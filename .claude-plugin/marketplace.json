@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "seo-geo-claude-skills",
-      "source": ".",
+      "source": "./",
       "description": "20 skills and 9 commands for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). Content quality powered by CORE-EEAT (80 items). Domain authority powered by CITE (40 items). Keyword research, competitor analysis, content writing, technical audits, rank tracking, schema markup, and AI citation optimization.",
       "version": "2.0.0",
       "category": "marketing",
