@@ -7,6 +7,25 @@
     "email": "hello@zhuhe.io",
     "url": "https://github.com/aaron-he-zhu"
   },
+  "homepage": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+  "repository": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+  "license": "Apache-2.0",
+  "keywords": [
+    "seo",
+    "geo",
+    "content-optimization",
+    "search-engine-optimization",
+    "generative-engine-optimization",
+    "ai-citation",
+    "core-eeat",
+    "cite",
+    "keyword-research",
+    "technical-seo",
+    "content-writing",
+    "schema-markup",
+    "rank-tracking",
+    "backlink-analysis"
+  ],
   "commands": ["./commands/"],
   "skills": [
     "./research/competitor-analysis",
