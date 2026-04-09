@@ -50,6 +50,5 @@
     "./cross-cutting/entity-optimizer",
     "./cross-cutting/memory-management"
   ],
-  "hooks": "./hooks/hooks.json",
   "mcpServers": "./.mcp.json"
 }
