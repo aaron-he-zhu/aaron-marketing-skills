@@ -124,6 +124,15 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 | `/seo:write-content <topic>` | SEO + GEO 최적화 콘텐츠 작성 |
 | `/seo:keyword-research <seed>` | 키워드 리서치 및 분석 |
 | `/seo:setup-alert <metric>` | 모니터링 알림 설정 |
+| `/seo:geo-drift-check [URL]` | (실험적, v9.0+) 예측 GEO Score와 실제 AI 엔진 인용 동작의 차이 검증 |
+
+### 유지보수 명령 (라이브러리 유지보수자 / 파워 유저용, 일상 사용 시 무시 가능)
+
+| 명령 | 설명 |
+|------|------|
+| `/seo:wiki-lint` | Wiki 건강 검사: 모순, 고아, 오래된 주장, 누락 페이지 감지 |
+| `/seo:contract-lint` | Auditor Runbook 드리프트 감지, handoff 스키마 검사, 전문 용어 누출 스캔 (v7.1.0+) |
+| `/seo:p2-review` | v7.1.0 연기 항목의 트리거 조건 평가; tombstone 재검토 (2026-07-10) |
 
 ## 기여
 
@@ -133,4 +142,4 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 
 Apache License 2.0
 
-*영문 README 최종 동기화: v7.0.0*
+*영문 README 최종 동기화: v9.0.0*

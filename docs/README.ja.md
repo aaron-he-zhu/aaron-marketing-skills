@@ -124,6 +124,15 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 | `/seo:write-content <topic>` | SEO + GEO最適化コンテンツ執筆 |
 | `/seo:keyword-research <seed>` | キーワードリサーチ＆分析 |
 | `/seo:setup-alert <metric>` | モニタリングアラート設定 |
+| `/seo:geo-drift-check [URL]` | (実験的、v9.0+) 予測GEOスコアと実際のAIエンジン引用動作の差異を検証 |
+
+### メンテナンスコマンド(ライブラリメンテナー / パワーユーザー向け、日常利用では無視可)
+
+| コマンド | 説明 |
+|----------|------|
+| `/seo:wiki-lint` | Wikiヘルスチェック:矛盾、孤立、古い主張、欠落ページの検出 |
+| `/seo:contract-lint` | Auditor Runbookドリフト検出、handoffスキーマ検証、専門用語リーク走査 (v7.1.0+) |
+| `/seo:p2-review` | v7.1.0延期項目のトリガー条件評価;tombstone 再審 (2026-07-10) |
 
 ## コントリビューション
 
@@ -133,4 +142,4 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 
 Apache License 2.0
 
-*英語READMEとの最終同期：v7.0.0*
+*英語READMEとの最終同期：v9.0.0*

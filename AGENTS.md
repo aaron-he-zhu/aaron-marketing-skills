@@ -41,7 +41,7 @@ seo-geo-claude-skills/
 │   ├── domain-authority-auditor/SKILL.md
 │   ├── entity-optimizer/SKILL.md
 │   └── memory-management/SKILL.md
-├── commands/                         # 12 one-shot command files
+├── commands/                         # 13 one-shot command files
 ├── references/                       # Shared reference documents
 │   ├── core-eeat-benchmark.md        # 80-item content quality framework
 │   ├── cite-domain-rating.md         # 40-item domain authority framework

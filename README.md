@@ -18,12 +18,10 @@ New to the terminology? See [GLOSSARY.md](GLOSSARY.md).
 
 ## Quick Start in 60 seconds
 
-1. **Install** — pick one of 7 native one-liners or the universal fallback:
+1. **Install** — three most common paths (full table of 7 native + fallback at [Installation](#installation)):
    - **Claude Code**: `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills`
    - **OpenClaw**: [clawhub.ai/plugins/aaron-seo-geo](https://clawhub.ai/plugins/aaron-seo-geo)
-   - **Universal**: `npx skills add aaron-he-zhu/seo-geo-claude-skills`
-
-   See [Installation](#installation) for Gemini CLI, Qwen, Amp, Kimi, CodeBuddy, and 35+ more.
+   - **Universal (any agent)**: `npx skills add aaron-he-zhu/seo-geo-claude-skills`
 
 2. **Try it immediately**:
    ```
@@ -267,7 +265,7 @@ Skills are organized into four execution phases plus one protocol layer. Use the
 
 One-shot tasks with explicit input and structured output.
 
-### User commands (9)
+### User commands (10)
 
 Day-to-day SEO/GEO work. Use these directly from any Claude Code, Cursor, or Codex session.
 
@@ -282,6 +280,7 @@ Day-to-day SEO/GEO work. Use these directly from any Claude Code, Cursor, or Cod
 | `/seo:write-content <topic>` | Write SEO + GEO optimized content from a topic and target keyword |
 | `/seo:keyword-research <seed>` | Research and analyze keywords for a topic or niche |
 | `/seo:setup-alert <metric>` | Configure monitoring alerts for critical metrics |
+| `/seo:geo-drift-check [URL]` | (experimental, v9.0+) Validate predicted GEO Score against actual AI-engine citations |
 
 ### Maintenance commands (3)
 
@@ -419,33 +418,20 @@ Not sure which skill to use? Here's a quick guide by goal:
 
 </details>
 
-## All Installation Methods
-
-| Method | Command | Best for |
-|--------|---------|----------|
-| **ClawHub** | `clawhub install aaron-he-zhu/<skill-name>` | OpenClaw users, individual skills |
-| **Skills CLI** | `npx skills add aaron-he-zhu/seo-geo-claude-skills` | Most users, 35+ agents, all 20 at once |
-| **Claude Code Plugin** | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` | Claude Code plugin system |
-| **Git Submodule** | `git submodule add ... .claude/skills/seo-geo` | Version-pinned team installs |
-| **Fork & Customize** | Fork + `npx skills add YOUR-ORG/...` | Teams with custom needs |
-| **Manual** | `git clone` + copy | No CLI needed |
+## Browse & advanced install
 
 Browse all 20 skills: [GitHub](https://github.com/aaron-he-zhu/seo-geo-claude-skills) · [ClawHub](https://clawhub.ai/u/aaron-he-zhu) · [skills.sh](https://skills.sh/aaron-he-zhu/seo-geo-claude-skills)
 
+For the full install table (7 native agents + universal fallback + submodule/fork/manual), see [Installation](#installation) above. A few less-common commands:
+
 ```bash
-# Install all skills (skills.sh)
-npx skills add aaron-he-zhu/seo-geo-claude-skills
-
-# Install a specific skill (skills.sh)
-npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
-
-# Install a specific skill (ClawHub)
+# Single skill via ClawHub
 clawhub install aaron-he-zhu/keyword-research
 
-# Preview available skills
+# Preview available skills (skills.sh)
 npx skills add aaron-he-zhu/seo-geo-claude-skills --list
 
-# Install globally for all agents
+# Global install for all agents (skills.sh)
 npx skills add aaron-he-zhu/seo-geo-claude-skills -g -y --all
 ```
 
@@ -471,6 +457,8 @@ See [CONTRIBUTING.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob
 ## Disclaimer
 
 These skills assist with SEO and GEO workflows but do not guarantee search rankings, AI citations, or traffic results. SEO and GEO outcomes depend on many factors outside the scope of this tool. Always verify recommendations with qualified professionals before making significant changes to your content strategy. AI-generated analysis should be reviewed by domain experts before being relied upon for business decisions.
+
+**Not legal advice.** Several skills and references (SECURITY.md scraping boundaries, CORE-EEAT T04 FTC disclosure, memory-management GDPR provisions, scoring-rubric.md WCAG/ADA section, llm-crawler-handling.md EU AI Act) cite statutes, case law, and regulator guidance current as of release date. Laws, penalty figures, and judicial interpretations evolve; jurisdictional coverage varies. Consult qualified legal counsel before relying on any legal summary in this repository for compliance decisions.
 
 ## License
 

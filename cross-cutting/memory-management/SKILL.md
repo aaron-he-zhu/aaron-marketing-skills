@@ -317,7 +317,7 @@ If any veto-level issue was found (CORE-EEAT T04, C01, R10 or CITE T03, T05, T09
 
 ## GDPR / Privacy Compliance
 
-`memory/` may store third-party personal data — entity names, founder bios, LinkedIn profiles, author/journalist names surfaced by `entity-optimizer` or research skills. Under GDPR Art 4(1), these qualify as "personal data". The user is the data controller.
+`memory/` may store third-party personal data — entity names, founder bios, LinkedIn profiles, author/journalist names surfaced by `entity-optimizer` or research skills. Under GDPR Art 4(1) (applies to **processing of personal data of EU/EEA/UK residents** regardless of where the controller is located), these qualify as "personal data". The user is the data controller. Non-EU users without EU/EEA/UK data subjects may still face analogous obligations under CCPA/CPRA (California), PIPEDA (Canada), LGPD (Brazil), or other national regimes. **Not legal advice.**
 
 ### Retention policy
 - WARM files: archive to `memory/archive/` after 90 days unreferenced (default lifecycle)
@@ -334,7 +334,7 @@ This skill then:
 4. Logs the purge to `memory/audits/gdpr-purges.md` with date + subject requested
 
 ### Lawful basis reminder
-Before writing a third-party person to `memory/entities/`, the user must have one lawful basis per GDPR Art 6: `consent`, `legitimate_interest`, `contract`, or equivalent. Advisory — this skill does not enforce.
+Before writing a third-party person to `memory/entities/`, the user must have one lawful basis per GDPR Art 6 (where GDPR applies — see scope note above): `consent`, `legitimate_interest`, `contract`, or equivalent. Advisory — this skill does not enforce, and does not substitute for legal review.
 
 ## Reference Materials
 

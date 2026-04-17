@@ -211,7 +211,7 @@ For e-commerce product pages.
   },
 ```
 
-> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **$51,744 per violation** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
+> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **~$53K/violation (2025 adjusted figure; 2024 baseline was $51,744; inflation-adjusted annually per 16 CFR §1.98)** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
 
 ```json
   "aggregateRating": {
@@ -287,7 +287,7 @@ For local business pages with physical locations.
   ],
 ```
 
-> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **$51,744 per violation** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
+> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **~$53K/violation (2025 adjusted figure; 2024 baseline was $51,744; inflation-adjusted annually per 16 CFR §1.98)** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
 
 ```json
   "aggregateRating": {
@@ -544,7 +544,7 @@ For cooking recipes.
   ],
 ```
 
-> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **$51,744 per violation** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
+> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **~$53K/violation (2025 adjusted figure; 2024 baseline was $51,744; inflation-adjusted annually per 16 CFR §1.98)** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
 
 ```json
   "aggregateRating": {
@@ -575,7 +575,7 @@ For software, apps, and tools.
   },
 ```
 
-> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **$51,744 per violation** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
+> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **~$53K/violation (2025 adjusted figure; 2024 baseline was $51,744; inflation-adjusted annually per 16 CFR §1.98)** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
 
 ```json
   "aggregateRating": {

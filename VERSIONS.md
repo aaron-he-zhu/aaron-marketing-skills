@@ -40,7 +40,7 @@ Major release combining three streams of work: (1) a 6-agent panel quality revie
 #### Legal & Compliance (new)
 
 - **SECURITY.md** scraping boundaries — robots.txt, CFAA, hiQ v LinkedIn / Meta v Bright Data precedents, EU DSM Art 4 TDM-reservation awareness
-- **FTC 16 CFR §255.5** affiliate disclosure enforcement in CORE-EEAT T04 — five new sub-items; $51,744/violation exposure baked into veto logic
+- **FTC 16 CFR §255.5** affiliate disclosure enforcement in CORE-EEAT T04 — five new sub-items; ~$53K/violation (inflation-adjusted, 16 CFR §1.98) exposure baked into veto logic
 - **GDPR Art 4 / Art 17** retention + deletion flow in `memory-management`; **Art 6** lawful-basis prompt in `entity-optimizer`
 - **EU AI Act Art 53** TDM reservation in `technical-seo-checker/references/llm-crawler-handling.md`
 - **ADA / WCAG 2.2 AA** alt-text rebalance — 1.1.1 descriptive primary, SEO keyword secondary (previous ordering risked ADA compliance claims)

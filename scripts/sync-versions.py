@@ -3,15 +3,25 @@
 
 Canonical source: .claude-plugin/plugin.json `version`.
 Targets:
-  - marketplace.json (root)
-  - gemini-extension.json
-  - qwen-extension.json
-  - .codebuddy-plugin/marketplace.json
+  - marketplace.json (root) — top-level `version` and `plugins[*].version`
+  - gemini-extension.json — top-level `version`
+  - qwen-extension.json — top-level `version`
+  - .codebuddy-plugin/marketplace.json — top-level `version` and `plugins[*].version`
 
-Usage: python3 scripts/sync-versions.py
+Usage:
+  python3 scripts/sync-versions.py            # apply
+  python3 scripts/sync-versions.py --dry-run  # preview, no writes
+  python3 scripts/sync-versions.py --help
+
 Exit code: 0 on success (or no-op), 1 on error.
+
+Why targeted paths (not recursive)? Each target has a known, enumerated set of
+`version` fields. A blanket recursive bump would accidentally overwrite any
+future unrelated `version` key (e.g., a nested schema version). The targeted
+approach is predictable and auditable.
 """
 
+import argparse
 import json
 import pathlib
 import sys
@@ -19,32 +29,49 @@ import sys
 ROOT = pathlib.Path(__file__).parent.parent.resolve()
 
 CANONICAL = ROOT / ".claude-plugin" / "plugin.json"
+
+# Each target: (path, [list of dotted paths to bump]).
+# Dotted path syntax: top-level "version", nested "metadata.version",
+# list element wildcard "plugins[*].version".
 TARGETS = [
-    ROOT / "marketplace.json",
-    ROOT / "gemini-extension.json",
-    ROOT / "qwen-extension.json",
-    ROOT / ".codebuddy-plugin" / "marketplace.json",
+    (ROOT / "marketplace.json", ["metadata.version", "plugins[*].version"]),
+    (ROOT / "gemini-extension.json", ["version"]),
+    (ROOT / "qwen-extension.json", ["version"]),
+    (ROOT / ".codebuddy-plugin" / "marketplace.json", ["version", "plugins[*].version"]),
 ]
 
 
-def bump_version(obj, version):
-    """Recursively set every `version` key to the target value. Returns True if changed."""
-    changed = False
-    if isinstance(obj, dict):
-        if "version" in obj and obj["version"] != version:
-            obj["version"] = version
-            changed = True
-        for value in obj.values():
-            if bump_version(value, version):
-                changed = True
-    elif isinstance(obj, list):
-        for item in obj:
-            if bump_version(item, version):
-                changed = True
-    return changed
+def set_path(obj, dotted_path, value):
+    """Set a dotted path (supports `plugins[*].version` list wildcard). Returns count of writes."""
+    parts = dotted_path.split(".")
+    return _walk(obj, parts, value)
+
+
+def _walk(cur, parts, value):
+    if not parts:
+        return 0
+    head, *rest = parts
+    if head.endswith("[*]"):
+        key = head[:-3]
+        if not isinstance(cur, dict) or key not in cur or not isinstance(cur[key], list):
+            return 0
+        return sum(_walk(item, rest, value) for item in cur[key])
+    if not rest:
+        if isinstance(cur, dict) and head in cur:
+            if cur[head] != value:
+                cur[head] = value
+                return 1
+        return 0
+    if isinstance(cur, dict) and head in cur:
+        return _walk(cur[head], rest, value)
+    return 0
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Sync version across cross-agent manifests.")
+    parser.add_argument("--dry-run", action="store_true", help="Preview changes without writing.")
+    args = parser.parse_args()
+
     if not CANONICAL.exists():
         print(f"ERROR: canonical source not found: {CANONICAL}", file=sys.stderr)
         return 1
@@ -55,21 +82,28 @@ def main():
         print(f"ERROR: no `version` field in {CANONICAL}", file=sys.stderr)
         return 1
 
-    print(f"Target version: {version}")
+    mode = "[dry-run] " if args.dry_run else ""
+    print(f"{mode}Target version: {version}")
 
-    for target in TARGETS:
+    changed_files = 0
+    for target, paths in TARGETS:
         if not target.exists():
             print(f"  skip    {target.relative_to(ROOT)} (not found)")
             continue
 
         data = json.loads(target.read_text())
-        if bump_version(data, version):
-            target.write_text(json.dumps(data, indent=2) + "\n")
-            print(f"  updated {target.relative_to(ROOT)}")
+        writes = sum(set_path(data, p, version) for p in paths)
+        if writes:
+            changed_files += 1
+            if args.dry_run:
+                print(f"  would-update {target.relative_to(ROOT)} ({writes} field(s))")
+            else:
+                target.write_text(json.dumps(data, indent=2) + "\n")
+                print(f"  updated     {target.relative_to(ROOT)} ({writes} field(s))")
         else:
-            print(f"  ok      {target.relative_to(ROOT)}")
+            print(f"  ok          {target.relative_to(ROOT)}")
 
-    print("Done.")
+    print(f"{mode}Done. {changed_files} file(s) {'would change' if args.dry_run else 'changed'}.")
     return 0
 
 

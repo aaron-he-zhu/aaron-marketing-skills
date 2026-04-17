@@ -507,9 +507,11 @@ Where section weights are: Title 0.15, Meta 0.05, Headers 0.10, Content 0.25, Ke
 | CLS | ≤0.1 | 0.1-0.25 | >0.25 |
 | TTFB | ≤800ms | 800-1800ms | >1800ms |
 
-## Accessibility requirements (WCAG 2.2 AA) — 2026 ADA scope
+## Accessibility requirements (WCAG 2.2 AA)
 
-Per ADA Title III enforcement patterns (UsableNet 2024: 4,605 web accessibility lawsuits), the following WCAG 2.2 AA criteria are in-scope for on-page SEO audits:
+> U.S. private commercial websites face ADA Title III web-accessibility exposure that remains circuit-split at the federal level; DOJ's 2024 Title II rule binds state/local government sites, not private commercial sites. WCAG 2.2 AA is the de-facto conformance target cited in most settlements and consent decrees. EU sites face EN 301 549 / European Accessibility Act (2025) obligations. **Not legal advice.** The criteria below reflect audit practice and observable enforcement patterns (UsableNet 2024: 4,605 web accessibility lawsuits), not a federal bright-line rule.
+
+The following WCAG 2.2 AA criteria are in-scope for on-page SEO audits:
 
 | Criterion | Check |
 |---|---|

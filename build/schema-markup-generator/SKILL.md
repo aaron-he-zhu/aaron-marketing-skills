@@ -201,7 +201,7 @@ When a user requests schema markup, run these three steps:
 - [ ] Content eligibility for rich results confirmed
 
 ### Output Validation
-- [ ] **aggregateRating truth check** — `ratingValue` and `reviewCount` reflect site-visible reviews; no fake/incentivized entries (FTC 16 CFR §465, $51,744/violation)
+- [ ] **aggregateRating truth check** — `ratingValue` and `reviewCount` reflect site-visible reviews; no fake/incentivized entries (FTC 16 CFR §465, ~$53K/violation (inflation-adjusted, 16 CFR §1.98))
 - [ ] JSON syntax validates (no trailing commas, proper quotes)
 - [ ] All required properties present for chosen schema type
 - [ ] URLs are absolute, not relative

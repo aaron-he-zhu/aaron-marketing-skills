@@ -47,6 +47,8 @@ This project consists of markdown-based skill files with no runtime dependencies
 
 ## Scraping Boundaries
 
+> **⚠️ Not legal advice.** The citations below summarize publicly reported authority as of 2026-04-17. Statutes, case law, and regulator guidance evolve; jurisdictional coverage varies. Consult counsel for your specific jurisdiction and fact pattern before acting on any boundary below.
+
 Several skills in this library involve crawling, fetching, or extracting content from web domains (e.g., `competitor-analysis`, `technical-seo-checker`, `on-page-seo-auditor`, `internal-linking-optimizer`, `backlink-analyzer`). Before invoking these skills against a domain that you do not own or operate under written authorization, Claude and the user must verify the following:
 
 ### 1. robots.txt compliance
@@ -57,8 +59,8 @@ Always fetch and parse `/robots.txt` before issuing any automated request to a t
 
 Unauthorized automated access can trigger Computer Fraud and Abuse Act (18 U.S.C. § 1030) exposure and EU equivalents. Reference cases:
 
-- **hiQ Labs v. LinkedIn** (9th Cir., 2022) — scraping public data is generally not "without authorization" under the CFAA, BUT platform cease-and-desist notices shift the analysis; continued access after a C&D can create liability.
-- **Meta Platforms v. Bright Data** (N.D. Cal., 2024) — scraping activity that violates a platform's Terms of Service can still constitute breach of contract and tortious interference even where CFAA does not apply. Outcomes are jurisdiction-specific and counsel-dependent.
+- **hiQ Labs v. LinkedIn** (9th Cir. preliminary-injunction dictum 2019/2022; district-court remand 2022) — the 9th Circuit's preliminary-injunction framing suggested scraping public data is generally not "without authorization" under the CFAA, but hiQ ultimately *lost* on LinkedIn's breach-of-contract claim at remand. Treat the CFAA-only framing as narrow; contract and tortious-interference exposure can survive even where CFAA does not apply.
+- **Meta Platforms v. Bright Data** (N.D. Cal., Jan 2024) — Meta *lost* summary judgment on the logged-out public-data scraping claims; contract-based claims on logged-in activity fared differently. Courts are still sorting public vs. authenticated scraping under state-law theories. Outcomes are jurisdiction-specific and fact-dependent; do not read either case as a green light or a blanket prohibition.
 
 If a target site posts a C&D, invalidates the crawler's account, or lists the user agent in `robots.txt` under `Disallow:`, stop crawling and surface the block to the user rather than attempting workarounds.
 

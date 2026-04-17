@@ -636,7 +636,7 @@ What is the primary goal?
 
 **T04: Disclosure Statements** | Dual ⚡
 
-> **Regulatory basis**: FTC **16 CFR §255.5** (Endorsement Guides — disclosure of material connections) and the FTC **2024/10 "Commission Rule on Use of Consumer Reviews and Testimonials"** (effective October 21, 2024). Civil penalties up to **$51,744 per violation** apply where a disclosure is absent, ambiguous, or obscured. These rules apply to any reviewer, affiliate, or endorser operating in or marketing to the U.S., regardless of platform.
+> **Regulatory basis (U.S. market)**: FTC **16 CFR §255.5** (Endorsement Guides — the substantive disclosure standards for material connections; advisory, not self-penalizing) and the FTC's **2024 Trade Regulation Rule on Consumer Reviews and Testimonials (16 CFR Part 465)**, effective 2024-10-21. Civil penalties attach under **15 U.S.C. §45(m)** and are **inflation-adjusted annually per 16 CFR §1.98** (baseline $51,744 in 2024; ~$53,088 in 2025; check current year). Applies to reviewers, affiliates, and endorsers operating in or marketing to the U.S., regardless of platform. EU/UK markets have analogous obligations (e.g., UK CMA's 2024 Digital Markets, Competition and Consumers Act). **Not legal advice — consult counsel for your jurisdiction.**
 
 Affiliate-link disclosure is enforceable only when ALL of the following sub-criteria are met. Missing any of (a)–(e) is a **Fail → VETO**.
 

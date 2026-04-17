@@ -124,6 +124,15 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 | `/seo:write-content <topic>` | SEO + GEO 优化内容写作 |
 | `/seo:keyword-research <seed>` | 关键词研究与分析 |
 | `/seo:setup-alert <metric>` | 配置监控告警 |
+| `/seo:geo-drift-check [URL]` | (实验性,v9.0+) 验证预测 GEO Score 与 AI 引擎实际引用情况的偏差 |
+
+### 维护命令(供库维护者 / 高级用户,日常可忽略)
+
+| 命令 | 说明 |
+|------|------|
+| `/seo:wiki-lint` | Wiki 健康检查:矛盾、孤儿、过时声明、缺失页面 |
+| `/seo:contract-lint` | Auditor Runbook 漂移检测、handoff schema 检查、术语泄漏扫描 (v7.1.0+) |
+| `/seo:p2-review` | 评估 v7.1.0 延期项目触发条件;tombstone 复审 (2026-07-10) |
 
 ## 贡献
 
@@ -133,4 +142,4 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 
 Apache License 2.0
 
-*最后同步英文 README：v7.0.0*
+*最后同步英文 README：v9.0.0*

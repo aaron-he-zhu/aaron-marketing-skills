@@ -195,7 +195,7 @@ Proceed with the audit using public search results, AI query testing, and SERP a
 
 When a user requests entity optimization:
 
-2. **GDPR Art 6 lawful-basis prompt (for third-party persons)** — if the entity being canonicalized is an individual (founder, author, public figure), the skill MUST prompt the user before writing to `memory/entities/`: "You are about to create a canonical profile for a person. Confirm your lawful basis under GDPR Art 6 for storing this individual's data: (1) consent, (2) legitimate interest, (3) contract, (4) other. If unsure, skip and return NEEDS_INPUT." Only proceed if user confirms a basis. Reference: [memory-management §GDPR / Privacy Compliance](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md).
+2. **GDPR Art 6 lawful-basis prompt (for third-party persons, EU/EEA/UK data subjects)** — if the entity being canonicalized is an individual (founder, author, public figure) and may be an EU/EEA/UK resident, the skill MUST prompt the user before writing to `memory/entities/`: "You are about to create a canonical profile for a person. If this person is or may be an EU/EEA/UK resident, GDPR Art 6 requires a lawful basis: (1) consent, (2) legitimate interest, (3) contract, (4) other. For non-EU subjects, check local regimes (CCPA/CPRA, PIPEDA, LGPD, etc.). If unsure, skip and return NEEDS_INPUT." Only proceed if user confirms a basis. Advisory only — not legal advice. Reference: [memory-management §GDPR / Privacy Compliance](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md).
 
 ### Step 1: Entity Discovery
 

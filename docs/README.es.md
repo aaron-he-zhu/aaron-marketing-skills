@@ -124,6 +124,15 @@ O ejecuta un comando:
 | `/seo:write-content <topic>` | Redacción de contenido optimizado SEO + GEO |
 | `/seo:keyword-research <seed>` | Investigación y análisis de keywords |
 | `/seo:setup-alert <metric>` | Configuración de alertas de monitoreo |
+| `/seo:geo-drift-check [URL]` | (experimental, v9.0+) Valida GEO Score predicho vs. citaciones reales de motores IA |
+
+### Comandos de mantenimiento (para mantenedores de la biblioteca / usuarios avanzados; se pueden ignorar en el uso diario)
+
+| Comando | Descripción |
+|---------|-------------|
+| `/seo:wiki-lint` | Revisión de salud de Wiki: contradicciones, huérfanos, afirmaciones obsoletas, páginas faltantes |
+| `/seo:contract-lint` | Detección de drift en Auditor Runbook, verificación de esquema handoff, escaneo de fuga de jerga (v7.1.0+) |
+| `/seo:p2-review` | Evaluar elementos diferidos de v7.1.0 contra condiciones de activación; revisión de tombstone (2026-07-10) |
 
 ## Contribuir
 
@@ -133,4 +142,4 @@ Las contribuciones son bienvenidas. Consulta [CONTRIBUTING.md](https://github.co
 
 Apache License 2.0
 
-*Última sincronización con README en inglés: v7.0.0*
+*Última sincronización con README en inglés: v9.0.0*
