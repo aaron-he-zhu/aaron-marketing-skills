@@ -72,6 +72,7 @@ jobs:
             --bundle-format claude-plugin \
             --host-targets claude-code \
             --name aaron-seo-geo \
+            --display-name "Aaron SEO GEO" \
             --version "${{ needs.detect-version.outputs.version }}" \
             --tags latest \
             --source-repo aaron-he-zhu/seo-geo-claude-skills \
