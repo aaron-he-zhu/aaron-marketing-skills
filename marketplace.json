@@ -13,7 +13,7 @@
     {
       "name": "aaron-seo-geo",
       "source": "./",
-      "description": "20 SEO and GEO skills plus 13 commands on one shared operating contract. Includes protocol-layer gates for content quality, domain trust, entity truth, and campaign memory alongside keyword research, content creation, audits, monitoring, schema markup, and AI citation optimization. v9.0.0 adds legal/compliance hardening (FTC, GDPR, EU AI Act, WCAG), 10 new playbooks, SKILL.md size compliance (≤350 lines), native install for Gemini CLI / Qwen / Amp / Kimi / CodeBuddy, and the experimental /seo:geo-drift-check command.",
+      "description": "20 SEO and GEO skills plus 15 commands on one shared operating contract. Includes protocol-layer gates for content quality, domain trust, entity truth, and campaign memory alongside keyword research, content creation, audits, monitoring, schema markup, and AI citation optimization. v9.0.0 adds legal/compliance hardening (FTC, GDPR, EU AI Act, WCAG), 10 new playbooks, SKILL.md size compliance (≤350 lines), native install for Gemini CLI / Qwen / Amp / Kimi / CodeBuddy, and the experimental /seo:geo-drift-check command.",
       "version": "9.0.0",
       "category": "marketing",
       "tags": [

@@ -1,6 +1,6 @@
 # SEO & GEO スキルライブラリ
 
-**20スキル。13コマンド。検索ランキング + AI引用を同時に。**
+**20スキル。15コマンド。検索ランキング + AI引用を同時に。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-9.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
@@ -133,6 +133,8 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 | `/seo:wiki-lint` | Wikiヘルスチェック:矛盾、孤立、古い主張、欠落ページの検出 |
 | `/seo:contract-lint` | Auditor Runbookドリフト検出、handoffスキーマ検証、専門用語リーク走査 (v7.1.0+) |
 | `/seo:p2-review` | v7.1.0延期項目のトリガー条件評価;tombstone 再審 (2026-07-10) |
+| `/seo:sync-versions` | `.claude-plugin/plugin.json` のバージョン番号を全クロスエージェント manifest に伝播 (v9.0+、`scripts/sync-versions.py` の代替) |
+| `/seo:validate-library` | ライブラリレベルの品質ゲート:ディスクリプション予算、YAMLフィールド順序、言語カバレッジ、重複トリガー検出 (v9.0+、`scripts/validate-descriptions.py` の代替) |
 
 ## コントリビューション
 

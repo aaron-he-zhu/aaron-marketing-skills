@@ -1,6 +1,6 @@
 # SEO & GEO Skills Library
 
-**20 skills. 13 commands. Rank in search. Get cited by AI.**
+**20 skills. 15 commands. Rank in search. Get cited by AI.**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-9.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
@@ -282,7 +282,7 @@ Day-to-day SEO/GEO work. Use these directly from any Claude Code, Cursor, or Cod
 | `/seo:setup-alert <metric>` | Configure monitoring alerts for critical metrics |
 | `/seo:geo-drift-check [URL]` | (experimental, v9.0+) Validate predicted GEO Score against actual AI-engine citations |
 
-### Maintenance commands (3)
+### Maintenance commands (5)
 
 For library maintainers / power users. Safe to ignore for daily use.
 
@@ -291,6 +291,8 @@ For library maintainers / power users. Safe to ignore for daily use.
 | `/seo:wiki-lint` | Wiki health check: detect contradictions, orphans, stale claims, missing pages |
 | `/seo:contract-lint` | Auditor Runbook drift detection, handoff schema check, jargon leak scan (v7.1.0+) |
 | `/seo:p2-review` | Evaluate v7.1.0 deferred items against trigger conditions; tombstone review (2026-07-10) |
+| `/seo:sync-versions` | Propagate canonical version from `.claude-plugin/plugin.json` to all cross-agent manifests (v9.0+, replaces `scripts/sync-versions.py`) |
+| `/seo:validate-library` | Library-level quality gate: description budgets, YAML field order, language coverage, duplicate triggers (v9.0+, replaces `scripts/validate-descriptions.py`) |
 
 Command files: [commands/](https://github.com/aaron-he-zhu/seo-geo-claude-skills/tree/main/commands/)
 

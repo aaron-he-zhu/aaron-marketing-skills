@@ -1,6 +1,6 @@
 # SEO & GEO Skills Library — Claude Code Context
 
-This plugin provides **20 skills and 13 commands** for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). All 20 skills follow one shared contract: trigger, quick start, skill contract, handoff summary, and next best skill. Skills are auto-loaded by context; commands are invoked with `/seo:`.
+This plugin provides **20 skills and 15 commands** for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). All 20 skills follow one shared contract: trigger, quick start, skill contract, handoff summary, and next best skill. Skills are auto-loaded by context; commands are invoked with `/seo:`.
 
 ## Skills by Phase
 
@@ -29,12 +29,14 @@ This plugin provides **20 skills and 13 commands** for Search Engine Optimizatio
 /seo:geo-drift-check — (experimental, v9.0+) Validate GEO Score against actual AI-engine citations
 ```
 
-**Maintenance commands (3)** — for library maintainers / power users. Safe to ignore for daily use:
+**Maintenance commands (5)** — for library maintainers / power users. Safe to ignore for daily use:
 
 ```
-/seo:wiki-lint       — Wiki health check: contradictions, orphans, stale claims
-/seo:contract-lint   — Auditor Runbook drift detection, handoff schema check, jargon leak scan (v7.1.0+)
-/seo:p2-review       — Evaluate v7.1.0 deferred items against trigger conditions; tombstone review (2026-07-10)
+/seo:wiki-lint          — Wiki health check: contradictions, orphans, stale claims
+/seo:contract-lint      — Auditor Runbook drift detection, handoff schema check, jargon leak scan (v7.1.0+)
+/seo:p2-review          — Evaluate v7.1.0 deferred items against trigger conditions; tombstone review (2026-07-10)
+/seo:sync-versions      — Propagate canonical version from .claude-plugin/plugin.json to all cross-agent manifests (v9.0+, replaces scripts/sync-versions.py)
+/seo:validate-library   — Library-level quality gate: description budgets, YAML field order, language coverage, duplicate triggers (v9.0+, replaces scripts/validate-descriptions.py)
 ```
 
 ## Quality Frameworks
@@ -73,7 +75,8 @@ Skills use `~~category` placeholders (e.g., `~~SEO tool`, `~~analytics`). Every 
 - Keep `SKILL.md` body under 350 lines — move detail to `references/` subdirectories. **Exception**: protocol-layer auditor skills (currently `content-quality-auditor` and `domain-authority-auditor`) may inline the authoritative Auditor Runbook §1-5 (~270 lines) directly in their SKILL.md body, bringing them to a ~750 line ceiling. Inlining is required because markdown-linked references do not execute reliably at skill activation. The inline block is delimited by `<!-- runbook-sync start: source_sha256=... block_sha256=... -->` markers and validated by `/seo:contract-lint`. See [references/decisions/2026-04-adr-001-inline-auditor-runbook.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/decisions/2026-04-adr-001-inline-auditor-runbook.md).
 - **New auditor-class skill authors**: start with [references/AUDITOR-AUTHORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/AUDITOR-AUTHORS.md) — template skeleton, veto registration checklist, anti-patterns, and sync procedure.
 - After updating a skill: update all 5 tracking files — `VERSIONS.md`, `.claude-plugin/plugin.json`, `marketplace.json` (repo root), `README.md` skills table, and this `CLAUDE.md` category table
-- Version bump also syncs 3 cross-agent manifests — `gemini-extension.json`, `qwen-extension.json`, `.codebuddy-plugin/marketplace.json`. Run `python3 scripts/sync-versions.py` after editing `.claude-plugin/plugin.json` to propagate the version automatically.
+- Version bump also syncs 3 cross-agent manifests — `gemini-extension.json`, `qwen-extension.json`, `.codebuddy-plugin/marketplace.json`. Run `/seo:sync-versions` after editing `.claude-plugin/plugin.json` to propagate the version automatically. A jq one-liner fallback for CI / no-Claude environments is documented in [commands/sync-versions.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/commands/sync-versions.md).
+- Design philosophy: the repo is content-only — no `.py` scripts. Developer utilities are either bash (`scripts/validate-skill.sh`) or pure-markdown slash commands. If a new utility is needed, add it as a `commands/*.md` file and mark it a maintenance command.
 - Keep the shared contract and state-model language consistent with `references/skill-contract.md` and `references/state-model.md`
 - Branch naming: `feature/skill-name`, `fix/skill-name`, `docs/description`
 

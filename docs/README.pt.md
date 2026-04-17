@@ -1,6 +1,6 @@
 # Biblioteca de Skills SEO & GEO
 
-**20 skills. 13 comandos. Ranqueie nas buscas. Seja citado por IA.**
+**20 skills. 15 comandos. Ranqueie nas buscas. Seja citado por IA.**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-9.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
@@ -133,6 +133,8 @@ Ou execute um comando:
 | `/seo:wiki-lint` | Verificação de saúde do Wiki: contradições, órfãos, afirmações obsoletas, páginas faltantes |
 | `/seo:contract-lint` | Detecção de drift no Auditor Runbook, verificação de esquema handoff, varredura de vazamento de jargão (v7.1.0+) |
 | `/seo:p2-review` | Avaliar itens adiados da v7.1.0 contra condições de gatilho; revisão de tombstone (2026-07-10) |
+| `/seo:sync-versions` | Propaga a versão canônica de `.claude-plugin/plugin.json` para todos os manifests cross-agent (v9.0+, substitui `scripts/sync-versions.py`) |
+| `/seo:validate-library` | Portão de qualidade em nível de biblioteca: orçamento de descrições, ordem de campos YAML, cobertura de idiomas, detecção de gatilhos duplicados (v9.0+, substitui `scripts/validate-descriptions.py`) |
 
 ## Contribuir
 

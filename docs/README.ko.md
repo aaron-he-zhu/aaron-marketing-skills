@@ -1,6 +1,6 @@
 # SEO & GEO 스킬 라이브러리
 
-**20개 스킬. 13개 명령. 검색 순위 + AI 인용을 한번에.**
+**20개 스킬. 15개 명령. 검색 순위 + AI 인용을 한번에.**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-9.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
@@ -133,6 +133,8 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 | `/seo:wiki-lint` | Wiki 건강 검사: 모순, 고아, 오래된 주장, 누락 페이지 감지 |
 | `/seo:contract-lint` | Auditor Runbook 드리프트 감지, handoff 스키마 검사, 전문 용어 누출 스캔 (v7.1.0+) |
 | `/seo:p2-review` | v7.1.0 연기 항목의 트리거 조건 평가; tombstone 재검토 (2026-07-10) |
+| `/seo:sync-versions` | `.claude-plugin/plugin.json`의 버전을 모든 크로스 에이전트 manifest로 전파 (v9.0+, `scripts/sync-versions.py` 대체) |
+| `/seo:validate-library` | 라이브러리 레벨 품질 게이트: 설명 예산, YAML 필드 순서, 언어 커버리지, 중복 트리거 감지 (v9.0+, `scripts/validate-descriptions.py` 대체) |
 
 ## 기여
 

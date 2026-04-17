@@ -103,7 +103,16 @@ Carried forward from v8.0.3 interim work:
 - Amp: `amp skill add aaron-he-zhu/seo-geo-claude-skills` — works out-of-box
 - Kimi Code CLI: `kimi plugin install <github-url>` — works out-of-box
 - CodeBuddy: `/plugin marketplace add <repo>` then `/plugin install aaron-seo-geo` (in-app 2-step) — via new `.codebuddy-plugin/marketplace.json`
-- `scripts/sync-versions.py` — developer utility that propagates version from `.claude-plugin/plugin.json` to all cross-agent manifests
+
+#### Zero-.py design philosophy (enforced)
+
+v9.0.0 removes **all Python scripts** from the repo to enforce AGENTS.md's "content-only repository" claim. The two previous dev utilities are now slash commands:
+
+- `scripts/sync-versions.py` → deleted; replaced by [`/seo:sync-versions`](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/commands/sync-versions.md) maintenance command (pure-markdown; includes a jq one-liner fallback for CI)
+- `scripts/validate-descriptions.py` → deleted; replaced by [`/seo:validate-library`](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/commands/validate-library.md) maintenance command
+- `scripts/validate-skill.sh` retained (bash, pre-existing, ClawHub spec validator)
+
+Contribution rule added to [CLAUDE.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CLAUDE.md): new developer utilities go as `commands/*.md` slash commands, not `.py` scripts.
 
 #### Infrastructure
 
@@ -116,8 +125,9 @@ Carried forward from v8.0.3 interim work:
 
 #### Validators (all green)
 
-- validate-skill.sh: 20/20 pass, 0 warnings
-- validate-descriptions.py: 20/20 pass
+- validate-skill.sh per-directory: 20/20 pass, 0 warnings
+- validate-skill.sh --status: 20/20 version-consistent across `version:` and `metadata.version:`
+- `/seo:validate-library` (replaces validate-descriptions.py): 20/20 pass
 - JSON parse (plugin, marketplace, .mcp.json, hooks.json, gemini-extension, qwen-extension, .codebuddy-plugin/marketplace): 7/7 OK
 - 622 GitHub absolute URLs verified resolvable
 - 160/160 required skill sections present

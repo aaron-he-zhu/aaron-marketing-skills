@@ -1,6 +1,6 @@
 # SEO & GEO 技能库
 
-**20 个技能。13 个命令。搜索排名 + AI 引用，一次搞定。**
+**20 个技能。15 个命令。搜索排名 + AI 引用，一次搞定。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-9.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
@@ -133,6 +133,8 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 | `/seo:wiki-lint` | Wiki 健康检查:矛盾、孤儿、过时声明、缺失页面 |
 | `/seo:contract-lint` | Auditor Runbook 漂移检测、handoff schema 检查、术语泄漏扫描 (v7.1.0+) |
 | `/seo:p2-review` | 评估 v7.1.0 延期项目触发条件;tombstone 复审 (2026-07-10) |
+| `/seo:sync-versions` | 将 `.claude-plugin/plugin.json` 的版本号传播到所有跨 agent manifest(v9.0+,替代 `scripts/sync-versions.py`) |
+| `/seo:validate-library` | 库级质量闸:描述预算、YAML 字段顺序、语言覆盖、重复触发词检测(v9.0+,替代 `scripts/validate-descriptions.py`) |
 
 ## 贡献
 
