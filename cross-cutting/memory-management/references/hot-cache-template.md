@@ -1,13 +1,13 @@
-# Hot Cache (CLAUDE.md) Template
+# Hot cache template (`memory/hot-cache.md`)
 
-Use this template when initializing memory for a new SEO project.
+Use this template when initializing memory for a new SEO project. The HOT tier is the single file `memory/hot-cache.md` (auto-loaded every session via the SessionStart hook, hard limit 80 lines / 25KB). Do NOT place this content in the project root's CLAUDE.md — CLAUDE.md is Claude Code's auto-loaded project-instructions file and is a separate concern.
 
-### 2. Hot Cache (CLAUDE.md) Structure
+### 2. Hot cache structure (`memory/hot-cache.md`)
 
-Create or update CLAUDE.md with this template:
+Create or update `memory/hot-cache.md` with this template:
 
 ```markdown
-# [Project Name] - SEO Memory (Hot Cache)
+# [Project Name] - SEO Memory (hot cache)
 
 **Last Updated**: [Date]
 **Project Status**: [Active/Maintenance/Growth]

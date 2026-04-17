@@ -1,16 +1,18 @@
 # SEO & GEO スキルライブラリ
 
-**20スキル。9コマンド。検索ランキング + AI引用を同時に。**
+**20スキル。12コマンド。検索ランキング + AI引用を同時に。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-8.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE)
 
-[English](../README.md) | [中文](README.zh.md) | **日本語** | [한국어](README.ko.md) | [Espanol](README.es.md) | [Portugues](README.pt.md)
+[English](../README.md) | [中文](README.zh.md) | **日本語** | [한국어](README.ko.md) | [Español](README.es.md) | [Português](README.pt.md)
 
 検索エンジン最適化（SEO）と生成エンジン最適化（GEO）のためのClaudeスキル＆コマンド集。依存関係ゼロ。[Claude Code](https://claude.ai/download)、[OpenClaw](https://openclaw.com)、[Gemini CLI](https://geminicli.com)、[Qwen Code](https://qwenlm.github.io/qwen-code-docs/)、[Amp](https://ampcode.com)、[Kimi](https://moonshotai.github.io/kimi-cli/)、[CodeBuddy](https://codebuddy.ai)にネイティブ対応。[35以上のエージェント](https://github.com/vercel-labs/skills#supported-agents)は `npx skills` 経由。コンテンツ品質は[CORE-EEATベンチマーク](https://github.com/aaron-he-zhu/core-eeat-content-benchmark)（80項目）、ドメイン権威は[CITEドメイン評価](https://github.com/aaron-he-zhu/cite-domain-rating)（40項目）で評価。
 
 > **SEO**は検索結果でのランキングを獲得します。**GEO**はAIシステム（ChatGPT、Perplexity、Google AI Overviews）からの引用を獲得します。このライブラリは両方をカバーします。
+
+用語に慣れていませんか？ [GLOSSARY.md](../GLOSSARY.md) をご覧ください。
 
 ### なぜこのスキルライブラリか
 

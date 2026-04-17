@@ -78,24 +78,27 @@ Weighted Score: XX/100 ([rating])
 GEO Score (CORE): XX/100    SEO Score (EEAT): XX/100
 
 Dimension Scores:
-C  -- Contextual Clarity  [████████░░] XX/100
-O  -- Organization        [████████░░] XX/100
-R  -- Referenceability    [████████░░] XX/100
-E  -- Exclusivity         [████████░░] XX/100
-Exp -- Experience         [████████░░] XX/100
-Ept -- Expertise          [████████░░] XX/100
-A  -- Authority           [████████░░] XX/100
-T  -- Trust               [████████░░] XX/100
+Contextual Clarity   [████████░░] XX/100
+Organization         [████████░░] XX/100
+Referenceability     [████████░░] XX/100
+Exclusivity          [████████░░] XX/100
+Experience           [████████░░] XX/100
+Expertise            [████████░░] XX/100
+Authority            [████████░░] XX/100
+Trust                [████████░░] XX/100
 
 Top 5 Content Quality Improvements:
-1. [ID] [Item] -- [specific action]
+1. [Issue in plain language] -- [specific action]
 ...
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 DETAILED FINDINGS
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-[Section-by-section breakdown + full 80-item score table]
+[Section-by-section breakdown in plain language. Internal item IDs
+ (CORE-EEAT benchmark identifiers) are emitted only in the YAML handoff
+ artifact at `memory/audits/` with `class: auditor-output` frontmatter —
+ never in this user-facing view, per Runbook §5 translation layer.]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 NOTE: For technical SEO (speed, crawl, HTTPS), run: /seo:check-technical

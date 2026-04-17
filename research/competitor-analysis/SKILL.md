@@ -91,9 +91,7 @@ This skill provides comprehensive analysis of competitor SEO and GEO strategies,
 
 ## When This Must Trigger
 
-Use this when the conversation involves any of these situations — even if the user does not use SEO terminology:
-
-Use this whenever the task needs reusable market intelligence that should influence strategy, not just an ad hoc answer.
+Use this when the conversation involves reusable market intelligence that should influence strategy — even if the user doesn't use SEO terminology:
 
 - Entering a new market or niche
 - Planning content strategy based on competitor success
@@ -149,14 +147,27 @@ How is [competitor] getting cited in AI responses? What can I learn?
 
 - **Reads**: user goals, target market inputs, available tool data, and prior strategy from [CLAUDE.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CLAUDE.md) and the shared [State Model](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/state-model.md) when available.
 - **Writes**: a user-facing research deliverable plus a reusable summary that can be stored under `memory/research/`.
-- **Promotes**: durable keyword priorities, competitor facts, entity candidates, and strategic decisions to `CLAUDE.md`, `memory/decisions.md`, and `memory/research/`; hand canonical entity work to `entity-optimizer`.
+- **Promotes**: durable keyword priorities, competitor facts, entity candidates, and strategic decisions to `memory/hot-cache.md`, `memory/decisions.md`, and `memory/research/`; hand canonical entity work to `entity-optimizer`.
 - **Next handoff**: use the `Next Best Skill` below when the findings are ready to drive action.
+
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
 
 ## Data Sources
 
 > **Note:** All integrations are optional. This skill works without any API keys — users provide data manually when no tools are connected.
 
 > See [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md) for tool category placeholders.
+
+**Scraping legality**: Before crawling any domain that is not your own or not under written authorization, verify `robots.txt` disallows, respect `Crawl-delay`, and confirm target TOS permits automated access. See [SECURITY.md §Scraping Boundaries](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/SECURITY.md).
 
 **With ~~SEO tool + ~~analytics + ~~AI monitor connected:**
 Automatically pull competitor keyword rankings, backlink profiles, top performing content, domain authority metrics from ~~SEO tool. Compare against your site's metrics from ~~analytics and ~~search console. Check AI citation patterns for both your site and competitors using ~~AI monitor.
@@ -307,3 +318,6 @@ If any findings should influence ongoing strategy, recommend promoting key concl
 ## Next Best Skill
 
 - **Primary**: [content-gap-analysis](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/content-gap-analysis/SKILL.md) — turn competitor findings into a focused opportunity map.
+- **Also consider**:
+  - [serp-analysis](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/research/serp-analysis/SKILL.md) — if SERP features need dissecting before targeting specific queries.
+  - [backlink-analyzer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/backlink-analyzer/SKILL.md) — if link-gap analysis explains competitor dominance.

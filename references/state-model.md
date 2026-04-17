@@ -26,7 +26,7 @@ Plan C standardizes where reusable project state belongs. All state follows a th
 - Project isolation: `memory/wiki/<project>/index.md` partitioned by hot-cache `project` field; no `project` field = global index only
 - Auto-loaded: SessionStart loads the current project's `index.md` (skips silently if absent)
 - Auto-refreshed: PostToolUse silently updates `index.md` after any WARM file write (low risk — fully rebuildable)
-- Writer: only `memory-management` skill
+- **Sole writer**: `memory-management` owns all wiki writes semantically. For performance, two narrowly-scoped auto-refresh operations are delegated to PostToolUse and Stop hooks (updating `memory/wiki/index.md` and `memory/wiki/log.md`). These hooks act on behalf of `memory-management` and MUST use the schema documented in [memory-management SKILL.md §Wiki Layer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md). Any wiki-compiled page (entity/keyword/topic) still requires explicit `memory-management` invocation.
 - Rollback: delete `memory/wiki/` to return to pre-wiki behavior with zero side effects
 - Does not participate in promotion/demotion lifecycle
 - Index fields are split into **precise** (score, status, next_action, mtime — extracted directly) and **best-effort** (summary — LLM inferred)
@@ -105,7 +105,9 @@ HOT tier is limited to 80 lines AND 25KB (whichever triggers first). Truncation 
 
 ## Memory File Frontmatter
 
-Every file in `memory/` (except `hot-cache.md`) SHOULD include YAML frontmatter:
+Every file in `memory/` SHOULD include YAML frontmatter. Two shapes are valid:
+
+**WARM files** — subject matter state (audits, research, decisions, entities, etc.):
 
 ```yaml
 ---
@@ -115,9 +117,20 @@ type: project
 ---
 ```
 
-Valid `type` values: `project`, `reference`, `decision`, `entity`
+Valid `type` values: `project`, `reference`, `decision`, `entity`, `glossary`, `open-loops`, `entity-candidates`
 
 The `description` field enables future semantic search across memory files.
+
+**HOT file** (`memory/hot-cache.md`) — session scope declaration:
+
+```yaml
+---
+tier: hot
+project: acme-q2     # null for global scope; set to a project slug to scope wiki/memory reads
+---
+```
+
+When `project` is non-null, the SessionStart hook and `memory-management` preferentially load `memory/wiki/<project>/index.md` over the global wiki. Switching projects between sessions = swap this field. See §Project Isolation above.
 
 ## Durable State
 

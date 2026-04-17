@@ -209,6 +209,11 @@ For e-commerce product pages.
       }
     }
   },
+```
+
+> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **$51,744 per violation** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
+
+```json
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "[4.5]",
@@ -280,6 +285,11 @@ For local business pages with physical locations.
       "closes": "15:00"
     }
   ],
+```
+
+> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **$51,744 per violation** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
+
+```json
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "[4.5]",
@@ -532,6 +542,11 @@ For cooking recipes.
       "text": "[Step 2 instructions]"
     }
   ],
+```
+
+> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **$51,744 per violation** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
+
+```json
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "[4.5]",
@@ -558,6 +573,11 @@ For software, apps, and tools.
     "price": "[price or 0 for free]",
     "priceCurrency": "USD"
   },
+```
+
+> ⚠️ **Google Rich Results Policy + FTC 2024/10 Reviews Rule**: `ratingValue` and `reviewCount` MUST reflect actual user reviews. Fake, self-serving, or incentivized ratings violate Google policy and incur FTC penalties up to **$51,744 per violation** (16 CFR §465). Before using this template, confirm: (1) reviews from verified users, (2) `reviewCount` matches site-visible reviews, (3) no review withholding. Add a `provenance:` comment in the JSON-LD citing the source (e.g., `"comment": "G2 profile snapshot 2026-04-17"`).
+
+```json
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "[4.5]",

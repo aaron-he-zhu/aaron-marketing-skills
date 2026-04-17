@@ -1,26 +1,28 @@
 # Biblioteca de Skills SEO & GEO
 
-**20 skills. 9 comandos. Posicionate en buscadores. Se citado por IA.**
+**20 skills. 12 comandos. Posiciónate en buscadores. Sé citado por IA.**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-8.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE)
 
-[English](../README.md) | [中文](README.zh.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | **Espanol** | [Portugues](README.pt.md)
+[English](../README.md) | [中文](README.zh.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | **Español** | [Português](README.pt.md)
 
-Skills y comandos de Claude para Optimizacion de Motores de Busqueda (SEO) y Optimizacion de Motores Generativos (GEO). Sin dependencias. Instalacion nativa en [Claude Code](https://claude.ai/download), [OpenClaw](https://openclaw.com), [Gemini CLI](https://geminicli.com), [Qwen Code](https://qwenlm.github.io/qwen-code-docs/), [Amp](https://ampcode.com), [Kimi](https://moonshotai.github.io/kimi-cli/), [CodeBuddy](https://codebuddy.ai). [Mas de 35 agentes adicionales](https://github.com/vercel-labs/skills#supported-agents) via `npx skills`. Calidad de contenido evaluada por [CORE-EEAT Benchmark](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (80 items). Autoridad de dominio evaluada por [CITE Domain Rating](https://github.com/aaron-he-zhu/cite-domain-rating) (40 items).
+Skills y comandos de Claude para Optimización de Motores de Búsqueda (SEO) y Optimización de Motores Generativos (GEO). Sin dependencias. Instalación nativa en [Claude Code](https://claude.ai/download), [OpenClaw](https://openclaw.com), [Gemini CLI](https://geminicli.com), [Qwen Code](https://qwenlm.github.io/qwen-code-docs/), [Amp](https://ampcode.com), [Kimi](https://moonshotai.github.io/kimi-cli/), [CodeBuddy](https://codebuddy.ai). [Más de 35 agentes adicionales](https://github.com/vercel-labs/skills#supported-agents) vía `npx skills`. Calidad de contenido evaluada por [CORE-EEAT Benchmark](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (80 items). Autoridad de dominio evaluada por [CITE Domain Rating](https://github.com/aaron-he-zhu/cite-domain-rating) (40 items).
 
-> **SEO** te posiciona en los resultados de busqueda. **GEO** hace que los sistemas de IA (ChatGPT, Perplexity, Google AI Overviews) te citen. Esta biblioteca cubre ambos.
+> **SEO** te posiciona en los resultados de búsqueda. **GEO** hace que los sistemas de IA (ChatGPT, Perplexity, Google AI Overviews) te citen. Esta biblioteca cubre ambos.
 
-### Por que esta biblioteca
+¿No conoces la terminología? Consulta [GLOSSARY.md](../GLOSSARY.md).
 
-- **120 items de evaluacion** — CORE-EEAT (80 items) + CITE (40 items) con puertas de veto
-- **8 idiomas, 750+ triggers** — ES, EN, ZH, JA, KO, PT con variantes formales, coloquiales y errores tipograficos
+### Por qué esta biblioteca
+
+- **120 items de evaluación** — CORE-EEAT (80 items) + CITE (40 items) con puertas de veto
+- **8 idiomas, 750+ triggers** — ES, EN, ZH, JA, KO, PT con variantes formales, coloquiales y errores tipográficos
 - **Sin dependencias** — skills en Markdown puro, sin Python, sin entorno virtual, sin claves API
-- **Agnostico de herramientas** — funciona solo o con 14 servidores MCP (Ahrefs, Semrush, Cloudflare y mas)
-- **Instalacion nativa en 7 agentes** — Claude Code, OpenClaw, Gemini CLI, Qwen Code, Amp, Kimi, CodeBuddy — mas de 35 agentes adicionales via `npx skills`
+- **Agnóstico de herramientas** — funciona solo o con 14 servidores MCP (Ahrefs, Semrush, Cloudflare y más)
+- **Instalación nativa en 7 agentes** — Claude Code, OpenClaw, Gemini CLI, Qwen Code, Amp, Kimi, CodeBuddy — más de 35 agentes adicionales vía `npx skills`
 
-## Inicio rapido
+## Inicio rápido
 
 ```bash
 # Claude Code
@@ -52,7 +54,7 @@ npx skills add aaron-he-zhu/seo-geo-claude-skills
 npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
 ```
 
-Despues de instalar, usa directamente:
+Después de instalar, usa directamente:
 ```
 Investiga palabras clave para "marketing digital" e identifica oportunidades
 ```
@@ -64,64 +66,64 @@ O ejecuta un comando:
 
 ## Skills
 
-### Investigacion
+### Investigación
 
-| Skill | Funcion |
+| Skill | Función |
 |-------|---------|
-| `keyword-research` | Descubrimiento de keywords, analisis de intencion, dificultad, clustering |
-| `competitor-analysis` | Analisis de estrategias SEO/GEO de competidores |
-| `serp-analysis` | Analisis de resultados de busqueda y patrones de respuesta IA |
-| `content-gap-analysis` | Oportunidades de contenido que los competidores cubren pero tu no |
+| `keyword-research` | Descubrimiento de keywords, análisis de intención, dificultad, clustering |
+| `competitor-analysis` | Análisis de estrategias SEO/GEO de competidores |
+| `serp-analysis` | Análisis de resultados de búsqueda y patrones de respuesta IA |
+| `content-gap-analysis` | Oportunidades de contenido que los competidores cubren pero tú no |
 
-### Construccion
+### Construcción
 
-| Skill | Funcion |
+| Skill | Función |
 |-------|---------|
-| `seo-content-writer` | Redaccion de contenido optimizado para busqueda |
-| `geo-content-optimizer` | Optimizacion para ser citado por sistemas de IA |
-| `meta-tags-optimizer` | Optimizacion de titulos, descripciones y etiquetas OG |
-| `schema-markup-generator` | Generacion de datos estructurados JSON-LD |
+| `seo-content-writer` | Redacción de contenido optimizado para búsqueda |
+| `geo-content-optimizer` | Optimización para ser citado por sistemas de IA |
+| `meta-tags-optimizer` | Optimización de títulos, descripciones y etiquetas OG |
+| `schema-markup-generator` | Generación de datos estructurados JSON-LD |
 
-### Optimizacion
+### Optimización
 
-| Skill | Funcion |
+| Skill | Función |
 |-------|---------|
-| `on-page-seo-auditor` | Auditoria SEO on-page con informe puntuado |
-| `technical-seo-checker` | Rastreabilidad, indexacion, Core Web Vitals |
-| `internal-linking-optimizer` | Optimizacion de estructura de enlaces internos |
-| `content-refresher` | Actualizacion de contenido obsoleto para recuperar rankings |
+| `on-page-seo-auditor` | Auditoría SEO on-page con informe puntuado |
+| `technical-seo-checker` | Rastreabilidad, indexación, Core Web Vitals |
+| `internal-linking-optimizer` | Optimización de estructura de enlaces internos |
+| `content-refresher` | Actualización de contenido obsoleto para recuperar rankings |
 
 ### Monitoreo
 
-| Skill | Funcion |
+| Skill | Función |
 |-------|---------|
-| `rank-tracker` | Seguimiento de posiciones de keywords en busqueda y IA |
-| `backlink-analyzer` | Analisis de perfil de backlinks y deteccion de enlaces toxicos |
-| `performance-reporter` | Generacion de informes de rendimiento SEO/GEO |
-| `alert-manager` | Alertas de caida de rankings, cambios de trafico, problemas tecnicos |
+| `rank-tracker` | Seguimiento de posiciones de keywords en búsqueda y IA |
+| `backlink-analyzer` | Análisis de perfil de backlinks y detección de enlaces tóxicos |
+| `performance-reporter` | Generación de informes de rendimiento SEO/GEO |
+| `alert-manager` | Alertas de caída de rankings, cambios de tráfico, problemas técnicos |
 
 ### Capa de protocolo
 
-| Skill | Funcion |
+| Skill | Función |
 |-------|---------|
-| `content-quality-auditor` | Auditoria CORE-EEAT de 80 items |
-| `domain-authority-auditor` | Auditoria CITE de 40 items |
-| `entity-optimizer` | Optimizacion de grafo de conocimiento de marca/entidad |
+| `content-quality-auditor` | Auditoría CORE-EEAT de 80 items |
+| `domain-authority-auditor` | Auditoría CITE de 40 items |
+| `entity-optimizer` | Optimización de grafo de conocimiento de marca/entidad |
 | `memory-management` | Persistencia de contexto entre sesiones |
 
 ## Comandos
 
-| Comando | Descripcion |
+| Comando | Descripción |
 |---------|-------------|
-| `/seo:audit-page <URL>` | Auditoria SEO + CORE-EEAT de pagina |
-| `/seo:check-technical <URL>` | Chequeo de salud tecnica SEO |
-| `/seo:generate-schema <type>` | Generacion de datos estructurados JSON-LD |
-| `/seo:optimize-meta <URL>` | Optimizacion de titulo, descripcion y OG |
+| `/seo:audit-page <URL>` | Auditoría SEO + CORE-EEAT de página |
+| `/seo:check-technical <URL>` | Chequeo de salud técnica SEO |
+| `/seo:generate-schema <type>` | Generación de datos estructurados JSON-LD |
+| `/seo:optimize-meta <URL>` | Optimización de título, descripción y OG |
 | `/seo:report <domain> <period>` | Informe integral de rendimiento SEO/GEO |
-| `/seo:audit-domain <domain>` | Auditoria de autoridad de dominio CITE |
-| `/seo:write-content <topic>` | Redaccion de contenido optimizado SEO + GEO |
-| `/seo:keyword-research <seed>` | Investigacion y analisis de keywords |
-| `/seo:setup-alert <metric>` | Configuracion de alertas de monitoreo |
+| `/seo:audit-domain <domain>` | Auditoría de autoridad de dominio CITE |
+| `/seo:write-content <topic>` | Redacción de contenido optimizado SEO + GEO |
+| `/seo:keyword-research <seed>` | Investigación y análisis de keywords |
+| `/seo:setup-alert <metric>` | Configuración de alertas de monitoreo |
 
 ## Contribuir
 
@@ -131,4 +133,4 @@ Las contribuciones son bienvenidas. Consulta [CONTRIBUTING.md](https://github.co
 
 Apache License 2.0
 
-*Ultima sincronizacion con README en ingles: v7.0.0*
+*Última sincronización con README en inglés: v7.0.0*

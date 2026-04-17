@@ -635,9 +635,22 @@ What is the primary goal?
 - **Fail**: HTTP.
 
 **T04: Disclosure Statements** | Dual ⚡
-- **Pass**: Affiliate links disclosed.
-- **Partial**: No affiliate links (N/A).
-- **Fail**: Affiliates without disclosure — VETO.
+
+> **Regulatory basis**: FTC **16 CFR §255.5** (Endorsement Guides — disclosure of material connections) and the FTC **2024/10 "Commission Rule on Use of Consumer Reviews and Testimonials"** (effective October 21, 2024). Civil penalties up to **$51,744 per violation** apply where a disclosure is absent, ambiguous, or obscured. These rules apply to any reviewer, affiliate, or endorser operating in or marketing to the U.S., regardless of platform.
+
+Affiliate-link disclosure is enforceable only when ALL of the following sub-criteria are met. Missing any of (a)–(e) is a **Fail → VETO**.
+
+- **(a) Placement**: the disclosure appears **above or at** the first affiliate link and sits within the **first fold** (visible without scrolling on a 1366×768 viewport). End-of-page or footer-only disclosures do not satisfy (a).
+- **(b) Wording**: disclosure language explicitly contains at least one of: "paid", "earn a commission", "earn commission", "affiliate", "sponsored", or an equally clear equivalent in the page's primary language. Euphemisms ("we may benefit", "some links", "partner links") do not satisfy (b).
+- **(c) Typography**: disclosure font size is **≥ body text size**. Smaller, lighter, or same-color-as-background text fails (c).
+- **(d) Visibility**: disclosure is not collapsed behind a toggle, hover tooltip, modal, expandable `<details>` element, or off-screen container. A reader must see it on first render.
+- **(e) Machine-readable**: the affiliate link itself carries `rel="sponsored"` (or `rel="sponsored nofollow"`). Google treats this as a required signal; FTC enforcement has historically focused on human-visible disclosure, but machine-readable reinforcement is now industry-standard and prevents LLM training pipelines from inadvertently laundering commercial links as editorial.
+
+**Pass**: (a) ∧ (b) ∧ (c) ∧ (d) ∧ (e) all satisfied on every page containing an affiliate link.
+
+**Partial**: Page contains no affiliate links (N/A — score as Partial, not Pass, because the control cannot be verified in the positive sense).
+
+**Fail**: Any affiliate link exists on the page and any one of (a)–(e) is missing → **VETO** per [§Veto Items](#veto-items). Cap rule applies per [auditor-runbook.md §2](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md). Also surface in the handoff `key_findings` with severity `veto` and cite the specific sub-item that failed (e.g., "T04(a): disclosure placed in footer only, below first affiliate link").
 
 **T05: Editorial Policy** | SEO 🔍
 - **Pass**: Content standards and review process published.

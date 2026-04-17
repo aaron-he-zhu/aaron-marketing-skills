@@ -1,16 +1,18 @@
 # SEO & GEO 스킬 라이브러리
 
-**20개 스킬. 9개 명령. 검색 순위 + AI 인용을 한번에.**
+**20개 스킬. 12개 명령. 검색 순위 + AI 인용을 한번에.**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-8.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE)
 
-[English](../README.md) | [中文](README.zh.md) | [日本語](README.ja.md) | **한국어** | [Espanol](README.es.md) | [Portugues](README.pt.md)
+[English](../README.md) | [中文](README.zh.md) | [日本語](README.ja.md) | **한국어** | [Español](README.es.md) | [Português](README.pt.md)
 
 검색 엔진 최적화(SEO)와 생성형 엔진 최적화(GEO)를 위한 Claude 스킬 및 명령 세트. 의존성 제로. [Claude Code](https://claude.ai/download), [OpenClaw](https://openclaw.com), [Gemini CLI](https://geminicli.com), [Qwen Code](https://qwenlm.github.io/qwen-code-docs/), [Amp](https://ampcode.com), [Kimi](https://moonshotai.github.io/kimi-cli/), [CodeBuddy](https://codebuddy.ai) 네이티브 지원. [35개 이상의 에이전트](https://github.com/vercel-labs/skills#supported-agents)는 `npx skills`로. 콘텐츠 품질은 [CORE-EEAT 벤치마크](https://github.com/aaron-he-zhu/core-eeat-content-benchmark)(80개 항목), 도메인 권위는 [CITE 도메인 등급](https://github.com/aaron-he-zhu/cite-domain-rating)(40개 항목)으로 평가.
 
 > **SEO**는 검색 결과에서 순위를 올립니다. **GEO**는 AI 시스템(ChatGPT, Perplexity, Google AI Overviews)에서 인용됩니다. 이 라이브러리는 둘 다 다룹니다.
+
+용어가 생소하신가요? [GLOSSARY.md](../GLOSSARY.md)를 참조하세요.
 
 ### 왜 이 스킬 라이브러리인가
 

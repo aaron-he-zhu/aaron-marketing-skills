@@ -249,10 +249,23 @@ H2: More Information
 
 ### Scoring Criteria
 
+#### Image alt text (WCAG 1.1.1 primary, SEO secondary)
+
+**Primary requirement (WCAG 1.1.1)**: every non-decorative image has alt text that is a **functional description** of the image content. A screen-reader user must get equivalent information.
+
+**Secondary (SEO)**: if the image relates to the page's primary keyword and the keyword appears naturally in a functional description, good. Never stuff.
+
+**Scoring**:
+- PASS: descriptive alt present on all content images; natural keyword inclusion where relevant
+- PARTIAL: descriptive alt present but some images missing alt; OR all alt present but some are keyword-stuffed
+- FAIL: missing alt on content images, OR alt text is just "image of X" / keyword list / decorative filler
+
+Never (regardless of SEO benefit): keyword stuffing, generic "image", missing alt on informational images.
+
+Reference: [WCAG 2.2 Success Criterion 1.1.1](https://www.w3.org/WAI/WCAG22/Understanding/non-text-content).
+
 | Criterion | Points | Requirement |
 |-----------|--------|-------------|
-| All images have alt text | 3 | Every image has descriptive alt attribute |
-| Alt text includes keywords | 2 | At least 1 image alt naturally includes primary keyword |
 | Descriptive file names | 1 | Files named descriptively (keyword-research-tool.webp, not IMG_4532.jpg) |
 | Optimized file sizes | 2 | Images compressed appropriately (<200KB for photos, <50KB for graphics) |
 | Modern formats | 1 | Uses WebP or AVIF where supported |
@@ -493,4 +506,18 @@ Where section weights are: Title 0.15, Meta 0.05, Headers 0.10, Content 0.25, Ke
 | FID/INP | ≤100ms/200ms | 100-300ms | >300ms |
 | CLS | ≤0.1 | 0.1-0.25 | >0.25 |
 | TTFB | ≤800ms | 800-1800ms | >1800ms |
+
+## Accessibility requirements (WCAG 2.2 AA) — 2026 ADA scope
+
+Per ADA Title III enforcement patterns (UsableNet 2024: 4,605 web accessibility lawsuits), the following WCAG 2.2 AA criteria are in-scope for on-page SEO audits:
+
+| Criterion | Check |
+|---|---|
+| 1.1.1 Non-text content | All images have functional alt text |
+| 1.3.1 Info and relationships | Headings nested logically (no skipped H1→H3), no empty headings |
+| 1.4.3 Contrast (minimum) | Normal text ≥ 4.5:1 contrast with background; large text ≥ 3:1 |
+| 2.4.7 Focus visible | Keyboard focus indicator visible on all interactive elements |
+| 4.1.2 Name, role, value | ARIA labels on custom controls; form fields have accessible names |
+
+Failing these items is both an SEO signal (Google uses a11y signals in rankings) AND a legal risk. Flag as HIGH priority.
 

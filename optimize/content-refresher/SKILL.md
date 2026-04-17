@@ -91,9 +91,7 @@ This skill helps identify and revitalize outdated content to reclaim lost rankin
 
 ## When This Must Trigger
 
-Use this when the conversation involves any of these situations — even if the user does not use SEO terminology:
-
-Use this whenever the task needs a diagnosis or repair plan that should feed directly into remediation work, not just a one-time opinion.
+Use this when the conversation involves a diagnosis or repair plan that should feed directly into remediation work — even if the user doesn't use SEO terminology:
 
 - Content has lost rankings or traffic over time
 - Statistics and information are outdated
@@ -152,6 +150,17 @@ Create a content refresh strategy for [domain/topic]
 - **Promotes**: blocking defects, repeated weaknesses, and fix priorities to `memory/open-loops.md` and `memory/decisions.md`.
 - **Next handoff**: use the `Next Best Skill` below when the repair path is clear.
 
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
+
 ## Data Sources
 
 > See [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md) for tool category placeholders.
@@ -204,119 +213,17 @@ When a user requests content refresh help:
    _For full 80-item audit, use [content-quality-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/content-quality-auditor/SKILL.md)_
    ```
 
-2. **Identify Content Refresh Candidates**
+2. **Identify Content Refresh Candidates** — Build candidate list with criteria (age, dated info, declining traffic, lost rankings, broken links, missing topics), content audit results table, and prioritization matrix
 
-   ```markdown
-   ## Content Refresh Analysis
-   
-   ### Refresh Candidate Identification
-   
-   **Criteria for Content Refresh**:
-   - Published more than 6 months ago
-   - Contains dated information (years, statistics)
-   - Declining traffic trend
-   - Lost keyword rankings
-   - Outdated references or broken links
-   - Missing topics competitors now cover
-   - No GEO optimization
-   
-   ### Content Audit Results
-   
-   | Content | Published | Last Updated | Traffic Trend | Priority |
-   |---------|-----------|--------------|---------------|----------|
-   | [Title 1] | [date] | [date] | ↓ -45% | 🔴 High |
-   | [Title 2] | [date] | Never | ↓ -30% | 🔴 High |
-   | [Title 3] | [date] | [date] | ↓ -20% | 🟡 Medium |
-   | [Title 4] | [date] | [date] | → 0% | 🟡 Medium |
-   
-   ### Refresh Prioritization Matrix
-   
-   ```
-   High Traffic + High Decline = 🔴 Refresh Immediately
-   High Traffic + Low Decline = 🟡 Schedule Refresh
-   Low Traffic + High Decline = 🟡 Evaluate & Decide
-   Low Traffic + Low Decline = 🟢 Low Priority
-   ```
-   ```
+   > **Reference**: See [references/refresh-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-templates.md) for the refresh candidate identification template (Step 2).
 
-3. **Analyze Individual Content for Refresh**
+3. **Analyze Individual Content for Refresh** — Per-URL deep analysis: performance metrics 6-mo-ago vs current, keyword position deltas, why-refresh rationale
 
-   ```markdown
-   ## Content Refresh Analysis: [Title]
-   
-   **URL**: [URL]
-   **Published**: [date]
-   **Last Updated**: [date]
-   **Word Count**: [X]
-   
-   ### Performance Metrics
-   
-   | Metric | 6 Mo Ago | Current | Change |
-   |--------|----------|---------|--------|
-   | Organic Traffic | [X]/mo | [X]/mo | [+/-X]% |
-   | Avg Position | [X] | [X] | [+/-X] |
-   | Impressions | [X] | [X] | [+/-X]% |
-   | CTR | [X]% | [X]% | [+/-X]% |
-   
-   ### Keywords Analysis
-   
-   | Keyword | Old Position | Current Position | Change |
-   |---------|--------------|------------------|--------|
-   | [kw 1] | [X] | [X] | ↓ [X] |
-   | [kw 2] | [X] | [X] | ↓ [X] |
-   | [kw 3] | [X] | [X] | ↓ [X] |
-   
-   ### Why This Content Needs Refresh
-   
-   1. **Outdated information**: [specific examples]
-   2. **Competitive gap**: [what competitors added]
-   3. **Missing topics**: [new subtopics to cover]
-   4. **SEO issues**: [current optimization problems]
-   5. **GEO potential**: [AI citation opportunities]
-   ```
+   > **Reference**: See [references/refresh-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-templates.md) for the individual content analysis template (Step 3).
 
-4. **Identify Specific Updates Needed**
+4. **Identify Specific Updates Needed** — Outdated elements table, missing information (topics competitors cover), SEO and GEO update checklists
 
-   ```markdown
-   ## Refresh Requirements
-   
-   ### Outdated Elements
-   
-   | Element | Current | Update Needed |
-   |---------|---------|---------------|
-   | Year references | "[old year]" | Update to [current year] |
-   | Statistics | "[old stat]" | Find current data |
-   | Tool mentions | "[old tool]" | Add newer tools |
-   | Links | [X] broken | Fix or replace |
-   | Screenshots | Outdated UI | Recapture |
-   
-   ### Missing Information
-   
-   **Topics competitors now cover that you don't**:
-   
-   | Topic | Competitor Coverage | Words Needed | Priority |
-   |-------|---------------------|--------------|----------|
-   | [Topic 1] | 3/5 competitors | ~300 words | High |
-   | [Topic 2] | 2/5 competitors | ~200 words | Medium |
-   | [Topic 3] | 4/5 competitors | ~400 words | High |
-   
-   ### SEO Updates Needed
-   
-   - [ ] Update title tag with current year
-   - [ ] Refresh meta description
-   - [ ] Add new H2 sections for [topics]
-   - [ ] Update internal links to newer content
-   - [ ] Add FAQ section for featured snippets
-   - [ ] Refresh images and add new alt text
-   
-   ### GEO Updates Needed
-   
-   - [ ] Add clear definition at start
-   - [ ] Include quotable statistics with sources
-   - [ ] Add Q&A formatted sections
-   - [ ] Update sources with current citations
-   - [ ] Create standalone factual statements
-   ```
+   > **Reference**: See [references/refresh-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-templates.md) for the refresh requirements template (Step 4).
 
 5. **Create Refresh Plan** — Structural changes, content additions, statistics/links/images to update
 
@@ -347,6 +254,7 @@ When a user requests content refresh help:
 - [ ] If comparing to competitors, competitor URLs provided
 
 ### Output Validation
+- [ ] **Banned-vocab self-check** — scan the refreshed content (both new additions and proposed replacements) for banned words/phrases per [skill-contract.md §Output Voice](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md). A refresh that leaves filler intact misses the point.
 - [ ] Every recommendation cites specific data points (not generic advice)
 - [ ] Outdated elements identified with specific examples and replacement data
 - [ ] All suggested additions include word counts and section locations
@@ -354,7 +262,11 @@ When a user requests content refresh help:
 
 ## Example
 
-> **Reference**: See [references/refresh-example.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-example.md) for a full worked example (cloud hosting refresh) and the comprehensive content refresh checklist.
+**User**: "Refresh my blog post about 'best cloud hosting providers'"
+
+**Output** (abbreviated): CORE-EEAT quick score flags Referenceability 35, Experience 30, Trust 60 — recommends pricing refresh for Q1 2023 data, broken-link fixes (3 affiliate links dead), author credential additions, and affiliate disclosure. Delivers a Changes Made block ready for republish.
+
+> **Reference**: See [references/refresh-example.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-example.md) for the full worked example (cloud hosting refresh) and the comprehensive content refresh checklist.
 
 ## Tips for Success
 
@@ -388,7 +300,7 @@ If any veto-level issue was found (CORE-EEAT T04, C01, R10 or CITE T03, T05, T09
 ## Reference Materials
 
 - [Content Decay Signals](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/content-decay-signals.md) — Decay indicators, lifecycle stages, and refresh triggers by content type
-- [Refresh Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-templates.md) — Detailed output templates for steps 5-9 (refresh plan, content writing, GEO enhancement, republishing, report)
+- [Refresh Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-templates.md) — Detailed output templates for steps 2-9 (candidate identification, individual analysis, refresh requirements, refresh plan, content writing, GEO enhancement, republishing, report)
 - [Refresh Example & Checklist](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/references/refresh-example.md) — Full worked example and pre/post-refresh checklist
 
 ## Next Best Skill

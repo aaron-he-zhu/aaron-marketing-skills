@@ -49,7 +49,7 @@ A comprehensive **CITE 40-item domain authority** audit with veto checks and act
    | T | 25% | 20% | 25% | **35%** | 25% | 25% | 20% |
    | E | 20% | 25% | 20% | 25% | **30%** | 20% | 15% |
 
-2. **Run Full CITE Audit** -- Invoke `domain-authority-auditor`. Veto check first (T03, T05, T09 -- any failure caps score at 39), then score all 40 items, calculate weighted CITE Score, and generate Top 5 improvements.
+2. **Run Full CITE Audit** -- Invoke `domain-authority-auditor`. Veto check first (any veto item failure caps score at 60 per [auditor-runbook.md §2](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/auditor-runbook.md)), then score all 40 items, calculate weighted CITE Score, and generate Top 5 improvements.
 3. **Compile Output** -- Format results below. Include comparative scoring if competitor domains were provided.
 
 ## Output Format
@@ -67,24 +67,29 @@ VETO STATUS: Pass / MANIPULATION ALERT
 DIMENSION SCORES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-C -- Citation     [████████░░] XX/100  (weight: X%)
-I -- Identity     [████████░░] XX/100  (weight: X%)
-T -- Trust        [████████░░] XX/100  (weight: X%)
-E -- Eminence     [████████░░] XX/100  (weight: X%)
+Citation      [████████░░] XX/100  (weight: X%)
+Identity      [████████░░] XX/100  (weight: X%)
+Trust         [████████░░] XX/100  (weight: X%)
+Eminence      [████████░░] XX/100  (weight: X%)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-VETO CHECK
+VETO CHECK (trust-critical items)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-T03 / T05 / T09: Pass/Fail per item
+Site Security, Legal Policies, Review Authenticity: Pass/Fail per item
+(Internal item IDs are emitted only in the YAML handoff at `memory/audits/` with `class: auditor-output`; never inline here, per Runbook §5.)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PRIORITY ACTION LIST
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Top 5 Improvements (by weighted impact):
-1. [ID] [Item] -- [action] (potential: +X weighted pts)
+1. [Issue in plain language] -- [action] (potential: +X weighted pts)
 ...
+
+[Internal item IDs are available in the handoff summary for team
+ ticket workflows; suppressed from this user-facing view by default.
+ Internal IDs go only to `memory/audits/` YAML handoff per Runbook §5.]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ACTION PLAN

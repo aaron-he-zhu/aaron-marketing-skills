@@ -1,6 +1,118 @@
 # On-Page SEO Auditor — Output Templates
 
-Detailed output templates for on-page-seo-auditor steps 5-11. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/on-page-seo-auditor/SKILL.md).
+Detailed output templates for on-page-seo-auditor steps 1-11. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/on-page-seo-auditor/SKILL.md).
+
+---
+
+## Step 1: Gather Page Information
+
+```markdown
+### Audit Setup
+
+**Page URL**: [URL]
+**Target Keyword**: [primary keyword]
+**Secondary Keywords**: [additional keywords]
+**Page Type**: [blog/product/landing/service]
+**Business Goal**: [traffic/conversions/authority]
+```
+
+---
+
+## Step 2: Audit Title Tag
+
+```markdown
+## Title Tag Analysis
+
+**Current Title**: [title]
+**Character Count**: [X] characters
+
+| Criterion | Status | Notes |
+|-----------|--------|-------|
+| Length (50-60 chars) | Pass/Warn/Fail | [notes] |
+| Keyword included | Pass/Warn/Fail | Position: [front/middle/end] |
+| Keyword at front | Pass/Warn/Fail | [notes] |
+| Unique across site | Pass/Warn/Fail | [notes] |
+| Compelling/clickable | Pass/Warn/Fail | [notes] |
+| Matches intent | Pass/Warn/Fail | [notes] |
+
+**Title Score**: [X]/10
+
+**Issues Found**:
+- [Issue 1]
+- [Issue 2]
+
+**Recommended Title**:
+"[Optimized title suggestion]"
+
+**Why**: [Explanation of improvements]
+```
+
+---
+
+## Step 3: Audit Meta Description
+
+```markdown
+## Meta Description Analysis
+
+**Current Description**: [description]
+**Character Count**: [X] characters
+
+| Criterion | Status | Notes |
+|-----------|--------|-------|
+| Length (150-160 chars) | Pass/Warn/Fail | [notes] |
+| Keyword included | Pass/Warn/Fail | [notes] |
+| Call-to-action present | Pass/Warn/Fail | [notes] |
+| Unique across site | Pass/Warn/Fail | [notes] |
+| Accurately describes page | Pass/Warn/Fail | [notes] |
+| Compelling copy | Pass/Warn/Fail | [notes] |
+
+**Description Score**: [X]/10
+
+**Issues Found**:
+- [Issue 1]
+
+**Recommended Description**:
+"[Optimized description suggestion]" ([X] chars)
+```
+
+---
+
+## Step 4: Audit Header Structure
+
+```markdown
+## Header Structure Analysis
+
+### Current Header Hierarchy
+
+```
+H1: [H1 text]
+  H2: [H2 text]
+    H3: [H3 text]
+    H3: [H3 text]
+  H2: [H2 text]
+    H3: [H3 text]
+  H2: [H2 text]
+```
+
+| Criterion | Status | Notes |
+|-----------|--------|-------|
+| Single H1 | Pass/Warn/Fail | Found: [X] H1s |
+| H1 includes keyword | Pass/Warn/Fail | [notes] |
+| Logical hierarchy | Pass/Warn/Fail | [notes] |
+| H2s include keywords | Pass/Warn/Fail | [X]/[Y] contain keywords |
+| No skipped levels | Pass/Warn/Fail | [notes] |
+| Descriptive headers | Pass/Warn/Fail | [notes] |
+
+**Header Score**: [X]/10
+
+**Issues Found**:
+- [Issue 1]
+- [Issue 2]
+
+**Recommended Changes**:
+- H1: [suggestion]
+- H2s: [suggestions]
+```
 
 ---
 

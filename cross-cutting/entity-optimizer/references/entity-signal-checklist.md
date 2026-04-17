@@ -135,3 +135,91 @@ Work through signals by priority tier. For each signal, mark status as ✅ (pres
 | Priority 1-2 mostly ✅ | Priority 3 AI-specific signals | 2-3 months |
 | Priority 1-3 mostly ✅ | Selective Priority 4 for completeness | Ongoing |
 | All tiers mostly ✅ | Maintenance + quarterly re-audit | Quarterly review |
+
+---
+
+## Step 3: Report & Action Plan Template
+
+```markdown
+## Entity Optimization Report
+
+### Overview
+
+- **Entity**: [name]
+- **Entity Type**: [type]
+- **Audit Date**: [date]
+
+### Signal Category Summary
+
+| Category | Status | Key Findings |
+|----------|--------|-------------|
+| Structured Data | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
+| Knowledge Base | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
+| Consistency (NAP+E) | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
+| Content-Based | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
+| Third-Party | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
+| AI-Specific | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
+
+### Critical Issues
+
+[List any issues that severely impact entity recognition — disambiguation problems, incorrect Knowledge Panel, missing from Knowledge Graph entirely]
+
+### Top 5 Priority Actions
+
+Sorted by: impact on entity recognition × effort required
+
+1. **[Signal]** — [specific action]
+   - Impact: [High/Medium] | Effort: [Low/Medium/High]
+   - Why: [explanation of how this improves entity recognition]
+
+2. **[Signal]** — [specific action]
+   - Impact: [High/Medium] | Effort: [Low/Medium/High]
+   - Why: [explanation]
+
+3–5. [Same format]
+
+### Entity Building Roadmap
+
+#### Week 1-2: Foundation (Structured Data + Consistency)
+- [ ] Implement/fix Organization or Person schema with full properties
+- [ ] Add sameAs links to all authoritative profiles
+- [ ] Audit and fix NAP+E consistency across all platforms
+- [ ] Ensure About page is entity-rich and well-structured
+
+#### Month 1: Knowledge Bases
+- [ ] Create or update Wikidata entry with complete properties
+- [ ] Ensure CrunchBase / industry directory profiles are complete
+- [ ] Build Wikipedia notability (or plan path to notability)
+- [ ] Submit to relevant authoritative directories
+
+#### Month 2-3: Authority Building
+- [ ] Secure mentions on authoritative industry sites
+- [ ] Build co-citation signals with established entities
+- [ ] Create topical content clusters that reinforce entity-topic associations
+- [ ] Pursue PR opportunities that generate entity mentions
+
+#### Ongoing: AI-Specific Optimization
+- [ ] Test AI entity resolution quarterly
+- [ ] Update factual claims to remain current and verifiable
+- [ ] Monitor AI systems for incorrect entity information
+- [ ] Ensure new content reinforces entity identity signals
+
+### Cross-Reference
+
+- **CORE-EEAT relevance**: Items A07 (Knowledge Graph Presence) and A08 (Entity Consistency) directly overlap — entity optimization strengthens Authority dimension
+- **CITE relevance**: CITE I01-I10 (Identity dimension) measures entity signals at domain level — entity optimization feeds these scores
+- For content-level audit: `content-quality-auditor`
+- For domain-level audit: `domain-authority-auditor`
+```
+
+---
+
+## Tips for Success
+
+1. **Start with Wikidata** — It's the single most influential editable knowledge base; a complete Wikidata entry with references often triggers Knowledge Panel creation within weeks
+2. **sameAs is your most powerful Schema.org property** — It directly tells search engines "I am this entity in the Knowledge Graph"; always include Wikidata URL first
+3. **Test AI recognition before and after** — Query ChatGPT, Claude, Perplexity, and Google AI Overview before optimizing, then again after; this is the most direct GEO metric
+4. **Entity signals compound** — Unlike content SEO, entity signals from different sources reinforce each other; 5 weak signals together are stronger than 1 strong signal alone
+5. **Consistency beats completeness** — A consistent entity name and description across 10 platforms beats a perfect profile on just 2
+6. **Don't neglect disambiguation** — If your entity name is shared with anything else, disambiguation is the first priority; all other signals are wasted if they're attributed to the wrong entity
+7. **Pair with CITE I-dimension for domain context** — Entity audit tells you how well the entity is recognized; CITE Identity (I01-I10) tells you how well the domain represents that entity; use both together

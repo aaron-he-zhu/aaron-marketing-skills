@@ -1,6 +1,126 @@
 # Content Refresh Templates
 
-Detailed output templates for content-refresher steps 5-9. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/SKILL.md).
+Detailed output templates for content-refresher steps 2-9. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/content-refresher/SKILL.md).
+
+---
+
+## Step 2: Identify Content Refresh Candidates
+
+```markdown
+## Content Refresh Analysis
+
+### Refresh Candidate Identification
+
+**Criteria for Content Refresh**:
+- Published more than 6 months ago
+- Contains dated information (years, statistics)
+- Declining traffic trend
+- Lost keyword rankings
+- Outdated references or broken links
+- Missing topics competitors now cover
+- No GEO optimization
+
+### Content Audit Results
+
+| Content | Published | Last Updated | Traffic Trend | Priority |
+|---------|-----------|--------------|---------------|----------|
+| [Title 1] | [date] | [date] | ↓ -45% | 🔴 High |
+| [Title 2] | [date] | Never | ↓ -30% | 🔴 High |
+| [Title 3] | [date] | [date] | ↓ -20% | 🟡 Medium |
+| [Title 4] | [date] | [date] | → 0% | 🟡 Medium |
+
+### Refresh Prioritization Matrix
+
+```
+High Traffic + High Decline = 🔴 Refresh Immediately
+High Traffic + Low Decline = 🟡 Schedule Refresh
+Low Traffic + High Decline = 🟡 Evaluate & Decide
+Low Traffic + Low Decline = 🟢 Low Priority
+```
+```
+
+---
+
+## Step 3: Analyze Individual Content for Refresh
+
+```markdown
+## Content Refresh Analysis: [Title]
+
+**URL**: [URL]
+**Published**: [date]
+**Last Updated**: [date]
+**Word Count**: [X]
+
+### Performance Metrics
+
+| Metric | 6 Mo Ago | Current | Change |
+|--------|----------|---------|--------|
+| Organic Traffic | [X]/mo | [X]/mo | [+/-X]% |
+| Avg Position | [X] | [X] | [+/-X] |
+| Impressions | [X] | [X] | [+/-X]% |
+| CTR | [X]% | [X]% | [+/-X]% |
+
+### Keywords Analysis
+
+| Keyword | Old Position | Current Position | Change |
+|---------|--------------|------------------|--------|
+| [kw 1] | [X] | [X] | ↓ [X] |
+| [kw 2] | [X] | [X] | ↓ [X] |
+| [kw 3] | [X] | [X] | ↓ [X] |
+
+### Why This Content Needs Refresh
+
+1. **Outdated information**: [specific examples]
+2. **Competitive gap**: [what competitors added]
+3. **Missing topics**: [new subtopics to cover]
+4. **SEO issues**: [current optimization problems]
+5. **GEO potential**: [AI citation opportunities]
+```
+
+---
+
+## Step 4: Identify Specific Updates Needed
+
+```markdown
+## Refresh Requirements
+
+### Outdated Elements
+
+| Element | Current | Update Needed |
+|---------|---------|---------------|
+| Year references | "[old year]" | Update to [current year] |
+| Statistics | "[old stat]" | Find current data |
+| Tool mentions | "[old tool]" | Add newer tools |
+| Links | [X] broken | Fix or replace |
+| Screenshots | Outdated UI | Recapture |
+
+### Missing Information
+
+**Topics competitors now cover that you don't**:
+
+| Topic | Competitor Coverage | Words Needed | Priority |
+|-------|---------------------|--------------|----------|
+| [Topic 1] | 3/5 competitors | ~300 words | High |
+| [Topic 2] | 2/5 competitors | ~200 words | Medium |
+| [Topic 3] | 4/5 competitors | ~400 words | High |
+
+### SEO Updates Needed
+
+- [ ] Update title tag with current year
+- [ ] Refresh meta description
+- [ ] Add new H2 sections for [topics]
+- [ ] Update internal links to newer content
+- [ ] Add FAQ section for featured snippets
+- [ ] Refresh images and add new alt text
+
+### GEO Updates Needed
+
+- [ ] Add clear definition at start
+- [ ] Include quotable statistics with sources
+- [ ] Add Q&A formatted sections
+- [ ] Update sources with current citations
+- [ ] Create standalone factual statements
+```
 
 ---
 

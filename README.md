@@ -14,6 +14,30 @@ Claude Skills and Commands for Search Engine Optimization (SEO) and Generative E
 
 > **SEO** gets you ranked in search results. **GEO** gets you cited by AI systems (ChatGPT, Perplexity, Google AI Overviews). This library covers both.
 
+New to the terminology? See [GLOSSARY.md](GLOSSARY.md).
+
+## Quick Start in 60 seconds
+
+1. **Install** — pick one of 7 native one-liners or the universal fallback:
+   - **Claude Code**: `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills`
+   - **OpenClaw**: [clawhub.ai/plugins/aaron-seo-geo](https://clawhub.ai/plugins/aaron-seo-geo)
+   - **Universal**: `npx skills add aaron-he-zhu/seo-geo-claude-skills`
+
+   See [Installation](#installation) for Gemini CLI, Qwen, Amp, Kimi, CodeBuddy, and 35+ more.
+
+2. **Try it immediately**:
+   ```
+   Research keywords for my SaaS product targeting small teams
+   ```
+   A skill will auto-activate — no command needed.
+
+3. **Or use a direct command**:
+   ```
+   /seo:audit-page https://example.com/blog/my-article
+   ```
+
+For terminology, see [GLOSSARY.md](GLOSSARY.md).
+
 ### Why This Library
 
 - **120-item quality frameworks** — CORE-EEAT (80 items) + CITE (40 items) with veto gates, not narrative guesswork
@@ -22,7 +46,7 @@ Claude Skills and Commands for Search Engine Optimization (SEO) and Generative E
 - **Tool-agnostic** — works standalone or with 14 MCP servers (Ahrefs, Semrush, Cloudflare, and more)
 - **Native install in 7 agents** — Claude Code, OpenClaw, Gemini CLI, Qwen Code, Amp, Kimi, CodeBuddy — plus 35+ more via `npx skills`
 
-## Quick Start
+## Installation
 
 > Works natively in [Claude Code](https://claude.ai/download), [OpenClaw](https://openclaw.com), [Gemini CLI](https://geminicli.com), [Qwen Code](https://qwenlm.github.io/qwen-code-docs/), [Amp](https://ampcode.com), [Kimi Code CLI](https://moonshotai.github.io/kimi-cli/), [CodeBuddy](https://codebuddy.ai) — plus [35+ more agents](https://github.com/vercel-labs/skills#supported-agents) via `npx skills`. No other dependencies.
 
@@ -243,6 +267,10 @@ Skills are organized into four execution phases plus one protocol layer. Use the
 
 One-shot tasks with explicit input and structured output.
 
+### User commands (9)
+
+Day-to-day SEO/GEO work. Use these directly from any Claude Code, Cursor, or Codex session.
+
 | Command | Description |
 |---------|-------------|
 | `/seo:audit-page <URL>` | Full on-page SEO + CORE-EEAT content quality audit with scored report |
@@ -254,6 +282,13 @@ One-shot tasks with explicit input and structured output.
 | `/seo:write-content <topic>` | Write SEO + GEO optimized content from a topic and target keyword |
 | `/seo:keyword-research <seed>` | Research and analyze keywords for a topic or niche |
 | `/seo:setup-alert <metric>` | Configure monitoring alerts for critical metrics |
+
+### Maintenance commands (3)
+
+For library maintainers / power users. Safe to ignore for daily use.
+
+| Command | Description |
+|---------|-------------|
 | `/seo:wiki-lint` | Wiki health check: detect contradictions, orphans, stale claims, missing pages |
 | `/seo:contract-lint` | Auditor Runbook drift detection, handoff schema check, jargon leak scan (v7.1.0+) |
 | `/seo:p2-review` | Evaluate v7.1.0 deferred items against trigger conditions; tombstone review (2026-07-10) |
