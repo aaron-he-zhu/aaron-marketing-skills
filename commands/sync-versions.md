@@ -14,7 +14,16 @@ parameters:
 
 Keeps the version field aligned across every manifest the library publishes to. Canonical source is `.claude-plugin/plugin.json`. Targets are the other manifests that declare their own `version`.
 
-**Why this is a markdown command, not a script** — this library's design philosophy is zero executable code in the repo. This command replaces the previous `scripts/sync-versions.py` developer utility and runs entirely in Claude's reasoning + Read/Edit tools.
+**Why this is a slash command, not a script** — this library's design philosophy is zero executable code in the repo. The primary path is markdown (Claude executes this command using Read/Edit tools). A shell fallback with `jq` is documented at the bottom of this file for CI or no-Claude environments.
+
+## Usage
+
+```
+/seo:sync-versions
+/seo:sync-versions --dry-run
+```
+
+Run after editing `.claude-plugin/plugin.json` `version` field. The command reads the new version and propagates it to the four cross-agent manifests listed below. Idempotent: no-op when everything is already in sync.
 
 ## Workflow
 
@@ -35,15 +44,15 @@ Keeps the version field aligned across every manifest the library publishes to. 
 
 3. **Idempotence check**: if a path already equals `$V`, skip it and note "already in sync". If `--dry-run` was passed, report what would change but do not write.
 
-4. **Summary report** (to the user):
+4. **Summary report** (to the user). Example output for an illustrative bump from 9.0.0 → 9.1.0:
    ```
-   Sync versions → 9.0.0
-     marketplace.json: metadata.version ✓ (was 8.0.2)
-     marketplace.json: plugins[0].version ✓ (was 8.0.2)
-     gemini-extension.json: version ✓ (was 8.0.2)
+   Sync versions → 9.1.0
+     marketplace.json: metadata.version ✓ (was 9.0.0)
+     marketplace.json: plugins[0].version ✓ (was 9.0.0)
+     gemini-extension.json: version ✓ (was 9.0.0)
      qwen-extension.json: version: already in sync
-     .codebuddy-plugin/marketplace.json: version ✓ (was 8.0.2)
-     .codebuddy-plugin/marketplace.json: plugins[0].version ✓ (was 8.0.2)
+     .codebuddy-plugin/marketplace.json: version ✓ (was 9.0.0)
+     .codebuddy-plugin/marketplace.json: plugins[0].version ✓ (was 9.0.0)
    5 file(s) updated, 1 field already in sync.
    ```
 

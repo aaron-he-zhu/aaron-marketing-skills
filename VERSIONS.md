@@ -85,7 +85,7 @@ Major release combining three streams of work: (1) a 6-agent panel quality revie
 #### i18n & UX
 
 - Quick Start in 60 seconds — 3-step TL;DR above the detailed install table
-- Commands tier split: 10 user (day-to-day) + 3 maintenance (for power users)
+- Commands tier split: 10 user (day-to-day) + 5 maintenance (for power users; includes the two slash commands that replaced the purged `.py` scripts)
 - Next Best decision trees embedded in 5 skills (`keyword-research`, `content-quality-auditor`, `on-page-seo-auditor`, `competitor-analysis`, `entity-optimizer`)
 - Mini-examples (User prompt + Output + Reference link) in 10 trimmed Example sections
 - Jargon dimension codes (C/O/R/E/Exp/Ept/A/T) removed from `/seo:audit-page` and `/seo:audit-domain` user-visible output

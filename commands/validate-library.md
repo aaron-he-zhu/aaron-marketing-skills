@@ -18,19 +18,29 @@ parameters:
 
 Replaces the previous `scripts/validate-descriptions.py`. This command is pure-markdown and runs entirely in Claude's reasoning + Read/Glob/Grep tools — it preserves the design philosophy that the repo contains no executable code.
 
+## Usage
+
+```
+/seo:validate-library                          # scan all 20 skills, report-only
+/seo:validate-library --skill keyword-research # scan one skill
+/seo:validate-library --strict                 # CI mode: final line reports STATUS: PASS or STATUS: FAIL
+```
+
+Run before version bumps, before opening a PR that touches any `SKILL.md`, or whenever bulk-refactoring skills. Complements `/seo:contract-lint` (handoff schema + runbook drift) and `scripts/validate-skill.sh` (per-skill ClawHub spec validation).
+
 ## What It Checks
 
 ### 1. Description budget (±20% tolerance)
 
-Each `SKILL.md` description (`description:` in YAML frontmatter) should land within this byte budget, measured by `len(text.encode("utf-8"))`:
+Each `SKILL.md` description (`description:` in YAML frontmatter) should land within this byte budget, measured by `len(text.encode("utf-8"))`. Targets were originally derived empirically from the v7.x release (see [references/skill-contract.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md)) — tuned so a skill's description fits within Anthropic Skills + Vercel Labs `npx skills find` discovery budgets without truncation:
 
-| Skill category | Target bytes | Tolerance band |
-|---|---|---|
-| research | 800 | 640–960 |
-| build | 900 | 720–1080 |
-| optimize | 900 | 720–1080 |
-| monitor | 700 | 560–840 |
-| cross-cutting | 1000 | 800–1200 |
+| Skill category | Target bytes | Tolerance band | Rationale |
+|---|---|---|---|
+| research | 800 | 640–960 | Market-analysis skills share a common shape; triggers skew short |
+| build | 900 | 720–1080 | Content-creation skills need more trigger variety |
+| optimize | 900 | 720–1080 | Audit skills need dimension + verb variety |
+| monitor | 700 | 560–840 | Alerting skills are narrow-scope |
+| cross-cutting | 1000 | 800–1200 | Protocol-layer skills carry more context |
 
 **Report**: one line per skill, showing actual byte length and pass/fail. Skills outside the band are not errors by themselves, but flag for manual review ("content bloat risk" or "too terse for discovery").
 
@@ -82,7 +92,7 @@ No trigger phrase may appear in more than one skill (case-insensitive, after Uni
    Total: 20  Passed: 20  Failed: 0
    ```
 
-5. **Strict mode** (`--strict`): if any skill fails any check, exit with a report ending in `FAIL` and return a non-zero-equivalent signal (for CI use, the caller can parse the last line).
+5. **Strict mode** (`--strict`): end the final report line with exactly `STATUS: PASS` or `STATUS: FAIL`. CI scripts can parse the last line (`tail -n 1`) to decide whether to fail the build. Report-only mode (default) ends with a plain `Total: 20  Passed: N  Failed: M` summary without the STATUS marker.
 
 ## Fallback for no-Claude environments
 
