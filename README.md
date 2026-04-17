@@ -20,19 +20,24 @@ Claude Skills and Commands for Search Engine Optimization (SEO) and Generative E
 - **8 languages, 750+ triggers** — EN, ZH, JA, KO, ES, PT with formal, casual, and misspelling variants
 - **Zero dependencies** — pure markdown skills, no Python, no venv, no API keys required
 - **Tool-agnostic** — works standalone or with 14 MCP servers (Ahrefs, Semrush, Cloudflare, and more)
-- **6 install methods** — ClawHub, skills.sh, Claude Code plugin, git submodule, fork, manual
+- **Native install in 7 agents** — Claude Code, OpenClaw, Gemini CLI, Qwen Code, Amp, Kimi, CodeBuddy — plus 35+ more via `npx skills`
 
 ## Quick Start
 
-> Works with [Claude Code](https://claude.ai/download), [OpenClaw](https://openclaw.com), [Cursor](https://cursor.com), [Codex](https://openai.com/codex), and [35+ other agents](https://skills.sh). No other dependencies.
+> Works natively in [Claude Code](https://claude.ai/download), [OpenClaw](https://openclaw.com), [Gemini CLI](https://geminicli.com), [Qwen Code](https://qwenlm.github.io/qwen-code-docs/), [Amp](https://ampcode.com), [Kimi Code CLI](https://moonshotai.github.io/kimi-cli/), [CodeBuddy](https://codebuddy.ai) — plus [35+ more agents](https://github.com/vercel-labs/skills#supported-agents) via `npx skills`. No other dependencies.
 
-1. **Install** — pick the method for your tool:
+1. **Install** — pick the command for your tool:
 
    | Your tool | Install command |
    |-----------|----------------|
-   | **OpenClaw** | `clawhub install aaron-he-zhu/<skill-name>` — [browse all 20](https://clawhub.ai/u/aaron-he-zhu) |
-   | **Claude Code** | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` (all 20) |
-   | **Cursor / Codex / Windsurf / other** | `npx skills add aaron-he-zhu/seo-geo-claude-skills` (all 20) |
+   | **Claude Code** | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` |
+   | **OpenClaw** | `clawhub install aaron-he-zhu/<skill>` · [bundle](https://clawhub.ai/plugins/aaron-seo-geo) |
+   | **Gemini CLI** | `gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
+   | **Qwen Code** | `qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
+   | **Amp** | `amp skill add aaron-he-zhu/seo-geo-claude-skills` |
+   | **Kimi Code CLI** | `kimi plugin install https://github.com/aaron-he-zhu/seo-geo-claude-skills.git` |
+   | **CodeBuddy** | in-app: `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` then `/plugin install aaron-seo-geo` |
+   | **Cursor / Codex / opencode / Windsurf / Cline / Copilot / [35+ more](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/seo-geo-claude-skills` |
 
    > All installation methods remain available at all times. If any marketplace is temporarily unavailable, use an alternative method.
 

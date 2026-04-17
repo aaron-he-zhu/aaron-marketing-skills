@@ -8,7 +8,7 @@
 
 [English](../README.md) | **中文** | [日本語](README.ja.md) | [한국어](README.ko.md) | [Espanol](README.es.md) | [Portugues](README.pt.md)
 
-面向搜索引擎优化（SEO）和生成式引擎优化（GEO）的 Claude 技能与命令集。零依赖，支持 [Claude Code](https://claude.ai/download)、[Cursor](https://cursor.com)、[Codex](https://openai.com/codex) 及 [35+ 其他代理](https://skills.sh)。内容质量由 [CORE-EEAT 基准](https://github.com/aaron-he-zhu/core-eeat-content-benchmark)（80 项）评分，域名权威由 [CITE 域名评级](https://github.com/aaron-he-zhu/cite-domain-rating)（40 项）评分。
+面向搜索引擎优化（SEO）和生成式引擎优化（GEO）的 Claude 技能与命令集。零依赖，原生支持 [Claude Code](https://claude.ai/download)、[OpenClaw](https://openclaw.com)、[Gemini CLI](https://geminicli.com)、[Qwen Code](https://qwenlm.github.io/qwen-code-docs/)、[Amp](https://ampcode.com)、[Kimi](https://moonshotai.github.io/kimi-cli/)、[CodeBuddy](https://codebuddy.ai)，以及 [35+ 其他代理](https://github.com/vercel-labs/skills#supported-agents) 通过 `npx skills`。内容质量由 [CORE-EEAT 基准](https://github.com/aaron-he-zhu/core-eeat-content-benchmark)（80 项）评分，域名权威由 [CITE 域名评级](https://github.com/aaron-he-zhu/cite-domain-rating)（40 项）评分。
 
 > **SEO** 让你在搜索结果中获得排名。**GEO** 让你被 AI 系统（ChatGPT、Perplexity、Google AI Overviews）引用。本库同时覆盖两者。
 
@@ -18,19 +18,38 @@
 - **8 种语言，750+ 触发词** — 中英日韩西葡，含正式、口语和拼写变体
 - **零依赖** — 纯 Markdown 技能文件，无需 Python、虚拟环境或 API 密钥
 - **工具无关** — 独立运行，或通过 14 个 MCP 服务器连接（Ahrefs、Semrush、Cloudflare 等）
-- **6 种安装方式** — ClawHub、skills.sh、Claude Code 插件、git submodule、fork、手动
+- **7 个代理原生安装** — Claude Code、OpenClaw、Gemini CLI、Qwen Code、Amp、Kimi、CodeBuddy — 外加 35+ 代理通过 `npx skills`
 
 ## 快速开始
 
 ```bash
-# 安装所有 20 个技能（skills.sh）
+# Claude Code
+/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
+
+# OpenClaw / ClawHub
+clawhub install aaron-he-zhu/<skill>
+
+# Gemini CLI
+gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills
+
+# Qwen Code
+qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills
+
+# Amp
+amp skill add aaron-he-zhu/seo-geo-claude-skills
+
+# Kimi Code CLI
+kimi plugin install https://github.com/aaron-he-zhu/seo-geo-claude-skills.git
+
+# CodeBuddy（应用内，2 步）
+/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
+/plugin install aaron-seo-geo
+
+# 通用回退（Cursor、Codex、opencode、Windsurf、Copilot 等 35+ 代理）
 npx skills add aaron-he-zhu/seo-geo-claude-skills
 
-# 安装单个技能
+# 仅安装单个技能
 npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
-
-# Claude Code 插件安装
-/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
 ```
 
 安装后即可使用：

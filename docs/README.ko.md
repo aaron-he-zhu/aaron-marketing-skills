@@ -8,7 +8,7 @@
 
 [English](../README.md) | [中文](README.zh.md) | [日本語](README.ja.md) | **한국어** | [Espanol](README.es.md) | [Portugues](README.pt.md)
 
-검색 엔진 최적화(SEO)와 생성형 엔진 최적화(GEO)를 위한 Claude 스킬 및 명령 세트. 의존성 제로. [Claude Code](https://claude.ai/download), [Cursor](https://cursor.com), [Codex](https://openai.com/codex), [35개 이상의 에이전트](https://skills.sh) 지원. 콘텐츠 품질은 [CORE-EEAT 벤치마크](https://github.com/aaron-he-zhu/core-eeat-content-benchmark)(80개 항목), 도메인 권위는 [CITE 도메인 등급](https://github.com/aaron-he-zhu/cite-domain-rating)(40개 항목)으로 평가.
+검색 엔진 최적화(SEO)와 생성형 엔진 최적화(GEO)를 위한 Claude 스킬 및 명령 세트. 의존성 제로. [Claude Code](https://claude.ai/download), [OpenClaw](https://openclaw.com), [Gemini CLI](https://geminicli.com), [Qwen Code](https://qwenlm.github.io/qwen-code-docs/), [Amp](https://ampcode.com), [Kimi](https://moonshotai.github.io/kimi-cli/), [CodeBuddy](https://codebuddy.ai) 네이티브 지원. [35개 이상의 에이전트](https://github.com/vercel-labs/skills#supported-agents)는 `npx skills`로. 콘텐츠 품질은 [CORE-EEAT 벤치마크](https://github.com/aaron-he-zhu/core-eeat-content-benchmark)(80개 항목), 도메인 권위는 [CITE 도메인 등급](https://github.com/aaron-he-zhu/cite-domain-rating)(40개 항목)으로 평가.
 
 > **SEO**는 검색 결과에서 순위를 올립니다. **GEO**는 AI 시스템(ChatGPT, Perplexity, Google AI Overviews)에서 인용됩니다. 이 라이브러리는 둘 다 다룹니다.
 
@@ -18,19 +18,38 @@
 - **8개 언어, 750+ 트리거** — 한국어 포함 다국어 지원 (공식, 일상, 오타 변형)
 - **의존성 제로** — 순수 Markdown 스킬, Python 불필요, 가상환경 불필요, API 키 불필요
 - **도구 무관** — 독립 실행 또는 MCP를 통해 14개 서버(Ahrefs, Semrush, Cloudflare 등) 연동
-- **6가지 설치 방법** — ClawHub, skills.sh, Claude Code 플러그인, git submodule, fork, 수동
+- **7개 에이전트에서 네이티브 설치** — Claude Code, OpenClaw, Gemini CLI, Qwen Code, Amp, Kimi, CodeBuddy — 그 외 35+ 에이전트는 `npx skills`로
 
 ## 빠른 시작
 
 ```bash
-# 모든 20개 스킬 설치 (skills.sh)
+# Claude Code
+/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
+
+# OpenClaw / ClawHub
+clawhub install aaron-he-zhu/<skill>
+
+# Gemini CLI
+gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills
+
+# Qwen Code
+qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills
+
+# Amp
+amp skill add aaron-he-zhu/seo-geo-claude-skills
+
+# Kimi Code CLI
+kimi plugin install https://github.com/aaron-he-zhu/seo-geo-claude-skills.git
+
+# CodeBuddy (앱 내, 2단계)
+/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
+/plugin install aaron-seo-geo
+
+# 범용 폴백 (Cursor, Codex, opencode, Windsurf, Copilot 등 35+ 에이전트)
 npx skills add aaron-he-zhu/seo-geo-claude-skills
 
-# 단일 스킬 설치
+# 단일 스킬만 설치
 npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
-
-# Claude Code 플러그인으로 설치
-/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
 ```
 
 설치 후 바로 사용:

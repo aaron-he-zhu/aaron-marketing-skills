@@ -214,9 +214,14 @@ Every skill works at Tier 1. Tool integration enhances but never gates functiona
 
 | Your tool | Install command |
 |-----------|----------------|
-| **OpenClaw** | `clawhub install aaron-he-zhu/<skill-name>` — [browse all 20](https://clawhub.ai/u/aaron-he-zhu) |
-| **Claude Code** | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` (all 20) |
-| **Cursor / Codex / Windsurf / other** | `npx skills add aaron-he-zhu/seo-geo-claude-skills` (all 20) |
+| **Claude Code** | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` |
+| **OpenClaw** | `clawhub install aaron-he-zhu/<skill>` · [bundle](https://clawhub.ai/plugins/aaron-seo-geo) |
+| **Gemini CLI** | `gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
+| **Qwen Code** | `qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
+| **Amp** | `amp skill add aaron-he-zhu/seo-geo-claude-skills` |
+| **Kimi Code CLI** | `kimi plugin install https://github.com/aaron-he-zhu/seo-geo-claude-skills.git` |
+| **CodeBuddy** | in-app: `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` then `/plugin install aaron-seo-geo` |
+| **Cursor / Codex / opencode / Windsurf / Cline / Copilot / [35+ more](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/seo-geo-claude-skills` |
 
 **Git Submodule** (version-pinned):
 ```bash

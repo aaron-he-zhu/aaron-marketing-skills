@@ -1,0 +1,65 @@
+{
+  "name": "aaron-seo-geo",
+  "owner": {
+    "name": "Aaron He Zhu",
+    "email": "hello@zhuhe.io"
+  },
+  "description": "SEO & GEO skill operating system with a shared contract, protocol-layer gates, and reusable state handoffs",
+  "version": "8.0.2",
+  "plugins": [
+    {
+      "name": "aaron-seo-geo",
+      "source": "./",
+      "description": "20 SEO and GEO skills plus 12 commands on one shared operating contract. Includes protocol-layer gates for content quality, domain trust, entity truth, and campaign memory alongside keyword research, content creation, audits, monitoring, schema markup, and AI citation optimization.",
+      "version": "8.0.2",
+      "author": {
+        "name": "Aaron He Zhu",
+        "email": "hello@zhuhe.io"
+      },
+      "homepage": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+      "repository": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+      "license": "Apache-2.0",
+      "category": "marketing",
+      "keywords": [
+        "seo",
+        "geo",
+        "content-optimization",
+        "search-engine-optimization",
+        "generative-engine-optimization",
+        "ai-citation",
+        "core-eeat",
+        "cite-framework",
+        "keyword-research",
+        "content-writing",
+        "technical-seo",
+        "schema-markup",
+        "rank-tracking",
+        "backlink-analysis"
+      ],
+      "strict": false,
+      "commands": "./commands/",
+      "skills": [
+        "./research/competitor-analysis",
+        "./research/content-gap-analysis",
+        "./research/keyword-research",
+        "./research/serp-analysis",
+        "./build/geo-content-optimizer",
+        "./build/meta-tags-optimizer",
+        "./build/schema-markup-generator",
+        "./build/seo-content-writer",
+        "./optimize/content-refresher",
+        "./optimize/internal-linking-optimizer",
+        "./optimize/on-page-seo-auditor",
+        "./optimize/technical-seo-checker",
+        "./monitor/alert-manager",
+        "./monitor/backlink-analyzer",
+        "./monitor/performance-reporter",
+        "./monitor/rank-tracker",
+        "./cross-cutting/content-quality-auditor",
+        "./cross-cutting/domain-authority-auditor",
+        "./cross-cutting/entity-optimizer",
+        "./cross-cutting/memory-management"
+      ]
+    }
+  ]
+}

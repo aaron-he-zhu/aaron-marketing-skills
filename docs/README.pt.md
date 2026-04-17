@@ -8,7 +8,7 @@
 
 [English](../README.md) | [中文](README.zh.md) | [日本語](README.ja.md) | [한국어](README.ko.md) | [Espanol](README.es.md) | **Portugues**
 
-Skills e comandos Claude para Otimizacao de Mecanismos de Busca (SEO) e Otimizacao de Mecanismos Generativos (GEO). Zero dependencias. Compativel com [Claude Code](https://claude.ai/download), [Cursor](https://cursor.com), [Codex](https://openai.com/codex) e [mais de 35 agentes](https://skills.sh). Qualidade de conteudo avaliada pelo [CORE-EEAT Benchmark](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (80 itens). Autoridade de dominio avaliada pelo [CITE Domain Rating](https://github.com/aaron-he-zhu/cite-domain-rating) (40 itens).
+Skills e comandos Claude para Otimizacao de Mecanismos de Busca (SEO) e Otimizacao de Mecanismos Generativos (GEO). Zero dependencias. Instalacao nativa em [Claude Code](https://claude.ai/download), [OpenClaw](https://openclaw.com), [Gemini CLI](https://geminicli.com), [Qwen Code](https://qwenlm.github.io/qwen-code-docs/), [Amp](https://ampcode.com), [Kimi](https://moonshotai.github.io/kimi-cli/), [CodeBuddy](https://codebuddy.ai). [Mais de 35 agentes adicionais](https://github.com/vercel-labs/skills#supported-agents) via `npx skills`. Qualidade de conteudo avaliada pelo [CORE-EEAT Benchmark](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (80 itens). Autoridade de dominio avaliada pelo [CITE Domain Rating](https://github.com/aaron-he-zhu/cite-domain-rating) (40 itens).
 
 > **SEO** posiciona voce nos resultados de busca. **GEO** faz com que sistemas de IA (ChatGPT, Perplexity, Google AI Overviews) citem voce. Esta biblioteca cobre ambos.
 
@@ -18,19 +18,38 @@ Skills e comandos Claude para Otimizacao de Mecanismos de Busca (SEO) e Otimizac
 - **8 idiomas, 750+ gatilhos** — PT, EN, ZH, JA, KO, ES com variantes formais, coloquiais e erros de digitacao
 - **Zero dependencias** — skills em Markdown puro, sem Python, sem ambiente virtual, sem chaves de API
 - **Agnostico de ferramentas** — funciona sozinho ou com 14 servidores MCP (Ahrefs, Semrush, Cloudflare e mais)
-- **6 metodos de instalacao** — ClawHub, skills.sh, plugin Claude Code, git submodule, fork, manual
+- **Instalacao nativa em 7 agentes** — Claude Code, OpenClaw, Gemini CLI, Qwen Code, Amp, Kimi, CodeBuddy — mais de 35 agentes adicionais via `npx skills`
 
 ## Inicio rapido
 
 ```bash
-# Instalar todos os 20 skills (skills.sh)
+# Claude Code
+/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
+
+# OpenClaw / ClawHub
+clawhub install aaron-he-zhu/<skill>
+
+# Gemini CLI
+gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills
+
+# Qwen Code
+qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills
+
+# Amp
+amp skill add aaron-he-zhu/seo-geo-claude-skills
+
+# Kimi Code CLI
+kimi plugin install https://github.com/aaron-he-zhu/seo-geo-claude-skills.git
+
+# CodeBuddy (no app, 2 passos)
+/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
+/plugin install aaron-seo-geo
+
+# Alternativa universal (Cursor, Codex, opencode, Windsurf, Copilot e 35+ agentes)
 npx skills add aaron-he-zhu/seo-geo-claude-skills
 
-# Instalar um skill individual
+# Apenas um skill individual
 npx skills add aaron-he-zhu/seo-geo-claude-skills -s keyword-research
-
-# Instalar via plugin Claude Code
-/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills
 ```
 
 Apos instalar, use diretamente:
