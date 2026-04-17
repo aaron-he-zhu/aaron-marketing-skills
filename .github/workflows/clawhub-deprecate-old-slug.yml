@@ -1,0 +1,48 @@
+# One-off: publishes seo-geo-claude-skills@8.0.1 with a deprecation
+# notice pointing users to aaron-seo-geo. Run once via workflow_dispatch.
+# Kept in-tree as documentation of the migration; re-running after the
+# first publish will fail with "version already exists" (expected no-op).
+name: Deprecate old slug
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deprecate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install -g clawhub
+      - run: clawhub login --token "${{ secrets.CLAWHUB_TOKEN }}"
+      - name: Build deprecation bundle
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/deprecated
+          # Copy repo contents minus VCS/CI dirs
+          rsync -a --exclude='.git' --exclude='.github' --exclude='.claude' . /tmp/deprecated/
+          # Rewrite plugin.json id/name + description
+          jq '.id="seo-geo-claude-skills"
+              | .name="seo-geo-claude-skills"
+              | .description="[DEPRECATED] This plugin has moved to aaron-seo-geo. Please reinstall: clawhub install aaron-seo-geo. This slug will no longer receive updates."' \
+            .claude-plugin/plugin.json > /tmp/deprecated/.claude-plugin/plugin.json
+          # Rewrite openclaw.bundle.json id
+          jq '.id="seo-geo-claude-skills"' openclaw.bundle.json > /tmp/deprecated/openclaw.bundle.json
+          echo "---modified plugin.json---"
+          jq '{id,name,version,description}' /tmp/deprecated/.claude-plugin/plugin.json
+      - name: Publish deprecation pointer
+        run: |
+          cd /tmp/deprecated
+          clawhub package publish . \
+            --family bundle-plugin \
+            --bundle-format claude-plugin \
+            --host-targets claude-code \
+            --name seo-geo-claude-skills \
+            --version 8.0.1 \
+            --tags latest \
+            --source-repo aaron-he-zhu/seo-geo-claude-skills \
+            --source-commit "$GITHUB_SHA" \
+            --source-ref main \
+            --changelog "DEPRECATED — plugin moved to aaron-seo-geo. Please reinstall via clawhub install aaron-seo-geo"
