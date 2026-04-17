@@ -90,9 +90,7 @@ Analyzes, monitors, and optimizes backlink profiles. Identifies link quality, di
 
 ## When This Must Trigger
 
-Use this when the conversation involves any of these situations — even if the user does not use SEO terminology:
-
-Use this whenever the task needs time-aware change detection, escalation, or stakeholder-ready visibility.
+Use this when the conversation involves time-aware change detection, escalation, or stakeholder-ready visibility — even if the user doesn't use SEO terminology:
 
 - Auditing your current backlink profile
 - Identifying toxic or harmful links
@@ -149,14 +147,27 @@ Compare backlink profiles: [your domain] vs [competitor domains]
 - **Promotes**: significant changes, confirmed anomalies, and follow-up actions to `memory/open-loops.md` and `memory/decisions.md`.
 - **Next handoff**: use the `Next Best Skill` below when a change needs action.
 
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
+
 ## Data Sources
 
 > **Note:** All integrations are optional. This skill works without any API keys — users provide data manually when no tools are connected.
 
 > See [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md) for tool category placeholders.
 
+**Scraping legality**: Before crawling any domain that is not your own or not under written authorization, verify `robots.txt` disallows, respect `Crawl-delay`, and confirm target TOS permits automated access. See [SECURITY.md §Scraping Boundaries](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/SECURITY.md).
+
 **With ~~link database + ~~SEO tool connected:**
-Automatically pull comprehensive backlink profiles including referring domains, anchor text distribution, link quality metrics (DA/DR), link velocity, and toxic link detection from ~~link database. Competitor backlink data from ~~SEO tool for gap analysis.
+Automatically pull comprehensive backlink profiles including referring domains, anchor text distribution, link quality metrics (DA (Moz Domain Authority™) / DR (Ahrefs Domain Rating™)), link velocity, and toxic link detection from ~~link database. Competitor backlink data from ~~SEO tool for gap analysis.
 
 **With manual data only:**
 Ask the user to provide:
@@ -298,4 +309,8 @@ If any findings should influence ongoing strategy, recommend promoting key concl
 
 ## Next Best Skill
 
-- **Primary**: [domain-authority-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/domain-authority-auditor/SKILL.md) — translate link findings into a domain-level trust view.
+Follows the verdict-conditional branching pattern in [skill-contract.md §Termination rules for Next Best Skill chains](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md). Visited-set rule applies.
+
+- **Toxic link ratio > 15%** → Primary: [domain-authority-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/domain-authority-auditor/SKILL.md) — translate link findings into a domain-level trust view.
+- **Toxic link ratio ≤ 15%** → Terminal (chain ends). Link profile is within normal range; no further gate check needed.
+- **Visited-set exception**: if `domain-authority-auditor` invoked this analysis, do NOT hand back to `domain-authority-auditor` — STOP chain and report chain-complete.

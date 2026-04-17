@@ -13,7 +13,7 @@ Detailed examples showing memory management in action.
 ```markdown
 I'll update rankings for your hero keywords. Let me check the hot cache for the list.
 
-[Reads CLAUDE.md, finds Hero Keywords section:]
+[Reads memory/hot-cache.md, finds Hero Keywords section:]
 - keyword research tools (currently #15, target #5)
 - best seo software (currently #23, target #10)
 - free backlink checker (currently #8, target #3)
@@ -41,7 +41,7 @@ I'll update rankings for your hero keywords. Let me check the hot cache for the 
 - All other keywords showing stable or positive movement
 
 ### Updated Files
-1. CLAUDE.md -> Hero Keywords table updated with current ranks
+1. memory/hot-cache.md -> Hero Keywords table updated with current ranks
 2. memory/monitoring/rank-history/2024-12-15-ranks.csv -> New row added:
    `2024-12-15,keyword research tools,12,best seo software,24,free backlink checker,6,...`
 
@@ -64,7 +64,7 @@ Hot cache refreshed. Next ranking check recommended: December 22, 2024.
 ```markdown
 Let me look that up in the project memory.
 
-[Step 1: Check CLAUDE.md -> not found]
+[Step 1: Check memory/hot-cache.md -> not found]
 [Step 2: Check memory/glossary.md -> found!]
 
 From your project glossary:
@@ -95,7 +95,7 @@ I'll set up the two-layer memory system for your outdoor gear e-commerce site.
 
 [Creates: memory/glossary.md, memory/research/, memory/content/, memory/monitoring/, etc.]
 
-## CLAUDE.md (Hot Cache) - Initial Setup
+## `memory/hot-cache.md` (hot cache) - Initial Setup
 
 I'll need some information to populate the hot cache:
 
@@ -119,12 +119,12 @@ I'll need some information to populate the hot cache:
    - Any internal product names or abbreviations?
    - How do you segment your keyword strategy?
 
-Please provide what you have, and I'll create your initial CLAUDE.md and glossary. We can start with basics and enrich as we gather more data.
+Please provide what you have, and I'll create your initial `memory/hot-cache.md` and glossary. We can start with basics and enrich as we gather more data.
 
 ---
 
 Once you provide this information, I'll generate:
-- CLAUDE.md with your initial hot cache
+- memory/hot-cache.md with your initial hot cache
 - memory/glossary.md with project terminology
 - memory/research/keywords/ structure with placeholder files
 - memory/research/competitors/ with initial competitor list
@@ -136,3 +136,53 @@ After setup, you can use commands like:
 - "Promote [keyword] to hot cache"
 - "Archive campaigns from Q3 2024"
 ```
+
+---
+
+## Advanced Features
+
+- **Smart Context Loading**: `Load full context for [campaign name]` — retrieves hot cache + all cold storage files for a campaign
+- **Memory Health Check**: `Run memory health check` — finds orphaned files, missing timestamps, stale items, broken references
+- **Bulk Promotion/Demotion**: `Promote all keywords ranking in top 10 to hot cache` / `Demote all completed campaigns from Q3`
+- **Memory Snapshot**: `Create memory snapshot for [date/milestone]` — point-in-time copy for major milestones
+- **Cross-Project Memory**: `Compare memory with [other project]` — keyword overlaps, competitor intersections across projects
+- **Wiki Lint**: `/seo:wiki-lint [--fix] [--project name] [--retire-preview]` — contradictions, orphans, stale claims, hash mismatches. See [commands/wiki-lint.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/commands/wiki-lint.md)
+
+---
+
+## Practical Limitations
+
+- **Concurrent access**: Use timestamped filenames to avoid overwrites from parallel sessions.
+- **Cold storage retrieval**: WARM/COLD files only load on demand. Hot cache is the primary cross-session mechanism.
+- **Data freshness**: Stale data (>90 days) should be flagged for refresh. Wiki index `mtime` field helps detect staleness.
+- **Wiki compilation**: Index is best-effort for summaries; precise fields (score, status, mtime) are deterministic. Delete `memory/wiki/` anytime to revert.
+
+---
+
+## Auditor Handoff Archive Block Format
+
+Append to the end of the monthly file (`memory/audits/YYYY-MM.md`), newest entries at bottom:
+
+```markdown
+## YYYY-MM-DD · <target> · <framework>
+
+- runbook_version: 1.1
+- status: DONE | DONE_WITH_CONCERNS | BLOCKED
+- framework: CORE-EEAT | CITE
+- vetos_failed: [T04, R10]    # empty list [] if none
+- veto_count: 2
+- raw_overall: 78
+- final_overall: 60            # or "n/a" if BLOCKED
+- cap_applied: true
+- audit_gap_types: [missing, shallow]  # derived from key_findings[].gap_type (string tag; distinct from entity-geo-handoff-schema.md's gap_type enum — see ownership note at bottom of this file); [] if none
+- false_positive: false        # user annotation; default false; set true only on explicit user "this was wrong" feedback
+- audit_source: content-quality-auditor | domain-authority-auditor
+```
+
+**Rules**:
+- One block per audit. Do not overwrite existing blocks.
+- `target` is the URL or domain audited.
+- `runbook_version` is copied from the current runbook header — this is how `/seo:p2-review` identifies cross-version reruns.
+- `audit_gap_types` is derived from `key_findings[].gap_type` string tags (deferred to P2; until then, leave as `[]`). **Namespace note**: this field is distinct from the `gap_type` enum defined in [references/entity-geo-handoff-schema.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/entity-geo-handoff-schema.md) which classifies entity-level recognition gaps. The auditor archive stores audit-finding gap tags (e.g., `missing`, `shallow`), whereas the entity schema enumerates entity-level gaps (e.g., `knowledge_graph`, `ai_recognition`). Keep both namespaces separate.
+- `false_positive` is the ONLY field that can be added/flipped after initial write, via explicit user annotation.
+- If the monthly file does not exist, create it with a single `# Audit Archive — YYYY-MM` header at top.

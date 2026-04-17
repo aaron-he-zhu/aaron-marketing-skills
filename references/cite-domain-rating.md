@@ -47,7 +47,7 @@
 | ID | Check Item | One-Line Standard |
 |----|-----------|-------------------|
 | C01 | Referring Domains Volume | >=500 unique referring domains |
-| C02 | Referring Domains Quality | >=20% of referring domains have DA/DR 50+ |
+| C02 | Referring Domains Quality | >=20% of referring domains have DA (Moz Domain Authority™) / DR (Ahrefs Domain Rating™) 50+ |
 | C03 | Link Equity Distribution | Top sources concentrate outbound links (<1,000 outbound domains) |
 | C04 | Link Velocity | Steady natural growth; no month >3x average |
 | C05 | AI Citation Frequency | Cited by >=2 AI engines on >=10 niche queries |

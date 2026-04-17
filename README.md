@@ -14,6 +14,27 @@ Claude Skills and Commands for Search Engine Optimization (SEO) and Generative E
 
 > **SEO** gets you ranked in search results. **GEO** gets you cited by AI systems (ChatGPT, Perplexity, Google AI Overviews). This library covers both.
 
+New to the terminology? See [GLOSSARY.md](GLOSSARY.md).
+
+## Quick Start in 60 seconds
+
+1. **Install the plugin** (pick one):
+   - Claude Code: add to `.mcp.json` or install via `/plugin`
+   - ClawHub: `clawhub install aaron-he-zhu/seo-geo-claude-skills`
+
+2. **Try it immediately**:
+   ```
+   Research keywords for my SaaS product targeting small teams
+   ```
+   A skill will auto-activate — no command needed.
+
+3. **Or use a direct command**:
+   ```
+   /seo:audit-page https://example.com/blog/my-article
+   ```
+
+For full install details, see [Installation](#quick-start). For terminology, see [GLOSSARY.md](GLOSSARY.md).
+
 ### Why This Library
 
 - **120-item quality frameworks** — CORE-EEAT (80 items) + CITE (40 items) with veto gates, not narrative guesswork
@@ -238,6 +259,10 @@ Skills are organized into four execution phases plus one protocol layer. Use the
 
 One-shot tasks with explicit input and structured output.
 
+### User commands (9)
+
+Day-to-day SEO/GEO work. Use these directly from any Claude Code, Cursor, or Codex session.
+
 | Command | Description |
 |---------|-------------|
 | `/seo:audit-page <URL>` | Full on-page SEO + CORE-EEAT content quality audit with scored report |
@@ -249,6 +274,13 @@ One-shot tasks with explicit input and structured output.
 | `/seo:write-content <topic>` | Write SEO + GEO optimized content from a topic and target keyword |
 | `/seo:keyword-research <seed>` | Research and analyze keywords for a topic or niche |
 | `/seo:setup-alert <metric>` | Configure monitoring alerts for critical metrics |
+
+### Maintenance commands (3)
+
+For library maintainers / power users. Safe to ignore for daily use.
+
+| Command | Description |
+|---------|-------------|
 | `/seo:wiki-lint` | Wiki health check: detect contradictions, orphans, stale claims, missing pages |
 | `/seo:contract-lint` | Auditor Runbook drift detection, handoff schema check, jargon leak scan (v7.1.0+) |
 | `/seo:p2-review` | Evaluate v7.1.0 deferred items against trigger conditions; tombstone review (2026-07-10) |

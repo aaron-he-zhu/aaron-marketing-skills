@@ -25,9 +25,13 @@ Any restatement of a rule outside its owning file is a drift bug and will be fla
 
 ## §1 · Handoff Schema (authoritative)
 
-Every auditor-class handoff MUST follow this shape:
+Every auditor-class handoff MUST follow this shape. Emitted audit artifact files (e.g., `memory/audits/**/*.md`) MUST include `class: auditor-output` in their YAML frontmatter so the PostToolUse Artifact Gate and Stop-time archiving hooks can detect them by frontmatter class instead of prose pattern-matching. Files lacking this marker are not treated as audit artifacts regardless of body content.
 
 ```yaml
+---
+class: auditor-output            # REQUIRED frontmatter marker for emitted audit artifacts
+---
+
 status: DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_INPUT
 objective: "what was audited"
 key_findings:
@@ -56,7 +60,7 @@ This prevents breakage when an audit produced before the upgrade is consumed by 
 
 ### Non-auditor skills
 
-Non-auditor skill handoffs follow [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) as-is. Cap-related fields do not apply. Non-auditors never emit `cap_applied` / `raw_overall_score` / `final_overall_score`.
+Non-auditor skill handoffs follow [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) as-is. Cap-related fields do not apply. Non-auditors never emit `cap_applied` / `raw_overall_score` / `final_overall_score`, and MUST NOT use the `class: auditor-output` frontmatter marker.
 
 ---
 
@@ -80,6 +84,8 @@ Non-auditor skill handoffs follow [skill-contract.md §Handoff Summary Format](h
 | **2+ veto fails** | `status: BLOCKED`, do NOT emit capped scores | `raw_overall_score` retained for record | `cap_applied: false`, reason in `open_loops` |
 
 **Cap target**: always the post-penalty final dimension value, never the raw pre-penalty value. If non-veto items already penalized the dimension, compute the post-penalty number first, then apply the veto cap to that.
+
+**Rounding rule (deterministic)**: all score arithmetic uses `math.floor` (truncate decimals). `77.5 → 77`, not `78`. `59.9 → 59`, not `60`. Applies to `raw_overall_score`, `final_overall_score`, dimension scores, and all intermediate calculations. QA and regression tests can rely on this — a re-run on the same inputs always produces the same integer. Worked Example 2 demonstrates: `raw_overall = 77.5` appears as `raw_overall_score: 77` in the handoff.
 
 ### Worked example 1 — single veto, raw dim above cap (classic case)
 

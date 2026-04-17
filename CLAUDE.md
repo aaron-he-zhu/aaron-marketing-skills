@@ -14,6 +14,8 @@ This plugin provides **20 skills and 12 commands** for Search Engine Optimizatio
 
 ## One-Shot Commands
 
+**User commands (9)** — day-to-day SEO/GEO work:
+
 ```
 /seo:audit-page      — On-page SEO + CORE-EEAT audit
 /seo:audit-domain    — CITE domain authority audit
@@ -24,6 +26,11 @@ This plugin provides **20 skills and 12 commands** for Search Engine Optimizatio
 /seo:generate-schema — JSON-LD structured data
 /seo:report          — Performance report
 /seo:setup-alert     — Monitoring alert configuration
+```
+
+**Maintenance commands (3)** — for library maintainers / power users. Safe to ignore for daily use:
+
+```
 /seo:wiki-lint       — Wiki health check: contradictions, orphans, stale claims
 /seo:contract-lint   — Auditor Runbook drift detection, handoff schema check, jargon leak scan (v7.1.0+)
 /seo:p2-review       — Evaluate v7.1.0 deferred items against trigger conditions; tombstone review (2026-07-10)

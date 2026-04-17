@@ -93,9 +93,7 @@ This skill creates compelling, optimized meta tags that improve click-through ra
 
 ## When This Must Trigger
 
-Use this when the conversation involves any of these situations — even if the user does not use SEO terminology:
-
-Use this whenever the task needs a shippable asset or transformation that should feed directly into quality review, deployment, or monitoring.
+Use this when the conversation involves a shippable asset or transformation that should feed directly into quality review, deployment, or monitoring — even if the user doesn't use SEO terminology:
 
 - Creating meta tags for new pages
 - Optimizing existing meta tags for better CTR
@@ -147,8 +145,19 @@ Create Open Graph and Twitter card tags for [page/URL]
 
 - **Reads**: the brief, target keywords, entity inputs, quality constraints, and prior decisions from [CLAUDE.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CLAUDE.md) and the shared [State Model](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/state-model.md) when available.
 - **Writes**: a user-facing content, metadata, or schema deliverable plus a reusable summary that can be stored under `memory/content/`.
-- **Promotes**: approved angles, messaging choices, missing evidence, and publish blockers to `CLAUDE.md`, `memory/decisions.md`, and `memory/open-loops.md`.
+- **Promotes**: approved angles, messaging choices, missing evidence, and publish blockers to `memory/hot-cache.md`, `memory/decisions.md`, and `memory/open-loops.md`.
 - **Next handoff**: use the `Next Best Skill` below when the asset is ready for review or deployment.
+
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
 
 ## Data Sources
 
@@ -168,163 +177,16 @@ Proceed with the full workflow using provided data. Note in the output which met
 
 ## Instructions
 
-When a user requests meta tag optimization:
+When a user requests meta tag optimization, run these six steps:
 
-1. **Gather Page Information**
+1. **Gather Page Information** — URL, page type, primary/secondary keywords, target audience, primary CTA, unique value prop
+2. **Create Optimized Title Tag** — 50-60 chars, primary keyword front-loaded; pick from 5 formula options (Keyword|Benefit|Brand, Number+Keyword+Promise, How-to, Question, Year+Keyword); generate 3 options with power word analysis
+3. **Write Meta Description** — 150-160 chars, primary keyword, CTA; use `[Offer] + [Benefit] + [CTA]` formula; generate 3 options with CTA and emotional trigger labels
+4. **Create Open Graph, Twitter Card, and Additional Meta Tags** — OG (og:type/url/title/description/image), Twitter Card, canonical, robots, viewport, author, article tags; combine into full block
+5. **CORE-EEAT Alignment Check** — verify C01 (Intent Alignment) and C02 (Direct Answer) with Pass/Warn/Fail
+6. **Provide CTR Optimization Tips** — power words analysis, CTR boosting elements table (Numbers +20-30%, Year +15-20%, Power Words +10-15%, Question +10-15%, Brackets +10%), A/B test suggestions
 
-   ```markdown
-   ### Page Analysis
-   
-   **Page URL**: [URL]
-   **Page Type**: [blog/product/landing/service/homepage]
-   **Primary Keyword**: [keyword]
-   **Secondary Keywords**: [keywords]
-   **Target Audience**: [audience]
-   **Primary CTA**: [action you want users to take]
-   **Unique Value Prop**: [what makes this page special]
-   ```
-
-2. **Create Optimized Title Tag**
-
-   ```markdown
-   ### Title Tag Optimization
-   
-   **Requirements**:
-   - Length: 50-60 characters (displays fully in SERP)
-   - Include primary keyword (preferably near front)
-   - Make it compelling and click-worthy
-   - Match search intent
-   - Include brand name if appropriate
-   
-   **Title Tag Formula Options**:
-   
-   1. **Keyword | Benefit | Brand**
-      "[Primary Keyword]: [Benefit] | [Brand Name]"
-      
-   2. **Number + Keyword + Promise**
-      "[Number] [Keyword] That [Promise/Result]"
-      
-   3. **How-to Format**
-      "How to [Keyword]: [Benefit/Result]"
-      
-   4. **Question Format**
-      "What is [Keyword]? [Brief Answer/Hook]"
-      
-   5. **Year + Keyword**
-      "[Keyword] in [Year]: [Hook/Update]"
-   
-   **Generated Title Options**:
-   
-   | Option | Title | Length | Power Words | Keyword Position |
-   |--------|-------|--------|-------------|------------------|
-   | 1 | [Title] | [X] chars | [words] | [Front/Middle] |
-   | 2 | [Title] | [X] chars | [words] | [Front/Middle] |
-   | 3 | [Title] | [X] chars | [words] | [Front/Middle] |
-   
-   **Recommended**: Option [X]
-   **Reasoning**: [Why this option is best]
-   
-   **Title Tag Code**:
-   ```html
-   <title>[Selected Title]</title>
-   ```
-   ```
-
-3. **Write Meta Description**
-
-   ```markdown
-   ### Meta Description Optimization
-   
-   **Requirements**:
-   - Length: 150-160 characters (displays fully in SERP)
-   - Include primary keyword naturally
-   - Include clear call-to-action
-   - Match page content accurately
-   - Create urgency or curiosity
-   - Avoid duplicate descriptions
-   
-   **Meta Description Formula**:
-   
-   [What the page offers] + [Benefit to user] + [Call-to-action]
-   
-   **Power Elements to Include**:
-   - Numbers and statistics
-   - Current year
-   - Emotional triggers
-   - Action verbs
-   - Unique value proposition
-   
-   **Generated Description Options**:
-   
-   | Option | Description | Length | CTA | Emotional Trigger |
-   |--------|-------------|--------|-----|-------------------|
-   | 1 | [Description] | [X] chars | [CTA] | [Trigger] |
-   | 2 | [Description] | [X] chars | [CTA] | [Trigger] |
-   | 3 | [Description] | [X] chars | [CTA] | [Trigger] |
-   
-   **Recommended**: Option [X]
-   **Reasoning**: [Why this option is best]
-   
-   **Meta Description Code**:
-   ```html
-   <meta name="description" content="[Selected Description]">
-   ```
-   ```
-
-4. **Create Open Graph, Twitter Card, and Additional Meta Tags**
-
-   Generate OG tags (og:type, og:url, og:title, og:description, og:image), Twitter Card tags, canonical URL, robots, viewport, author, and article-specific tags. Then combine into a complete meta tag block.
-
-   > **Reference**: See [references/meta-tag-code-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/meta-tag-code-templates.md) for OG type selection guide, Twitter card type selection, all HTML code templates, and the complete meta tag block template.
-
-5. **CORE-EEAT Alignment Check**
-
-   Verify meta tags align with content quality standards. Reference: [CORE-EEAT Benchmark](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/core-eeat-benchmark.md)
-
-   ```markdown
-   ### CORE-EEAT Meta Tag Alignment
-
-   | Check | Status | Notes |
-   |-------|--------|-------|
-   | **C01 Intent Alignment**: Title promise matches actual content delivery | ✅/⚠️/❌ | [Does the title accurately represent what the page delivers?] |
-   | **C02 Direct Answer**: Meta description reflects the core answer available in first 150 words | ✅/⚠️/❌ | [Does the description preview the direct answer?] |
-
-   **If C01 fails**: Title is misleading — rewrite to match actual content.
-   **If C02 fails**: Content may need restructuring to front-load the answer, or description should better reflect available content.
-   ```
-
-9. **Provide CTR Optimization Tips**
-
-   ```markdown
-   ## CTR Optimization Analysis
-
-   ### Power Words Used
-   - [Word 1] - Creates [emotion/action]
-   - [Word 2] - Creates [emotion/action]
-
-   ### CTR Boosting Elements
-
-   | Element | Present | Impact |
-   |---------|---------|--------|
-   | Numbers | Yes/No | +20-30% CTR |
-   | Current Year | Yes/No | +15-20% CTR |
-   | Power Words | Yes/No | +10-15% CTR |
-   | Question | Yes/No | +10-15% CTR |
-   | Brackets | Yes/No | +10% CTR |
-
-   ### A/B Test Suggestions
-
-   Test these variations:
-
-   **Version A** (Current):
-   - Title: [Title]
-   - Description: [Description]
-
-   **Version B** (Test):
-   - Title: [Alternative title]
-   - Description: [Alternative description]
-   - Hypothesis: [Why this might perform better]
-   ```
+> **Reference**: See [references/instructions-detail.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/instructions-detail.md) for full templates (page analysis, title/description formula options, CORE-EEAT alignment matrix, CTR optimization analysis), worked example, and tips. See [references/meta-tag-code-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/meta-tag-code-templates.md) for HTML code templates.
 
 ## Validation Checkpoints
 
@@ -335,6 +197,7 @@ When a user requests meta tag optimization:
 - [ ] Unique value proposition articulated
 
 ### Output Validation
+- [ ] **Banned-vocab self-check** — scan titles and descriptions for banned words/phrases per [skill-contract.md §Output Voice](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md). Especially: `crucial, robust, leverage, seamless, unlock, cutting-edge, empower, streamline`. Meta tags are short — every word counts.
 - [ ] Title length 50-60 characters (displays fully in SERP)
 - [ ] Meta description length 150-160 characters
 - [ ] Primary keyword appears in both title and description
@@ -346,49 +209,15 @@ When a user requests meta tag optimization:
 
 **User**: "Create meta tags for a blog post about 'how to start a podcast in [current year]'"
 
-**Output**:
+**Output** (abbreviated):
+- Title: `<title>How to Start a Podcast in [year]: Complete Beginner's Guide</title>` (~55 chars, keyword front-loaded, power words: Complete, Beginner's)
+- Description: `<meta name="description" content="Learn how to start a podcast in [year] with our step-by-step guide. Covers equipment, hosting, recording, and launching your first episode. Start podcasting today!">` (~163 chars, CTA included)
 
-```markdown
-## Meta Tags: How to Start a Podcast ([current year])
-
-### Title Tag
-```html
-<title>How to Start a Podcast in [current year]: Complete Beginner's Guide</title>
-```
-**Length**: ~55 characters ✅
-**Keyword**: "how to start a podcast" at front ✅
-**Power Words**: "Complete", "Beginner's" ✅
-
-### Meta Description
-```html
-<meta name="description" content="Learn how to start a podcast in [current year] with our step-by-step guide. Covers equipment, hosting, recording, and launching your first episode. Start podcasting today!">
-```
-**Length**: ~163 characters ✅
-**Keyword**: Included naturally ✅
-**CTA**: "Start podcasting today!" ✅
-
-_Complete meta tag block (with OG, Twitter, Article tags) generated using template from [references/meta-tag-code-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/meta-tag-code-templates.md)._
-
-### A/B Test Variations
-
-**Title Variation B**:
-"Start a Podcast in [current year]: Step-by-Step Guide (+ Free Checklist)"
-
-**Title Variation C**:
-"How to Start a Podcast: [current year] Guide [Equipment + Software + Tips]"
-
-**Description Variation B**:
-"Want to start a podcast in [current year]? This guide covers everything: equipment ($100 budget option), best hosting platforms, recording tips, and how to get your first 1,000 listeners."
-```
+See the full example (with OG, Twitter, Article tags and 3 A/B variations) in [references/instructions-detail.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/instructions-detail.md#example).
 
 ## Tips for Success
 
-1. **Front-load keywords** - Put important terms at the beginning
-2. **Match intent** - Description should preview what page delivers
-3. **Be specific** - Vague descriptions get ignored
-4. **Test variations** - Small changes can significantly impact CTR
-5. **Update regularly** - Add current year, refresh messaging
-6. **Check competitors** - See what's working in your SERP
+Front-load keywords; match intent; be specific; test variations; update regularly; check competitors. Full list in [references/instructions-detail.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/instructions-detail.md#tips-for-success).
 
 
 ### Save Results
@@ -409,7 +238,9 @@ If any findings should influence ongoing strategy, recommend promoting key concl
 
 ## Reference Materials
 
+- [Instructions Detail](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/instructions-detail.md) — Full 6-step workflow, title/description formulas, CORE-EEAT alignment matrix, CTR analysis, worked example, tips
 - [Meta Tag Formulas](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/meta-tag-formulas.md) — Proven title and description formulas
+- [Meta Tag Code Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/meta-tag-code-templates.md) — HTML templates (OG, Twitter, article tags)
 - [CTR and Social Reference](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/meta-tags-optimizer/references/ctr-and-social-reference.md) — Page-type templates, CTR data, OG best practices
 
 ## Next Best Skill

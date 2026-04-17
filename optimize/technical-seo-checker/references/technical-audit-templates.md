@@ -1,6 +1,131 @@
 # Technical SEO Checker — Output Templates
 
-Detailed output templates for technical-seo-checker steps 3-9. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/technical-seo-checker/SKILL.md).
+Detailed output templates for technical-seo-checker steps 1-9. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/technical-seo-checker/SKILL.md).
+
+---
+
+## Step 1: Audit Crawlability
+
+```markdown
+## Crawlability Analysis
+
+### Robots.txt Review
+
+**URL**: [domain]/robots.txt
+**Status**: [Found/Not Found/Error]
+
+**Current Content**:
+```
+[robots.txt content]
+```
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| File exists | ✅/❌ | [notes] |
+| Valid syntax | ✅/⚠️/❌ | [errors found] |
+| Sitemap declared | ✅/❌ | [sitemap URL] |
+| Important pages blocked | ✅/⚠️/❌ | [blocked paths] |
+| Assets blocked | ✅/⚠️/❌ | [CSS/JS blocked?] |
+| Correct user-agents | ✅/⚠️/❌ | [notes] |
+
+**Issues Found**:
+- [Issue 1]
+- [Issue 2]
+
+**Recommended robots.txt**:
+```
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://example.com/sitemap.xml
+```
+
+---
+
+### XML Sitemap Review
+
+**Sitemap URL**: [URL]
+**Status**: [Found/Not Found/Error]
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Sitemap exists | ✅/❌ | [notes] |
+| Valid XML format | ✅/⚠️/❌ | [errors] |
+| In robots.txt | ✅/❌ | [notes] |
+| Submitted to ~~search console | ✅/⚠️/❌ | [notes] |
+| URLs count | [X] | [appropriate?] |
+| Only indexable URLs | ✅/⚠️/❌ | [notes] |
+| Includes priority | ✅/⚠️ | [notes] |
+| Includes lastmod | ✅/⚠️ | [accurate?] |
+
+**Issues Found**:
+- [Issue 1]
+
+---
+
+### Crawl Budget Analysis
+
+| Factor | Status | Impact |
+|--------|--------|--------|
+| Crawl errors | [X] errors | [Low/Med/High] |
+| Duplicate content | [X] pages | [Low/Med/High] |
+| Thin content | [X] pages | [Low/Med/High] |
+| Redirect chains | [X] found | [Low/Med/High] |
+| Orphan pages | [X] found | [Low/Med/High] |
+
+**Crawlability Score**: [X]/10
+```
+
+---
+
+## Step 2: Audit Indexability
+
+```markdown
+## Indexability Analysis
+
+### Index Status Overview
+
+| Metric | Count | Notes |
+|--------|-------|-------|
+| Pages in sitemap | [X] | |
+| Pages indexed | [X] | [source: site: search] |
+| Index coverage ratio | [X]% | [good if >90%] |
+
+### Index Blockers Check
+
+| Blocker Type | Found | Pages Affected |
+|--------------|-------|----------------|
+| noindex meta tag | [X] | [list or "none"] |
+| noindex X-Robots | [X] | [list or "none"] |
+| Robots.txt blocked | [X] | [list or "none"] |
+| Canonical to other | [X] | [list or "none"] |
+| 4xx/5xx errors | [X] | [list or "none"] |
+| Redirect loops | [X] | [list or "none"] |
+
+### Canonical Tags Audit
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Canonicals present | ✅/⚠️/❌ | [X]% of pages |
+| Self-referencing | ✅/⚠️/❌ | [notes] |
+| Consistent (HTTP/HTTPS) | ✅/⚠️/❌ | [notes] |
+| Consistent (www/non-www) | ✅/⚠️/❌ | [notes] |
+| No conflicting signals | ✅/⚠️/❌ | [notes] |
+
+### Duplicate Content Issues
+
+| Issue Type | Count | Examples |
+|------------|-------|----------|
+| Exact duplicates | [X] | [URLs] |
+| Near duplicates | [X] | [URLs] |
+| Parameter duplicates | [X] | [URLs] |
+| WWW/non-WWW | [X] | [notes] |
+| HTTP/HTTPS | [X] | [notes] |
+
+**Indexability Score**: [X]/10
+```
 
 ---
 

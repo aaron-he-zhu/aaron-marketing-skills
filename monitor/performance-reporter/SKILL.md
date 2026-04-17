@@ -82,9 +82,7 @@ This skill creates comprehensive SEO and GEO performance reports that combine mu
 
 ## When This Must Trigger
 
-Use this when the conversation involves any of these situations — even if the user does not use SEO terminology:
-
-Use this whenever the task needs time-aware change detection, escalation, or stakeholder-ready visibility.
+Use this when the conversation involves time-aware change detection, escalation, or stakeholder-ready visibility — even if the user doesn't use SEO terminology:
 
 - Monthly/quarterly SEO reporting
 - Executive stakeholder updates
@@ -139,6 +137,17 @@ Generate a content performance report
 - **Writes**: a user-facing monitoring deliverable plus a reusable summary that can be stored under `memory/monitoring/`.
 - **Promotes**: significant changes, confirmed anomalies, and follow-up actions to `memory/open-loops.md` and `memory/decisions.md`.
 - **Next handoff**: use the `Next Best Skill` below when a change needs action.
+
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
 
 ## Data Sources
 

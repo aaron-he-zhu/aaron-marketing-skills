@@ -85,9 +85,7 @@ Tracks, analyzes, and reports on keyword ranking positions over time. Monitors b
 
 ## When This Must Trigger
 
-Use this when the conversation involves any of these situations — even if the user does not use SEO terminology:
-
-Use this whenever the task needs time-aware change detection, escalation, or stakeholder-ready visibility.
+Use this when the conversation involves time-aware change detection, escalation, or stakeholder-ready visibility — even if the user doesn't use SEO terminology:
 
 - Setting up ranking tracking for new campaigns
 - Monitoring keyword position changes
@@ -143,6 +141,17 @@ Create a ranking report for [domain/campaign]
 - **Writes**: a user-facing monitoring deliverable plus a reusable summary that can be stored under `memory/monitoring/`.
 - **Promotes**: significant changes, confirmed anomalies, and follow-up actions to `memory/open-loops.md` and `memory/decisions.md`.
 - **Next handoff**: use the `Next Best Skill` below when a change needs action.
+
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
 
 ## Data Sources
 
@@ -272,4 +281,8 @@ If any findings should influence ongoing strategy, recommend promoting key concl
 
 ## Next Best Skill
 
-- **Primary**: [alert-manager](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/alert-manager/SKILL.md) — operationalize rank changes into thresholds and follow-ups.
+Follows the verdict-conditional branching pattern in [skill-contract.md §Termination rules for Next Best Skill chains](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md). Visited-set rule applies.
+
+- **Initial setup (no prior baseline in `memory/monitoring/rank-history/`)** → Primary: [alert-manager](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/alert-manager/SKILL.md) — operationalize the fresh baseline into thresholds and follow-ups.
+- **Subsequent runs (baseline already exists)** → Terminal (chain ends). A delta report against the prior baseline is the deliverable; no further handoff needed.
+- **Visited-set exception**: if `alert-manager` invoked this tracker (threshold breach), do NOT hand back to `alert-manager` — STOP chain and report chain-complete.

@@ -14,7 +14,7 @@
 | Link Database | `~~link database` | Ahrefs, Majestic, Moz Link Explorer | Ahrefs, Semrush |
 | Competitive Intel | `~~competitive intel` | SimilarWeb, SpyFu, Semrush | SimilarWeb, Semrush |
 | CDN / Hosting | `~~CDN` | Cloudflare, Fastly, Vercel, Netlify | Cloudflare, Vercel |
-| Page Speed | `~~page speed tool` | Google PageSpeed Insights, WebPageTest, GTmetrix | — |
+| Page Speed | `~~page speed tool` | Google PageSpeed Insights, WebPageTest, GTmetrix, Lighthouse CLI, Chrome UX Report (CrUX) API | — (no default MCP; see "Page speed data without an MCP" below) |
 | Schema Validator | `~~schema validator` | Google Rich Results Test, Schema.org Validator | — |
 | Knowledge Graph | `~~knowledge graph` | Google Knowledge Graph API, Wikidata SPARQL, DBpedia, CrunchBase | — |
 | Brand Monitor | `~~brand monitor` | Google Alerts, Brand24, Mention.com, Brandwatch | — |
@@ -57,6 +57,34 @@ To add more servers, edit `.mcp.json` at the project root:
   }
 }
 ```
+
+## Page speed data without an MCP
+
+`~~page speed tool` has no default MCP server (no vendor exposes one at the time of writing). Technical SEO audits rely on Core Web Vitals data; here is how to feed it manually:
+
+**Option 1 — PageSpeed Insights export (fastest)**
+- Run `https://pagespeed.web.dev/report?url=<your-url>` in a browser
+- Copy the JSON view or screenshot
+- Paste into the conversation when the skill asks for "performance data"
+
+**Option 2 — PSI API (automatable)**
+- Endpoint: `https://pagespeedonline.googleapis.com/pagespeedonline/v5/runPagespeed?url=<url>&strategy=mobile&key=<API_KEY>`
+- Get a free API key from Google Cloud Console (PageSpeed Insights API)
+- Paste the `lighthouseResult.audits` section when prompted
+
+**Option 3 — Lighthouse CLI (local)**
+- `npx lighthouse <url> --output json --output-path=./lh.json`
+- Paste relevant sections or summarize LCP/INP/CLS/TBT scores
+
+**Option 4 — Chrome UX Report (real-user data)**
+- Endpoint: `https://chromeuxreport.googleapis.com/v1/records:queryRecord` (needs API key)
+- Provides field data (real users) vs. lab data from PSI/Lighthouse
+- Best for site-wide LCP/INP/CLS summaries
+
+**Option 5 — `~~web crawler` integration (bulk)**
+- Screaming Frog or Sitebulb can call PageSpeed Insights API during crawl
+- Export CSV with per-URL Core Web Vitals
+- Paste the CSV when running bulk technical audits
 
 ## How Placeholders Work
 

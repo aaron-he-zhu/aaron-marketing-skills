@@ -54,14 +54,25 @@ metadata:
     # JA
     - "内部リンク最適化"
     - "サイト構造"
+    - "サイト構造改善"
+    - "孤立ページ"
+    - "内部リンク戦略"
+    - "アンカーテキスト最適化"
     # KO
     - "내부 링크 최적화"
     - "사이트 구조"
+    - "사이트 구조 개선"
+    - "고아 페이지"
+    - "앵커 텍스트"
     # ES
     - "enlaces internos"
     - "arquitectura del sitio"
+    - "páginas huérfanas"
+    - "estructura del sitio"
     # PT
     - "links internos"
+    - "arquitetura do site"
+    - "páginas órfãs"
     # Misspellings
     - "internal linkng"
 ---
@@ -79,9 +90,7 @@ This skill analyzes your site's internal link structure and provides recommendat
 
 ## When This Must Trigger
 
-Use this when the conversation involves any of these situations — even if the user does not use SEO terminology:
-
-Use this whenever the task needs a diagnosis or repair plan that should feed directly into remediation work, not just a one-time opinion.
+Use this when the conversation involves a diagnosis or repair plan that should feed directly into remediation work — even if the user doesn't use SEO terminology:
 
 - Improving site architecture for SEO
 - Distributing authority to important pages
@@ -144,11 +153,24 @@ Optimize anchor text across the site
 - **Promotes**: blocking defects, repeated weaknesses, and fix priorities to `memory/open-loops.md` and `memory/decisions.md`.
 - **Next handoff**: use the `Next Best Skill` below when the repair path is clear.
 
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
+
 ## Data Sources
 
 > **Note:** All integrations are optional. This skill works without any API keys — users provide data manually when no tools are connected.
 
 > See [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md) for tool category placeholders.
+
+**Scraping legality**: Before crawling any domain that is not your own or not under written authorization, verify `robots.txt` disallows, respect `Crawl-delay`, and confirm target TOS permits automated access. See [SECURITY.md §Scraping Boundaries](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/SECURITY.md).
 
 **With ~~web crawler + ~~analytics connected:**
 Claude can automatically perform a full site crawl via ~~web crawler to map the complete link graph, fetch page performance metrics from ~~analytics to identify high-value pages, and analyze link flow throughout the site. This enables data-driven internal linking strategies.
@@ -238,51 +260,9 @@ When a user requests internal linking optimization:
    2. [URL] - Delete or noindex
    ```
 
-3. **Analyze Anchor Text Distribution**
+3. **Analyze Anchor Text Distribution** — Current anchor patterns, distribution-by-page breakdown, over-optimization/generic flag, per-page recommendations (CORE-EEAT R08)
 
-   > **CORE-EEAT alignment**: Internal linking quality maps to R08 (Internal Link Graph) in the CORE-EEAT benchmark -- use descriptive anchors, ensure links support topical authority. See [content-quality-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/content-quality-auditor/SKILL.md) for full audit.
-
-   ```markdown
-   ## Anchor Text Analysis
-   
-   ### Current Anchor Text Patterns
-   
-   **Most Used Anchors**:
-   
-   | Anchor Text | Count | Target Pages | Assessment |
-   |-------------|-------|--------------|------------|
-   | "click here" | [X] | [X] pages | ❌ Not descriptive |
-   | "read more" | [X] | [X] pages | ❌ Not descriptive |
-   | "[exact keyword]" | [X] | [page] | ⚠️ May be over-optimized |
-   | "[descriptive phrase]" | [X] | [page] | ✅ Good |
-   
-   ### Anchor Text Distribution by Page
-   
-   **Page: [Important URL]**
-   
-   | Anchor Text | Source Page | Status |
-   |-------------|-------------|--------|
-   | "[anchor 1]" | [source URL] | ✅/⚠️/❌ |
-   | "[anchor 2]" | [source URL] | ✅/⚠️/❌ |
-   
-   **Issues Found**:
-   - Over-optimized anchors: [X] instances
-   - Generic anchors: [X] instances
-   - Same anchor to multiple pages: [X] instances
-   
-   ### Anchor Text Recommendations
-   
-   **For Page: [URL]**
-   
-   Current: "[current anchor]" used [X] times
-   
-   Recommended variety:
-   - "[variation 1]" - Use from [page type]
-   - "[variation 2]" - Use from [page type]
-   - "[variation 3]" - Use from [page type]
-   
-   **Anchor Score**: [X]/10
-   ```
+   > **Reference**: See [references/linking-templates.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/references/linking-templates.md) for the anchor text analysis template (Step 3) including the CORE-EEAT R08 alignment note.
 
 4. **Create Topic Cluster Link Strategy** — Map current pillar/cluster links, recommend link structure, list specific links to add
 
@@ -315,7 +295,11 @@ When a user requests internal linking optimization:
 
 ## Example
 
-> **Reference**: See [references/linking-example.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/references/linking-example.md) for a full worked example (email marketing best practices internal linking opportunities).
+**User**: "Find internal linking opportunities for my blog post on 'email marketing best practices'"
+
+**Output** (abbreviated): 5 high-value links identified — `/blog/grow-email-list/` for "building your email list" (para 2), `/blog/email-subject-lines/` for "subject lines" (para 5), `/blog/email-segmentation-guide/` for "audience segments", `/services/email-automation/` for CTA section, `/blog/best-email-tools/` for conclusion — each with paragraph location and recommended anchor text.
+
+> **Reference**: See [references/linking-example.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/references/linking-example.md) for the full worked example (email marketing best practices internal linking opportunities).
 
 ## Tips for Success
 
@@ -343,7 +327,7 @@ If any veto-level issue was found (CORE-EEAT T04, C01, R10 or CITE T03, T05, T09
 ## Reference Materials
 
 - [Link Architecture Patterns](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/references/link-architecture-patterns.md) — Architecture models (hub-and-spoke, silo, flat, pyramid, mesh), anchor text diversity framework, link equity flow model, and internal link audit checklist
-- [Linking Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/references/linking-templates.md) — Detailed output templates for steps 6-7 (navigation optimization, implementation plan)
+- [Linking Templates](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/references/linking-templates.md) — Detailed output templates for steps 3-7 (anchor text analysis, topic cluster strategy, contextual opportunities, navigation optimization, implementation plan)
 - [Linking Example](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/references/linking-example.md) — Full worked example for internal linking opportunities
 
 ## Next Best Skill

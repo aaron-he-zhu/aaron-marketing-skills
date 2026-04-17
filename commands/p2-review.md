@@ -31,7 +31,7 @@ Scans `memory/audits/YYYY-MM*.md` files for evidence that each P2 observation it
 
 | Item | Binary trigger | Data source |
 |---|---|---|
-| **Gap Typology field** | 3+ handoffs in `memory/audits/` with explicit `gap_type_missing` annotation from a downstream writer/refresher skill | `memory/audits/*.md` |
+| **Gap Typology field** | 3+ handoffs in `memory/audits/` with explicit `audit_gap_types: [missing, ...]` annotation from a downstream writer/refresher skill (per [examples.md §Auditor Handoff Archive Block Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/examples.md)) | `memory/audits/*.md` |
 | **40-tier cap number** | 30+ audits in `memory/audits/` with 2+ veto fails (BLOCKED status) | `memory/audits/*.md` |
 | **Failure Modes Catalog** (single shared file) | 5+ audits in `memory/audits/` with `false_positive: true` user annotation | `memory/audits/*.md` |
 | **Adversarial Pass** (alternative to removed Blind Pass) | Named user feedback: "audits feel mechanical" or equivalent | feedback channel, manual |

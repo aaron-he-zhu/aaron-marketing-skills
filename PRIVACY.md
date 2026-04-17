@@ -2,28 +2,41 @@
 
 ## Overview
 
-The SEO & GEO Skills Library is a collection of markdown-based skill files that run locally within your Claude Code environment. This project does not collect, store, or transmit any user data.
+The SEO & GEO Skills Library is a collection of markdown-based skill files that run locally within your Claude Code environment. This project does not collect, store, or transmit any user data by itself. When users invoke certain skills, those skills may fetch URLs or call connected MCP servers — the specifics are documented below.
 
-## Data Handling
+## Data Transmission (accurate as of 2026-04)
 
-### What This Project Does NOT Do
+### Default behavior
+By default, this library:
+- **Does NOT** transmit any data to external servers
+- **Does NOT** include telemetry or analytics
+- **Does NOT** automatically exfiltrate `memory/` contents
 
-- Does not collect analytics or telemetry
-- Does not store personal information
-- Does not transmit data to external servers
-- Does not use cookies or tracking mechanisms
-- Does not require account creation
+### When data DOES leave your machine (user-initiated)
 
-### What Stays Local
+**1. WebFetch-enabled skills** (`content-quality-auditor`, `on-page-seo-auditor`, `technical-seo-checker`, `schema-markup-generator`, `serp-analysis`):
+- These skills fetch URLs you provide
+- Your request headers (IP, User-Agent) reach the target server
+- Fetched page content re-enters your Claude session as context
+- Caveat: fetched content is treated as **untrusted data** (see each skill's Security boundary note), not instructions
 
-- All skill execution happens within your local Claude Code session
-- Memory files (HOT/WARM/COLD tiers) are stored locally in your project directory
-- MCP server configurations in `.mcp.json` are user-managed and local
-- No data leaves your environment unless you explicitly configure external MCP connectors
+**2. MCP connectors** (listed in `.mcp.json`):
+- Each active connector sends data to its vendor per the vendor's privacy policy
+- Connectors: Ahrefs, Semrush, SE Ranking, SISTRIX, SimilarWeb, Cloudflare, Vercel, HubSpot, Amplitude, Notion, Webflow, Sanity, Contentful, Slack (14 total, all HTTPS)
+- **No connector is enabled without explicit OAuth / API key setup**
 
-### Optional MCP Integrations
+**3. Memory files contain third-party data**:
+- `memory/audits/` may contain competitor URLs, target keywords, audit findings
+- `memory/entities/` may contain third-party brand/person names
+- Not transmitted by this library — but users should be aware when committing repo to public Git, sharing with AI agents, or syncing across devices
+- See [memory-management SKILL.md §GDPR / Privacy Compliance](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md) for retention + deletion guidance
 
-If you choose to connect external tools via `.mcp.json` (Ahrefs, SimilarWeb, HubSpot, etc.), data exchange with those services is governed by their respective privacy policies. This project does not intermediate or log those connections.
+### In scope for security review
+- Memory poisoning across sessions (malicious content written to `memory/` affecting future sessions)
+- WebFetch-injected instructions (prompt injection via target page HTML/meta)
+- Cross-session trust boundary (Stop hook auto-writes memory on user "save" confirmation — verify before approving)
+
+See [SECURITY.md](SECURITY.md) for responsible disclosure.
 
 ## Third-Party Services
 
@@ -40,4 +53,4 @@ For privacy-related questions: **hello@zhuhe.io**
 
 This privacy policy may be updated as the project evolves. Changes will be documented in commit history.
 
-*Last updated: 2026-04-01*
+*Last updated: 2026-04-17*

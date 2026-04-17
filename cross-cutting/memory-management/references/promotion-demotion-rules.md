@@ -1,10 +1,10 @@
 # Promotion and Demotion Rules
 
-Detailed triggers and actions for moving items between the hot cache (CLAUDE.md) and cold storage (memory/ subdirectories).
+Detailed triggers and actions for moving items between the hot cache (memory/hot-cache.md) and cold storage (memory/ subdirectories).
 
 ## Promotion Logic
 
-**Promote to Hot Cache when:**
+**Promote to hot cache when:**
 
 ### Keyword promotion triggers:
 - Keyword referenced in 3+ conversations within 7 days
@@ -24,7 +24,7 @@ Detailed triggers and actions for moving items between the hot cache (CLAUDE.md)
 
 **Promotion action:**
 ```markdown
-1. Add item to relevant section in CLAUDE.md
+1. Add item to relevant section in memory/hot-cache.md
 2. Add note: "Promoted [date] - [reason]"
 3. Keep detailed data in cold storage
 4. Set reminder to review in 30 days
@@ -51,8 +51,8 @@ Detailed triggers and actions for moving items between the hot cache (CLAUDE.md)
 
 **Demotion action:**
 ```markdown
-1. Remove from CLAUDE.md
+1. Remove from memory/hot-cache.md
 2. Archive full data in memory/[category]/archive/
-3. Add line to CLAUDE.md: "Last reviewed [category]: [date]"
+3. Add line to memory/hot-cache.md: "Last reviewed [category]: [date]"
 4. Keep 1-line summary if historically significant
 ```

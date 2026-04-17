@@ -79,9 +79,7 @@ Sets up proactive monitoring alerts for critical SEO and GEO metrics. Triggers n
 
 ## When This Must Trigger
 
-Use this when the conversation involves any of these situations — even if the user does not use SEO terminology:
-
-Use this whenever the task needs time-aware change detection, escalation, or stakeholder-ready visibility.
+Use this when the conversation involves time-aware change detection, escalation, or stakeholder-ready visibility — even if the user doesn't use SEO terminology:
 
 - Setting up SEO monitoring systems
 - Creating ranking drop alerts
@@ -139,6 +137,17 @@ Review and optimize my current SEO alerts
 - **Writes**: a user-facing monitoring deliverable plus a reusable summary that can be stored under `memory/monitoring/`.
 - **Promotes**: significant changes, confirmed anomalies, and follow-up actions to `memory/open-loops.md` and `memory/decisions.md`.
 - **Next handoff**: use the `Next Best Skill` below when a change needs action.
+
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
 
 ## Data Sources
 
@@ -334,4 +343,8 @@ If any findings should influence ongoing strategy, recommend promoting key concl
 
 ## Next Best Skill
 
-- **Primary**: [rank-tracker](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/rank-tracker/SKILL.md) — pair alerts with a baseline measurement workflow.
+Follows the verdict-conditional branching pattern in [skill-contract.md §Termination rules for Next Best Skill chains](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md). Visited-set rule applies.
+
+- **Alert configuration just completed and reporting cadence is requested** → Primary: [performance-reporter](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/monitor/performance-reporter/SKILL.md) — fold the configured alerts into a recurring stakeholder report.
+- **Alert configuration is a standalone setup (no reporting loop)** → Terminal (chain ends).
+- **Visited-set exception**: if `rank-tracker` invoked this skill for threshold setup, do NOT hand back to `rank-tracker` — STOP chain and report chain-complete.

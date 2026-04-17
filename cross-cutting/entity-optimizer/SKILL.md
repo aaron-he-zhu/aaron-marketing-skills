@@ -153,11 +153,24 @@ AI systems confuse [my entity] with [other entity] — help me disambiguate
 
 - **Reads**: the entity name, primary domain, known profiles, topic associations, and prior brand context from [CLAUDE.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CLAUDE.md) and the shared [State Model](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/state-model.md) when available.
 - **Writes**: a user-facing entity report plus a reusable profile that can be stored under `memory/entities/`.
-- **Promotes**: canonical names, sameAs links, disambiguation notes, and entity gaps to `CLAUDE.md`, `memory/entities/`, and `memory/open-loops.md`.
+- **Promotes**: canonical names, sameAs links, disambiguation notes, and entity gaps to `memory/hot-cache.md`, `memory/entities/`, and `memory/open-loops.md`.
 
 This skill is the sole writer of canonical entity profiles at `memory/entities/<name>.md`. Other skills write entity candidates to `memory/entities/candidates.md` only. When 3+ candidates accumulate, this skill should be recommended.
 
+**Profile schema**: the frontmatter of every canonical entity profile follows the authoritative contract in [references/entity-geo-handoff-schema.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/entity-geo-handoff-schema.md). That schema defines which fields downstream skills (`geo-content-optimizer`, `schema-markup-generator`, `meta-tags-optimizer`, `ai-overview-recovery`) depend on. Do not omit required fields — the consumers will degrade gracefully to `DONE_WITH_CONCERNS` and surface an `open_loop` pointing back here.
+
 - **Next handoff**: use the `Next Best Skill` below once the entity truth is clear.
+
+### Handoff Summary
+
+Emit this shape when finishing the skill (see [skill-contract.md §Handoff Summary Format](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/skill-contract.md) for the authoritative format):
+
+- **Status**: DONE / DONE_WITH_CONCERNS / BLOCKED / NEEDS_INPUT
+- **Objective**: what was analyzed, created, or fixed
+- **Key Findings / Output**: the highest-signal result
+- **Evidence**: URLs, data points, or sections reviewed
+- **Open Loops**: blockers, missing inputs, or unresolved risks
+- **Recommended Next Skill**: one primary next move
 
 ## Data Sources
 
@@ -181,6 +194,8 @@ Proceed with the audit using public search results, AI query testing, and SERP a
 ## Instructions
 
 When a user requests entity optimization:
+
+2. **GDPR Art 6 lawful-basis prompt (for third-party persons)** — if the entity being canonicalized is an individual (founder, author, public figure), the skill MUST prompt the user before writing to `memory/entities/`: "You are about to create a canonical profile for a person. Confirm your lawful basis under GDPR Art 6 for storing this individual's data: (1) consent, (2) legitimate interest, (3) contract, (4) other. If unsure, skip and return NEEDS_INPUT." Only proceed if user confirms a basis. Reference: [memory-management §GDPR / Privacy Compliance](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/SKILL.md).
 
 ### Step 1: Entity Discovery
 
@@ -239,77 +254,9 @@ Evaluate each signal as Pass / Fail / Partial with a specific action for each ga
 
 ### Step 3: Report & Action Plan
 
-```markdown
-## Entity Optimization Report
+Produce an Entity Optimization Report with: overview (entity/type/date), signal category summary (6-category ✅/⚠️/❌ table with findings), critical issues, top 5 priority actions (impact × effort), entity building roadmap (Week 1-2 → Month 1 → Month 2-3 → Ongoing), and CORE-EEAT A07/A08 + CITE I01-I10 cross-reference.
 
-### Overview
-
-- **Entity**: [name]
-- **Entity Type**: [type]
-- **Audit Date**: [date]
-
-### Signal Category Summary
-
-| Category | Status | Key Findings |
-|----------|--------|-------------|
-| Structured Data | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| Knowledge Base | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| Consistency (NAP+E) | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| Content-Based | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| Third-Party | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-| AI-Specific | ✅ Strong / ⚠️ Gaps / ❌ Missing | [key findings] |
-
-### Critical Issues
-
-[List any issues that severely impact entity recognition — disambiguation problems, incorrect Knowledge Panel, missing from Knowledge Graph entirely]
-
-### Top 5 Priority Actions
-
-Sorted by: impact on entity recognition × effort required
-
-1. **[Signal]** — [specific action]
-   - Impact: [High/Medium] | Effort: [Low/Medium/High]
-   - Why: [explanation of how this improves entity recognition]
-
-2. **[Signal]** — [specific action]
-   - Impact: [High/Medium] | Effort: [Low/Medium/High]
-   - Why: [explanation]
-
-3–5. [Same format]
-
-### Entity Building Roadmap
-
-#### Week 1-2: Foundation (Structured Data + Consistency)
-- [ ] Implement/fix Organization or Person schema with full properties
-- [ ] Add sameAs links to all authoritative profiles
-- [ ] Audit and fix NAP+E consistency across all platforms
-- [ ] Ensure About page is entity-rich and well-structured
-
-#### Month 1: Knowledge Bases
-- [ ] Create or update Wikidata entry with complete properties
-- [ ] Ensure CrunchBase / industry directory profiles are complete
-- [ ] Build Wikipedia notability (or plan path to notability)
-- [ ] Submit to relevant authoritative directories
-
-#### Month 2-3: Authority Building
-- [ ] Secure mentions on authoritative industry sites
-- [ ] Build co-citation signals with established entities
-- [ ] Create topical content clusters that reinforce entity-topic associations
-- [ ] Pursue PR opportunities that generate entity mentions
-
-#### Ongoing: AI-Specific Optimization
-- [ ] Test AI entity resolution quarterly
-- [ ] Update factual claims to remain current and verifiable
-- [ ] Monitor AI systems for incorrect entity information
-- [ ] Ensure new content reinforces entity identity signals
-
-### Cross-Reference
-
-- **CORE-EEAT relevance**: Items A07 (Knowledge Graph Presence) and A08 (Entity Consistency) directly overlap — entity optimization strengthens Authority dimension
-- **CITE relevance**: CITE I01-I10 (Identity dimension) measures entity signals at domain level — entity optimization feeds these scores
-- For content-level audit: `content-quality-auditor`
-- For domain-level audit: `domain-authority-auditor`
-```
+> **Reference**: See [references/entity-signal-checklist.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/entity-signal-checklist.md) for the full Step 3 report template.
 
 ### Save Results
 
@@ -345,17 +292,15 @@ If any veto-level issue was found (CORE-EEAT T04, C01, R10 or CITE T03, T05, T09
 
 ## Example
 
-> **Reference**: See [references/example-audit-report.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/example-audit-report.md) for a complete example entity audit report for a B2B SaaS company (CloudMetrics), including AI entity resolution test results, entity health summary, top 3 priority actions, and CORE-EEAT/CITE cross-references.
+**User**: "Audit entity presence for Acme Analytics, our B2B SaaS analytics platform at acme-analytics.example"
+
+**Output** (abbreviated): AI resolution test shows partial recognition — ChatGPT described it as a generic "analytics tool" without B2B specificity; not listed among enterprise analytics players; founder unknown to AI systems. Health summary flags missing Wikidata entry, no Knowledge Panel, and 3 priority actions — Wikidata submission, sameAs links, and a founder-bio page.
+
+> **Reference**: See [references/example-audit-report.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/example-audit-report.md) for the full entity audit report including AI resolution test results, entity health summary, top 3 priority actions, and CORE-EEAT/CITE cross-references.
 
 ## Tips for Success
 
-1. **Start with Wikidata** — It's the single most influential editable knowledge base; a complete Wikidata entry with references often triggers Knowledge Panel creation within weeks
-2. **sameAs is your most powerful Schema.org property** — It directly tells search engines "I am this entity in the Knowledge Graph"; always include Wikidata URL first
-3. **Test AI recognition before and after** — Query ChatGPT, Claude, Perplexity, and Google AI Overview before optimizing, then again after; this is the most direct GEO metric
-4. **Entity signals compound** — Unlike content SEO, entity signals from different sources reinforce each other; 5 weak signals together are stronger than 1 strong signal alone
-5. **Consistency beats completeness** — A consistent entity name and description across 10 platforms beats a perfect profile on just 2
-6. **Don't neglect disambiguation** — If your entity name is shared with anything else, disambiguation is the first priority; all other signals are wasted if they're attributed to the wrong entity
-7. **Pair with CITE I-dimension for domain context** — Entity audit tells you how well the entity is recognized; CITE Identity (I01-I10) tells you how well the domain represents that entity; use both together
+> **Reference**: See [references/entity-signal-checklist.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/entity-signal-checklist.md) for the full 7-item Tips for Success list (start with Wikidata, leverage sameAs, test AI recognition before/after, compounding signals, consistency > completeness, disambiguation-first, pair with CITE I-dimension).
 
 ## Entity Type Reference
 
@@ -368,9 +313,12 @@ If any veto-level issue was found (CORE-EEAT T04, C01, R10 or CITE T03, T05, T09
 ## Reference Materials
 
 Detailed guides for entity optimization:
-- [references/entity-signal-checklist.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/entity-signal-checklist.md) — Complete signal checklist with verification methods
+- [references/entity-signal-checklist.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/entity-signal-checklist.md) — Complete signal checklist with verification methods, Step 3 report template, and Tips for Success
 - [references/knowledge-graph-guide.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/entity-optimizer/references/knowledge-graph-guide.md) — Wikidata, Wikipedia, and Knowledge Graph optimization playbook
 
 ## Next Best Skill
 
 - **Primary**: [schema-markup-generator](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/schema-markup-generator/SKILL.md) — turn entity truth into machine-readable implementation.
+- **Also consider**:
+  - [geo-content-optimizer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/geo-content-optimizer/SKILL.md) — if the core gap is AI-engine recognition (ChatGPT / Perplexity don't know the brand).
+  - [seo-content-writer](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/build/seo-content-writer/SKILL.md) — if a new About / founder page is needed to establish the entity.

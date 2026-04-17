@@ -1,16 +1,18 @@
 # SEO & GEO 技能库
 
-**20 个技能。9 个命令。搜索排名 + AI 引用，一次搞定。**
+**20 个技能。12 个命令。搜索排名 + AI 引用，一次搞定。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-8.0.0-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE)
 
-[English](../README.md) | **中文** | [日本語](README.ja.md) | [한국어](README.ko.md) | [Espanol](README.es.md) | [Portugues](README.pt.md)
+[English](../README.md) | **中文** | [日本語](README.ja.md) | [한국어](README.ko.md) | [Español](README.es.md) | [Português](README.pt.md)
 
 面向搜索引擎优化（SEO）和生成式引擎优化（GEO）的 Claude 技能与命令集。零依赖，支持 [Claude Code](https://claude.ai/download)、[Cursor](https://cursor.com)、[Codex](https://openai.com/codex) 及 [35+ 其他代理](https://skills.sh)。内容质量由 [CORE-EEAT 基准](https://github.com/aaron-he-zhu/core-eeat-content-benchmark)（80 项）评分，域名权威由 [CITE 域名评级](https://github.com/aaron-he-zhu/cite-domain-rating)（40 项）评分。
 
 > **SEO** 让你在搜索结果中获得排名。**GEO** 让你被 AI 系统（ChatGPT、Perplexity、Google AI Overviews）引用。本库同时覆盖两者。
+
+不熟悉术语？请查看 [GLOSSARY.md](../GLOSSARY.md)。
 
 ### 为什么选择这个技能库
 

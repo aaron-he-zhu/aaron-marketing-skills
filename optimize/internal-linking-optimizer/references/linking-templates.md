@@ -1,6 +1,54 @@
 # Internal Linking Optimizer — Output Templates
 
-Detailed output templates for internal-linking-optimizer steps 4-7. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/SKILL.md).
+Detailed output templates for internal-linking-optimizer steps 3-7. Referenced from [SKILL.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/optimize/internal-linking-optimizer/SKILL.md).
+
+---
+
+## Step 3: Analyze Anchor Text Distribution
+
+**CORE-EEAT alignment**: Internal linking quality maps to R08 (Internal Link Graph) in the CORE-EEAT benchmark -- use descriptive anchors, ensure links support topical authority. See [content-quality-auditor](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/content-quality-auditor/SKILL.md) for full audit.
+
+```markdown
+## Anchor Text Analysis
+
+### Current Anchor Text Patterns
+
+**Most Used Anchors**:
+
+| Anchor Text | Count | Target Pages | Assessment |
+|-------------|-------|--------------|------------|
+| "click here" | [X] | [X] pages | ❌ Not descriptive |
+| "read more" | [X] | [X] pages | ❌ Not descriptive |
+| "[exact keyword]" | [X] | [page] | ⚠️ May be over-optimized |
+| "[descriptive phrase]" | [X] | [page] | ✅ Good |
+
+### Anchor Text Distribution by Page
+
+**Page: [Important URL]**
+
+| Anchor Text | Source Page | Status |
+|-------------|-------------|--------|
+| "[anchor 1]" | [source URL] | ✅/⚠️/❌ |
+| "[anchor 2]" | [source URL] | ✅/⚠️/❌ |
+
+**Issues Found**:
+- Over-optimized anchors: [X] instances
+- Generic anchors: [X] instances
+- Same anchor to multiple pages: [X] instances
+
+### Anchor Text Recommendations
+
+**For Page: [URL]**
+
+Current: "[current anchor]" used [X] times
+
+Recommended variety:
+- "[variation 1]" - Use from [page type]
+- "[variation 2]" - Use from [page type]
+- "[variation 3]" - Use from [page type]
+
+**Anchor Score**: [X]/10
+```
 
 ---
 
