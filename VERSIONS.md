@@ -8,28 +8,122 @@ Current versions of all skills. Agents can fetch this file from `https://raw.git
 
 | Skill | Category | Version | Last Updated |
 |-------|----------|---------|--------------|
-| keyword-research | research | 8.0.0 | 2026-04-15 |
-| competitor-analysis | research | 8.0.0 | 2026-04-15 |
-| serp-analysis | research | 8.0.0 | 2026-04-15 |
-| content-gap-analysis | research | 8.0.0 | 2026-04-15 |
-| seo-content-writer | build | 8.0.0 | 2026-04-15 |
-| geo-content-optimizer | build | 8.0.0 | 2026-04-15 |
-| meta-tags-optimizer | build | 8.0.0 | 2026-04-15 |
-| schema-markup-generator | build | 8.0.0 | 2026-04-15 |
-| on-page-seo-auditor | optimize | 8.0.0 | 2026-04-15 |
-| technical-seo-checker | optimize | 8.0.0 | 2026-04-15 |
-| internal-linking-optimizer | optimize | 8.0.0 | 2026-04-15 |
-| content-refresher | optimize | 8.0.0 | 2026-04-15 |
-| rank-tracker | monitor | 8.0.0 | 2026-04-15 |
-| backlink-analyzer | monitor | 8.0.0 | 2026-04-15 |
-| performance-reporter | monitor | 8.0.0 | 2026-04-15 |
-| alert-manager | monitor | 8.0.0 | 2026-04-15 |
-| content-quality-auditor | cross-cutting | 8.0.0 | 2026-04-15 |
-| domain-authority-auditor | cross-cutting | 8.0.0 | 2026-04-15 |
-| entity-optimizer | cross-cutting | 8.0.0 | 2026-04-15 |
-| memory-management | cross-cutting | 8.0.0 | 2026-04-15 |
+| keyword-research | research | 9.0.0 | 2026-04-17 |
+| competitor-analysis | research | 9.0.0 | 2026-04-17 |
+| serp-analysis | research | 9.0.0 | 2026-04-17 |
+| content-gap-analysis | research | 9.0.0 | 2026-04-17 |
+| seo-content-writer | build | 9.0.0 | 2026-04-17 |
+| geo-content-optimizer | build | 9.0.0 | 2026-04-17 |
+| meta-tags-optimizer | build | 9.0.0 | 2026-04-17 |
+| schema-markup-generator | build | 9.0.0 | 2026-04-17 |
+| on-page-seo-auditor | optimize | 9.0.0 | 2026-04-17 |
+| technical-seo-checker | optimize | 9.0.0 | 2026-04-17 |
+| internal-linking-optimizer | optimize | 9.0.0 | 2026-04-17 |
+| content-refresher | optimize | 9.0.0 | 2026-04-17 |
+| rank-tracker | monitor | 9.0.0 | 2026-04-17 |
+| backlink-analyzer | monitor | 9.0.0 | 2026-04-17 |
+| performance-reporter | monitor | 9.0.0 | 2026-04-17 |
+| alert-manager | monitor | 9.0.0 | 2026-04-17 |
+| content-quality-auditor | cross-cutting | 9.0.0 | 2026-04-17 |
+| domain-authority-auditor | cross-cutting | 9.0.0 | 2026-04-17 |
+| entity-optimizer | cross-cutting | 9.0.0 | 2026-04-17 |
+| memory-management | cross-cutting | 9.0.0 | 2026-04-17 |
 
 ## Changelog
+
+### v9.0.0 — Quality Pass + Multi-Agent Compatibility (2026-04-17)
+
+Major release combining three streams of work: (1) a 6-agent panel quality review with legal/compliance hardening, (2) ten new playbooks and instructions-detail references that make skills directly executable without inline bloat, and (3) native install support for five additional AI coding agents.
+
+**Heads-up for existing users**: no breaking changes to skill I/O contracts. Score numbers may shift slightly on re-audit because of new FTC/GDPR/WCAG checks and tightened veto evaluation; if so, the affected item is flagged in the "Critical Issue to Fix" section. The core operating model (trigger → quick start → skill contract → handoff → next best skill) is unchanged.
+
+#### Legal & Compliance (new)
+
+- **SECURITY.md** scraping boundaries — robots.txt, CFAA, hiQ v LinkedIn / Meta v Bright Data precedents, EU DSM Art 4 TDM-reservation awareness
+- **FTC 16 CFR §255.5** affiliate disclosure enforcement in CORE-EEAT T04 — five new sub-items; $51,744/violation exposure baked into veto logic
+- **GDPR Art 4 / Art 17** retention + deletion flow in `memory-management`; **Art 6** lawful-basis prompt in `entity-optimizer`
+- **EU AI Act Art 53** TDM reservation in `technical-seo-checker/references/llm-crawler-handling.md`
+- **ADA / WCAG 2.2 AA** alt-text rebalance — 1.1.1 descriptive primary, SEO keyword secondary (previous ordering risked ADA compliance claims)
+- **Schema aggregateRating** truth warnings on 4 template blocks (preventing fake-rating schemas)
+- **Trademark annotations** — Moz Domain Authority™ / Ahrefs Domain Rating™ referenced with TM glyphs where first mentioned
+
+#### New Playbooks (high-value, directly usable)
+
+- `build/geo-content-optimizer/references/ai-overview-recovery.md` — playbook for recovering traffic after losing Google AI Overview citation
+- `optimize/on-page-seo-auditor/references/bulk-audit-playbook.md` — site-wide batch audit workflow
+- `optimize/technical-seo-checker/references/bulk-audit-playbook.md` — counterpart for technical health
+- `optimize/technical-seo-checker/references/ecommerce-platform-patterns.md` — Shopify, WooCommerce, Headless, BigCommerce, Magento common issues
+- `optimize/technical-seo-checker/references/llm-crawler-handling.md` — robots.txt patterns for GPTBot, ClaudeBot, Gemini, Perplexity, etc.
+- `optimize/technical-seo-checker/references/pre-migration-playbook.md` — 6-stage WordPress → Headless migration guide
+- Inter-skill contracts: `references/entity-geo-handoff-schema.md` (entity-optimizer ↔ geo-content-optimizer) and `references/geo-score-feedback-loop.md` (T+14/T+45/T+90 validation protocol)
+
+#### New command
+
+- `/seo:geo-drift-check` (experimental) — validates predicted GEO Score against actual AI-engine citation behavior. Pure-markdown command; uses whichever AI-engine MCP the user has connected. No Python scripts, no scheduled runners, no bundled API keys.
+
+#### Content Quality (SKILL.md size compliance)
+
+- 11 SKILL.md files trimmed to ≤350 lines per CLAUDE.md rule. Execution detail moved to `references/instructions-detail.md` (9 new reference files across research/build/cross-cutting). Skill body now declares behavior; detail file defines procedure. Reduces cold-load token footprint by ~40% on affected skills.
+- Handoff Summary template added to all 18 non-auditor skills (20/20 coverage now).
+
+#### Memory System Expansion
+
+- Memory scaffolding: `memory/glossary.md`, `memory/decisions.md`, `memory/open-loops.md`, `memory/entities/candidates.md`, `memory/geo-feedback/` (with YAML frontmatter + initial templates)
+- Top-level `GLOSSARY.md` (12 library-internal terms) linked from README and 5 localized docs. Reduces jargon friction for new users.
+
+#### Contract Hardening
+
+- Cap rounding determinism: `math.floor` rule added to Runbook §2 (no more 59.8 vs 59 off-by-one)
+- Runbook SHA256 alignment made six-way (source × 3 + block × 4) via class marker for `contract-lint` reliability
+- Next Best Skill cycle termination: verdict-conditional + visited-set patterns in 5 skills, documented in `skill-contract.md`
+- `class: auditor-output` frontmatter marker added for hook field decoupling
+- Wiki sole-writer delegation clarified in `state-model.md`
+- HOT tier identity unified (32 stale `CLAUDE.md` references swapped for `memory/hot-cache.md`)
+- `gap_type` namespace disambiguation (entity vs audit)
+- `approved_by` provenance cascade for `memory/decisions.md`
+
+#### i18n & UX
+
+- Quick Start in 60 seconds — 3-step TL;DR above the detailed install table
+- Commands tier split: 10 user (day-to-day) + 3 maintenance (for power users)
+- Next Best decision trees embedded in 5 skills (`keyword-research`, `content-quality-auditor`, `on-page-seo-auditor`, `competitor-analysis`, `entity-optimizer`)
+- Mini-examples (User prompt + Output + Reference link) in 10 trimmed Example sections
+- Jargon dimension codes (C/O/R/E/Exp/Ept/A/T) removed from `/seo:audit-page` and `/seo:audit-domain` user-visible output
+- `--technical` flag removed (§5 violation)
+- 3 thin skills expanded: `memory-management`, `internal-linking-optimizer`, `schema-markup-generator` (+39 triggers in JA/KO/ES/PT + misspellings)
+- ES/PT diacritics restored (48 accented characters each, 0 regressions)
+- Language switcher labels corrected: Espanol → Español, Portugues → Português
+
+#### Native Install (5 more agents)
+
+Carried forward from v8.0.3 interim work:
+
+- Gemini CLI: `gemini extensions install <github-url>` — via new `gemini-extension.json`
+- Qwen Code: `qwen extensions install <github-url>` — via new `qwen-extension.json`
+- Amp: `amp skill add aaron-he-zhu/seo-geo-claude-skills` — works out-of-box
+- Kimi Code CLI: `kimi plugin install <github-url>` — works out-of-box
+- CodeBuddy: `/plugin marketplace add <repo>` then `/plugin install aaron-seo-geo` (in-app 2-step) — via new `.codebuddy-plugin/marketplace.json`
+- `scripts/sync-versions.py` — developer utility that propagates version from `.claude-plugin/plugin.json` to all cross-agent manifests
+
+#### Infrastructure
+
+- `cloudmetrics.io` (real domain, tort risk) replaced with `acme-analytics.example` (RFC 2606 reserved) in examples
+- `hooks.json` dangling reference fixed (`examples.md §Archive Block Format`)
+- PRIVACY.md accuracy rewrite (default no-transmit + WebFetch + MCP explicit)
+- PostToolUse hook session-level debounce (content-quality nag suppression)
+- Wiki init threshold lowered (5 → 3 non-stub files)
+- Artifact Gate structural requirements now checked via path + frontmatter rather than prose grep
+
+#### Validators (all green)
+
+- validate-skill.sh: 20/20 pass, 0 warnings
+- validate-descriptions.py: 20/20 pass
+- JSON parse (plugin, marketplace, .mcp.json, hooks.json, gemini-extension, qwen-extension, .codebuddy-plugin/marketplace): 7/7 OK
+- 622 GitHub absolute URLs verified resolvable
+- 160/160 required skill sections present
+- Six-way SHA256 alignment verified across inlined Runbook §1-5
+
+---
 
 ### v8.0.0 — Unified Version Release (2026-04-15)
 

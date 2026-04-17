@@ -1,6 +1,6 @@
 # SEO & GEO Skills Library — Claude Code Context
 
-This plugin provides **20 skills and 12 commands** for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). All 20 skills follow one shared contract: trigger, quick start, skill contract, handoff summary, and next best skill. Skills are auto-loaded by context; commands are invoked with `/seo:`.
+This plugin provides **20 skills and 13 commands** for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). All 20 skills follow one shared contract: trigger, quick start, skill contract, handoff summary, and next best skill. Skills are auto-loaded by context; commands are invoked with `/seo:`.
 
 ## Skills by Phase
 
@@ -14,7 +14,7 @@ This plugin provides **20 skills and 12 commands** for Search Engine Optimizatio
 
 ## One-Shot Commands
 
-**User commands (9)** — day-to-day SEO/GEO work:
+**User commands (10)** — day-to-day SEO/GEO work:
 
 ```
 /seo:audit-page      — On-page SEO + CORE-EEAT audit
@@ -26,6 +26,7 @@ This plugin provides **20 skills and 12 commands** for Search Engine Optimizatio
 /seo:generate-schema — JSON-LD structured data
 /seo:report          — Performance report
 /seo:setup-alert     — Monitoring alert configuration
+/seo:geo-drift-check — (experimental, v9.0+) Validate GEO Score against actual AI-engine citations
 ```
 
 **Maintenance commands (3)** — for library maintainers / power users. Safe to ignore for daily use:

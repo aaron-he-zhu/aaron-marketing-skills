@@ -1,8 +1,8 @@
 {
   "id": "aaron-seo-geo",
   "name": "aaron-seo-geo",
-  "version": "8.0.2",
-  "description": "20 SEO and GEO skills plus 12 commands on one shared operating contract. Includes protocol-layer gates for content quality, domain trust, entity truth, and campaign memory alongside keyword research, content creation, audits, monitoring, schema markup, and AI citation optimization. v8.0.0 unifies all skill versions to 8.0.0 with Auditor Runbook inline strategy, Critical Fail Cap enforcement, Guardrail Negatives, contract-lint and p2-review commands.",
+  "version": "9.0.0",
+  "description": "20 SEO and GEO skills plus 13 commands on one shared operating contract. Includes protocol-layer gates for content quality, domain trust, entity truth, and campaign memory alongside keyword research, content creation, audits, monitoring, schema markup, and AI citation optimization. v8.0.0 unifies all skill versions to 8.0.0 with Auditor Runbook inline strategy, Critical Fail Cap enforcement, Guardrail Negatives, contract-lint and p2-review commands.",
   "author": {
     "name": "Aaron He Zhu",
     "email": "hello@zhuhe.io",

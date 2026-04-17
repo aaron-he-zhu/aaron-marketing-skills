@@ -1,7 +1,7 @@
 ---
 name: keyword-research
 description: 'Find high-value SEO keywords: search volume, difficulty, intent classification, topic clusters. 关键词研究/内容选题'
-version: "8.0.0"
+version: "9.0.0"
 license: Apache-2.0
 compatibility: "Claude Code ≥1.0, skills.sh marketplace, ClawHub marketplace, Vercel Labs skills ecosystem. No system packages required. Optional: MCP network access for SEO tool integrations."
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when starting keyword research for a new page, topic, or campa
 argument-hint: "<topic or seed keyword> [market/language]"
 metadata:
   author: aaron-he-zhu
-  version: "8.0.0"
+  version: "9.0.0"
   geo-relevance: "medium"
   tags:
     - seo

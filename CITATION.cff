@@ -2,15 +2,15 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "SEO & GEO Skills Library"
-abstract: "Claude Skills and Commands for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). 20 skills, 12 commands, and one shared operating contract."
+abstract: "Claude Skills and Commands for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). 20 skills, 13 commands, and one shared operating contract."
 authors:
   - family-names: Zhu
     given-names: Aaron He
     email: hello@zhuhe.io
 repository-code: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
 license: Apache-2.0
-version: "8.0.0"
-date-released: "2026-04-15"
+version: "9.0.0"
+date-released: "2026-04-17"
 keywords:
   - seo
   - geo

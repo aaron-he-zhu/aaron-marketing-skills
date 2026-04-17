@@ -10,7 +10,7 @@ Guidelines for AI agents working in this repository.
 - **License**: Apache 2.0
 - **Skills Specification**: [Agent Skills](https://agentskills.io/specification.md)
 
-This is a content-only repository (no executable code). It contains 20 SEO and GEO skills, 12 one-shot commands, and shared reference documents for AI coding agents.
+This is a content-only repository (no executable code). It contains 20 SEO and GEO skills, 13 one-shot commands, and shared reference documents for AI coding agents.
 
 ## Repository Structure
 
