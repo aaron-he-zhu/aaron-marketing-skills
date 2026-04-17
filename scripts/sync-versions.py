@@ -42,9 +42,30 @@ TARGETS = [
 
 
 def set_path(obj, dotted_path, value):
-    """Set a dotted path (supports `plugins[*].version` list wildcard). Returns count of writes."""
+    """Set a dotted path (supports `plugins[*].version` list wildcard). Returns count of writes.
+
+    Limitation: splits on `.` so real JSON keys containing `.` are unsupported.
+    None of the current target files use such keys; revisit if a new target does.
+    """
     parts = dotted_path.split(".")
     return _walk(obj, parts, value)
+
+
+def _path_exists(cur, parts):
+    """Diagnostic helper: does the path resolve to an existing field (regardless of value)?"""
+    if not parts:
+        return True
+    head, *rest = parts
+    if head.endswith("[*]"):
+        key = head[:-3]
+        if not isinstance(cur, dict) or key not in cur or not isinstance(cur[key], list):
+            return False
+        return any(_path_exists(item, rest) for item in cur[key])
+    if not rest:
+        return isinstance(cur, dict) and head in cur
+    if isinstance(cur, dict) and head in cur:
+        return _path_exists(cur[head], rest)
+    return False
 
 
 def _walk(cur, parts, value):
@@ -86,12 +107,18 @@ def main():
     print(f"{mode}Target version: {version}")
 
     changed_files = 0
+    missing_path_files = 0
     for target, paths in TARGETS:
         if not target.exists():
             print(f"  skip    {target.relative_to(ROOT)} (not found)")
             continue
 
         data = json.loads(target.read_text())
+        # Count how many configured paths exist in this file (to distinguish
+        # "already synced" from "configured paths not present").
+        paths_found = sum(
+            1 for p in paths if _path_exists(data, p.split("."))
+        )
         writes = sum(set_path(data, p, version) for p in paths)
         if writes:
             changed_files += 1
@@ -100,9 +127,15 @@ def main():
             else:
                 target.write_text(json.dumps(data, indent=2) + "\n")
                 print(f"  updated     {target.relative_to(ROOT)} ({writes} field(s))")
+        elif paths_found == 0:
+            missing_path_files += 1
+            print(f"  WARN        {target.relative_to(ROOT)} (none of {paths} found — stale config?)")
         else:
-            print(f"  ok          {target.relative_to(ROOT)}")
+            print(f"  ok          {target.relative_to(ROOT)} ({paths_found}/{len(paths)} path(s) already at {version})")
 
+    if missing_path_files:
+        print(f"{mode}Done. {changed_files} file(s) {'would change' if args.dry_run else 'changed'}. {missing_path_files} file(s) had NO configured paths — fix TARGETS.", file=sys.stderr)
+        return 1 if not args.dry_run else 0
     print(f"{mode}Done. {changed_files} file(s) {'would change' if args.dry_run else 'changed'}.")
     return 0
 

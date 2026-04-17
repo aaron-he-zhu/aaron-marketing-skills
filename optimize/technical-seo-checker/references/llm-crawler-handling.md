@@ -193,7 +193,10 @@ X-Robots-Tag: noai, notrain
 Reference: [W3C TDM Reservation Protocol](https://www.w3.org/2022/tdmrep/).
 
 ### EU AI Act Art 53(1)(c) — GPAI provider obligations
-Effective 2025-08. General-Purpose AI Model providers (OpenAI, Anthropic, Google, etc.) must:
+
+> **Phased application of the AI Act**: the Act entered into force 2024-08; prohibited-practice provisions applied from 2025-02; **GPAI provider obligations (Art 51-55, including Art 53 summary-of-training-data) applied from 2025-08-02**; general applicability to high-risk systems phases through 2026-08. The date below refers specifically to when Art 53 GPAI obligations became applicable, not the whole Act.
+
+Art 53 applicable date: **2025-08-02**. General-Purpose AI Model providers (OpenAI, Anthropic, Google, etc.) must:
 - Publish summary of training data content
 - Respect opt-out signals including `tdm-reservation`
 - Establish copyright policy
