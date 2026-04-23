@@ -1,7 +1,7 @@
 ---
 name: serp-analysis
 description: 'Analyze SERPs: ranking factors, features, intent patterns, AI overviews, featured snippets. SERP分析/搜索结果'
-version: "9.0.0"
+version: "9.0.1"
 license: Apache-2.0
 compatibility: "Claude Code ≥1.0, skills.sh marketplace, ClawHub marketplace, Vercel Labs skills ecosystem. No system packages required. Optional: MCP network access for SEO tool integrations."
 allowed-tools: WebFetch
@@ -10,7 +10,7 @@ when_to_use: "Use when analyzing search engine results pages, SERP features, fea
 argument-hint: "<keyword or query>"
 metadata:
   author: aaron-he-zhu
-  version: "9.0.0"
+  version: "9.0.1"
   geo-relevance: "high"
   tags:
     - seo

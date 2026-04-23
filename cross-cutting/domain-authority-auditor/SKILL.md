@@ -1,7 +1,7 @@
 ---
 name: domain-authority-auditor
 description: '40-item CITE domain audit: citation, impact, trust, entity scoring with veto checks. 域名权威/网站可信度'
-version: "9.0.0"
+version: "9.0.1"
 license: Apache-2.0
 compatibility: "Claude Code ≥1.0, skills.sh marketplace, ClawHub marketplace, Vercel Labs skills ecosystem. No system packages required. Optional: MCP network access for SEO tool integrations."
 homepage: "https://github.com/aaron-he-zhu/seo-geo-claude-skills"
@@ -10,7 +10,7 @@ argument-hint: "<domain>"
 class: auditor
 metadata:
   author: aaron-he-zhu
-  version: "9.0.0"
+  version: "9.0.1"
   geo-relevance: "medium"
   tags:
     - seo
