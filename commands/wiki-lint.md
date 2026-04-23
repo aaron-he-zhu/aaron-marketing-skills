@@ -32,6 +32,19 @@ Scans `memory/wiki/` compiled pages and `memory/` WARM files for inconsistencies
 /seo:wiki-lint --retire-preview
 ```
 
+## Workflow
+
+1. **Discover pages** — Glob `memory/wiki/*.md` (filtered by `--project` if specified) to enumerate all compiled wiki pages.
+2. **Build WARM index** — Read all `memory/` WARM files (`*.md`, excluding `wiki/`) to map entity/keyword → source path + current content hash.
+3. **Contradiction scan** — For each entity/keyword appearing in two or more pages or WARM files, compare claim values. Tag each conflict HIGH / MEDIUM / LOW per the resolution table below.
+4. **Stale claim scan** — For each `sources.hash` entry in a compiled wiki page, recompute `shasum -a 256` on the referenced WARM file and compare. Drift = stale claim.
+5. **Orphan detection** — Build an inbound-link index from all wiki pages; flag any page with zero inbound links from other wiki pages.
+6. **Missing page detection** — Count entity/keyword mentions across all wiki pages; flag any entity mentioned 3+ times with no dedicated page.
+7. **Cross-reference gap detection** — For each pair of pages sharing a topic, confirm both pages link to each other; flag missing reciprocal links.
+8. **HOT drift check** — Compare active values in `memory/hot-cache.md` against the current wiki page for each entity/keyword.
+9. **Hash recheck** — Re-run the hash comparison from step 4 to catch any file changes during the scan.
+10. **Report** — Produce structured output in the format below and append to `memory/wiki/log.md`.
+
 ## Checks Performed
 
 | Check | Description | Auto-fixable |
