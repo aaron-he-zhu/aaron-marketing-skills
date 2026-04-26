@@ -20,6 +20,7 @@ Claude Skills and Commands for Search Engine Optimization (SEO) and Generative E
    - **Claude Code**: `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills`
    - **OpenClaw**: [clawhub.ai/plugins/aaron-seo-geo](https://clawhub.ai/plugins/aaron-seo-geo)
    - **Universal (any agent)**: `npx skills add aaron-he-zhu/seo-geo-claude-skills`
+   - **Chinese discovery**: [Skills宝](https://skilery.com) for more skills in Chinese
 
 2. **Try it** — a skill auto-activates from natural language:
    ```
