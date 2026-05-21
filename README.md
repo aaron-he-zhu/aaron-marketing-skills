@@ -7,10 +7,11 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/aaron-he-zhu/seo-geo-claude-skills)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/commits/main)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-purple)](https://claude.ai/download)
+[![Codex Plugin](https://img.shields.io/badge/Codex%20Plugin-compatible-10A37F)](https://developers.openai.com/codex/plugins/build)
 
 [English](README.md) | [中文](docs/README.zh.md)
 
-Claude Skills and Commands for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). This repository is the candidate SEO/GEO anchor capability pack for slash-aaron. Skill content is zero-dependency Markdown; Claude Code hooks use a small Bash runner. Install targets and support claims are maintained in the [Marketplace Module](marketplaces/README.md) and [platform registry](distribution/platforms.json). Content quality uses [CORE-EEAT](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (80 items); domain trust uses [CITE](https://github.com/aaron-he-zhu/cite-domain-rating) (40 items).
+Agent Skills and Commands for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). This repository is the candidate SEO/GEO anchor capability pack for slash-aaron. Skill content is zero-dependency Markdown; Claude Code hooks use a small Bash runner; Codex integration uses `.codex-plugin/plugin.json` plus a repo marketplace at `.agents/plugins/marketplace.json`. Install targets and support claims are maintained in the [Marketplace Module](marketplaces/README.md) and [platform registry](distribution/platforms.json). Content quality uses [CORE-EEAT](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (80 items); domain trust uses [CITE](https://github.com/aaron-he-zhu/cite-domain-rating) (40 items).
 
 ## Quick Start
 
@@ -19,6 +20,7 @@ Common install paths are below. Support level, evidence, manifest ownership, and
 | Tool | Install |
 |------|---------|
 | Claude Code | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` |
+| Codex | `codex plugin marketplace add aaron-he-zhu/seo-geo-claude-skills`, restart Codex, then install `aaron-seo-geo` from the plugin directory |
 | ClawHub.ai / OpenClaw | `clawhub install aaron-he-zhu/<skill>` or [bundle](https://clawhub.ai/plugins/aaron-seo-geo) |
 | Gemini CLI | `gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
 | Qwen Code | `qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
@@ -35,13 +37,13 @@ If your host supports automatic skill routing, try a natural-language request:
 Research keywords for my SaaS product targeting small teams
 ```
 
-Slash-command entrypoint when your host exposes `./commands/`:
+Slash-command entrypoint when your host exposes `./commands/` or command playbooks:
 
 ```text
 /aaron:auto audit https://example.com/blog/my-article
 ```
 
-Optional tools are documented in [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md); every skill also works at Tier 1 with user-provided data.
+Optional tools are documented in [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md); every skill also works at Tier 1 with user-provided data. Codex loads the plugin from `.codex-plugin/plugin.json`; the repo marketplace at `.agents/plugins/marketplace.json` points to the repository root with a local source for development and testing.
 
 ## Operating Model
 

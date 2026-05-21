@@ -45,7 +45,7 @@ Final 9.x release consolidating the entire post-v9.0.0 development line into a s
 - **PII compile guardrail**: heuristic detection of natural-person entities (title-case names / LinkedIn / `entity_type: person`); surfaces GDPR Art 5(1)(c) data-minimization warning before compile.
 - **GDPR purge schema**: canonical template at `cross-cutting/memory-management/references/gdpr-purge-log-template.md` with auditor-verifiable structure (purge_id, fingerprint, scope, action, legal_basis, grep-count proof, audit_signature). Never raw subject data.
 - **`/aaron:series` command**: plan / write / continue / publish-handoff modes for content series workflows.
-- **Multi-agent compatibility**: Gemini, Qwen, Amp, Kimi, CodeBuddy manifest support.
+- **Multi-agent compatibility**: Codex, Gemini, Qwen, Amp, Kimi, CodeBuddy manifest support.
 - **31 eval cases** under `evals/memory-management/` (was 6 pre-9.5.0) covering retirement, recovery, contradiction reconciliation, GDPR, multi-project, PII, force-retire.
 
 **Fixed (security)**:
@@ -68,7 +68,7 @@ Final 9.x release consolidating the entire post-v9.0.0 development line into a s
 **Changed**:
 - Public command API: `/seo:*` → `/aaron:*` (breaking).
 - Skill `version` and `metadata.version` fields unified across all 20 skills.
-- Marketplace mirrors (`marketplace.json` ↔ `.claude-plugin/marketplace.json`) kept byte-identical via `.github/scripts/sync-skills.js`.
+- Marketplace mirrors (`marketplace.json` ↔ `.claude-plugin/marketplace.json`) kept byte-identical via `.github/scripts/sync-skills.js`; Codex manifest uses `skills: "./"` so Codex can recursively discover nested skill directories; the same script keeps that root setting in place.
 
 **Protected**: all 20 skills and 20 commands remain. No skill directories renamed, moved, or deleted. Existing skill GitHub URLs are stable.
 

@@ -8,7 +8,7 @@
 
 [English](../README.md) | **中文**
 
-面向搜索引擎优化（SEO）和生成式引擎优化（GEO）的 Claude 技能与命令集。本仓库是 slash-aaron 的候选 SEO/GEO anchor 能力包。技能内容为零依赖 Markdown；Claude Code hooks 使用轻量 Bash runner。安装入口、发布面和支持证据统一维护在 [Marketplace 模块](../marketplaces/README.md) 与 [平台注册表](../distribution/platforms.json)。内容质量使用 CORE-EEAT（80 项），域名权威使用 CITE（40 项）。
+面向搜索引擎优化（SEO）和生成式引擎优化（GEO）的 Agent 技能与命令集。本仓库是 slash-aaron 的候选 SEO/GEO anchor 能力包。技能内容为零依赖 Markdown；Claude Code hooks 使用轻量 Bash runner；Codex 集成使用 `.codex-plugin/plugin.json` 和 `.agents/plugins/marketplace.json`。安装入口、发布面和支持证据统一维护在 [Marketplace 模块](../marketplaces/README.md) 与 [平台注册表](../distribution/platforms.json)。内容质量使用 CORE-EEAT（80 项），域名权威使用 CITE（40 项）。
 
 ## 快速开始
 
@@ -17,6 +17,7 @@
 | 工具 | 安装 |
 |------|------|
 | Claude Code | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` |
+| Codex | `codex plugin marketplace add aaron-he-zhu/seo-geo-claude-skills`，重启 Codex 后在插件目录安装 `aaron-seo-geo` |
 | ClawHub.ai / OpenClaw | 整包：`clawhub install aaron-he-zhu/aaron-seo-geo`；单技能：`clawhub install aaron-he-zhu/<skill>` |
 | Gemini CLI | `gemini extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
 | Qwen Code | `qwen extensions install https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
@@ -33,7 +34,7 @@
 帮我研究"云原生"相关的关键词机会
 ```
 
-Slash 命令宿主的稳定入口：
+支持 `./commands/` 或命令 playbook 的宿主稳定入口：
 
 ```text
 /aaron:auto audit https://example.com
@@ -63,7 +64,7 @@ SEO/GEO pack-local 入口：`/aaron:auto`；例外最大深度模式：`/aaron:m
 
 每个技能都遵循统一结构：Quick Start、Skill Contract、Handoff Summary、Data Sources、Instructions、Reference Materials、Next Best Skill。四个跨阶段技能负责协议层：`content-quality-auditor` 做发布质量门，`domain-authority-auditor` 做信任门，`entity-optimizer` 维护实体事实，`memory-management` 管理 HOT/WARM/COLD 项目记忆。
 
-可选工具连接器见 [CONNECTORS.md](../CONNECTORS.md)；没有工具时，每个技能仍可用用户提供的数据运行。
+可选工具连接器见 [CONNECTORS.md](../CONNECTORS.md)；没有工具时，每个技能仍可用用户提供的数据运行。Codex 通过 `.codex-plugin/plugin.json` 加载插件；仓库级 marketplace 文件位于 `.agents/plugins/marketplace.json`，开发测试时以本仓库根目录作为 local source。
 
 ## 质量框架
 

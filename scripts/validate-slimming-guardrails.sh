@@ -778,6 +778,8 @@ allowed = [
   /\Amarketplace\.json\z/,
   %r{\A\.claude-plugin/marketplace\.json\z},
   %r{\A\.codebuddy-plugin/marketplace\.json\z},
+  %r{\A\.codex-plugin/plugin\.json\z},
+  %r{\A\.agents/plugins/marketplace\.json\z},
   %r{\Acommands/auto\.md\z},
   %r{\Adocs/README\.zh\.md\z},
   /\AVERSIONS\.md\z/,
@@ -910,7 +912,7 @@ forbid_stub_sentinel_release_paths() {
       for file in README.md docs/README.zh.md CLAUDE.md AGENTS.md CITATION.cff VERSIONS.md \
         marketplaces/README.md \
         .claude-plugin/plugin.json marketplace.json .claude-plugin/marketplace.json \
-        .codebuddy-plugin/marketplace.json gemini-extension.json qwen-extension.json; do
+        .codebuddy-plugin/marketplace.json .codex-plugin/plugin.json .agents/plugins/marketplace.json gemini-extension.json qwen-extension.json; do
         [ -f "$ROOT/$file" ] && grep -Il -- "SEO_GEO_SKILL_STUB" "$ROOT/$file" 2>/dev/null
       done
     } | sed "s#^$ROOT/##" | sort -u
@@ -965,6 +967,15 @@ if command -v jq >/dev/null 2>&1; then
 	    require_json_equal ".codebuddy-plugin/marketplace.json" ".plugins[0].version" "$plugin_version" "CodeBuddy plugin version matches plugin"
 	    require_json_equal ".codebuddy-plugin/marketplace.json" ".plugins[0].commands" "./commands/" "CodeBuddy exposes command path"
 	    require_json_equal ".codebuddy-plugin/marketplace.json" ".plugins[0].commandNamespace" "aaron" "CodeBuddy records Aaron namespace"
+    require_json_equal ".codex-plugin/plugin.json" ".version" "$plugin_version" "Codex plugin version matches plugin"
+    require_json_equal ".codex-plugin/plugin.json" ".name" "aaron-seo-geo" "Codex plugin name matches plugin"
+    require_json_equal ".codex-plugin/plugin.json" ".skills" "./" "Codex plugin scans the repository for skills"
+    require_json_equal ".codex-plugin/plugin.json" ".mcpServers" "./.mcp.json" "Codex plugin points to MCP config"
+    require_json_equal ".agents/plugins/marketplace.json" ".plugins[0].name" "aaron-seo-geo" "Codex marketplace entry matches plugin"
+    require_json_equal ".agents/plugins/marketplace.json" ".plugins[0].source.source" "local" "Codex marketplace uses local source"
+    require_json_equal ".agents/plugins/marketplace.json" ".plugins[0].source.path" "./" "Codex marketplace source points at repo root"
+    require_json_equal ".agents/plugins/marketplace.json" ".plugins[0].policy.installation" "AVAILABLE" "Codex marketplace installation policy is available"
+    require_json_equal ".agents/plugins/marketplace.json" ".plugins[0].policy.authentication" "ON_INSTALL" "Codex marketplace authentication policy is on install"
     require_json_equal "openclaw.plugin.json" ".id" "aaron-seo-geo" "OpenClaw bundle id matches plugin"
     require_json_equal "openclaw.plugin.json" ".version" "$plugin_version" "OpenClaw bundle version matches plugin"
     require_json_equal "openclaw.plugin.json" ".format" "claude-plugin" "OpenClaw bundle format is current"
@@ -981,7 +992,7 @@ if command -v jq >/dev/null 2>&1; then
     require_text ".clawhubignore" ".docs/outreach/" "ClawHub package excludes private outreach docs"
     require_text "marketplaces/README.md" "command support is claimed only where the platform registry says" "marketplace module scopes command support claims"
     require_text "distribution/platforms.json" "\"lastVerified\"" "platform registry records verification dates"
-    if jq empty "$ROOT/hooks/hooks.json" "$ROOT/.mcp.json" "$ROOT/openclaw.plugin.json" "$ROOT/distribution/platforms.json" >/dev/null 2>&1; then
+    if jq empty "$ROOT/hooks/hooks.json" "$ROOT/.mcp.json" "$ROOT/openclaw.plugin.json" "$ROOT/distribution/platforms.json" "$ROOT/.codex-plugin/plugin.json" "$ROOT/.agents/plugins/marketplace.json" >/dev/null 2>&1; then
       pass "runtime JSON files parse cleanly"
     else
       fail "runtime JSON files parse cleanly"
@@ -1076,10 +1087,12 @@ if command -v jq >/dev/null 2>&1; then
   root_marketplace_skills="$(jq -c '.plugins[0].skills' "$ROOT/marketplace.json" 2>/dev/null)"
   bundle_marketplace_skills="$(jq -c '.plugins[0].skills' "$ROOT/.claude-plugin/marketplace.json" 2>/dev/null)"
   codebuddy_skills="$(jq -c '.plugins[0].skills' "$ROOT/.codebuddy-plugin/marketplace.json" 2>/dev/null)"
+  codex_skills="$(jq -r '.skills' "$ROOT/.codex-plugin/plugin.json" 2>/dev/null)"
   discovered_skills="$(discover_skill_paths | jq -R . | jq -s -c .)"
   require_equal "$root_marketplace_skills" "$plugin_skills" "root marketplace skills list matches plugin.json"
   require_equal "$bundle_marketplace_skills" "$plugin_skills" "bundle marketplace skills list matches plugin.json"
   require_equal "$codebuddy_skills" "$plugin_skills" "CodeBuddy skills list matches plugin.json"
+  require_equal "$codex_skills" "./" "Codex plugin skills root enables Codex recursive discovery"
   require_equal "$plugin_skills" "$discovered_skills" "plugin.json skills list matches discovered SKILL.md directories"
   require_equal "$root_marketplace_skills" "$discovered_skills" "root marketplace skills list matches discovered SKILL.md directories"
   require_equal "$bundle_marketplace_skills" "$discovered_skills" "bundle marketplace skills list matches discovered SKILL.md directories"
@@ -1119,6 +1132,8 @@ require_text ".claude-plugin/plugin.json" "20 SEO/GEO skills and 20 commands" "p
 require_text "marketplace.json" "20 SEO/GEO skills and 20 commands" "root marketplace command count is current"
 require_text ".claude-plugin/marketplace.json" "20 SEO/GEO skills and 20 commands" "bundle marketplace command count is current"
 require_text ".codebuddy-plugin/marketplace.json" "20 SEO/GEO skills and 20 commands" "CodeBuddy marketplace command count is current"
+require_text ".codex-plugin/plugin.json" "20 SEO/GEO skills and 20 commands" "Codex plugin command count is current"
+require_text ".agents/plugins/marketplace.json" "aaron-seo-geo" "Codex marketplace names plugin"
 require_text "gemini-extension.json" "20 SEO/GEO skills on one shared contract" "Gemini extension skill count is current"
 require_text "gemini-extension.json" "Slash-command exposure is host-dependent and not claimed by this manifest" "Gemini extension does not overclaim slash commands"
 require_text "qwen-extension.json" "20 SEO/GEO skills on one shared contract" "Qwen extension skill count is current"
@@ -1199,6 +1214,8 @@ require_text ".github/PULL_REQUEST_TEMPLATE.md" "Host namespace smoke evidence" 
 require_host_namespace_smoke "host namespace smoke evidence is parser-checkable"
 require_text ".github/workflows/validate-skill.yml" "evals/**" "validation workflow watches eval changes"
 require_text ".github/workflows/validate-skill.yml" "marketplaces/**" "validation workflow watches marketplace module"
+require_text ".github/workflows/validate-skill.yml" ".codex-plugin/**" "validation workflow watches Codex manifest"
+require_text ".github/workflows/validate-skill.yml" ".agents/plugins/**" "validation workflow watches Codex repo marketplace"
 require_text ".github/workflows/validate-skill.yml" "openclaw.plugin.json" "validation workflow watches OpenClaw manifest"
 require_text ".github/workflows/validate-skill.yml" ".github/ISSUE_TEMPLATE/**" "validation workflow watches issue templates"
 require_text ".github/workflows/validate-skill.yml" ".github/PULL_REQUEST_TEMPLATE.md" "validation workflow watches PR template"

@@ -1,0 +1,53 @@
+{
+  "name": "aaron-seo-geo",
+  "version": "9.9.9",
+  "description": "20 SEO/GEO skills and 20 commands on one shared contract for keyword research, content creation, technical audits, schema markup, monitoring, quality gates, entity truth, and campaign memory.",
+  "author": {
+    "name": "Aaron He Zhu",
+    "email": "hello@zhuhe.io",
+    "url": "https://github.com/aaron-he-zhu"
+  },
+  "homepage": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+  "repository": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+  "license": "Apache-2.0",
+  "keywords": [
+    "seo",
+    "geo",
+    "content-optimization",
+    "search-engine-optimization",
+    "generative-engine-optimization",
+    "ai-citation",
+    "core-eeat",
+    "cite-framework",
+    "keyword-research",
+    "technical-seo",
+    "content-writing",
+    "schema-markup",
+    "rank-tracking",
+    "backlink-analysis"
+  ],
+  "skills": "./",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Aaron SEO/GEO",
+    "shortDescription": "20 SEO/GEO skills and 20 Aaron commands for Codex",
+    "longDescription": "Use Aaron SEO/GEO in Codex to plan, audit, write, optimize, monitor, and remember SEO/GEO work with shared CORE-EEAT and CITE quality gates. The plugin bundles 20 Agent Skills and optional MCP connector definitions. Markdown command playbooks under ./commands/ remain available to hosts that expose slash commands; Codex command exposure is not claimed by this manifest.",
+    "developerName": "Aaron He Zhu",
+    "category": "Marketing",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/aaron-he-zhu/seo-geo-claude-skills",
+    "privacyPolicyURL": "https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/PRIVACY.md",
+    "termsOfServiceURL": "https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Research SEO/GEO keywords for my product.",
+      "Audit this page with CORE-EEAT and CITE.",
+      "Create a GEO-ready content brief."
+    ],
+    "brandColor": "#10A37F",
+    "screenshots": []
+  }
+}

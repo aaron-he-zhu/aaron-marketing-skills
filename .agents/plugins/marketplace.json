@@ -1,0 +1,20 @@
+{
+  "name": "aaron-seo-geo",
+  "interface": {
+    "displayName": "Aaron SEO/GEO"
+  },
+  "plugins": [
+    {
+      "name": "aaron-seo-geo",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Marketing"
+    }
+  ]
+}

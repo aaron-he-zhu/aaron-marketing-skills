@@ -7,7 +7,7 @@ Guidelines for AI agents working in this repository. For full runtime context, s
 - **Name**: seo-geo-claude-skills — 20 SEO/GEO skills, 20 commands, shared references
 - **Repository**: https://github.com/aaron-he-zhu/seo-geo-claude-skills
 - **Author**: Aaron He Zhu | **License**: Apache 2.0
-- **Specs**: [Agent Skills](https://agentskills.io/specification.md) · [ClawHub](https://github.com/openclaw/clawhub/blob/main/docs/skill-format.md) · [Vercel Labs](https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md)
+- **Specs**: [Agent Skills](https://agentskills.io/specification.md) · [Codex Plugins](https://developers.openai.com/codex/plugins/build) · [ClawHub](https://github.com/openclaw/clawhub/blob/main/docs/skill-format.md) · [Vercel Labs](https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md)
 Content-first repository: skills and commands are Markdown; Claude Code hooks use a small Bash runner. Primary directories: `research/`, `build/`, `optimize/`, `monitor/`, `cross-cutting/`, `commands/`, `references/`.
 
 Install instructions live in [README.md](README.md). Marketplace and agent-host integration details live in [marketplaces/README.md](marketplaces/README.md). Keep this file focused on authoring and maintenance rules.
@@ -57,7 +57,7 @@ See [CLAUDE.md § Inter-Skill Handoff](CLAUDE.md). Key fields: objective, findin
 
 - **Branch naming**: `feature/skill-name`, `fix/skill-name`, `docs/description`
 - **Conventional Commits**: `feat:`, `fix:`, `docs:`
-- **After skill changes**: update tracking files (VERSIONS.md, `.claude-plugin/plugin.json`, marketplace.json, README.md, CLAUDE.md). For release bumps, also sync CITATION, localized README badges, Gemini/Qwen/CodeBuddy manifests, marketplace mirrors, and the [marketplace module](marketplaces/README.md) when platform-facing behavior changes.
+- **After skill changes**: update tracking files (VERSIONS.md, `.claude-plugin/plugin.json`, `.codex-plugin/plugin.json`, marketplace.json, README.md, CLAUDE.md). For release bumps, also sync CITATION, localized README badges, Gemini/Qwen/CodeBuddy manifests, marketplace mirrors, and the [marketplace module](marketplaces/README.md) when platform-facing behavior changes.
 - **Keep regular SKILL.md under 350 lines** — use `references/` for detail. Auditor-class skills with `runbook-sync` markers may inline the protocol runbook up to ~750 lines.
 - **Validate**: `./scripts/validate-skill.sh <category>/<skill-name>` and `./scripts/validate-slimming-guardrails.sh` before release/slimming PRs.
 

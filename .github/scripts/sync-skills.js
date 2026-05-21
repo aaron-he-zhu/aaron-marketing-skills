@@ -2,7 +2,7 @@
  * Sync skills manifest
  *
  * Scans category directories for SKILL.md files and updates
- * marketplace.json, plugin.json, and CodeBuddy with the complete skills list.
+ * marketplace.json, plugin.json, CodeBuddy, and Codex manifest skill root.
  * Use --check to fail if generated files are stale without writing them.
  */
 
@@ -22,6 +22,7 @@ const MARKETPLACE_PATH = path.join(ROOT, "marketplace.json");
 const MARKETPLACE_PLUGIN_PATH = path.join(ROOT, ".claude-plugin", "marketplace.json");
 const PLUGIN_PATH = path.join(ROOT, ".claude-plugin", "plugin.json");
 const CODEBUDDY_PATH = path.join(ROOT, ".codebuddy-plugin", "marketplace.json");
+const CODEX_PLUGIN_PATH = path.join(ROOT, ".codex-plugin", "plugin.json");
 const CHECK_ONLY = process.argv.includes("--check");
 
 function discoverSkills() {
@@ -87,6 +88,12 @@ function codeBuddyContent(skills) {
   return JSON.stringify(data, null, 2) + "\n";
 }
 
+function codexPluginContent() {
+  const data = JSON.parse(fs.readFileSync(CODEX_PLUGIN_PATH, "utf8"));
+  data.skills = "./";
+  return JSON.stringify(data, null, 2) + "\n";
+}
+
 const skills = discoverSkills();
 console.log(`Discovered ${skills.length} skills:`);
 skills.forEach((s) => console.log(`  ${s}`));
@@ -97,6 +104,7 @@ stale = writeOrCheck(MARKETPLACE_PATH, marketplace, "marketplace.json") || stale
 stale = writeOrCheck(MARKETPLACE_PLUGIN_PATH, marketplace, ".claude-plugin/marketplace.json") || stale;
 stale = writeOrCheck(PLUGIN_PATH, pluginContent(skills), ".claude-plugin/plugin.json") || stale;
 stale = writeOrCheck(CODEBUDDY_PATH, codeBuddyContent(skills), ".codebuddy-plugin/marketplace.json") || stale;
+stale = writeOrCheck(CODEX_PLUGIN_PATH, codexPluginContent(), ".codex-plugin/plugin.json") || stale;
 
 if (CHECK_ONLY && stale) {
   console.error("Run `node .github/scripts/sync-skills.js` and commit the generated manifest changes.");

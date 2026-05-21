@@ -121,6 +121,8 @@ jobs:
         run: |
           set -euo pipefail
           jq empty .claude-plugin/plugin.json
+          jq empty .codex-plugin/plugin.json
+          jq empty .agents/plugins/marketplace.json
           jq empty marketplace.json
           jq empty .claude-plugin/marketplace.json
           jq empty gemini-extension.json

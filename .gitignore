@@ -34,5 +34,7 @@ docs/plans/
 node_modules/
 
 # npx skills install artifacts (local-only)
-.agents/
+.agents/*
+!.agents/plugins/
+!.agents/plugins/marketplace.json
 skills-lock.json

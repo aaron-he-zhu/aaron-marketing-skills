@@ -1,0 +1,7 @@
+# Verify commands for HelloAGENTS Ralph Loop
+# Auto-detected or manually configured
+# Format: simple list only (one command per line, no YAML advanced syntax)
+
+commands:
+  - node .github/scripts/sync-skills.js --check
+  - bash scripts/validate-slimming-guardrails.sh

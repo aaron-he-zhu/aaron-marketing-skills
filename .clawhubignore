@@ -25,5 +25,7 @@ node_modules/
 package-lock.json
 
 # npx skills install artifacts (local-only, not part of published bundle)
-.agents/
+.agents/*
+!.agents/plugins/
+!.agents/plugins/marketplace.json
 skills-lock.json
