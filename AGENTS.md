@@ -4,7 +4,7 @@ Guidelines for AI agents working in this repository. For full runtime context, s
 
 ## Repository Overview
 
-- **Name**: seo-geo-claude-skills — 20 SEO/GEO skills, 20 commands, shared references
+- **Name**: seo-geo-claude-skills — 21 SEO/GEO skills, 20 commands, shared references
 - **Repository**: https://github.com/aaron-he-zhu/seo-geo-claude-skills
 - **Author**: Aaron He Zhu | **License**: Apache 2.0
 - **Specs**: [Agent Skills](https://agentskills.io/specification.md) · [ClawHub](https://github.com/openclaw/clawhub/blob/main/docs/skill-format.md) · [Vercel Labs](https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md)

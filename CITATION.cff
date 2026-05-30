@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "SEO & GEO Skills Library"
-abstract: "Claude Skills and Commands for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). 20 skills, 20 commands, and one shared operating contract."
+abstract: "Claude Skills and Commands for Search Engine Optimization (SEO), Generative Engine Optimization (GEO), and data-analysis workflows. 21 skills, 20 commands, and one shared operating contract."
 authors:
   - family-names: Zhu
     given-names: Aaron He

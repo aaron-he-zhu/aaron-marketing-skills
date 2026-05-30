@@ -1,6 +1,6 @@
 # SEO & GEO Skills Library - Versions
 
-Current versions for the plugin and all 20 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/seo-geo-claude-skills/main/VERSIONS.md` once per session.
+Current versions for the plugin and all 21 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/seo-geo-claude-skills/main/VERSIONS.md` once per session.
 
 **Current release**: `9.9.9` (2026-05-14). Skill `version`, `metadata.version`, plugin manifests, marketplace files, badges, and `CITATION.cff` are aligned to the same public version.
 
@@ -28,6 +28,7 @@ Current versions for the plugin and all 20 skills. Agents can fetch this file fr
 | domain-authority-auditor | cross-cutting | 9.9.9 | 2026-05-14 |
 | entity-optimizer | cross-cutting | 9.9.9 | 2026-05-14 |
 | memory-management | cross-cutting | 9.9.9 | 2026-05-14 |
+| data-flow-skill | cross-cutting | 9.9.9 | 2026-05-14 |
 
 ## Changelog
 
@@ -67,12 +68,12 @@ Final 9.x release consolidating the entire post-v9.0.0 development line into a s
 
 **Changed**:
 - Public command API: `/seo:*` → `/aaron:*` (breaking).
-- Skill `version` and `metadata.version` fields unified across all 20 skills.
+- Skill `version` and `metadata.version` fields unified across all 21 skills.
 - Marketplace mirrors (`marketplace.json` ↔ `.claude-plugin/marketplace.json`) kept byte-identical via `.github/scripts/sync-skills.js`.
 
-**Protected**: all 20 skills and 20 commands remain. No skill directories renamed, moved, or deleted. Existing skill GitHub URLs are stable.
+**Protected**: all 21 skills and 20 commands remain. No skill directories renamed, moved, or deleted. Existing skill GitHub URLs are stable.
 
-- 20 skills (4 research + 4 build + 4 optimize + 4 monitor + 4 cross-cutting).
+- 21 skills (4 research + 4 build + 4 optimize + 4 monitor + 5 cross-cutting).
 - CORE-EEAT 80-item content quality framework with three veto items (T04, C01, R10).
 - CITE 40-item domain authority framework with three veto items (T03, T05, T09).
 

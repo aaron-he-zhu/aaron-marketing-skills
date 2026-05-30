@@ -1,6 +1,6 @@
 # SEO & GEO 技能库
 
-**20 个技能。20 个命令。规划、审计、监控 SEO/GEO 工作。**
+**21 个技能。20 个命令。规划、审计、监控与分析 SEO/GEO 工作。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/seo-geo-claude-skills?style=flat)](https://github.com/aaron-he-zhu/seo-geo-claude-skills)
 [![Version](https://img.shields.io/badge/version-9.9.9-orange)](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)
@@ -47,7 +47,7 @@ Slash 命令宿主的稳定入口：
 | 构建 | `seo-content-writer` SEO/GEO 内容草稿；`geo-content-optimizer` AI 引用优化；`meta-tags-optimizer` 标题与元描述；`schema-markup-generator` JSON-LD 结构化数据 |
 | 优化 | `on-page-seo-auditor` 页面 SEO 与 CORE-EEAT；`technical-seo-checker` 抓取、索引、速度、安全；`internal-linking-optimizer` 内链与站点架构；`content-refresher` 旧内容刷新 |
 | 监控 | `rank-tracker` 排名与 SERP 变化；`backlink-analyzer` 外链质量与机会；`performance-reporter` SEO/GEO 报告；`alert-manager` 预警与监控规则 |
-| 协议层 | `content-quality-auditor` 发布质量门；`domain-authority-auditor` CITE 域名可信度；`entity-optimizer` 实体与知识图谱；`memory-management` 项目记忆 |
+| 协议层 | `content-quality-auditor` 发布质量门；`domain-authority-auditor` CITE 域名可信度；`entity-optimizer` 实体与知识图谱；`memory-management` 项目记忆；`data-flow-skill` 数据分析、可视化、报告与幻灯片产物 |
 
 ## 命令
 SEO/GEO pack-local 入口：`/aaron:auto`；例外最大深度模式：`/aaron:max`（二者也包含在用户命令中）。
@@ -61,7 +61,7 @@ SEO/GEO pack-local 入口：`/aaron:auto`；例外最大深度模式：`/aaron:m
 
 ## 运行模型
 
-每个技能都遵循统一结构：Quick Start、Skill Contract、Handoff Summary、Data Sources、Instructions、Reference Materials、Next Best Skill。四个跨阶段技能负责协议层：`content-quality-auditor` 做发布质量门，`domain-authority-auditor` 做信任门，`entity-optimizer` 维护实体事实，`memory-management` 管理 HOT/WARM/COLD 项目记忆。
+每个技能都遵循统一结构：Quick Start、Skill Contract、Handoff Summary、Data Sources、Instructions、Reference Materials、Next Best Skill。五个跨阶段技能负责协议层与共享工作流：`content-quality-auditor` 做发布质量门，`domain-authority-auditor` 做信任门，`entity-optimizer` 维护实体事实，`memory-management` 管理 HOT/WARM/COLD 项目记忆，`data-flow-skill` 将用户提供的数据转化为可追溯的分析、图表、报告和幻灯片产物。
 
 可选工具连接器见 [CONNECTORS.md](../CONNECTORS.md)；没有工具时，每个技能仍可用用户提供的数据运行。
 

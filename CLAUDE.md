@@ -1,6 +1,6 @@
 # SEO & GEO Skills Library — Claude Code Context
 
-This plugin provides **20 skills and 20 commands** for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). All 20 skills follow one shared contract: trigger, quick start, skill contract, handoff summary, and next best skill. Skills are auto-loaded by context; commands are invoked with `/aaron:`. Current bundle version: `9.9.9` (see [VERSIONS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)).
+This plugin provides **21 skills and 20 commands** for Search Engine Optimization (SEO), Generative Engine Optimization (GEO), and data-analysis workflows. All 21 skills follow one shared contract: trigger, quick start, skill contract, handoff summary, and next best skill. Skills are auto-loaded by context; commands are invoked with `/aaron:`. Current bundle version: `9.9.9` (see [VERSIONS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)).
 
 ## Skills by Phase
 
@@ -10,7 +10,7 @@ This plugin provides **20 skills and 20 commands** for Search Engine Optimizatio
 | **Build** | `seo-content-writer`, `geo-content-optimizer`, `meta-tags-optimizer`, `schema-markup-generator` |
 | **Optimize** | `on-page-seo-auditor`, `technical-seo-checker`, `internal-linking-optimizer`, `content-refresher` |
 | **Monitor** | `rank-tracker`, `backlink-analyzer`, `performance-reporter`, `alert-manager` |
-| **Cross-cutting / Protocol** | `content-quality-auditor`, `domain-authority-auditor`, `entity-optimizer`, `memory-management` |
+| **Cross-cutting / Protocol** | `content-quality-auditor`, `domain-authority-auditor`, `entity-optimizer`, `memory-management`, `data-flow-skill` |
 
 ## One-Shot Commands
 
@@ -60,6 +60,7 @@ This plugin provides **20 skills and 20 commands** for Search Engine Optimizatio
   - `domain-authority-auditor` = citation trust gate
   - `entity-optimizer` = canonical entity profile
   - `memory-management` = campaign memory loop
+  - `data-flow-skill` = dataset analysis, visualization, reports, and slide-ready outputs
 - Hook automation: `hooks/hooks.json` — command-backed hooks for SessionStart, UserPromptSubmit, PostToolUse checks, and a silent allow-only Stop check
 - Temperature memory: HOT (`memory/hot-cache.md`, 80 lines, auto-loaded) / WARM (`memory/` subdirs) / COLD (`memory/archive/`)
 - Wiki compilation view: `memory/wiki/` — auto-refreshed structured index of WARM files (Phase 1), compiled pages with conversational reconciliation (Phase 2), and user-initiated WARM retirement to COLD with full recovery path (Phase 3). Project isolation via `<project>/index.md`, 健康度 scoring, user-tier guidance. See [wiki-runbook.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/cross-cutting/memory-management/references/wiki-runbook.md) for execution detail. Delete `memory/wiki/` to revert without losing retirement history (COLD frontmatter preserves `originally_at`; recovery via `scripts/recover-retired-warm.sh`). Design history archived in [proposal-wiki-layer-v3.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/proposal-wiki-layer-v3.md); v9.9.9 implementation in [proposal-wiki-phase-2-3-completion.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/references/proposal-wiki-phase-2-3-completion.md).
