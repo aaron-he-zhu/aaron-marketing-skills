@@ -40,7 +40,7 @@ from html.parser import HTMLParser
 import _http  # shared polite HTTP (UA, gzip, timeout, size cap, backoff)
 
 _HEADING_SAMPLE = 5          # how many heading texts to keep per level
-_SKIP_TEXT_TAGS = {"script", "style", "noscript", "template", "svg"}
+_SKIP_TEXT_TAGS = {"script", "style", "noscript", "template", "svg", "title"}
 
 
 class _OnPageParser(HTMLParser):
@@ -64,10 +64,14 @@ class _OnPageParser(HTMLParser):
         self._capture = None           # current tag whose text we're capturing
         self._buf = []
         self._jsonld_buf = None        # accumulates JSON-LD script text
+        self._skip_text_depth = 0      # active non-visible text container depth
 
     # --- tag handling -----------------------------------------------------
     def handle_starttag(self, tag, attrs):
         a = {k.lower(): (v or "") for k, v in attrs}
+
+        if tag in _SKIP_TEXT_TAGS:
+            self._skip_text_depth += 1
 
         if tag == "title" and not self._title_done:
             self._begin_capture("title")
@@ -99,6 +103,8 @@ class _OnPageParser(HTMLParser):
         if tag == "script" and self._jsonld_buf is not None:
             self.jsonld_blocks.append("".join(self._jsonld_buf))
             self._jsonld_buf = None
+        if tag in _SKIP_TEXT_TAGS and self._skip_text_depth:
+            self._skip_text_depth -= 1
 
     def handle_data(self, data):
         if self._jsonld_buf is not None:
@@ -108,7 +114,7 @@ class _OnPageParser(HTMLParser):
             self._buf.append(data)
         # Rough word count over visible text (skip script/style/etc.).
         stripped = data.strip()
-        if stripped and self._capture not in _SKIP_TEXT_TAGS:
+        if stripped and self._skip_text_depth == 0:
             self._text_words += len(stripped.split())
 
     # --- helpers ----------------------------------------------------------
