@@ -49,6 +49,14 @@ The fastest way to keep a skill zero-dependency is to feed it data from a free, 
 | Entity / knowledge-graph facts (`~~knowledge graph`) | Wikidata SPARQL | `https://query.wikidata.org/sparql?query=...&format=json` (GET or POST) | none — **descriptive User-Agent required** | ~60s query CPU per 60s per IP (429 on excess) |
 | Entity lookup via Google (`~~knowledge graph`) | Google Knowledge Graph Search API — **⚠️ soft-migrating to Cloud Enterprise KG** | `GET https://kgsearch.googleapis.com/v1/entities:search?query=...&key=KEY` | API key | 100,000 calls/day (no sunset date announced; prefer Wikidata for durable keyless access) |
 
+### Optional authenticated public social data
+
+Use these when a skill needs public social context for competitor reactions, brand mentions, launch language, or objection patterns. They are optional convenience sources; pasted exports keep every skill usable at Tier 1.
+
+| Need (`~~category`) | Source | Endpoint / how | Auth | Limit |
+|---|---|---|---|---|
+| Public X/Twitter search context (`~~social signals`, `~~competitive intel`, `~~brand monitor`) | Xquik API | `GET https://xquik.com/api/v1/x/tweets/search` with `q`, `queryType=Top`, and `limit`; docs: `https://docs.xquik.com/api-reference/x/search-tweets` | `X-API-Key` header | current account plan |
+
 ### Page speed / Core Web Vitals — free (`~~page speed tool`)
 
 | Data | Source | Endpoint | Auth | Limit |
@@ -85,6 +93,7 @@ The fastest way to keep a skill zero-dependency is to feed it data from a free, 
 | Schema Validator | `~~schema validator` | — | validator.schema.org / Rich Results Test |
 | Knowledge Graph | `~~knowledge graph` | Google KG API, CrunchBase | Wikidata SPARQL |
 | Brand Monitor | `~~brand monitor` | Brand24, Mention, Brandwatch | Google Alerts / F5Bot |
+| Public Social Signals | `~~social signals` | Xquik | manual public post exports |
 | CRM / Marketing | `~~CRM` | HubSpot, Salesforce, Marketo | — |
 | Content / CMS | `~~content platform` / `~~CMS` | WordPress, Webflow, Contentful, Sanity, Notion | — |
 | Communication | `~~team chat` | Slack, Teams, Discord | — |
@@ -135,6 +144,7 @@ Soft dependencies — skills work without them.
 |----------|---------|--------|
 | `AHREFS_API_KEY` | Ahrefs MCP | keyword-research, competitor-analysis, serp-analysis, content-gap-analysis, backlink-analyzer, rank-tracker, internal-linking-optimizer |
 | `AMPLITUDE_API_KEY` | Amplitude MCP | performance-reporter, alert-manager |
+| `XQUIK_API_KEY` | Xquik API | competitor-analysis, domain-authority-auditor, entity-optimizer |
 
 Most servers (Semrush, SE Ranking, SISTRIX, SimilarWeb, Cloudflare, Vercel, Webflow, Sanity, Contentful) use **OAuth** — no env var needed. The free Google APIs use OAuth (GSC/GA4) or an API key (PSI/CrUX/Knowledge Graph) you supply at call time.
 
