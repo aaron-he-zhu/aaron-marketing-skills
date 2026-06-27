@@ -1,5 +1,5 @@
 {
-  "name": "aaron-seo-geo",
+  "name": "aaron",
   "owner": {
     "name": "Aaron He Zhu",
     "url": "https://github.com/aaron-he-zhu"
@@ -17,7 +17,6 @@
       "version": "9.9.10",
       "category": "marketing",
       "commands": "./commands/",
-      "commandNamespace": "aaron",
       "tags": [
         "seo",
         "geo",

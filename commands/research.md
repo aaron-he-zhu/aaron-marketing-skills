@@ -1,6 +1,6 @@
 ---
 name: research
-description: "Understand the opportunity: keyword demand, SERP intent, competitors, content gaps, and site/topic/entity maps. Not sure? Use /aaron:auto."
+description: "Understand the opportunity: keyword demand, SERP intent, competitors, content gaps, and site/topic/entity maps. Not sure? Use /aaron-seo-geo:auto."
 argument-hint: "<topic-or-domain> [--competitors <domains>] [--map]"
 parameters:
   - name: target
@@ -33,10 +33,10 @@ Understand the opportunity and landscape: keyword demand, SERP intent, competito
 
 ## Rules
 
-- Discover search demand, SERP intent, topic clusters, and content opportunities; keep AI-answer-inclusion diagnosis in `/aaron:audit --visibility`.
+- Discover search demand, SERP intent, topic clusters, and content opportunities; keep AI-answer-inclusion diagnosis in `/aaron-seo-geo:audit --visibility`.
 - With `--competitors`, compare across rankings, content coverage, backlinks, authority, and AI citation visibility; return a battlecard, gaps, priority opportunities, and evidence mode.
 - With `--map` (or a known opportunity set), turn findings into a content architecture, topic/entity map, and internal-link plan: clusters, pillar/supporting pages, orphan risks, anchor guidance, and next briefs.
-- Keep evidence mode visible (tool vs. estimate); hand off to `/aaron:create` for production.
+- Keep evidence mode visible (tool vs. estimate); hand off to `/aaron-seo-geo:create` for production.
 
 ## Output
 

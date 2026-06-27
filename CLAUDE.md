@@ -1,6 +1,6 @@
 # SEO & GEO Skills Library — Claude Code Context
 
-This plugin provides **20 skills and 5 commands** for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). All 20 skills follow one shared contract: trigger, quick start, skill contract, handoff summary, and next best skill. Skills are auto-loaded by context; commands are invoked with `/aaron:`. Current bundle version: `9.9.10` (see [VERSIONS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)).
+This plugin provides **20 skills and 5 commands** for Search Engine Optimization (SEO) and Generative Engine Optimization (GEO). All 20 skills follow one shared contract: trigger, quick start, skill contract, handoff summary, and next best skill. Skills are auto-loaded by context; commands are invoked with `/aaron-seo-geo:`. Current bundle version: `9.9.10` (see [VERSIONS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/VERSIONS.md)).
 
 ## Skills by Phase
 
@@ -14,14 +14,14 @@ This plugin provides **20 skills and 5 commands** for Search Engine Optimization
 
 ## One-Shot Commands
 
-**Five commands**, organized by SEO/GEO intent. Day-to-day work starts with `/aaron:auto`; the other four are explicit mode entrypoints. Not sure? Use `/aaron:auto`:
+**Five commands**, organized by SEO/GEO intent. Day-to-day work starts with `/aaron-seo-geo:auto`; the other four are explicit mode entrypoints. Not sure? Use `/aaron-seo-geo:auto`:
 
 ```
-/aaron:auto      — Infer SEO/GEO intent and run the smallest useful workflow (add --deep for exhaustive/stress-test)
-/aaron:research  — Keyword demand, SERP intent, competitors, content gaps, site/topic/entity maps
-/aaron:create    — Brief, write, series, refresh, CMS-neutral publish package (--brief|--series|--refresh|--publish|--meta|--schema)
-/aaron:audit     — On-page + CORE-EEAT quality, technical SEO, AI visibility, domain authority (--full|--tech|--visibility|--authority)
-/aaron:track     — Rankings, alerts, performance reports, project memory (--alert|--report|--remember)
+/aaron-seo-geo:auto      — Infer SEO/GEO intent and run the smallest useful workflow (add --deep for exhaustive/stress-test)
+/aaron-seo-geo:research  — Keyword demand, SERP intent, competitors, content gaps, site/topic/entity maps
+/aaron-seo-geo:create    — Brief, write, series, refresh, CMS-neutral publish package (--brief|--series|--refresh|--publish|--meta|--schema)
+/aaron-seo-geo:audit     — On-page + CORE-EEAT quality, technical SEO, AI visibility, domain authority (--full|--tech|--visibility|--authority)
+/aaron-seo-geo:track     — Rankings, alerts, performance reports, project memory (--alert|--report|--remember)
 ```
 
 ## Quality Frameworks

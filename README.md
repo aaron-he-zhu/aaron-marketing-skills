@@ -18,7 +18,7 @@ Install with Claude Code, any Agent Skills-compatible host, or a plain `git clon
 
 | Tool | Install |
 |------|---------|
-| Claude Code | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` |
+| Claude Code | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` then `/plugin install aaron-seo-geo@aaron` |
 | skills.sh / generic Agent Skills hosts | `npx skills add aaron-he-zhu/seo-geo-claude-skills` |
 | Any host | `git clone https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
 
@@ -33,7 +33,7 @@ Research keywords for my SaaS product targeting small teams
 Slash-command entrypoint when your host exposes `./commands/`:
 
 ```text
-/aaron:auto audit https://example.com/blog/my-article
+/aaron-seo-geo:auto audit https://example.com/blog/my-article
 ```
 
 Optional tools are documented in [CONNECTORS.md](https://github.com/aaron-he-zhu/seo-geo-claude-skills/blob/main/CONNECTORS.md); every skill also works at Tier 1 with user-provided data.
@@ -69,15 +69,15 @@ Five commands, organized by SEO/GEO intent:
 
 | Command | Use it for |
 |---------|-----------|
-| `/aaron:auto` | Describe any goal — infers intent and runs the smallest useful workflow (`--deep` for exhaustive/stress-test) |
-| `/aaron:research` | Keyword demand, SERP intent, competitors, content gaps, site/topic/entity maps |
-| `/aaron:create` | Brief, write, series, refresh, CMS-neutral publish package (`--brief`/`--series`/`--refresh`/`--publish`/`--meta`/`--schema`) |
-| `/aaron:audit` | On-page + CORE-EEAT quality, technical SEO, AI visibility, domain authority (`--full`/`--tech`/`--visibility`/`--authority`) |
-| `/aaron:track` | Rankings, alerts, performance reports, project memory (`--alert`/`--report`/`--remember`) |
+| `/aaron-seo-geo:auto` | Describe any goal — infers intent and runs the smallest useful workflow (`--deep` for exhaustive/stress-test) |
+| `/aaron-seo-geo:research` | Keyword demand, SERP intent, competitors, content gaps, site/topic/entity maps |
+| `/aaron-seo-geo:create` | Brief, write, series, refresh, CMS-neutral publish package (`--brief`/`--series`/`--refresh`/`--publish`/`--meta`/`--schema`) |
+| `/aaron-seo-geo:audit` | On-page + CORE-EEAT quality, technical SEO, AI visibility, domain authority (`--full`/`--tech`/`--visibility`/`--authority`) |
+| `/aaron-seo-geo:track` | Rankings, alerts, performance reports, project memory (`--alert`/`--report`/`--remember`) |
 
-Daily work normally starts with `/aaron:auto`, which runs the workflow implied by your goal and stops only at blocking decisions. The other four are explicit mode entrypoints.
+Daily work normally starts with `/aaron-seo-geo:auto`, which runs the workflow implied by your goal and stops only at blocking decisions. The other four are explicit mode entrypoints.
 
-Breaking rename note: current commands use `/aaron:`. Paste any old `/seo:*` command into `/aaron:auto` to recover the new route; for example, `/aaron:auto /seo:audit-page https://example.com/blog/post` returns `/aaron:audit https://example.com/blog/post`.
+Breaking rename note: current commands use `/aaron-seo-geo:`. Paste any old `/seo:*` command into `/aaron-seo-geo:auto` to recover the new route; for example, `/aaron-seo-geo:auto /seo:audit-page https://example.com/blog/post` returns `/aaron-seo-geo:audit https://example.com/blog/post`.
 
 Command files: [commands/](https://github.com/aaron-he-zhu/seo-geo-claude-skills/tree/main/commands/).
 

@@ -33,17 +33,17 @@ Current versions for the plugin and all 20 skills. Agents can fetch this file fr
 
 ### v9.9.10 — focus on skills: scaffolding cleanup, 5 commands, quality pass, bundled connectors (2026-06-05)
 
-Removed non-user-facing maintenance and process scaffolding, and consolidated the command surface, so the library focuses on the skills themselves. **Breaking**: the command set is reduced to **5** (`/aaron:auto`, `/aaron:research`, `/aaron:create`, `/aaron:audit`, `/aaron:track`) — the bundle is now **20 skills + 5 commands**.
+Removed non-user-facing maintenance and process scaffolding, and consolidated the command surface, so the library focuses on the skills themselves. **Breaking**: the command set is reduced to **5** (`/aaron-seo-geo:auto`, `/aaron-seo-geo:research`, `/aaron-seo-geo:create`, `/aaron-seo-geo:audit`, `/aaron-seo-geo:track`) — the bundle is now **20 skills + 5 commands**.
 
 **Removed**:
-- Controlled-evolution protocol (`/aaron:evolve`, EvolutionEvent, `evolution-*` references, `memory/evolution/`) and the GEO-drift feedback loop it fed: the `memory/geo-feedback/` records and the `/aaron:watch --geo-drift` mode are removed, so `/aaron:watch` now covers rankings and alerts only.
+- Controlled-evolution protocol (`/aaron-seo-geo:evolve`, EvolutionEvent, `evolution-*` references, `memory/evolution/`) and the GEO-drift feedback loop it fed: the `memory/geo-feedback/` records and the `/aaron-seo-geo:watch --geo-drift` mode are removed, so `/aaron-seo-geo:watch` now covers rankings and alerts only.
 - Wiki memory-compilation layer (Phase 1–3, 健康度 scoring, wiki-driven WARM→COLD retirement, `wiki-runbook.md`, recovery/rollback scripts). Plain HOT/WARM/COLD memory and `memory/archive/` are unchanged.
-- Maintainer commands `/aaron:guard` and `/aaron:skillify`; line-budget / "slimming" ceremony (350-line ceiling, `validate-slimming-guardrails.sh`, the `references/decisions/` ADRs); and the inline-runbook sha256 sync ceremony (the auditor runbook stays inlined — only the hash-drift check is gone).
+- Maintainer commands `/aaron-seo-geo:guard` and `/aaron-seo-geo:skillify`; line-budget / "slimming" ceremony (350-line ceiling, `validate-slimming-guardrails.sh`, the `references/decisions/` ADRs); and the inline-runbook sha256 sync ceremony (the auditor runbook stays inlined — only the hash-drift check is gone).
 - Per-vendor distribution catering: `gemini-extension.json`, `qwen-extension.json`, `openclaw.plugin.json`, `.codebuddy-plugin/`, `marketplaces/`, the `distribution/` platform registry, and the ClawHub/OpenClaw publishing workflows. Distribution is now generic: one root `marketplace.json` plus its `.claude-plugin/` mirror.
 - Historical design proposals under `.docs/` and `references/proposal-*`.
 - `CITATION.cff` (citation-metadata ceremony) and `references/skill-resolver.md` (a derived routing index redundant with the skills' own descriptions) — neither referenced by any skill or command.
 
-**Command re-architecture (20 → 5)**: the 17 user commands plus `/aaron:max` collapsed into 5 intent commands — `discover`/`compete`/`map` → `/aaron:research`; `brief`/`write`/`series`/`refresh`/`publish` → `/aaron:create`; `tech`/`visibility`/`authority` → `/aaron:audit`; `watch`/`report`/`remember` → `/aaron:track`; `max` → `/aaron:auto --deep` (mode flags preserved, e.g. `--meta`, `--schema`, `--alert`, `--report`). Old `/seo:*` and prior command names still recover via `/aaron:auto`.
+**Command re-architecture (20 → 5)**: the 17 user commands plus `/aaron-seo-geo:max` collapsed into 5 intent commands — `discover`/`compete`/`map` → `/aaron-seo-geo:research`; `brief`/`write`/`series`/`refresh`/`publish` → `/aaron-seo-geo:create`; `tech`/`visibility`/`authority` → `/aaron-seo-geo:audit`; `watch`/`report`/`remember` → `/aaron-seo-geo:track`; `max` → `/aaron-seo-geo:auto --deep` (mode flags preserved, e.g. `--meta`, `--schema`, `--alert`, `--report`). Old `/seo:*` and prior command names still recover via `/aaron-seo-geo:auto`.
 
 **Authoring-quality pass**: a senior-review pass across all 20 skills — narrower `description` triggers, explicit scope boundaries ("not for X — use Y"), verifiable `Done when` criteria, Decision Gates (stop-vs-continue), and a uniform Measured / User-provided / Estimated data-honesty rule so no skill presents an estimate as a fact.
 
@@ -56,15 +56,15 @@ Removed non-user-facing maintenance and process scaffolding, and consolidated th
 Final 9.x release consolidating the entire post-v9.0.0 development line into a single coherent shipment. Previous interim tags (v9.5.0, v9.9.0, v9.9.5) and the entire v10.x exploratory line have been retired and folded into this release. Anyone tracking the 9.x line should upgrade directly from v9.0.0 to v9.9.9.
 
 **Added**:
-- **Aaron command architecture**: public command API renamed from `/seo:*` to `/aaron:*`; 17 user commands. New commands: `/aaron:auto`, `/aaron:max`, `/aaron:discover`, `/aaron:compete`, `/aaron:map`, `/aaron:brief`, `/aaron:series`, `/aaron:refresh`, `/aaron:publish`, `/aaron:visibility`, `/aaron:remember`. Old `/seo:*` commands are not runtime aliases — paste into `/aaron:auto` for recovery routing.
+- **Aaron command architecture**: public command API renamed from `/seo:*` to `/aaron-seo-geo:*`; 17 user commands. New commands: `/aaron-seo-geo:auto`, `/aaron-seo-geo:max`, `/aaron-seo-geo:discover`, `/aaron-seo-geo:compete`, `/aaron-seo-geo:map`, `/aaron-seo-geo:brief`, `/aaron-seo-geo:series`, `/aaron-seo-geo:refresh`, `/aaron-seo-geo:publish`, `/aaron-seo-geo:visibility`, `/aaron-seo-geo:remember`. Old `/seo:*` commands are not runtime aliases — paste into `/aaron-seo-geo:auto` for recovery routing.
 - **Wiki Knowledge Layer (Phase 1 → 3)**: full multi-session memory layer with auto-refreshed index (Phase 1), compiled pages with source SHA-256 hashes and conversational `(a)/(b)/(s)/(i)` contradiction reconciliation (Phase 2), and user-initiated WARM retirement with `originally_at` reverse link for full rollback recovery (Phase 3). New auxiliary files: `memory/wiki/log.md`, `.unresolved.md`, `.drift-log`, `.retire-day-log`. Recovery script `scripts/recover-retired-warm.sh` + Phase 3 rollback validator `scripts/validate-phase3-rollback.sh` (4 fixture variants).
 - **Severity-tier routing for auditor outputs (B3)**: `content-quality-auditor` and `domain-authority-auditor` now route findings by severity tier (Critical / High / Medium / Low) instead of flat lists.
-- **`/aaron:remember` slash command**: non-technical-user recovery path with trigger phrases (`recover wiki` / `恢复wiki` / `undo last retire`). memory-management runs recovery scripts on the user's behalf rather than telling them to "Run scripts/recover-retired-warm.sh".
-- **Bulk + force retire flows**: `/aaron:guard --wiki --retire-preview --bulk-confirmed` retires all `safe`-marked candidates in one operation; `force-retire <path>` bypasses C5 (frontmatter-coverage) only. Day-cap (20/UTC-day) still enforced.
+- **`/aaron-seo-geo:remember` slash command**: non-technical-user recovery path with trigger phrases (`recover wiki` / `恢复wiki` / `undo last retire`). memory-management runs recovery scripts on the user's behalf rather than telling them to "Run scripts/recover-retired-warm.sh".
+- **Bulk + force retire flows**: `/aaron-seo-geo:guard --wiki --retire-preview --bulk-confirmed` retires all `safe`-marked candidates in one operation; `force-retire <path>` bypasses C5 (frontmatter-coverage) only. Day-cap (20/UTC-day) still enforced.
 - **Multi-project guardrail**: pre-compile prompt when ≥2 distinct project slugs in hot-cache history.
 - **PII compile guardrail**: heuristic detection of natural-person entities (title-case names / LinkedIn / `entity_type: person`); surfaces GDPR Art 5(1)(c) data-minimization warning before compile.
 - **GDPR purge schema**: canonical template at `cross-cutting/memory-management/references/gdpr-purge-log-template.md` with auditor-verifiable structure (purge_id, fingerprint, scope, action, legal_basis, grep-count proof, audit_signature). Never raw subject data.
-- **`/aaron:series` command**: plan / write / continue / publish-handoff modes for content series workflows.
+- **`/aaron-seo-geo:series` command**: plan / write / continue / publish-handoff modes for content series workflows.
 - **Multi-agent compatibility**: Gemini, Qwen, Amp, Kimi, CodeBuddy manifest support.
 - **31 eval cases** under `evals/memory-management/` (was 6 pre-9.5.0) covering retirement, recovery, contradiction reconciliation, GDPR, multi-project, PII, force-retire.
 
@@ -86,7 +86,7 @@ Final 9.x release consolidating the entire post-v9.0.0 development line into a s
 - Audit-log post-condition mandated for every wiki write — `wiki-runbook §3` log table extended with `restore` + `resolve` operations.
 
 **Changed**:
-- Public command API: `/seo:*` → `/aaron:*` (breaking).
+- Public command API: `/seo:*` → `/aaron-seo-geo:*` (breaking).
 - Skill `version` and `metadata.version` fields unified across all 20 skills.
 - Marketplace mirrors (`marketplace.json` ↔ `.claude-plugin/marketplace.json`) kept byte-identical via `.github/scripts/sync-skills.js`.
 

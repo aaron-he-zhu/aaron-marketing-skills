@@ -89,11 +89,11 @@ Sorted by: weight × points lost (highest impact first)
 | CITE (Domain) | 69.9/100 | Medium |
 | CORE-EEAT (Content) | Run content-quality-auditor on sample pages | — |
 
-**Diagnosis**: Low CITE + unknown CORE-EEAT → Run `/aaron:audit` on top 5 landing pages to determine whether to prioritize content quality or domain authority first.
+**Diagnosis**: Low CITE + unknown CORE-EEAT → Run `/aaron-seo-geo:audit` on top 5 landing pages to determine whether to prioritize content quality or domain authority first.
 
 ### Recommended Next Steps
 
 - For entity building: run `entity-optimizer` to strengthen I-dimension signals
 - For content audit: use `content-quality-auditor` on key pages
-- For tracking progress: run `/aaron:track --report` with CITE score trends quarterly
+- For tracking progress: run `/aaron-seo-geo:track --report` with CITE score trends quarterly
 ```

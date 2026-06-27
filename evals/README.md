@@ -1,6 +1,6 @@
 # Skill Quality & Regression Cases
 **Status**: lightweight simulated seed set
-**Scope**: quality and regression review examples for the skills and the `/aaron:auto`/`/aaron:auto --deep` Product API
+**Scope**: quality and regression review examples for the skills and the `/aaron-seo-geo:auto`/`/aaron-seo-geo:auto --deep` Product API
 This directory stores small review cases that document expected skill behavior and known regressions. They are reviewed manually or with Claude during PR and code review. They are not automated benchmarks and do not prove production behavior.
 ## Layout
 ```text

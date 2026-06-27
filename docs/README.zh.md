@@ -16,7 +16,7 @@
 
 | 工具 | 安装 |
 |------|------|
-| Claude Code | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` |
+| Claude Code | `/plugin marketplace add aaron-he-zhu/seo-geo-claude-skills` 然后 `/plugin install aaron-seo-geo@aaron` |
 | skills.sh / 通用 Agent Skills 宿主 | `npx skills add aaron-he-zhu/seo-geo-claude-skills` |
 | 任意宿主 | `git clone https://github.com/aaron-he-zhu/seo-geo-claude-skills` |
 
@@ -31,7 +31,7 @@
 Slash 命令宿主的稳定入口：
 
 ```text
-/aaron:auto audit https://example.com
+/aaron-seo-geo:auto audit https://example.com
 ```
 
 ## 技能
@@ -45,15 +45,15 @@ Slash 命令宿主的稳定入口：
 | 协议层 | `content-quality-auditor` 发布质量门；`domain-authority-auditor` CITE 域名可信度；`entity-optimizer` 实体与知识图谱；`memory-management` 项目记忆 |
 
 ## 命令
-5 个命令，按 SEO/GEO 意图组织。日常工作从 `/aaron:auto` 开始；其余四个是显式的模式入口：
+5 个命令，按 SEO/GEO 意图组织。日常工作从 `/aaron-seo-geo:auto` 开始；其余四个是显式的模式入口：
 
-- `/aaron:auto` — 推断意图并执行最小够用的工作流（加 `--deep` 进行穷尽/压测）
-- `/aaron:research` — 关键词需求、SERP 意图、竞品、内容缺口、站点/主题/实体地图
-- `/aaron:create` — brief、写作、系列、刷新、CMS 中立发布包（`--brief`/`--series`/`--refresh`/`--publish`/`--meta`/`--schema`）
-- `/aaron:audit` — on-page + CORE-EEAT 质量、技术 SEO、AI 可见性、域权威（`--full`/`--tech`/`--visibility`/`--authority`）
-- `/aaron:track` — 排名、告警、绩效报告、项目记忆（`--alert`/`--report`/`--remember`）
+- `/aaron-seo-geo:auto` — 推断意图并执行最小够用的工作流（加 `--deep` 进行穷尽/压测）
+- `/aaron-seo-geo:research` — 关键词需求、SERP 意图、竞品、内容缺口、站点/主题/实体地图
+- `/aaron-seo-geo:create` — brief、写作、系列、刷新、CMS 中立发布包（`--brief`/`--series`/`--refresh`/`--publish`/`--meta`/`--schema`）
+- `/aaron-seo-geo:audit` — on-page + CORE-EEAT 质量、技术 SEO、AI 可见性、域权威（`--full`/`--tech`/`--visibility`/`--authority`）
+- `/aaron-seo-geo:track` — 排名、告警、绩效报告、项目记忆（`--alert`/`--report`/`--remember`）
 
-破坏性改名说明：当前命令使用 `/aaron:`。旧 `/seo:*` 命令可粘贴给 `/aaron:auto` 来恢复新路由；例如 `/aaron:auto /seo:audit-page https://example.com/blog/post` 会返回 `/aaron:audit https://example.com/blog/post`。
+破坏性改名说明：当前命令使用 `/aaron-seo-geo:`。旧 `/seo:*` 命令可粘贴给 `/aaron-seo-geo:auto` 来恢复新路由；例如 `/aaron-seo-geo:auto /seo:audit-page https://example.com/blog/post` 会返回 `/aaron-seo-geo:audit https://example.com/blog/post`。
 
 ## 运行模型
 

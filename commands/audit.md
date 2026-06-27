@@ -1,6 +1,6 @@
 ---
 name: audit
-description: "Evaluate and harden what exists: on-page SEO, content quality (CORE-EEAT), technical SEO, AI-visibility/GEO readiness, and domain authority (CITE). Not sure? Use /aaron:auto."
+description: "Evaluate and harden what exists: on-page SEO, content quality (CORE-EEAT), technical SEO, AI-visibility/GEO readiness, and domain authority (CITE). Not sure? Use /aaron-seo-geo:auto."
 argument-hint: "<url-domain-or-content> [--full] [--tech|--visibility|--authority] [--competitors <domains>]"
 parameters:
   - name: target

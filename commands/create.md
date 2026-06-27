@@ -1,6 +1,6 @@
 ---
 name: create
-description: "Produce SEO/GEO content end-to-end: brief, draft one asset or a series, refresh stale content, and prepare a CMS-neutral publish package. Not sure? Use /aaron:auto."
+description: "Produce SEO/GEO content end-to-end: brief, draft one asset or a series, refresh stale content, and prepare a CMS-neutral publish package. Not sure? Use /aaron-seo-geo:auto."
 argument-hint: "<topic-brief-or-url> [--brief|--series|--refresh|--publish|--meta|--schema] [--type article|landing|faq|comparison]"
 parameters:
   - name: input
@@ -42,7 +42,7 @@ Produce SEO/GEO content end-to-end — brief, draft, series, refresh, and publis
 - `--refresh`: diagnose freshness, decay, outdated facts, and ranking loss; return a refresh plan, evidence gaps, update scope, and quality-gate status.
 - `--publish`: prepare a CMS-neutral publish package (quality gate + metadata + schema + media + internal-link checks); do not publish directly. Allow `ready` only with full veto-aware audit coverage at SHIP, `cap_applied: false`, no BLOCKED status, no veto/blocker open loops, no unresolved required evidence, and `ready_verdict_allowed: true`.
 - `--meta`: title / meta / Open Graph variants only. `--schema`: JSON-LD only; never invent unsupported rich-result facts.
-- Do not claim publish-ready status without `/aaron:audit` or `--publish` quality-gate evidence.
+- Do not claim publish-ready status without `/aaron-seo-geo:audit` or `--publish` quality-gate evidence.
 
 ## Output
 

@@ -639,7 +639,7 @@ For a complete assessment, pair this CITE audit with a CORE-EEAT content audit:
 - For content improvement: use `content-quality-auditor` on key pages
 - For backlink strategy: use `backlink-analyzer` for detailed link analysis
 - For competitor benchmarking: use `competitor-analysis` with CITE scores
-- For tracking progress: run `/aaron:track --report` with CITE score trends
+- For tracking progress: run `/aaron-seo-geo:track --report` with CITE score trends
 ```
 
 ### Step 4.5: Apply Scoring Runbook

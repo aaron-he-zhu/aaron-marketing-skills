@@ -1,6 +1,6 @@
 ---
 name: track
-description: "Track and remember over time: rankings, alerts, performance reports, and project memory. Not sure? Use /aaron:auto."
+description: "Track and remember over time: rankings, alerts, performance reports, and project memory. Not sure? Use /aaron-seo-geo:auto."
 argument-hint: "<domain-campaign-or-memory-request> [--alert|--report|--remember] [--period <range>]"
 parameters:
   - name: target

@@ -30,7 +30,6 @@
   "commands": [
     "./commands/"
   ],
-  "commandNamespace": "aaron",
   "skills": [
     "./research/competitor-analysis",
     "./research/content-gap-analysis",
