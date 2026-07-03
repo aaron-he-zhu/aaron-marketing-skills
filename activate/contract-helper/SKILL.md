@@ -1,7 +1,7 @@
 ---
 name: contract-helper
 description: 'Use when the user asks to "draft an influencer contract", "review these agreement terms", or "build a partnership template"; produces a full influencer agreement framework (scope, compensation, usage rights, exclusivity, FTC disclosure), a clause-by-clause review with red flags, and a negotiation cheat sheet. Not for outreach negotiation before a deal exists — use outreach-manager.'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when drafting a new influencer or creator agreement, reviewing
 argument-hint: "<deliverables and compensation> [platform] | review <pasted terms>"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: influencer
   phase: activate
   family: influencer-marketing
@@ -40,7 +40,7 @@ Review these contract terms from an influencer agency: [paste terms]
   - Every required term is filled or explicitly marked TBD (parties, deliverables, compensation, payment timeline, usage rights, exclusivity, termination).
   - Red flags are listed for any review, and a legal-counsel review note is attached before execution.
   - A negotiation cheat sheet maps each open term to a standard range.
-- **Primary next skill**: [content-amplifier](../../convert/content-amplifier/SKILL.md) — once the contract is signed, amplify the licensed content.
+- **Primary next skill**: [content-amplifier](../../activate/content-amplifier/SKILL.md) — once the contract is signed, amplify the licensed content.
 
 ### Handoff Summary
 
@@ -85,7 +85,7 @@ Save the drafted agreement or review memo to `memory/influencer/contract-helper/
 
 ## Next Best Skill
 
-**Primary**: [content-amplifier](../../convert/content-amplifier/SKILL.md) — once the agreement is signed and usage rights are locked, amplify the licensed content into paid and owned channels.
+**Primary**: [content-amplifier](../../activate/content-amplifier/SKILL.md) — once the agreement is signed and usage rights are locked, amplify the licensed content into paid and owned channels.
 
 **Alternates (same Activate/Convert family)**:
 - [content-reviewer](../content-reviewer/SKILL.md) — run the approval workflow the contract defines.

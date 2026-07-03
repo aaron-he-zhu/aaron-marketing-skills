@@ -26,7 +26,7 @@ For the bundle-able categories the repo ships small **Python-3-stdlib** helpers 
 
 See [scripts/connectors/README.md](scripts/connectors/README.md) for the full list, the safety contract, and what intentionally stays external (proprietary / own-data → MCP/API).
 
-**Measurement loop.** Most helpers above are point-in-time. Pipe any of them into `ledger.py record` to keep a local, git-diffable time series per target, then `ledger.py diff` / `ledger.py trend` to compute real movement — so a skill reports a measured delta instead of an estimated one. This is the spine the monitor-phase skills (rank-tracker, performance-reporter) and technical-seo-checker read for baselines. **Before trusting any movement, read [references/measurement-protocol.md](references/measurement-protocol.md)** — it defines which signals are minute-level proxies vs week-scale outcomes, and why outcome deltas need a control group to attribute.
+**Measurement loop.** Most helpers above are point-in-time. Pipe any of them into `ledger.py record` to keep a local, git-diffable time series per target, then `ledger.py diff` / `ledger.py trend` to compute real movement — so a skill reports a measured delta instead of an estimated one. This is the spine the monitor-phase skills (rank-tracker, performance-monitor) and technical-seo-checker read for baselines. **Before trusting any movement, read [references/measurement-protocol.md](references/measurement-protocol.md)** — it defines which signals are minute-level proxies vs week-scale outcomes, and why outcome deltas need a control group to attribute.
 
 ## Free & public data sources (no paid tool, no MCP)
 
@@ -120,6 +120,17 @@ The influencer-marketing skills use these additional placeholders (plus `~~CRM`,
 | Competitor Tracking | `~~competitor tracking` | influencer | Social Blade, BuzzSumo | manual competitor profile review | manual review |
 | Customer Survey | `~~customer survey data` | influencer | Typeform, SurveyMonkey, Qualtrics | Google Forms | Google Forms |
 | E-signature | `~~e-signature` | influencer | DocuSign, Dropbox Sign, PandaDoc | PDF + manual signature | manual PDF sign |
+
+### Email / SEND categories
+
+The email-marketing skills add one placeholder, `~~email platform` (the ESP), and reuse `~~web analytics` (GA4) + `~~ecommerce` for revenue truth. Every deliverability signal is **keyless** — it comes from public DNS, the free DMARC aggregate (RUA) report you already receive, or a seed-list test — so no keyed ESP API is ever required (keyed ESP APIs are opt-in Tier-2/3 MCP). The SEND framework scores from the user's **own-account manual export**, exactly like paid/ROAS.
+
+| Category | Placeholder | Discipline | Example paid tools | Free / own-data path | Agent default |
+|----------|-------------|------------|--------------------|----------------------|---------------|
+| Email Platform (ESP) | `~~email platform` | email | Klaviyo, Mailchimp, HubSpot, Customer.io, Braze | native ESP campaign/flow + deliverability export (own data) | manual export (own); keyed API = opt-in MCP |
+| Email Authentication | `~~email platform` (auth signals) | email | Valimail, EasyDMARC, dmarcian | DNS lookup of SPF/DKIM/DMARC/BIMI + the **DMARC aggregate (RUA) report** (own, free) | DNS + RUA report |
+| Sender Reputation | `~~email platform` (reputation) | email | Postmark, SendForensics | Google Postmaster Tools / Microsoft SNDS (own data) | Postmaster/SNDS (own) |
+| Inbox Placement | `~~email platform` (seed test) | email | GlockApps, Mailtrap, Litmus | manual seed-list send across own inbox providers | manual seed test |
 
 ## How placeholders work
 

@@ -1,7 +1,7 @@
 ---
 name: keyword-research
 description: 'Use when the user asks to "find keywords", "挖词", or "搜什么词"; prioritizes search volume, keyword difficulty, intent, and topic clusters from provided or connected data. Not for competitor-relative coverage gaps — use content-gap-analysis. 关键词研究/内容选题'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when starting keyword research for a new page, topic, or campa
 argument-hint: "<topic or seed keyword> [market/language]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: seo-geo
   phase: research
   geo-relevance: "medium"

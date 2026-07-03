@@ -74,7 +74,7 @@ P2 (single-page):
 - **Key Findings / Output**: pattern-level issues + portfolio priority list
 - **Evidence**: "Sampled N of M pages (deep audit); inferred group issues from URL structure + meta signals"
 - **Open Loops**: un-sampled groups; access blockers; data freshness caveats
-- **Recommended Next Skill**: `content-refresher` (if content issues dominate) OR `schema-markup-generator` (if structured data issues)
+- **Recommended Next Skill**: `content-writer` (if content issues dominate) OR `serp-markup-builder` (if structured data issues)
 
 ## Minimum viable bulk input
 

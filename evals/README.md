@@ -1,6 +1,6 @@
 # Skill Quality & Regression Cases
 **Status**: lightweight simulated seed set
-**Scope**: quality and regression review examples covering all 54 skills (24 SEO/GEO + 4 protocol + 18 influencer/IMPACT + 8 paid ads) and the `/aaron-marketing:auto`/`/aaron-marketing:auto --deep` natural-language router
+**Scope**: quality and regression review examples covering all 69 skills (16 SEO/GEO + 5 protocol + 16 influencer/IMPACT + 16 paid ads + 16 email) and the `/aaron-marketing:auto`/`/aaron-marketing:auto --deep` natural-language router
 This directory stores small review cases that document expected skill behavior and known regressions. They are reviewed manually or with Claude during PR and code review. They are not automated benchmarks and do not prove production behavior. (The `/aaron-marketing:auto` scenario library is runtime routing data and now lives in `references/auto-routing-scenarios.md`, not here.)
 ## Layout
 ```text

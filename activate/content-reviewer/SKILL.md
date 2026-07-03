@@ -1,7 +1,7 @@
 ---
 name: content-reviewer
 description: 'Use when the user asks to "review this influencer content" or "check if this post meets brand guidelines"; produces a structured review (brand alignment, message accuracy, compliance, quality, technical specs), an approve/revise/reject decision, and a constructive feedback message for the creator. Not for drafting the brief that sets the criteria — use brief-generator; not for the partnership agreement — use contract-helper.'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -10,7 +10,7 @@ argument-hint: "<content submission or link> [platform] [campaign]"
 class: auditor
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: influencer
   phase: activate
   family: influencer-marketing
@@ -138,15 +138,15 @@ A submission with strong visuals (Brand 9/10, Quality 9/10) but no visible #ad d
 - [creator-registry](../../protocol/creator-registry/SKILL.md) — the creator's disclosure/compliance history; log dated verdicts back to it.
 - [brief-generator](../../plan/brief-generator/SKILL.md) — the brief whose criteria this review checks against.
 - [contract-helper](../../activate/contract-helper/SKILL.md) — bake content guidelines and approval terms into the agreement.
-- [content-amplifier](../../convert/content-amplifier/SKILL.md) — amplify content once approved.
-- [performance-analyzer](../../track/performance-analyzer/SKILL.md) — track how approved content performs.
+- [content-amplifier](../../activate/content-amplifier/SKILL.md) — amplify content once approved.
+- [performance-analyzer](../../measure/performance-analyzer/SKILL.md) — track how approved content performs.
 
 ## Next Best Skill
 
 **Primary**: [contract-helper](../../activate/contract-helper/SKILL.md) — once content is approved (or once review feedback exposes a gap the agreement should cover), fold guidelines, usage rights, and approval terms into the partnership contract.
 
 **Alternates** (same Activate family):
-- [content-amplifier](../../convert/content-amplifier/SKILL.md) — when content is approved and ready to scale through paid or owned channels.
-- [performance-analyzer](../../track/performance-analyzer/SKILL.md) — when the piece is live and you want to measure outcomes.
+- [content-amplifier](../../activate/content-amplifier/SKILL.md) — when content is approved and ready to scale through paid or owned channels.
+- [performance-analyzer](../../measure/performance-analyzer/SKILL.md) — when the piece is live and you want to measure outcomes.
 
 Termination note (visited-set): if a recommended skill has already been invoked this session, stop and report the chain as complete rather than re-running it. Cap any handoff chain at max-depth 3.

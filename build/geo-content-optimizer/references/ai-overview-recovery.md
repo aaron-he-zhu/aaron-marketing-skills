@@ -102,10 +102,10 @@ If no recovery at T+28:
 - **Key Findings / Output**: segmentation table, per-query rewrite priority, estimated recovery timeline
 - **Evidence**: GSC export ref, SERP screenshots, pre/post CTR deltas
 - **Open Loops**: monitoring windows (T+7/14/28), pages pending rewrite, entity gaps
-- **Recommended Next Skill**: `content-refresher`, `entity-optimizer`, `rank-tracker`
+- **Recommended Next Skill**: `content-writer`, `entity-optimizer`, `rank-tracker`
 
 ## See also
 
 - [entity-optimizer](../../../protocol/entity-optimizer/SKILL.md)
-- [content-refresher](../../../optimize/content-refresher/SKILL.md)
+- [content-writer](../../../build/content-writer/SKILL.md)
 - [technical-seo-checker LLM crawler guide](../../../optimize/technical-seo-checker/references/llm-crawler-handling.md)

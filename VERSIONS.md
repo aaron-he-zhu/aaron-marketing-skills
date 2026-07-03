@@ -1,69 +1,108 @@
 # Aaron Marketing Skills — Versions
 
-Current versions for the plugin and all 54 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/aaron-marketing-skills/main/VERSIONS.md` once per session.
+Current versions for the plugin and all 69 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/aaron-marketing-skills/main/VERSIONS.md` once per session.
 
-**Current release**: `11.0.0` (2026-06-29). Skill `version`, `metadata.version`, plugin manifests, marketplace files, and badges are aligned to the same public version.
+**Current release**: `12.0.0` (2026-07-03). First release since v11 — adds the **email-marketing (SEND) discipline** and makes all 4 disciplines symmetric at 4 phases × 4 skills (16 each); **54 → 69 skills**, all aligned to `12.0.0`.
 
 ## Skills
 
 | Skill | Category | Version | Last Updated |
 |-------|----------|---------|--------------|
-| keyword-research | research | 11.0.0 | 2026-06-28 |
-| competitor-analysis | research | 11.0.0 | 2026-06-28 |
-| serp-analysis | research | 11.0.0 | 2026-06-28 |
-| content-gap-analysis | research | 11.0.0 | 2026-06-28 |
-| seo-content-writer | build | 11.0.0 | 2026-06-28 |
-| geo-content-optimizer | build | 11.0.0 | 2026-06-28 |
-| meta-tags-optimizer | build | 11.0.0 | 2026-06-28 |
-| schema-markup-generator | build | 11.0.0 | 2026-06-28 |
-| on-page-seo-auditor | optimize | 11.0.0 | 2026-06-28 |
-| technical-seo-checker | optimize | 11.0.0 | 2026-06-28 |
-| internal-linking-optimizer | optimize | 11.0.0 | 2026-06-28 |
-| content-refresher | optimize | 11.0.0 | 2026-06-28 |
-| rank-tracker | monitor | 11.0.0 | 2026-06-28 |
-| backlink-analyzer | monitor | 11.0.0 | 2026-06-28 |
-| performance-reporter | monitor | 11.0.0 | 2026-06-28 |
-| alert-manager | monitor | 11.0.0 | 2026-06-28 |
-| content-quality-auditor | optimize | 11.0.0 | 2026-06-29 |
-| domain-authority-auditor | monitor | 11.0.0 | 2026-06-29 |
-| entity-optimizer | protocol | 11.0.0 | 2026-06-28 |
-| memory-management | protocol | 11.0.0 | 2026-06-28 |
-| creator-registry | protocol | 11.0.0 | 2026-06-29 |
-| offer-claims-registry | protocol | 11.0.0 | 2026-06-29 |
-| audience-analyzer | insight | 11.0.0 | 2026-06-28 |
-| niche-researcher | insight | 11.0.0 | 2026-06-28 |
-| trend-spotter | insight | 11.0.0 | 2026-06-28 |
-| influencer-discovery | map | 11.0.0 | 2026-06-28 |
-| fit-scorer | map | 11.0.0 | 2026-06-28 |
-| competitor-tracker | map | 11.0.0 | 2026-06-28 |
-| campaign-planner | plan | 11.0.0 | 2026-06-28 |
-| brief-generator | plan | 11.0.0 | 2026-06-28 |
-| budget-optimizer | plan | 11.0.0 | 2026-06-28 |
-| outreach-manager | activate | 11.0.0 | 2026-06-28 |
-| content-reviewer | activate | 11.0.0 | 2026-06-28 |
-| contract-helper | activate | 11.0.0 | 2026-06-28 |
-| content-amplifier | convert | 11.0.0 | 2026-06-28 |
-| ugc-repurposer | convert | 11.0.0 | 2026-06-28 |
-| landing-optimizer | convert | 11.0.0 | 2026-06-28 |
-| performance-analyzer | track | 11.0.0 | 2026-06-28 |
-| roi-calculator | track | 11.0.0 | 2026-06-28 |
-| report-generator | track | 11.0.0 | 2026-06-28 |
-| programmatic-seo | build | 11.0.0 | 2026-06-29 |
-| parasite-seo | build | 11.0.0 | 2026-06-29 |
-| comparison-page-builder | build | 11.0.0 | 2026-06-29 |
-| local-seo | build | 11.0.0 | 2026-06-29 |
-| site-architecture | optimize | 11.0.0 | 2026-06-29 |
-| ai-traffic | monitor | 11.0.0 | 2026-06-29 |
-| campaign-architect | paid | 11.0.0 | 2026-06-29 |
-| audience-segment-builder | paid | 11.0.0 | 2026-06-29 |
-| ad-creative-builder | paid | 11.0.0 | 2026-06-29 |
-| ad-test-designer | paid | 11.0.0 | 2026-06-29 |
-| ad-account-auditor | paid | 11.0.0 | 2026-06-29 |
-| conversion-signal-qa | paid | 11.0.0 | 2026-06-29 |
-| paid-measurement-loop | paid | 11.0.0 | 2026-06-29 |
-| attribution-reconciler | paid | 11.0.0 | 2026-06-29 |
+| competitor-analysis | research | 12.0.0 | 2026-07-03 |
+| content-gap-analysis | research | 12.0.0 | 2026-07-03 |
+| keyword-research | research | 12.0.0 | 2026-07-03 |
+| serp-analysis | research | 12.0.0 | 2026-07-03 |
+| content-writer | build | 12.0.0 | 2026-07-03 |
+| geo-content-optimizer | build | 12.0.0 | 2026-07-03 |
+| page-play-builder | build | 12.0.0 | 2026-07-03 |
+| serp-markup-builder | build | 12.0.0 | 2026-07-03 |
+| content-quality-auditor | optimize | 12.0.0 | 2026-07-03 |
+| on-page-seo-auditor | optimize | 12.0.0 | 2026-07-03 |
+| site-structure-optimizer | optimize | 12.0.0 | 2026-07-03 |
+| technical-seo-checker | optimize | 12.0.0 | 2026-07-03 |
+| domain-authority-auditor | monitor | 12.0.0 | 2026-07-03 |
+| offsite-signal-analyzer | monitor | 12.0.0 | 2026-07-03 |
+| performance-monitor | monitor | 12.0.0 | 2026-07-03 |
+| rank-tracker | monitor | 12.0.0 | 2026-07-03 |
+| audience-mapper | discover | 12.0.0 | 2026-07-03 |
+| fit-scorer | discover | 12.0.0 | 2026-07-03 |
+| influencer-discovery | discover | 12.0.0 | 2026-07-03 |
+| trend-spotter | discover | 12.0.0 | 2026-07-03 |
+| brief-generator | plan | 12.0.0 | 2026-07-03 |
+| budget-optimizer | plan | 12.0.0 | 2026-07-03 |
+| campaign-planner | plan | 12.0.0 | 2026-07-03 |
+| competitor-tracker | plan | 12.0.0 | 2026-07-03 |
+| content-amplifier | activate | 12.0.0 | 2026-07-03 |
+| content-reviewer | activate | 12.0.0 | 2026-07-03 |
+| contract-helper | activate | 12.0.0 | 2026-07-03 |
+| outreach-manager | activate | 12.0.0 | 2026-07-03 |
+| landing-optimizer | measure | 12.0.0 | 2026-07-03 |
+| performance-analyzer | measure | 12.0.0 | 2026-07-03 |
+| report-generator | measure | 12.0.0 | 2026-07-03 |
+| roi-calculator | measure | 12.0.0 | 2026-07-03 |
+| audience-segment-builder | paid | 12.0.0 | 2026-07-03 |
+| campaign-architect | paid | 12.0.0 | 2026-07-03 |
+| product-feed-optimizer | paid | 12.0.0 | 2026-07-03 |
+| search-term-miner | paid | 12.0.0 | 2026-07-03 |
+| ad-creative-builder | paid | 12.0.0 | 2026-07-03 |
+| ad-test-designer | paid | 12.0.0 | 2026-07-03 |
+| bid-strategy-planner | paid | 12.0.0 | 2026-07-03 |
+| landing-experience-checker | paid | 12.0.0 | 2026-07-03 |
+| ad-account-auditor | paid | 12.0.0 | 2026-07-03 |
+| conversion-signal-qa | paid | 12.0.0 | 2026-07-03 |
+| conversion-value-mapper | paid | 12.0.0 | 2026-07-03 |
+| placement-exclusion-manager | paid | 12.0.0 | 2026-07-03 |
+| attribution-reconciler | paid | 12.0.0 | 2026-07-03 |
+| budget-pacing-monitor | paid | 12.0.0 | 2026-07-03 |
+| fatigue-frequency-manager | paid | 12.0.0 | 2026-07-03 |
+| paid-measurement-loop | paid | 12.0.0 | 2026-07-03 |
+| deliverability-qa | email | 12.0.0 | 2026-07-03 |
+| list-growth-designer | email | 12.0.0 | 2026-07-03 |
+| list-hygiene-monitor | email | 12.0.0 | 2026-07-03 |
+| list-segment-builder | email | 12.0.0 | 2026-07-03 |
+| dynamic-content-personalizer | email | 12.0.0 | 2026-07-03 |
+| email-creative-builder | email | 12.0.0 | 2026-07-03 |
+| email-render-builder | email | 12.0.0 | 2026-07-03 |
+| subject-line-lab | email | 12.0.0 | 2026-07-03 |
+| email-sequence-designer | email | 12.0.0 | 2026-07-03 |
+| newsletter-monetization-planner | email | 12.0.0 | 2026-07-03 |
+| preference-frequency-manager | email | 12.0.0 | 2026-07-03 |
+| reactivation-specialist | email | 12.0.0 | 2026-07-03 |
+| cold-outbound-sequencer | email | 12.0.0 | 2026-07-03 |
+| email-quality-auditor | email | 12.0.0 | 2026-07-03 |
+| inbox-placement-monitor | email | 12.0.0 | 2026-07-03 |
+| send-experiment-designer | email | 12.0.0 | 2026-07-03 |
+| consent-registry | protocol | 12.0.0 | 2026-07-03 |
+| creator-registry | protocol | 12.0.0 | 2026-07-03 |
+| entity-optimizer | protocol | 12.0.0 | 2026-07-03 |
+| memory-management | protocol | 12.0.0 | 2026-07-03 |
+| offer-claims-registry | protocol | 12.0.0 | 2026-07-03 |
 
 ## Changelog
+
+### v12.0.0 — Email Marketing (SEND) discipline + 4×4 symmetry refactor (2026-07-03)
+
+The first release since v11 — **two stacked changes shipped as one version** (line still at v12 because v12 was never published), taking the library **54 → 69 skills**: **(A)** a new **email-marketing discipline** on the new **SEND** framework, and **(B)** a **4×4 symmetry refactor** making every discipline exactly 4 phases × 4 skills. All 5 auditor gates and 4 truth registries preserved; frameworks and golden-math intact; **zero capability deleted** — every reduction is a mode-preserving merge. All 69 skills aligned to `12.0.0`.
+
+**(B) 4×4 symmetry refactor** — every discipline symmetric at 4 phases × 4 skills = 16 (64 discipline + 5 protocol = **69 skills**):
+
+- **SEO/GEO 24 → 16** via 6 mode-based merges: `content-writer` (writer+refresher), `serp-markup-builder` (meta+schema), `page-play-builder` (programmatic+parasite+comparison+local, 4 modes + 4 reference packs), `site-structure-optimizer` (linking+architecture), `performance-monitor` (reporter+alert), `offsite-signal-analyzer` (backlinks+ai-traffic).
+- **Influencer 18 → 16**: 6 → 4 phases — `insight`+`map` → **discover**, `activate`+`convert` → **activate**, `track` → **measure** (`plan` unchanged). Merges: `audience-mapper` (analyzer+niche), `content-amplifier` (amplifier+ugc-repurposer). `competitor-tracker` → plan, `landing-optimizer` → measure.
+- **Paid 8 → 16** (+8 new): search-term-miner, product-feed-optimizer, bid-strategy-planner, landing-experience-checker, placement-exclusion-manager, conversion-value-mapper, budget-pacing-monitor, fatigue-frequency-manager.
+- **Email 8 → 16** (+7 new + rename): list-hygiene-monitor, subject-line-lab, email-render-builder, dynamic-content-personalizer, preference-frequency-manager, reactivation-specialist, inbox-placement-monitor, cold-outbound-sequencer; `send-test-designer` → `send-experiment-designer` (send-time now a first-class mode).
+- **Refactor counts**: 63 → **69 skills** · per-discipline 24/18/8/8 → **16/16/16/16** · protocol 5 (unchanged).
+
+**(A) Email Marketing discipline + SEND framework** — the fourth discipline, **email marketing**, scored on the new **SEND** framework (fifth quality framework alongside CORE-EEAT / CITE / C³ / ROAS). SEND scores four goal-weighted levers — **S**ender-integrity/deliverability · **E**ngagement · **N**urture/lifecycle · **D**irect-response/conversion — rolling up to the **EQS** (Email Quality Score, 0–100) via the same arithmetic goal-weighted mean as CITE/ROAS. Vetoes: S1 (auth broken), S2 (non-consented list), N1 (unsubscribe broken/absent), D1 (claim integrity). Use-case-agnostic: one skill set serves B2C lifecycle/ecommerce, B2B cold outbound, and newsletter/creator; the goal-weight column encodes which.
+
+- **8 email skills** across the **SEND loop** (`email/` phase directories: setup → engage → nurture → deliver):
+  - Setup — `deliverability-qa` (SEND-S, the S1 auth pre-flight), `list-segment-builder` (segments + suppression), `list-growth-designer` (acquisition strategy + compliant opt-in capture-flow spec)
+  - Engage — `email-creative-builder` (subject/preheader/body/CTA, message-matched, claims-ledger-aware)
+  - Nurture — `email-sequence-designer` (lifecycle flows + frequency governance), `newsletter-monetization-planner` (paid-sub/sponsorship/referral economics)
+  - Deliver — `send-experiment-designer` (A/B + send-time + hold-out design), `email-quality-auditor` (**auditor-class gate** — EQS + S1/S2/N1/D1 vetoes + pre-send go/no-go; SHIP/FIX/BLOCK → `memory/audits/email/`)
+- **1 protocol-layer registry**: `consent-registry` — the per-subject consent/suppression SSOT (`memory/consent/`), GDPR lawful-basis gated like `creator-registry`; the record the S2/N1 vetoes are judged against (fourth truth registry).
+- **New**: `references/send-benchmark.md`, `commands/email.md` (5th command), `~~email platform` connector category, `memory/consent/` + `memory/email/` + `memory/audits/email/` scaffolding, golden-math SEND fixture, and email eval seed cases.
+- **Wired**: `/auto` routing, `auditor-runbook.md` (v2.2 — SEND veto-set), `state-model.md`, `check-evals.py` phase dirs, and the 8 tracking files.
+- **Email-wave counts (mid-release)**: 54 → **63 skills** · 4 → **5 commands** · 4 → **5 frameworks** · 4 → **5 auditor gates** · 3 → **4 truth registries** (protocol layer 4 → 5). The **(B)** refactor above then took 63 → **69** at 16/16/16/16 — the final v12.0.0 shape.
 
 ### v11.0.0 — Correctness patch + OSS-borrow expansion + Paid Ads discipline (2026-06-29)
 

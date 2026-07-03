@@ -1,7 +1,7 @@
 ---
 name: entity-optimizer
 description: 'Use when the user asks to "optimize entity presence"; builds Knowledge Graph, Wikidata, sameAs, and AI recognition signals for a canonical entity identity. Not for page-level AI-citation readiness — use geo-content-optimizer. 实体优化/知识图谱'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when optimizing entity presence for Knowledge Graph, Wikidata,
 argument-hint: "<entity name or brand>"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: protocol
   phase: protocol
   geo-relevance: "high"
@@ -73,7 +73,7 @@ AI systems confuse [my entity] with [other entity] — help me disambiguate
 
 This skill is the sole writer of canonical entity profiles at `memory/entities/<name>.md`. Other skills write entity candidates to `memory/entities/candidates.md` only. When 3+ candidates accumulate, this skill should be recommended.
 
-**Profile schema**: the frontmatter of every canonical entity profile follows the authoritative contract in [Entity-GEO Handoff Schema](../../references/entity-geo-handoff-schema.md). That schema defines which fields downstream skills (`geo-content-optimizer` — including its [AI-overview-recovery playbook](../../build/geo-content-optimizer/references/ai-overview-recovery.md) — `schema-markup-generator`, `meta-tags-optimizer`) depend on. Do not omit required fields — the consumers will degrade gracefully to `DONE_WITH_CONCERNS` and surface an `open_loop` pointing back here.
+**Profile schema**: the frontmatter of every canonical entity profile follows the authoritative contract in [Entity-GEO Handoff Schema](../../references/entity-geo-handoff-schema.md). That schema defines which fields downstream skills (`geo-content-optimizer` — including its [AI-overview-recovery playbook](../../build/geo-content-optimizer/references/ai-overview-recovery.md) — `serp-markup-builder`, `serp-markup-builder`) depend on. Do not omit required fields — the consumers will degrade gracefully to `DONE_WITH_CONCERNS` and surface an `open_loop` pointing back here.
 
 - **Primary next skill**: use the `Next Best Skill` below once the entity truth is clear.
 
@@ -193,4 +193,4 @@ Detailed guides for entity optimization:
 
 ## Next Best Skill
 
-Primary: [schema-markup-generator](../../build/schema-markup-generator/SKILL.md). Also consider: [geo-content-optimizer](../../build/geo-content-optimizer/SKILL.md) (AI recognition gap) or [seo-content-writer](../../build/seo-content-writer/SKILL.md) (new About/founder page needed).
+Primary: [serp-markup-builder](../../build/serp-markup-builder/SKILL.md). Also consider: [geo-content-optimizer](../../build/geo-content-optimizer/SKILL.md) (AI recognition gap) or [content-writer](../../build/content-writer/SKILL.md) (new About/founder page needed).

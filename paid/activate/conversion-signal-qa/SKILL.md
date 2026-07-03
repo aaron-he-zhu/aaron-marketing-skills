@@ -1,7 +1,7 @@
 ---
 name: conversion-signal-qa
 description: 'Use when the user asks to "QA my conversion tracking before launch", "check my UTMs / pixel / event firing", "set up a tracking pre-flight", or "set the dedup rule so Meta and Google stop double-counting"; builds and fixes the measurement plumbing — conversion-event firing, UTM hygiene, cross-platform dedup rules, attribution-window alignment, and offline/iOS-ATT modeled-gap flags — as a pre-flight checklist plus a UTM/event-spec builder. Not for scoring R1/R2 — that is a scored veto in ad-account-auditor; not for account structure — use campaign-architect. 付费广告转化追踪QA/UTM规范/跨平台去重'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use before launching or scaling paid campaigns, when the measureme
 argument-hint: "<site/account topic> [platforms] [GA4 conversions + traffic-acquisition export]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: paid
   phase: activate
   geo-relevance: "low"

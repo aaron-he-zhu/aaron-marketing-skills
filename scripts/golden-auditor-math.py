@@ -26,6 +26,7 @@ CORE = os.path.join(ROOT, "references", "core-eeat-benchmark.md")
 CITE = os.path.join(ROOT, "references", "cite-domain-rating.md")
 C3 = os.path.join(ROOT, "references", "c3-benchmark.md")
 ROAS = os.path.join(ROOT, "references", "roas-benchmark.md")
+SEND = os.path.join(ROOT, "references", "send-benchmark.md")
 CQA = os.path.join(ROOT, "optimize", "content-quality-auditor", "SKILL.md")
 DAA = os.path.join(ROOT, "monitor", "domain-authority-auditor", "SKILL.md")
 
@@ -144,6 +145,27 @@ if len(rows) >= 2:
 check("R=75 O=80 A=85 S=78" in roas_text, "ROAS input vector present in roas-benchmark")
 check("floor(78.25) = 78" in roas_text, "ROAS DR result 78 present in roas-benchmark")
 check("floor(80.25) = 80" in roas_text, "ROAS Prospecting result 80 present in roas-benchmark")
+
+print("== SEND EQS arithmetic weighted-mean: all three goal-weight rows sum to 1.0; worked examples recompute ==")
+send_text = open(SEND, encoding="utf-8").read()
+swe = re.compile(r"S\s*[×xX*]\s*([\d.]+)\s*\+\s*E\s*[×xX*]\s*([\d.]+)\s*\+\s*N\s*[×xX*]\s*([\d.]+)\s*\+\s*D\s*[×xX*]\s*([\d.]+)")
+srows = swe.findall(send_text)
+check(len(srows) >= 3, "found all three SEND goal-weight formulas (got %d)" % len(srows))
+send_vec = {"S": 80, "E": 75, "N": 70, "D": 78}
+if len(srows) >= 3:
+    promo = {k: float(v) for k, v in zip("SEND", srows[0])}
+    reten = {k: float(v) for k, v in zip("SEND", srows[1])}
+    cold = {k: float(v) for k, v in zip("SEND", srows[2])}
+    check(abs(sum(promo.values()) - 1.0) < 1e-9, "SEND Promotional weights sum to 1.0 (got %.2f)" % sum(promo.values()))
+    check(abs(sum(reten.values()) - 1.0) < 1e-9, "SEND Retention weights sum to 1.0 (got %.2f)" % sum(reten.values()))
+    check(abs(sum(cold.values()) - 1.0) < 1e-9, "SEND Cold-outbound weights sum to 1.0 (got %.2f)" % sum(cold.values()))
+    check(weighted(send_vec, promo) == 76, "SEND Promotional example (S80 E75 N70 D78) == 76 (got %d)" % weighted(send_vec, promo))
+    check(weighted(send_vec, reten) == 74, "SEND Retention example (same vector) == 74 (got %d)" % weighted(send_vec, reten))
+    check(weighted(send_vec, cold) == 76, "SEND Cold-outbound example (same vector) == 76 (got %d)" % weighted(send_vec, cold))
+check("S=80 E=75 N=70 D=78" in send_text, "SEND input vector present in send-benchmark")
+check("floor(76.6) = 76" in send_text, "SEND Promotional result 76 present in send-benchmark")
+check("floor(74.95) = 74" in send_text, "SEND Retention result 74 present in send-benchmark")
+check("floor(76.95) = 76" in send_text, "SEND Cold-outbound result 76 present in send-benchmark")
 
 print()
 if fails:

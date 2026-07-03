@@ -75,6 +75,6 @@ The influencer-marketing skills (IMPACT phases: Insight · Map · Plan · Activa
 
 Three skills apply C³ scoring directly (they emit the rubric scores and enforce the veto items); two more inform those scores without computing them.
 
-- **Map** — [fit-scorer](../map/fit-scorer/SKILL.md) scores creators on **ACE** and enforces the A2/C1/E2 veto items. [influencer-discovery](../map/influencer-discovery/SKILL.md) *informs* this step: it shortlists candidates that fit-scorer then scores on ACE (it does not compute ACE itself).
+- **Map** — [fit-scorer](../discover/fit-scorer/SKILL.md) scores creators on **ACE** and enforces the A2/C1/E2 veto items. [influencer-discovery](../discover/influencer-discovery/SKILL.md) *informs* this step: it shortlists candidates that fit-scorer then scores on ACE (it does not compute ACE itself).
 - **Activate** — [content-reviewer](../activate/content-reviewer/SKILL.md) gates deliverables on **ART**, with T1 (FTC disclosure) and T2 (claim integrity) as veto items.
-- **Track** — [roi-calculator](../track/roi-calculator/SKILL.md) computes the **ROI** score and the **CVI** rollup. [performance-analyzer](../track/performance-analyzer/SKILL.md) *contributes* the measured campaign inputs that feed ROI/CVI (it does not compute the rollup itself).
+- **Track** — [roi-calculator](../measure/roi-calculator/SKILL.md) computes the **ROI** score and the **CVI** rollup. [performance-analyzer](../measure/performance-analyzer/SKILL.md) *contributes* the measured campaign inputs that feed ROI/CVI (it does not compute the rollup itself).

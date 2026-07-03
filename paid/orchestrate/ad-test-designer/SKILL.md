@@ -1,7 +1,7 @@
 ---
 name: ad-test-designer
 description: 'Use when the user asks to "design an A/B test", "set up a creative/landing test", "run an incrementality test", or "is this test significant — promote or kill?"; produces a hypothesis, variant matrix, sample-size/duration/power plan, a documented significance read, and a promote/kill decision on your own exported results. Not for producing the variants — use ad-creative-builder; not for reading back one shipped change vs a control — use paid-measurement-loop; not for cross-channel reporting — use performance-analyzer. 广告AB测试设计/实验设计/显著性判定/增效测试'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when designing a creative/landing A/B/n or incrementality test
 argument-hint: "<what to test / results CSV> [goal: DR|prospecting] [baseline CVR/CTR]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: paid
   phase: orchestrate
   geo-relevance: "low"

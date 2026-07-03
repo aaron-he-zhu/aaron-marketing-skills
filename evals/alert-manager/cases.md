@@ -1,3 +1,0 @@
-```yaml
-{id: routing-command-watch-alert-001, type: eval-case, status: simulated, target_skill: alert-manager, scenario: "User asks to turn monitoring into alerts.", input_summary: "Set alerts for ranking drops, traffic drops, technical failures, and competitor movement.", expected_behavior: ["Route /aaron-marketing:seo-geo --mode track --alert to alert-manager when thresholds and notifications are requested.", "Require metric source, threshold owner, and notification channel before setup.", "Do not enable external alerts without explicit approval."], failure_modes: ["Routes to rank-tracker only.", "Sets alerts without thresholds.", "Enables notifications without confirmation."]}
-```

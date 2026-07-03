@@ -1,7 +1,7 @@
 ---
 name: serp-analysis
 description: 'Use when the user asks to "analyze the SERP" or "SERP分析"; maps SERP features, layout, ranking factors, search intent, AI Overviews, and snippet opportunities for a query. Not for keyword demand discovery — use keyword-research. SERP分析/搜索结果'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -10,7 +10,7 @@ argument-hint: "<keyword or query>"
 allowed-tools: WebFetch
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: seo-geo
   phase: research
   geo-relevance: "high"
@@ -38,7 +38,7 @@ What does it take to rank for [keyword]?
 - **Writes**: a user-facing analysis and reusable summary.
 - **Promotes**: durable keyword priorities, competitor facts, and pending strategy decisions to `memory/hot-cache.md`, `memory/open-loops.md`, and `memory/research/`.
 - **Done when**: the SERP composition and top-result ranking factors are documented from a verified live/provided SERP; dominant intent is named with evidence; and a True Difficulty score (0-100, weighted inputs per the template) plus per-site-stage fit is stated.
-- **Primary next skill**: [seo-content-writer](../../build/seo-content-writer/SKILL.md) when the user is ready to build against the observed SERP.
+- **Primary next skill**: [content-writer](../../build/content-writer/SKILL.md) when the user is ready to build against the observed SERP.
 
 ### Handoff Summary
 
@@ -122,4 +122,4 @@ Write path: `memory/research/serp-analysis/YYYY-MM-DD-<topic>.md`; promote durab
 
 ## Next Best Skill
 
-Primary: [seo-content-writer](../../build/seo-content-writer/SKILL.md).
+Primary: [content-writer](../../build/content-writer/SKILL.md).

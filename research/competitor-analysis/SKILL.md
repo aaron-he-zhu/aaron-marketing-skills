@@ -1,7 +1,7 @@
 ---
 name: competitor-analysis
 description: 'Use when the user asks to "analyze competitors" or "竞品分析"; benchmarks competitor keywords, content, backlinks, AI citations, and traffic share into strengths, weaknesses, and an action plan. Not for a pairwise topic-coverage gap map — use content-gap-analysis. 竞品分析/竞争对手'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when analyzing competitor SEO strategy, comparing domains, ben
 argument-hint: "<competitor URL or domain>"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: seo-geo
   phase: research
   geo-relevance: "medium"
@@ -120,4 +120,4 @@ Write path: `memory/research/competitor-analysis/YYYY-MM-DD-<topic>.md`; promote
 
 ## Next Best Skill
 
-Primary: [content-gap-analysis](../content-gap-analysis/SKILL.md). Also: [serp-analysis](../serp-analysis/SKILL.md) and [backlink-analyzer](../../monitor/backlink-analyzer/SKILL.md). If the goal is a head-to-head "us vs them" page, hand the vetted competitor set to [comparison-page-builder](../../build/comparison-page-builder/SKILL.md).
+Primary: [content-gap-analysis](../content-gap-analysis/SKILL.md). Also: [serp-analysis](../serp-analysis/SKILL.md) and [offsite-signal-analyzer](../../monitor/offsite-signal-analyzer/SKILL.md). If the goal is a head-to-head "us vs them" page, hand the vetted competitor set to [page-play-builder](../../build/page-play-builder/SKILL.md).

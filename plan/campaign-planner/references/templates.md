@@ -462,7 +462,7 @@ Analysis                               ████ ████
 ## Tips for Success
 
 1. **Start with clear objectives** — everything else flows from goals.
-2. **Know your audience deeply** — use audience-analyzer insights.
+2. **Know your audience deeply** — use audience-mapper insights.
 3. **Balance reach and engagement** — mix influencer tiers strategically.
 4. **Build in flexibility** — plans need room to adapt.
 5. **Set realistic targets** — use benchmarks from past campaigns.

@@ -1,3 +1,0 @@
-```yaml
-{id: routing-command-publish-internal-links-001, type: eval-case, status: simulated, target_skill: internal-linking-optimizer, scenario: "User asks for internal links before publishing.", input_summary: "Prepare internal link targets and anchors for this article before publish.", expected_behavior: ["Route /aaron-marketing:seo-geo --mode create --publish to internal-linking-optimizer when link placement is the requested package piece.", "Preserve anchor over-optimization limits.", "Hand off publish readiness to content-quality-auditor."], failure_modes: ["Skips internal links.", "Uses exact-match anchors excessively.", "Claims publish-ready from links alone."]}
-```

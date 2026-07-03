@@ -1,7 +1,7 @@
 ---
 name: campaign-planner
 description: 'Use when the user asks to "plan an influencer campaign", "build a campaign blueprint", or "launch a product with creators"; produces campaign objectives, platform and influencer-tier strategy, content requirements, a phased timeline, budget allocation, and KPI targets. Not for writing individual creator briefs — use brief-generator.'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when planning a new influencer campaign, launching a product w
 argument-hint: "<brand or product> [budget] [platform] [timeframe]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: influencer
   phase: plan
   family: influencer-marketing
@@ -85,15 +85,15 @@ Work the nine steps in order. Each has a fill-in template in [references/templat
 - [skill-contract.md](../../references/skill-contract.md) — shared contract and handoff schema.
 - [state-model.md](../../references/state-model.md) — memory tiers and save-path conventions.
 - [CONNECTORS.md](../../CONNECTORS.md) — free/keyless data recipes per connector category.
-- [audience-analyzer](../../insight/audience-analyzer/SKILL.md) — define the target audience this plan serves.
+- [audience-mapper](../../discover/audience-mapper/SKILL.md) — define the target audience this plan serves.
 - [brief-generator](../../plan/brief-generator/SKILL.md) — turn the plan into per-influencer briefs.
 - [budget-optimizer](../../plan/budget-optimizer/SKILL.md) — refine the budget allocation.
-- [influencer-discovery](../../map/influencer-discovery/SKILL.md) — find influencers matching the criteria.
+- [influencer-discovery](../../discover/influencer-discovery/SKILL.md) — find influencers matching the criteria.
 
 ## Next Best Skill
 
 - **Primary**: [brief-generator](../../plan/brief-generator/SKILL.md) — convert the approved plan into concrete influencer briefs.
 - **Alternate**: [budget-optimizer](../../plan/budget-optimizer/SKILL.md) — pressure-test and optimize the budget split before locking the plan.
-- **Alternate**: [influencer-discovery](../../map/influencer-discovery/SKILL.md) — build the shortlist against the selection criteria defined here.
+- **Alternate**: [influencer-discovery](../../discover/influencer-discovery/SKILL.md) — build the shortlist against the selection criteria defined here.
 
 Termination note: keep a visited-set of skills invoked this session. If the primary next skill has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request.

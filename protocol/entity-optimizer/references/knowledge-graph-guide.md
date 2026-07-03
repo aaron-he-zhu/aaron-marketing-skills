@@ -33,7 +33,7 @@ Use this guide to turn an entity into a consistent, verifiable profile that down
 3. Add or fix Organization/Person/Product/LocalBusiness schema where eligible.
 4. Strengthen SameAs links with official, verifiable profiles.
 5. Identify missing citations, weak sources, and conflicts.
-6. Hand off to `schema-markup-generator`, `geo-content-optimizer`, or `domain-authority-auditor`.
+6. Hand off to `serp-markup-builder`, `geo-content-optimizer`, or `domain-authority-auditor`.
 
 ## Wikidata / Wikipedia Notes
 

@@ -1,7 +1,7 @@
 ---
 name: outreach-manager
 description: 'Use when the user asks to "write influencer outreach", "follow up with a creator", or "negotiate partnership terms"; produces personalized pitches, multi-touch follow-up sequences, negotiation scripts with objection handling, and a status pipeline tracker. Not for finalizing signed agreements — use contract-helper.'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Activate the skill when the user wants to contact a creator, draft
 argument-hint: "<influencer handle or list> [platform] [budget]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: influencer
   phase: activate
   family: influencer-marketing
@@ -101,7 +101,7 @@ Full multi-version output, follow-up cadence, negotiation guide, and pipeline tr
 - [CONNECTORS.md](../../CONNECTORS.md) — free/keyless data recipe per connector category.
 - C3 benchmark scoring at [references/c3/scoring-architecture.md](../../references/c3/scoring-architecture.md) — quality scoring reference for downstream review.
 - [expert-panel.md](../../references/expert-panel.md) — multi-persona review method for pressure-testing outreach copy before sending.
-- Sibling skills: [influencer-discovery](../../map/influencer-discovery/SKILL.md), [fit-scorer](../../map/fit-scorer/SKILL.md), [brief-generator](../../plan/brief-generator/SKILL.md), [contract-helper](../contract-helper/SKILL.md), [content-reviewer](../../activate/content-reviewer/SKILL.md).
+- Sibling skills: [influencer-discovery](../../discover/influencer-discovery/SKILL.md), [fit-scorer](../../discover/fit-scorer/SKILL.md), [brief-generator](../../plan/brief-generator/SKILL.md), [contract-helper](../contract-helper/SKILL.md), [content-reviewer](../../activate/content-reviewer/SKILL.md).
 
 ## Next Best Skill
 
@@ -113,7 +113,7 @@ Termination note: keep a visited-set. If a skill in this chain was already invok
 
 ## Related Skills
 
-- [influencer-discovery](../../map/influencer-discovery/) - Find influencers to reach out to
-- [fit-scorer](../../map/fit-scorer/) - Prioritize who to contact first
+- [influencer-discovery](../../discover/influencer-discovery/) - Find influencers to reach out to
+- [fit-scorer](../../discover/fit-scorer/) - Prioritize who to contact first
 - [brief-generator](../../plan/brief-generator/) - Send briefs to confirmed partners
 - [contract-helper](../contract-helper/) - Finalize agreements

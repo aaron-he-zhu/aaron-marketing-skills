@@ -1,7 +1,7 @@
 ---
 name: creator-registry
 description: 'Use when the user asks "what did we pay this creator last time" or to "update the creator roster"; maintains one durable record per creator — verified handles, rate history, exclusivity windows, dated compliance events, performance baselines. Not for scoring fit — use fit-scorer; not for reviewing content — use content-reviewer. 创作者档案/达人名册'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when consolidating a creator's record after a campaign closes,
 argument-hint: "<creator handle or name>"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: protocol
   phase: protocol
   geo-relevance: "low"
@@ -23,12 +23,12 @@ One durable record per creator holds: verified cross-platform handles (identity 
 
 **Scope seams** — who keeps what:
 
-- Fit verdicts stay with [fit-scorer](../../map/fit-scorer/SKILL.md); the registry supplies audience history, response-history facts, and past-partnership facts — never a score or a "reputation" rating.
+- Fit verdicts stay with [fit-scorer](../../discover/fit-scorer/SKILL.md); the registry supplies audience history, response-history facts, and past-partnership facts — never a score or a "reputation" rating.
 - FTC/content judgment stays with [content-reviewer](../../activate/content-reviewer/SKILL.md) (the C³ ART gate); the registry stores its outcomes as dated events citing verdict IDs — never a compliant/risky label.
-- Finding new creators stays with [influencer-discovery](../../map/influencer-discovery/SKILL.md); its one-shot [creator-dossier](../../map/influencer-discovery/references/creator-dossier.md) snapshot is the intake format this registry formalizes into a durable record.
+- Finding new creators stays with [influencer-discovery](../../discover/influencer-discovery/SKILL.md); its one-shot [creator-dossier](../../discover/influencer-discovery/references/creator-dossier.md) snapshot is the intake format this registry formalizes into a durable record.
 - Active-cycle pipeline and status tracking stays with [outreach-manager](../../activate/outreach-manager/SKILL.md)'s Step 5 tracker; the registry records only the closed outcome (final rate, response history, confirmed contact path) after a cycle ends.
 - Agreements stay with [contract-helper](../../activate/contract-helper/SKILL.md); it consumes exclusivity windows and usage-rights history from here and submits signed terms back as candidate updates.
-- Campaign measurement stays with [performance-analyzer](../../track/performance-analyzer/SKILL.md), which consumes the baselines and returns new ones.
+- Campaign measurement stays with [performance-analyzer](../../measure/performance-analyzer/SKILL.md), which consumes the baselines and returns new ones.
 
 ## Quick Start
 
@@ -60,7 +60,7 @@ Reconcile the pending updates in memory/creators/candidates.md against the roste
 
 ## Data Sources
 
-Keyless Tier 1 by construction — built from the user's OWN records: negotiated rates and closed-cycle outcomes pasted or loaded from `memory/influencer/outreach-manager/`, signed terms from `memory/influencer/contract-helper/`, gated ART verdicts from `memory/audits/influencer/` (the source of dated compliance events), campaign results from `memory/influencer/performance-analyzer/` (baselines), discovery dossiers built with the public-read [creator-dossier](../../map/influencer-discovery/references/creator-dossier.md) method (bio links for handle dedup; #ad / paid-partnership labels for disclosure events), and any CRM or spreadsheet export the user pastes.
+Keyless Tier 1 by construction — built from the user's OWN records: negotiated rates and closed-cycle outcomes pasted or loaded from `memory/influencer/outreach-manager/`, signed terms from `memory/influencer/contract-helper/`, gated ART verdicts from `memory/audits/influencer/` (the source of dated compliance events), campaign results from `memory/influencer/performance-analyzer/` (baselines), discovery dossiers built with the public-read [creator-dossier](../../discover/influencer-discovery/references/creator-dossier.md) method (bio links for handle dedup; #ad / paid-partnership labels for disclosure events), and any CRM or spreadsheet export the user pastes.
 
 Every audience stat carries an as-of date plus a Measured / User-provided / Estimated label; identity links that cannot be confirmed are marked unconfirmed, never guessed (the creator-dossier convention). Optional sharpeners: `~~influencer database` (follower/demographic refresh) and `~~CRM` (contact dedup) — none required. See [CONNECTORS.md](../../CONNECTORS.md).
 
@@ -89,9 +89,9 @@ Lifecycle per [State Model §memory/creators/](../../references/state-model.md):
 
 - [Creator Record Template](references/creator-record-template.md) — canonical record frontmatter and section scaffold, candidates.md line format, merge-precedence table
 - [Entity Optimizer](../entity-optimizer/SKILL.md) — the SSOT pattern this registry mirrors
-- [Creator Dossier](../../map/influencer-discovery/references/creator-dossier.md) — the one-shot intake snapshot this registry formalizes
+- [Creator Dossier](../../discover/influencer-discovery/references/creator-dossier.md) — the one-shot intake snapshot this registry formalizes
 - [State Model](../../references/state-model.md) — `memory/creators/` ownership and lifecycle exemption
 
 ## Next Best Skill
 
-Primary: [outreach-manager](../../activate/outreach-manager/SKILL.md) — the most common reason to open a record is re-engaging a rostered creator; hand it the contact path, last agreed rate, and negotiation history. Alternates: [contract-helper](../../activate/contract-helper/SKILL.md) (an exclusivity window is expiring and renewal terms are due) or [fit-scorer](../../map/fit-scorer/SKILL.md) (audience stats shifted materially since last scored, so the go/pass read needs refreshing). Standard termination rules apply: visited-set check, max-depth 3, stop on ambiguous routing.
+Primary: [outreach-manager](../../activate/outreach-manager/SKILL.md) — the most common reason to open a record is re-engaging a rostered creator; hand it the contact path, last agreed rate, and negotiation history. Alternates: [contract-helper](../../activate/contract-helper/SKILL.md) (an exclusivity window is expiring and renewal terms are due) or [fit-scorer](../../discover/fit-scorer/SKILL.md) (audience stats shifted materially since last scored, so the go/pass read needs refreshing). Standard termination rules apply: visited-set check, max-depth 3, stop on ambiguous routing.

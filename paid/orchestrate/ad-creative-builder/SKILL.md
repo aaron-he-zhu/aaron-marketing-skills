@@ -1,7 +1,7 @@
 ---
 name: ad-creative-builder
-description: 'Use when the user asks to "write ad copy", "generate RSA headlines", or "build ad creative at volume"; produces ad units — RSA headlines/descriptions, hooks, and an angle matrix — message-matched to the destination landing page. Not for scoring an ad account — use ad-account-auditor; not for the post-click page — use landing-optimizer; not for organic articles — use seo-content-writer. 广告创意/广告文案/RSA标题'
-version: "11.0.0"
+description: 'Use when the user asks to "write ad copy", "generate RSA headlines", or "build ad creative at volume"; produces ad units — RSA headlines/descriptions, hooks, and an angle matrix — message-matched to the destination landing page. Not for scoring an ad account — use ad-account-auditor; not for the post-click page — use landing-optimizer; not for organic articles — use content-writer. 广告创意/广告文案/RSA标题'
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when generating or iterating paid-ad creative: RSA headlines a
 argument-hint: "<product/offer> <destination URL> [platform: google|meta|...]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: paid
   phase: orchestrate
   geo-relevance: "low"
@@ -83,5 +83,5 @@ On user confirmation, save to `memory/paid-ads/ad-creative-builder/YYYY-MM-DD-<o
 
 - **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the creative against ROAS (O1/O2 veto checks) once a set is ready.
 - **If units carry `[needs source]` flags or unregistered claims**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claims with evidence provenance and approved wording, then swap the resolved wording back into the flagged units.
-- **If the destination URL is weak or missing** (NEEDS_INPUT): [landing-optimizer](../../../convert/landing-optimizer/SKILL.md) — fix the post-click page so message-match is achievable, then return here.
+- **If the destination URL is weak or missing** (NEEDS_INPUT): [landing-optimizer](../../../measure/landing-optimizer/SKILL.md) — fix the post-click page so message-match is achievable, then return here.
 - Global visited-set / max-depth termination contract from [skill-contract.md](../../../references/skill-contract.md) applies; stop when the creative set is auditor-ready.

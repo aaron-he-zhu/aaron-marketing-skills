@@ -1,7 +1,7 @@
 ---
 name: on-page-seo-auditor
 description: 'Use when the user asks to "audit on-page SEO" or "diagnose why a single page dropped"; scores titles, meta, header structure, keyword placement, links, and images with prioritized fixes. Not for E-E-A-T / publish-readiness scoring — use content-quality-auditor; not for crawl / CWV / indexing — use technical-seo-checker. 页面SEO审计/排名诊断'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -10,7 +10,7 @@ argument-hint: "<URL> [keyword]"
 allowed-tools: WebFetch
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: seo-geo
   phase: optimize
   geo-relevance: "medium"
@@ -119,7 +119,7 @@ When a user requests an on-page SEO audit, use the compact step templates in [re
 **Continue silently (never stop for):**
 - No target keyword — infer one via the Step 1 keyword fallback, label it Estimated, and proceed as `DONE_WITH_CONCERNS`.
 - Missing optional tool data (search volume, competitor metrics) — mark the affected items N/A and proceed.
-- A reported "ranking drop" for a single page — this is in scope: diagnose the page's structural causes. Do not redirect to rank-tracker (which only measures a drop), content-refresher (which fixes decay), or alert-manager (which alerts on future drops); recommend them only as a Next Best Skill once the diagnosis is done.
+- A reported "ranking drop" for a single page — this is in scope: diagnose the page's structural causes. Do not redirect to rank-tracker (which only measures a drop), content-writer (which fixes decay), or performance-monitor (which alerts on future drops); recommend them only as a Next Best Skill once the diagnosis is done.
 
 ## Example
 
@@ -140,4 +140,4 @@ Ask to save results; if yes, write `memory/audits/on-page-seo-auditor/YYYY-MM-DD
 
 ## Next Best Skill
 
-Primary: [content-refresher](../content-refresher/SKILL.md). Also consider [technical-seo-checker](../technical-seo-checker/SKILL.md), [meta-tags-optimizer](../../build/meta-tags-optimizer/SKILL.md), or [internal-linking-optimizer](../internal-linking-optimizer/SKILL.md) by finding dimension.
+Primary: [content-writer](../../build/content-writer/SKILL.md). Also consider [technical-seo-checker](../technical-seo-checker/SKILL.md), [serp-markup-builder](../../build/serp-markup-builder/SKILL.md), or [site-structure-optimizer](../site-structure-optimizer/SKILL.md) by finding dimension.

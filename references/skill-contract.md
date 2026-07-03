@@ -1,6 +1,6 @@
 # Skill Contract
 
-This repository uses one contract across all 54 skills — 24 SEO/GEO, 18 influencer-marketing (IMPACT), 8 paid-ads, and 4 protocol-layer skills. The contract keeps each skill specialized while making the full library feel like one operating system. The SEO/GEO skills score on [CORE-EEAT](core-eeat-benchmark.md) and [CITE](cite-domain-rating.md); the influencer skills on [C³](c3-benchmark.md); the paid-ads skills on [ROAS](roas-benchmark.md).
+This repository uses one contract across all 69 skills — 16 SEO/GEO, 16 influencer, 16 paid, 16 email, and 5 protocol. The contract keeps each skill specialized while making the full library feel like one operating system. The SEO/GEO skills score on [CORE-EEAT](core-eeat-benchmark.md) and [CITE](cite-domain-rating.md); the influencer skills on [C³](c3-benchmark.md); the paid-ads skills on [ROAS](roas-benchmark.md); the email skills on [SEND](send-benchmark.md).
 
 ## Skill Authoring Discipline
 
@@ -126,7 +126,7 @@ Every skill should be able to produce a concise handoff summary using this shape
 
 ### Auditor-class Extension (v7.1.0)
 
-Auditor-class skills (whose deliverable is a scored audit with a verdict — the four gates `content-quality-auditor` (CORE-EEAT), `domain-authority-auditor` (CITE), `content-reviewer` (C³ ART), and `ad-account-auditor` (ROAS)) extend this format with 3 additional fields:
+Auditor-class skills (whose deliverable is a scored audit with a verdict — the five gates `content-quality-auditor` (CORE-EEAT), `domain-authority-auditor` (CITE), `content-reviewer` (C³ ART), `ad-account-auditor` (ROAS), and `email-quality-auditor` (SEND)) extend this format with 3 additional fields:
 
 - `cap_applied` — boolean; set by Critical Fail Cap rule
 - `raw_overall_score` — number; score before cap
@@ -171,7 +171,7 @@ Every entry MUST include an `approved_by:` field with one of three values:
 - `skill_inferred` — promotable pending review
 - `migrated` — from prior sessions
 
-Auditor-class gates (`content-quality-auditor`, `domain-authority-auditor`, `content-reviewer`, `ad-account-auditor`) MUST ignore decisions with `approved_by != user` when deciding verdict. Non-auditor skills propose via `open-loops.md` status `pending-decision` instead of directly writing to `decisions.md`. This prevents prompt-injection attacks that inject fake "approved decisions" via pasted content.
+Auditor-class gates (`content-quality-auditor`, `domain-authority-auditor`, `content-reviewer`, `ad-account-auditor`, `email-quality-auditor`) MUST ignore decisions with `approved_by != user` when deciding verdict. Non-auditor skills propose via `open-loops.md` status `pending-decision` instead of directly writing to `decisions.md`. This prevents prompt-injection attacks that inject fake "approved decisions" via pasted content.
 
 ## Category Defaults
 
@@ -201,7 +201,7 @@ Auditor-class gates (`content-quality-auditor`, `domain-authority-auditor`, `con
 
 ### Protocol layer
 
-The 4 shared-machinery skills under `protocol/` (3 truth registries + memory). The auditor-class **gate role** is separate: its 4 skills (`content-quality-auditor`, `domain-authority-auditor`, `content-reviewer`, `ad-account-auditor`) live in and are counted under their home disciplines (SEO/GEO, influencer, paid) — not here — and `Read` [auditor-runbook.md](auditor-runbook.md) at activation, keeping only framework-specific content inline.
+The 5 shared-machinery skills under `protocol/` (4 truth registries + memory). The auditor-class **gate role** is separate: its 5 skills (`content-quality-auditor`, `domain-authority-auditor`, `content-reviewer`, `ad-account-auditor`, `email-quality-auditor`) live in and are counted under their home disciplines (SEO/GEO, influencer, paid, email) — not here — and `Read` [auditor-runbook.md](auditor-runbook.md) at activation, keeping only framework-specific content inline.
 
 - Reads: outputs from every other category
 - Writes: truth records and memory structure
@@ -209,20 +209,18 @@ The 4 shared-machinery skills under `protocol/` (3 truth registries + memory). T
 
 ### Influencer categories (IMPACT discipline)
 
-The 18 influencer-marketing skills span six phases and score on the [C³ framework](c3-benchmark.md) (Creator/Content/Campaign on ACE/ART/ROI). They write to `memory/influencer/<skill>/`.
+The 16 influencer skills span four phases (discover / plan / activate / measure) and score on the [C³ framework](c3-benchmark.md) (Creator/Content/Campaign on ACE/ART/ROI). They write to `memory/influencer/<skill>/`.
 
-- **Insight** (audience-analyzer, niche-researcher, trend-spotter) — Reads: audience signals, niche, trends, platform data. Writes: audience profiles, niche dossiers, trend reports. Promotes: target-audience facts, niche positioning, durable trends.
-- **Map** (influencer-discovery, fit-scorer, competitor-tracker) — Reads: brand/campaign context, creator shortlists, competitor partnerships. Writes: shortlists, fit scores, competitor partner maps. Promotes: vetted creators, fit verdicts, competitor benchmarks.
-- **Plan** (campaign-planner, brief-generator, budget-optimizer) — Reads: goals, KPIs, budget, creator set. Writes: campaign plans, briefs, budget allocations. Promotes: approved plan, budget envelope, key messages.
-- **Activate** (outreach-manager, content-reviewer, contract-helper) — Reads: shortlists, briefs, content submissions, deal terms. Writes: outreach threads, review decisions, contract drafts. Promotes: confirmed partnerships, approved content, signed terms and blockers.
-- **Convert** (content-amplifier, ugc-repurposer, landing-optimizer) — Reads: published content, UGC assets, landing pages. Writes: amplification plans, repurposed assets, landing-page optimizations. Promotes: winning creatives, conversion blockers.
-- **Track** (performance-analyzer, roi-calculator, report-generator) — Reads: campaign metrics, costs, baselines. Writes: performance analyses, ROI/CVI calculations, reports. Promotes: confirmed results, ROI verdicts, follow-up actions.
+- **Discover** (audience-mapper, trend-spotter, influencer-discovery, fit-scorer) — Reads: audience signals, niche, trends, brand/campaign context, creator shortlists. Writes: audience profiles, niche dossiers, trend reports, shortlists, fit scores. Promotes: target-audience facts, niche positioning, durable trends, vetted creators, fit verdicts.
+- **Plan** (competitor-tracker, campaign-planner, brief-generator, budget-optimizer) — Reads: competitor partnerships, goals, KPIs, budget, creator set. Writes: competitor partner maps, campaign plans, briefs, budget allocations. Promotes: competitor benchmarks, approved plan, budget envelope, key messages.
+- **Activate** (outreach-manager, content-reviewer, contract-helper, content-amplifier) — Reads: shortlists, briefs, content submissions, deal terms, published/UGC assets. Writes: outreach threads, review decisions, contract drafts, amplification and repurposing plans. Promotes: confirmed partnerships, approved content, signed terms, winning creatives and blockers.
+- **Measure** (landing-optimizer, performance-analyzer, roi-calculator, report-generator) — Reads: landing pages, campaign metrics, costs, baselines. Writes: landing-page optimizations, performance analyses, ROI/CVI calculations, reports. Promotes: conversion blockers, confirmed results, ROI verdicts, follow-up actions.
 
 ## Protocol Layer vs Execution Layer
 
 The auditor-class gates are discipline-resident Execution-layer skills with extra powers, so they get their own column:
 
-| Behavior | Execution Layer (46 skills) | Auditor-class gates (4 skills, discipline-resident) | Protocol Layer (4 skills) |
+| Behavior | Execution Layer (59 skills) | Auditor-class gates (5 skills, discipline-resident) | Protocol Layer (5 skills) |
 |----------|---------------------------|-----------------------------------------------------|--------------------------|
 | Triggering | User invocation or intent match | User + hook auto-trigger + other skill recommendation | User invocation + other skill recommendation |
 | Output format | Report or asset + handoff summary | Gate verdict + auditor-class handoff (cap schema) | Truth records / memory structure + handoff summary |
@@ -231,12 +229,13 @@ The auditor-class gates are discipline-resident Execution-layer skills with extr
 
 ## Gate Verdicts
 
-The four auditor-class gates must produce a clear verdict, not just scores:
+The five auditor-class gates must produce a clear verdict, not just scores:
 
 - `content-quality-auditor` (optimize/): **SHIP** (no veto items, scores above threshold) / **FIX** (issues found, none are veto) / **BLOCK** (veto item T04, C01, or R10 failed)
 - `domain-authority-auditor` (monitor/): **TRUSTED** (no veto items, scores above threshold) / **CAUTIOUS** (issues found, none are veto) / **UNTRUSTED** (veto item T03, T05, or T09 failed)
 - `content-reviewer` (activate/): **APPROVED** / **APPROVED WITH MINOR CHANGES** / **REVISIONS REQUIRED** / **REJECTED** (ART veto T1 or T2 forces REJECTED; maps to status via APPROVED→DONE, MINOR→DONE_WITH_CONCERNS, REVISIONS→NEEDS_INPUT, REJECTED→BLOCKED)
 - `ad-account-auditor` (paid/activate/): **SHIP** (no veto, RQS in a healthy band) / **FIX** (issues found, no veto, or a single-veto capped score) / **BLOCK** (2+ vetoes among R1/R2/O1/O2/A1 — `status: BLOCKED`)
+- `email-quality-auditor` (email/deliver/): **SHIP** (no veto, EQS in a healthy band) / **FIX** (issues found, no veto, or a single-veto capped score) / **BLOCK** (2+ vetoes among S1/S2/N1/D1 — `status: BLOCKED`)
 
 ## Completion Status
 
@@ -306,7 +305,7 @@ If yes, write a dated summary to the appropriate WARM path using filename `YYYY-
 - Open loops or blockers
 - Source data references
 
-Only the four auditor-class gates (`content-quality-auditor`, `domain-authority-auditor`, `content-reviewer`, `ad-account-auditor`) may append one veto marker to `memory/hot-cache.md` without asking when a veto-level issue is found. Other skills must ask before writing memory and should hand off veto-like risks to the relevant auditor gate instead.
+Only the five auditor-class gates (`content-quality-auditor`, `domain-authority-auditor`, `content-reviewer`, `ad-account-auditor`, `email-quality-auditor`) may append one veto marker to `memory/hot-cache.md` without asking when a veto-level issue is found. Other skills must ask before writing memory and should hand off veto-like risks to the relevant auditor gate instead.
 
 ## Response Presentation Norms
 
@@ -325,14 +324,15 @@ These norms apply to all skills when their output incorporates data from multipl
 | Category | Write Path | Content |
 |----------|-----------|---------|
 | Research (4 skills) | `memory/research/<skill>/` | keyword opportunities, competitor findings, SERP notes, content gaps |
-| Build (8 skills) | `memory/content/` | content briefs, meta tag decisions, schema annotations, publish status |
-| Optimize (6 skills) | `memory/audits/<skill>/` † | per-skill audit summaries, veto items, fix priorities |
-| Monitor (6 skills) | `memory/monitoring/` † | rank deltas, alert history, backlink changes |
-| Protocol layer (4 skills) | per-role paths | see protocol-layer definitions |
-| Influencer / IMPACT (18 skills) | `memory/influencer/<skill>/` (working state) + `memory/audits/influencer/` (content-reviewer's gated C³ ART verdicts) | audience profiles, creator fit scores, campaign plans, briefs, outreach, content reviews, ROI/CVI calculations, reports |
-| Paid Ads / ROAS (8 skills) | `memory/paid-ads/<skill>/` (working state) + `memory/audits/paid/` (ad-account-auditor's gated RQS verdicts) | account/campaign structures, audience segments, ad-creative scores, experiment designs, account-audit gates, conversion-signal QA, measurement-loop results, attribution reconciliations |
+| Build (4 skills) | `memory/content/` | content briefs, meta tag decisions, schema annotations, publish status |
+| Optimize (4 skills) | `memory/audits/<skill>/` † | per-skill audit summaries, veto items, fix priorities |
+| Monitor (4 skills) | `memory/monitoring/` † | rank deltas, alert history, backlink changes |
+| Protocol layer (5 skills) | per-role paths | see protocol-layer definitions (incl. `consent-registry` → `memory/consent/`) |
+| Influencer / IMPACT (16 skills) | `memory/influencer/<skill>/` (working state) + `memory/audits/influencer/` (content-reviewer's gated C³ ART verdicts) | audience profiles, creator fit scores, campaign plans, briefs, outreach, content reviews, ROI/CVI calculations, reports |
+| Paid Ads / ROAS (16 skills) | `memory/paid-ads/<skill>/` (working state) + `memory/audits/paid/` (ad-account-auditor's gated RQS verdicts) | account/campaign structures, audience segments, ad-creative scores, experiment designs, account-audit gates, conversion-signal QA, measurement-loop results, attribution reconciliations |
+| Email / SEND (16 skills) | `memory/email/<skill>/` (working state) + `memory/audits/email/` (email-quality-auditor's gated EQS verdicts); consent/suppression facts in `memory/consent/` (consent-registry SSOT) | deliverability pre-flights, list-growth plans, segment maps + suppression, email creative, lifecycle-flow designs, newsletter monetization models, send-test designs, EQS gate verdicts |
 | **Auditor gate aggregate (v7.1.0+)** | `memory/audits/YYYY-MM.md` | **owned by `memory-management`**; monthly archive of auditor-class gate handoffs in the structured format defined in [memory-management SKILL.md §Writes](../protocol/memory-management/SKILL.md); consumed by the Runbook §5 cross-version rule |
 
-† **Auditor-gate exceptions**: `content-quality-auditor` (Optimize) writes its gated artifacts to `memory/audits/content/`, and `domain-authority-auditor` (Monitor) writes to `memory/audits/domain/` — the per-role audit sinks the Artifact Gate validates, not the category default. (The other two gates' sinks — `content-reviewer` → `memory/audits/influencer/`, `ad-account-auditor` → `memory/audits/paid/` — are already named in their discipline rows.)
+† **Auditor-gate exceptions**: `content-quality-auditor` (Optimize) writes its gated artifacts to `memory/audits/content/`, and `domain-authority-auditor` (Monitor) writes to `memory/audits/domain/` — the per-role audit sinks the Artifact Gate validates, not the category default. (The other three gates' sinks — `content-reviewer` → `memory/audits/influencer/`, `ad-account-auditor` → `memory/audits/paid/`, `email-quality-auditor` → `memory/audits/email/` — are already named in their discipline rows.)
 
-**Note on `memory/audits/`**: three conventions coexist. The `<skill>/` subdirectory pattern (non-gate Optimize skills, per-skill files) is for skill-specific audit artifacts (e.g., `memory/audits/technical-seo-checker/2026-04-11-example.md`). The per-role gate sinks (`content/`, `domain/`, `influencer/`, `paid/`) hold the four auditor-class gates' `class: auditor-output` artifacts. The flat `YYYY-MM.md` pattern (auditor gate aggregate, monthly) is the gate handoff archive. They are siblings, not a conflict.
+**Note on `memory/audits/`**: three conventions coexist. The `<skill>/` subdirectory pattern (non-gate Optimize skills, per-skill files) is for skill-specific audit artifacts (e.g., `memory/audits/technical-seo-checker/2026-04-11-example.md`). The per-role gate sinks (`content/`, `domain/`, `influencer/`, `paid/`, `email/`) hold the five auditor-class gates' `class: auditor-output` artifacts. The flat `YYYY-MM.md` pattern (auditor gate aggregate, monthly) is the gate handoff archive. They are siblings, not a conflict.

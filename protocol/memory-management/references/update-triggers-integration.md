@@ -62,7 +62,7 @@
 | **rank-tracker** | Update rank-history/; refresh hot cache Hero Keywords; flag significant movements |
 | **competitor-analysis** | Update memory/research/competitors/; refresh hot cache Competitors; add new competitors if they outrank top 5 |
 | **content-gap-analysis** | Store in memory/research/content-gaps/; promote opportunities to hot cache; update content calendar |
-| **seo-content-writer** | Log to memory/content/published/YYYY-MM-DD-[slug].md; track keyword + publish date; set 30-day performance check |
+| **content-writer** | Log to memory/content/published/YYYY-MM-DD-[slug].md; track keyword + publish date; set 30-day performance check |
 | **content-quality-auditor** | Save to memory/audits/content/; update hot cache Key Metrics; flag score < 60 in Active Campaigns |
 | **domain-authority-auditor** | Save to memory/audits/domain/; update CITE Score in hot cache; note veto status; compare against previous |
 | **influencer skills (IMPACT)** | Save dated outputs to memory/influencer/[skill]/; promote confirmed partners, agreed rates, campaign facts to hot cache; creator facts go to memory/creators/candidates.md |

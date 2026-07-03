@@ -150,6 +150,21 @@ Only `offer-claims-registry` writes canonical records here. Other skills submit 
 
 **Lifecycle exemption**: ledger files are standing state, not dated run artifacts — exempt from the 90-day WARM demotion (like `memory/entities/` and `memory/creators/`); rows retire via their review/expiry date, and `memory-management` remains the sole executor of archival.
 
+### `memory/consent/`
+
+Store (one record per subscriber/prospect subject — the email consent & suppression SSOT):
+
+- subscription status and source
+- opt-in timestamp + **lawful basis** (consent / legitimate-interest / contract) and double-opt-in proof
+- append-only unsubscribe / bounce / spam-complaint history with dates
+- suppression flags the S2 veto and N1 unsubscribe-honoring are judged against
+
+Only `consent-registry` writes canonical records here. Other skills submit updates to `memory/consent/candidates.md` only.
+
+**GDPR posture**: subscribers are natural persons — inherit `creator-registry`'s lawful-basis gate and data-minimization posture; store the minimum needed to prove consent and honor suppression, never raw personal data beyond that.
+
+**Lifecycle exemption**: consent/suppression records are standing state, not dated run artifacts — exempt from the 90-day WARM demotion (like `memory/creators/` and `memory/claims/`); records retire on consent withdrawal / suppression, and `memory-management` remains the sole executor of archival.
+
 ### `memory/research/`
 
 Common subfolders:
@@ -188,9 +203,10 @@ Common subfolders:
 
 - `content/` (content-quality-auditor — CORE-EEAT)
 - `domain/` (domain-authority-auditor — CITE)
-- `<skill>/` (other Optimize skills, per-skill — e.g. `technical-seo-checker/`, `internal-linking-optimizer/`)
+- `<skill>/` (other Optimize skills, per-skill — e.g. `technical-seo-checker/`, `site-structure-optimizer/`)
 - `influencer/` (content-reviewer — C³ ART gate artifacts)
 - `paid/` (ad-account-auditor — ROAS gate artifacts)
+- `email/` (email-quality-auditor — SEND gate artifacts)
 
 Store:
 
@@ -218,16 +234,16 @@ Store:
 
 ### `memory/influencer/`
 
-Per-skill subfolders, one per influencer-marketing (IMPACT) skill: `memory/influencer/<skill>/` (e.g. `audience-analyzer/`, `fit-scorer/`, `roi-calculator/`). Scored on the [C³ framework](c3-benchmark.md).
+Per-skill subfolders, one per influencer-marketing (IMPACT) skill: `memory/influencer/<skill>/` (e.g. `audience-mapper/`, `fit-scorer/`, `roi-calculator/`). Scored on the [C³ framework](c3-benchmark.md).
 
 Store:
 
-- audience profiles, niche dossiers, trend reports (Insight)
-- creator shortlists, fit scores (ACE), competitor partner maps (Map)
-- campaign plans, briefs, budget allocations (Plan)
-- outreach threads, content reviews (ART), contract drafts (Activate)
-- amplification plans, repurposed UGC, landing-page optimizations (Convert)
-- performance analyses, ROI/CVI calculations, reports (Track)
+- audience profiles, niche dossiers, trend reports (discover)
+- creator shortlists, fit scores (ACE), competitor partner maps (discover)
+- campaign plans, briefs, budget allocations (plan)
+- outreach threads, content reviews (ART), contract drafts (activate)
+- amplification plans, repurposed UGC, landing-page optimizations (activate)
+- performance analyses, ROI/CVI calculations, reports (measure)
 
 Same WARM lifecycle as the other categories: dated files `YYYY-MM-DD-<topic>.md`, demoted to `memory/archive/` after 90 days by `last_updated`. (content-reviewer's **gated** ART verdict is an auditor artifact and lives in `memory/audits/influencer/`, not here.)
 
@@ -237,11 +253,24 @@ Per-skill subfolders, one per Paid Ads skill: `memory/paid-ads/<skill>/` (e.g. `
 
 Store:
 
-- account/campaign structure plans, targeting + negative lists, cannibalization audits (build)
-- ad-creative sets and angle matrices (build)
+- account/campaign structure plans, targeting + negative lists, cannibalization audits (research)
+- ad-creative sets and angle matrices (orchestrate)
 - ROAS/CPA readback snapshots vs control (scale)
 
 Same WARM lifecycle (dated files, demoted to `memory/archive/` after 90 days). ad-account-auditor's **gated** RQS verdict is an auditor artifact and lives in `memory/audits/paid/`.
+
+### `memory/email/`
+
+Per-skill subfolders, one per email-marketing skill: `memory/email/<skill>/` (e.g. `deliverability-qa/`, `email-creative-builder/`, `email-sequence-designer/`). Scored on the [SEND framework](send-benchmark.md).
+
+Store:
+
+- deliverability pre-flight results (auth/reputation/inbox-placement), segment maps + suppression lists (setup)
+- email creative sets, subject-line variants (engage)
+- lifecycle-flow designs, cadence/frequency plans, newsletter monetization models (nurture)
+- send-test designs and significance reads (deliver)
+
+Same WARM lifecycle (dated files, demoted to `memory/archive/` after 90 days). email-quality-auditor's **gated** EQS verdict is an auditor artifact and lives in `memory/audits/email/`. Consent/suppression facts live in `memory/consent/` (consent-registry's SSOT), not here.
 
 ## Writing Guidance
 
@@ -260,9 +289,11 @@ When a skill describes state updates, it should:
 - Other skills write entity candidates to `memory/entities/candidates.md` only
 - `creator-registry` is the sole writer of canonical records in `memory/creators/<handle-slug>.md`; other skills write to `memory/creators/candidates.md` only
 - `offer-claims-registry` is the sole writer of canonical records in `memory/claims/`; other skills write to `memory/claims/candidates.md` only
+- `consent-registry` is the sole writer of canonical records in `memory/consent/`; other skills write to `memory/consent/candidates.md` only
 - `content-quality-auditor` owns publish-readiness state in `memory/audits/content/`
 - `domain-authority-auditor` owns citation-trust state in `memory/audits/domain/`
 - `content-reviewer` owns the C³ ART gate state in `memory/audits/influencer/`
 - `ad-account-auditor` owns the ROAS gate state in `memory/audits/paid/`
+- `email-quality-auditor` owns the SEND gate state in `memory/audits/email/`
 
 See [skill-contract.md](skill-contract.md) for the full protocol-layer vs execution-layer behavior matrix.

@@ -76,7 +76,7 @@ P2 (single-page refinements):
 - **Key Findings / Output**: per-cluster pattern findings + portfolio priority
 - **Evidence**: "Sampled N/M URLs; extrapolated to cluster level; confidence flagged per finding"
 - **Open Loops**: un-sampled clusters, URLs flagged for individual attention, data gaps (no keyword data, etc.)
-- **Recommended Next Skill**: `content-refresher` (for bulk content edits) OR `meta-tags-optimizer` (for title/description template work) OR `internal-linking-optimizer` (if linking pattern is the dominant issue)
+- **Recommended Next Skill**: `content-writer` (for bulk content edits) OR `serp-markup-builder` (for title/description template work) OR `site-structure-optimizer` (if linking pattern is the dominant issue)
 
 ## Template suggestions (common bulk outputs)
 

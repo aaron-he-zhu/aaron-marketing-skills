@@ -1,7 +1,7 @@
 ---
 name: budget-optimizer
 description: 'Use when the user asks to "allocate my influencer budget", "optimize spend across tiers", or "compare budget scenarios"; produces a tier/platform/content allocation table, ROI and CPM/CPE projections, scenario comparisons, and mid-campaign reallocation moves. Not for building the full campaign plan — use campaign-planner.'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when planning budget allocation for a new influencer campaign,
 argument-hint: "<total budget> [platforms] [campaign goal]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: influencer
   phase: plan
   family: influencer-marketing
@@ -51,9 +51,9 @@ Output: a tier/platform/content allocation table, projected reach + CPM/CPE, 2-3
 
 > Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../references/skill-contract.md).
 
-## Cross-discipline: paid-ads spend + bid-pacing mode
+## Cross-discipline: paid-ads spend allocation
 
-This skill also allocates **paid-ads** spend — the tier/platform tables map to channels/campaigns; use the ROAS goal-weight (DR vs Prospecting) as the scenario axis and read CPA/ROAS targets instead of CPM/CPE. For paid it carries a **bid-pacing / learning-phase mode**: from a live campaign/spend export, check pacing vs plan, respect the learning phase (don't churn a campaign mid-learning), and issue scale-up/down moves — as **advisory** recommendations from own-export data (keyed bid automation is an opt-in Tier-2/3 MCP, never required). Scope: this sets/adjusts the **plan**; [paid-measurement-loop](../../paid/scale/paid-measurement-loop/SKILL.md) reads one shipped change back against a control, and premature scaling is an **S guardrail flag** in [ad-account-auditor](../../paid/activate/ad-account-auditor/SKILL.md), not a separate skill or a veto. Save paid runs under `memory/paid-ads/budget-optimizer/`.
+This skill also allocates **paid-ads** spend — the tier/platform tables map to channels/campaigns; use the ROAS goal-weight (DR vs Prospecting) as the scenario axis and read CPA/ROAS targets instead of CPM/CPE. Scope: this computes the spend-reallocation **plan** only. It does **not** read in-flight pacing or issue scale-up/down moves — the live pacing read (pacing vs plan, learning-phase respect) belongs to [budget-pacing-monitor](../../paid/scale/budget-pacing-monitor/SKILL.md), and bid-strategy choice belongs to [bid-strategy-planner](../../paid/orchestrate/bid-strategy-planner/SKILL.md). [paid-measurement-loop](../../paid/scale/paid-measurement-loop/SKILL.md) reads one shipped change back against a control, and premature scaling is an **S guardrail flag** in [ad-account-auditor](../../paid/activate/ad-account-auditor/SKILL.md), not a separate skill or a veto. Save paid runs under `memory/paid-ads/budget-optimizer/`.
 
 ## Data Sources
 
@@ -129,10 +129,10 @@ This allocation prioritizes TikTok for viral potential while using Instagram for
 - Connector recipes: [CONNECTORS.md](../../CONNECTORS.md)
 - Sibling skills:
   - [campaign-planner](../campaign-planner/SKILL.md) — the campaign plan this budget funds
-  - [influencer-discovery](../../map/influencer-discovery/SKILL.md) — find influencers in budget range
+  - [influencer-discovery](../../discover/influencer-discovery/SKILL.md) — find influencers in budget range
   - [outreach-manager](../../activate/outreach-manager/SKILL.md) — turn the allocation into outreach
-  - [roi-calculator](../../track/roi-calculator/SKILL.md) — calculate actual ROI post-campaign
-  - [performance-analyzer](../../track/performance-analyzer/SKILL.md) — inform reallocation decisions
+  - [roi-calculator](../../measure/roi-calculator/SKILL.md) — calculate actual ROI post-campaign
+  - [performance-analyzer](../../measure/performance-analyzer/SKILL.md) — inform reallocation decisions
 
 ## Next Best Skill
 
@@ -140,7 +140,7 @@ This allocation prioritizes TikTok for viral potential while using Instagram for
 
 **Alternates** (same IMPACT family):
 
-- [influencer-discovery](../../map/influencer-discovery/SKILL.md) — if you need to source candidates that fit each tier's per-influencer budget first.
+- [influencer-discovery](../../discover/influencer-discovery/SKILL.md) — if you need to source candidates that fit each tier's per-influencer budget first.
 - [campaign-planner](../campaign-planner/SKILL.md) — if the budget exposed a gap in the underlying campaign plan.
 
 **Termination**: keep a visited-set. If the recommended next skill was already invoked in this session's chain, stop and report chain-complete instead of re-invoking. Default `max-depth: 3`. When routing is ambiguous, present the options and stop rather than auto-following.

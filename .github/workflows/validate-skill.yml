@@ -64,7 +64,9 @@ jobs:
         run: |
           set -euo pipefail
           find research build optimize monitor protocol \
-            insight map plan activate convert track paid/research paid/orchestrate paid/activate paid/scale \
+            discover plan activate measure \
+            paid/research paid/orchestrate paid/activate paid/scale \
+            email/setup email/engage email/nurture email/deliver \
             -mindepth 2 -maxdepth 2 -name SKILL.md \
             -print | sort | while read -r file; do
             bash scripts/validate-skill.sh "$(dirname "$file")"

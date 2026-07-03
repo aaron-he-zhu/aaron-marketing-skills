@@ -1,7 +1,7 @@
 ---
 name: memory-management
-description: 'Use when the user asks to "remember project context"; manages the cross-discipline marketing memory lifecycle (SEO/GEO + influencer + paid ads) — hot-cache, active work, archive tiers, and privacy cleanup. Not for content or domain scoring — use the auditors. 项目记忆/跨会话'
-version: "11.0.0"
+description: 'Use when the user asks to "remember project context"; manages the cross-discipline marketing memory lifecycle (SEO/GEO + influencer + paid ads + email) — hot-cache, active work, archive tiers, and privacy cleanup. Not for content or domain scoring — use the auditors. 项目记忆/跨会话'
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,14 +9,14 @@ when_to_use: "Use when reviewing, archiving, or cleaning up campaign memory. Als
 argument-hint: "[review|archive|cleanup]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: protocol
   phase: protocol
   geo-relevance: "low"
 ---
 
 # Memory Management
-This skill implements a three-tier memory system (HOT/WARM/COLD) for all marketing disciplines (SEO/GEO, influencer, and paid ads). HOT memory (80 lines max) loads automatically every session via the SessionStart hook. WARM memory loads on demand per skill. COLD memory is archived data queried only when explicitly requested. The skill manages the full lifecycle: capture, promote, demote, and archive.
+This skill implements a three-tier memory system (HOT/WARM/COLD) for all marketing disciplines (SEO/GEO, influencer, paid ads, and email). HOT memory (80 lines max) loads automatically every session via the SessionStart hook. WARM memory loads on demand per skill. COLD memory is archived data queried only when explicitly requested. The skill manages the full lifecycle: capture, promote, demote, and archive.
 
 ## What This Skill Does
 
@@ -123,11 +123,11 @@ With tools: auto-populate from ~~SEO tool, ~~analytics, ~~search console. Withou
 
 ## Instructions
 
-When a user requests memory management (any discipline — SEO/GEO, influencer, or paid ads):
+When a user requests memory management (any discipline — SEO/GEO, influencer, paid ads, or email):
 
 ### 1. Initialize Memory Structure
 
-For new projects, create the directory structure defined in the [State Model](../../references/state-model.md). Key directories: `memory/` (decisions, open-loops, glossary, entities, creators, claims, research, content, audits, monitoring, influencer, paid-ads).
+For new projects, create the directory structure defined in the [State Model](../../references/state-model.md). Key directories: `memory/` (decisions, open-loops, glossary, entities, creators, claims, consent, research, content, audits, monitoring, influencer, paid-ads, email).
 
 > **Templates**: [Hot Cache Template](references/hot-cache-template.md) · [Glossary Template](references/glossary-template.md)
 
@@ -146,14 +146,14 @@ When a user references something unclear, follow this lookup sequence:
 
 **Step 3: Check Cold Storage**
 - Search `memory/archive/` first for dated `YYYY-MM-DD-` archived files.
-- If the archive points to a source category, follow that trail back to `memory/research/`, `memory/audits/`, `memory/monitoring/`, `memory/influencer/`, or `memory/paid-ads/`.
+- If the archive points to a source category, follow that trail back to `memory/research/`, `memory/audits/`, `memory/monitoring/`, `memory/influencer/`, `memory/paid-ads/`, or `memory/email/`.
 - Treat COLD findings as historical unless refreshed by the current session.
 
 **Step 4: Ask User**
 - If not found in any layer, ask for clarification
 - Log the new term in glossary if it's project-specific
 
-- **Decision provenance (v8.0.1+)**: when loading `memory/decisions.md`, verify each entry has `approved_by: user`. Entries with `approved_by: skill_inferred` or missing field are treated as **ADVISORY** — surface to user before using as authoritative. Auditor-class gate skills (content-quality-auditor, domain-authority-auditor, content-reviewer, ad-account-auditor) MUST ignore non-user-approved decisions when determining verdict. See [skill-contract.md §Promotion Rules](../../references/skill-contract.md).
+- **Decision provenance (v8.0.1+)**: when loading `memory/decisions.md`, verify each entry has `approved_by: user`. Entries with `approved_by: skill_inferred` or missing field are treated as **ADVISORY** — surface to user before using as authoritative. Auditor-class gate skills (content-quality-auditor, domain-authority-auditor, content-reviewer, ad-account-auditor, email-quality-auditor) MUST ignore non-user-approved decisions when determining verdict. See [skill-contract.md §Promotion Rules](../../references/skill-contract.md).
 
 Example lookup: User asks "Update rankings for our hero KWs" → Step 1 finds "Hero Keywords (Priority 1)" in hot-cache → extract the keyword list → run the ranking check → update `memory/hot-cache.md` and `memory/monitoring/rank-history/YYYY-MM-DD-ranks.csv`.
 
@@ -163,7 +163,7 @@ Example lookup: User asks "Update rankings for our hero KWs" → Step 1 finds "H
 
 ### 4. Update Triggers, Archive Management & Cross-Skill Integration
 
-> **Reference**: See [Update Triggers & Integration](references/update-triggers-integration.md) for the complete update procedures after ranking checks, competitor analyses, audits, and reports; monthly/quarterly archive routines; and integration points with connected skills across all three disciplines — SEO/GEO (keyword-research, rank-tracker, competitor-analysis, content-gap-analysis, seo-content-writer, content-quality-auditor, domain-authority-auditor), influencer (skills writing under `memory/influencer/<skill>/`, plus content-reviewer's gated artifacts and creator-registry candidate flow), and paid ads (skills writing under `memory/paid-ads/<skill>/`, plus the ad-account-auditor and attribution-reconciler artifacts rolled into the monthly aggregate and the offer-claims-registry candidate flow).
+> **Reference**: See [Update Triggers & Integration](references/update-triggers-integration.md) for the complete update procedures after ranking checks, competitor analyses, audits, and reports; monthly/quarterly archive routines; and integration points with connected skills across all four disciplines — SEO/GEO (keyword-research, rank-tracker, competitor-analysis, content-gap-analysis, content-writer, content-quality-auditor, domain-authority-auditor), influencer (skills writing under `memory/influencer/<skill>/`, plus content-reviewer's gated artifacts and creator-registry candidate flow), paid ads (skills writing under `memory/paid-ads/<skill>/`, plus the ad-account-auditor and attribution-reconciler artifacts rolled into the monthly aggregate and the offer-claims-registry candidate flow), and email (skills writing under `memory/email/<skill>/`, plus email-quality-auditor's gated EQS artifacts rolled into the monthly aggregate and the consent-registry candidate flow).
 
 ### 5. Memory Hygiene Checks
 

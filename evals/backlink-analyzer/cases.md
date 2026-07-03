@@ -1,3 +1,0 @@
-```yaml
-{id: routing-command-authority-backlink-001, type: eval-case, status: simulated, target_skill: backlink-analyzer, scenario: "User asks for backlink quality and toxic link review.", input_summary: "Audit backlinks, identify toxic domains, and find authority-building opportunities.", expected_behavior: ["Route /aaron-marketing:seo-geo --mode audit --authority to backlink-analyzer when link profile quality is the object.", "Escalate domain trust scoring to domain-authority-auditor when needed.", "Do not recommend disavow without evidence and manual review."], failure_modes: ["Routes only to domain-authority-auditor.", "Treats low DA as toxic.", "Skips removal-before-disavow order."]}
-```

@@ -1,7 +1,7 @@
 ---
 name: domain-authority-auditor
-description: 'Use when auditing domain authority, trust, or citation credibility; runs 40-item CITE scoring with veto checks (TRUSTED/CAUTIOUS/UNTRUSTED). Not for page-level content quality — use content-quality-auditor; not for backlink profiling alone — use backlink-analyzer. 域名权威/网站可信度'
-version: "11.0.0"
+description: 'Use when auditing domain authority, trust, or citation credibility; runs 40-item CITE scoring with veto checks (TRUSTED/CAUTIOUS/UNTRUSTED). Not for page-level content quality — use content-quality-auditor; not for backlink profiling alone — use offsite-signal-analyzer. 域名权威/网站可信度'
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -10,7 +10,7 @@ argument-hint: "<domain>"
 class: auditor
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: seo-geo
   phase: monitor
   geo-relevance: "medium"
@@ -30,7 +30,7 @@ This skill evaluates domain authority across 40 standardized criteria organized 
 Use this when domain credibility or citation trustworthiness is in question — even if the user doesn't use audit terminology:
 
 - User asks "how trustworthy is my site" or "is my domain credible"
-- When backlink-analyzer finds toxic link ratio above 15%, its handoff summary recommends this gate check
+- When offsite-signal-analyzer finds toxic link ratio above 15%, its handoff summary recommends this gate check
 - Evaluating domain authority before a GEO campaign
 - Benchmarking your domain against competitors
 - Assessing whether a domain is trustworthy as a citation source
@@ -424,7 +424,7 @@ For a complete assessment, pair this CITE audit with a CORE-EEAT content audit:
 
 - For domain authority building: focus on top 5 priorities above
 - For content improvement: use `content-quality-auditor` on key pages
-- For backlink strategy: use `backlink-analyzer` for detailed link analysis
+- For backlink strategy: use `offsite-signal-analyzer` for detailed link analysis
 - For competitor benchmarking: use `competitor-analysis` with CITE scores
 - For tracking progress: run `/aaron-marketing:seo-geo --mode track --report` with CITE score trends
 ```
@@ -479,4 +479,4 @@ See [Example Report](references/example-report.md) for a complete CITE audit of 
 
 ## Next Best Skill
 
-CAUTIOUS + link-quality: [backlink-analyzer](../backlink-analyzer/SKILL.md). UNTRUSTED: [entity-optimizer](../../protocol/entity-optimizer/SKILL.md). TRUSTED: terminal. Visited-set rule applies per [skill-contract.md](../../references/skill-contract.md).
+CAUTIOUS + link-quality: [offsite-signal-analyzer](../offsite-signal-analyzer/SKILL.md). UNTRUSTED: [entity-optimizer](../../protocol/entity-optimizer/SKILL.md). TRUSTED: terminal. Visited-set rule applies per [skill-contract.md](../../references/skill-contract.md).

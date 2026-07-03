@@ -4,13 +4,25 @@ Guidelines for AI agents working in this repository. For full runtime context, s
 
 ## Repository Overview
 
-- **Name**: aaron-marketing-skills — 54 skills (24 SEO/GEO + 18 influencer + 8 paid ads + 4 protocol), 3 disciplines + a protocol layer, 4 commands, shared references
+- **Name**: aaron-marketing-skills — 69 skills (16 SEO/GEO + 16 influencer + 16 paid + 16 email + 5 protocol), 4 disciplines + a protocol layer, 5 commands, shared references
 - **Repository**: https://github.com/aaron-he-zhu/aaron-marketing-skills
 - **Author**: Aaron He Zhu | **License**: Apache 2.0
 - **Specs**: [Agent Skills](https://agentskills.io/specification.md)
-Content-first repository: skills and commands are Markdown; Claude Code hooks use a small Bash runner; `scripts/connectors/` holds zero-dependency Python-stdlib data helpers (no pip deps). Primary directories: SEO/GEO `research/`, `build/`, `optimize/`, `monitor/`; protocol layer `protocol/`; influencer/IMPACT `insight/`, `map/`, `plan/`, `activate/`, `convert/`, `track/`; paid ads `paid/research`, `paid/orchestrate`, `paid/activate`, `paid/scale`; plus `commands/`, `references/`, `scripts/connectors/`.
+Content-first repository: skills and commands are Markdown; Claude Code hooks use a small Bash runner; `scripts/connectors/` holds zero-dependency Python-stdlib data helpers (no pip deps). Primary directories: SEO/GEO `research/`, `build/`, `optimize/`, `monitor/`; protocol layer `protocol/`; influencer/IMPACT `discover/`, `plan/`, `activate/`, `measure/`; paid ads `paid/research`, `paid/orchestrate`, `paid/activate`, `paid/scale`; email `email/setup`, `email/engage`, `email/nurture`, `email/deliver`; plus `commands/`, `references/`, `scripts/connectors/`.
 
 Install instructions live in [README.md](README.md). Keep this file focused on authoring and maintenance rules.
+
+### New skills (v12.0.0) — 4×4 symmetry refactor
+
+The bundle is now four disciplines of exactly **4 phases × 4 skills = 16** each (64 discipline + 5 protocol = **69**). No capability was deleted — reductions are mode-preserving merges. Full per-phase listings are in [CLAUDE.md § Skills by Phase](CLAUDE.md).
+
+**SEO/GEO (16)** — merges: `content-writer` (seo-content-writer + content-refresher) · `serp-markup-builder` (meta-tags-optimizer + schema-markup-generator) · `page-play-builder` (programmatic + parasite + comparison + local SEO, 4 modes) · `site-structure-optimizer` (internal-linking-optimizer + site-architecture) · `performance-monitor` (performance-reporter + alert-manager) · `offsite-signal-analyzer` (backlink-analyzer + ai-traffic).
+
+**Influencer/IMPACT (16)** — 6 phases → 4 (insight + map → **discover**, activate + convert → **activate**, track → **measure**). Merges: `audience-mapper` (audience-analyzer + niche-researcher) · `content-amplifier` (content-amplifier + ugc-repurposer). Moves: `competitor-tracker` (map → plan) · `landing-optimizer` (convert → measure).
+
+**Paid/ROAS (16)** — new: `search-term-miner`, `product-feed-optimizer` (research) · `bid-strategy-planner`, `landing-experience-checker` (orchestrate) · `placement-exclusion-manager`, `conversion-value-mapper` (activate) · `budget-pacing-monitor`, `fatigue-frequency-manager` (scale).
+
+**Email/SEND (16)** — new: `list-hygiene-monitor` (setup) · `subject-line-lab`, `email-render-builder`, `dynamic-content-personalizer` (engage) · `preference-frequency-manager`, `reactivation-specialist` (nurture) · `inbox-placement-monitor`, `cold-outbound-sequencer` (deliver). Renamed: `send-experiment-designer` (was send-test-designer).
 
 ### New skills (v11.0.0)
 
@@ -53,7 +65,7 @@ Sixteen skills added across the 38 → 54 expansion (six SEO/GEO + four paid in 
 | `compatibility` | Platform list |
 | `allowed-tools` | Pre-approved tools (e.g., `WebFetch`) |
 | `metadata.author/version/geo-relevance/tags/triggers` | Discovery and categorization. `metadata.version` must match top-level `version`. |
-| `metadata.discipline` + `metadata.phase` | On every skill (54/54): `discipline` = seo-geo/influencer/paid/protocol; `phase` = lifecycle phase. Uniform routing/clustering tags. |
+| `metadata.discipline` + `metadata.phase` | On every skill (69/69): `discipline` = seo-geo/influencer/paid/email/protocol; `phase` = lifecycle phase. Uniform routing/clustering tags. |
 | `when_to_use` | Trigger scenarios for auto-invocation (underscores, not hyphens) |
 | `argument-hint` | Argument format hint in command picker |
 
@@ -68,7 +80,8 @@ See [CLAUDE.md § Quality Frameworks](CLAUDE.md) for details. Summary:
 - **CITE** (40 items, 4 dimensions): domain authority. [Full reference](references/cite-domain-rating.md)
 - **C³** (9 dimensions, Creator/Content/Campaign on ACE/ART/ROI, CVI geometric rollup): influencer marketing. [Full reference](references/c3-benchmark.md)
 - **ROAS** (R Return / O Offer / A Audience / S Spend-efficiency, RQS arithmetic weighted-mean rollup like CITE): paid ads. [Full reference](references/roas-benchmark.md)
-- Veto items: CORE-EEAT (T04, C01, R10) · CITE (T03, T05, T09) · C³ (ACE A2/C1/E2, ART T1/T2) · ROAS (R1/R2/O1/O2/A1)
+- **SEND** (S Sender-integrity/deliverability / E Engagement / N Nurture-lifecycle / D Direct-response, EQS arithmetic goal-weighted-mean rollup like ROAS): email marketing. [Full reference](references/send-benchmark.md)
+- Veto items: CORE-EEAT (T04, C01, R10) · CITE (T03, T05, T09) · C³ (ACE A2/C1/E2, ART T1/T2) · ROAS (R1/R2/O1/O2/A1) · SEND (S1/S2/N1/D1)
 
 ## Tool Connector Pattern
 
@@ -76,9 +89,9 @@ Skills use `~~category` placeholders. See [CONNECTORS.md](CONNECTORS.md). Every 
 
 ## Inter-Skill Handoff
 
-See [CLAUDE.md § Inter-Skill Handoff](CLAUDE.md). Key fields (per skill-contract §Handoff Summary Format): status, objective, key findings, evidence, assumptions, open loops, recommended next skill — plus `cap_applied` / `raw_overall_score` / `final_overall_score` for the 4 auditor-class gates.
+See [CLAUDE.md § Inter-Skill Handoff](CLAUDE.md). Key fields (per skill-contract §Handoff Summary Format): status, objective, key findings, evidence, assumptions, open loops, recommended next skill — plus `cap_applied` / `raw_overall_score` / `final_overall_score` for the 5 auditor-class gates.
 
-Auditor-class gates: `content-quality-auditor` (CORE-EEAT publish gate), `domain-authority-auditor` (CITE citation-trust gate), `content-reviewer` (C³ ART gate → `memory/audits/influencer/`), and `ad-account-auditor` (ROAS gate → `memory/audits/paid/`). New cross-cutting reference protocols: `humanizer-slop`, the `measurement-protocol` decision protocol, and `platforms/`.
+Auditor-class gates: `content-quality-auditor` (CORE-EEAT publish gate), `domain-authority-auditor` (CITE citation-trust gate), `content-reviewer` (C³ ART gate → `memory/audits/influencer/`), `ad-account-auditor` (ROAS gate → `memory/audits/paid/`), and `email-quality-auditor` (SEND gate → `memory/audits/email/`). New cross-cutting reference protocols: `humanizer-slop`, the `measurement-protocol` decision protocol, and `platforms/`.
 
 ## Git Workflow
 
@@ -86,7 +99,7 @@ Auditor-class gates: `content-quality-auditor` (CORE-EEAT publish gate), `domain
 - **Conventional Commits**: `feat:`, `fix:`, `docs:`
 - **After skill changes**: update the tracking files — the authoritative 8-file list is in [CONTRIBUTING.md §6](CONTRIBUTING.md) (VERSIONS.md, `.claude-plugin/plugin.json`, root `marketplace.json` + its `.claude-plugin/marketplace.json` mirror, README.md, CLAUDE.md, AGENTS.md, docs/README.zh.md). For release bumps, also sync localized README badges.
 - **Use `references/` for detail** — keep `SKILL.md` focused. Auditor-class skills `Read references/auditor-runbook.md` at activation (the framework-agnostic SSOT) and keep only their framework-specific §2 worked examples, §3 guardrails, and §5 veto-ID rows inline.
-- **Validate**: `./scripts/validate-skill.sh <category>/<skill-name>` before release PRs. CI guards: `golden-math` (4 frameworks), `check-evals`, `check-pii`, `check-stdlib-only` (incl. the Paid-Ads keyed-API red line).
+- **Validate**: `./scripts/validate-skill.sh <category>/<skill-name>` before release PRs. CI guards: `golden-math` (5 frameworks), `check-evals`, `check-pii`, `check-stdlib-only` (incl. the Paid-Ads keyed-API red line).
 
 ## Writing Style
 

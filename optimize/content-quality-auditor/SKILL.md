@@ -1,7 +1,7 @@
 ---
 name: content-quality-auditor
 description: 'Use when auditing content quality, E-E-A-T, or publish readiness; runs 80-item CORE-EEAT scoring with veto checks and a fix plan. Not for structural on-page tags/headers — use on-page-seo-auditor; not for domain/citation trust — use domain-authority-auditor. 内容质量/EEAT评分'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -11,7 +11,7 @@ allowed-tools: WebFetch
 class: auditor
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: seo-geo
   phase: optimize
   geo-relevance: "high"
@@ -28,7 +28,7 @@ This skill evaluates content quality across 80 standardized criteria organized i
 Use this when content needs a quality check before publishing — even if the user doesn't use audit terminology:
 
 - User asks "is this ready to publish" or "how good is this"
-- User just finished writing with seo-content-writer or content-refresher
+- User just finished writing with content-writer (new or refresh mode)
 - **PostToolUse hook recommendation**: after content is written or substantially edited, the command-backed hook may recommend this audit. When hook-triggered, skip setup questions — audit the content that was just produced.
 - Auditing content quality before publishing
 - Evaluating existing content for improvement opportunities
@@ -36,7 +36,7 @@ Use this when content needs a quality check before publishing — even if the us
 - Comparing content quality against competitors
 - Assessing both GEO readiness (AI citation potential) and SEO strength (source credibility)
 - Running periodic content quality checks as part of a content maintenance program
-- After writing or optimizing content with seo-content-writer or geo-content-optimizer
+- After writing or optimizing content with content-writer or geo-content-optimizer
 
 ## What This Skill Does
 
@@ -416,9 +416,9 @@ Sorted by: weight × points lost across all tiers (highest impact first). This i
 
 ### Recommended Next Steps
 
-- For full content rewrite: use `seo-content-writer` with CORE-EEAT constraints
+- For full content rewrite: use `content-writer` with CORE-EEAT constraints
 - For GEO optimization: use `geo-content-optimizer` targeting failed GEO-First items
-- For content refresh: use `content-refresher` with weak dimensions as focus
+- For content refresh: use `content-writer` with weak dimensions as focus
 - For technical fixes: run `/aaron-marketing:seo-geo --mode audit --tech` for site-level issues
 ```
 
@@ -479,4 +479,4 @@ See [references/item-reference.md](references/item-reference.md) for a complete 
 
 ## Next Best Skill
 
-Primary: [content-refresher](../content-refresher/SKILL.md) (FIX verdict). BLOCK: [seo-content-writer](../../build/seo-content-writer/SKILL.md) or [entity-optimizer](../../protocol/entity-optimizer/SKILL.md). SHIP: [rank-tracker](../../monitor/rank-tracker/SKILL.md).
+FIX: [content-writer](../../build/content-writer/SKILL.md). BLOCK: [entity-optimizer](../../protocol/entity-optimizer/SKILL.md). SHIP: [rank-tracker](../../monitor/rank-tracker/SKILL.md).

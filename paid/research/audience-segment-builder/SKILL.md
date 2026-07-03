@@ -1,7 +1,7 @@
 ---
 name: audience-segment-builder
 description: 'Use when the user asks to "build audience segments from my customer list", "make value-based / lookalike seed lists", "set up exclusion / suppression segments", or "map audiences to funnel stages across platforms"; turns the user''s OWN customer/CRM/GA4 export into seed audiences, value-based lookalike SEED lists, exclusion/suppression segments, and a cross-platform funnel-stage targeting map, informing the ROAS A (Audience) dimension. Not for building account structure or match types — use campaign-architect; not for organic SERP intent — use keyword-research. 付费广告受众分群/种子人群/排除人群/相似人群种子'
-version: "11.0.0"
+version: "12.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when preparing WHO to target before a paid account is built: s
 argument-hint: "<customer/CRM CSV or GA4 export> [goal: DR|prospecting] [platforms]"
 metadata:
   author: aaron-he-zhu
-  version: "11.0.0"
+  version: "12.0.0"
   discipline: paid
   phase: research
   geo-relevance: "low"

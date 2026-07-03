@@ -170,6 +170,22 @@ Discipline-neutral. Every monitored change (SEO/GEO edit, influencer activation,
 - **Influencer** — content has a short head (first 24–48h decides most reach) then a long tail; judge a post on its own platform analytics vs the creator's recent median, not vs another creator. ROI/CVI roll up per the [C³ framework](c3-benchmark.md).
 - **Paid ads** — auction feedback is near-instant, so the latency problem inverts vs GEO: the slow parts are **conversion lag** (a click today converts days later) and **attribution windows** (Meta 7-day-click vs Google last-click are not comparable — normalize before diffing), plus **learning-phase noise** (editing a campaign still in learning resets it; do not read or change it until it exits). Never compare cross-platform ROAS without normalizing window + currency. Scores roll up per the ROAS framework (`references/roas-benchmark.md`, added in the Paid Ads wave).
 
+## Frequency ceiling by objective
+
+Read against the **early-flight baseline**, not a raw last-day dip (per the paid latency note above). Frequency is impressions ÷ reach over a stated window — a 7-day rolling window unless the export says otherwise. The bands below are **Estimated** starting points, not measured thresholds: they say *where to start looking for decay*, not a hard cutoff. Confirm the actual breach by reading the CTR/CVR slope, and let the observed decay — not the number alone — call fatigue vs saturation. There is no universal "frequency 3" rule.
+
+| Objective | Frequency ceiling (7-day) | Read | Confidence |
+|---|---|---|---|
+| **Prospecting / cold** (Awareness, top-funnel) | ~1.5–2.5 | Cold audiences fatigue fast; CTR decay past this band usually reads as creative fatigue while reach is still growing | Estimated |
+| **Warm retargeting** (site visitors, cart, engagers) | ~4–7 | A warm, invested pool tolerates more exposures before CTR/CVR fall; a plateau in reach *with* a rising frequency reads as saturation, not fatigue | Estimated |
+| **Retention / existing customers** (short-window winback) | ~6–10 | The most tolerant band, but the pool is smallest, so saturation arrives on a shorter calendar even if the per-user ceiling is high | Estimated |
+
+Notes on reading the band:
+- **Prospecting < warm < retention** is the ordering that holds; the exact numbers are platform- and vertical-dependent, so treat them as Estimated and state the ceiling you used.
+- A number inside the band with **falling CTR** still signals fatigue — the ceiling is a prompt to check the slope, not a pass.
+- A number above the band with **flat CTR/CVR** is not yet a problem; do not rotate on the frequency figure alone.
+- Longer windows (28-day) inflate frequency mechanically; do not compare a 28-day frequency against a 7-day band.
+
 ## Tooling map
 
 | Tool | Status | Layer(s) | Role |
