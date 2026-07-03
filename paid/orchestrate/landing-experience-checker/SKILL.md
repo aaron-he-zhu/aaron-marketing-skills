@@ -81,7 +81,7 @@ On user confirmation, save to `memory/paid-ads/landing-experience-checker/YYYY-M
 ## Next Best Skill
 
 - **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — once the page passes preflight, score the account against ROAS and run the launch go/no-go (it computes the RQS and the O1/O2 vetoes; this skill does not).
-- **If a check is marked Fix (page copy, layout, or form)**: [landing-optimizer](../../../measure/landing-optimizer/SKILL.md) — it owns the actual page repair; return here to re-preflight after the fix.
+- **If a check is marked Fix (page copy, layout, or form)**: [landing-optimizer](../../../influencer/measure/landing-optimizer/SKILL.md) — it owns the actual page repair; return here to re-preflight after the fix.
 - **If the live-offer wording on the page drifted from the registered offer**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — reconcile the canonical offer terms, then re-run the message-match check.
 - **If neither ad copy nor page copy is available** (NEEDS_INPUT): stop and ask for the destination URL and the ad headlines; do not fabricate a continuity verdict.
 - Global visited-set / `max-depth: 3` termination contract from [skill-contract.md](../../../references/skill-contract.md) applies; stop once the page is auditor-ready or a Fix has been routed to its owner.

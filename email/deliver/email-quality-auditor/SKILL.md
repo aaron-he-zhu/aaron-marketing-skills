@@ -199,7 +199,7 @@ Write the artifact to `memory/audits/email/YYYY-MM-DD-<topic>.md` with `class: a
 
 Verdict-conditional primary next move:
 
-- **SHIP** → [performance-analyzer](../../../measure/performance-analyzer/SKILL.md) (measure the send) or [send-experiment-designer](../send-experiment-designer/SKILL.md) (run the A/B / hold-out).
+- **SHIP** → [performance-analyzer](../../../influencer/measure/performance-analyzer/SKILL.md) (measure the send) or [send-experiment-designer](../send-experiment-designer/SKILL.md) (run the A/B / hold-out).
 - **FIX** → the owning build skill for the flagged lever: S issues → [deliverability-qa](../../setup/deliverability-qa/SKILL.md); N issues → [email-sequence-designer](../../nurture/email-sequence-designer/SKILL.md); E/D creative issues → [email-creative-builder](../../engage/email-creative-builder/SKILL.md). Fix, then re-run this audit.
 - **BLOCK** → route to the specific fix owner (S1 → [deliverability-qa](../../setup/deliverability-qa/SKILL.md); S2 → [consent-registry](../../../protocol/consent-registry/SKILL.md); N1 → [email-sequence-designer](../../nurture/email-sequence-designer/SKILL.md); D1 → [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md)), clear the vetoes, then re-audit before sending.
 

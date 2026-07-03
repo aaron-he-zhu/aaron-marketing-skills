@@ -83,5 +83,5 @@ On user confirmation, save to `memory/paid-ads/ad-creative-builder/YYYY-MM-DD-<o
 
 - **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the creative against ROAS (O1/O2 veto checks) once a set is ready.
 - **If units carry `[needs source]` flags or unregistered claims**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claims with evidence provenance and approved wording, then swap the resolved wording back into the flagged units.
-- **If the destination URL is weak or missing** (NEEDS_INPUT): [landing-optimizer](../../../measure/landing-optimizer/SKILL.md) — fix the post-click page so message-match is achievable, then return here.
+- **If the destination URL is weak or missing** (NEEDS_INPUT): [landing-optimizer](../../../influencer/measure/landing-optimizer/SKILL.md) — fix the post-click page so message-match is achievable, then return here.
 - Global visited-set / max-depth termination contract from [skill-contract.md](../../../references/skill-contract.md) applies; stop when the creative set is auditor-ready.

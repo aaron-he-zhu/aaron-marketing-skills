@@ -2,7 +2,7 @@
 
 The third framework in this library, alongside [CORE-EEAT](core-eeat-benchmark.md) (content quality) and [CITE](cite-domain-rating.md) (domain authority). C³ scores **influencer marketing** across three nested scopes — **Creator · Content · Campaign** — each on a lean 3-dimension rubric (**ACE · ART · ROI**).
 
-This file is the entry point; the full rubric lives in [references/c3/](c3/).
+This file is the entry point; the full rubric lives in [references/c3/](c3).
 
 ## The three scopes (C³)
 
@@ -75,6 +75,6 @@ The influencer-marketing skills (IMPACT phases: Discover · Plan · Activate · 
 
 Three skills apply C³ scoring directly (they emit the rubric scores and enforce the veto items); two more inform those scores without computing them.
 
-- **Discover** — [fit-scorer](../discover/fit-scorer/SKILL.md) scores creators on **ACE** and enforces the A2/C1/E2 veto items. [influencer-discovery](../discover/influencer-discovery/SKILL.md) *informs* this step: it shortlists candidates that fit-scorer then scores on ACE (it does not compute ACE itself).
-- **Activate** — [content-reviewer](../activate/content-reviewer/SKILL.md) gates deliverables on **ART**, with T1 (FTC disclosure) and T2 (claim integrity) as veto items.
-- **Measure** — [roi-calculator](../measure/roi-calculator/SKILL.md) computes the **ROI** score and the **CVI** rollup. [performance-analyzer](../measure/performance-analyzer/SKILL.md) *contributes* the measured campaign inputs that feed ROI/CVI (it does not compute the rollup itself).
+- **Discover** — [fit-scorer](../influencer/discover/fit-scorer/SKILL.md) scores creators on **ACE** and enforces the A2/C1/E2 veto items. [influencer-discovery](../influencer/discover/influencer-discovery/SKILL.md) *informs* this step: it shortlists candidates that fit-scorer then scores on ACE (it does not compute ACE itself).
+- **Activate** — [content-reviewer](../influencer/activate/content-reviewer/SKILL.md) gates deliverables on **ART**, with T1 (FTC disclosure) and T2 (claim integrity) as veto items.
+- **Measure** — [roi-calculator](../influencer/measure/roi-calculator/SKILL.md) computes the **ROI** score and the **CVI** rollup. [performance-analyzer](../influencer/measure/performance-analyzer/SKILL.md) *contributes* the measured campaign inputs that feed ROI/CVI (it does not compute the rollup itself).

@@ -4,7 +4,7 @@ Formalizes the data contract between `entity-optimizer` (writes canonical entity
 
 Referenced by:
 - [entity-optimizer/SKILL.md](../protocol/entity-optimizer/SKILL.md) — as an authoritative contract for its Writes
-- [geo-content-optimizer/SKILL.md](../build/geo-content-optimizer/SKILL.md) — as an authoritative contract for its Reads
+- [geo-content-optimizer/SKILL.md](../seo/build/geo-content-optimizer/SKILL.md) — as an authoritative contract for its Reads
 
 ---
 
@@ -85,7 +85,7 @@ next_action: null                      # null if entity is healthy
 | `wikidata_q` | QID or null | Optional | geo-content-optimizer (as authoritative signal) |
 | `description_short` | string ≤160 chars | Yes | serp-markup-builder (fallback meta desc), geo-content-optimizer (first-paragraph boilerplate) |
 | `description_long` | markdown paragraph | Yes | geo-content-optimizer (about-page source of truth) |
-| `ai_resolution_status` | per-engine enum | Yes | geo-content-optimizer (decides which engines need targeting; its [AI-overview-recovery playbook](../build/geo-content-optimizer/references/ai-overview-recovery.md) scopes rewrite effort) |
+| `ai_resolution_status` | per-engine enum | Yes | geo-content-optimizer (decides which engines need targeting; its [AI-overview-recovery playbook](../seo/build/geo-content-optimizer/references/ai-overview-recovery.md) scopes rewrite effort) |
 | `ai_resolution_notes[]` | strings | Recommended | geo-content-optimizer (what disambiguation to add in body) |
 | `gap_type` | enum or null | Yes | next-best-skill routing for downstream |
 | `next_action` | string or null | Yes | Open loop if non-null |

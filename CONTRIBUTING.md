@@ -12,15 +12,15 @@ Thanks for your interest in contributing! This guide covers adding skills, impro
 
 | Category | Directory | Use when the skill... |
 |----------|-----------|----------------------|
-| Research | `research/` | Gathers market data before content creation (SEO/GEO) |
-| Build | `build/` | Creates new content or markup (SEO/GEO) |
-| Optimize | `optimize/` | Improves existing content or site health (SEO/GEO) |
-| Monitor | `monitor/` | Tracks performance over time (SEO/GEO) |
+| Research | `seo/research/` | Gathers market data before content creation (SEO/GEO) |
+| Build | `seo/build/` | Creates new content or markup (SEO/GEO) |
+| Optimize | `seo/optimize/` | Improves existing content or site health (SEO/GEO) |
+| Monitor | `seo/monitor/` | Tracks performance over time (SEO/GEO) |
 | Protocol | `protocol/` | Cross-cutting layer (truth registries: entity/creator/claims/consent + memory) — shared across disciplines |
-| Discover | `discover/` | Audience/niche mapping + influencer discovery & fit (influencer/IMPACT) |
-| Plan | `plan/` | Competitor tracking, campaigns, briefs, budgets (influencer/IMPACT) |
-| Activate | `activate/` | Outreach, content review (C³ ART gate), contracts, amplification (influencer/IMPACT) |
-| Measure | `measure/` | Post-click, performance, ROI, reports (influencer/IMPACT) |
+| Discover | `influencer/discover/` | Audience/niche mapping + influencer discovery & fit (influencer/IMPACT) |
+| Plan | `influencer/plan/` | Competitor tracking, campaigns, briefs, budgets (influencer/IMPACT) |
+| Activate | `influencer/activate/` | Outreach, content review (C³ ART gate), contracts, amplification (influencer/IMPACT) |
+| Measure | `influencer/measure/` | Post-click, performance, ROI, reports (influencer/IMPACT) |
 | Paid Ads | `paid/<phase>/` | Builds, audits, and scales paid-ad campaigns (ROAS loop: research/orchestrate/activate/scale) |
 | Email | `email/<phase>/` | Grows, sends, and audits email programs (SEND loop: setup/engage/nurture/deliver) |
 

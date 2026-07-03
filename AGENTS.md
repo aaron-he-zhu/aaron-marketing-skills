@@ -8,7 +8,7 @@ Guidelines for AI agents working in this repository. For full runtime context, s
 - **Repository**: https://github.com/aaron-he-zhu/aaron-marketing-skills
 - **Author**: Aaron He Zhu | **License**: Apache 2.0
 - **Specs**: [Agent Skills](https://agentskills.io/specification.md)
-Content-first repository: skills and commands are Markdown; Claude Code hooks use a small Bash runner; `scripts/connectors/` holds zero-dependency Python-stdlib data helpers (no pip deps). Primary directories: SEO/GEO `research/`, `build/`, `optimize/`, `monitor/`; protocol layer `protocol/`; influencer/IMPACT `discover/`, `plan/`, `activate/`, `measure/`; paid ads `paid/research`, `paid/orchestrate`, `paid/activate`, `paid/scale`; email `email/setup`, `email/engage`, `email/nurture`, `email/deliver`; plus `commands/`, `references/`, `scripts/connectors/`.
+Content-first repository: skills and commands are Markdown; Claude Code hooks use a small Bash runner; `scripts/connectors/` holds zero-dependency Python-stdlib data helpers (no pip deps). Primary directories: SEO/GEO `seo/research/`, `seo/build/`, `seo/optimize/`, `seo/monitor/`; protocol layer `protocol/`; influencer/IMPACT `influencer/discover/`, `influencer/plan/`, `influencer/activate/`, `influencer/measure/`; paid ads `paid/research`, `paid/orchestrate`, `paid/activate`, `paid/scale`; email `email/setup`, `email/engage`, `email/nurture`, `email/deliver`; plus `commands/`, `references/`, `scripts/connectors/`.
 
 Install instructions live in [README.md](README.md). Keep this file focused on authoring and maintenance rules.
 

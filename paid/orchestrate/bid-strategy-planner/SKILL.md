@@ -91,13 +91,13 @@ On user confirmation, save to `memory/paid-ads/bid-strategy-planner/YYYY-MM-DD-<
 - Shared state model: [state-model.md](../../../references/state-model.md)
 - Connector recipes: [CONNECTORS.md](../../../CONNECTORS.md)
 - Sibling skills:
-  - [budget-optimizer](../../../plan/budget-optimizer/SKILL.md) — allocates the spend this strategy bids against
+  - [budget-optimizer](../../../influencer/plan/budget-optimizer/SKILL.md) — allocates the spend this strategy bids against
   - [ad-creative-builder](../ad-creative-builder/SKILL.md) — the **O** units the same campaign runs
   - [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — the ROAS gate
 
 ## Next Best Skill
 
 - **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the campaign against ROAS (the **S** lever and the premature-scaling guardrail) once the strategy, target, and portfolio are set.
-- **If the budget behind the bid is not yet allocated**: [budget-optimizer](../../../plan/budget-optimizer/SKILL.md) — set the spend envelope the strategy bids within, then return here.
+- **If the budget behind the bid is not yet allocated**: [budget-optimizer](../../../influencer/plan/budget-optimizer/SKILL.md) — set the spend envelope the strategy bids within, then return here.
 - **If the plan is live and you need in-flight pacing, not a starting plan** (NEEDS_INPUT): [budget-pacing-monitor](../../scale/budget-pacing-monitor/SKILL.md) — reads spend/delivery against plan mid-flight; this skill only sets the entry plan.
 - **Termination**: keep a visited-set. If the recommended next skill was already invoked in this session's chain, stop and report chain-complete. Default `max-depth: 3`. When routing is ambiguous, present the options and stop rather than auto-following; if the auditor returns a BLOCK verdict, stop and route to the named fix rather than re-running this skill.

@@ -231,9 +231,9 @@ The auditor-class gates are discipline-resident Execution-layer skills with extr
 
 The five auditor-class gates must produce a clear verdict, not just scores:
 
-- `content-quality-auditor` (optimize/): **SHIP** (no veto items, scores above threshold) / **FIX** (issues found, none are veto) / **BLOCK** (veto item T04, C01, or R10 failed)
-- `domain-authority-auditor` (monitor/): **TRUSTED** (no veto items, scores above threshold) / **CAUTIOUS** (issues found, none are veto) / **UNTRUSTED** (veto item T03, T05, or T09 failed)
-- `content-reviewer` (activate/): **APPROVED** / **APPROVED WITH MINOR CHANGES** / **REVISIONS REQUIRED** / **REJECTED** (ART veto T1 or T2 forces REJECTED; maps to status via APPROVED→DONE, MINOR→DONE_WITH_CONCERNS, REVISIONS→NEEDS_INPUT, REJECTED→BLOCKED)
+- `content-quality-auditor` (seo/optimize/): **SHIP** (no veto items, scores above threshold) / **FIX** (issues found, none are veto) / **BLOCK** (veto item T04, C01, or R10 failed)
+- `domain-authority-auditor` (seo/monitor/): **TRUSTED** (no veto items, scores above threshold) / **CAUTIOUS** (issues found, none are veto) / **UNTRUSTED** (veto item T03, T05, or T09 failed)
+- `content-reviewer` (influencer/activate/): **APPROVED** / **APPROVED WITH MINOR CHANGES** / **REVISIONS REQUIRED** / **REJECTED** (ART veto T1 or T2 forces REJECTED; maps to status via APPROVED→DONE, MINOR→DONE_WITH_CONCERNS, REVISIONS→NEEDS_INPUT, REJECTED→BLOCKED)
 - `ad-account-auditor` (paid/activate/): **SHIP** (no veto, RQS in a healthy band) / **FIX** (issues found, no veto, or a single-veto capped score) / **BLOCK** (2+ vetoes among R1/R2/O1/O2/A1 — `status: BLOCKED`)
 - `email-quality-auditor` (email/deliver/): **SHIP** (no veto, EQS in a healthy band) / **FIX** (issues found, no veto, or a single-veto capped score) / **BLOCK** (2+ vetoes among S1/S2/N1/D1 — `status: BLOCKED`)
 

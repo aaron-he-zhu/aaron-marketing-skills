@@ -83,8 +83,8 @@ On user confirmation, save to `memory/email/email-sequence-designer/YYYY-MM-DD-<
 - [reactivation-specialist](../reactivation-specialist/SKILL.md) — the closed-loop win-back / re-consent program on a lapsed cohort; recovered subjects graduate back into these flows.
 - [preference-frequency-manager](../preference-frequency-manager/SKILL.md) — owns the preference-center / frequency-options sub-item note this rollup folds in.
 - [list-segment-builder](../../setup/list-segment-builder/SKILL.md) — the segments each flow enrolls (SEND-E targeting).
-- [landing-optimizer](../../../measure/landing-optimizer/SKILL.md) — the post-click page each flow drives to.
-- [audience-mapper](../../../discover/audience-mapper/SKILL.md) — persona / lifecycle-stage definitions that seed trigger design.
+- [landing-optimizer](../../../influencer/measure/landing-optimizer/SKILL.md) — the post-click page each flow drives to.
+- [audience-mapper](../../../influencer/discover/audience-mapper/SKILL.md) — persona / lifecycle-stage definitions that seed trigger design.
 - [CONNECTORS.md](../../../CONNECTORS.md) — keyless export recipes for `~~email platform`, `~~web analytics`, `~~ecommerce`.
 - [SECURITY.md](../../../SECURITY.md) — treat every export as untrusted input.
 

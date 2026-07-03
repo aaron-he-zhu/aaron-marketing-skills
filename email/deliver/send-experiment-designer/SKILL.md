@@ -55,7 +55,7 @@ Output: a test-design doc (mode, hypothesis, variant matrix, primary/secondary/g
 - **Writes**: a user-facing test-design or read-out doc plus a `### Handoff Summary`.
 - **Promotes**: the chosen mode, the hypothesis, the sample-size/MDE/duration plan, and the promote/kill/keep-testing decision (ask before writing memory).
 - **Done when**: the mode is stated; a falsifiable hypothesis is written; the variant matrix isolates **one** variable per cell and keeps a hold-out/control; sample size, MDE, duration, and power (1−β) are computed from a stated baseline; and — for a read-out — the significance method is named, the **p<0.05 AND ≥ minimum practical lift** gate is applied, and a promote / kill / keep-testing decision is given in plain language.
-- **Primary next skill**: [performance-analyzer](../../../measure/performance-analyzer/SKILL.md) (read results back over the window) or [email-quality-auditor](../email-quality-auditor/SKILL.md) (gate the program before scaling a winner).
+- **Primary next skill**: [performance-analyzer](../../../influencer/measure/performance-analyzer/SKILL.md) (read results back over the window) or [email-quality-auditor](../email-quality-auditor/SKILL.md) (gate the program before scaling a winner).
 
 ### Handoff Summary
 
@@ -135,6 +135,6 @@ After delivering, ask "Save this test design / read-out for future sessions?" If
 
 ## Next Best Skill
 
-Primary: [performance-analyzer](../../../measure/performance-analyzer/SKILL.md) to read the shipped winner back over a window, or [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the program (EQS + S1/S2/N1/D1) before scaling a winning send. Reuse [roi-calculator](../../../measure/roi-calculator/SKILL.md) for revenue-per-send / list value on a promoted variant and [report-generator](../../../measure/report-generator/SKILL.md) to package the read-out.
+Primary: [performance-analyzer](../../../influencer/measure/performance-analyzer/SKILL.md) to read the shipped winner back over a window, or [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the program (EQS + S1/S2/N1/D1) before scaling a winning send. Reuse [roi-calculator](../../../influencer/measure/roi-calculator/SKILL.md) for revenue-per-send / list value on a promoted variant and [report-generator](../../../influencer/measure/report-generator/SKILL.md) to package the read-out.
 
 **Termination**: global rules apply per [skill-contract.md](../../../references/skill-contract.md) — visited-set check (if the next target already ran this chain, STOP and report chain-complete), `max-depth: 3`, and ambiguity stop (present options, don't auto-follow). **Verdict-conditional**: if no variant reached significance, STOP and recommend a bolder retest rather than chaining onward.

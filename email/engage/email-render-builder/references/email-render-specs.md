@@ -1,6 +1,6 @@
 # Email Render Specs (SEND-E build)
 
-Build patterns and QA checklists for `email-render-builder`. The layout carries the approved copy from [email-creative-builder](../../../engage/email-creative-builder/SKILL.md) unchanged; this pack governs the *build*, not the words. All checklists feed the render-QA report that [email-quality-auditor](../../../deliver/email-quality-auditor/SKILL.md) reads before scoring the E/D unit.
+Build patterns and QA checklists for `email-render-builder`. The layout carries the approved copy from [email-creative-builder](../../email-creative-builder/SKILL.md) unchanged; this pack governs the *build*, not the words. All checklists feed the render-QA report that [email-quality-auditor](../../../deliver/email-quality-auditor/SKILL.md) reads before scoring the E/D unit.
 
 ## Layout skeleton
 
@@ -53,4 +53,4 @@ Many clients block images by default — the email must still work.
 
 ## Plain-text parity
 
-The `text/plain` alternate must carry the same core message, the same primary CTA, and the same destination URL as the HTML. Diff the shipped plain-text alt against the HTML; if none shipped, produce one. A copy-driven mismatch (subject too long to render, CTA label overflows the button) is not a build fix — flag it and route to [email-creative-builder](../../../engage/email-creative-builder/SKILL.md).
+The `text/plain` alternate must carry the same core message, the same primary CTA, and the same destination URL as the HTML. Diff the shipped plain-text alt against the HTML; if none shipped, produce one. A copy-driven mismatch (subject too long to render, CTA label overflows the button) is not a build fix — flag it and route to [email-creative-builder](../../email-creative-builder/SKILL.md).

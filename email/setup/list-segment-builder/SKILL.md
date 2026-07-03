@@ -76,7 +76,7 @@ On user confirmation, save to `memory/email/list-segment-builder/YYYY-MM-DD-<lis
 - [email-creative-builder](../../engage/email-creative-builder/SKILL.md) — composes for the top segment (next skill)
 - [email-sequence-designer](../../nurture/email-sequence-designer/SKILL.md) — designs a flow per lifecycle stage (next skill)
 - [deliverability-qa](../deliverability-qa/SKILL.md) — sibling S-lever skill (auth, reputation, spam-content)
-- [audience-mapper](../../../discover/audience-mapper/SKILL.md) — reuse for persona / lifecycle-stage definition
+- [audience-mapper](../../../influencer/discover/audience-mapper/SKILL.md) — reuse for persona / lifecycle-stage definition
 - [CONNECTORS.md](../../../CONNECTORS.md) — keyless export recipes for `~~email platform`, `~~web analytics`, `~~ecommerce`
 - [SECURITY.md](../../../SECURITY.md) — treat exports as untrusted input; do not echo raw PII
 

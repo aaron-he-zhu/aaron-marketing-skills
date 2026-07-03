@@ -32,4 +32,4 @@ For each CTA, record the row so the auditor can verify email↔landing consisten
 | Offer | <terms/code> | <identical terms/code> | ✓ / ✗ |
 | CTA label | <verb + object> | <same next step> | ✓ / ✗ |
 
-A mismatch is a message-match failure (SEND-`D` sub-item) — flag it; the post-click fix is [landing-optimizer](../../../../measure/landing-optimizer/SKILL.md).
+A mismatch is a message-match failure (SEND-`D` sub-item) — flag it; the post-click fix is [landing-optimizer](../../../../influencer/measure/landing-optimizer/SKILL.md).

@@ -16,7 +16,7 @@ The four disciplines share one **meta-lifecycle** spine (an approximate bridge �
 | **Measure** | monitor | measure | Scale | Deliver |
 | **Cross-cutting** | the **protocol layer** (entity/creator/claims/consent truth registries · memory) serves all four; the 5 auditor-class gates live in their disciplines | | | |
 
-Notes: "Activate" means creator outreach in IMPACT but account-gating in ROAS — same word, discipline-specific scope. All four disciplines use phase *directories* — paid skills live under `paid/<phase>/` (research/orchestrate/activate/scale) and email skills under `email/<phase>/` (setup/engage/nurture/deliver).
+Notes: "Activate" means creator outreach in IMPACT but account-gating in ROAS — same word, discipline-specific scope. All four disciplines now live under a discipline folder — SEO/GEO under `seo/<phase>/` (research/build/optimize/monitor), influencer under `influencer/<phase>/` (discover/plan/activate/measure), paid under `paid/<phase>/` (research/orchestrate/activate/scale), and email under `email/<phase>/` (setup/engage/nurture/deliver).
 
 **SEO/GEO (16):**
 

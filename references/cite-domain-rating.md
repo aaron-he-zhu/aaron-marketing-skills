@@ -151,7 +151,7 @@ Failing any veto item activates the Critical Fail Cap. The cap arithmetic and th
 
 **Single veto fail**: cap applies per [Runbook §2 decision table](auditor-runbook.md). Also raises a **Manipulation Alert** in the handoff `open_loops` field.
 
-**2+ veto fails**: audit returns `status: BLOCKED` per [§2 Worked example 3 in domain-authority-auditor](../monitor/domain-authority-auditor/SKILL.md). Calibration for a numeric multi-veto cap is pending v7.3, gated on 30+ real multi-veto audits in `memory/audits/`.
+**2+ veto fails**: audit returns `status: BLOCKED` per [§2 Worked example 3 in domain-authority-auditor](../seo/monitor/domain-authority-auditor/SKILL.md). Calibration for a numeric multi-veto cap is pending v7.3, gated on 30+ real multi-veto audits in `memory/audits/`.
 
 ---
 

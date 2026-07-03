@@ -210,4 +210,4 @@ Before writing a third-party person to `memory/entities/`, the user must have on
 
 ## Next Best Skill
 
-Primary: [keyword-research](../../research/keyword-research/SKILL.md) — seed or refresh campaign strategy with current demand signals.
+Primary: [keyword-research](../../seo/research/keyword-research/SKILL.md) — seed or refresh campaign strategy with current demand signals.
