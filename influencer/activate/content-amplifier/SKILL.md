@@ -111,7 +111,7 @@ For slicing one source into many output atoms, apply the 7-tier extraction and n
 
 ## Decision Gates
 
-- **Stop and ask** — only when a mode input needed to proceed is missing and not inferable: (1) *paid* has no budget and none can be inferred — ask for the amplification budget; (2) *repurpose* has assets whose usage rights are unknown — ask for the rights level before recommending any paid/website/email reuse, because reusing a rights-restricted asset is a compliance risk you must not guess through.
+- **Stop and ask** — only when a mode input needed to proceed is missing and not inferable: (1) *paid* has no budget and none can be inferred — ask for the amplification budget; (2) *repurpose* has assets whose usage rights are unknown — ask for the rights level before recommending any ad/website/email reuse, because reusing a rights-restricted asset is a compliance risk you must not guess through.
 - **Continue silently** — do not stop for: which 3 of N pieces to deep-dive (pick by performance); missing optional connector data (mark N/A, ask the user for the numbers, proceed); a platform not in the reference set (apply the nearest analog and note it). Missing organic metrics → ask once, then proceed with the pieces you have, labeling gaps.
 
 ## Example

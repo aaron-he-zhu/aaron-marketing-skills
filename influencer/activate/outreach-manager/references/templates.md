@@ -20,7 +20,7 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md). Copy
 - Niche: [category]
 
 **Outreach Details**:
-- Compensation type: [paid/gifted/affiliate]
+- Compensation type: [ad/gifted/affiliate]
 - Budget per influencer: $[X] or [product value]
 - Deliverables: [what you're asking for]
 - Timeline: [urgency level]

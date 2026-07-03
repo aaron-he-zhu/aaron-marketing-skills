@@ -32,9 +32,9 @@ EVALS = os.path.join(ROOT, "evals")
 MANIFEST = os.path.join(EVALS, "structure-manifest.json")
 
 PHASE_DIRS = [
-    "seo/research", "seo/build", "seo/optimize", "seo/monitor", "protocol",   # SEO/GEO
+    "seo-geo/research", "seo-geo/build", "seo-geo/optimize", "seo-geo/monitor", "protocol",   # SEO/GEO
     "influencer/discover", "influencer/plan", "influencer/activate", "influencer/measure",      # influencer (4x4)
-    "paid/research", "paid/orchestrate", "paid/activate", "paid/scale",                                                        # paid ads (when present)
+    "ad/research", "ad/orchestrate", "ad/activate", "ad/scale",                                                        # paid ads (when present)
     "email/setup", "email/engage", "email/nurture", "email/deliver",                                                          # email marketing
 ]
 REQUIRED_CASE_KEYS = [

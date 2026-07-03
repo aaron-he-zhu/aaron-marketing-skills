@@ -205,7 +205,7 @@ Common subfolders:
 - `domain/` (domain-authority-auditor — CITE)
 - `<skill>/` (other Optimize skills, per-skill — e.g. `technical-seo-checker/`, `site-structure-optimizer/`)
 - `influencer/` (content-reviewer — C³ ART gate artifacts)
-- `paid/` (ad-account-auditor — ROAS gate artifacts)
+- `ad/` (ad-account-auditor — ROAS gate artifacts)
 - `email/` (email-quality-auditor — SEND gate artifacts)
 
 Store:
@@ -247,9 +247,9 @@ Store:
 
 Same WARM lifecycle as the other categories: dated files `YYYY-MM-DD-<topic>.md`, demoted to `memory/archive/` after 90 days by `last_updated`. (content-reviewer's **gated** ART verdict is an auditor artifact and lives in `memory/audits/influencer/`, not here.)
 
-### `memory/paid-ads/`
+### `memory/ad/`
 
-Per-skill subfolders, one per Paid Ads skill: `memory/paid-ads/<skill>/` (e.g. `campaign-architect/`, `ad-creative-builder/`, `paid-measurement-loop/`). Scored on the [ROAS framework](roas-benchmark.md).
+Per-skill subfolders, one per Paid Ads skill: `memory/ad/<skill>/` (e.g. `campaign-architect/`, `ad-creative-builder/`, `paid-measurement-loop/`). Scored on the [ROAS framework](roas-benchmark.md).
 
 Store:
 
@@ -257,7 +257,7 @@ Store:
 - ad-creative sets and angle matrices (orchestrate)
 - ROAS/CPA readback snapshots vs control (scale)
 
-Same WARM lifecycle (dated files, demoted to `memory/archive/` after 90 days). ad-account-auditor's **gated** RQS verdict is an auditor artifact and lives in `memory/audits/paid/`.
+Same WARM lifecycle (dated files, demoted to `memory/archive/` after 90 days). ad-account-auditor's **gated** RQS verdict is an auditor artifact and lives in `memory/audits/ad/`.
 
 ### `memory/email/`
 
@@ -293,7 +293,7 @@ When a skill describes state updates, it should:
 - `content-quality-auditor` owns publish-readiness state in `memory/audits/content/`
 - `domain-authority-auditor` owns citation-trust state in `memory/audits/domain/`
 - `content-reviewer` owns the C³ ART gate state in `memory/audits/influencer/`
-- `ad-account-auditor` owns the ROAS gate state in `memory/audits/paid/`
+- `ad-account-auditor` owns the ROAS gate state in `memory/audits/ad/`
 - `email-quality-auditor` owns the SEND gate state in `memory/audits/email/`
 
 See [skill-contract.md](skill-contract.md) for the full protocol-layer vs execution-layer behavior matrix.

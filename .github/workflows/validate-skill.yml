@@ -63,9 +63,9 @@ jobs:
       - name: Validate all skills
         run: |
           set -euo pipefail
-          find seo/research seo/build seo/optimize seo/monitor protocol \
+          find seo-geo/research seo-geo/build seo-geo/optimize seo-geo/monitor protocol \
             influencer/discover influencer/plan influencer/activate influencer/measure \
-            paid/research paid/orchestrate paid/activate paid/scale \
+            ad/research ad/orchestrate ad/activate ad/scale \
             email/setup email/engage email/nurture email/deliver \
             -mindepth 2 -maxdepth 2 -name SKILL.md \
             -print | sort | while read -r file; do

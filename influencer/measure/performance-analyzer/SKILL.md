@@ -20,7 +20,7 @@ metadata:
 
 Analyze influencer campaign performance past surface metrics — score results vs target/benchmark, rank platforms/creators/content, read engagement quality and sentiment, attribute conversions, and write ranked learnings.
 
-> **Cross-discipline (paid ads):** this is also the cross-channel **paid-ads** scorecard/anomaly lens — account-wide metric rollups vs target/benchmark that feed [ad-test-designer](../../../paid/orchestrate/ad-test-designer/SKILL.md) (what to test) and [paid-measurement-loop](../../../paid/scale/paid-measurement-loop/SKILL.md) (what to read back). Save paid runs under `memory/paid-ads/performance-analyzer/`.
+> **Cross-discipline (paid ads):** this is also the cross-channel **paid-ads** scorecard/anomaly lens — account-wide metric rollups vs target/benchmark that feed [ad-test-designer](../../../ad/orchestrate/ad-test-designer/SKILL.md) (what to test) and [paid-measurement-loop](../../../ad/scale/paid-measurement-loop/SKILL.md) (what to read back). Save paid runs under `memory/ad/performance-analyzer/`.
 
 ## Quick Start
 

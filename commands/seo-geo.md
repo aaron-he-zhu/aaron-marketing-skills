@@ -5,7 +5,7 @@ argument-hint: "<goal-url-topic-or-domain> [--mode research|create|audit|track] 
 
 # SEO/GEO Command
 
-The single SEO/GEO entrypoint (peer of `/aaron-marketing:impact` and `/aaron-marketing:paid`). Four modes cover the discipline end-to-end; the former `research` / `create` / `audit` / `track` commands are these modes — every sub-flag is preserved unchanged.
+The single SEO/GEO entrypoint (peer of `/aaron-marketing:impact` and `/aaron-marketing:ad`). Four modes cover the discipline end-to-end; the former `research` / `create` / `audit` / `track` commands are these modes — every sub-flag is preserved unchanged.
 
 ## Route
 

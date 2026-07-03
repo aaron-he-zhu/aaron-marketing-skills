@@ -15,7 +15,7 @@
 ### For new skills:
 - [ ] `name` field matches directory name exactly
 - [ ] `description` includes trigger phrases AND scope boundaries
-- [ ] Placed in the correct phase directory (SEO/GEO: research/build/optimize/monitor · protocol: protocol · influencer: discover/plan/activate/measure · paid: `paid/<phase>/` — research/orchestrate/activate/scale)
+- [ ] Placed in the correct phase directory (SEO/GEO: research/build/optimize/monitor · protocol: protocol · influencer: discover/plan/activate/measure · paid: `ad/<phase>/` — research/orchestrate/activate/scale)
 - [ ] Uses `~~placeholder` pattern for tool references
 - [ ] Includes validation checkpoints
 - [ ] Includes at least one concrete example

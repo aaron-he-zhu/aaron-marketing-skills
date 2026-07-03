@@ -73,7 +73,7 @@ AI systems confuse [my entity] with [other entity] — help me disambiguate
 
 This skill is the sole writer of canonical entity profiles at `memory/entities/<name>.md`. Other skills write entity candidates to `memory/entities/candidates.md` only. When 3+ candidates accumulate, this skill should be recommended.
 
-**Profile schema**: the frontmatter of every canonical entity profile follows the authoritative contract in [Entity-GEO Handoff Schema](../../references/entity-geo-handoff-schema.md). That schema defines which fields downstream skills (`geo-content-optimizer` — including its [AI-overview-recovery playbook](../../seo/build/geo-content-optimizer/references/ai-overview-recovery.md) — `serp-markup-builder`, `serp-markup-builder`) depend on. Do not omit required fields — the consumers will degrade gracefully to `DONE_WITH_CONCERNS` and surface an `open_loop` pointing back here.
+**Profile schema**: the frontmatter of every canonical entity profile follows the authoritative contract in [Entity-GEO Handoff Schema](../../references/entity-geo-handoff-schema.md). That schema defines which fields downstream skills (`geo-content-optimizer` — including its [AI-overview-recovery playbook](../../seo-geo/build/geo-content-optimizer/references/ai-overview-recovery.md) — `serp-markup-builder`, `serp-markup-builder`) depend on. Do not omit required fields — the consumers will degrade gracefully to `DONE_WITH_CONCERNS` and surface an `open_loop` pointing back here.
 
 - **Primary next skill**: use the `Next Best Skill` below once the entity truth is clear.
 
@@ -193,4 +193,4 @@ Detailed guides for entity optimization:
 
 ## Next Best Skill
 
-Primary: [serp-markup-builder](../../seo/build/serp-markup-builder/SKILL.md). Also consider: [geo-content-optimizer](../../seo/build/geo-content-optimizer/SKILL.md) (AI recognition gap) or [content-writer](../../seo/build/content-writer/SKILL.md) (new About/founder page needed).
+Primary: [serp-markup-builder](../../seo-geo/build/serp-markup-builder/SKILL.md). Also consider: [geo-content-optimizer](../../seo-geo/build/geo-content-optimizer/SKILL.md) (AI recognition gap) or [content-writer](../../seo-geo/build/content-writer/SKILL.md) (new About/founder page needed).

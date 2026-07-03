@@ -12,16 +12,16 @@ Thanks for your interest in contributing! This guide covers adding skills, impro
 
 | Category | Directory | Use when the skill... |
 |----------|-----------|----------------------|
-| Research | `seo/research/` | Gathers market data before content creation (SEO/GEO) |
-| Build | `seo/build/` | Creates new content or markup (SEO/GEO) |
-| Optimize | `seo/optimize/` | Improves existing content or site health (SEO/GEO) |
-| Monitor | `seo/monitor/` | Tracks performance over time (SEO/GEO) |
+| Research | `seo-geo/research/` | Gathers market data before content creation (SEO/GEO) |
+| Build | `seo-geo/build/` | Creates new content or markup (SEO/GEO) |
+| Optimize | `seo-geo/optimize/` | Improves existing content or site health (SEO/GEO) |
+| Monitor | `seo-geo/monitor/` | Tracks performance over time (SEO/GEO) |
 | Protocol | `protocol/` | Cross-cutting layer (truth registries: entity/creator/claims/consent + memory) — shared across disciplines |
 | Discover | `influencer/discover/` | Audience/niche mapping + influencer discovery & fit (influencer/IMPACT) |
 | Plan | `influencer/plan/` | Competitor tracking, campaigns, briefs, budgets (influencer/IMPACT) |
 | Activate | `influencer/activate/` | Outreach, content review (C³ ART gate), contracts, amplification (influencer/IMPACT) |
 | Measure | `influencer/measure/` | Post-click, performance, ROI, reports (influencer/IMPACT) |
-| Paid Ads | `paid/<phase>/` | Builds, audits, and scales paid-ad campaigns (ROAS loop: research/orchestrate/activate/scale) |
+| Paid Ads | `ad/<phase>/` | Builds, audits, and scales paid-ad campaigns (ROAS loop: research/orchestrate/activate/scale) |
 | Email | `email/<phase>/` | Grows, sends, and audits email programs (SEND loop: setup/engage/nurture/deliver) |
 
 ### 2. Create the skill directory
@@ -63,7 +63,7 @@ Auditor-class skills are the exception: they `Read references/auditor-runbook.md
 | `content-quality-auditor` | CORE-EEAT (publish readiness) | `memory/audits/content/` |
 | `domain-authority-auditor` | CITE (citation trust) | `memory/audits/domain/` |
 | `content-reviewer` | C³ ART (influencer content gate) | `memory/audits/influencer/` |
-| `ad-account-auditor` | ROAS RQS (paid-ads gate) | `memory/audits/paid/` |
+| `ad-account-auditor` | ROAS RQS (paid-ads gate) | `memory/audits/ad/` |
 | `email-quality-auditor` | SEND EQS (email SEND gate) | `memory/audits/email/` |
 
 Cross-cutting reference protocols apply across disciplines: the humanizer-slop protocol, the measurement-protocol decision protocol, and the per-channel `platforms/` reference packs. These stay references (not skills) by design — each is consumed as a pre-handoff sub-step inside discipline skills, so promoting one to a standalone skill would duplicate that step.

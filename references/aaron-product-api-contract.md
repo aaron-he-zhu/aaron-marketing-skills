@@ -4,11 +4,11 @@
 - `/aaron-marketing:auto` — infer discipline and intent from the goal and run the smallest useful workflow; `--deep` for exhaustive, maximum-rigor, or stress-test runs.
 - `/aaron-marketing:seo-geo` — SEO/GEO end-to-end via `--mode research|create|audit|track`, with per-mode flags preserved (`--brief`/`--series`/`--refresh`/`--publish`/`--meta`/`--schema`, `--full`/`--tech`/`--visibility`/`--authority`, `--alert`/`--report`/`--remember`, `--competitors`/`--map`).
 - `/aaron-marketing:impact` — influencer (IMPACT) lifecycle across four phases: discover / plan / activate / measure (`--phase` to force one).
-- `/aaron-marketing:paid` — paid ads along the ROAS loop across four phases: research / orchestrate / activate / scale (`--phase` to force one).
+- `/aaron-marketing:ad` — paid ads along the ROAS loop across four phases: research / orchestrate / activate / scale (`--phase` to force one).
 - `/aaron-marketing:email` — email marketing along the SEND loop across four phases: setup / engage / nurture / deliver (`--phase` to force one).
 ## `/aaron-marketing:auto`
 - Accept natural-language marketing tasks (SEO/GEO, influencer, paid, or email) when invoked directly or by verified host routing, then identify the discipline, scenario family, and risk gates.
-- Execute the end-to-end command chain implied by the user goal — `/aaron-marketing:seo-geo` modes for SEO/GEO, `/aaron-marketing:impact` phases for influencer, `/aaron-marketing:paid` phases for paid, `/aaron-marketing:email` phases for email — using the smallest depth that can produce the requested outcome.
+- Execute the end-to-end command chain implied by the user goal — `/aaron-marketing:seo-geo` modes for SEO/GEO, `/aaron-marketing:impact` phases for influencer, `/aaron-marketing:ad` phases for paid, `/aaron-marketing:email` phases for email — using the smallest depth that can produce the requested outcome.
 - Route influencer, paid, and email goals to the matching IMPACT / ROAS / SEND skill by name; do not decline them and do not force them through an SEO/GEO mode.
 - Ask only blocking questions required for that chain, then continue until the natural stopping point is reached.
 - If the user gives an object but no clear outcome, run a lightweight triage and choose the safest useful starting chain; if the user gives neither object nor outcome, ask one concise blocking question.

@@ -20,7 +20,7 @@ metadata:
 
 This skill helps you create professional influencer marketing reports that tell the story of your campaign performance. It adapts content and depth based on the audience.
 
-> **Cross-discipline (paid ads):** this is also the **paid-ads** reporting surface — build exec/client/channel reports from RQS history (`memory/audits/paid/`) and measurement-loop readback verdicts. It presents metrics; it does not compute them (return math stays in [roi-calculator](../roi-calculator/SKILL.md)). Save paid runs under `memory/paid-ads/report-generator/`.
+> **Cross-discipline (paid ads):** this is also the **paid-ads** reporting surface — build exec/client/channel reports from RQS history (`memory/audits/ad/`) and measurement-loop readback verdicts. It presents metrics; it does not compute them (return math stays in [roi-calculator](../roi-calculator/SKILL.md)). Save paid runs under `memory/ad/report-generator/`.
 
 ## Quick Start
 
@@ -45,7 +45,7 @@ Generate an executive summary for our Q3 influencer campaigns
   1. The report matches the requested audience template (executive, client, team, or board).
   2. Every metric is paired with context (target, benchmark, or prior period).
   3. The report ends with concrete recommendations and, where relevant, action items.
-- **Primary next skill**: [content-quality-auditor](../../../seo/optimize/content-quality-auditor/SKILL.md)
+- **Primary next skill**: [content-quality-auditor](../../../seo-geo/optimize/content-quality-auditor/SKILL.md)
 
 ### Handoff Summary
 
@@ -76,7 +76,7 @@ When a user requests a report:
 
 4. **Close with recommendations and action items** — end every report with concrete next steps; add an owner/deadline action-items table for team and board audiences.
 
-5. **Save and promote** — write the finished report to `memory/influencer/report-generator/YYYY-MM-DD-<topic>.md` (paid runs to `memory/paid-ads/report-generator/`). Promote durable verdicts (final ROI/ROAS, top performers, renew/drop calls, headline learnings) to `memory/hot-cache.md`.
+5. **Save and promote** — write the finished report to `memory/influencer/report-generator/YYYY-MM-DD-<topic>.md` (paid runs to `memory/ad/report-generator/`). Promote durable verdicts (final ROI/ROAS, top performers, renew/drop calls, headline learnings) to `memory/hot-cache.md`.
 
 ## Example
 
@@ -112,11 +112,11 @@ Increase Q1 influencer budget by 25%, focused on TikTok micro-influencers and pr
 - [roi-calculator](../roi-calculator/SKILL.md) — supplies ROI/ROAS figures
 - [campaign-planner](../../plan/campaign-planner/SKILL.md) — original plan to compare results against
 - [content-amplifier](../../activate/content-amplifier/SKILL.md) — amplification results to report on
-- [content-quality-auditor](../../../seo/optimize/content-quality-auditor/SKILL.md) — quality gate for the report itself
+- [content-quality-auditor](../../../seo-geo/optimize/content-quality-auditor/SKILL.md) — quality gate for the report itself
 
 ## Next Best Skill
 
-**Primary**: [content-quality-auditor](../../../seo/optimize/content-quality-auditor/SKILL.md) — run the finished report through the publish-readiness gate before it goes to a stakeholder.
+**Primary**: [content-quality-auditor](../../../seo-geo/optimize/content-quality-auditor/SKILL.md) — run the finished report through the publish-readiness gate before it goes to a stakeholder.
 
 **Alternates (same measure phase / IMPACT family)**:
 

@@ -127,7 +127,7 @@ When a user requests memory management (any discipline — SEO/GEO, influencer, 
 
 ### 1. Initialize Memory Structure
 
-For new projects, create the directory structure defined in the [State Model](../../references/state-model.md). Key directories: `memory/` (decisions, open-loops, glossary, entities, creators, claims, consent, research, content, audits, monitoring, influencer, paid-ads, email).
+For new projects, create the directory structure defined in the [State Model](../../references/state-model.md). Key directories: `memory/` (decisions, open-loops, glossary, entities, creators, claims, consent, research, content, audits, monitoring, influencer, ad, email).
 
 > **Templates**: [Hot Cache Template](references/hot-cache-template.md) · [Glossary Template](references/glossary-template.md)
 
@@ -146,7 +146,7 @@ When a user references something unclear, follow this lookup sequence:
 
 **Step 3: Check Cold Storage**
 - Search `memory/archive/` first for dated `YYYY-MM-DD-` archived files.
-- If the archive points to a source category, follow that trail back to `memory/research/`, `memory/audits/`, `memory/monitoring/`, `memory/influencer/`, `memory/paid-ads/`, or `memory/email/`.
+- If the archive points to a source category, follow that trail back to `memory/research/`, `memory/audits/`, `memory/monitoring/`, `memory/influencer/`, `memory/ad/`, or `memory/email/`.
 - Treat COLD findings as historical unless refreshed by the current session.
 
 **Step 4: Ask User**
@@ -163,7 +163,7 @@ Example lookup: User asks "Update rankings for our hero KWs" → Step 1 finds "H
 
 ### 4. Update Triggers, Archive Management & Cross-Skill Integration
 
-> **Reference**: See [Update Triggers & Integration](references/update-triggers-integration.md) for the complete update procedures after ranking checks, competitor analyses, audits, and reports; monthly/quarterly archive routines; and integration points with connected skills across all four disciplines — SEO/GEO (keyword-research, rank-tracker, competitor-analysis, content-gap-analysis, content-writer, content-quality-auditor, domain-authority-auditor), influencer (skills writing under `memory/influencer/<skill>/`, plus content-reviewer's gated artifacts and creator-registry candidate flow), paid ads (skills writing under `memory/paid-ads/<skill>/`, plus the ad-account-auditor and attribution-reconciler artifacts rolled into the monthly aggregate and the offer-claims-registry candidate flow), and email (skills writing under `memory/email/<skill>/`, plus email-quality-auditor's gated EQS artifacts rolled into the monthly aggregate and the consent-registry candidate flow).
+> **Reference**: See [Update Triggers & Integration](references/update-triggers-integration.md) for the complete update procedures after ranking checks, competitor analyses, audits, and reports; monthly/quarterly archive routines; and integration points with connected skills across all four disciplines — SEO/GEO (keyword-research, rank-tracker, competitor-analysis, content-gap-analysis, content-writer, content-quality-auditor, domain-authority-auditor), influencer (skills writing under `memory/influencer/<skill>/`, plus content-reviewer's gated artifacts and creator-registry candidate flow), paid ads (skills writing under `memory/ad/<skill>/`, plus the ad-account-auditor and attribution-reconciler artifacts rolled into the monthly aggregate and the offer-claims-registry candidate flow), and email (skills writing under `memory/email/<skill>/`, plus email-quality-auditor's gated EQS artifacts rolled into the monthly aggregate and the consent-registry candidate flow).
 
 ### 5. Memory Hygiene Checks
 
@@ -210,4 +210,4 @@ Before writing a third-party person to `memory/entities/`, the user must have on
 
 ## Next Best Skill
 
-Primary: [keyword-research](../../seo/research/keyword-research/SKILL.md) — seed or refresh campaign strategy with current demand signals.
+Primary: [keyword-research](../../seo-geo/research/keyword-research/SKILL.md) — seed or refresh campaign strategy with current demand signals.

@@ -117,7 +117,7 @@ EOF
 assert_pass "non-auditor file (no class marker) is ignored" "$(gate not_auditor.md)"
 
 echo "Artifact Gate — C3 influencer (content-reviewer) artifacts"
-mkdir -p "$PROJ/memory/audits/influencer" "$PROJ/memory/audits/paid" "$PROJ/memory/influencer/content-reviewer"
+mkdir -p "$PROJ/memory/audits/influencer" "$PROJ/memory/audits/ad" "$PROJ/memory/influencer/content-reviewer"
 
 # C3-1. Compliant content-reviewer ART artifact (Approved->DONE) under memory/audits/influencer/ -> PASS
 cat > "$PROJ/memory/audits/influencer/cr_good.md" <<'EOF'
@@ -174,8 +174,8 @@ EOF
 draft_out="$(printf '{"tool_input":{"file_path":"memory/influencer/content-reviewer/draft.md"},"cwd":"%s"}' "$PROJ" | CLAUDE_PROJECT_DIR="$PROJ" bash "$HOOK" post-tool-use)"
 assert_pass "content-reviewer draft outside memory/audits/ is not gated (fail-open)" "$draft_out"
 
-# C3-5. ROAS ad-account-auditor artifact under memory/audits/paid/ -> PASS (explicit paid-consumer coverage)
-cat > "$PROJ/memory/audits/paid/aa_good.md" <<'EOF'
+# C3-5. ROAS ad-account-auditor artifact under memory/audits/ad/ -> PASS (explicit paid-consumer coverage)
+cat > "$PROJ/memory/audits/ad/aa_good.md" <<'EOF'
 ---
 class: auditor-output
 ---

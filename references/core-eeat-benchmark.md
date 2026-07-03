@@ -189,7 +189,7 @@ Failing any veto item activates the Critical Fail Cap. The cap arithmetic and th
 
 **Single veto fail**: cap applies per [Runbook §2 decision table](auditor-runbook.md).
 
-**2+ veto fails**: audit returns `status: BLOCKED` per [§2 Worked example 3 in content-quality-auditor](../seo/optimize/content-quality-auditor/SKILL.md). Calibration for a numeric multi-veto cap is pending v7.3, gated on 30+ real multi-veto audits in `memory/audits/`.
+**2+ veto fails**: audit returns `status: BLOCKED` per [§2 Worked example 3 in content-quality-auditor](../seo-geo/optimize/content-quality-auditor/SKILL.md). Calibration for a numeric multi-veto cap is pending v7.3, gated on 30+ real multi-veto audits in `memory/audits/`.
 
 Rationale: prevents "79 items pass + 1 veto fails" from producing a misleadingly high overall score.
 

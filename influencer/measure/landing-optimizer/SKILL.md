@@ -20,7 +20,7 @@ metadata:
 
 This skill helps you create and optimize landing pages specifically for influencer marketing traffic. When users click from an influencer's post, the landing experience should feel connected and optimized for conversion.
 
-> **Cross-discipline (paid ads):** this is also the **paid-ads** post-click skill — the page half of the ROAS **Offer** message-match (it pairs with [ad-creative-builder](../../../paid/orchestrate/ad-creative-builder/SKILL.md), which owns the ad half). The same diagnose-and-fix flow applies to paid landing pages; save paid runs under `memory/paid-ads/landing-optimizer/`. On paid runs, message-match the page against the [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) ledger when present: offer terms, promo codes, and dates against `memory/claims/offers.md`, and claim wording against the approved variants in `memory/claims/claims-ledger.md`.
+> **Cross-discipline (paid ads):** this is also the **paid-ads** post-click skill — the page half of the ROAS **Offer** message-match (it pairs with [ad-creative-builder](../../../ad/orchestrate/ad-creative-builder/SKILL.md), which owns the ad half). The same diagnose-and-fix flow applies to paid landing pages; save paid runs under `memory/ad/landing-optimizer/`. On paid runs, message-match the page against the [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) ledger when present: offer terms, promo codes, and dates against `memory/claims/offers.md`, and claim wording against the approved variants in `memory/claims/claims-ledger.md`.
 
 ## Quick Start
 
@@ -77,7 +77,7 @@ When a user requests landing page help, work through these steps. Each step's fi
 7. **Influencer-specific pages** — decide whether a dedicated `/creator-name` page is warranted and what to personalize.
 8. **Performance tracking** — set targets for load time, bounce, CR, add-to-cart, AOV; define UTM params and events for attribution.
 
-Save the finished plan to `memory/influencer/landing-optimizer/YYYY-MM-DD-<topic>.md` (paid runs to `memory/paid-ads/landing-optimizer/`) and promote durable facts to `memory/hot-cache.md`.
+Save the finished plan to `memory/influencer/landing-optimizer/YYYY-MM-DD-<topic>.md` (paid runs to `memory/ad/landing-optimizer/`) and promote durable facts to `memory/hot-cache.md`.
 
 ## Example
 

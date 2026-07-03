@@ -116,7 +116,7 @@ Append to monthly file (`memory/audits/YYYY-MM.md`), newest at bottom:
 - One block per audit. Do not overwrite existing blocks.
 - `target` is the URL or domain audited (for ROAS blocks, the ad account or campaign).
 - `runbook_version` copied from current runbook header.
-- Paid artifacts roll in too: ROAS blocks come from ad-account-auditor's gated artifacts under `memory/audits/paid/`; attribution-reconciler's standing workbooks under `memory/paid-ads/attribution-reconciler/` are folded into the same monthly pass (a one-line pointer per workbook is enough — do not copy tables).
+- Paid artifacts roll in too: ROAS blocks come from ad-account-auditor's gated artifacts under `memory/audits/ad/`; attribution-reconciler's standing workbooks under `memory/ad/attribution-reconciler/` are folded into the same monthly pass (a one-line pointer per workbook is enough — do not copy tables).
 - `false_positive` is the ONLY field that can be flipped after initial write.
 - GDPR/CCPA erasure is the exception: replace subject identifiers with a stable redacted label while preserving scores, status, and timestamps. (Working-tree redaction only — no salted fingerprint or reingest tombstone; see [memory-management SKILL.md §GDPR](../SKILL.md) and [GDPR Purge Log Template](gdpr-purge-log-template.md).)
 - If monthly file doesn't exist, create with `# Audit Archive — YYYY-MM` header.

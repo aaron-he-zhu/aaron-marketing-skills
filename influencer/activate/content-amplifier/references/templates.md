@@ -551,7 +551,7 @@ Examples:
 | UGC-002 | 12 months | Perpetual | $[X] |
 ```
 
-> Never recommend paid/website/email reuse of an asset whose rights level is unknown or `Organic only` — ask for the rights first (see SKILL.md Decision Gates).
+> Never recommend ad/website/email reuse of an asset whose rights level is unknown or `Organic only` — ask for the rights first (see SKILL.md Decision Gates).
 
 ## Worked Example — repurpose (3 TikTok videos)
 
