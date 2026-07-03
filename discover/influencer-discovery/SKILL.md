@@ -87,7 +87,7 @@ Save the report to `memory/influencer/influencer-discovery/YYYY-MM-DD-<topic>.md
 - [state-model.md](../../references/state-model.md) — memory tiers and save-path conventions.
 - [CONNECTORS.md](../../CONNECTORS.md) — free/keyless data recipes and opt-in MCP layer.
 - C3 benchmark at [references/c3/scoring-architecture.md](../../references/c3/scoring-architecture.md) — scoring framework that fit-scorer applies downstream.
-- Siblings in the Map phase: [fit-scorer](../../discover/fit-scorer/SKILL.md), [competitor-tracker](../../plan/competitor-tracker/SKILL.md).
+- Siblings in the discover phase: [fit-scorer](../fit-scorer/SKILL.md), [audience-mapper](../audience-mapper/SKILL.md), [trend-spotter](../trend-spotter/SKILL.md).
 
 ## Next Best Skill
 

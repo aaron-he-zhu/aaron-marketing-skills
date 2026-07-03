@@ -59,7 +59,7 @@ Opinions (not just reporting) · varied sentence rhythm · concrete names/dates/
 
 | Skill | Use | Weight |
 |---|---|---|
-| `seo-content-writer` | pre-publish self-check before handing off a draft | gate before DONE |
+| `content-writer` | pre-publish self-check before handing off a draft | gate before DONE |
 | `geo-content-optimizer` | same self-check after AI-readability edits | gate before DONE |
 | `content-quality-auditor` | maps to CORE-EEAT **Experience** | **SOFT penalty** — never a veto; vetoes stay T04/C01/R10 |
 | `content-reviewer` | maps to the **ART** (content quality) dimension of C³ | **NON-veto** — ART vetoes stay T1/T2 only |

@@ -234,7 +234,7 @@ IS_AUDITOR=$(echo "$FRONTMATTER" | grep -qE '^class: *auditor' && echo "yes" || 
 # extracting to references/ (see CLAUDE.md Contribution Rules); exempt them from the
 # >250-line references/ advisory by phase directory.
 PHASE_DIR=$(basename "$(dirname "$SKILL_DIR")")
-case "$PHASE_DIR" in insight|map|plan|activate|convert|track) IS_INFLUENCER="yes";; *) IS_INFLUENCER="no";; esac
+case "$PHASE_DIR" in discover|plan|activate|measure) IS_INFLUENCER="yes";; *) IS_INFLUENCER="no";; esac
 
 if [ "$IS_AUDITOR" = "yes" ]; then
     pass "Auditor skill reads the shared runbook + keeps framework-specific examples inline ($BODY_LINES lines)"

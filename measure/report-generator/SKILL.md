@@ -118,7 +118,7 @@ Increase Q1 influencer budget by 25%, focused on TikTok micro-influencers and pr
 
 **Primary**: [content-quality-auditor](../../optimize/content-quality-auditor/SKILL.md) — run the finished report through the publish-readiness gate before it goes to a stakeholder.
 
-**Alternates (same Track phase / IMPACT family)**:
+**Alternates (same measure phase / IMPACT family)**:
 
 - [performance-analyzer](../performance-analyzer/SKILL.md) — if the report exposes data gaps, re-analyze before re-reporting.
 - [roi-calculator](../roi-calculator/SKILL.md) — recompute return figures if the financial inputs changed.

@@ -22,12 +22,10 @@ body:
         - SEO/GEO — Build (SEO writing, GEO optimization, meta tags, schema)
         - SEO/GEO — Optimize (on-page audit, technical SEO, linking, content quality)
         - SEO/GEO — Monitor (rankings, backlinks, performance, domain authority)
-        - IMPACT — Insight (audience, niche, trends)
-        - IMPACT — Map (influencer discovery, fit scoring, competitor tracking)
-        - IMPACT — Plan (campaign, brief, budget)
-        - IMPACT — Activate (outreach, content review, contracts)
-        - IMPACT — Convert (amplification, UGC repurposing, landing pages)
-        - IMPACT — Track (performance, ROI, reporting)
+        - IMPACT — Discover (audience, niche, trends, influencer discovery, fit scoring)
+        - IMPACT — Plan (competitor tracking, campaign, brief, budget)
+        - IMPACT — Activate (outreach, content review, contracts, amplification)
+        - IMPACT — Measure (landing pages, performance, ROI, reporting)
         - Paid ROAS — Research (campaign structure, audience segments)
         - Paid ROAS — Orchestrate (ad creative, test design)
         - Paid ROAS — Activate (account gate, conversion-signal QA)
@@ -50,7 +48,7 @@ body:
     id: existing-gaps
     attributes:
       label: Why can't existing skills cover this?
-      description: Explain why the 54 existing skills don't address this need.
+      description: Explain why the 69 existing skills don't address this need.
       placeholder: "The closest existing skill is X, but it doesn't handle..."
     validations:
       required: true

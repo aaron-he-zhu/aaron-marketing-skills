@@ -103,7 +103,7 @@ Save the report to `memory/influencer/fit-scorer/YYYY-MM-DD-<topic>.md` and prom
 
 **Primary**: [competitor-tracker](../../plan/competitor-tracker/SKILL.md) — benchmark your top-scored picks against the creators competitors already work with before you commit budget.
 
-**Alternates** (same Map phase):
+**Alternates** (same discover phase):
 - [influencer-discovery](../../discover/influencer-discovery/SKILL.md) — if the shortlist is too thin to rank, source more candidates.
 - [audience-mapper](../../discover/audience-mapper/SKILL.md) — if audience-match scores are uncertain, tighten the target-audience definition first.
 

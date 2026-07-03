@@ -78,12 +78,12 @@ next_action: null                      # null if entity is healthy
 |-------|------|----------|-------------|
 | `name` | slug string | Yes | all |
 | `display_name` | string | Yes | geo-content-optimizer (as entity display) |
-| `type` | enum | Yes | schema-markup-generator (picks Schema.org type), geo-content-optimizer |
+| `type` | enum | Yes | serp-markup-builder (picks Schema.org type), geo-content-optimizer |
 | `primary_domain` | URL | Yes | geo-content-optimizer (first-party citation) |
 | `also_known_as[]` | strings | Recommended | geo-content-optimizer (alias coverage for AI disambiguation) |
-| `same_as[]` | URLs | Recommended | schema-markup-generator (`sameAs` property), geo-content-optimizer |
+| `same_as[]` | URLs | Recommended | serp-markup-builder (`sameAs` property), geo-content-optimizer |
 | `wikidata_q` | QID or null | Optional | geo-content-optimizer (as authoritative signal) |
-| `description_short` | string ≤160 chars | Yes | meta-tags-optimizer (fallback meta desc), geo-content-optimizer (first-paragraph boilerplate) |
+| `description_short` | string ≤160 chars | Yes | serp-markup-builder (fallback meta desc), geo-content-optimizer (first-paragraph boilerplate) |
 | `description_long` | markdown paragraph | Yes | geo-content-optimizer (about-page source of truth) |
 | `ai_resolution_status` | per-engine enum | Yes | geo-content-optimizer (decides which engines need targeting; its [AI-overview-recovery playbook](../build/geo-content-optimizer/references/ai-overview-recovery.md) scopes rewrite effort) |
 | `ai_resolution_notes[]` | strings | Recommended | geo-content-optimizer (what disambiguation to add in body) |
@@ -113,7 +113,7 @@ next_action: null                      # null if entity is healthy
    - Add `open_loop`: "Entity <display_name> needs re-verification — profile not updated since <date>. Recommend running entity-optimizer."
 4. If `ai_resolution_status` shows the target engine as `unrecognized`, emit a recommendation handoff to entity-optimizer BEFORE publishing content on that query.
 
-### Reads (schema-markup-generator — secondary consumer)
+### Reads (serp-markup-builder — secondary consumer)
 
 1. When generating `Organization` / `Product` / `Person` schema, look up `memory/entities/<slug>.md` first.
 2. Populate `name`, `sameAs`, `logo`, `founder`, `foundingDate`, `url`, `address` from the profile. No guessing.
