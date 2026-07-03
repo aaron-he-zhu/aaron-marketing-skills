@@ -1,7 +1,7 @@
 ---
 name: subject-line-lab
 description: 'Use when the user asks to "generate subject line variants", "pre-score my subject lines", or "will this subject get truncated / trigger spam filters"; produces a labeled subject + preheader variant set and a per-variant heuristic pre-score card — spam-trigger flags, length/truncation across desktop + mobile, emoji-count, and the inbox preview render (from-name + subject + preheader) — before any test is run. Not for the body copy or CTA — use email-creative-builder; not for the A/B test design or significance read — use send-experiment-designer; not for the goal-weighted EQS or the S1/S2/N1/D1 vetoes — use email-quality-auditor. 邮件主题行生成/主题行预打分/截断与垃圾词检查'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when generating or pre-screening a subject-line + preheader va
 argument-hint: "<subject candidates or angle> [from-name] [mode: promo|cold|newsletter]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: engage
   geo-relevance: "low"

@@ -1,7 +1,7 @@
 ---
 name: content-reviewer
 description: 'Use when the user asks to "review this influencer content" or "check if this post meets brand guidelines"; produces a structured review (brand alignment, message accuracy, compliance, quality, technical specs), an approve/revise/reject decision, and a constructive feedback message for the creator. Not for drafting the brief that sets the criteria — use brief-generator; not for the partnership agreement — use contract-helper.'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -10,7 +10,7 @@ argument-hint: "<content submission or link> [platform] [campaign]"
 class: auditor
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: influencer
   phase: activate
   family: influencer-marketing

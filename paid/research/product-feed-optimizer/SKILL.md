@@ -1,7 +1,7 @@
 ---
 name: product-feed-optimizer
 description: 'Use when the user asks to "optimize my Shopping feed", "fix product disapprovals", "improve product titles/attributes", or "build feed-driven PMax asset groups"; audits and rewrites the Shopping/Performance Max product feed — title/description patterns, required and recommended attributes, GTIN/availability/price hygiene, disapproval triage, and feed-driven asset-group / listing-group structure — informing the ROAS O (Offer) dimension. Not for text ad copy — use ad-creative-builder; not for scoring the account or the RQS — use ad-account-auditor. 商品Feed优化/购物广告Feed/商品标题优化/商品禁投修复'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when preparing or repairing the product data behind Shopping /
 argument-hint: "<product-feed export (TSV/CSV/XML) or Merchant Center diagnostics> [goal: DR|prospecting] [platforms]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: paid
   phase: research
   geo-relevance: "low"

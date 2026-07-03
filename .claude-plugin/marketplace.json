@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Marketing capability pack: 69 skills + 5 /aaron-marketing: commands across four disciplines — SEO/GEO, influencer marketing (IMPACT), paid ads (ROAS), and email marketing (SEND), plus a shared protocol layer. Frameworks: CORE-EEAT, CITE, C3, ROAS, SEND.",
-    "version": "12.0.0",
+    "version": "12.1.0",
     "repository": "https://github.com/aaron-he-zhu/aaron-marketing-skills"
   },
   "plugins": [
@@ -14,7 +14,7 @@
       "name": "aaron-marketing",
       "source": "./",
       "description": "69 marketing skills and 5 commands on one shared contract across four disciplines: SEO/GEO (incl. programmatic/parasite/local SEO, site architecture, AI-traffic), influencer marketing on the IMPACT framework, paid ads across the ROAS loop (audience segments, campaign architecture, ad creative, experiment design, account audit, conversion-signal QA, measurement, attribution reconciliation), and email marketing across the SEND loop (deliverability/consent, list growth, segmentation, creative, lifecycle flows, newsletter monetization, send-testing, email-quality audit), plus a shared protocol layer (entity/creator/claims/consent truth registries, memory). Frameworks: CORE-EEAT, CITE, C3, ROAS, SEND.",
-      "version": "12.0.0",
+      "version": "12.1.0",
       "category": "marketing",
       "commands": "./commands/",
       "tags": [

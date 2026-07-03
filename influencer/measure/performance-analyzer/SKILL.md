@@ -1,7 +1,7 @@
 ---
 name: performance-analyzer
 description: 'Use when the user asks to "analyze influencer campaign performance", "compare influencers", or "find what content worked"; produces metric scorecards vs target and benchmark, platform/influencer/content rankings, engagement-quality and sentiment reads, conversion-attribution breakdowns, and ranked learnings. Not for dollar-level return math — use roi-calculator.'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use mid-flight or post-campaign when a user wants to evaluate infl
 argument-hint: "<campaign name> [platform or influencer handles]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: influencer
   phase: measure
   family: influencer-marketing

@@ -1,7 +1,7 @@
 ---
 name: outreach-manager
 description: 'Use when the user asks to "write influencer outreach", "follow up with a creator", or "negotiate partnership terms"; produces personalized pitches, multi-touch follow-up sequences, negotiation scripts with objection handling, and a status pipeline tracker. Not for finalizing signed agreements — use contract-helper.'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Activate the skill when the user wants to contact a creator, draft
 argument-hint: "<influencer handle or list> [platform] [budget]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: influencer
   phase: activate
   family: influencer-marketing

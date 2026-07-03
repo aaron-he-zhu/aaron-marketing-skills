@@ -1,7 +1,7 @@
 ---
 name: performance-monitor
 description: 'Use when the user asks to "generate an SEO report", "出月报", "set SEO alerts", or "排名掉了提醒我"; two modes — report builds multi-metric traffic/ranking/authority/content dashboards, and alert configures threshold notifications for future ranking, traffic, technical, backlink, competitor, and AI-visibility changes. Not for raw position-by-position deltas — use rank-tracker. SEO报告/绩效仪表盘/SEO预警/排名监控'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when generating multi-metric SEO/GEO performance reports, traf
 argument-hint: "<domain> [--mode report|alert] [date range | metric]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: seo-geo
   phase: monitor
   geo-relevance: "medium"

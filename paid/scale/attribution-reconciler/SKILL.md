@@ -1,7 +1,7 @@
 ---
 name: attribution-reconciler
 description: 'Use when platform-reported conversions disagree with GA4/ecommerce, when you suspect Meta and Google are double-counting the same sales, or for a standing (monthly) reconciliation workbook that de-dups stacked credit against an order-ID truth set, normalizes attribution windows and currency, compares attribution models, and reads incrementality from a geo/holdout test. Not for the point-in-time R2 veto or RQS gate — use ad-account-auditor; not for the ROI/ROAS ratio math itself — use roi-calculator. 付费广告归因对账/去重/增量'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when running a standing reconciliation of platform-reported co
 argument-hint: "<GA4/ecommerce order-ID export> [platform conversion exports] [goal: DR|prospecting]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: paid
   phase: scale
   geo-relevance: "low"

@@ -1,7 +1,7 @@
 ---
 name: email-sequence-designer
 description: 'Use when the user asks to "design a welcome flow", "set up an abandoned-cart sequence", "build a light re-engagement branch inside a lifecycle flow", or "plan a cold-outbound sequence"; produces general lifecycle automation flows (welcome, cart, browse-abandon, post-purchase, in-flow re-engagement, B2B cold outbound) with trigger, step timing, branch/exit conditions, goal, frequency governance (send caps, quiet hours, fatigue guardrail), a sunset path, and a SEND N-dimension score. Not for the closed-loop win-back / re-consent (re-permission) program on a lapsed cohort — use reactivation-specialist; not for writing each email''s copy — use email-creative-builder; not for computing EQS or the N1 unsubscribe veto — use email-quality-auditor. 邮件自动化流程设计/购物车挽回/流失召回序列'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when designing or restructuring general email lifecycle automa
 argument-hint: "<flow type or lifecycle goal> [platform/ESP] [trigger event] [audience/segment]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: nurture
   geo-relevance: "low"

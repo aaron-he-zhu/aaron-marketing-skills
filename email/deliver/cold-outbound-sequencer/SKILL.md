@@ -1,7 +1,7 @@
 ---
 name: cold-outbound-sequencer
 description: 'Use when the user asks to "build a B2B cold-outbound sequence", "design reply-triage branching", "plan a domain warmup / sending throttle", or "make my outbound CAN-SPAM / opt-in compliant"; produces a multi-step outbound sequence with reply-triage branches (positive / objection / referral / not-now / opt-out), a warmup + send-throttle ramp schedule, jurisdiction opt-in/CAN-SPAM guardrails (guidance, not legal advice), and a SEND S-dimension read. Not for B2C lifecycle flows — use email-sequence-designer; not for the consent record — use consent-registry; not for computing EQS — use email-quality-auditor. B2B冷启动外联序列/回复分流/域名预热'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when designing a B2B cold-outbound email program before writin
 argument-hint: "<sequence goal or ICP> [sending domain/mailbox setup] [target jurisdiction(s)] [list source]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: deliver
   geo-relevance: "low"

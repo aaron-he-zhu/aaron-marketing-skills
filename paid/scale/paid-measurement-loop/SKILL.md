@@ -1,7 +1,7 @@
 ---
 name: paid-measurement-loop
 description: 'Use when the user asks to "read back" a paid campaign change, "did this ad change work", or "compare ROAS/CPA before and after"; reads ROAS/CPA against a control over a fixed readback window and returns a Promote / Keep-testing / Rollback / Unproven decision with the math delegated to roi-calculator. Not for the ROI ratio math itself — use roi-calculator; not for cross-channel rollups — use performance-analyzer. 付费广告复盘/ROAS回看/投放效果归因'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when reading back a paid-ads change (budget shift, new creativ
 argument-hint: "<campaign/change> [readback window]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: paid
   phase: scale
   geo-relevance: "low"

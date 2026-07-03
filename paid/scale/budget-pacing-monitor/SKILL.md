@@ -1,7 +1,7 @@
 ---
 name: budget-pacing-monitor
 description: 'Use when the user asks to "check pacing", "am I over/under-spending", "is this campaign on track to hit budget", or "why did spend spike/stall mid-flight"; returns a spend-vs-target-curve read, learning-phase status, an over/under-delivery call, and a reallocation trigger. Not for initial budget allocation — use budget-optimizer; not for choosing the bid strategy — use bid-strategy-planner; not for the RQS gate — use ad-account-auditor. 付费广告预算节奏监控/跑量过快过慢/在途配速'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when monitoring an in-flight campaign's spend against its inte
 argument-hint: "<campaign/flight> [budget + flight window] [target curve: even|front|back-loaded]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: paid
   phase: scale
   geo-relevance: "low"

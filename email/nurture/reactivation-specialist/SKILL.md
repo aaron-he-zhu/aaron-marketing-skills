@@ -1,7 +1,7 @@
 ---
 name: reactivation-specialist
 description: 'Use when the user asks to "build a win-back campaign", "re-engage lapsed subscribers", "run a re-permission / re-consent sweep", or "sunset my dead list"; produces a closed-loop reactivation program — a lapsed-cohort definition, a staged offer ladder, a re-consent (re-permission) capture step, and a sunset-confirm / suppression rule. Owns none of the SEND-N sub-item notes: engagement-decay / sunset is email-sequence-designer's and preference-center / frequency options is preference-frequency-manager's — this skill references those notes, it does not re-emit them. Not for the general lifecycle flows (welcome/cart/post-purchase) — use email-sequence-designer; not for the preference-center / opt-down ladder — use preference-frequency-manager; not for the consent record itself — use consent-registry; not for computing EQS or the N1 veto — use email-quality-auditor. 流失召回/重新授权/沉默用户清理'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when a defined cohort has stopped opening/clicking and the use
 argument-hint: "<lapsed cohort or no-engagement window> [platform/ESP] [offer/incentive available] [suppression policy]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: nurture
   geo-relevance: "low"

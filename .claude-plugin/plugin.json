@@ -1,7 +1,7 @@
 {
   "id": "aaron-marketing",
   "name": "aaron-marketing",
-  "version": "12.0.0",
+  "version": "12.1.0",
   "description": "69 marketing skills and 5 commands on one shared contract across four disciplines: SEO/GEO (keyword research, content creation, technical audits, schema markup, programmatic/parasite/local SEO, site architecture, AI-traffic, monitoring), influencer marketing on the IMPACT framework (audience insight, discovery, campaign planning, outreach, amplification, ROI tracking), paid ads across the ROAS loop (audience segments, campaign architecture, ad creative, experiment design, account audit, conversion-signal QA, measurement loop, attribution reconciliation), and email marketing across the SEND loop (deliverability/consent, list growth, segmentation, creative, lifecycle flows, newsletter monetization, send-testing, email-quality audit), plus a shared protocol layer (entity/creator/offer-claim/consent truth registries, project memory) serving all four. Frameworks: CORE-EEAT, CITE, C3, ROAS, SEND.",
   "author": {
     "name": "Aaron He Zhu",

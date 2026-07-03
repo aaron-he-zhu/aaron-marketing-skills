@@ -1,7 +1,7 @@
 ---
 name: email-creative-builder
 description: 'Use when the user asks to "write the email", "draft subject lines", or "build email creative"; produces the pre-click unit — subject-line variants + preheader, body copy, one clear CTA, and a plain-text alt — message-matched to the destination page and claims-ledger-aware. Not for pre-scoring or ranking subject-line variants (spam/truncation/render pre-score) — use subject-line-lab; not for scoring the email or computing EQS — use email-quality-auditor; not for the multi-step flow — use email-sequence-designer; not for the A/B test plan — use send-experiment-designer. 邮件文案/主题行/邮件创意'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when drafting or iterating a single email creative: subject-li
 argument-hint: "<offer/topic> <destination URL> [mode: promo|cold|newsletter]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: engage
   geo-relevance: "low"

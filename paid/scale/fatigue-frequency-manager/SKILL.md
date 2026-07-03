@@ -1,7 +1,7 @@
 ---
 name: fatigue-frequency-manager
 description: 'Use when the user asks to "is my ad fatiguing", "why is CTR dropping at scale", or "should I rotate creative / widen the audience"; reads frequency, CTR and CVR decay against an early-flight baseline and returns Rotate-creative / Widen-audience / Hold triggers with a per-ad-set fatigue read. Not for building the replacement creative — use ad-creative-builder; not for the RQS score or vetoes — use ad-account-auditor. 广告疲劳检测/频次管理/换素材还是扩人群'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when a scaled paid campaign shows rising frequency or falling 
 argument-hint: "<campaign/ad-set> [flight window]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: paid
   phase: scale
   geo-relevance: "low"

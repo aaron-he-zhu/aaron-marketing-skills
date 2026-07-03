@@ -1,7 +1,7 @@
 ---
 name: audience-mapper
 description: 'Use when the user asks to "analyze my target audience", "build an audience profile for influencer targeting", "research a niche community", or "deep-dive a subculture before partnering with creators"; in audience mode produces demographic/psychographic profiles, a platform-priority matrix, named personas, and an influencer-selection criteria set, and in niche mode produces a community map, culture decode (language/norms/taboos), key-voice tiers, a Brand Fit Score, and a phased entry strategy. Not for finding specific creators to contract — use influencer-discovery; not for scoring a shortlist on ACE — use fit-scorer. 目标受众画像/人群分析 · 细分社群/亚文化调研'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Run at the start of an influencer program, or when entering a new 
 argument-hint: "<brand/product or niche> [mode: audience|niche] [category] [geo/platforms]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: influencer
   phase: discover
   geo-relevance: "low"

@@ -1,7 +1,7 @@
 ---
 name: on-page-seo-auditor
 description: 'Use when the user asks to "audit on-page SEO" or "diagnose why a single page dropped"; scores titles, meta, header structure, keyword placement, links, and images with prioritized fixes. Not for E-E-A-T / publish-readiness scoring — use content-quality-auditor; not for crawl / CWV / indexing — use technical-seo-checker. 页面SEO审计/排名诊断'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -10,7 +10,7 @@ argument-hint: "<URL> [keyword]"
 allowed-tools: WebFetch
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: seo-geo
   phase: optimize
   geo-relevance: "medium"

@@ -1,7 +1,7 @@
 ---
 name: consent-registry
 description: 'Use when the user asks to "log this subscriber''s opt-in", "record our unsubscribes and complaints", or "what lawful basis do we have to email this list"; maintains one durable record per subscriber under memory/consent/ — subscription status, opt-in timestamp + lawful basis, double-opt-in proof, acquisition source, and an append-only unsubscribe/bounce/complaint history — and resolves consent candidates from list imports. Not for scoring the S2 consent or N1 opt-out vetoes or issuing an EQS verdict — use email-quality-auditor; not for building suppression segments — use list-segment-builder. 订阅同意台账/退订抑制记录/合法性依据登记'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when recording or updating a subscriber's consent status, logg
 argument-hint: "<subscriber email/id, 'record opt-in', or 'reconcile candidates'>"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: protocol
   phase: protocol
   geo-relevance: "low"

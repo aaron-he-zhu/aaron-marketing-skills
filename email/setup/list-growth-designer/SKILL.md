@@ -1,6 +1,6 @@
 ---
 name: list-growth-designer
-version: "12.0.0"
+version: "12.1.0"
 description: 'Use when the user asks to "grow my email list", "design a lead magnet / signup incentive", "set up double opt-in", or "plan a referral / recommendation loop"; produces a list-growth plan — acquisition channels, lead-magnet / incentive concepts, a compliant double-opt-in capture-flow spec, referral-loop mechanics, and subscriber-growth / cost-per-opt-in targets (labeled Estimated) — that feeds SEND-S (consent quality captured at acquisition) and SEND-N (lifecycle entry). Not for the signup page/popup UX itself — use landing-optimizer; not for recording the opt-in — use consent-registry; not for the confirmation-email copy — use email-creative-builder. 邮件列表增长/lead magnet/双重确认/推荐环'
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
@@ -9,7 +9,7 @@ when_to_use: "Use when planning how to grow an owned email list: choosing acquis
 argument-hint: "<growth goal / audience / offer> [channels] [jurisdiction]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: setup
   geo-relevance: "low"

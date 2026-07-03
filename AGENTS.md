@@ -12,7 +12,7 @@ Content-first repository: skills and commands are Markdown; Claude Code hooks us
 
 Install instructions live in [README.md](README.md). Keep this file focused on authoring and maintenance rules.
 
-### New skills (v12.0.0) — 4×4 symmetry refactor
+### New skills (v12.1.0) — 4×4 symmetry refactor
 
 The bundle is now four disciplines of exactly **4 phases × 4 skills = 16** each (64 discipline + 5 protocol = **69**). No capability was deleted — reductions are mode-preserving merges. Full per-phase listings are in [CLAUDE.md § Skills by Phase](CLAUDE.md).
 

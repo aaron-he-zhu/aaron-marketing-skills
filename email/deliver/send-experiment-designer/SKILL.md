@@ -1,7 +1,7 @@
 ---
 name: send-experiment-designer
 description: 'Use when the user asks to "design an email A/B test", "set up a multivariate subject/CTA test", "run a send-time test", "build a hold-out group", or "is this email test significant — promote or kill?"; produces a falsifiable hypothesis, a one-variable-per-cell variant matrix, a sample-size / MDE / duration / power plan, and a documented significance read with a promote / kill / keep-testing call on your own ESP export. Not for computing the program-wide EQS or running the vetoes — use email-quality-auditor; not for writing the email itself — use email-creative-builder. 邮件AB测试设计/多变量测试/发送时间测试/留出组/显著性判定'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when designing an email experiment in any of four modes — an
 argument-hint: "<what to test / results export> [mode: a-b|multivariate|send-time|hold-out] [goal: promo|retention|cold] [baseline open/click/CVR] [list size]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: deliver
   geo-relevance: "low"

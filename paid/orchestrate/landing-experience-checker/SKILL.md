@@ -1,7 +1,7 @@
 ---
 name: landing-experience-checker
 description: 'Use when the user asks to "pre-launch check the landing page", "run a Quality-Score preflight", or "verify ad-to-page message match before launch"; produces an ad↔page continuity report — message-match gaps, above-the-fold check, page-speed read, form-friction count, mobile-render flags — as a pass/fix punch list. Not for redesigning or rewriting the page — use landing-optimizer; not for scoring the account or the RQS — use ad-account-auditor. 落地页体验预检/广告落地页一致性检查'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use before a paid campaign goes live to preflight the destination 
 argument-hint: "<destination URL> [ad copy/headlines] [goal: dr|prospecting]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: paid
   phase: orchestrate
   geo-relevance: "low"

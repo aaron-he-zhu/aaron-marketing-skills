@@ -1,7 +1,7 @@
 ---
 name: ad-creative-builder
 description: 'Use when the user asks to "write ad copy", "generate RSA headlines", or "build ad creative at volume"; produces ad units — RSA headlines/descriptions, hooks, and an angle matrix — message-matched to the destination landing page. Not for scoring an ad account — use ad-account-auditor; not for the post-click page — use landing-optimizer; not for organic articles — use content-writer. 广告创意/广告文案/RSA标题'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when generating or iterating paid-ad creative: RSA headlines a
 argument-hint: "<product/offer> <destination URL> [platform: google|meta|...]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: paid
   phase: orchestrate
   geo-relevance: "low"

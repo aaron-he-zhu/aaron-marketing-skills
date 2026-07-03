@@ -1,7 +1,7 @@
 ---
 name: email-quality-auditor
 description: 'Use when the user asks to "audit an email program", "is this campaign safe to send", or run a pre-send go/no-go on their own exported email data; runs SEND EQS scoring with S1/S2/N1/D1 veto checks and a SHIP/FIX/BLOCK gate, and emits a gated audit artifact. Not for building deliverability setup — use deliverability-qa; not for designing lifecycle flows — use email-sequence-designer. 邮件质量审计/EQS评分/发送前放行'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -11,7 +11,7 @@ allowed-tools: WebFetch
 class: auditor
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: deliver
   geo-relevance: "low"

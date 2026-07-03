@@ -1,7 +1,7 @@
 ---
 name: preference-frequency-manager
 description: 'Use when the user asks to "build a preference center", "set up a frequency opt-down ladder", "give people a step-down instead of unsubscribe", or "design a topic/cadence preference page"; produces a preference-center field spec, a frequency/topic opt-down ladder (down-tier paths that substitute for a hard unsubscribe), a preference-to-suppression mapping, and a SEND N-dimension sub-item note on preference-center / frequency options offered. Not for the lifecycle flow map or cadence governance — use email-sequence-designer; not for the consent/suppression record itself — use consent-registry; not for computing EQS or ruling the N1 unsubscribe veto — use email-quality-auditor. 邮件偏好中心/降频阶梯设计/退订替代降档'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when designing the subscriber-facing preference center and the
 argument-hint: "<preference-center or opt-down goal> [platform/ESP] [topic set] [audience/segment]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: nurture
   geo-relevance: "low"

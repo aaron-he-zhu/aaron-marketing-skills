@@ -1,7 +1,7 @@
 ---
 name: creator-registry
 description: 'Use when the user asks "what did we pay this creator last time" or to "update the creator roster"; maintains one durable record per creator — verified handles, rate history, exclusivity windows, dated compliance events, performance baselines. Not for scoring fit — use fit-scorer; not for reviewing content — use content-reviewer. 创作者档案/达人名册'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when consolidating a creator's record after a campaign closes,
 argument-hint: "<creator handle or name>"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: protocol
   phase: protocol
   geo-relevance: "low"

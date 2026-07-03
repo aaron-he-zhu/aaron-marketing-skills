@@ -1,7 +1,7 @@
 ---
 name: memory-management
 description: 'Use when the user asks to "remember project context"; manages the cross-discipline marketing memory lifecycle (SEO/GEO + influencer + paid ads + email) — hot-cache, active work, archive tiers, and privacy cleanup. Not for content or domain scoring — use the auditors. 项目记忆/跨会话'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when reviewing, archiving, or cleaning up campaign memory. Als
 argument-hint: "[review|archive|cleanup]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: protocol
   phase: protocol
   geo-relevance: "low"

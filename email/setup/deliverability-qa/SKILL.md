@@ -1,7 +1,7 @@
 ---
 name: deliverability-qa
 description: 'Use when the user asks to "run a deliverability pre-flight before I send", "check my SPF/DKIM/DMARC/BIMI", "why am I landing in spam / promotions", or "score my sender reputation and list hygiene"; runs the ONE-TIME pre-send SEND S1 authentication pre-flight and scores the SEND S (Sender-integrity / Deliverability) dimension — a DNS + DMARC-RUA auth check, domain/IP reputation read, inbox-placement (seed-list) result, a spam-content/link/render scan, and a point-in-time bounce/complaint list-hygiene snapshot — with per-sub-item pass/partial/needs-input notes and an S1 status flag. Not for the recurring hygiene / bounce-complaint trend read over time — use list-hygiene-monitor; not for computing the final EQS or enforcing the vetoes — use email-quality-auditor; not for building segments/suppression lists — use list-segment-builder. 邮件送达率预检/SPF DKIM DMARC认证/发件域声誉'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use as the ONE-TIME pre-flight snapshot before a send or scale-up,
 argument-hint: "<sending domain / program> [ESP + goal] [DMARC RUA report + inbox-placement test]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: setup
   geo-relevance: "low"

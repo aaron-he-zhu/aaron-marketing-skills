@@ -1,7 +1,7 @@
 ---
 name: newsletter-monetization-planner
 description: 'Use when the user asks to "monetize my newsletter", "build a sponsorship rate card", or "model paid-subscription revenue"; produces a revenue model (paid tiers, ad/sponsorship inventory + CPM/flat rate card, referral/boost loops), a list-growth ↔ revenue projection, and honest-offer / disclosure checks for the SEND-D lever. Not for scoring the whole program or running D1 — use email-quality-auditor; not for the return math — use roi-calculator; not for the post-click page — use landing-optimizer. 邮件newsletter变现/赞助刊例/付费订阅测算'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when planning how an owned newsletter or creator list makes mo
 argument-hint: "<newsletter/list size> [goal: paid-subs|sponsorship|both] [open/click rates]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: nurture
   geo-relevance: "low"

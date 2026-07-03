@@ -1,7 +1,7 @@
 ---
 name: offsite-signal-analyzer
 description: 'Use when the user asks to "analyze backlinks", "analyze my off-site signals", or "track AI traffic / ChatGPT / Perplexity referrals"; profiles referring domains, anchor-text mix, toxic links, and disavow candidates (backlinks mode) or isolates AI-assistant referral sessions in GA4/GSC/logs and reports their trend, landing pages, and AI-vs-organic conversion (ai-referrals mode). Not for internal links — use site-structure-optimizer; not for keyword positions — use rank-tracker; not for multi-metric stakeholder reports — use performance-monitor. 外链分析/反向链接/AI流量/AI引荐/ChatGPT流量/AI转化'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -10,7 +10,7 @@ argument-hint: "<domain or URL> [--mode backlinks|ai-referrals] [date range]"
 allowed-tools: WebFetch
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: seo-geo
   phase: monitor
   geo-relevance: "medium"

@@ -3,7 +3,7 @@
 **69 个技能。5 个命令。四个营销学科 —— SEO/GEO、红人、付费广告、邮件营销 —— 共享同一套运行契约。**
 
 [![GitHub Stars](https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat)](https://github.com/aaron-he-zhu/aaron-marketing-skills)
-[![Version](https://img.shields.io/badge/version-12.0.0-orange)](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)
+[![Version](https://img.shields.io/badge/version-12.1.0-orange)](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)
 [![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills)](https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-purple)](https://claude.ai/download)
@@ -482,7 +482,7 @@ docs/            # 本地化 README(zh)
 ## 贡献与文档
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— 撰写规则、贡献清单、权威的 8 文件追踪列表。
-- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`12.0.0`）。
+- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`12.1.0`）。
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— 安全、隐私、社区政策。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— 面向 Agent 的本仓库上下文。
 
@@ -496,7 +496,7 @@ docs/            # 本地化 README(zh)
 
 Apache License 2.0 —— 见 [LICENSE](../LICENSE)。
 
-*最后同步英文 README：v12.0.0*
+*最后同步英文 README：v12.1.0*
 
 ## Star History
 

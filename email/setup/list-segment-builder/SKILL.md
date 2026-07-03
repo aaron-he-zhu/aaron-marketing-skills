@@ -1,7 +1,7 @@
 ---
 name: list-segment-builder
 description: 'Use when the user asks to "build email segments from my list", "make engaged / lapsed / RFM segments", "set up cart-abandoner or lifecycle-stage audiences", or "build a suppression list of unsubscribes and bounces"; turns the user''s OWN list/CRM/GA4/ecommerce export into behavioral, attribute, and lifecycle-stage segments plus a suppression list, with per-segment sizes labeled Measured/Estimated, informing the SEND E (Engagement/targeting) dimension. Not for scoring EQS or running vetoes — use email-quality-auditor; not for authentication or spam-content checks — use deliverability-qa. 邮件列表分群/生命周期分群/抑制名单/流失召回'
-version: "12.0.0"
+version: "12.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -9,7 +9,7 @@ when_to_use: "Use when preparing WHO to email before any send is designed: segme
 argument-hint: "<list/CRM CSV or GA4/ecommerce export> [goal: promo|retention|cold] [ESP]"
 metadata:
   author: aaron-he-zhu
-  version: "12.0.0"
+  version: "12.1.0"
   discipline: email
   phase: setup
   geo-relevance: "low"
