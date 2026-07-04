@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/aaron-he-zhu-aaron-marketing-skills-badge.png)](https://mseep.ai/app/aaron-he-zhu-aaron-marketing-skills)
+
 # Aaron Marketing Skills
 
 **69 skills. 5 commands. Four marketing disciplines — SEO/GEO, influencer, paid ads, email — on one operating contract.**
