@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed architecture conformance checks for the v17 system catalog."""
+"""Fail-closed architecture conformance checks for the system catalog."""
 from __future__ import annotations
 
 import importlib.util
@@ -15,6 +15,7 @@ FRAMEWORK_PATH = ROOT / "references" / "framework-catalog.json"
 PLUGIN_PATH = ROOT / ".claude-plugin" / "plugin.json"
 GROUPINGS_PATH = ROOT / "skills.sh.json"
 MARKETPLACE_PATHS = [ROOT / "marketplace.json", ROOT / ".claude-plugin" / "marketplace.json"]
+OPENCLAW_PATH = ROOT / "openclaw.plugin.json"
 HOOKS_PATH = ROOT / "hooks" / "hooks.json"
 REGISTRY_RUNTIME = ROOT / "scripts" / "registry-events.py"
 LEGACY_COMPOSITE = re.compile(r"\b(?:LQS|NQS)\b|goal-weight(?:ed)? column", re.I)
@@ -231,6 +232,11 @@ def check_distribution(catalog, expected_paths, failures):
             failures.append("%s plugin description differs from plugin.json" % marketplace_path.relative_to(ROOT))
     if MARKETPLACE_PATHS[0].read_bytes() != MARKETPLACE_PATHS[1].read_bytes():
         failures.append("marketplace mirrors are not byte-identical")
+    openclaw = load_json(OPENCLAW_PATH)
+    if openclaw.get("version") != catalog.get("bundle_version"):
+        failures.append("openclaw.plugin.json version differs from catalog bundle_version")
+    if openclaw.get("description") != plugin.get("description"):
+        failures.append("openclaw.plugin.json description differs from plugin.json")
     hooks = load_json(HOOKS_PATH).get("hooks", {})
     expected_hook_events = {
         "SessionStart", "UserPromptSubmit", "PreToolUse", "PostToolUse",
@@ -355,7 +361,7 @@ def check_auditors(catalog, failures):
                 failures.append("%s contract is missing %r" % (skill, token))
         if not runtime.is_file() or "GENERATED FILE" not in runtime.read_text(encoding="utf-8")[:200]:
             failures.append("%s standalone runtime is missing or not generated" % skill)
-        sinks = {"memory/audits/%s/" % match for match in re.findall(r"memory/audits/([^/\s`]+)/", text)}
+        sinks = {"memory/audits/%s/" % match for match in re.findall(r"memory/audits/([^/\s`]+)/?", text)}
         if sinks - {auditor["sink"]}:
             failures.append("%s references another auditor's write sink: %s" % (skill, sorted(sinks)))
         if MUTABLE_RUNTIME.search(text):
@@ -367,9 +373,9 @@ def check_l1_dependency(catalog, failures):
     required = dependency.get("required_fields", [])
     statuses = dependency.get("dependency_status_values", [])
     if required != ["narrative_canon_id", "narrative_canon_version", "claims_projection_offset", "dependency_status"]:
-        failures.append("L1 dependency fields differ from the v17 contract")
+        failures.append("L1 dependency fields differ from the system-catalog contract")
     if statuses != ["verified", "approved-fallback", "blocked"]:
-        failures.append("L1 dependency statuses differ from the v17 contract")
+        failures.append("L1 dependency statuses differ from the system-catalog contract")
     builders = dependency.get("builders", [])
     if len(builders) != 7 or len(builders) != len(set(builders)):
         failures.append("L1 dependency must cover seven unique core builders")
@@ -688,7 +694,7 @@ def main():
         check_l1_dependency(catalog, failures)
         check_symmetry(catalog, expected_paths, failures)
         check_legacy_and_producers(catalog, failures)
-    except (ArchitectureError, OSError, ValueError, KeyError) as exc:
+    except (ArchitectureError, OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
         failures.append("architecture check aborted safely: %s" % exc)
     if failures:
         print("ARCHITECTURE CONFORMANCE FAILED: %d issue(s)" % len(failures))

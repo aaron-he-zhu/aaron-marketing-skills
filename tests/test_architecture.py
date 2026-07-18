@@ -6,6 +6,7 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
+import tempfile
 import unittest
 
 
@@ -162,6 +163,57 @@ class SymmetryTests(unittest.TestCase):
         failures = self.symmetry_failures(catalog)
         self.assertTrue(
             any("unknown rule or scope" in item for item in failures),
+            failures,
+        )
+
+
+class DistributionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.module = load_module()
+        with (ROOT / "references" / "system-catalog.json").open(encoding="utf-8") as handle:
+            cls.catalog = json.load(handle)
+
+    def distribution_failures(self):
+        failures = []
+        paths = self.module.expected_skill_paths(self.catalog, failures)
+        self.module.check_distribution(self.catalog, paths, failures)
+        return failures
+
+    def test_pristine_distribution_surfaces_have_no_failures(self):
+        self.assertEqual([], self.distribution_failures())
+
+    def test_openclaw_version_drift_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            drifted = Path(tmp) / "openclaw.plugin.json"
+            payload = json.loads((ROOT / "openclaw.plugin.json").read_text(encoding="utf-8"))
+            payload["version"] = "0.0.0"
+            drifted.write_text(json.dumps(payload), encoding="utf-8")
+            original = self.module.OPENCLAW_PATH
+            self.module.OPENCLAW_PATH = drifted
+            try:
+                failures = self.distribution_failures()
+            finally:
+                self.module.OPENCLAW_PATH = original
+        self.assertTrue(
+            any("openclaw.plugin.json version" in item for item in failures),
+            failures,
+        )
+
+    def test_openclaw_description_drift_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            drifted = Path(tmp) / "openclaw.plugin.json"
+            payload = json.loads((ROOT / "openclaw.plugin.json").read_text(encoding="utf-8"))
+            payload["description"] = "stale"
+            drifted.write_text(json.dumps(payload), encoding="utf-8")
+            original = self.module.OPENCLAW_PATH
+            self.module.OPENCLAW_PATH = drifted
+            try:
+                failures = self.distribution_failures()
+            finally:
+                self.module.OPENCLAW_PATH = original
+        self.assertTrue(
+            any("openclaw.plugin.json description" in item for item in failures),
             failures,
         )
 

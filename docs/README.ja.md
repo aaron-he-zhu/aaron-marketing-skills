@@ -541,7 +541,7 @@ Artifact Gate は**フレームワーク非依存**です —— 同じフック
 
 | 層 | 得られるもの |
 |-------|--------------|
-| **21 の同梱・依存関係ゼロのコネクタ** | 純粋な Python 標準ライブラリ —— `pip` 不要、ビルドステップ不要。keyless なライブ SERP + JS レンダースクレイピング（Firecrawl、Tavily）、AI 回答の引用プローブ、DNS-over-HTTPS のメール認証取得、Wikipedia 注目度シリーズ、GDELT ニュース言及、本物の YouTube クリエイター指標、IndexNow + Baidu インデックス送信、Resend ESP 自動化、そしてそれらのいずれをも前後比較の時系列に変える git 差分可能な測定台帳。 |
+| **28 の同梱・依存関係ゼロのコネクタ** | 純粋な Python 標準ライブラリ —— `pip` 不要、ビルドステップ不要。keyless なライブ SERP + JS レンダースクレイピング（Firecrawl、Tavily）、AI 回答の引用プローブ、DNS-over-HTTPS のメール認証取得、Wikipedia 注目度シリーズ、GDELT ニュース言及、本物の YouTube クリエイター指標、IndexNow + Baidu インデックス送信、Resend ESP 自動化、そしてそれらのいずれをも前後比較の時系列に変える git 差分可能な測定台帳。 |
 | **60 以上の文書化された公式/無料 API** | 各行がベンダーの**公式ドキュメント**をリンクし、検証日を持ち、各リンクは公開前に HTTP で確認されます。多くのツールリストが見落とすパスを含みます：GSC URL Inspection、CrUX History（40 週間のフィールド CWV）、Gmail Postmaster Tools API、Meta の Ad Library、Microsoft Clarity の Data Export API。 |
 | **ベンダー MCP サーバー** | 18 のリモートエンドポイントをカタログ化（決して自動登録されません —— あなたの `/mcp` リストはきれいなまま）、加えて Google Analytics、Search Console、**Google Ads**、**Microsoft Clarity** の公式セルフホストサーバー。2 つのリモート MCP はキー不要で動作します（Firecrawl、Tavily）。 |
 

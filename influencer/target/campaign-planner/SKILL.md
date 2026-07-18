@@ -3,7 +3,7 @@ name: campaign-planner
 slug: aaron-campaign-planner
 displayName: "Campaign Planner · 活动规划"
 summary: "红人活动整体规划:目标、阶段、创作者组合、时间线与风险预案"
-description: 'Use when the user asks to "plan an influencer campaign", "build a campaign blueprint", or "launch a product with creators"; produces campaign objectives, platform and influencer-tier strategy, content requirements, a phased timeline, budget allocation, and KPI targets. Not for writing individual creator briefs — use brief-generator; not for the overall product-launch plan (tiering, calendar, press, community day) — use launch-tier-planner, which hands this skill the creator lane. A launch request that does not mention creators routes to the launch discipline, not here.'
+description: 'Use when the user asks to "plan an influencer campaign", "build a campaign blueprint", or "launch a product with creators"; produces campaign objectives, platform and influencer-tier strategy, content requirements, a phased timeline, budget allocation, and KPI targets. Not for writing individual creator briefs — use brief-generator; not for the overall product-launch plan (tiering, calendar, press, community day) — use launch-tier-planner, which hands this skill the creator lane. A launch request that does not mention creators routes to the launch discipline, not here. 达人营销策划/种草方案'
 version: "18.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"

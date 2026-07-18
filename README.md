@@ -541,7 +541,7 @@ Skills name tools with `~~category` placeholders (`~~SEO tool`, `~~web analytics
 
 | Layer | What you get |
 |-------|--------------|
-| **21 bundled zero-dependency connectors** | Pure Python stdlib — no `pip`, no build step. Keyless live SERP + JS-rendered scraping (Firecrawl, Tavily), an AI-answer citation probe, DNS-over-HTTPS email-auth pulls, Wikipedia attention series, GDELT news mentions, real YouTube creator metrics, IndexNow + Baidu index push, Resend ESP automation, and a git-diffable measurement ledger that turns any of them into a before/after time series. |
+| **28 bundled zero-dependency connectors** | Pure Python stdlib — no `pip`, no build step. Keyless live SERP + JS-rendered scraping (Firecrawl, Tavily), an AI-answer citation probe, DNS-over-HTTPS email-auth pulls, Wikipedia attention series, GDELT news mentions, real YouTube creator metrics, IndexNow + Baidu index push, Resend ESP automation, Product Hunt / HN / App Store launch intel, Bluesky / Fediverse / Discourse community reads, an experiment-statistics decision helper, and a git-diffable measurement ledger that turns any of them into a before/after time series. |
 | **60+ documented official/free APIs** | Every row links the vendor's **official documentation**, carries a verified-on date, and every link is HTTP-checked before it ships. Includes the paths most tool lists miss: GSC URL Inspection, CrUX History (40 weeks of field CWV), the Gmail Postmaster Tools API, Meta's Ad Library, Microsoft Clarity's Data Export API. |
 | **Vendor MCP servers** | 18 remote endpoints catalogued (never auto-registered — your `/mcp` list stays clean) plus the official self-hosted servers for Google Analytics, Search Console, **Google Ads**, and **Microsoft Clarity**. Two remote MCPs work with no key at all (Firecrawl, Tavily). |
 
@@ -639,7 +639,7 @@ evals/           # per-skill structural eval cases + structure-manifest.json
 hooks/           # hooks.json + claude-hook.sh (the only runtime logic)
 scripts/         # validate-skill.sh + connectors/ (stdlib) + CI guards
 memory/          # HOT/WARM/COLD scaffolding + registry stores (entities/creators/claims/consent/launch/channels/narrative-registry)
-docs/            # localized README (zh)
+docs/            # 9 localized READMEs + contributor docs (connector playbook, agent compatibility, …)
 .claude-plugin/  # plugin.json + marketplace.json mirror
 ```
 

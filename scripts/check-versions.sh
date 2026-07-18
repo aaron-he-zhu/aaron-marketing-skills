@@ -254,11 +254,24 @@ fi
 # consults. It silently froze at the v12 four-discipline era (launch/social/narrative
 # shipped with ZERO expected_route scenarios) — assert every command discipline keeps
 # at least one routing scenario so a new discipline cannot ship uncovered again.
+# The discipline list is derived from the typed catalog so an 8th discipline
+# extends these guards automatically instead of silently skipping them.
+DISCIPLINES=$(python3 - <<'PY'
+import json
+with open("references/system-catalog.json", encoding="utf-8") as handle:
+    catalog = json.load(handle)
+print(" ".join(sorted(catalog["disciplines"])))
+PY
+)
+if [ -z "$DISCIPLINES" ]; then
+  err "cannot derive discipline list from references/system-catalog.json"
+fi
+DISC_COUNT=$(wc -w <<< "$DISCIPLINES" | tr -d ' ')
 ROUTING="references/auto-routing-scenarios.md"
 if [ ! -f "$ROUTING" ]; then
   err "$ROUTING missing — the /aaron-marketing:auto routing contract"
 else
-  for cmd in seo-geo influencer ad email launch social narrative; do
+  for cmd in $DISCIPLINES; do
     grep -q "expected_route: \"/aaron-marketing:$cmd" "$ROUTING" \
       || err "$ROUTING has no expected_route scenario for /aaron-marketing:$cmd (auto routing coverage gap)"
   done
@@ -270,7 +283,7 @@ fi
 # claimed 3 real skills were "not separate skills"). Assert every skill physically
 # under a discipline dir is named in that discipline's command, so a new skill
 # cannot ship unlisted. (Protocol skills have no dedicated command — exempt.)
-for disc in seo-geo influencer ad email launch social narrative; do
+for disc in $DISCIPLINES; do
   cmd="commands/$disc.md"
   if [ ! -f "$cmd" ]; then err "$cmd missing — the $disc command"; continue; fi
   while IFS= read -r skill; do
@@ -286,7 +299,7 @@ done
 # tables; none are machine-generated, so assert every skill physically under a
 # discipline dir is named in all of them. Guides carry no version badge by
 # design — coverage, not version, is the locked surface here.
-for disc in seo-geo influencer ad email launch social narrative; do
+for disc in $DISCIPLINES; do
   for guide in "$disc/README.md" "$disc/README.zh.md"; do
     if [ ! -f "$guide" ]; then err "$guide missing — the $disc discipline guide"; continue; fi
     while IFS= read -r skill; do
@@ -299,9 +312,9 @@ done
 while IFS= read -r skill; do
   [ -n "$skill" ] || continue
   grep -qw "$skill" CLAUDE.md || err "CLAUDE.md does not name skill '$skill' (catalog rot)"
-done < <(find seo-geo influencer ad email launch social narrative protocol -name SKILL.md 2>/dev/null | sed 's#/SKILL.md##; s#.*/##' | sort -u)
+done < <(find $DISCIPLINES protocol -name SKILL.md 2>/dev/null | sed 's#/SKILL.md##; s#.*/##' | sort -u)
 
 if [ $fail -eq 0 ]; then
-  echo "version-sync clean — bundle $BUNDLE, $skill_count skills consistent across the 10 tracking surfaces + README topology/commands + localized badges + OpenClaw manifest + About SSOT; auto-routing covers all 7 disciplines; every discipline command, guide pair, and the CLAUDE.md catalog list their full skill sets"
+  echo "version-sync clean — bundle $BUNDLE, $skill_count skills consistent across the 10 tracking surfaces + README topology/commands + localized badges + OpenClaw manifest + About SSOT; auto-routing covers all $DISC_COUNT disciplines; every discipline command, guide pair, and the CLAUDE.md catalog list their full skill sets"
 fi
 exit $fail

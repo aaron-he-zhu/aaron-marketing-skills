@@ -955,6 +955,22 @@ class ResendSpecTests(unittest.TestCase):
         self.assertEqual(len(resend.idempotency_key("x" * 400)),
                          resend.IDEMPOTENCY_MAX)
 
+    def test_broadcast_create_bad_content_returns_error_not_traceback(self):
+        spec = self._spec(["broadcast-create", "--segment", "seg_1",
+                           "--from", "me@x.dev", "--subject", "s",
+                           "--html", "no-such-file.html"])
+        self.assertEqual(spec["error"], "bad_content")
+        self.assertIn("no-such-file.html", spec["detail"])
+
+    def test_broadcast_create_happy_path(self):
+        spec = self._spec(["broadcast-create", "--segment", "seg_1",
+                           "--from", "me@x.dev", "--subject", "s",
+                           "--text", "body text"])
+        self.assertTrue(spec["mutating"])
+        body = spec["request"]["body"]
+        self.assertEqual(body["segment_id"], "seg_1")
+        self.assertEqual(body["text"], "body text")
+
 
 class FirecrawlSpecTests(unittest.TestCase):
     def _spec(self, argv):

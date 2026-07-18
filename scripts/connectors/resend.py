@@ -281,8 +281,11 @@ def build_spec(args):
     if cmd == "broadcast-create":
         body = {"segment_id": args.segment, "from": getattr(args, "from"),
                 "subject": args.subject}
-        html = _content(args.html)
-        text = _content(args.text)
+        try:
+            html = _content(args.html)
+            text = _content(args.text)
+        except ContentError as e:
+            return {"error": "bad_content", "detail": str(e)}
         if html:
             body["html"] = html
         if text:

@@ -222,6 +222,10 @@ def atomic_write(path, content):
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temp_name = tempfile.mkstemp(prefix=".%s." % path.name, dir=str(path.parent))
     try:
+        if path.exists():
+            os.fchmod(fd, path.stat().st_mode & 0o777)
+        else:
+            os.fchmod(fd, 0o644)
         with os.fdopen(fd, "wb") as handle:
             handle.write(content)
             handle.flush()
@@ -243,7 +247,8 @@ def main(argv=None):
         if args.write:
             atomic_write(OUTPUT_PATH, expected)
             print("wrote %s" % OUTPUT_PATH.relative_to(ROOT))
-        elif not OUTPUT_PATH.is_file() or OUTPUT_PATH.read_bytes() != expected:
+            return 0
+        if not OUTPUT_PATH.is_file() or OUTPUT_PATH.read_bytes() != expected:
             raise ValueError("generated system architecture is missing or stale; run with --write")
     except (OSError, ValueError, KeyError) as exc:
         print("error: %s" % exc, file=sys.stderr)

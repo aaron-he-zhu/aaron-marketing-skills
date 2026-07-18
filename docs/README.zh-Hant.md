@@ -541,7 +541,7 @@ Artifact Gate 是**框架無關**的——同一個 hook 驗證 TALE、CORE-EEAT
 
 | 層 | 你得到什麼 |
 |----|------------|
-| **21 個內建零依賴連接器** | 純 Python 標準庫——無 `pip`、無建置。keyless 即時 SERP + JS 渲染抓取（Firecrawl、Tavily）、AI 答案引用探針、DNS-over-HTTPS 郵件認證拉取、維基百科關注度序列、GDELT 新聞提及、真實 YouTube 創作者指標、IndexNow + 百度收錄推送、Resend ESP 自動化，以及能把上述任一變成前後對比時間序列的 git 可差分測量台帳。 |
+| **28 個內建零依賴連接器** | 純 Python 標準庫——無 `pip`、無建置。keyless 即時 SERP + JS 渲染抓取（Firecrawl、Tavily）、AI 答案引用探針、DNS-over-HTTPS 郵件認證拉取、維基百科關注度序列、GDELT 新聞提及、真實 YouTube 創作者指標、IndexNow + 百度收錄推送、Resend ESP 自動化，以及能把上述任一變成前後對比時間序列的 git 可差分測量台帳。 |
 | **60+ 個記錄在案的官方/免費 API** | 每一行都連結廠商**官方文件**、帶核驗日期，且每條連結入庫前都經過 HTTP 實測。包含多數工具清單遺漏的路徑：GSC URL Inspection、CrUX History（40 週真實使用者 CWV）、Gmail Postmaster Tools API、Meta 廣告庫、微軟 Clarity 資料匯出 API。 |
 | **廠商 MCP 伺服器** | 18 個遠端端點入目錄（絕不自動註冊——你的 `/mcp` 清單保持乾淨），外加 Google Analytics、Search Console、**Google Ads**、**微軟 Clarity** 的官方自架伺服器。其中兩個遠端 MCP 完全免鑑權（Firecrawl、Tavily）。 |
 

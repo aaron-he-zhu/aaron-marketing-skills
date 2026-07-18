@@ -541,7 +541,7 @@ Artifact Gate는 **프레임워크 비의존적**입니다 — 같은 훅이 TAL
 
 | 계층 | 얻는 것 |
 |-------|--------------|
-| **21개의 번들 의존성 없는 커넥터** | 순수 Python 표준 라이브러리 — `pip` 없음, 빌드 단계 없음. keyless 라이브 SERP + JS 렌더 스크래핑(Firecrawl, Tavily), AI 답변 인용 프로브, DNS-over-HTTPS 이메일 인증 가져오기, Wikipedia 주목도 시계열, GDELT 뉴스 언급, 실제 YouTube 크리에이터 지표, IndexNow + Baidu 색인 푸시, Resend ESP 자동화, 그리고 이들 중 무엇이든 전후 비교 시계열로 바꾸는 git 디프 가능한 측정 원장. |
+| **28개의 번들 의존성 없는 커넥터** | 순수 Python 표준 라이브러리 — `pip` 없음, 빌드 단계 없음. keyless 라이브 SERP + JS 렌더 스크래핑(Firecrawl, Tavily), AI 답변 인용 프로브, DNS-over-HTTPS 이메일 인증 가져오기, Wikipedia 주목도 시계열, GDELT 뉴스 언급, 실제 YouTube 크리에이터 지표, IndexNow + Baidu 색인 푸시, Resend ESP 자동화, 그리고 이들 중 무엇이든 전후 비교 시계열로 바꾸는 git 디프 가능한 측정 원장. |
 | **60개 이상의 문서화된 공식/무료 API** | 각 행이 벤더의 **공식 문서**를 링크하고, 검증 날짜를 담으며, 각 링크는 출시 전 HTTP 확인됩니다. 대부분의 도구 목록이 놓치는 경로를 포함: GSC URL Inspection, CrUX History(40주간 필드 CWV), Gmail Postmaster Tools API, Meta의 Ad Library, Microsoft Clarity의 Data Export API. |
 | **벤더 MCP 서버** | 18개 원격 엔드포인트를 카탈로그화(절대 자동 등록되지 않음 — 당신의 `/mcp` 목록은 깨끗하게 유지)하고, Google Analytics, Search Console, **Google Ads**, **Microsoft Clarity**의 공식 셀프호스트 서버 추가. 두 개의 원격 MCP는 키 없이 동작합니다(Firecrawl, Tavily). |
 

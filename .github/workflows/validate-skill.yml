@@ -16,12 +16,13 @@ jobs:
 
       - name: Validate all skills
         run: |
-          set -euo pipefail
-          python3 -c 'import json; print("\n".join(p.removeprefix("./") for p in json.load(open(".claude-plugin/plugin.json"))["skills"]))' |
+          set -uo pipefail
+          fail=0
           while read -r skill; do
-            bash scripts/validate-skill.sh "$skill"
-          done
-          bash scripts/validate-skill.sh --status
+            bash scripts/validate-skill.sh "$skill" || fail=1
+          done < <(python3 -c 'import json; print("\n".join(p.removeprefix("./") for p in json.load(open(".claude-plugin/plugin.json"))["skills"]))')
+          bash scripts/validate-skill.sh --status || fail=1
+          exit $fail
 
       - name: Architecture and distribution contracts
         run: |
@@ -29,7 +30,7 @@ jobs:
           python3 scripts/check-architecture.py
           python3 scripts/generate-system-docs.py --check
           python3 scripts/generate-auditor-runtime.py --check
-          python3 -m unittest tests.test_architecture tests.test_distribution_builder
+          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter
           bash tests/test_runtime_distribution.sh
 
       - name: Root references/ blob-main guard
