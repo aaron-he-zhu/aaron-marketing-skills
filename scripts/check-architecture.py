@@ -33,6 +33,9 @@ AUDIT_WRITE_INTENT = re.compile(
     re.I,
 )
 AUDIT_WRITE_NEGATION = re.compile(r"\b(?:never|must not|does not|do not|reserved)\b", re.I)
+EXCLUDED_MARKDOWN_PARTS = {
+    ".git", ".planning", ".agents", ".codex", "reference-oss", "node_modules",
+}
 
 
 class ArchitectureError(ValueError):
@@ -609,17 +612,16 @@ def check_symmetry(catalog, expected_paths, failures):
 
 
 def markdown_files():
-    excluded_parts = {".git", ".planning", ".agents", ".codex", "reference-oss"}
     for path in ROOT.rglob("*.md"):
         relative = path.relative_to(ROOT)
-        if any(part in excluded_parts for part in relative.parts):
+        if any(part in EXCLUDED_MARKDOWN_PARTS for part in relative.parts):
             continue
         if re.search(r"(?:^| )\d+\.md$", path.name) or " 2" in path.name:
             continue
         yield path
 
 
-def check_legacy_and_producers(catalog, failures):
+def check_recursive_markdown(failures):
     for path in markdown_files():
         text = path.read_text(encoding="utf-8")
         relative = str(path.relative_to(ROOT))
@@ -632,6 +634,10 @@ def check_legacy_and_producers(catalog, failures):
         if relative != "VERSIONS.md" and re.search(
                 r"\bbatch-promote\b|\bday close\b|3\+ candidate", text, re.I):
             failures.append("legacy batch/threshold registry semantics remain in %s" % relative)
+
+
+def check_legacy_and_producers(catalog, failures):
+    check_recursive_markdown(failures)
     normative = [
         "README.md", "CLAUDE.md", "AGENTS.md", "CONTRIBUTING.md",
         "commands/ad.md", "commands/email.md", "commands/launch.md", "commands/social.md", "commands/narrative.md",

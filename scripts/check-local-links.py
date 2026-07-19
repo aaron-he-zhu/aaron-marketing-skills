@@ -12,7 +12,9 @@ ROOT = Path(__file__).resolve().parents[1]
 LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 FENCE = re.compile(r"^\s*(```|~~~)")
 SCHEME = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
-EXCLUDED_PARTS = {".git", ".planning", ".agents", ".codex", "reference-oss"}
+EXCLUDED_PARTS = {
+    ".git", ".planning", ".agents", ".codex", "reference-oss", "node_modules",
+}
 
 
 def markdown_files():
