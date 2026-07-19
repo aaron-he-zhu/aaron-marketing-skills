@@ -91,6 +91,8 @@ python3 -m unittest tests.test_distribution_builder
 
 The allowlist in `references/distribution-files.json` is authoritative. Runtime additions must be declared there; tests, evals, CI, generators, and repository-maintenance documentation must not leak into the plugin payload. Standalone one-folder auditor bundles stay compact and fail closed; regenerate them with `python3 scripts/generate-auditor-runtime.py --write` after changing any bound source.
 - **check-evals** — structural lint over all eval fixtures and auto-routing targets (phase directories and command selectors derive from the system catalog).
+- **check-context-budget** — the progressive-disclosure budget as a hard gate: SKILL.md line caps, auditor activation-chain byte budgets, per-reference byte budgets (conform-or-declared ceilings), and the HOT template's runtime 80-line/25 KB limit.
+- **check-routing** — description-routing health as a hard gate: quoted trigger phrases are uniquely owned across all 120 skills, every description carries a `Not for X — use Y` boundary clause, and bare-name handoffs in Next Best Skill blocks resolve to real skills.
 - **check-local-links** — every repo-local Markdown link target must resolve inside the repo.
 - **check-pii** — scans for committed PII. Enable the repository pre-commit hook once
   per clone with `git config core.hooksPath .githooks`; CI independently scans every

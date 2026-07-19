@@ -33,6 +33,14 @@ jobs:
           python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter
           bash tests/test_runtime_distribution.sh
 
+      - name: Context budget and routing contracts
+        run: |
+          set -euo pipefail
+          python3 scripts/check-context-budget.py
+          python3 scripts/check-routing.py
+          python3 -m unittest tests.test_context_budget tests.test_routing
+          bash tests/test_runtime_distribution.sh
+
       - name: Root references/ blob-main guard
         run: |
           # Repo-level half of the documented blob/main ban: the per-skill validator

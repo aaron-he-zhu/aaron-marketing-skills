@@ -468,6 +468,70 @@ assert_contains "current cache still injects the excerpt" "$out11" "Project reco
 assert_notcontains "current cache raises no limit warning" "$out11" "limit warning"
 assert_notcontains "current cache raises no staleness signal" "$out11" "Staleness signal"
 
+echo "SessionStart — registry intake & projection-lag signals"
+
+# 12. An old pending proposal surfaces the owner-ritual nudge
+mkdir -p "$PROJ/memory/events"
+cat > "$PROJ/proposal-old.json" <<EOF
+{"schema_version":"1.0","idempotency_key":"hook-pending-old","aggregate_id":"rec-1","operation":"propose","proposed_operation":"upsert","occurred_at":"2020-01-01T10:00:00Z","actor":{"type":"skill","id":"content-writer"},"authorized_by":"user","authorization_ref":"fixture","source":{"type":"user-provided","ref":"fixture","observed_at":"2020-01-01"},"expected_revision":0,"payload":{"set":{"title":"Old"}}}
+EOF
+python3 "$REPO/scripts/registry-events.py" --root "$PROJ" append entities "$PROJ/proposal-old.json" >/dev/null
+out12="$(session)"
+assert_contains "old pending proposal surfaces owner-ritual nudge" "$out12" "pending owner review"
+assert_contains "nudge marks the >14d threshold" "$out12" ">14d"
+
+# 13. A fresh pending proposal reports intake without the staleness threshold
+rm -rf "$PROJ/memory/events" "$PROJ/memory/projections"
+TODAY="$(date +%Y-%m-%d)"
+sed "s/2020-01-01/$TODAY/g; s/hook-pending-old/hook-pending-new/" "$PROJ/proposal-old.json" > "$PROJ/proposal-new.json"
+python3 "$REPO/scripts/registry-events.py" --root "$PROJ" append entities "$PROJ/proposal-new.json" >/dev/null
+out13="$(session)"
+assert_contains "fresh pending proposal reports intake" "$out13" "pending owner review"
+assert_notcontains "fresh proposal raises no staleness threshold" "$out13" ">14d"
+
+# 14. A stored projection behind the stream head surfaces the lag note
+python3 - "$PROJ" <<'PY'
+import json, pathlib, sys
+path = pathlib.Path(sys.argv[1]) / "memory/projections/entities.json"
+stored = json.loads(path.read_text(encoding="utf-8"))
+stored["last_offset"] = 0
+path.write_text(json.dumps(stored), encoding="utf-8")
+PY
+out14="$(session)"
+assert_contains "stale projection surfaces the lag note" "$out14" "Projection lag"
+
+# 15. No registry events means no intake or lag signals at all
+rm -rf "$PROJ/memory/events" "$PROJ/memory/projections"
+out15="$(session)"
+assert_notcontains "empty project raises no intake signal" "$out15" "pending owner review"
+assert_notcontains "empty project raises no lag signal" "$out15" "Projection lag"
+
+echo "SessionStart — resume checkpoint"
+
+# 16. A session checkpoint is injected as untrusted resume context
+cat > "$PROJ/memory/session-checkpoint.md" <<'EOF'
+updated_at: 2026-07-18
+active_skill: keyword-research
+pending_handoff: content-gap-analysis
+resume_instruction: ask for the SERP export first
+EOF
+out16="$(session)"
+assert_contains "checkpoint is injected at load" "$out16" "Resume checkpoint"
+assert_contains "checkpoint carries the resume action" "$out16" "SERP export"
+assert_contains "checkpoint is labeled untrusted" "$out16" "re-verify offsets"
+
+# 17. An over-limit checkpoint warns at load and truncates
+{ for i in $(seq 1 50); do echo "checkpoint filler line $i"; done; } > "$PROJ/memory/session-checkpoint.md"
+out17="$(session)"
+assert_contains "over-limit checkpoint warns at load" "$out17" "Checkpoint limit warning"
+
+# 18. A symlinked checkpoint is not read
+rm -f "$PROJ/memory/session-checkpoint.md"
+printf 'CHECKPOINT_SECRET_MARKER\n' > "$PROJ/outside-checkpoint.txt"
+ln -s "$PROJ/outside-checkpoint.txt" "$PROJ/memory/session-checkpoint.md"
+assert_notcontains "symlinked checkpoint is rejected" "$(session)" "CHECKPOINT_SECRET_MARKER"
+rm -f "$PROJ/memory/session-checkpoint.md" "$PROJ/outside-checkpoint.txt"
+
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

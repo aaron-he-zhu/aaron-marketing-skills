@@ -68,7 +68,19 @@ python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" verify consent
 python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" project consent
 python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" get consent subject-sha256-prefix
 python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" is-suppressed subject-sha256-prefix
+python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" pending
 ```
+
+`pending` is the read-only intake/lag report: per registry it returns the pending
+proposal count, the oldest pending proposal's occurred_at and age in days, and the
+projection lag (stream head offset minus the stored projection's last_offset). With
+the host key it fully verifies the stream; without it the report uses only the
+publicly verifiable structure (canonical JSON, offsets, hash chain, request hashes,
+principal bindings) and labels itself `authority_verified: false` — the pending
+signal is an advisory nudge, never an authorization input. It creates no runtime
+paths. The SessionStart hook surfaces stale intake (oldest verifiable pending
+proposal > 14 days) and any projection lag so the owner ritual queue cannot stall
+silently.
 
 `owner-append` and `safety-append` succeed only when a trusted host injects `AARON_REGISTRY_HOST_KEY` and a valid `AARON_REGISTRY_CAPABILITY` for that one request. The signing key must remain in a host boundary where the agent cannot run arbitrary code or inspect the launched process environment; exposing the key to an agent-controlled shell defeats this authority model. Inject the token directly when launching the registry subprocess, and never place key/token values in a request file, prompt, shell argument, artifact, or log. The stdlib issuance function is for that trusted integration and tests, not an agent tool.
 

@@ -41,7 +41,7 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | performance-monitor | evaluate | 18.0.0 | 2026-07-12 |
 | offsite-signal-analyzer | evaluate | 18.0.0 | 2026-07-12 |
 | channel-portfolio-planner | explore | 18.0.0 | 2026-07-12 |
-| voice-dossier-builder | explore | 18.0.0 | 2026-07-12 |
+| voice-dossier-builder | explore | 18.0.1 | 2026-07-18 |
 | platform-norm-profiler | explore | 18.0.0 | 2026-07-12 |
 | participation-warmup-planner | explore | 18.0.0 | 2026-07-12 |
 | social-calendar-builder | craft | 18.0.0 | 2026-07-12 |

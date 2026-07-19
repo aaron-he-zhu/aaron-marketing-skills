@@ -54,10 +54,54 @@ Hot cache limit warning (load-time): memory/hot-cache.md is ${rl} lines / ${rb} 
 
 Staleness signal: the oldest dated entry in memory/hot-cache.md is ${sdt} (${sag} days old, >30d) — verify freshness or demote stale items via memory-management (the agent judges which)."; added=1; }; fi
     fi
+    ck="$(mf "$rt" "session-checkpoint.md" || true)"
+    if [ -n "$ck" ] && [ -f "$ck" ] && [ ! -L "$ck" ]; then
+      cex="$(sr "$ck" 40 8192)"; [ -n "$cex" ] && { body="$body
+
+Resume checkpoint (untrusted project record; re-verify offsets against the live projections before acting):
+$cex"; added=1; }
+      cl="$(wc -l < "$ck"|tr -d ' ')"; cb="$(wc -c < "$ck"|tr -d ' ')"; cl="${cl:-0}"; cb="${cb:-0}"
+      { [ "$cl" -gt 40 ] || [ "$cb" -gt 8192 ]; } && { body="$body
+
+Checkpoint limit warning (load-time): memory/session-checkpoint.md is ${cl} lines / ${cb} bytes, over the 40-line/8KB limit — the excerpt above was truncated at load. Recommend memory-management rewrite."; added=1; }
+    fi
     ol="$(mf "$rt" "open-loops.md" || true)"
     if [ -n "$ol" ] && [ -f "$ol" ] && [ ! -L "$ol" ]; then olc="$(awk '/<!--/{inc=1} {if(!inc && ($0~/^###/||$0~/^- \[/))c++} /-->/{inc=0} END{print c+0}' "$ol" 2>/dev/null || true)"; olc="${olc:-0}"; [ "$olc" -gt 0 ] && { body="$body
 
 Open loops: memory/open-loops.md tracks ${olc} item(s) — surface any that look stale to the user."; added=1; }; fi
+    evd="$(mf "$rt" "events" || true)"
+    if [ -n "$evd" ] && [ -d "$evd" ] && command -v python3 >/dev/null 2>&1; then
+      pr="${CLAUDE_PLUGIN_ROOT:-$(cd "$(dirname "$0")/.." 2>/dev/null && pwd -P)}"; re="$pr/scripts/registry-events.py"
+      if [ -f "$re" ]; then
+        ps="$(python3 "$re" --root "$rt" pending 2>/dev/null | python3 -c '
+import json,sys
+try: d=json.load(sys.stdin)
+except Exception: sys.exit(0)
+tot=d.get("total_pending",0); oldest=-1; lagged=0
+for e in d.get("registries",{}).values():
+    if not e.get("verifiable"): continue
+    a=e.get("oldest_pending_age_days")
+    if isinstance(a,int) and not isinstance(a,bool) and a>oldest: oldest=a
+    lag=e.get("projection_lag")
+    if isinstance(lag,int) and not isinstance(lag,bool) and lag>0: lagged+=1
+print("%d %d %d" % (tot,oldest,lagged))' 2>/dev/null || true)"
+        if [ -n "$ps" ]; then
+          ptot="${ps%% *}"; prest="${ps#* }"; pold="${prest%% *}"; plag="${prest##* }"
+          if [ "$pold" -gt 14 ]; then
+            body="$body
+
+Registry intake: ${ptot} proposal(s) pending owner review; the oldest is ${pold} days old (>14d). Pending proposals have no canonical effect until accepted in the owner ritual — surface this to the user and suggest running it (references/registry-event-protocol.md)."; added=1
+          elif [ "$ptot" -gt 0 ]; then
+            body="$body
+
+Registry intake: ${ptot} proposal(s) pending owner review (oldest ${pold} day(s))."; added=1
+          fi
+          [ "$plag" -gt 0 ] && { body="$body
+
+Projection lag: ${plag} registr(y/ies) have a stored projection behind the event stream — rebuild with registry-events.py project <registry> before relying on it."; added=1; }
+        fi
+      fi
+    fi
     [ "$added" -eq 1 ] || exit 0; ctx "SessionStart" "$body";;
   user-prompt-submit)
     rt="$(root)" || exit 0; hot="$(mf "$rt" "hot-cache.md" || true)"; [ -f "$hot" ] || exit 0

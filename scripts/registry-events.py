@@ -1206,7 +1206,7 @@ def locked_stream(path, exclusive=True):
             os.close(parent_fd)
 
 
-def read_stream(handle, registry, root_hash):
+def read_stream(handle, registry, root_hash, verify_authority=True):
     handle.seek(0)
     events = []
     previous_hash = "0" * 64
@@ -1256,7 +1256,19 @@ def read_stream(handle, registry, root_hash):
         principal = event["principal"]
         signed = principal.get("type") in {"host-capability", "safety-capability"}
         supplied_signature = event.get("authority_signature")
-        if signed:
+        if signed and not verify_authority:
+            # Advisory read mode (pending_report only): the public hash chain,
+            # offsets, request hashes, and principal bindings above have all
+            # been checked; only the HMAC authority signature needs the host
+            # key. A capability ID is still tracked so reuse stays visible.
+            if (not isinstance(supplied_signature, str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", supplied_signature)):
+                raise RegistryError("event authority signature is malformed at line %d" % line_number)
+            capability_id = principal["capability_id"]
+            if capability_id in seen_capabilities:
+                raise RegistryError("host capability was reused at line %d" % line_number)
+            seen_capabilities.add(capability_id)
+        elif signed:
             if (not isinstance(supplied_signature, str)
                     or not re.fullmatch(r"[0-9a-f]{64}", supplied_signature)
                     or not hmac.compare_digest(supplied_signature, authority_signature(event))):
@@ -1665,7 +1677,7 @@ def append_event(root, registry, request, capability_token=None):
                 "record": state["records"].get(event["aggregate_id"])}
 
 
-def load_state(root, registry, create=False):
+def load_state(root, registry, create=False, verify_authority=True):
     if registry not in REGISTRIES:
         raise RegistryError("unknown registry: %s" % registry)
     stream_path, projection_path, suppressions_path = memory_paths(root, registry, create=create)
@@ -1674,7 +1686,7 @@ def load_state(root, registry, create=False):
         return new_projection(registry)
     root_hash = project_root_hash(root)
     with locked_stream(stream_path, exclusive=False) as handle:
-        events = read_stream(handle, registry, root_hash)
+        events = read_stream(handle, registry, root_hash, verify_authority=verify_authority)
         state = project_events(registry, events)
     return state
 
@@ -1700,6 +1712,70 @@ def get_record(root, registry, aggregate_id):
 def is_suppressed(root, aggregate_id):
     record = get_record(root, "consent", aggregate_id)
     return bool(record and record.get("suppressed"))
+
+
+def _observed_age_days(value, now):
+    """Whole days between an occurred_at date/date-time and now; None if naive."""
+    try:
+        parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except (ValueError, AttributeError):
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=dt.timezone.utc)
+    return max(0, (now - parsed).days)
+
+
+def pending_report(root, now=None):
+    """Read-only cross-registry intake/lag report. Never creates runtime paths.
+
+    Per registry: pending proposal count, the oldest pending proposal's
+    occurred_at and age in days, and projection lag (stream head offset minus
+    the stored projection's last_offset). When the host authority key is
+    available the stream is fully verified (authority_verified: true); without
+    it the report falls back to the publicly verifiable structure — canonical
+    JSON, offsets, hash chain, request hashes, principal bindings — and labels
+    the entry authority_verified: false. The pending signal is advisory (a
+    user-facing nudge), never an authorization input, so a signature-skipped
+    read cannot widen authority. A stream that cannot be parsed at all is
+    reported as unverifiable rather than as zero-pending.
+    """
+    now = now or dt.datetime.now(dt.timezone.utc)
+    authority_verified = bool(os.environ.get(HOST_KEY_ENV))
+    registries = {}
+    total = 0
+    for registry in sorted(REGISTRIES):
+        entry = {"verifiable": True, "authority_verified": authority_verified,
+                 "pending": 0,
+                 "oldest_pending_occurred_at": None, "oldest_pending_age_days": None,
+                 "stream_offset": 0, "projection_offset": None, "projection_lag": None}
+        try:
+            state = load_state(root, registry, create=False,
+                               verify_authority=authority_verified)
+        except RegistryError as exc:
+            entry["verifiable"] = False
+            entry["error"] = str(exc)
+            registries[registry] = entry
+            continue
+        pending = list(state["pending"].values())
+        entry["pending"] = len(pending)
+        entry["stream_offset"] = state["last_offset"]
+        if pending:
+            oldest = min(pending, key=lambda item: item["occurred_at"])
+            entry["oldest_pending_occurred_at"] = oldest["occurred_at"]
+            entry["oldest_pending_age_days"] = _observed_age_days(oldest["occurred_at"], now)
+        _, projection_path, _ = memory_paths(root, registry, create=False)
+        try:
+            stored = json.loads(Path(projection_path).read_text(encoding="utf-8"))
+            stored_offset = stored.get("last_offset")
+        except (OSError, ValueError):
+            stored_offset = None
+        entry["projection_offset"] = stored_offset
+        if isinstance(stored_offset, int) and not isinstance(stored_offset, bool):
+            entry["projection_lag"] = state["last_offset"] - stored_offset
+        total += len(pending)
+        registries[registry] = entry
+    return {"registries": registries, "total_pending": total,
+            "authority_verified": authority_verified}
 
 
 def load_request(path):
@@ -1744,6 +1820,10 @@ def main(argv=None):
     get.add_argument("aggregate_id")
     suppressed = sub.add_parser("is-suppressed")
     suppressed.add_argument("aggregate_id")
+    sub.add_parser(
+        "pending",
+        help="Read-only cross-registry pending-proposal and projection-lag report.",
+    )
     args = parser.parse_args(argv)
     try:
         if args.command == "init":
@@ -1791,6 +1871,8 @@ def main(argv=None):
         elif args.command == "get":
             result = {"registry": args.registry, "aggregate_id": args.aggregate_id,
                       "record": get_record(args.root, args.registry, args.aggregate_id)}
+        elif args.command == "pending":
+            result = pending_report(args.root)
         else:
             result = {"aggregate_id": args.aggregate_id,
                       "suppressed": is_suppressed(args.root, args.aggregate_id)}

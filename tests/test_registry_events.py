@@ -1301,6 +1301,106 @@ class RegistryEventTests(unittest.TestCase):
         self.assertEqual(state["last_offset"], 1)
         self.assertTrue(projection.exists())
 
+    def test_pending_report_empty_root_is_quiet_and_creates_nothing(self):
+        report = registry.pending_report(self.root)
+        self.assertEqual(report["total_pending"], 0)
+        self.assertEqual(set(report["registries"]), registry.REGISTRIES)
+        self.assertTrue(all(e["verifiable"] for e in report["registries"].values()))
+        self.assertFalse((self.root / "memory").exists())
+
+    def test_pending_report_counts_and_ages_proposals(self):
+        old = event(
+            "entities", "pending-old", operation="propose",
+            proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+            occurred_at="2026-07-01T00:00:00Z",
+        )
+        registry.append_event(self.root, "entities", old)
+        recent = event(
+            "claims", "pending-recent", operation="propose",
+            proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+            occurred_at="2026-07-09T00:00:00Z",
+        )
+        registry.append_event(self.root, "claims", recent)
+        now = dt.datetime(2026, 7, 18, tzinfo=dt.timezone.utc)
+        report = registry.pending_report(self.root, now=now)
+        self.assertEqual(report["total_pending"], 2)
+        entities = report["registries"]["entities"]
+        self.assertEqual(entities["pending"], 1)
+        self.assertEqual(entities["oldest_pending_age_days"], 17)
+        self.assertEqual(entities["projection_lag"], 0)
+        self.assertEqual(report["registries"]["claims"]["oldest_pending_age_days"], 9)
+
+    def test_pending_report_resolved_proposal_drops_out(self):
+        proposal = event(
+            "entities", "pending-resolved", operation="propose",
+            proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        first = registry.append_event(self.root, "entities", proposal)
+        accept = event(
+            "entities", "accept-resolved", operation="accept", payload={},
+            proposal_event_id=first["event"]["event_id"],
+        )
+        registry.append_event(self.root, "entities", accept)
+        report = registry.pending_report(self.root)
+        self.assertEqual(report["registries"]["entities"]["pending"], 0)
+        self.assertEqual(report["total_pending"], 0)
+
+    def test_pending_report_detects_projection_lag(self):
+        registry.append_event(self.root, "creators", event("creators", "lag-1", aggregate_id="record-1"))
+        registry.append_event(self.root, "creators", event("creators", "lag-2", aggregate_id="record-2"))
+        projection_path = self.root / "memory/projections/creators.json"
+        stored = json.loads(projection_path.read_text(encoding="utf-8"))
+        stored["last_offset"] = 1
+        projection_path.write_text(json.dumps(stored), encoding="utf-8")
+        report = registry.pending_report(self.root)
+        creators = report["registries"]["creators"]
+        self.assertEqual(creators["stream_offset"], 2)
+        self.assertEqual(creators["projection_offset"], 1)
+        self.assertEqual(creators["projection_lag"], 1)
+
+    def test_pending_report_marks_unverifiable_stream(self):
+        registry.append_event(self.root, "creators", event("creators", "signed-1"))
+        stream_path, _, _ = registry.memory_paths(self.root, "creators")
+        with stream_path.open("a", encoding="utf-8") as handle:
+            handle.write("not-json\n")
+        report = registry.pending_report(self.root)
+        creators = report["registries"]["creators"]
+        self.assertFalse(creators["verifiable"])
+        self.assertIn("error", creators)
+        self.assertEqual(report["registries"]["entities"]["pending"], 0)
+
+    def test_pending_report_without_host_key_uses_labeled_advisory_read(self):
+        proposal = event(
+            "entities", "pending-advisory", operation="propose",
+            proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        first = registry.append_event(self.root, "entities", proposal)
+        accept = event(
+            "entities", "accept-advisory", operation="accept", payload={},
+            proposal_event_id=first["event"]["event_id"],
+        )
+        registry.append_event(self.root, "entities", accept)
+        registry.append_event(
+            self.root, "entities",
+            event("entities", "pending-advisory-2", operation="propose",
+                  proposed_operation="upsert", expected_revision=0,
+                  aggregate_id="record-2",
+                  actor={"type": "skill", "id": "content-writer"}))
+        os.environ.pop(registry.HOST_KEY_ENV, None)
+        report = registry.pending_report(self.root)
+        entities = report["registries"]["entities"]
+        self.assertTrue(entities["verifiable"])
+        self.assertFalse(entities["authority_verified"])
+        self.assertEqual(entities["pending"], 1)
+        os.environ[registry.HOST_KEY_ENV] = self.host_key
+        strict = registry.pending_report(self.root)
+        self.assertTrue(strict["registries"]["entities"]["authority_verified"])
+        self.assertEqual(strict["registries"]["entities"]["pending"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
