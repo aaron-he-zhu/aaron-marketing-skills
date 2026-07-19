@@ -1,0 +1,340 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/auditor-prompt-contract.schema.json",
+  "title": "Aaron auditor prompt contract",
+  "description": "A generated, source-bound prompt and evaluation contract for one auditor gate.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "contract_id",
+    "contract_kind",
+    "source_catalog",
+    "skill",
+    "gate",
+    "framework_contract",
+    "prompt",
+    "evaluation_variants"
+  ],
+  "properties": {
+    "$schema": {"const": "../auditor-prompt-contract.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "contract_id": {"type": "string", "pattern": "^auditor-gate:[a-z0-9][a-z0-9-]*$"},
+    "contract_kind": {"const": "auditor-gate"},
+    "source_catalog": {"$ref": "#/$defs/catalogRecord"},
+    "skill": {"$ref": "#/$defs/skill"},
+    "gate": {"$ref": "#/$defs/gate"},
+    "framework_contract": {"$ref": "#/$defs/frameworkContract"},
+    "prompt": {"$ref": "#/$defs/prompt"},
+    "evaluation_variants": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "prefixItems": [
+        {"$ref": "#/$defs/evaluationVariant", "properties": {"id": {"const": "complete"}}},
+        {"$ref": "#/$defs/evaluationVariant", "properties": {"id": {"const": "missing-evidence"}}},
+        {"$ref": "#/$defs/evaluationVariant", "properties": {"id": {"const": "single-veto"}}},
+        {"$ref": "#/$defs/evaluationVariant", "properties": {"id": {"const": "multi-veto"}}},
+        {"$ref": "#/$defs/evaluationVariant", "properties": {"id": {"const": "persistence-authority"}}}
+      ],
+      "items": false
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "semver": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "sourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "catalogRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "version", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "version": {"$ref": "#/$defs/semver"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "version", "sha256"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "path": {"type": "string", "pattern": "^[a-z0-9][a-z0-9/-]*/SKILL\\.md$"},
+        "version": {"$ref": "#/$defs/semver"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["framework", "runtime_sources", "sink"],
+      "properties": {
+        "framework": {"$ref": "#/$defs/framework"},
+        "runtime_sources": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/sourceRecord"}
+        },
+        "sink": {"type": "string", "pattern": "^memory/audits/[a-z0-9-]+/$"}
+      }
+    },
+    "framework": {
+      "enum": ["CORE-EEAT", "CITE", "STAR", "ROAS", "SEND", "RAMP", "ECHO", "TALE"]
+    },
+    "frameworkContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_path",
+        "catalog_version",
+        "catalog_sha256",
+        "profiles",
+        "required_context",
+        "qualified_veto_ids",
+        "scoring"
+      ],
+      "properties": {
+        "catalog_path": {"const": "references/framework-catalog.json"},
+        "catalog_version": {"$ref": "#/$defs/semver"},
+        "catalog_sha256": {"$ref": "#/$defs/sha256"},
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}
+        },
+        "required_context": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1, "maxLength": 512}
+        },
+        "qualified_veto_ids": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(?:CORE-EEAT|CITE|STAR|ROAS|SEND|RAMP|ECHO|TALE)-[A-Z][A-Z0-9]*$"
+          }
+        },
+        "scoring": {"$ref": "#/$defs/scoring"}
+      }
+    },
+    "scoring": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["missing_evidence_state", "multi_veto_minimum", "rounding", "veto_ceiling"],
+      "properties": {
+        "missing_evidence_state": {"const": "unknown"},
+        "multi_veto_minimum": {"const": 2},
+        "rounding": {"const": "floor"},
+        "veto_ceiling": {"const": 59}
+      }
+    },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "input_contract", "directives", "execution_steps", "output_contract", "authority"],
+      "properties": {
+        "role": {"type": "string", "minLength": 1, "maxLength": 512},
+        "input_contract": {"$ref": "#/$defs/inputContract"},
+        "directives": {
+          "type": "array",
+          "minItems": 9,
+          "maxItems": 9,
+          "items": {"type": "string", "minLength": 1, "maxLength": 1024}
+        },
+        "execution_steps": {
+          "type": "array",
+          "minItems": 6,
+          "maxItems": 6,
+          "items": {"type": "string", "minLength": 1, "maxLength": 1024}
+        },
+        "output_contract": {"$ref": "#/$defs/outputContract"},
+        "authority": {"$ref": "#/$defs/authority"}
+      }
+    },
+    "inputContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_required", "profile_required", "observation_date_required", "allowed_profiles", "required_context"],
+      "properties": {
+        "target_required": {"const": true},
+        "profile_required": {"const": true},
+        "observation_date_required": {"const": true},
+        "allowed_profiles": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}
+        },
+        "required_context": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1, "maxLength": 512}
+        }
+      }
+    },
+    "outputContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_schema_ref",
+        "artifact_schema_ref",
+        "status_values",
+        "verdict_values",
+        "score_states",
+        "qualified_veto_ids"
+      ],
+      "properties": {
+        "run_schema_ref": {"const": "references/audit-run.schema.json"},
+        "artifact_schema_ref": {"const": "references/audit-artifact.schema.json"},
+        "status_values": {"const": ["DONE", "DONE_WITH_CONCERNS", "BLOCKED", "NEEDS_INPUT"]},
+        "verdict_values": {"const": ["SHIP", "FIX", "BLOCK", "UNDECIDED"]},
+        "score_states": {"const": ["SCORED", "NOT_SCORED"]},
+        "qualified_veto_ids": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(?:CORE-EEAT|CITE|STAR|ROAS|SEND|RAMP|ECHO|TALE)-[A-Z][A-Z0-9]*$"
+          }
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "persistence_sink",
+        "persistence_requires_explicit_authorization",
+        "validate_before_persist",
+        "revalidate_after_persist",
+        "external_mutations_allowed",
+        "registry_mutations_allowed"
+      ],
+      "properties": {
+        "persistence_sink": {"type": "string", "pattern": "^memory/audits/[a-z0-9-]+/$"},
+        "persistence_requires_explicit_authorization": {"const": true},
+        "validate_before_persist": {"const": true},
+        "revalidate_after_persist": {"const": true},
+        "external_mutations_allowed": {"const": false},
+        "registry_mutations_allowed": {"const": false}
+      }
+    },
+    "evaluationVariant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "input", "expected", "semantic_case"],
+      "properties": {
+        "id": {"enum": ["complete", "missing-evidence", "single-veto", "multi-veto", "persistence-authority"]},
+        "input": {"$ref": "#/$defs/variantInput"},
+        "expected": {"$ref": "#/$defs/variantExpected"},
+        "semantic_case": {"$ref": "#/$defs/semanticCase"}
+      }
+    },
+    "semanticCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scenario", "input_summary", "expected_behavior", "failure_modes"],
+      "properties": {
+        "scenario": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "input_summary": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "expected_behavior": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {"type": "string", "minLength": 1, "maxLength": 1024}
+        },
+        "failure_modes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {"type": "string", "minLength": 1, "maxLength": 1024}
+        }
+      }
+    },
+    "variantInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence_coverage", "verified_veto_ids", "persistence_requested", "persistence_authorized"],
+      "properties": {
+        "evidence_coverage": {"enum": ["complete", "incomplete"]},
+        "verified_veto_ids": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(?:CORE-EEAT|CITE|STAR|ROAS|SEND|RAMP|ECHO|TALE)-[A-Z][A-Z0-9]*$"
+          }
+        },
+        "persistence_requested": {"type": "boolean"},
+        "persistence_authorized": {"type": "boolean"}
+      }
+    },
+    "variantExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status_any_of",
+        "verdict_any_of",
+        "score_state",
+        "cap_applied",
+        "raw_score_policy",
+        "final_score_policy",
+        "missing_evidence_state",
+        "persistence_action"
+      ],
+      "properties": {
+        "status_any_of": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"enum": ["DONE", "DONE_WITH_CONCERNS", "BLOCKED", "NEEDS_INPUT"]}
+        },
+        "verdict_any_of": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {"enum": ["SHIP", "FIX", "BLOCK", "UNDECIDED"]}
+        },
+        "score_state": {"enum": ["SCORED", "NOT_SCORED"]},
+        "cap_applied": {"type": "boolean"},
+        "raw_score_policy": {"enum": ["emit", "omit"]},
+        "final_score_policy": {"enum": ["equals-raw", "cap-at-59", "omit"]},
+        "missing_evidence_state": {"enum": ["unknown", "not-applicable"]},
+        "persistence_action": {"enum": ["not-requested", "deny-and-request-explicit-authorization"]}
+      }
+    }
+  }
+}

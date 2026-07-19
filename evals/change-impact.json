@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "unmatched_policy": "smoke-only",
+  "rules": [
+    {
+      "id": "global-topology",
+      "patterns": [
+        "references/system-catalog.json",
+        "references/system-catalog.schema.json",
+        "scripts/check-architecture.py",
+        "scripts/generate-system-docs.py"
+      ],
+      "selector": "all"
+    },
+    {
+      "id": "behavior-harness",
+      "patterns": [
+        "scripts/eval_cases.py",
+        "scripts/run-behavior-evals.py",
+        "scripts/check-evals.py",
+        "scripts/adapters/*.py",
+        "evals/behavior-adapter-v2.schema.json",
+        "evals/behavior-profiles.json",
+        "evals/change-impact.json",
+        "evals/codex-behavior-*-output.schema.json"
+      ],
+      "selector": "all"
+    },
+    {
+      "id": "authored-case-source",
+      "patterns": [
+        "evals/*/cases.md"
+      ],
+      "selector": "source-ref"
+    },
+    {
+      "id": "routing-library",
+      "patterns": [
+        "evals/auto-routing-scenarios.source.md",
+        "references/auto-routing-scenarios.md",
+        "references/auto-routing/*.md",
+        "scripts/generate-auto-routing-shards.py"
+      ],
+      "selector": "auto-routing"
+    },
+    {
+      "id": "skill-contract",
+      "patterns": [
+        "*/*/*/SKILL.md",
+        "protocol/*/SKILL.md"
+      ],
+      "selector": "skill-contract"
+    },
+    {
+      "id": "command-contract",
+      "patterns": [
+        "commands/*.md"
+      ],
+      "selector": "command-contract"
+    },
+    {
+      "id": "auditor-methodology",
+      "patterns": [
+        "references/*-benchmark.md",
+        "references/auditor-runbook.md",
+        "references/rubric-*.json",
+        "references/audit-*.json",
+        "references/auditor-prompt-contract.schema.json",
+        "references/auditor-prompt-contract-index.schema.json",
+        "references/framework-catalog.json",
+        "scripts/rubric-score.py",
+        "scripts/validate-audit-artifact.py"
+      ],
+      "selector": "auditors"
+    },
+    {
+      "id": "prompt-contract",
+      "patterns": [
+        "references/prompt-contracts/index.json",
+        "references/prompt-contracts/*.json",
+        "scripts/generate-auditor-prompt-contracts.py"
+      ],
+      "selector": "prompt-contract"
+    },
+    {
+      "id": "shared-reference",
+      "patterns": [
+        "references/*.md",
+        "references/platforms/*.md"
+      ],
+      "selector": "reference-consumers"
+    }
+  ]
+}

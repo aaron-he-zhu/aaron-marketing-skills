@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Structural lint for the eval seed set — Python 3 stdlib only.
+"""Strict provenance and structural lint for the eval corpus — stdlib only.
 
 This is NOT an eval *runner*: it never calls a model and never executes a skill.
-It only guards the *structure* of the manually-authored `evals/<skill>/cases.md`
-corpus so capability-expansion edits cannot silently rot it. Two guards:
+It strictly parses authored/routing/generated cases, verifies every real-case
+evidence hash, and guards the manually-authored `evals/<skill>/cases.md`
+structure so capability-expansion edits cannot silently rot it. Two guards:
 
   1. Presence + parseability: every skill (a subdir of a phase dir) has a
      `cases.md`; every case object carries the required keys; every
@@ -27,6 +28,8 @@ import os
 import re
 import sys
 
+import eval_cases
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVALS = os.path.join(ROOT, "evals")
 MANIFEST = os.path.join(EVALS, "structure-manifest.json")
@@ -42,9 +45,16 @@ PHASE_DIRS = [
     for phase in spec["phase_order"]
 ] + ["protocol"]
 REQUIRED_CASE_KEYS = [
-    "id", "type", "target_skill", "scenario",
+    "id", "type", "status", "target_skill", "scenario",
     "input_summary", "expected_behavior", "failure_modes",
 ]
+CASE_STATUS_RE = re.compile(r'(?:^|[{,])\s*"?status"?\s*:\s*"?([A-Za-z_-]+)"?')
+CASE_TYPE_RE = re.compile(r'(?:^|[{,])\s*"?type"?\s*:\s*"?([A-Za-z0-9_-]+)"?')
+EVIDENCE_REF_RE = re.compile(r'(?:^|[{,])\s*"?evidence_ref"?\s*:\s*"([^"\n]+)"')
+EVIDENCE_SHA_RE = re.compile(r'(?:^|[{,])\s*"?evidence_sha256"?\s*:\s*"([0-9a-f]+)"')
+SAFE_EVIDENCE_REF = re.compile(
+    r"^(?!/)(?!.*//)(?!.*(?:^|/)\.\.?(?:/|$))(?!.*\/$)[A-Za-z0-9][A-Za-z0-9._/-]*$"
+)
 # Manifest may carry ONLY these keys. Anything matching a score/metric word is a
 # scope-creep attempt (the rejected output-score baseline) and fails the run.
 MANIFEST_ALLOWED_KEYS = {"skills", "count", "required_case_keys", "note"}
@@ -129,6 +139,19 @@ def lint_cases(slug):
         m = TARGET_SKILL_RE.search(obj)
         if m and m.group(1) not in VALID_SLUGS:
             fail("%s/cases.md case #%d target_skill '%s' is not a real skill" % (slug, i, m.group(1)))
+        case_type = CASE_TYPE_RE.search(obj)
+        if case_type and case_type.group(1) != "eval-case":
+            fail("%s/cases.md case #%d type must be eval-case" % (slug, i))
+        status = CASE_STATUS_RE.search(obj)
+        if status and status.group(1) not in {"simulated", "real"}:
+            fail("%s/cases.md case #%d status must be simulated or real" % (slug, i))
+        if status and status.group(1) == "real":
+            evidence_ref = EVIDENCE_REF_RE.search(obj)
+            evidence_sha = EVIDENCE_SHA_RE.search(obj)
+            if not evidence_ref or not SAFE_EVIDENCE_REF.fullmatch(evidence_ref.group(1)):
+                fail("%s/cases.md case #%d real status requires a safe quoted evidence_ref" % (slug, i))
+            if not evidence_sha or len(evidence_sha.group(1)) != 64:
+                fail("%s/cases.md case #%d real status requires evidence_sha256" % (slug, i))
     return True
 
 
@@ -276,6 +299,25 @@ def build_manifest():
 
 def main():
     update = "--update" in sys.argv
+
+    try:
+        strict_cases = eval_cases.load_cases(ROOT)
+        derived_cases = eval_cases.load_derived_auditor_cases(ROOT)
+        all_cases = strict_cases + derived_cases
+        eval_cases.index_cases(all_cases)
+        counts = {
+            "authored": sum(case["source_group"] == "authored" for case in strict_cases),
+            "auto-routing": sum(case["source_group"] == "auto-routing" for case in strict_cases),
+            "derived-auditor": len(derived_cases),
+        }
+        if counts != {"authored": 572, "auto-routing": 88, "derived-auditor": 40}:
+            fail("strict eval corpus count drifted: %s" % counts)
+        print(
+            "== strict eval parser: %d authored + %d auto-routing + %d derived = %d cases =="
+            % (counts["authored"], counts["auto-routing"], counts["derived-auditor"], len(all_cases))
+        )
+    except eval_cases.EvalCaseError as exc:
+        fail("strict eval parser rejected the corpus: %s" % exc)
 
     present = [s for s in sorted(VALID_SLUGS) if lint_cases(s)]
     missing = sorted(set(VALID_SLUGS) - set(present))

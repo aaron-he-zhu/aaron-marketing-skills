@@ -223,6 +223,8 @@ Opt-in **run evidence** lives separately under `memory/runs/<run-id>/`: append-o
 
 Before a turn snapshot, the stdlib [`context-resolver.py`](scripts/context-resolver.py) can turn an explicit candidate request into a hash-bound [context manifest](references/context-resolution.md). It deterministically applies required/optional/forbidden policy, authority and freshness order, conflict/supersession rules, sensitivity and byte budgets, content dedupe, and typed omission reasons. It does not perform semantic retrieval or copy source content into the manifest. `/auto` likewise reads a generated index plus at most three discipline/cross-discipline [routing shards](references/auto-routing-scenarios.md), while one maintenance source preserves all 88 cases.
 
+Semantic conformance is also layered. The strict corpus projects 572 authored cases, 88 generated routing cases, and 40 generated auditor prompt-contract variants into one 700-case runner model. A fixed 24-case smoke profile, change-aware impact selection, and full nightly profile are credential-free to plan in CI. Optional protocol-v2 host adapters add hash-bound real execution provenance and keep behavior failures distinct from host failures; a real adapter run over a simulated case remains simulated case evidence. The eight generated auditor prompt contracts bind their skill, catalogs, framework rules, and runtime sources without becoming a second topology inventory; see the [semantic evaluation docs](https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/main/evals#readme) for the source-only maintenance workflow.
+
 **Hooks** (`hooks/hooks.json`, runner `hooks/claude-hook.sh`) wire seven Claude Code events:
 
 | Event | Matcher | What it does |
@@ -669,7 +671,7 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 |-------|--------|
 | `validate-skill.sh` | Frontmatter, required sections, version consistency, plugin-relative links across all 120 skills. |
 | `golden-auditor-math.py` | Deterministic weight-sum + worked-example arithmetic for **all eight** frameworks. |
-| `check-evals.py` | Eval structural lint + `structure-manifest.json` (120/120 skills carry eval cases). |
+| `check-evals.py` | Strict 700-case parser, evidence provenance, routing lint, and `structure-manifest.json` (120/120 skills carry eval cases). |
 | `check-pii.py` | Blocks committed secrets / PII (token-level allowlist, fail-closed). |
 | `check-stdlib-only.sh` | Dependency-creep guard + the Paid-Ads keyed-API red line. |
 | `check-versions.sh` | Version-sync guard: system catalog, plugin/marketplace/OpenClaw manifests, root + localized README badges, AGENTS/CLAUDE/VERSIONS, GitHub About, and all 120 skill versions stay aligned. |
@@ -678,6 +680,7 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 | `tests/test_run_events.py` | Operational event-tree/hash-chain, idempotency, concurrency, snapshot/save-point/envelope, privacy, recovery, and unsafe-path regressions. |
 | `tests/test_context_resolver.py` | Deterministic required/optional selection, freshness, conflict, dedupe, sensitivity/budget, signature, path, and immutable-output regressions. |
 | `generate-auto-routing-shards.py --check` | Proves the runtime routing index and eight queryable shards are exact generated views of one 88-case source. |
+| `generate-auditor-prompt-contracts.py --check` | Proves the eight gate prompt contracts and 40 semantic variants match current catalogs, skills, runtime sources, and hashes. |
 | `check-context-budget.py` | Recursive per-reference caps plus the largest valid three-shard `/auto` assembled-context budget. |
 
 Live endpoint drift is sampled separately by the **manual** [`scripts/connectors/smoke-live.sh`](scripts/connectors/smoke-live.sh) — one minimal real call per hosted connector listed in that script, with shape assertions (rate-limit answers count as SKIP); run it before a release, never in CI.

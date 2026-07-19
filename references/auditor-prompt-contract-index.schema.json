@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/auditor-prompt-contract-index.schema.json",
+  "title": "Aaron auditor prompt contract index",
+  "description": "Generated hash index for exactly eight auditor prompt contracts and forty evaluation variants.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "source_catalog",
+    "framework_catalog",
+    "contract_schema",
+    "contract_count",
+    "variant_count",
+    "contracts"
+  ],
+  "properties": {
+    "$schema": {"const": "../auditor-prompt-contract-index.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "source_catalog": {"$ref": "#/$defs/catalogRecord"},
+    "framework_catalog": {"$ref": "#/$defs/catalogRecord"},
+    "contract_schema": {"$ref": "#/$defs/sourceRecord"},
+    "contract_count": {"const": 8},
+    "variant_count": {"const": 40},
+    "contracts": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/indexEntry"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "semver": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "sourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "catalogRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "version", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "version": {"$ref": "#/$defs/semver"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "indexEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "skill",
+        "framework",
+        "ref",
+        "sha256",
+        "skill_version",
+        "skill_sha256",
+        "evaluation_variant_count",
+        "evaluation_variant_ids"
+      ],
+      "properties": {
+        "skill": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "framework": {"enum": ["CORE-EEAT", "CITE", "STAR", "ROAS", "SEND", "RAMP", "ECHO", "TALE"]},
+        "ref": {"type": "string", "pattern": "^references/prompt-contracts/[a-z0-9][a-z0-9-]*\\.json$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "skill_version": {"$ref": "#/$defs/semver"},
+        "skill_sha256": {"$ref": "#/$defs/sha256"},
+        "evaluation_variant_count": {"const": 5},
+        "evaluation_variant_ids": {
+          "const": ["complete", "missing-evidence", "single-veto", "multi-veto", "persistence-authority"]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "profiles": {
+    "smoke": {
+      "description": "Fixed cross-layer contract, routing, and safety sentinels for every behavior-eval run.",
+      "mode": "fixed",
+      "case_ids": [
+        "derived-narrative-quality-auditor-missing-evidence",
+        "derived-content-quality-auditor-missing-evidence",
+        "derived-domain-authority-auditor-missing-evidence",
+        "derived-social-quality-auditor-missing-evidence",
+        "derived-email-quality-auditor-missing-evidence",
+        "derived-ad-account-auditor-missing-evidence",
+        "derived-creator-content-auditor-missing-evidence",
+        "derived-launch-readiness-auditor-missing-evidence",
+        "auto-competitor-gap-001",
+        "influencer-content-review-gate-001",
+        "paid-prelaunch-account-audit-001",
+        "email-presend-audit-gate-001",
+        "launch-readiness-gate-001",
+        "social-prepublish-gate-001",
+        "narrative-preship-gate-001",
+        "cross-creator-whitelisting-001",
+        "pii-injection-guardrail-005",
+        "routing-chain-max-depth-001",
+        "routing-chain-visited-set-001",
+        "routing-chain-authority-stop-001",
+        "memory-management-sim-003",
+        "consent-registry-v17-002",
+        "offer-claims-registry-v17-003",
+        "influencer-outreach-side-effect-001"
+      ]
+    },
+    "change-aware": {
+      "description": "The fixed smoke sentinels plus every case semantically affected by the changed paths.",
+      "mode": "change-aware",
+      "include_profiles": [
+        "smoke"
+      ],
+      "impact_map": "evals/change-impact.json"
+    },
+    "nightly": {
+      "description": "All authored, auto-routing, and generated auditor-contract cases with no sampling or truncation.",
+      "mode": "all"
+    }
+  }
+}

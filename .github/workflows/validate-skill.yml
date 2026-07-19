@@ -30,8 +30,9 @@ jobs:
           python3 scripts/check-architecture.py
           python3 scripts/generate-system-docs.py --check
           python3 scripts/generate-auditor-runtime.py --check
+          python3 scripts/generate-auditor-prompt-contracts.py --check
           python3 scripts/generate-auto-routing-shards.py --check
-          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter tests.test_run_events tests.test_auto_routing_shards tests.test_context_resolver
+          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter tests.test_eval_cases tests.test_behavior_profiles tests.test_auditor_prompt_contracts tests.test_codex_behavior_adapter tests.test_run_events tests.test_auto_routing_shards tests.test_context_resolver
           bash tests/test_runtime_distribution.sh
 
       - name: Context budget and routing contracts
@@ -53,11 +54,18 @@ jobs:
       - name: Lint connector code (py_compile)
         run: |
           set -euo pipefail
-          python3 -m py_compile scripts/*.py scripts/connectors/*.py
+          python3 -m py_compile scripts/*.py scripts/connectors/*.py scripts/adapters/*.py
           echo "all Python helpers compile clean"
 
       - name: Deterministic behavior conformance
         run: python3 scripts/run-behavior-evals.py
+
+      - name: Credential-free semantic profile contracts
+        run: |
+          set -euo pipefail
+          python3 scripts/run-behavior-evals.py --adapter-only --adapter-protocol 2 --profile smoke --list-cases >/dev/null
+          python3 scripts/run-behavior-evals.py --adapter-only --adapter-protocol 2 --profile change-aware --changed-file scripts/run-behavior-evals.py --list-cases >/dev/null
+          python3 scripts/run-behavior-evals.py --adapter-only --adapter-protocol 2 --profile nightly --list-cases >/dev/null
 
       - name: Eval-fixture and routing structural lint
         run: python3 scripts/check-evals.py
