@@ -589,6 +589,39 @@ class AuditTrendsTest(unittest.TestCase):
             self.assertFalse(row["score_comparable"])
             self.assertIsNone(row["score_delta"])
 
+    def test_mid_series_catalog_drift_makes_score_delta_non_comparable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for index, score in enumerate((55, 60, 78), 1):
+                put_artifact(
+                    tmp, "m%d.md" % index, target="mid-drift",
+                    observed_at="2026-07-0%d" % index,
+                    verdict="FIX" if score < 78 else "SHIP", score=score,
+                )
+            artifacts, skipped = trends.collect(tmp)
+            self.assertEqual(skipped, 0)
+            migrated = [dict(item) for item in artifacts]
+            migrated[1]["catalog_version"] = "19.0.0"
+            row = trends.series_report(migrated)[0]
+            self.assertTrue(row["catalog_drift"])
+            self.assertFalse(row["score_comparable"])
+            self.assertIsNone(row["score_delta"])
+
+    def test_mid_series_context_drift_makes_score_delta_non_comparable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            for index, score in enumerate((55, 60, 78), 1):
+                put_artifact(
+                    tmp, "m%d.md" % index, target="mid-context",
+                    observed_at="2026-07-0%d" % index,
+                    verdict="FIX" if score < 78 else "SHIP", score=score,
+                )
+            artifacts, skipped = trends.collect(tmp)
+            self.assertEqual(skipped, 0)
+            migrated = [dict(item) for item in artifacts]
+            migrated[1]["context_sha256"] = "0" * 64
+            row = trends.series_report(migrated)[0]
+            self.assertFalse(row["score_comparable"])
+            self.assertIsNone(row["score_delta"])
+
     def test_human_output_escapes_terminal_control_sequences_in_target(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = put_artifact(
