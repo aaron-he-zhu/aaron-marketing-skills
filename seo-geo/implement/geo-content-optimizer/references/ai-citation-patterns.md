@@ -40,6 +40,24 @@ Each engine runs its own index and ranking logic. Below: what backend it uses an
 
 ---
 
+## 2026 platform updates (dated & sourced)
+
+The per-engine table above covers the durable levers; this section adds the 2026 platform shifts that move tactics, each with a verification date and primary source. These surfaces change quarterly — re-verify before quoting.
+
+**Google AI Overviews / AI Mode** — *verified 2026-07-16 (blog.google, Search Engine Land, Pew Research).* Gemini 3 became the default for AI Overviews + AI Mode (Jan 2026), and citation-vs-Top-10 overlap collapsed from ~76% to ~38% — passage quality now outweighs raw ranking for inclusion. The **2026-05-27** update added **Preferred Sources** (users ~2× as likely to click; prompt loyal audiences to add you as one), **"Subscribed" labels**, expanded **"Highly Cited" badges**, and **in-text citation links** beside the specific claim they support (rewards claim-level citability). Optimal extracted-passage length **134–167 words**; ~44% of citations come from the first 30% of the page body. Google **does not use `llms.txt`** (Illyes; developer guidance Jun 2026).
+
+**ChatGPT / ChatGPT Search** — *verified 2026-07-16 (developers.openai.com/api/docs/bots; Search Engine Land Jul 2026).* Reverse-engineering surfaces **multi-backend retrieval** (a `result_source` field shows "Labrador" ~88% of primary sources, plus Bright Data / Oxylabs / SERP), and retrieval is **non-deterministic** — ~12% of repeated prompts switch backends, so audit citations across repeated runs, not a single snapshot. **Thinking mode is a distinct citation surface**: only ~26% domain overlap with Instant, citation rate 50%→68%, shifting away from Reddit/UGC toward official docs and gov/academic. **Crawler split (official):** `OAI-SearchBot` controls Search visibility; `GPTBot` is training-only; `ChatGPT-User` is user-triggered — allow OAI-SearchBot even if you block GPTBot. **Referring-domain count gatekeeps retrieval** (sites with 32K+ referring domains ~3.5× more likely cited). The Mar 2026 model transition cut cited web sources ~20%.
+
+**Perplexity** — *verified 2026-07-16 (docs.perplexity.ai; Perplexity blog; Jun 2026 funding coverage).* Now on the in-house **Sonar** model family (external GPT/Claude routing deprecated Feb 2025). Two crawlers: `PerplexityBot` (index) and `Perplexity-User` (live per-query fetch that generally **ignores robots.txt** since it's user-initiated — allowlist by UA *and* published IP ranges in your WAF, the common accidental-block point). **Comet publisher rev-share:** citations pay out (80/20) **even without click-through**, so being cited has direct monetization for qualifying publishers. Levers: a direct answer in the first **40–60 words** of each section, **atomic paragraphs** that parse without surrounding context, and **freshness** (updates boost citation ~37% in the first 48h).
+
+**Claude** — *verified 2026-07-16 (platform.claude.com web-search docs).* Anthropic formalized a **three-crawler framework** (Feb 2026): `ClaudeBot` (training) · `Claude-SearchBot` (search index) · `Claude-User` (live user-directed fetch) — block training while staying citable by allowing the latter two; no stable IP ranges are published, so robots.txt UA rules are the only control. `web_search_20260209` added **dynamic filtering** — Claude code-filters raw results before they enter context, so cleanly-structured pages are likelier to survive the pass. `llms.txt` consumption by Claude is **unconfirmed** — treat as unproven.
+
+**Gemini app** — *verified 2026-07-16 (ai.google.dev/gemini-api/docs/google-search).* Cites via **Grounding with Google Search** — same stack as AI Overviews, different surface. **No separate Gemini crawler exists:** Googlebot indexability *is* Gemini visibility (Google-Extended only controls training opt-out), so optimizing for Gemini = Google Search technical health + the AI Overviews playbook. Citation share skews hard to platforms (Reddit ~27.5%, YouTube ~13.7%, Wikipedia ~12.7% — ~54% combined). Google **explicitly ignores `llms.txt`**.
+
+**On `llms.txt` across the board:** cheap agent-readiness hygiene, **not** a rankings or citation lever on any platform — Google states its systems ignore it, there is no confirmed third-party consumption by Claude, and server-log studies show ~97% of `llms.txt` files receive zero AI requests.
+
+---
+
 ## Universal Citation Factors
 
 **Content quality**: Factual accuracy, clear unambiguous language, comprehensive coverage, up-to-date information.
@@ -114,3 +132,7 @@ Content ready for AI citation should have:
 - [ ] Clear H2/H3 headings
 - [ ] Short paragraphs (2-4 sentences)
 - [ ] No promotional language
+
+---
+
+*The dated "2026 platform updates" section is contributed and maintained — with the full per-platform detail and source list — at [abouchard11/ai-citation-patterns](https://github.com/abouchard11/ai-citation-patterns).*
