@@ -4,8 +4,8 @@
 
 | Version | Supported |
 |---------|-----------|
-| 17.x    | Yes (current line) |
-| < 17    | No        |
+| 18.x    | Yes (current line) |
+| < 18    | No        |
 
 Policy: only the latest minor of the current major line receives fixes; older majors are unsupported — upgrade to the current release.
 

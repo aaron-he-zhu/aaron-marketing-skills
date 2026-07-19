@@ -114,6 +114,12 @@ def build_fixture(root: Path) -> None:
           "- **Current bundle**: %s\n"
           "120 skills (16 × 7 disciplines + 8 protocol)\n"
           "8 commands\n%s\n" % (BUNDLE, "\n".join(FRAMEWORK_LINES)))
+    write(root, "SECURITY.md",
+          "# Security Policy\n\n"
+          "| Version | Supported |\n"
+          "|---------|-----------|\n"
+          "| 1.x | Yes (current line) |\n"
+          "| < 1 | No |\n")
     write(root, "VERSIONS.md", VERSIONS_MD.format(bundle=BUNDLE))
     write(root, ".github/repo-about.json",
           json.dumps({"description": "2 fixture skills"}))
@@ -187,6 +193,26 @@ class CheckVersionsTests(unittest.TestCase):
         code, out = self.run_guard(mutate)
         self.assertEqual(1, code, out)
         self.assertIn("bundle_version 9.9.9 != bundle 1.0.0", out)
+
+    def test_security_supported_major_drift_fails(self):
+        def mutate(root):
+            write(root, "SECURITY.md",
+                  "# Security Policy\n\n"
+                  "| Version | Supported |\n"
+                  "|---------|-----------|\n"
+                  "| 9.x | Yes (current line) |\n"
+                  "| < 9 | No |\n")
+        code, out = self.run_guard(mutate)
+        self.assertEqual(1, code, out)
+        self.assertIn("current supported major 9 != bundle major 1", out)
+        self.assertIn("unsupported boundary 9 != bundle major 1", out)
+
+    def test_missing_security_policy_fails_closed(self):
+        def mutate(root):
+            (root / "SECURITY.md").unlink()
+        code, out = self.run_guard(mutate)
+        self.assertEqual(1, code, out)
+        self.assertIn("SECURITY.md missing", out)
 
     def test_extra_discipline_in_catalog_extends_routing_guard(self):
         # The discipline list is derived from the catalog: an 8th discipline

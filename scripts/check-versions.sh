@@ -19,6 +19,9 @@
 #      skill count — the About is not a versioned file, so it silently drifted
 #      on the v13/v14 discipline bumps; this keeps its count honest offline, and
 #      scripts/sync-about.sh + about-drift.yml handle projecting/verifying it on GitHub.
+#   5. SECURITY.md names the bundle major as the only supported major line and
+#      marks every earlier major unsupported. This is a release-policy guard,
+#      not an additional skill-authoring tracking surface.
 #
 # Bash plus Python stdlib JSON parsing (repo dependency policy). Exit 0 clean, 1 on any
 # mismatch, with one FAIL line per finding.
@@ -97,6 +100,20 @@ else
 FRAMEWORKS
   grep -q "^\*\*Current release\*\*: \`$BUNDLE\`" VERSIONS.md || err "VERSIONS.md 'Current release' line != $BUNDLE"
   grep -q "^### v$BUNDLE " VERSIONS.md || err "VERSIONS.md changelog entry '### v$BUNDLE …' missing"
+  # SECURITY.md intentionally tracks the supported major, not every point
+  # release. Parse the table fail-closed so a missing row, duplicate row, or
+  # stale unsupported boundary cannot silently pass.
+  bundle_major=${BUNDLE%%.*}
+  if [ ! -f SECURITY.md ]; then
+    err "SECURITY.md missing — supported-version policy cannot be verified"
+  else
+    security_current=$(sed -n 's/^| *\([0-9][0-9]*\)\.x *| *Yes (current line) *|$/\1/p' SECURITY.md)
+    security_unsupported=$(sed -n 's/^| *< *\([0-9][0-9]*\) *| *No *|$/\1/p' SECURITY.md)
+    [ "$security_current" = "$bundle_major" ] || \
+      err "SECURITY.md current supported major ${security_current:-missing} != bundle major $bundle_major"
+    [ "$security_unsupported" = "$bundle_major" ] || \
+      err "SECURITY.md unsupported boundary ${security_unsupported:-missing} != bundle major $bundle_major"
+  fi
   # openclaw.plugin.json is the OpenClaw bundle-plugin manifest (ClawHub package publish).
   # It carries the bundle version too — keep it in the version-lock so it can't drift.
   if [ -f openclaw.plugin.json ]; then
@@ -315,6 +332,6 @@ while IFS= read -r skill; do
 done < <(find $DISCIPLINES protocol -name SKILL.md 2>/dev/null | sed 's#/SKILL.md##; s#.*/##' | sort -u)
 
 if [ $fail -eq 0 ]; then
-  echo "version-sync clean — bundle $BUNDLE, $skill_count skills consistent across the 10 tracking surfaces + README topology/commands + localized badges + OpenClaw manifest + About SSOT; auto-routing covers all $DISC_COUNT disciplines; every discipline command, guide pair, and the CLAUDE.md catalog list their full skill sets"
+  echo "version-sync clean — bundle $BUNDLE, $skill_count skills consistent across the 10 tracking surfaces + SECURITY support policy + README topology/commands + localized badges + OpenClaw manifest + About SSOT; auto-routing covers all $DISC_COUNT disciplines; every discipline command, guide pair, and the CLAUDE.md catalog list their full skill sets"
 fi
 exit $fail
