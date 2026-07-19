@@ -1,0 +1,258 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/audit-loop-state.schema.json",
+  "title": "Aaron Marketing Proposal-only Audit Loop Step v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "run_id", "loop_id", "transition_id", "sequence",
+    "transition", "from_state", "state", "run_parent_event_id",
+    "run_parent_event_sha256", "cycle", "max_cycles",
+    "total_retries", "state_retries", "max_retries", "backoff_seconds",
+    "retry_not_before", "deadline", "occurred_at", "recorded_at",
+    "idempotency_key", "request_hash", "previous_step_ref",
+    "previous_step_sha256", "expected_previous_sha256", "proposal_only",
+    "external_mutation_authorized", "baseline_audit", "latest_audit",
+    "proposal", "owner", "intervention", "reason_code", "lease"
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "uuid": {
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "reference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))(?!.*\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "state": {
+      "enum": [
+        "awaiting-proposal", "awaiting-owner", "awaiting-intervention",
+        "awaiting-reaudit", "next", "converged", "exhausted",
+        "gate-blocked", "needs-input"
+      ]
+    },
+    "auditIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref", "sha256", "schema_version", "runbook_version",
+        "catalog_version", "framework", "profile", "target",
+        "observed_at", "target_identity_sha256", "context_sha256", "status", "verdict",
+        "score_state", "evidence_coverage", "score_confidence",
+        "raw_overall_score", "final_overall_score"
+      ],
+      "properties": {
+        "ref": {"$ref": "#/$defs/reference"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "schema_version": {"const": "3.0"},
+        "runbook_version": {"const": "3.0.0"},
+        "catalog_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "framework": {"enum": ["CORE-EEAT", "CITE", "STAR", "ROAS", "SEND", "RAMP", "ECHO", "TALE"]},
+        "profile": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "target": {"type": "string", "minLength": 1},
+        "observed_at": {"type": "string", "format": "date"},
+        "target_identity_sha256": {"$ref": "#/$defs/sha256"},
+        "context_sha256": {"$ref": "#/$defs/sha256"},
+        "status": {"enum": ["DONE", "DONE_WITH_CONCERNS", "BLOCKED", "NEEDS_INPUT"]},
+        "verdict": {"enum": ["SHIP", "FIX", "BLOCK", "UNDECIDED"]},
+        "score_state": {"enum": ["SCORED", "NOT_SCORED"]},
+        "evidence_coverage": {"type": "integer", "minimum": 0, "maximum": 100},
+        "score_confidence": {"enum": ["high", "medium", "low", "not_scored"]},
+        "raw_overall_score": {"type": ["integer", "null"], "minimum": 0, "maximum": 100},
+        "final_overall_score": {"type": ["integer", "null"], "minimum": 0, "maximum": 100}
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256", "bytes"],
+      "properties": {
+        "ref": {"$ref": "#/$defs/reference"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 1, "maximum": 10000000}
+      }
+    },
+    "lease": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generation", "active", "owner", "token_sha256", "acquired_at",
+        "expires_at", "released_at"
+      ],
+      "properties": {
+        "generation": {"type": "integer", "minimum": 0, "maximum": 128},
+        "active": {"type": "boolean"},
+        "owner": {"oneOf": [{"$ref": "#/$defs/safeId"}, {"type": "null"}]},
+        "token_sha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "acquired_at": {"type": ["string", "null"], "format": "date-time"},
+        "expires_at": {"type": ["string", "null"], "format": "date-time"},
+        "released_at": {"type": ["string", "null"], "format": "date-time"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"generation": {"const": 0}}, "required": ["generation"]},
+          "then": {
+            "properties": {
+              "active": {"const": false}, "owner": {"type": "null"},
+              "token_sha256": {"type": "null"}, "acquired_at": {"type": "null"},
+              "expires_at": {"type": "null"}, "released_at": {"type": "null"}
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"generation": {"minimum": 1}},
+            "required": ["generation"]
+          },
+          "then": {
+            "properties": {
+              "owner": {"$ref": "#/$defs/safeId"},
+              "token_sha256": {"$ref": "#/$defs/sha256"},
+              "acquired_at": {"type": "string", "format": "date-time"},
+              "expires_at": {"type": "string", "format": "date-time"}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"active": {"const": true}}, "required": ["active"]},
+          "then": {"properties": {"released_at": {"type": "null"}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "generation": {"minimum": 1},
+              "active": {"const": false}
+            },
+            "required": ["generation", "active"]
+          },
+          "then": {
+            "properties": {
+              "released_at": {"type": "string", "format": "date-time"}
+            }
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "2.0"},
+    "run_id": {"$ref": "#/$defs/uuid"},
+    "loop_id": {"$ref": "#/$defs/uuid"},
+    "transition_id": {"$ref": "#/$defs/uuid"},
+    "sequence": {"type": "integer", "minimum": 1, "maximum": 128},
+    "transition": {
+      "enum": [
+        "start", "lease-acquired", "proposal-recorded", "owner-accepted", "owner-rejected",
+        "intervention-recorded", "reaudit-recorded", "cycle-advanced",
+        "retry-scheduled", "retry-exhausted", "deadline-expired"
+      ]
+    },
+    "from_state": {"oneOf": [{"$ref": "#/$defs/state"}, {"type": "null"}]},
+    "state": {"$ref": "#/$defs/state"},
+    "run_parent_event_id": {"$ref": "#/$defs/uuid"},
+    "run_parent_event_sha256": {"$ref": "#/$defs/sha256"},
+    "cycle": {"type": "integer", "minimum": 1, "maximum": 3},
+    "max_cycles": {"type": "integer", "minimum": 1, "maximum": 3},
+    "total_retries": {"type": "integer", "minimum": 0, "maximum": 128},
+    "state_retries": {"type": "integer", "minimum": 0, "maximum": 11},
+    "max_retries": {"type": "integer", "minimum": 0, "maximum": 10},
+    "backoff_seconds": {"type": "integer", "minimum": 0, "maximum": 32},
+    "retry_not_before": {"type": ["string", "null"], "format": "date-time"},
+    "deadline": {"type": "string", "format": "date-time"},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "idempotency_key": {"$ref": "#/$defs/safeId"},
+    "request_hash": {"$ref": "#/$defs/sha256"},
+    "previous_step_ref": {"oneOf": [{"$ref": "#/$defs/reference"}, {"type": "null"}]},
+    "previous_step_sha256": {"$ref": "#/$defs/sha256"},
+    "expected_previous_sha256": {"$ref": "#/$defs/sha256"},
+    "proposal_only": {"const": true},
+    "external_mutation_authorized": {"const": false},
+    "baseline_audit": {"$ref": "#/$defs/auditIdentity"},
+    "latest_audit": {"$ref": "#/$defs/auditIdentity"},
+    "proposal": {"oneOf": [{"$ref": "#/$defs/evidence"}, {"type": "null"}]},
+    "owner": {"oneOf": [{"$ref": "#/$defs/safeId"}, {"type": "null"}]},
+    "intervention": {"oneOf": [{"$ref": "#/$defs/evidence"}, {"type": "null"}]},
+    "reason_code": {"$ref": "#/$defs/safeId"},
+    "lease": {"$ref": "#/$defs/lease"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"transition": {"const": "start"}}, "required": ["transition"]},
+      "then": {
+        "properties": {
+          "sequence": {"const": 1}, "from_state": {"type": "null"},
+          "state": {"const": "awaiting-proposal"},
+          "previous_step_ref": {"type": "null"},
+          "previous_step_sha256": {"const": "0000000000000000000000000000000000000000000000000000000000000000"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"state": {"const": "converged"}}, "required": ["state"]},
+      "then": {
+        "properties": {
+          "latest_audit": {
+            "properties": {
+              "status": {"const": "DONE"}, "verdict": {"const": "SHIP"},
+              "score_state": {"const": "SCORED"},
+              "score_confidence": {"enum": ["medium", "high"]}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"transition": {"const": "owner-accepted"}}, "required": ["transition"]},
+      "then": {
+        "properties": {
+          "from_state": {"const": "awaiting-owner"},
+          "state": {"const": "awaiting-intervention"},
+          "owner": {"$ref": "#/$defs/safeId"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"transition": {"const": "owner-rejected"}}, "required": ["transition"]},
+      "then": {
+        "properties": {
+          "from_state": {"const": "awaiting-owner"},
+          "state": {"const": "needs-input"},
+          "owner": {"$ref": "#/$defs/safeId"},
+          "reason_code": {"const": "owner-rejected"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"transition": {"const": "retry-exhausted"}}, "required": ["transition"]},
+      "then": {
+        "properties": {
+          "state": {"const": "exhausted"},
+          "reason_code": {"const": "retry-budget-exhausted"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"transition": {"const": "deadline-expired"}}, "required": ["transition"]},
+      "then": {
+        "properties": {
+          "state": {"const": "exhausted"},
+          "reason_code": {"const": "deadline-expired"}
+        }
+      }
+    }
+  ]
+}

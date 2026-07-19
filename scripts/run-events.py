@@ -21,6 +21,7 @@ import re
 import stat as statmod
 import subprocess
 import sys
+import time
 import uuid
 
 try:
@@ -30,6 +31,7 @@ except ImportError:  # pragma: no cover - writes fail closed without POSIX locki
 
 
 SCHEMA_VERSION = "1.0"
+AUDIT_LOOP_SCHEMA_VERSION = "2.0"
 NAMESPACE = uuid.UUID("5a325540-897b-44fe-8022-a5c59dc12bcc")
 ZERO_HASH = "0" * 64
 MAX_EVENT_BYTES = 64_000
@@ -39,6 +41,10 @@ MAX_REFERENCE_BYTES = 10_000_000
 MAX_REFERENCE_INSPECTION_BYTES = 64_000_000
 MAX_CONTEXT_MANIFESTS = 256
 MAX_EVENTS = 10_000
+MAX_AUDIT_LOOPS = 256
+MAX_LOOP_VALIDATION_SECONDS = 30
+MAX_LOOP_CLOSURE_STEPS = 1_024
+MAX_LOOP_CLOSURE_BYTES = 16_000_000
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 SAFE_REF = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:/-]{0,511}$")
 SAFE_FIELD = re.compile(r"^[A-Za-z_][A-Za-z0-9_.-]{0,63}$")
@@ -71,13 +77,36 @@ REQUEST_FIELDS = {
 ASSIGNED_FIELDS = {"event_id", "offset", "recorded_at", "request_hash", "previous_hash", "event_hash"}
 DIMENSION_FIELDS = {
     "hook_name", "tool_name", "validator", "evidence_mode", "adapter_name",
-    "model_id", "route_reason", "failure_class", "loop_state", "branch_reason",
+    "model_id", "route_reason", "route_transition", "route_command",
+    "failure_class", "loop_state", "branch_reason",
+}
+ROUTE_TRANSITIONS = {"initial", "automatic-handoff", "user-reroute"}
+MAX_ROUTE_CHAIN_SKILLS = 4
+LOOP_STATES = {
+    "awaiting-proposal", "awaiting-owner", "awaiting-intervention",
+    "awaiting-reaudit", "next", "converged", "exhausted",
+    "gate-blocked", "needs-input",
+}
+LOOP_TERMINAL_STATES = {"converged", "exhausted", "gate-blocked", "needs-input"}
+LOOP_STEP_FIELDS = {
+    "schema_version", "run_id", "loop_id", "transition_id", "sequence",
+    "transition", "from_state", "state", "cycle", "max_cycles", "total_retries",
+    "state_retries", "max_retries", "backoff_seconds", "retry_not_before",
+    "deadline", "occurred_at", "recorded_at", "idempotency_key", "request_hash",
+    "run_parent_event_id", "run_parent_event_sha256",
+    "previous_step_ref", "previous_step_sha256", "expected_previous_sha256",
+    "proposal_only", "external_mutation_authorized", "baseline_audit", "latest_audit",
+    "proposal", "owner", "intervention", "reason_code", "lease",
+}
+LOOP_CLOSURE_FAILURE_CODES = {
+    "nonterminal", "missing-step", "hash-mismatch", "invalid-chain",
+    "event-mismatch", "validation-timeout", "validator-error",
 }
 INTERNAL_EVENT_TYPES = {
-    "turn_snapshot_created", "save_point_created", "run_waiting",
+    "turn_snapshot_created", "save_point_created", "loop_state_changed", "run_waiting",
     "run_finished", "run_failed", "run_aborted",
 }
-RESERVED_IDEMPOTENCY_PREFIXES = ("snapshot:", "save:", "envelope:", "hook:")
+RESERVED_IDEMPOTENCY_PREFIXES = ("snapshot:", "save:", "loop:", "envelope:", "hook:")
 
 
 class RunEventError(ValueError):
@@ -318,12 +347,14 @@ def validate_event_semantics(request):
     turn_id = request["turn_id"]
     required = {
         "run_started": ("started", "run"),
+        "route_selected": ("succeeded", "route"),
         "turn_started": ("started", "turn"),
         "turn_snapshot_created": ("succeeded", "turn"),
         "tool_requested": ("started", "tool"),
         "tool_allowed": ("started", "tool"),
         "tool_blocked": ("blocked", "tool"),
         "save_point_created": ("succeeded", "save-point"),
+        "loop_state_changed": ("succeeded", "loop"),
         "run_waiting": ("waiting", "run"),
         "run_finished": ("succeeded", "run"),
         "run_failed": ("failed", "run"),
@@ -339,6 +370,39 @@ def validate_event_semantics(request):
     if event_type in {"run_started", "run_waiting", *TERMINAL_TYPES}:
         if subject["ref"] != request["run_id"] or turn_id is not None:
             raise RunEventError("run lifecycle events require the matching run subject and no turn_id")
+    if event_type == "route_selected":
+        if "reason_code" not in request:
+            raise RunEventError("route_selected requires reason_code")
+        if set(request["dimensions"]) != {"route_transition", "route_command"}:
+            raise RunEventError(
+                "route_selected dimensions must contain exactly route_transition and route_command"
+            )
+        validate_enum(
+            request["dimensions"]["route_transition"],
+            ROUTE_TRANSITIONS,
+            "dimensions.route_transition",
+        )
+    if event_type == "loop_state_changed":
+        if turn_id is not None or "reason_code" not in request:
+            raise RunEventError("loop_state_changed requires reason_code and no turn_id")
+        validate_uuid(subject["ref"], "loop_state_changed subject.ref")
+        if set(request["dimensions"]) != {"loop_state"}:
+            raise RunEventError("loop_state_changed requires exactly the loop_state dimension")
+        validate_enum(request["dimensions"]["loop_state"], LOOP_STATES, "dimensions.loop_state")
+        if set(request["metrics"]) != {"sequence", "cycle", "total_retries"}:
+            raise RunEventError(
+                "loop_state_changed requires sequence, cycle, and total_retries metrics"
+            )
+        for name in ("sequence", "cycle", "total_retries"):
+            value = request["metrics"][name]
+            if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+                raise RunEventError("loop_state_changed metrics.%s must be a non-negative integer" % name)
+        if not 1 <= request["metrics"]["sequence"] <= 128:
+            raise RunEventError("loop_state_changed sequence must be 1..128")
+        if not 1 <= request["metrics"]["cycle"] <= 3:
+            raise RunEventError("loop_state_changed cycle must be 1..3")
+        if request["metrics"]["total_retries"] > 128:
+            raise RunEventError("loop_state_changed total_retries must be at most 128")
     if event_type in {"turn_started", "turn_snapshot_created", "turn_finished"}:
         if turn_id is None or subject["kind"] != "turn" or subject["ref"] != turn_id:
             raise RunEventError("turn lifecycle events require a matching turn subject")
@@ -359,6 +423,7 @@ def validate_event_semantics(request):
     typed_reference = {
         "turn_snapshot_created": "turn-snapshot",
         "save_point_created": "save-point",
+        "loop_state_changed": "loop",
     }.get(event_type)
     if typed_reference and (
             len(references) != 1 or references[0]["kind"] != typed_reference
@@ -376,6 +441,12 @@ def validate_event_semantics(request):
         )
         if references[0]["ref"] != expected:
             raise RunEventError("save_point_created requires its canonical runtime reference")
+    if event_type == "loop_state_changed":
+        prefix = "memory/runs/%s/loops/%s/" % (request["run_id"], subject["ref"])
+        reference = references[0]["ref"]
+        if not reference.startswith(prefix) or not re.fullmatch(
+                r"[0-9]{3}-[a-z][a-z-]*\.json", reference[len(prefix):]):
+            raise RunEventError("loop_state_changed requires its canonical immutable step reference")
     if event_type in {"run_waiting", *TERMINAL_TYPES} and (
             len(references) != 1 or references[0]["kind"] != "run-envelope"
             or "sha256" not in references[0]
@@ -403,9 +474,79 @@ def event_ancestry(events, parent_event_id):
     return ancestry
 
 
+def route_state_from_events(selected_events):
+    """Derive the typed route chain from one already-selected event ancestry.
+
+    There is intentionally no compatibility fallback for pre-contract route events.
+    These runtime changes have not been published, so an untyped legacy event fails
+    validation instead of being guessed from snapshots or actor metadata.
+    """
+    state = None
+    for event in selected_events:
+        if event["event_type"] != "route_selected":
+            continue
+        transition = event["dimensions"]["route_transition"]
+        target = event["subject"]["ref"]
+        if transition == "initial":
+            if state is not None:
+                raise RunEventError("initial route may appear only once on the selected ancestry")
+            chain = [target]
+        elif transition == "automatic-handoff":
+            if state is None:
+                raise RunEventError("automatic-handoff requires a prior route on the selected ancestry")
+            if target in state["chain"]:
+                raise RunEventError("automatic-handoff target was already visited in the current route chain")
+            if len(state["chain"]) >= MAX_ROUTE_CHAIN_SKILLS:
+                raise RunEventError("automatic-handoff exceeds the three-handoff route limit")
+            chain = [*state["chain"], target]
+        elif transition == "user-reroute":
+            if state is None:
+                raise RunEventError("user-reroute requires a prior route on the selected ancestry")
+            # actor.type is observational provenance, not authorization. The typed
+            # transition is what resets this operational chain.
+            chain = [target]
+        else:  # validate_event_semantics should make this unreachable.
+            raise RunEventError("route transition is unsupported")
+        state = {
+            "skill": target,
+            "command": event["dimensions"]["route_command"],
+            "reason_code": event["reason_code"],
+            "transition": transition,
+            "chain": chain,
+            "chain_depth": len(chain) - 1,
+            "event_id": event.get("event_id"),
+        }
+    return state
+
+
+def selected_route_state(events, parent_event_id):
+    """Return route state from the root-to-parent ancestry, never sibling events."""
+    return route_state_from_events(event_ancestry(events, parent_event_id))
+
+
 def validate_event_transition(request, events):
     """Validate stream-relative lifecycle transitions on the selected branch."""
     event_type = request["event_type"]
+    if event_type == "route_selected":
+        # Include the proposed event in the reducer so every route invariant has a
+        # single implementation shared by append and stream replay.
+        route_state_from_events([
+            *event_ancestry(events, request["parent_event_id"]), request,
+        ])
+        return
+    if event_type == "loop_state_changed":
+        ancestry = event_ancestry(events, request["parent_event_id"])
+        prior = [
+            event for event in ancestry
+            if event["event_type"] == "loop_state_changed"
+            and event["subject"]["ref"] == request["subject"]["ref"]
+        ]
+        expected_sequence = len(prior) + 1
+        if request["metrics"]["sequence"] != expected_sequence:
+            raise RunEventError(
+                "loop_state_changed sequence does not extend the selected-ancestry loop"
+            )
+        return
     if event_type not in {"tool_requested", "tool_allowed", "tool_blocked", "tool_finished"}:
         return
     turn_id = request["turn_id"]
@@ -526,6 +667,10 @@ def project_events(run_id, events):
             "last_turn_snapshot_sha256": None, "last_save_point_ref": None,
             "last_save_point_sha256": None, "run_envelope_ref": None,
             "run_envelope_sha256": None,
+            "route_skill": None, "route_command": None,
+            "route_reason_code": None, "route_transition": None,
+            "route_chain": [], "automatic_handoff_depth": None,
+            "loop_states": [],
             "started_at": None, "updated_at": None,
         }
     children = {event["event_id"]: 0 for event in events}
@@ -545,15 +690,29 @@ def project_events(run_id, events):
         parent_id = cursor["parent_event_id"]
         cursor = by_id.get(parent_id) if parent_id is not None else None
     selected_path.reverse()
+    route_state = route_state_from_events(selected_path)
     open_tools = set()
     last_snapshot = last_snapshot_hash = last_save = last_save_hash = None
     envelope = envelope_hash = None
     validated_artifacts = []
+    loop_states = {}
     for event in selected_path:
         if event["event_type"] in {"tool_requested", "tool_allowed"}:
             open_tools.add(event["subject"]["ref"])
         elif event["event_type"] in {"tool_blocked", "tool_finished"}:
             open_tools.discard(event["subject"]["ref"])
+        elif event["event_type"] == "loop_state_changed":
+            reference = event["references"][0]
+            loop_states[event["subject"]["ref"]] = {
+                "loop_id": event["subject"]["ref"],
+                "state": event["dimensions"]["loop_state"],
+                "reason_code": event["reason_code"],
+                "sequence": event["metrics"]["sequence"],
+                "cycle": event["metrics"]["cycle"],
+                "total_retries": event["metrics"]["total_retries"],
+                "step_ref": reference["ref"],
+                "step_sha256": reference["sha256"],
+            }
         for reference in event["references"]:
             if reference["kind"] == "turn-snapshot":
                 last_snapshot = reference["ref"]
@@ -595,6 +754,13 @@ def project_events(run_id, events):
         "last_save_point_sha256": last_save_hash,
         "run_envelope_ref": envelope,
         "run_envelope_sha256": envelope_hash,
+        "route_skill": route_state["skill"] if route_state else None,
+        "route_command": route_state["command"] if route_state else None,
+        "route_reason_code": route_state["reason_code"] if route_state else None,
+        "route_transition": route_state["transition"] if route_state else None,
+        "route_chain": route_state["chain"] if route_state else [],
+        "automatic_handoff_depth": route_state["chain_depth"] if route_state else None,
+        "loop_states": [loop_states[key] for key in sorted(loop_states)],
         "started_at": events[0]["occurred_at"],
         "updated_at": last["recorded_at"],
     }
@@ -842,6 +1008,32 @@ def locked_stream(path, exclusive, create=True):
 
 
 @contextlib.contextmanager
+def locked_run_coordinator(root, run_id):
+    """Serialize every existing-run mutation before narrower runtime locks."""
+    root_path = normalized_root(root)
+    stream, _projection, run_dir = run_paths(root_path, run_id, create=False)
+    status = _lstat(run_dir, "run directory", missing_ok=True)
+    if status is None:
+        raise RunEventError("run does not exist: %s" % run_id)
+    if statmod.S_ISLNK(status.st_mode) or not statmod.S_ISDIR(status.st_mode):
+        raise RunEventError("run directory must be a real directory")
+    lock_path = run_dir / ".coordinator.lock"
+    ensure_ignored(root_path, [lock_path])
+    if _lstat(stream, "run event stream", missing_ok=True) is None:
+        raise RunEventError("run does not exist: %s" % run_id)
+    if _lstat(lock_path, "run coordinator lock", missing_ok=True) is None:
+        # Serialize first creation on the already durable stream. The stream is
+        # released before taking the coordinator, preserving the steady-state
+        # coordinator -> stream lock order.
+        with locked_stream(stream, exclusive=True, create=False):
+            if _lstat(lock_path, "run coordinator lock", missing_ok=True) is None:
+                with locked_stream(lock_path, exclusive=True):
+                    pass
+    with locked_stream(lock_path, exclusive=True) as handle:
+        yield handle
+
+
+@contextlib.contextmanager
 def anchored_regular_file(path):
     resolved_parent = normalized_root(path.parent)
     parent_fd, identity = open_directory_anchor(resolved_parent)
@@ -1043,6 +1235,19 @@ def atomic_write_json(root, path, value):
 
 
 def write_immutable_json(root, path, value):
+    try:
+        proposed_raw = (
+            json.dumps(
+                value, indent=2, sort_keys=True, ensure_ascii=False,
+                allow_nan=False,
+            ) + "\n"
+        ).encode("utf-8")
+    except (TypeError, ValueError, OverflowError, RecursionError) as exc:
+        raise RunEventError("immutable runtime document must be finite JSON: %s" % exc) from exc
+    if len(proposed_raw) > MAX_DOCUMENT_BYTES:
+        raise RunEventError(
+            "immutable runtime document exceeds %d bytes" % MAX_DOCUMENT_BYTES
+        )
     recover_immutable_install(path)
     status = _lstat(path, "runtime document", missing_ok=True)
     if status is not None:
@@ -1156,6 +1361,16 @@ def hook_retry_equivalent(existing, normalized):
     return canonical_json(prior) == canonical_json(normalized)
 
 
+def ensure_event_capacity(events, event_type):
+    """Reserve the final stream slot exclusively for a terminal envelope."""
+    if len(events) >= MAX_EVENTS:
+        raise RunEventError("event stream has reached the %d event limit" % MAX_EVENTS)
+    if len(events) >= MAX_EVENTS - 1 and event_type not in TERMINAL_TYPES:
+        raise RunEventError(
+            "event stream reserves its final slot for a terminal run envelope"
+        )
+
+
 def append_locked(root, run_id, handle, events, request, projection_path, allow_hook_retry=False):
     normalized = validate_event_request(request)
     if normalized["run_id"] != run_id:
@@ -1171,8 +1386,7 @@ def append_locked(root, run_id, handle, events, request, projection_path, allow_
         return {"deduplicated": True, "event": existing, "projection": projected}
     if events and events[-1]["event_type"] in TERMINAL_TYPES:
         raise RunEventError("terminal run cannot accept another event")
-    if len(events) >= MAX_EVENTS:
-        raise RunEventError("event stream has reached the %d event limit" % MAX_EVENTS)
+    ensure_event_capacity(events, normalized["event_type"])
     if not events and normalized["event_type"] != "run_started":
         raise RunEventError("new run must start with run_started")
     if events and normalized["parent_event_id"] not in {event["event_id"] for event in events}:
@@ -1206,6 +1420,16 @@ def append_locked(root, run_id, handle, events, request, projection_path, allow_
     return {"deduplicated": False, "event": event, "projection": projected}
 
 
+def _append_event_under_coordinator(root, run_id, normalized, allow_hook_retry=False):
+    """Append one already validated request while the caller owns coordination."""
+    stream, projection, _ = run_paths(root, run_id, create=True)
+    with locked_stream(stream, exclusive=True) as handle:
+        events = read_stream(handle, run_id)
+        return append_locked(
+            root, run_id, handle, events, normalized, projection, allow_hook_retry,
+        )
+
+
 def append_event(root, run_id, request, allow_hook_retry=False):
     normalized = validate_event_request(request)
     if normalized["event_type"] in INTERNAL_EVENT_TYPES:
@@ -1214,14 +1438,24 @@ def append_event(root, run_id, request, allow_hook_retry=False):
                      if normalized["idempotency_key"].startswith(prefix)), None)
     if reserved and not (allow_hook_retry and reserved == "hook:"):
         raise RunEventError("idempotency key prefix is reserved for the runtime")
-    stream, projection, _ = run_paths(root, run_id, create=True)
-    with locked_stream(stream, exclusive=True) as handle:
-        events = read_stream(handle, run_id)
-        return append_locked(root, run_id, handle, events, normalized, projection, allow_hook_retry)
+    root_path = normalized_root(root)
+    stream, _projection, _run_dir = run_paths(root_path, run_id, create=False)
+    if _lstat(stream, "run event stream", missing_ok=True) is None:
+        if normalized["event_type"] != "run_started":
+            raise RunEventError("new run must start with run_started")
+        # The first event creates the run stream before a per-run coordinator
+        # can exist. Concurrent starts still serialize on the stream itself.
+        return _append_event_under_coordinator(
+            root_path, run_id, normalized, allow_hook_retry,
+        )
+    with locked_run_coordinator(root_path, run_id):
+        return _append_event_under_coordinator(
+            root_path, run_id, normalized, allow_hook_retry,
+        )
 
 
-def append_hook_event(root, run_id, request):
-    """Append a hook event against the current head under one exclusive lock."""
+def _append_hook_event_under_coordinator(root, run_id, request):
+    """Append a hook event while the caller owns the per-run coordinator."""
     stream, projection, _ = run_paths(root, run_id, create=False)
     if _lstat(stream, "run event stream", missing_ok=True) is None:
         return None
@@ -1237,12 +1471,507 @@ def append_hook_event(root, run_id, request):
         )
 
 
+def append_hook_event(root, run_id, request):
+    """Append a hook event against the current head under run coordination."""
+    root_path = normalized_root(root)
+    stream, _projection, _run_dir = run_paths(root_path, run_id, create=False)
+    if _lstat(stream, "run event stream", missing_ok=True) is None:
+        return None
+    with locked_run_coordinator(root_path, run_id):
+        return _append_hook_event_under_coordinator(root_path, run_id, request)
+
+
 def load_events(root, run_id):
     stream, _, _ = run_paths(root, run_id, create=False)
     if _lstat(stream, "run event stream", missing_ok=True) is None:
         raise RunEventError("run does not exist: %s" % run_id)
     with locked_stream(stream, exclusive=False) as handle:
         return read_stream(handle, run_id)
+
+
+def _validate_loop_step_document(run_id, loop_id, reference, document):
+    """Validate the branch-binding fields of one in-memory v2 loop step."""
+    validate_ref(reference, "loop step ref")
+    if not isinstance(document, dict):
+        raise RunEventError("audit loop step must be an object")
+    exact_object(document, LOOP_STEP_FIELDS, set(), "audit loop step")
+    if document["schema_version"] != AUDIT_LOOP_SCHEMA_VERSION:
+        raise RunEventError("audit loop step schema_version is unsupported")
+    if document["run_id"] != run_id or document["loop_id"] != loop_id:
+        raise RunEventError("audit loop step identity does not match the run and loop")
+    validate_uuid(document["transition_id"], "audit loop transition_id")
+    validate_uuid(document["run_parent_event_id"], "audit loop run_parent_event_id")
+    validate_sha(
+        document["run_parent_event_sha256"],
+        "audit loop run_parent_event_sha256",
+    )
+    validate_enum(document["state"], LOOP_STATES, "audit loop state")
+    validate_safe_id(document["reason_code"], "audit loop reason_code")
+    parse_datetime(document["occurred_at"], "audit loop occurred_at")
+    for name, minimum, maximum in (
+            ("sequence", 1, 128), ("cycle", 1, 3), ("total_retries", 0, 128)):
+        value = document[name]
+        if not isinstance(value, int) or isinstance(value, bool) or not minimum <= value <= maximum:
+            raise RunEventError("audit loop %s is out of range" % name)
+    if document["proposal_only"] is not True or document["external_mutation_authorized"] is not False:
+        raise RunEventError("audit loop step widened the proposal-only authority boundary")
+    prefix = "memory/runs/%s/loops/%s/" % (run_id, loop_id)
+    expected_name = "%03d-%s.json" % (document["sequence"], document["transition"])
+    if reference != prefix + expected_name:
+        raise RunEventError("audit loop step reference is not canonical for its identity")
+    return strict_json_loads(canonical_json(document), "normalized audit loop step")
+
+
+def _validate_loop_step_wrapper(root, run_id, loop_id, wrapper):
+    root_path = normalized_root(root)
+    exact_object(wrapper, {"document", "ref", "sha256"}, set(), "loop step wrapper")
+    validate_ref(wrapper["ref"], "loop step wrapper.ref")
+    validate_sha(wrapper["sha256"], "loop step wrapper.sha256")
+    path, installed, metadata = verified_json_reference(
+        root_path, wrapper["ref"], wrapper["sha256"], "immutable audit loop step",
+    )
+    if statmod.S_IMODE(metadata.st_mode) != 0o600:
+        raise RunEventError("immutable audit loop step must use private file mode 0600")
+    ensure_ignored(root_path, [path])
+    if not isinstance(wrapper["document"], dict) or canonical_json(installed) != canonical_json(
+            wrapper["document"]):
+        raise RunEventError("loop step wrapper does not match the installed bytes")
+    document = _validate_loop_step_document(run_id, loop_id, wrapper["ref"], installed)
+    return {"document": document, "ref": wrapper["ref"], "sha256": wrapper["sha256"]}
+
+
+def _resolve_loop_steps_via_cli(root, run_id, loop_id, reference, expected_sha256):
+    tool = Path(__file__).with_name("audit-loop.py")
+    if not tool.is_file():
+        raise RunEventError("audit loop runtime is unavailable")
+    try:
+        completed = subprocess.run(
+            [
+                sys.executable, str(tool), "show", "--root", str(root),
+                "--run-id", run_id, "--loop-id", loop_id,
+            ],
+            cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            check=False, timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise RunEventError("audit loop chain validation could not run: %s" % exc) from exc
+    if completed.returncode:
+        detail = " ".join(
+            completed.stdout.decode("utf-8", errors="replace").splitlines()[-3:]
+        )[:500]
+        raise RunEventError("audit loop chain validation failed: %s" % (detail or "invalid loop"))
+    try:
+        result = strict_json_loads(completed.stdout.decode("utf-8"), "audit loop show result")
+    except UnicodeDecodeError as exc:
+        raise RunEventError("audit loop show result must be UTF-8") from exc
+    exact_object(
+        result, {"steps", "head_ref", "head_sha256", "head", "chain"}, set(),
+        "audit loop show result",
+    )
+    if (
+            not isinstance(result["steps"], int) or isinstance(result["steps"], bool)
+            or result["steps"] < 1 or result["steps"] > 128
+            or not isinstance(result["chain"], list)
+            or len(result["chain"]) != result["steps"]):
+        raise RunEventError("audit loop show result has an invalid bounded chain")
+    if result["head_ref"] != reference or result["head_sha256"] != expected_sha256:
+        raise RunEventError("only the current verified audit loop head can be recorded")
+    wrappers = []
+    for index, identity in enumerate(result["chain"], 1):
+        exact_object(identity, {"ref", "sha256"}, set(), "audit loop chain identity")
+        validate_ref(identity["ref"], "audit loop chain ref")
+        validate_sha(identity["sha256"], "audit loop chain sha256")
+        _path, document, _metadata = verified_json_reference(
+            root, identity["ref"], identity["sha256"], "immutable audit loop step",
+        )
+        wrapper = _validate_loop_step_wrapper(root, run_id, loop_id, {
+            "document": document, "ref": identity["ref"],
+            "sha256": identity["sha256"],
+        })
+        if wrapper["document"]["sequence"] != index:
+            raise RunEventError("audit loop show chain sequence is not contiguous")
+        wrappers.append(wrapper)
+    if (
+            wrappers[-1]["ref"] != result["head_ref"]
+            or wrappers[-1]["sha256"] != result["head_sha256"]
+            or canonical_json(wrappers[-1]["document"]) != canonical_json(result["head"])):
+        raise RunEventError("audit loop show head does not match its verified chain")
+    return wrappers
+
+
+def _serialized_immutable_json_bytes(value):
+    try:
+        return (
+            json.dumps(
+                value, indent=2, sort_keys=True, ensure_ascii=False,
+                allow_nan=False,
+            ) + "\n"
+        ).encode("utf-8")
+    except (TypeError, ValueError, OverflowError, RecursionError) as exc:
+        raise RunEventError("immutable runtime document must be finite JSON: %s" % exc) from exc
+
+
+def _loop_event_matches_wrapper(event, wrapper, events_by_id):
+    document = wrapper["document"]
+    parent = events_by_id.get(document["run_parent_event_id"])
+    return (
+        event["event_type"] == "loop_state_changed"
+        and event["idempotency_key"] == "loop:" + document["transition_id"]
+        and event["parent_event_id"] == document["run_parent_event_id"]
+        and parent is not None
+        and parent["event_hash"] == document["run_parent_event_sha256"]
+        and event["subject"] == {"kind": "loop", "ref": document["loop_id"]}
+        and event.get("reason_code") == document["reason_code"]
+        and event["references"] == [{
+            "kind": "loop", "ref": wrapper["ref"], "sha256": wrapper["sha256"],
+        }]
+        and event["metrics"] == {
+            "sequence": document["sequence"], "cycle": document["cycle"],
+            "total_retries": document["total_retries"],
+        }
+        and event["dimensions"] == {"loop_state": document["state"]}
+    )
+
+
+def _verify_loop_event_coverage_in_events(
+        run_id, loop_id, normalized, events, allow_missing_last=False,
+        require_selected=False, _allowed_unmaterialized_event_id=None,
+        _event_scope_ids=None):
+    """Bind every supplied step to one event on one historical ancestry.
+
+    Sibling events for the same loop are intentionally ignored here. Historical
+    validity and current-branch selection are separate questions: trends use
+    the former, while a mutator opts into ``require_selected``.
+    """
+    if not events:
+        raise RunEventError("audit loop coverage requires a non-empty run")
+    if _allowed_unmaterialized_event_id is not None:
+        validate_uuid(
+            _allowed_unmaterialized_event_id,
+            "allowed unmaterialized loop event id",
+        )
+    events_by_id = {event["event_id"]: event for event in events}
+    ancestry_cache = {}
+
+    def ancestry_ids(parent_event_id):
+        cached = ancestry_cache.get(parent_event_id)
+        if cached is not None:
+            return cached
+        result = set()
+        cursor = events_by_id.get(parent_event_id)
+        while cursor is not None:
+            result.add(cursor["event_id"])
+            cursor = events_by_id.get(cursor["parent_event_id"])
+        ancestry_cache[parent_event_id] = result
+        return result
+    all_loop_events = [
+        event for event in events
+        if event["event_type"] == "loop_state_changed"
+        and event["subject"]["ref"] == loop_id
+        and (_event_scope_ids is None or event["event_id"] in _event_scope_ids)
+    ]
+    matched_events = []
+    for index, wrapper in enumerate(normalized):
+        matches = [
+            event for event in all_loop_events
+            if _loop_event_matches_wrapper(event, wrapper, events_by_id)
+        ]
+        if len(matches) == 1:
+            matched_events.append(matches[0])
+            continue
+        if allow_missing_last and index == len(normalized) - 1 and not matches:
+            continue
+        raise RunEventError("immutable audit loop step/event coverage is incomplete or ambiguous")
+    required = len(normalized) - (1 if allow_missing_last else 0)
+    if len(matched_events) < required:
+        raise RunEventError("immutable audit loop step/event coverage is incomplete")
+    for prior, current in zip(matched_events, matched_events[1:]):
+        if prior["event_id"] not in ancestry_ids(current["parent_event_id"]):
+            raise RunEventError("audit loop events do not form one event ancestry")
+    matched_ids = {event["event_id"] for event in matched_events}
+    comparable_extras = []
+    for candidate in all_loop_events:
+        if candidate["event_id"] in matched_ids:
+            continue
+        candidate_ancestors = ancestry_ids(candidate["parent_event_id"])
+        if any(
+                matched["event_id"] in candidate_ancestors
+                or candidate["event_id"] in ancestry_ids(matched["parent_event_id"])
+                for matched in matched_events):
+            comparable_extras.append(candidate)
+    if comparable_extras:
+        allowed = (
+            _allowed_unmaterialized_event_id is not None
+            and len(comparable_extras) == 1
+            and comparable_extras[0]["event_id"] == _allowed_unmaterialized_event_id
+            and matched_events
+            and matched_events[-1]["event_id"]
+            in ancestry_ids(comparable_extras[0]["parent_event_id"])
+            and comparable_extras[0]["metrics"]["sequence"] == len(normalized) + 1
+            and comparable_extras[0]["references"][0]["ref"].startswith(
+                "memory/runs/%s/loops/%s/%03d-"
+                % (run_id, loop_id, len(normalized) + 1)
+            )
+        )
+        if not allowed:
+            raise RunEventError(
+                "audit loop ancestry has an unmaterialized or forked event"
+            )
+    if require_selected:
+        selected_ids = {
+            event["event_id"]
+            for event in event_ancestry(events, events[-1]["event_id"])
+        }
+        if any(event["event_id"] not in selected_ids for event in matched_events):
+            raise RunEventError("audit loop history is not on the current selected branch")
+    return {
+        "steps": len(normalized),
+        "events": len(matched_events),
+        "event_ids": [event["event_id"] for event in matched_events],
+    }
+
+
+def verify_loop_event_coverage(
+        root, run_id, loop_id, wrappers, allow_missing_last=False,
+        require_selected=False, _allowed_unmaterialized_event_id=None,
+        _event_scope_ids=None):
+    """Require one exact same-ancestry event for every immutable loop step."""
+    if not isinstance(wrappers, list) or not wrappers:
+        raise RunEventError("audit loop coverage requires at least one step")
+    normalized = [
+        _validate_loop_step_wrapper(root, run_id, loop_id, wrapper) for wrapper in wrappers
+    ]
+    events = load_events(root, run_id)
+    return _verify_loop_event_coverage_in_events(
+        run_id, loop_id, normalized, events, allow_missing_last,
+        require_selected=require_selected,
+        _allowed_unmaterialized_event_id=_allowed_unmaterialized_event_id,
+        _event_scope_ids=_event_scope_ids,
+    )
+
+
+def anchor_loop_step(
+        root, run_id, loop_id, reference, expected_sha256, document, *,
+        _coordinator_locked=False):
+    """Anchor a deterministic v2 step event before its file is materialized.
+
+    This is an internal transaction primitive for ``audit-loop.py``. It never
+    reads the not-yet-created final file and therefore cannot be reached by the
+    public ``loop-step`` command.
+    """
+    if not _coordinator_locked:
+        raise RunEventError("loop step anchoring requires the run coordinator lock")
+    validate_uuid(run_id, "run_id")
+    validate_uuid(loop_id, "loop_id")
+    validate_sha(expected_sha256, "loop step sha256")
+    normalized_document = _validate_loop_step_document(
+        run_id, loop_id, reference, document,
+    )
+    derived_sha256 = hashlib.sha256(
+        _serialized_immutable_json_bytes(normalized_document)
+    ).hexdigest()
+    if derived_sha256 != expected_sha256:
+        raise RunEventError("loop step sha256 does not match its deterministic bytes")
+    root_path = normalized_root(root)
+    target_path = root_path.joinpath(*reference.split("/"))
+    ensure_ignored(
+        root_path,
+        [
+            target_path,
+            target_path.parent / (".%s.run-create" % target_path.name),
+        ],
+    )
+    wrapper = {
+        "document": normalized_document,
+        "ref": reference,
+        "sha256": expected_sha256,
+    }
+    stream, projection, _run_dir = run_paths(root, run_id, create=False)
+    with locked_stream(stream, exclusive=True, create=False) as handle:
+        events = read_stream(handle, run_id)
+        if not events:
+            raise RunEventError("audit loop cannot attach to an empty run")
+        events_by_id = {event["event_id"]: event for event in events}
+        key = "loop:" + normalized_document["transition_id"]
+        existing = [event for event in events if event["idempotency_key"] == key]
+        if existing:
+            if (
+                    len(existing) != 1
+                    or not _loop_event_matches_wrapper(
+                        existing[0], wrapper, events_by_id,
+                    )):
+                raise RunEventError(
+                    "loop event idempotency identity is occupied by another step"
+                )
+            selected_ids = {
+                event["event_id"]
+                for event in event_ancestry(events, events[-1]["event_id"])
+            }
+            target_status = _lstat(
+                target_path, "anchored audit loop step", missing_ok=True,
+            )
+            if (
+                    existing[0]["event_id"] not in selected_ids
+                    and target_status is not None):
+                raise RunEventError(
+                    "materialized loop anchor is not on the current selected branch"
+                )
+            state = project_events(run_id, events)
+            atomic_write_json(normalized_root(root), projection, state)
+            return {
+                "deduplicated": True,
+                "event": existing[0],
+                "projection": state,
+                "artifact": {"ref": reference, "sha256": expected_sha256},
+            }
+
+        if events[-1]["event_type"] in TERMINAL_TYPES:
+            raise RunEventError("terminal run cannot accept a loop step anchor")
+        ensure_event_capacity(events, "loop_state_changed")
+        parent = events_by_id.get(normalized_document["run_parent_event_id"])
+        if parent is None:
+            raise RunEventError("loop step run parent does not exist")
+        if parent["event_hash"] != normalized_document["run_parent_event_sha256"]:
+            raise RunEventError("loop step run parent hash mismatch")
+        if parent["event_id"] != events[-1]["event_id"]:
+            raise RunEventError("new loop step must anchor to the selected run head")
+
+        selected_ids = {
+            event["event_id"]
+            for event in event_ancestry(events, parent["event_id"])
+        }
+        global_loop_events = [
+            event for event in events
+            if event["event_type"] == "loop_state_changed"
+            and event["subject"]["ref"] == loop_id
+        ]
+        selected_loop_events = [
+            event for event in global_loop_events
+            if event["event_id"] in selected_ids
+        ]
+        if len(global_loop_events) != len(selected_loop_events):
+            raise RunEventError("audit loop cannot fork across run branches")
+        if normalized_document["sequence"] != len(selected_loop_events) + 1:
+            raise RunEventError("loop step sequence does not extend its selected branch")
+        if selected_loop_events:
+            prior_reference = selected_loop_events[-1]["references"][0]
+            if (
+                    normalized_document["previous_step_ref"] != prior_reference["ref"]
+                    or normalized_document["previous_step_sha256"]
+                    != prior_reference["sha256"]):
+                raise RunEventError("loop step does not extend its prior anchored step")
+        elif (
+                normalized_document["previous_step_ref"] is not None
+                or normalized_document["previous_step_sha256"] != ZERO_HASH):
+            raise RunEventError("first loop step must begin at the zero step hash")
+
+        request = {
+            "schema_version": SCHEMA_VERSION,
+            "run_id": run_id,
+            "idempotency_key": key,
+            "event_type": "loop_state_changed",
+            "occurred_at": normalized_document["occurred_at"],
+            "actor": {"type": "system", "id": "audit-loop"},
+            "parent_event_id": normalized_document["run_parent_event_id"],
+            "turn_id": None,
+            "status": "succeeded",
+            "subject": {"kind": "loop", "ref": loop_id},
+            "reason_code": normalized_document["reason_code"],
+            "references": [{
+                "kind": "loop", "ref": reference,
+                "sha256": expected_sha256,
+            }],
+            "metrics": {
+                "sequence": normalized_document["sequence"],
+                "cycle": normalized_document["cycle"],
+                "total_retries": normalized_document["total_retries"],
+            },
+            "dimensions": {"loop_state": normalized_document["state"]},
+        }
+        result = append_locked(root, run_id, handle, events, request, projection)
+        result["artifact"] = {"ref": reference, "sha256": expected_sha256}
+        return result
+
+
+def _record_loop_step_under_coordinator(
+        root, run_id, loop_id, reference, expected_sha256, _resolved_steps=None):
+    """Verify that the current immutable loop head already has its exact anchor."""
+    validate_uuid(run_id, "run_id")
+    validate_uuid(loop_id, "loop_id")
+    validate_ref(reference, "loop step ref")
+    validate_sha(expected_sha256, "loop step sha256")
+    external_resolution = _resolved_steps is None
+    if external_resolution:
+        loop_dir = (
+            normalized_root(root) / "memory" / "runs" / run_id / "loops" / loop_id
+        )
+        loop_guard = locked_stream(
+            loop_dir / ".loop.lock", exclusive=False, create=False,
+        )
+    else:
+        loop_guard = contextlib.nullcontext()
+    with loop_guard:
+        if external_resolution:
+            wrappers = _resolve_loop_steps_via_cli(
+                root, run_id, loop_id, reference, expected_sha256,
+            )
+        else:
+            if not isinstance(_resolved_steps, list) or not _resolved_steps:
+                raise RunEventError("resolved audit loop steps must be a non-empty list")
+            wrappers = [
+                _validate_loop_step_wrapper(root, run_id, loop_id, item)
+                for item in _resolved_steps
+            ]
+        matches = [
+            item for item in wrappers
+            if item["ref"] == reference and item["sha256"] == expected_sha256
+        ]
+        if len(matches) != 1:
+            raise RunEventError("resolved audit loop step identity mismatch")
+        wrapper = matches[0]
+        document = wrapper["document"]
+        stream, projection, _ = run_paths(root, run_id, create=False)
+        with locked_stream(stream, exclusive=True, create=False) as handle:
+            events = read_stream(handle, run_id)
+            _verify_loop_event_coverage_in_events(
+                run_id, loop_id, wrappers, events,
+                require_selected=True,
+            )
+            key = "loop:" + document["transition_id"]
+            existing = [event for event in events if event["idempotency_key"] == key]
+            events_by_id = {event["event_id"]: event for event in events}
+            if (
+                    len(existing) != 1
+                    or not _loop_event_matches_wrapper(
+                        existing[0], wrapper, events_by_id,
+                    )):
+                raise RunEventError(
+                    "public loop-step requires one exact pre-existing loop anchor"
+                )
+            state = project_events(run_id, events)
+            atomic_write_json(normalized_root(root), projection, state)
+            return {
+                "deduplicated": True, "event": existing[0], "projection": state,
+                "artifact": {"ref": reference, "sha256": expected_sha256},
+            }
+
+
+def record_loop_step(
+        root, run_id, loop_id, reference, expected_sha256,
+        _resolved_steps=None, _coordinator_locked=False):
+    """Verify/dedupe an already anchored loop step; never create its event."""
+    if _resolved_steps is not None and not _coordinator_locked:
+        raise RunEventError(
+            "pre-resolved audit loop steps require the run coordinator lock"
+        )
+    if _coordinator_locked:
+        return _record_loop_step_under_coordinator(
+            root, run_id, loop_id, reference, expected_sha256, _resolved_steps,
+        )
+    with locked_run_coordinator(root, run_id):
+        return _record_loop_step_under_coordinator(
+            root, run_id, loop_id, reference, expected_sha256, _resolved_steps,
+        )
 
 
 def rebuild_projection(root, run_id):
@@ -1416,6 +2145,71 @@ def validate_save_point(value):
     return strict_json_loads(canonical_json(value), "normalized save point")
 
 
+def validate_loop_closure(value):
+    exact_object(
+        value,
+        {"scope", "selected_head_event_id", "status", "loops"},
+        set(),
+        "loop_closure",
+    )
+    if value["scope"] != "selected-ancestry":
+        raise RunEventError("loop_closure.scope must be selected-ancestry")
+    validate_uuid(
+        value["selected_head_event_id"],
+        "loop_closure.selected_head_event_id",
+    )
+    validate_enum(
+        value["status"], {"none", "verified", "unresolved"},
+        "loop_closure.status",
+    )
+    loops = value["loops"]
+    if not isinstance(loops, list) or len(loops) > MAX_AUDIT_LOOPS:
+        raise RunEventError(
+            "loop_closure.loops must contain at most %d entries"
+            % MAX_AUDIT_LOOPS
+        )
+    seen = set()
+    unresolved = 0
+    for index, item in enumerate(loops):
+        label = "loop_closure.loops[%d]" % index
+        exact_object(
+            item,
+            {
+                "loop_id", "last_loop_event_id", "expected_step_ref",
+                "expected_step_sha256", "validation_status", "failure_code",
+            },
+            set(),
+            label,
+        )
+        validate_uuid(item["loop_id"], label + ".loop_id")
+        validate_uuid(item["last_loop_event_id"], label + ".last_loop_event_id")
+        validate_ref(item["expected_step_ref"], label + ".expected_step_ref")
+        validate_sha(item["expected_step_sha256"], label + ".expected_step_sha256")
+        validate_enum(
+            item["validation_status"], {"valid", "unresolved"},
+            label + ".validation_status",
+        )
+        if item["validation_status"] == "valid":
+            if item["failure_code"] is not None:
+                raise RunEventError("valid loop_closure item cannot have failure_code")
+        else:
+            unresolved += 1
+            validate_enum(
+                item["failure_code"], LOOP_CLOSURE_FAILURE_CODES,
+                label + ".failure_code",
+            )
+        if item["loop_id"] in seen:
+            raise RunEventError("loop_closure cannot repeat a loop_id")
+        seen.add(item["loop_id"])
+    if value["status"] == "none" and loops:
+        raise RunEventError("loop_closure status none requires no loops")
+    if value["status"] == "verified" and (not loops or unresolved):
+        raise RunEventError("loop_closure status verified requires only valid loops")
+    if value["status"] == "unresolved" and not unresolved:
+        raise RunEventError("loop_closure status unresolved requires an unresolved loop")
+    return strict_json_loads(canonical_json(value), "normalized loop_closure")
+
+
 def validate_envelope(value):
     required = {
         "schema_version", "run_id", "parent_run_id", "started_at", "ended_at", "status",
@@ -1423,7 +2217,7 @@ def validate_envelope(value):
         "last_event_offset", "last_event_hash", "save_point", "registry_offsets",
         "artifacts", "metrics", "failure_class", "next_action",
     }
-    exact_object(value, required, set(), "run envelope")
+    exact_object(value, required, {"loop_closure"}, "run envelope")
     if value["schema_version"] != SCHEMA_VERSION:
         raise RunEventError("run envelope schema_version must be 1.0")
     validate_uuid(value["run_id"], "run_id")
@@ -1441,15 +2235,29 @@ def validate_envelope(value):
     if value["status"] in {"succeeded", "failed", "aborted"} and value["ended_at"] is None:
         raise RunEventError("terminal run envelope requires ended_at")
     validate_enum(value["evidence_mode"], {"none", "simulated", "real", "mixed"}, "evidence_mode")
-    route = exact_object(value["route"], {"skill", "version", "reason_code"}, set(), "route")
-    validate_safe_id(route["skill"], "route.skill")
-    if not isinstance(route["version"], str) or not SEMVER.fullmatch(route["version"]):
-        raise RunEventError("route.version must be semver")
-    validate_safe_id(route["reason_code"], "route.reason_code")
+    degraded_terminal = value["status"] in {"failed", "aborted"}
+    route = value["route"]
+    if route is None:
+        if not degraded_terminal:
+            raise RunEventError("only failed or aborted envelopes may omit route")
+    else:
+        route = exact_object(route, {"skill", "version", "reason_code"}, set(), "route")
+        validate_safe_id(route["skill"], "route.skill")
+        if not isinstance(route["version"], str) or not SEMVER.fullmatch(route["version"]):
+            raise RunEventError("route.version must be semver")
+        validate_safe_id(route["reason_code"], "route.reason_code")
     manifests = value["context_manifests"]
-    if not isinstance(manifests, list) or not 1 <= len(manifests) <= MAX_CONTEXT_MANIFESTS:
+    minimum_manifests = 0 if degraded_terminal else 1
+    if (
+            not isinstance(manifests, list)
+            or not minimum_manifests <= len(manifests) <= MAX_CONTEXT_MANIFESTS):
         raise RunEventError(
-            "context_manifests must contain 1 to %d entries" % MAX_CONTEXT_MANIFESTS
+            "context_manifests must contain %d to %d entries"
+            % (minimum_manifests, MAX_CONTEXT_MANIFESTS)
+        )
+    if not manifests and (route is not None or value["save_point"] is not None):
+        raise RunEventError(
+            "degraded envelope without context must omit route and save_point"
         )
     for index, reference in enumerate(manifests):
         label = "context_manifests[%d]" % index
@@ -1464,6 +2272,12 @@ def validate_envelope(value):
     if value["save_point"] is not None:
         validate_artifact_ref(value["save_point"], "save_point")
     validate_offsets(value["registry_offsets"])
+    if (
+            not manifests
+            and any(offset is not None for offset in value["registry_offsets"].values())):
+        raise RunEventError(
+            "degraded envelope without context must use unbound null registry offsets"
+        )
     if not isinstance(value["artifacts"], list) or len(value["artifacts"]) > 128:
         raise RunEventError("artifacts must be an array with at most 128 entries")
     for index, reference in enumerate(value["artifacts"]):
@@ -1484,6 +2298,8 @@ def validate_envelope(value):
     if value["status"] in {"failed", "blocked", "aborted"} and failure_class is None:
         raise RunEventError("failed, blocked, or aborted run envelope requires failure_class")
     validate_next_action(value["next_action"])
+    if "loop_closure" in value:
+        validate_loop_closure(value["loop_closure"])
     return strict_json_loads(canonical_json(value), "normalized run envelope")
 
 
@@ -1594,7 +2410,7 @@ def validate_context_document(root, reference, expected_sha, expected_signature,
     return path, document, metadata
 
 
-def validate_snapshot_context_binding(snapshot, context):
+def validate_snapshot_context_binding(snapshot, context, route_state=None):
     route = context["route"]
     if snapshot["skill"]["name"] != route["target_skill"]:
         raise RunEventError("turn snapshot skill does not match the context route")
@@ -1604,6 +2420,17 @@ def validate_snapshot_context_binding(snapshot, context):
         raise RunEventError("turn snapshot contract hash does not match the context target skill")
     if snapshot["registry_offsets"] != context["registry_offsets"]:
         raise RunEventError("turn snapshot registry offsets do not match its context manifest")
+    if route_state is not None:
+        expected = {
+            "target_skill": route_state["route_skill"],
+            "command": route_state["route_command"],
+            "reason_code": route_state["route_reason_code"],
+        }
+        actual = {field: route[field] for field in expected}
+        if actual != expected:
+            raise RunEventError(
+                "turn snapshot context route does not match the latest typed route event"
+            )
     return snapshot
 
 
@@ -1726,7 +2553,7 @@ def existing_artifact_result(root, existing, proposed, projection, expected_kind
     }
 
 
-def write_snapshot(root, run_id, value):
+def _write_snapshot_under_coordinator(root, run_id, value):
     normalized = validate_snapshot(value)
     if normalized["run_id"] != run_id:
         raise RunEventError("snapshot run_id does not match command run_id")
@@ -1741,8 +2568,11 @@ def write_snapshot(root, run_id, value):
             return existing_artifact_result(
                 root_path, existing, normalized, state, "turn-snapshot",
             )
+        ensure_event_capacity(events, "turn_snapshot_created")
         if not events or state["status"] not in {"active", "waiting"}:
             raise RunEventError("snapshot requires an active run")
+        if state["route_skill"] is None:
+            raise RunEventError("snapshot requires an ancestor typed route_selected event")
         events_by_id = {event["event_id"]: event for event in events}
         selected_events = [events_by_id[event_id] for event_id in state["selected_path_event_ids"]]
         ensure_snapshot_capacity(selected_events)
@@ -1769,7 +2599,7 @@ def write_snapshot(root, run_id, value):
             normalized["context_manifest"]["context_signature"],
             run_id, normalized["turn_id"], verify_sources=True,
         )
-        validate_snapshot_context_binding(normalized, context_document)
+        validate_snapshot_context_binding(normalized, context_document, state)
         if "prompt_contract_ref" in normalized["skill"]:
             resolve_project_reference(
                 root_path, normalized["skill"]["prompt_contract_ref"],
@@ -1802,7 +2632,16 @@ def write_snapshot(root, run_id, value):
         return result
 
 
-def write_save_point(root, run_id, value):
+def write_snapshot(root, run_id, value):
+    """Install a typed snapshot and its event under run coordination."""
+    normalized = validate_snapshot(value)
+    if normalized["run_id"] != run_id:
+        raise RunEventError("snapshot run_id does not match command run_id")
+    with locked_run_coordinator(root, run_id):
+        return _write_snapshot_under_coordinator(root, run_id, normalized)
+
+
+def _write_save_point_under_coordinator(root, run_id, value):
     normalized = validate_save_point(value)
     if normalized["run_id"] != run_id:
         raise RunEventError("save point run_id does not match command run_id")
@@ -1817,6 +2656,7 @@ def write_save_point(root, run_id, value):
             return existing_artifact_result(
                 root_path, existing, normalized, state, "save-point",
             )
+        ensure_event_capacity(events, "save_point_created")
         if not events or state["status"] not in {"active", "waiting"}:
             raise RunEventError("save point requires an active run")
         if normalized["last_event_id"] != state["head_event_id"]:
@@ -1825,6 +2665,8 @@ def write_save_point(root, run_id, value):
             raise RunEventError("save point offset/hash must equal the verified stream head")
         if state["open_tool_refs"]:
             raise RunEventError("save point cannot be created with unfinished tool calls")
+        if state["route_skill"] is None:
+            raise RunEventError("save point requires an ancestor typed route_selected event")
         if (
                 normalized["turn_snapshot"]["ref"] != state["last_turn_snapshot_ref"]
                 or normalized["turn_snapshot"]["sha256"] != state["last_turn_snapshot_sha256"]):
@@ -1844,26 +2686,17 @@ def write_save_point(root, run_id, value):
                 or snapshot_document["context_manifest"]["context_signature"]
                 != normalized["context_manifest"]["context_signature"]):
             raise RunEventError("save point context does not match its turn snapshot")
-        validate_snapshot_context_binding(snapshot_document, context_document)
+        validate_snapshot_context_binding(snapshot_document, context_document, state)
         if normalized["registry_offsets"] != context_document["registry_offsets"]:
             raise RunEventError("save point registry offsets do not match its context manifest")
-        branch_snapshots = selected_branch_snapshots(root_path, run_id, events, state)
-        branch_skill_history = [
-            document["skill"]["name"] for _event, document in branch_snapshots
-        ]
-        if not branch_skill_history or normalized["visited_skills"][-1] != branch_skill_history[-1]:
+        if normalized["visited_skills"] != state["route_chain"]:
             raise RunEventError(
-                "save point visited_skills must end with the current selected-branch skill"
+                "save point visited_skills must exactly match the selected typed route chain"
             )
-        history_cursor = len(branch_skill_history) - 1
-        for claimed_skill in reversed(normalized["visited_skills"]):
-            while history_cursor >= 0 and branch_skill_history[history_cursor] != claimed_skill:
-                history_cursor -= 1
-            if history_cursor < 0:
-                raise RunEventError(
-                    "save point visited_skills must be corroborated by selected-branch snapshots"
-                )
-            history_cursor -= 1
+        if normalized["chain_depth"] != state["automatic_handoff_depth"]:
+            raise RunEventError(
+                "save point chain_depth must equal the derived automatic-handoff depth"
+            )
         artifact_bytes = 0
         for reference in normalized["artifacts"]:
             if reference["ref"].endswith(("/events.ndjson", "/session.json")):
@@ -1914,7 +2747,212 @@ def write_save_point(root, run_id, value):
         return result
 
 
-def finish_run(root, run_id, value):
+def write_save_point(root, run_id, value):
+    """Install a typed save point and its event under run coordination."""
+    normalized = validate_save_point(value)
+    if normalized["run_id"] != run_id:
+        raise RunEventError("save point run_id does not match command run_id")
+    with locked_run_coordinator(root, run_id):
+        return _write_save_point_under_coordinator(root, run_id, normalized)
+
+
+def _loop_closure_failure_code(exc):
+    if isinstance(exc, TimeoutError):
+        return "validation-timeout"
+    message = str(exc).lower()
+    if "does not exist" in message or "no such file" in message:
+        return "missing-step"
+    if "hash mismatch" in message:
+        return "hash-mismatch"
+    if "budget" in message or "limit" in message:
+        return "validator-error"
+    if any(token in message for token in (
+            "event coverage", "event ancestry", "event does not", "event mismatch",
+            "run parent", "selected branch")):
+        return "event-mismatch"
+    if isinstance(exc, RunEventError):
+        return "invalid-chain"
+    return "validator-error"
+
+
+def _selected_loop_prefix(
+        root, run_id, loop_id, loop_events, events, selected_ids, deadline,
+        budget):
+    wrappers = []
+    for index, event in enumerate(loop_events, 1):
+        if time.monotonic() >= deadline:
+            raise TimeoutError("audit loop validation deadline exceeded")
+        budget["steps"] += 1
+        if budget["steps"] > MAX_LOOP_CLOSURE_STEPS:
+            raise RunEventError("audit loop closure step budget exceeded")
+        reference = event["references"][0]
+        path, document, metadata = verified_json_reference(
+            root, reference["ref"], reference["sha256"],
+            "selected audit loop step",
+        )
+        budget["bytes"] += metadata.st_size
+        if budget["bytes"] > MAX_LOOP_CLOSURE_BYTES:
+            raise RunEventError("audit loop closure byte budget exceeded")
+        if statmod.S_IMODE(metadata.st_mode) != 0o600:
+            raise RunEventError("selected audit loop step must use private file mode 0600")
+        ensure_ignored(normalized_root(root), [path])
+        normalized = _validate_loop_step_document(
+            run_id, loop_id, reference["ref"], document,
+        )
+        if normalized["sequence"] != index:
+            raise RunEventError("selected audit loop sequence is not contiguous")
+        wrapper = {
+            "document": normalized,
+            "ref": reference["ref"],
+            "sha256": reference["sha256"],
+        }
+        if wrappers:
+            prior = wrappers[-1]
+            if (
+                    normalized["previous_step_ref"] != prior["ref"]
+                    or normalized["previous_step_sha256"] != prior["sha256"]
+                    or normalized["expected_previous_sha256"] != prior["sha256"]
+                    or normalized["from_state"] != prior["document"]["state"]):
+                raise RunEventError("selected audit loop step chain is invalid")
+        elif (
+                normalized["previous_step_ref"] is not None
+                or normalized["previous_step_sha256"] != ZERO_HASH
+                or normalized["expected_previous_sha256"] != ZERO_HASH):
+            raise RunEventError("selected audit loop start does not begin at zero hash")
+        wrappers.append(wrapper)
+    coverage = _verify_loop_event_coverage_in_events(
+        run_id, loop_id, wrappers, events,
+        _event_scope_ids=selected_ids,
+    )
+    expected_ids = [event["event_id"] for event in loop_events]
+    if coverage["event_ids"] != expected_ids:
+        raise RunEventError("selected audit loop event mismatch")
+    if time.monotonic() >= deadline:
+        raise TimeoutError("audit loop validation deadline exceeded")
+    return wrappers[-1]["document"]["state"]
+
+
+def verify_run_audit_loops(
+        root, run_id, require_terminal, branch_head_event_id=None,
+        allow_unresolved=False):
+    """Derive bounded loop closure from exactly one selected event ancestry."""
+    root_path = normalized_root(root)
+    events = load_events(root_path, run_id)
+    if not events:
+        raise RunEventError("audit loop validation requires a non-empty run")
+    selected_head = branch_head_event_id or events[-1]["event_id"]
+    validate_uuid(selected_head, "selected loop branch head")
+    if selected_head not in {event["event_id"] for event in events}:
+        raise RunEventError("selected loop branch head does not exist")
+    selected_events = event_ancestry(events, selected_head)
+    selected_ids = {event["event_id"] for event in selected_events}
+    groups = {}
+    for event in selected_events:
+        if event["event_type"] != "loop_state_changed":
+            continue
+        groups.setdefault(event["subject"]["ref"], []).append(event)
+    if len(groups) > MAX_AUDIT_LOOPS:
+        raise RunEventError(
+            "selected branch exceeds the %d audit-loop limit" % MAX_AUDIT_LOOPS
+        )
+
+    deadline = time.monotonic() + MAX_LOOP_VALIDATION_SECONDS
+    budget = {"steps": 0, "bytes": 0}
+    items = []
+    unresolved_count = 0
+    for loop_id, loop_events in groups.items():
+        last_event = loop_events[-1]
+        expected = last_event["references"][0]
+        item = {
+            "loop_id": loop_id,
+            "last_loop_event_id": last_event["event_id"],
+            "expected_step_ref": expected["ref"],
+            "expected_step_sha256": expected["sha256"],
+            "validation_status": "valid",
+            "failure_code": None,
+        }
+        try:
+            if time.monotonic() >= deadline:
+                raise TimeoutError("audit loop validation deadline exceeded")
+            head_state = _selected_loop_prefix(
+                root_path, run_id, loop_id, loop_events, events,
+                selected_ids, deadline, budget,
+            )
+            if require_terminal and head_state not in LOOP_TERMINAL_STATES:
+                if not allow_unresolved:
+                    raise RunEventError(
+                        "terminal run envelope requires selected audit loops to be terminal"
+                    )
+                item["validation_status"] = "unresolved"
+                item["failure_code"] = "nonterminal"
+        except Exception as exc:
+            if not allow_unresolved:
+                raise RunEventError(
+                    "selected audit loop validation failed for %s: %s"
+                    % (loop_id, exc)
+                ) from exc
+            item["validation_status"] = "unresolved"
+            item["failure_code"] = _loop_closure_failure_code(exc)
+        if item["validation_status"] == "unresolved":
+            unresolved_count += 1
+        items.append(item)
+    status = "none" if not items else ("unresolved" if unresolved_count else "verified")
+    return validate_loop_closure({
+        "scope": "selected-ancestry",
+        "selected_head_event_id": selected_head,
+        "status": status,
+        "loops": items,
+    })
+
+
+def _verify_envelope_artifact_references(root, references):
+    inspected_bytes = 0
+    for reference in references:
+        if reference["ref"].endswith(("/events.ndjson", "/session.json")):
+            raise RunEventError("run envelope artifacts cannot reference mutable runtime files")
+        _path, reference_bytes = resolve_project_reference(
+            root, reference["ref"], reference["sha256"],
+        )
+        inspected_bytes += reference_bytes
+        if inspected_bytes > MAX_REFERENCE_INSPECTION_BYTES:
+            raise RunEventError(
+                "run envelope artifact references exceed %d inspected bytes"
+                % MAX_REFERENCE_INSPECTION_BYTES
+            )
+
+
+def _install_envelope_locked(
+        root, run_id, run_dir, projection, handle, events, normalized,
+        event_key, intended_event_type):
+    target_dir = ensure_child_directories(root, run_dir, ["envelopes"])
+    target = target_dir / (normalized["last_event_id"] + ".json")
+    digest = write_immutable_json(root, target, normalized)
+    reference = str(target.relative_to(root))
+    status = {
+        "run_finished": "succeeded", "run_failed": "failed",
+        "run_aborted": "cancelled", "run_waiting": "waiting",
+    }[intended_event_type]
+    request = {
+        "schema_version": SCHEMA_VERSION,
+        "run_id": run_id,
+        "idempotency_key": event_key,
+        "event_type": intended_event_type,
+        "occurred_at": normalized["ended_at"] or now_iso(),
+        "actor": {"type": "system", "id": "run-events"},
+        "parent_event_id": events[-1]["event_id"],
+        "turn_id": None,
+        "status": status,
+        "subject": {"kind": "run", "ref": run_id},
+        "references": [{"kind": "run-envelope", "ref": reference, "sha256": digest}],
+        "metrics": normalized["metrics"],
+        "dimensions": {"evidence_mode": normalized["evidence_mode"]},
+    }
+    result = append_locked(root, run_id, handle, events, request, projection)
+    result["artifact"] = {"ref": reference, "sha256": digest}
+    return result
+
+
+def _finish_run_under_coordinator(root, run_id, value):
     normalized = validate_envelope(value)
     if normalized["run_id"] != run_id:
         raise RunEventError("run envelope run_id does not match command run_id")
@@ -1929,6 +2967,11 @@ def finish_run(root, run_id, value):
             return existing_artifact_result(
                 root_path, existing, normalized, state, "run-envelope",
             )
+        intended_event_type = {
+            "succeeded": "run_finished", "failed": "run_failed",
+            "aborted": "run_aborted",
+        }.get(normalized["status"], "run_waiting")
+        ensure_event_capacity(events, intended_event_type)
         if not events or state["status"] not in {"active", "waiting"}:
             raise RunEventError("finish requires an active run")
         if normalized["last_event_id"] != state["head_event_id"]:
@@ -1937,6 +2980,20 @@ def finish_run(root, run_id, value):
             raise RunEventError("run envelope offset/hash must equal the verified stream head")
         if normalized["started_at"] != state["started_at"]:
             raise RunEventError("run envelope started_at must match run_started")
+        degraded_without_context = (
+            normalized["status"] in {"failed", "aborted"}
+            and not normalized["context_manifests"]
+        )
+        if degraded_without_context:
+            _verify_envelope_artifact_references(
+                root_path, normalized["artifacts"],
+            )
+            return _install_envelope_locked(
+                root_path, run_id, run_dir, projection, handle, events,
+                normalized, event_key, intended_event_type,
+            )
+        if state["route_skill"] is None:
+            raise RunEventError("run envelope requires an ancestor typed route_selected event")
         if normalized["status"] == "succeeded" and state["open_tool_refs"]:
             raise RunEventError("successful run cannot finish with unfinished tool calls")
         context_documents = []
@@ -1952,7 +3009,7 @@ def finish_run(root, run_id, value):
         }
         observed_contexts = []
         branch_snapshots = selected_branch_snapshots(root_path, run_id, events, state)
-        for _event, snapshot_document in branch_snapshots:
+        for snapshot_event, snapshot_document in branch_snapshots:
             snapshot_context = snapshot_document["context_manifest"]
             identity = (
                 snapshot_context["ref"], snapshot_context["sha256"],
@@ -1963,8 +3020,20 @@ def finish_run(root, run_id, value):
                 "context_signature": identity[2],
             })
             if identity in context_by_identity:
+                route_at_snapshot = selected_route_state(
+                    events, snapshot_event["parent_event_id"],
+                )
+                if route_at_snapshot is None:
+                    raise RunEventError(
+                        "turn snapshot lacks an ancestor typed route_selected event"
+                    )
+                route_view = {
+                    "route_skill": route_at_snapshot["skill"],
+                    "route_command": route_at_snapshot["command"],
+                    "route_reason_code": route_at_snapshot["reason_code"],
+                }
                 validate_snapshot_context_binding(
-                    snapshot_document, context_by_identity[identity],
+                    snapshot_document, context_by_identity[identity], route_view,
                 )
         if not observed_contexts:
             raise RunEventError("run envelope requires an ancestor turn snapshot")
@@ -1974,6 +3043,18 @@ def finish_run(root, run_id, value):
             )
         terminal_context = context_documents[-1][1]
         terminal_route = terminal_context["route"]
+        if {
+                "target_skill": state["route_skill"],
+                "command": state["route_command"],
+                "reason_code": state["route_reason_code"],
+        } != {
+                "target_skill": terminal_route["target_skill"],
+                "command": terminal_route["command"],
+                "reason_code": terminal_route["reason_code"],
+        }:
+            raise RunEventError(
+                "run envelope terminal context route does not match the latest typed route event"
+            )
         if normalized["route"] != {
                 "skill": terminal_route["target_skill"],
                 "version": terminal_route["catalog_version"],
@@ -2034,48 +3115,30 @@ def finish_run(root, run_id, value):
                     for field in ("ref", "sha256", "context_signature")):
                 raise RunEventError("run envelope save point context does not match its snapshot")
             validate_snapshot_context_binding(save_snapshot, save_context)
-        artifact_bytes = 0
-        for reference in references_to_verify:
-            if reference["ref"].endswith(("/events.ndjson", "/session.json")):
-                raise RunEventError("run envelope artifacts cannot reference mutable runtime files")
-            _path, reference_bytes = resolve_project_reference(
-                root_path, reference["ref"], reference["sha256"],
-            )
-            artifact_bytes += reference_bytes
-            if artifact_bytes > MAX_REFERENCE_INSPECTION_BYTES:
-                raise RunEventError(
-                    "run envelope artifact references exceed %d inspected bytes"
-                    % MAX_REFERENCE_INSPECTION_BYTES
-                )
-        target_dir = ensure_child_directories(root_path, run_dir, ["envelopes"])
-        target = target_dir / (normalized["last_event_id"] + ".json")
-        digest = write_immutable_json(root_path, target, normalized)
-        reference = str(target.relative_to(root_path))
-        event_type = {
-            "succeeded": "run_finished", "failed": "run_failed", "aborted": "run_aborted",
-        }.get(normalized["status"], "run_waiting")
-        status = {
-            "run_finished": "succeeded", "run_failed": "failed", "run_aborted": "cancelled",
-            "run_waiting": "waiting",
-        }[event_type]
-        request = {
-            "schema_version": SCHEMA_VERSION,
-            "run_id": run_id,
-            "idempotency_key": event_key,
-            "event_type": event_type,
-            "occurred_at": normalized["ended_at"] or now_iso(),
-            "actor": {"type": "system", "id": "run-events"},
-            "parent_event_id": events[-1]["event_id"],
-            "turn_id": None,
-            "status": status,
-            "subject": {"kind": "run", "ref": run_id},
-            "references": [{"kind": "run-envelope", "ref": reference, "sha256": digest}],
-            "metrics": normalized["metrics"],
-            "dimensions": {"evidence_mode": normalized["evidence_mode"]},
-        }
-        result = append_locked(root, run_id, handle, events, request, projection)
-        result["artifact"] = {"ref": reference, "sha256": digest}
-        return result
+        _verify_envelope_artifact_references(root_path, references_to_verify)
+        return _install_envelope_locked(
+            root_path, run_id, run_dir, projection, handle, events,
+            normalized, event_key, intended_event_type,
+        )
+
+
+def finish_run(root, run_id, value):
+    """Install a waiting/terminal envelope under the per-run coordinator lock."""
+    candidate = dict(value) if isinstance(value, dict) else value
+    if isinstance(candidate, dict):
+        candidate.pop("loop_closure", None)
+    normalized = validate_envelope(candidate)
+    if normalized["run_id"] != run_id:
+        raise RunEventError("run envelope run_id does not match command run_id")
+    with locked_run_coordinator(root, run_id):
+        terminal_status = normalized["status"] in {"succeeded", "failed", "aborted"}
+        normalized["loop_closure"] = verify_run_audit_loops(
+            root, run_id,
+            require_terminal=terminal_status,
+            branch_head_event_id=normalized["last_event_id"],
+            allow_unresolved=normalized["status"] in {"failed", "aborted"},
+        )
+        return _finish_run_under_coordinator(root, run_id, normalized)
 
 
 def hashed_identifier(value, run_id):
@@ -2185,6 +3248,13 @@ def resume_summary(root, run_id, max_bytes):
         "last_save_point_sha256": state["last_save_point_sha256"],
         "run_envelope_ref": state["run_envelope_ref"],
         "run_envelope_sha256": state["run_envelope_sha256"],
+        "route_skill": state["route_skill"],
+        "route_command": state["route_command"],
+        "route_reason_code": state["route_reason_code"],
+        "route_transition": state["route_transition"],
+        "route_chain": state["route_chain"],
+        "automatic_handoff_depth": state["automatic_handoff_depth"],
+        "loop_states": state["loop_states"],
         "note": "Untrusted operational evidence; re-verify referenced state before acting.",
     }
     encoded = (canonical_json(summary) + "\n").encode("utf-8")
@@ -2192,11 +3262,25 @@ def resume_summary(root, run_id, max_bytes):
         summary["leaf_event_ids"] = summary["leaf_event_ids"][-4:]
         summary["turn_ids"] = summary["turn_ids"][-8:]
         summary["open_tool_refs"] = summary["open_tool_refs"][-8:]
+        summary["loop_states"] = summary["loop_states"][-2:]
         summary["truncated"] = True
         encoded = (canonical_json(summary) + "\n").encode("utf-8")
     if len(encoded) > max_bytes:
-        for key in ("leaf_event_ids", "turn_ids", "open_tool_refs"):
+        for key in ("leaf_event_ids", "turn_ids", "open_tool_refs", "loop_states"):
             summary[key] = []
+        encoded = (canonical_json(summary) + "\n").encode("utf-8")
+    if len(encoded) > max_bytes:
+        summary = {
+            "schema_version": SCHEMA_VERSION,
+            "authoritative": False,
+            "run_id": run_id,
+            "status": state["status"],
+            "last_offset": state["last_offset"],
+            "last_event_id": state["last_event_id"],
+            "last_event_hash": state["last_event_hash"],
+            "truncated": True,
+            "note": "Untrusted operational evidence; re-verify before acting.",
+        }
         encoded = (canonical_json(summary) + "\n").encode("utf-8")
     if len(encoded) > max_bytes:
         raise RunEventError("resume summary cannot fit requested bound")
@@ -2232,6 +3316,13 @@ def build_parser():
     save = sub.add_parser("save-point", help="store a recovery point and append its event")
     save.add_argument("run_id")
     save.add_argument("document")
+    loop_step = sub.add_parser(
+        "loop-step", help="verify an already event-bound immutable audit-loop head"
+    )
+    loop_step.add_argument("run_id")
+    loop_step.add_argument("loop_id")
+    loop_step.add_argument("reference")
+    loop_step.add_argument("sha256")
     finish = sub.add_parser("finish", help="store a run envelope and seal or wait the run")
     finish.add_argument("run_id")
     finish.add_argument("document")
@@ -2263,6 +3354,10 @@ def main(argv=None):
         result = write_snapshot(args.root, args.run_id, read_json(args.document, "turn snapshot"))
     elif args.command == "save-point":
         result = write_save_point(args.root, args.run_id, read_json(args.document, "save point"))
+    elif args.command == "loop-step":
+        result = record_loop_step(
+            args.root, args.run_id, args.loop_id, args.reference, args.sha256,
+        )
     elif args.command == "finish":
         result = finish_run(args.root, args.run_id, read_json(args.document, "run envelope"))
     elif args.command == "resume":

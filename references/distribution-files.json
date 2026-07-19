@@ -16,6 +16,8 @@
       "memory/templates"
     ],
     "runtime_references": [
+      "references/audit-loop-protocol.md",
+      "references/audit-loop-state.schema.json",
       "references/audit-artifact.schema.json",
       "references/audit-run.schema.json",
       "references/auto-routing-scenarios.md",
@@ -33,6 +35,7 @@
       "references/turn-snapshot.schema.json"
     ],
     "runtime_scripts": [
+      "scripts/audit-loop.py",
       "scripts/audit-trends.py",
       "scripts/check-memory-private.py",
       "scripts/context-resolver.py",

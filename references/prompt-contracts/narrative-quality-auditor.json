@@ -226,7 +226,7 @@
     "runtime_sources": [
       {
         "path": "references/auditor-runbook.md",
-        "sha256": "c915340fee0c56cf792d1819888cdc55a80106077a857387fe9760817526f41c"
+        "sha256": "b893aee6a1fe5d8570c26bd63a179b7329b715f870575ef7f833c4d94e800a59"
       },
       {
         "path": "references/scoring-semantics.md",

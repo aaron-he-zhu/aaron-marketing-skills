@@ -17,7 +17,7 @@
       ],
       "framework": "TALE",
       "ref": "references/prompt-contracts/narrative-quality-auditor.json",
-      "sha256": "08935b781abd670f1a0fec0c211b5f1a66b6bdd3925e06aa1aec53e457addbd1",
+      "sha256": "40980962f62144efa6117123fe0777518beb414ae6add075a470fb69439dd2b0",
       "skill": "narrative-quality-auditor",
       "skill_sha256": "f8ea2c5436259403f1ebe4d6118403beb79004e1a4a4bf28d9eb24a2b6a655fb",
       "skill_version": "18.0.0"
@@ -33,7 +33,7 @@
       ],
       "framework": "CORE-EEAT",
       "ref": "references/prompt-contracts/content-quality-auditor.json",
-      "sha256": "019e58148f70dcb08ac12f65f75dc6d1db5aa2753466f6b8bc1eed1474478b87",
+      "sha256": "2e98c30221f11a5301462883d5c8537b07e67ffd99867d1adf591bd7d824bfc3",
       "skill": "content-quality-auditor",
       "skill_sha256": "8e3f8f25c7569adf262f3435c7d5daa508e072253e79a85ad9e76314eb9de1d4",
       "skill_version": "18.0.0"
@@ -49,7 +49,7 @@
       ],
       "framework": "CITE",
       "ref": "references/prompt-contracts/domain-authority-auditor.json",
-      "sha256": "999e3d4670c29320879dee9779cc461451cffe758b54a7694817ca3e84987a2c",
+      "sha256": "6d8b3251eddf6d095e569cb48b8be733010bb6ba62e2c98b67db868d30ae3a69",
       "skill": "domain-authority-auditor",
       "skill_sha256": "4c240a92296abf301c5681aadc4118f14c04a23fb19ea144c686f932eac5697f",
       "skill_version": "18.0.0"
@@ -65,7 +65,7 @@
       ],
       "framework": "ECHO",
       "ref": "references/prompt-contracts/social-quality-auditor.json",
-      "sha256": "adc5bbc9ef3721987f9e686582d612732991d60aace8b4d4caaf7547ab011b5a",
+      "sha256": "6e354b1f3c0c57738af4aade39c2db3897126df786a38e2d097b2532327ed228",
       "skill": "social-quality-auditor",
       "skill_sha256": "9a383a4479e8e740100d4a7f8dccd44fc4156414131f6417be0626bd291b6dae",
       "skill_version": "18.0.0"
@@ -81,7 +81,7 @@
       ],
       "framework": "SEND",
       "ref": "references/prompt-contracts/email-quality-auditor.json",
-      "sha256": "6d2e1137da3c485b9e7f095743c403e923cd9f03a466c16e53d58a1787759db9",
+      "sha256": "95f0f226d079663f99c28f971830008be2c3499b4fe0c342a7dff02cb8fea097",
       "skill": "email-quality-auditor",
       "skill_sha256": "3ded15fec88aa102dece291e2f6fcc3ca69a88a70c39cd1324b89a8f0b73dc94",
       "skill_version": "18.0.0"
@@ -97,7 +97,7 @@
       ],
       "framework": "ROAS",
       "ref": "references/prompt-contracts/ad-account-auditor.json",
-      "sha256": "4425cb77ecf181a20589cdece3f97c964b13ff0998c07c53877739c843c93119",
+      "sha256": "2dfec3d5043569e404a069358505f465cf9833af752fdbe57654ad463b83b96f",
       "skill": "ad-account-auditor",
       "skill_sha256": "67058d4494e56773e18244753fc61971f5e872f581775acf68d115f18925605f",
       "skill_version": "18.0.0"
@@ -113,7 +113,7 @@
       ],
       "framework": "STAR",
       "ref": "references/prompt-contracts/creator-content-auditor.json",
-      "sha256": "149279b4d02f5ecb2d68687c4973348b64d11ea3b52ae44d4112ccc44130bf55",
+      "sha256": "35f497390abc5b389abacadf469c667a17456eb0e917aefb2030855a18de23d5",
       "skill": "creator-content-auditor",
       "skill_sha256": "39b6f669d4b2039db3db1a8c77c597f057c6ea1c375ad7a89836a13740d996e3",
       "skill_version": "18.0.0"
@@ -129,7 +129,7 @@
       ],
       "framework": "RAMP",
       "ref": "references/prompt-contracts/launch-readiness-auditor.json",
-      "sha256": "44bcaac312b5c1dc1cd8d5958c0043b68569bd88517749f1817262939aadbc27",
+      "sha256": "d3aefeedc14e9b622682d895cb31df2f1f8855c355449f4e54edb4ebe86d4db3",
       "skill": "launch-readiness-auditor",
       "skill_sha256": "7a817d651e54dfbfd6316e2ccaa2dbcfac500214f0ca80498ea3413e25d5844a",
       "skill_version": "18.0.0"

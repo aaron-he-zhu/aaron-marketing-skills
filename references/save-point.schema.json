@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/save-point.schema.json",
   "title": "Aaron save point",
-  "description": "A metadata-only recovery pointer into a verified run stream; it is not canonical marketing state. The runtime additionally requires chain_depth to equal visited_skills length minus one.",
+  "description": "A metadata-only recovery pointer into a verified run stream; it is not canonical marketing state. The runtime requires visited_skills to exactly equal the typed route chain derived from the selected parent ancestry and chain_depth to equal its automatic-handoff depth. pending_handoff is only a proposal and never mutates that chain.",
   "type": "object",
   "additionalProperties": false,
   "required": [

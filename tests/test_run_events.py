@@ -1,5 +1,5 @@
 import importlib.util
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
 import hashlib
 import json
 import os
@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import subprocess
 import tempfile
+import threading
 import unittest
 import uuid
 from unittest import mock
@@ -36,7 +37,7 @@ class RunEventTests(unittest.TestCase):
     def offsets(value=None):
         return {name: value for name in runtime.REGISTRIES}
 
-    def request(self, key, event_type="route_selected", parent=None, turn_id=None,
+    def request(self, key, event_type="context_resolved", parent=None, turn_id=None,
                 status="succeeded", subject=None, **overrides):
         value = {
             "schema_version": "1.0",
@@ -48,13 +49,57 @@ class RunEventTests(unittest.TestCase):
             "parent_event_id": parent,
             "turn_id": turn_id,
             "status": status,
-            "subject": subject or {"kind": "route", "ref": "fixture"},
+            "subject": subject or {"kind": "context", "ref": "fixture"},
             "references": [],
             "metrics": {},
             "dimensions": {},
         }
         value.update(overrides)
         return value
+
+    def route_request(self, key, parent, target="content-writer", command="seo-geo",
+                      reason_code="fixture", transition="initial", actor_type="system"):
+        return self.request(
+            key,
+            event_type="route_selected",
+            parent=parent,
+            status="succeeded",
+            subject={"kind": "route", "ref": target},
+            actor={"type": actor_type, "id": "test-host"},
+            reason_code=reason_code,
+            dimensions={
+                "route_transition": transition,
+                "route_command": command,
+            },
+        )
+
+    def select_route(self, key="route-initial", target="content-writer",
+                     command="seo-geo", reason_code="fixture",
+                     transition="initial", parent=None, actor_type="system"):
+        events = runtime.load_events(self.root, self.run_id)
+        return runtime.append_event(
+            self.root,
+            self.run_id,
+            self.route_request(
+                key,
+                parent or events[-1]["event_id"],
+                target=target,
+                command=command,
+                reason_code=reason_code,
+                transition=transition,
+                actor_type=actor_type,
+            ),
+        )
+
+    def ensure_initial_route(self):
+        events = runtime.load_events(self.root, self.run_id)
+        state = runtime.project_events(self.run_id, events)
+        if state["route_skill"] is None:
+            return self.select_route(
+                key="route-initial-" + events[-1]["event_id"],
+                parent=events[-1]["event_id"],
+            )
+        return None
 
     def start(self):
         return runtime.append_event(
@@ -102,6 +147,9 @@ class RunEventTests(unittest.TestCase):
 
     def context_reference(self, value=None):
         value = value or self.context_manifest_value()
+        stream = self.root / "memory" / "runs" / self.run_id / "events.ndjson"
+        if stream.is_file():
+            self.ensure_initial_route()
         relative = "memory/runs/%s/turns/%s/context-manifest.json" % (
             value["run_id"], value["turn_id"],
         )
@@ -171,13 +219,16 @@ class RunEventTests(unittest.TestCase):
             "context_manifest": context,
             "artifacts": [],
             "registry_offsets": self.offsets(None),
-            "visited_skills": ["content-writer"],
-            "chain_depth": 0,
+            "visited_skills": list(state["route_chain"]),
+            "chain_depth": state["automatic_handoff_depth"],
             "pending_handoff": None,
             "next_action": {"code": "continue"},
         }
 
     def envelope_value(self, context, save_point, state, status="succeeded"):
+        context_document = json.loads(
+            (self.root / context["ref"]).read_text(encoding="utf-8")
+        )
         return {
             "schema_version": "1.0",
             "run_id": self.run_id,
@@ -187,9 +238,9 @@ class RunEventTests(unittest.TestCase):
             "status": status,
             "evidence_mode": "simulated",
             "route": {
-                "skill": "content-writer",
-                "version": "18.0.0",
-                "reason_code": "fixture",
+                "skill": context_document["route"]["target_skill"],
+                "version": context_document["route"]["catalog_version"],
+                "reason_code": context_document["route"]["reason_code"],
             },
             "context_manifests": [context],
             "last_event_id": state["last_event_id"],
@@ -201,6 +252,151 @@ class RunEventTests(unittest.TestCase):
             "metrics": {"turns": 1, "tool_calls": 0},
             "failure_class": None,
             "next_action": None,
+        }
+
+    def degraded_envelope_value(self, state, status="failed"):
+        return {
+            "schema_version": "1.0",
+            "run_id": self.run_id,
+            "parent_run_id": None,
+            "started_at": "2026-07-19T10:00:00Z",
+            "ended_at": "2026-07-19T10:03:00Z",
+            "status": status,
+            "evidence_mode": "none",
+            "route": None,
+            "context_manifests": [],
+            "last_event_id": state["last_event_id"],
+            "last_event_offset": state["last_offset"],
+            "last_event_hash": state["last_event_hash"],
+            "save_point": None,
+            "registry_offsets": self.offsets(None),
+            "artifacts": [],
+            "metrics": {"turns": 0, "tool_calls": 0},
+            "failure_class": "loop",
+            "next_action": None,
+        }
+
+    @staticmethod
+    def loop_audit_identity():
+        return {
+            "ref": "inputs/audit.md",
+            "sha256": "a" * 64,
+            "schema_version": "3.0",
+            "runbook_version": "3.0.0",
+            "catalog_version": "18.0.0",
+            "framework": "CORE-EEAT",
+            "profile": "blog-post",
+            "target": "fixture",
+            "observed_at": "2026-07-19",
+            "target_identity_sha256": "b" * 64,
+            "context_sha256": "c" * 64,
+            "status": "DONE_WITH_CONCERNS",
+            "verdict": "FIX",
+            "score_state": "SCORED",
+            "evidence_coverage": 100,
+            "score_confidence": "medium",
+            "raw_overall_score": 80,
+            "final_overall_score": 80,
+        }
+
+    @staticmethod
+    def loop_wrapper(step):
+        return {
+            "document": step["document"],
+            "ref": step["ref"],
+            "sha256": step["sha256"],
+        }
+
+    def loop_step_fixture(
+            self, loop_id, parent_event, prior=None, *, transition=None,
+            state=None, reason_code=None, materialize=True):
+        sequence = 1 if prior is None else prior["document"]["sequence"] + 1
+        transition = transition or ("start" if prior is None else "deadline-expired")
+        state = state or ("awaiting-proposal" if prior is None else "exhausted")
+        reason_code = reason_code or (
+            "loop-started" if prior is None else "deadline-expired"
+        )
+        previous_ref = None if prior is None else prior["ref"]
+        previous_sha = runtime.ZERO_HASH if prior is None else prior["sha256"]
+        reference = "memory/runs/%s/loops/%s/%03d-%s.json" % (
+            self.run_id, loop_id, sequence, transition,
+        )
+        occurred_at = "2026-07-19T10:%02d:00Z" % sequence
+        document = {
+            "schema_version": "2.0",
+            "run_id": self.run_id,
+            "loop_id": loop_id,
+            "transition_id": str(uuid.uuid5(
+                uuid.NAMESPACE_URL,
+                "%s:%s:%d:%s" % (self.run_id, loop_id, sequence, transition),
+            )),
+            "sequence": sequence,
+            "transition": transition,
+            "from_state": None if prior is None else prior["document"]["state"],
+            "state": state,
+            "cycle": 1,
+            "max_cycles": 3,
+            "total_retries": 0,
+            "state_retries": 0,
+            "max_retries": 2,
+            "backoff_seconds": 0,
+            "retry_not_before": None,
+            "deadline": "2026-07-19T11:00:00Z",
+            "occurred_at": occurred_at,
+            "recorded_at": occurred_at,
+            "idempotency_key": "fixture-%s-%03d" % (loop_id[:12], sequence),
+            "request_hash": runtime.sha256_json({
+                "loop_id": loop_id, "sequence": sequence,
+            }),
+            "run_parent_event_id": parent_event["event_id"],
+            "run_parent_event_sha256": parent_event["event_hash"],
+            "previous_step_ref": previous_ref,
+            "previous_step_sha256": previous_sha,
+            "expected_previous_sha256": previous_sha,
+            "proposal_only": True,
+            "external_mutation_authorized": False,
+            "baseline_audit": self.loop_audit_identity(),
+            "latest_audit": self.loop_audit_identity(),
+            "proposal": None,
+            "owner": None,
+            "intervention": None,
+            "reason_code": reason_code,
+            "lease": {
+                "generation": 0,
+                "active": False,
+                "owner": None,
+                "token_sha256": None,
+                "acquired_at": None,
+                "expires_at": None,
+                "released_at": None,
+            },
+        }
+        expected_sha = hashlib.sha256(
+            runtime._serialized_immutable_json_bytes(document)
+        ).hexdigest()
+        _stream, _projection, run_dir = runtime.run_paths(
+            self.root, self.run_id, create=False,
+        )
+        loop_dir = runtime.ensure_child_directories(
+            runtime.normalized_root(self.root), run_dir, ["loops", loop_id],
+        )
+        path = loop_dir / Path(reference).name
+        with runtime.locked_run_coordinator(self.root, self.run_id):
+            anchored = runtime.anchor_loop_step(
+                self.root, self.run_id, loop_id, reference, expected_sha,
+                document, _coordinator_locked=True,
+            )
+            if materialize:
+                self.assertEqual(
+                    expected_sha,
+                    runtime.write_immutable_json(self.root, path, document),
+                )
+        return {
+            "document": document,
+            "ref": reference,
+            "sha256": expected_sha,
+            "path": path,
+            "event": anchored["event"],
         }
 
     def test_idempotency_hash_chain_and_projection_repair(self):
@@ -249,6 +445,113 @@ class RunEventTests(unittest.TestCase):
             state["leaf_event_ids"],
         )
 
+    def test_untyped_legacy_route_event_fails_closed(self):
+        root = self.start()["event"]
+        legacy = self.request(
+            "legacy-route",
+            event_type="route_selected",
+            parent=root["event_id"],
+            subject={"kind": "route", "ref": "content-writer"},
+        )
+        with self.assertRaisesRegex(runtime.RunEventError, "requires reason_code"):
+            runtime.append_event(self.root, self.run_id, legacy)
+
+        legacy["reason_code"] = "fixture"
+        with self.assertRaisesRegex(runtime.RunEventError, "dimensions must contain exactly"):
+            runtime.append_event(self.root, self.run_id, legacy)
+        self.assertEqual(1, len(runtime.load_events(self.root, self.run_id)))
+
+    def test_route_state_uses_only_selected_parent_ancestry(self):
+        root = self.start()["event"]
+        branch_a = self.select_route(
+            key="route-a", parent=root["event_id"], target="skill-a", command="auto",
+        )
+        branch_b = self.select_route(
+            key="route-b", parent=root["event_id"], target="skill-b", command="email",
+        )
+        self.assertEqual("skill-b", branch_b["projection"]["route_skill"])
+        self.assertEqual(["skill-b"], branch_b["projection"]["route_chain"])
+        self.assertEqual(0, branch_b["projection"]["automatic_handoff_depth"])
+
+        continued_a = self.select_route(
+            key="route-a-auto",
+            parent=branch_a["event"]["event_id"],
+            target="skill-b",
+            command="email",
+            transition="automatic-handoff",
+        )
+        projection = continued_a["projection"]
+        self.assertEqual("skill-b", projection["route_skill"])
+        self.assertEqual("email", projection["route_command"])
+        self.assertEqual("fixture", projection["route_reason_code"])
+        self.assertEqual("automatic-handoff", projection["route_transition"])
+        self.assertEqual(["skill-a", "skill-b"], projection["route_chain"])
+        self.assertEqual(1, projection["automatic_handoff_depth"])
+
+        with self.assertRaisesRegex(runtime.RunEventError, "initial route may appear only once"):
+            self.select_route(
+                key="route-a-second-initial",
+                parent=branch_a["event"]["event_id"],
+                target="skill-c",
+            )
+
+    def test_route_loop_cap_and_user_reset_are_deterministic(self):
+        root = self.start()["event"]
+        current = self.select_route(
+            key="initial-a", parent=root["event_id"], target="skill-a", command="auto",
+        )
+        current = self.select_route(
+            key="auto-b", parent=current["event"]["event_id"], target="skill-b",
+            command="auto", transition="automatic-handoff",
+        )
+        with self.assertRaisesRegex(runtime.RunEventError, "already visited"):
+            self.select_route(
+                key="auto-loop", parent=current["event"]["event_id"], target="skill-a",
+                command="auto", transition="automatic-handoff",
+            )
+        for target in ("skill-c", "skill-d"):
+            current = self.select_route(
+                key="auto-" + target,
+                parent=current["event"]["event_id"],
+                target=target,
+                command="auto",
+                transition="automatic-handoff",
+            )
+        self.assertEqual(3, current["projection"]["automatic_handoff_depth"])
+        with self.assertRaisesRegex(runtime.RunEventError, "three-handoff route limit"):
+            self.select_route(
+                key="auto-overflow", parent=current["event"]["event_id"],
+                target="skill-e", command="auto", transition="automatic-handoff",
+            )
+
+        reset = self.select_route(
+            key="user-reset",
+            parent=current["event"]["event_id"],
+            target="skill-a",
+            command="auto",
+            transition="user-reroute",
+            actor_type="system",
+        )
+        self.assertEqual(["skill-a"], reset["projection"]["route_chain"])
+        self.assertEqual(0, reset["projection"]["automatic_handoff_depth"])
+        after_reset = self.select_route(
+            key="auto-after-reset",
+            parent=reset["event"]["event_id"],
+            target="skill-b",
+            command="auto",
+            transition="automatic-handoff",
+        )
+        self.assertEqual(["skill-a", "skill-b"], after_reset["projection"]["route_chain"])
+        with self.assertRaisesRegex(runtime.RunEventError, "requires a prior route"):
+            self.select_route(
+                key="actor-does-not-authorize",
+                parent=root["event_id"],
+                target="skill-z",
+                command="auto",
+                transition="user-reroute",
+                actor_type="user",
+            )
+
     def test_tampering_truncation_and_hardlinks_fail_closed(self):
         self.start()
         stream, _, _ = runtime.run_paths(self.root, self.run_id)
@@ -292,18 +595,252 @@ class RunEventTests(unittest.TestCase):
         self.assertEqual(17, len({event["event_hash"] for event in events}))
 
     def test_event_limit_is_rejected_before_the_stream_becomes_unverifiable(self):
-        with mock.patch.object(runtime, "MAX_EVENTS", 2):
+        with mock.patch.object(runtime, "MAX_EVENTS", 3):
             root_event = self.start()["event"]
             second = runtime.append_event(
                 self.root, self.run_id,
                 self.request("second", parent=root_event["event_id"]),
             )
-            with self.assertRaisesRegex(runtime.RunEventError, "event limit"):
+            with self.assertRaisesRegex(runtime.RunEventError, "final slot"):
                 runtime.append_event(
                     self.root, self.run_id,
                     self.request("overflow", parent=second["event"]["event_id"]),
                 )
             self.assertEqual(2, len(runtime.load_events(self.root, self.run_id)))
+
+    def test_final_event_slot_rejects_waiting_but_allows_terminal_envelope(self):
+        self.start()
+        context = self.context_reference()
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
+        event_count = len(runtime.load_events(self.root, self.run_id))
+        waiting = self.envelope_value(
+            context, None, snapshot["projection"], status="waiting",
+        )
+        waiting["ended_at"] = None
+        waiting["next_action"] = {"code": "capacity-wait"}
+        with mock.patch.object(runtime, "MAX_EVENTS", event_count + 1):
+            with self.assertRaisesRegex(runtime.RunEventError, "final slot"):
+                runtime.finish_run(self.root, self.run_id, waiting)
+            terminal = self.envelope_value(context, None, snapshot["projection"])
+            finished = runtime.finish_run(self.root, self.run_id, terminal)
+        self.assertEqual("succeeded", finished["projection"]["status"])
+        self.assertEqual(event_count + 1, finished["event"]["offset"])
+
+    def test_terminal_loop_closure_is_scoped_to_the_selected_ancestry(self):
+        self.start()
+        context = self.context_reference()
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
+        loop_id = str(uuid.uuid4())
+        active = self.loop_step_fixture(loop_id, snapshot["event"])
+        terminal = self.loop_step_fixture(
+            loop_id, active["event"], active,
+            transition="deadline-expired", state="exhausted",
+            reason_code="deadline-expired",
+        )
+
+        sibling = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "sibling-from-active-loop",
+                parent=active["event"]["event_id"],
+                subject={"kind": "context", "ref": "sibling"},
+            ),
+        )
+        envelope = self.envelope_value(context, None, sibling["projection"])
+        with self.assertRaisesRegex(
+                runtime.RunEventError, "requires selected audit loops to be terminal"):
+            runtime.finish_run(self.root, self.run_id, envelope)
+
+        historical = runtime.verify_loop_event_coverage(
+            self.root, self.run_id, loop_id,
+            [self.loop_wrapper(active), self.loop_wrapper(terminal)],
+        )
+        self.assertEqual(
+            [active["event"]["event_id"], terminal["event"]["event_id"]],
+            historical["event_ids"],
+        )
+
+    def test_sibling_only_loop_is_ignored_and_historical_chain_remains_valid(self):
+        self.start()
+        context = self.context_reference()
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
+        loop_id = str(uuid.uuid4())
+        active = self.loop_step_fixture(loop_id, snapshot["event"])
+        terminal = self.loop_step_fixture(loop_id, active["event"], active)
+
+        selected = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "branch-before-loop",
+                parent=snapshot["event"]["event_id"],
+                subject={"kind": "context", "ref": "selected-without-loop"},
+            ),
+        )
+        closure = runtime.verify_run_audit_loops(
+            self.root, self.run_id, require_terminal=True,
+            branch_head_event_id=selected["event"]["event_id"],
+        )
+        self.assertEqual("none", closure["status"])
+        self.assertEqual([], closure["loops"])
+
+        envelope = self.envelope_value(context, None, selected["projection"])
+        envelope["loop_closure"] = {
+            "scope": "selected-ancestry",
+            "selected_head_event_id": active["event"]["event_id"],
+            "status": "verified",
+            "loops": [],
+        }
+        finished = runtime.finish_run(self.root, self.run_id, envelope)
+        stored = json.loads(
+            (self.root / finished["artifact"]["ref"]).read_text(encoding="utf-8")
+        )
+        self.assertEqual("none", stored["loop_closure"]["status"])
+        self.assertEqual(
+            selected["event"]["event_id"],
+            stored["loop_closure"]["selected_head_event_id"],
+        )
+        historical = runtime.verify_loop_event_coverage(
+            self.root, self.run_id, loop_id,
+            [self.loop_wrapper(active), self.loop_wrapper(terminal)],
+        )
+        self.assertEqual(2, historical["events"])
+
+    def test_failed_finish_persists_bounded_unresolved_loop_evidence(self):
+        self.start()
+        context = self.context_reference()
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
+        loop_id = str(uuid.uuid4())
+        active = self.loop_step_fixture(loop_id, snapshot["event"])
+        active["path"].unlink()
+
+        state = runtime.project_events(
+            self.run_id, runtime.load_events(self.root, self.run_id),
+        )
+        succeeded = self.envelope_value(context, None, state)
+        with self.assertRaisesRegex(runtime.RunEventError, "does not exist"):
+            runtime.finish_run(self.root, self.run_id, succeeded)
+
+        failed = self.envelope_value(context, None, state, status="failed")
+        failed["failure_class"] = "loop"
+        result = runtime.finish_run(self.root, self.run_id, failed)
+        stored = json.loads(
+            (self.root / result["artifact"]["ref"]).read_text(encoding="utf-8")
+        )
+        self.assertEqual("run_failed", result["event"]["event_type"])
+        self.assertEqual("unresolved", stored["loop_closure"]["status"])
+        self.assertEqual("unresolved", stored["loop_closure"]["loops"][0]["validation_status"])
+        self.assertEqual("missing-step", stored["loop_closure"]["loops"][0]["failure_code"])
+        self.assertEqual(active["ref"], stored["loop_closure"]["loops"][0]["expected_step_ref"])
+        self.assertEqual(active["sha256"], stored["loop_closure"]["loops"][0]["expected_step_sha256"])
+
+    def test_failed_and_aborted_runs_can_seal_before_route_or_context(self):
+        for status, event_type in (("failed", "run_failed"), ("aborted", "run_aborted")):
+            with self.subTest(status=status):
+                self.run_id = str(uuid.uuid4())
+                started = self.start()
+                envelope = self.degraded_envelope_value(
+                    started["projection"], status=status,
+                )
+                claimed_offsets = json.loads(json.dumps(envelope))
+                claimed_offsets["registry_offsets"]["claims"] = 0
+                with self.assertRaisesRegex(
+                        runtime.RunEventError, "unbound null registry offsets"):
+                    runtime.finish_run(
+                        self.root, self.run_id, claimed_offsets,
+                    )
+                result = runtime.finish_run(self.root, self.run_id, envelope)
+                stored = json.loads(
+                    (self.root / result["artifact"]["ref"]).read_text(encoding="utf-8")
+                )
+                self.assertEqual(event_type, result["event"]["event_type"])
+                self.assertIsNone(stored["route"])
+                self.assertEqual([], stored["context_manifests"])
+                self.assertEqual("none", stored["loop_closure"]["status"])
+
+    def test_loop_closure_uses_shared_step_and_byte_budgets(self):
+        started = self.start()
+        first_loop = str(uuid.uuid4())
+        first = self.loop_step_fixture(first_loop, started["event"])
+        second_loop = str(uuid.uuid4())
+        second = self.loop_step_fixture(second_loop, first["event"])
+        selected_head = second["event"]["event_id"]
+
+        with mock.patch.object(runtime, "MAX_LOOP_CLOSURE_STEPS", 1):
+            with self.assertRaisesRegex(runtime.RunEventError, "step budget"):
+                runtime.verify_run_audit_loops(
+                    self.root, self.run_id, require_terminal=False,
+                    branch_head_event_id=selected_head,
+                )
+            unresolved = runtime.verify_run_audit_loops(
+                self.root, self.run_id, require_terminal=False,
+                branch_head_event_id=selected_head, allow_unresolved=True,
+            )
+            self.assertEqual("unresolved", unresolved["status"])
+            self.assertEqual(
+                ["valid", "unresolved"],
+                [item["validation_status"] for item in unresolved["loops"]],
+            )
+            self.assertEqual("validator-error", unresolved["loops"][1]["failure_code"])
+
+        combined_minus_one = first["path"].stat().st_size + second["path"].stat().st_size - 1
+        with mock.patch.object(runtime, "MAX_LOOP_CLOSURE_BYTES", combined_minus_one):
+            with self.assertRaisesRegex(runtime.RunEventError, "byte budget"):
+                runtime.verify_run_audit_loops(
+                    self.root, self.run_id, require_terminal=False,
+                    branch_head_event_id=selected_head,
+                )
+
+    def test_future_anchor_is_not_public_coverage_but_is_recoverable_internally(self):
+        started = self.start()
+        loop_id = str(uuid.uuid4())
+        first = self.loop_step_fixture(loop_id, started["event"])
+        pending = self.loop_step_fixture(
+            loop_id, first["event"], first, materialize=False,
+        )
+        descendant = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "after-pending-loop-anchor",
+                parent=pending["event"]["event_id"],
+            ),
+        )
+
+        with self.assertRaisesRegex(runtime.RunEventError, "unmaterialized or forked"):
+            runtime.verify_loop_event_coverage(
+                self.root, self.run_id, loop_id, [self.loop_wrapper(first)],
+            )
+        allowed = runtime.verify_loop_event_coverage(
+            self.root, self.run_id, loop_id, [self.loop_wrapper(first)],
+            require_selected=True,
+            _allowed_unmaterialized_event_id=pending["event"]["event_id"],
+        )
+        self.assertEqual([first["event"]["event_id"]], allowed["event_ids"])
+
+        with runtime.locked_run_coordinator(self.root, self.run_id):
+            recovered = runtime.anchor_loop_step(
+                self.root, self.run_id, loop_id, pending["ref"], pending["sha256"],
+                pending["document"], _coordinator_locked=True,
+            )
+            runtime.write_immutable_json(
+                self.root, pending["path"], pending["document"],
+            )
+        self.assertTrue(recovered["deduplicated"])
+        self.assertEqual(descendant["event"]["event_id"], runtime.load_events(
+            self.root, self.run_id,
+        )[-1]["event_id"])
+        complete = runtime.verify_loop_event_coverage(
+            self.root, self.run_id, loop_id,
+            [self.loop_wrapper(first), self.loop_wrapper(pending)],
+        )
+        self.assertEqual(2, complete["events"])
 
     def test_complete_snapshot_save_point_and_envelope_lifecycle(self):
         root_event = self.start()["event"]
@@ -328,7 +865,9 @@ class RunEventTests(unittest.TestCase):
         changed_snapshot["host"]["model_id"] = "different-model"
         with self.assertRaisesRegex(runtime.RunEventError, "different artifact content"):
             runtime.write_snapshot(self.root, self.run_id, changed_snapshot)
-        self.assertEqual(turn["event"]["event_id"], snapshot["event"]["parent_event_id"])
+        route_parent = runtime.load_events(self.root, self.run_id)[-2]
+        self.assertEqual("route_selected", route_parent["event_type"])
+        self.assertEqual(route_parent["event_id"], snapshot["event"]["parent_event_id"])
 
         state = snapshot["projection"]
         save_value = self.save_point_value(snapshot["artifact"], context, state)
@@ -419,6 +958,83 @@ class RunEventTests(unittest.TestCase):
                 self.root, self.run_id, self.snapshot_value(invalid_context),
             )
 
+    def test_snapshot_binds_context_to_latest_typed_route_event(self):
+        root = self.start()["event"]
+        self.select_route(
+            key="route-command-mismatch",
+            parent=root["event_id"],
+            target="content-writer",
+            command="auto",
+            reason_code="fixture",
+        )
+        context = self.context_reference()
+        with self.assertRaisesRegex(runtime.RunEventError, "latest typed route event"):
+            runtime.write_snapshot(
+                self.root, self.run_id, self.snapshot_value(context),
+            )
+
+    def test_save_point_uses_exact_route_chain_and_pending_handoff_is_inert(self):
+        root = self.start()["event"]
+        initial = self.select_route(
+            key="route-content",
+            parent=root["event_id"],
+            target="content-writer",
+            command="seo-geo",
+        )
+        automatic = self.select_route(
+            key="route-auditor",
+            parent=initial["event"]["event_id"],
+            target="content-quality-auditor",
+            command="seo-geo",
+            transition="automatic-handoff",
+        )
+        context = self.context_reference(
+            self.context_manifest_value(target_skill="content-quality-auditor")
+        )
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
+        wrong = self.save_point_value(
+            snapshot["artifact"], context, snapshot["projection"],
+        )
+        wrong["visited_skills"] = ["invented-skill", "content-quality-auditor"]
+        with self.assertRaisesRegex(runtime.RunEventError, "exactly match"):
+            runtime.write_save_point(self.root, self.run_id, wrong)
+
+        value = self.save_point_value(
+            snapshot["artifact"], context, snapshot["projection"],
+        )
+        value["pending_handoff"] = {
+            "status": "proposed",
+            "objective_code": "continue-review",
+            "recommended_skill": "another-skill",
+        }
+        saved = runtime.write_save_point(self.root, self.run_id, value)
+        self.assertEqual(
+            ["content-writer", "content-quality-auditor"],
+            saved["projection"]["route_chain"],
+        )
+        self.assertEqual(1, saved["projection"]["automatic_handoff_depth"])
+        self.assertEqual(automatic["projection"]["route_chain"], saved["projection"]["route_chain"])
+
+    def test_envelope_rejects_route_selected_after_terminal_snapshot(self):
+        self.start()
+        context = self.context_reference()
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
+        rerouted = self.select_route(
+            key="late-user-reroute",
+            parent=snapshot["event"]["event_id"],
+            target="content-quality-auditor",
+            command="seo-geo",
+            reason_code="late-reroute",
+            transition="user-reroute",
+        )
+        envelope = self.envelope_value(context, None, rerouted["projection"])
+        with self.assertRaisesRegex(runtime.RunEventError, "latest typed route event"):
+            runtime.finish_run(self.root, self.run_id, envelope)
+
     def test_save_point_and_envelope_bind_branch_context_and_offsets(self):
         root_event = self.start()["event"]
         runtime.append_event(
@@ -437,7 +1053,7 @@ class RunEventTests(unittest.TestCase):
             runtime.write_save_point(self.root, self.run_id, bad_save)
         bad_save = self.save_point_value(snapshot["artifact"], context, snapshot["projection"])
         bad_save["visited_skills"] = ["invented-skill"]
-        with self.assertRaisesRegex(runtime.RunEventError, "current selected-branch skill"):
+        with self.assertRaisesRegex(runtime.RunEventError, "exactly match the selected typed route chain"):
             runtime.write_save_point(self.root, self.run_id, bad_save)
 
         no_snapshot_root = tempfile.TemporaryDirectory()
@@ -449,7 +1065,10 @@ class RunEventTests(unittest.TestCase):
         try:
             started = self.start()
             bare_context = self.context_reference()
-            envelope = self.envelope_value(bare_context, None, started["projection"])
+            live_state = runtime.project_events(
+                self.run_id, runtime.load_events(self.root, self.run_id),
+            )
+            envelope = self.envelope_value(bare_context, None, live_state)
             with self.assertRaisesRegex(runtime.RunEventError, "ancestor turn snapshot"):
                 runtime.finish_run(self.root, self.run_id, envelope)
         finally:
@@ -477,7 +1096,9 @@ class RunEventTests(unittest.TestCase):
         first_snapshot = runtime.write_snapshot(
             self.root, self.run_id, self.snapshot_value(first_context),
         )
-        self.assertEqual(first_turn["event"]["event_id"], first_snapshot["event"]["parent_event_id"])
+        first_route = runtime.load_events(self.root, self.run_id)[-2]
+        self.assertEqual("route_selected", first_route["event_type"])
+        self.assertEqual(first_route["event_id"], first_snapshot["event"]["parent_event_id"])
 
         runtime.append_event(
             self.root, self.run_id,
@@ -574,7 +1195,10 @@ class RunEventTests(unittest.TestCase):
         snapshot = runtime.write_snapshot(
             self.root, self.run_id, self.snapshot_value(context),
         )
-        self.assertEqual(turn["event"]["event_id"], snapshot["event"]["parent_event_id"])
+        self.assertEqual(
+            "route_selected",
+            runtime.load_events(self.root, self.run_id)[-2]["event_type"],
+        )
         first_value = self.envelope_value(
             context, None, snapshot["projection"], status="waiting",
         )
@@ -618,6 +1242,24 @@ class RunEventTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(runtime.RunEventError, "reserved for its typed runtime command"):
             runtime.append_event(self.root, self.run_id, forged)
+
+        loop_id = str(uuid.uuid4())
+        forged_loop = self.request(
+            "forged-loop", event_type="loop_state_changed",
+            parent=root_event["event_id"], turn_id=None, status="succeeded",
+            subject={"kind": "loop", "ref": loop_id},
+            reason_code="forged-loop-state",
+            references=[{
+                "kind": "loop",
+                "ref": "memory/runs/%s/loops/%s/001-start.json"
+                % (self.run_id, loop_id),
+                "sha256": "b" * 64,
+            }],
+            metrics={"sequence": 1, "cycle": 1, "total_retries": 0},
+            dimensions={"loop_state": "awaiting-proposal"},
+        )
+        with self.assertRaisesRegex(runtime.RunEventError, "reserved for its typed runtime command"):
+            runtime.append_event(self.root, self.run_id, forged_loop)
 
         invalid = dict(forged)
         invalid["status"] = "failed"
@@ -667,7 +1309,10 @@ class RunEventTests(unittest.TestCase):
             ),
         )
         context = self.context_reference()
-        envelope = self.envelope_value(context, None, tool["projection"])
+        live_state = runtime.project_events(
+            self.run_id, runtime.load_events(self.root, self.run_id),
+        )
+        envelope = self.envelope_value(context, None, live_state)
         with self.assertRaisesRegex(runtime.RunEventError, "unfinished tool"):
             runtime.finish_run(self.root, self.run_id, envelope)
 
@@ -1035,6 +1680,19 @@ class RunEventTests(unittest.TestCase):
         digest = runtime.write_immutable_json(root, target, proposed)
         self.assertEqual(hashlib.sha256(expected_raw).hexdigest(), digest)
 
+    def test_oversized_immutable_document_is_rejected_before_install(self):
+        self.start()
+        root = runtime.normalized_root(self.root)
+        _, _, run_dir = runtime.run_paths(root, self.run_id)
+        target_dir = runtime.ensure_child_directories(root, run_dir, ["save-points"])
+        target = target_dir / "oversized.json"
+        with self.assertRaisesRegex(runtime.RunEventError, "exceeds"):
+            runtime.write_immutable_json(
+                root, target, {"payload": "x" * runtime.MAX_DOCUMENT_BYTES},
+            )
+        self.assertFalse(target.exists())
+        self.assertFalse((target_dir / ".oversized.json.run-create").exists())
+
     def test_read_only_stream_operations_require_exact_private_mode(self):
         self.start()
         stream, _projection, _run_dir = runtime.run_paths(self.root, self.run_id)
@@ -1065,6 +1723,27 @@ class RunEventTests(unittest.TestCase):
         events = runtime.load_events(self.root, self.run_id)
         self.assertEqual(7, len(events))
         self.assertEqual(list(range(1, 8)), [event["offset"] for event in events])
+
+    def test_existing_run_append_waits_for_per_run_coordinator(self):
+        root_event = self.start()["event"]
+        started = threading.Event()
+
+        def append_after_signal():
+            started.set()
+            return runtime.append_event(
+                self.root, self.run_id,
+                self.request("coordinated", parent=root_event["event_id"]),
+            )
+
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            with runtime.locked_run_coordinator(self.root, self.run_id):
+                future = executor.submit(append_after_signal)
+                self.assertTrue(started.wait(timeout=2))
+                with self.assertRaises(TimeoutError):
+                    future.result(timeout=0.1)
+            result = future.result(timeout=5)
+        self.assertEqual("coordinated", result["event"]["idempotency_key"])
+        self.assertEqual(2, result["event"]["offset"])
 
     def test_validators_reject_implicit_offsets_raw_metadata_and_pseudo_token_counts(self):
         context = self.context_reference()
@@ -1135,6 +1814,39 @@ class RunEventTests(unittest.TestCase):
     def test_schema_contracts_are_strict_and_match_runtime_enums(self):
         event_schema = json.loads((ROOT / "references" / "run-event.schema.json").read_text())
         self.assertEqual(runtime.EVENT_TYPES, set(event_schema["properties"]["event_type"]["enum"]))
+        route_clause = next(
+            clause for clause in event_schema["allOf"]
+            if clause["if"]["properties"]["event_type"].get("const") == "route_selected"
+        )["then"]
+        self.assertIn("reason_code", route_clause["required"])
+        route_dimensions = route_clause["properties"]["dimensions"]
+        self.assertFalse(route_dimensions["additionalProperties"])
+        self.assertEqual(
+            {"route_transition", "route_command"},
+            set(route_dimensions["required"]),
+        )
+        self.assertEqual(
+            runtime.ROUTE_TRANSITIONS,
+            set(route_dimensions["properties"]["route_transition"]["enum"]),
+        )
+        loop_clause = next(
+            clause for clause in event_schema["allOf"]
+            if clause["if"]["properties"]["event_type"].get("const")
+            == "loop_state_changed"
+        )["then"]
+        self.assertIn("reason_code", loop_clause["required"])
+        loop_dimensions = loop_clause["properties"]["dimensions"]
+        self.assertFalse(loop_dimensions["additionalProperties"])
+        self.assertEqual(
+            runtime.LOOP_STATES,
+            set(loop_dimensions["properties"]["loop_state"]["enum"]),
+        )
+        loop_metrics = loop_clause["properties"]["metrics"]
+        self.assertEqual(
+            {"sequence", "cycle", "total_retries"}, set(loop_metrics["required"]),
+        )
+        self.assertEqual(128, loop_metrics["properties"]["total_retries"]["maximum"])
+        self.assertIn("loop_state_changed", runtime.INTERNAL_EVENT_TYPES)
         reference_pattern = event_schema["$defs"]["reference"]["properties"]["ref"]["pattern"]
         self.assertIsNone(re.fullmatch(reference_pattern, "artifact/"))
         self.assertIsNone(re.fullmatch(reference_pattern, "artifact/../secret"))
@@ -1152,6 +1864,55 @@ class RunEventTests(unittest.TestCase):
         self.assertIsNone(re.fullmatch(snapshot_uuid_pattern, self.run_id.upper()))
         save_schema = json.loads((ROOT / "references/save-point.schema.json").read_text())
         self.assertEqual(1, save_schema["properties"]["visited_skills"]["minItems"])
+        self.assertIn("exactly equal the typed route chain", save_schema["description"])
+        envelope_schema = json.loads(
+            (ROOT / "references/run-envelope.schema.json").read_text()
+        )
+        loop_closure = envelope_schema["$defs"]["loopClosure"]
+        self.assertFalse(loop_closure["additionalProperties"])
+        closure_statuses = {
+            clause["if"]["properties"]["status"]["const"]
+            for clause in loop_closure["allOf"]
+        }
+        self.assertEqual({"none", "verified", "unresolved"}, closure_statuses)
+        none_clause = next(
+            clause for clause in loop_closure["allOf"]
+            if clause["if"]["properties"]["status"]["const"] == "none"
+        )
+        self.assertEqual(
+            0, none_clause["then"]["properties"]["loops"]["maxItems"],
+        )
+        verified_clause = next(
+            clause for clause in loop_closure["allOf"]
+            if clause["if"]["properties"]["status"]["const"] == "verified"
+        )
+        self.assertEqual(
+            "valid",
+            verified_clause["then"]["properties"]["loops"]["items"]
+            ["properties"]["validation_status"]["const"],
+        )
+        unresolved_clause = next(
+            clause for clause in loop_closure["allOf"]
+            if clause["if"]["properties"]["status"]["const"] == "unresolved"
+        )
+        self.assertEqual(
+            "unresolved",
+            unresolved_clause["then"]["properties"]["loops"]["contains"]
+            ["properties"]["validation_status"]["const"],
+        )
+        degraded_clause = next(
+            clause for clause in envelope_schema["allOf"]
+            if clause["if"]["properties"].get("context_manifests", {}).get("maxItems") == 0
+        )
+        degraded_offsets = degraded_clause["then"]["properties"]["registry_offsets"]
+        self.assertEqual(
+            runtime.REGISTRIES,
+            set(degraded_offsets["properties"]),
+        )
+        self.assertTrue(all(
+            rule == {"type": "null"}
+            for rule in degraded_offsets["properties"].values()
+        ))
 
 
 if __name__ == "__main__":

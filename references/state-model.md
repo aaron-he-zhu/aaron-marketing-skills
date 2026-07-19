@@ -154,6 +154,17 @@ The eight gate sinks are `memory/audits/{content,domain,influencer,ad,email,laun
 
 Audit artifacts retain framework, profile, version, target, observation date, evidence coverage/confidence, status, and verdict. Monthly pointer indexes live under `memory/indexes/audits/`; they may link artifacts but may not invent a cross-framework aggregate or strip profile/version context.
 
+Validated FIX audits may enter the non-authoritative proposal-only outer loop defined by [`audit-loop-protocol.md`](audit-loop-protocol.md). Its immutable steps record proposals, owner review, non-empty intervention evidence, and re-audits; they are operational evidence, not accepted registry truth or external-action capabilities. `external_mutation_authorized` is always false. A loop converges only on a distinct medium/high-confidence SHIP re-audit with the same framework/profile/target identity and an observation date later than the baseline and no earlier than the intervention's UTC date.
+
+Audit-loop v2 state is event-first: the runtime reserves the selected-ancestry
+`loop_state_changed` event for exact derived step bytes, then materializes that
+step. The step binds its run parent ID/hash, one loop identity cannot fork across
+branches, and sibling-only loops do not enter the selected branch's runtime-derived
+`loop_closure`. Success requires exact terminal loop coverage;
+waiting/needs-input/blocked require exact coverage but may stay active; only
+failed/aborted may preserve a bounded unresolved closure, which is failure
+evidence rather than valid loop state or convergence.
+
 ## Ownership Rules
 
 - Ordinary skills write only their authorized WARM path and proposal events.
@@ -170,3 +181,5 @@ Audit artifacts retain framework, profile, version, target, observation date, ev
 On projection loss, run `project <registry>`. On suspected corruption, run `verify <registry>` and stop on any offset/hash/idempotency failure. Restore a verified backup or append a compensating event; never patch NDJSON manually. A failed projection install does not justify deleting the fsynced event.
 
 For a runtime session, use `run-events.py verify <run-id>` and then `project <run-id>`. A run save point is an untrusted operational pointer: re-check its event head, artifact hashes, registry offsets, permission profile, and external state before resuming. Never translate a run event or envelope into an accepted registry fact.
+
+For an audit loop, use `audit-loop.py show --run-id <run-id> --loop-id <loop-id>` before advancing it. Respect its returned `retry_not_before`, deadline, lease generation, and optimistic head hash; never edit a step or infer authorization from an owner-review transition. If an event anchor is durable but its step is missing, recover only by replaying the same original loop request with the same idempotency key, explicit occurrence time, expected head, and exact inputs, allowing the controller to re-derive the anchored bytes. That exact file-only recovery may finish an anchor on a historical sibling branch or after a later terminal event without moving the selected head; it does not rewrite the sealed envelope or its recorded unresolved closure. An existing materialized duplicate or new transition requires its ancestry to be selected, and terminal state forbids every new transition/event. `run-events.py loop-step` verifies only an already event-bound head; it cannot create an anchor, materialize a missing step, or turn an edited file into committed state.

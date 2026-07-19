@@ -33,17 +33,8 @@
     "ended_at": {"oneOf": [{"type": "null"}, {"type": "string", "format": "date-time"}]},
     "status": {"enum": ["waiting", "needs-input", "blocked", "succeeded", "failed", "aborted"]},
     "evidence_mode": {"enum": ["none", "simulated", "real", "mixed"]},
-    "route": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["skill", "version", "reason_code"],
-      "properties": {
-        "skill": {"$ref": "#/$defs/safeId"},
-        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
-        "reason_code": {"$ref": "#/$defs/safeId"}
-      }
-    },
-    "context_manifests": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "#/$defs/contextReference"}},
+    "route": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/route"}]},
+    "context_manifests": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/contextReference"}},
     "last_event_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
     "last_event_offset": {"type": "integer", "minimum": 1},
     "last_event_hash": {"$ref": "#/$defs/sha256"},
@@ -75,7 +66,8 @@
           }
         }
       ]
-    }
+    },
+    "loop_closure": {"$ref": "#/$defs/loopClosure"}
   },
   "allOf": [
     {
@@ -89,11 +81,142 @@
           "failure_class": {"enum": ["prompt", "routing", "context", "tool", "permission", "artifact", "loop", "unknown"]}
         }
       }
+    },
+    {
+      "if": {"properties": {"status": {"not": {"enum": ["failed", "aborted"]}}}},
+      "then": {
+        "properties": {
+          "route": {"$ref": "#/$defs/route"},
+          "context_manifests": {"minItems": 1}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"enum": ["failed", "aborted"]},
+          "context_manifests": {"maxItems": 0}
+        }
+      },
+      "then": {
+        "properties": {
+          "route": {"type": "null"},
+          "save_point": {"type": "null"},
+          "registry_offsets": {
+            "properties": {
+              "entities": {"type": "null"},
+              "creators": {"type": "null"},
+              "claims": {"type": "null"},
+              "consent": {"type": "null"},
+              "launches": {"type": "null"},
+              "channels": {"type": "null"},
+              "narrative": {"type": "null"}
+            }
+          }
+        }
+      }
     }
   ],
   "$defs": {
     "safeId": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "uuid": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skill", "version", "reason_code"],
+      "properties": {
+        "skill": {"$ref": "#/$defs/safeId"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
+        "reason_code": {"$ref": "#/$defs/safeId"}
+      }
+    },
+    "loopClosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "selected_head_event_id", "status", "loops"],
+      "properties": {
+        "scope": {"const": "selected-ancestry"},
+        "selected_head_event_id": {"$ref": "#/$defs/uuid"},
+        "status": {"enum": ["none", "verified", "unresolved"]},
+        "loops": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {"$ref": "#/$defs/loopClosureItem"}
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "none"}}},
+          "then": {"properties": {"loops": {"maxItems": 0}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "verified"}}},
+          "then": {
+            "properties": {
+              "loops": {
+                "minItems": 1,
+                "items": {
+                  "properties": {"validation_status": {"const": "valid"}},
+                  "required": ["validation_status"]
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {"properties": {"status": {"const": "unresolved"}}},
+          "then": {
+            "properties": {
+              "loops": {
+                "minItems": 1,
+                "contains": {
+                  "properties": {"validation_status": {"const": "unresolved"}},
+                  "required": ["validation_status"]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "loopClosureItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "loop_id", "last_loop_event_id", "expected_step_ref",
+        "expected_step_sha256", "validation_status", "failure_code"
+      ],
+      "properties": {
+        "loop_id": {"$ref": "#/$defs/uuid"},
+        "last_loop_event_id": {"$ref": "#/$defs/uuid"},
+        "expected_step_ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "expected_step_sha256": {"$ref": "#/$defs/sha256"},
+        "validation_status": {"enum": ["valid", "unresolved"]},
+        "failure_code": {
+          "oneOf": [
+            {"type": "null"},
+            {"enum": [
+              "nonterminal", "missing-step", "hash-mismatch", "invalid-chain",
+              "event-mismatch", "validation-timeout", "validator-error"
+            ]}
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"validation_status": {"const": "valid"}}},
+          "then": {"properties": {"failure_code": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"validation_status": {"const": "unresolved"}}},
+          "then": {"properties": {"failure_code": {"enum": [
+            "nonterminal", "missing-step", "hash-mismatch", "invalid-chain",
+            "event-mismatch", "validation-timeout", "validator-error"
+          ]}}}
+        }
+      ]
+    },
     "reference": {
       "type": "object",
       "additionalProperties": false,

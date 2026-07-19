@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/run-event.schema.json",
   "title": "Aaron operational run event",
-  "description": "Structural shape for a non-authoritative, metadata-only event in a private per-run append stream. Cross-field identity equality, parent ancestry, lifecycle transitions, hash-chain continuity, and typed-artifact binding are semantic constraints enforced by scripts/run-events.py.",
+  "description": "Structural shape for a non-authoritative, metadata-only event in a private per-run append stream. Cross-field identity equality, selected parent ancestry, typed route/loop transitions, hash-chain continuity, and typed-artifact binding are semantic constraints enforced by scripts/run-events.py. Untyped legacy route_selected events fail closed because this local runtime contract has not been published.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -86,7 +86,7 @@
     "dimensions": {
       "type": "object",
       "maxProperties": 16,
-      "propertyNames": {"enum": ["hook_name", "tool_name", "validator", "evidence_mode", "adapter_name", "model_id", "route_reason", "failure_class", "loop_state", "branch_reason"]},
+      "propertyNames": {"enum": ["hook_name", "tool_name", "validator", "evidence_mode", "adapter_name", "model_id", "route_reason", "route_transition", "route_command", "failure_class", "loop_state", "branch_reason"]},
       "additionalProperties": {"$ref": "#/$defs/safeId"}
     },
     "event_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
@@ -111,6 +111,79 @@
     {
       "if": {"properties": {"event_type": {"not": {"const": "run_started"}}}},
       "then": {"properties": {"parent_event_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "route_selected"}}},
+      "then": {
+        "required": ["reason_code"],
+        "properties": {
+          "status": {"const": "succeeded"},
+          "subject": {"properties": {"kind": {"const": "route"}}},
+          "dimensions": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["route_transition", "route_command"],
+            "properties": {
+              "route_transition": {"enum": ["initial", "automatic-handoff", "user-reroute"]},
+              "route_command": {"$ref": "#/$defs/safeId"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "loop_state_changed"}}},
+      "then": {
+        "required": ["reason_code"],
+        "properties": {
+          "status": {"const": "succeeded"},
+          "turn_id": {"type": "null"},
+          "subject": {
+            "properties": {
+              "kind": {"const": "loop"},
+              "ref": {"type": "string", "format": "uuid"}
+            }
+          },
+          "dimensions": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["loop_state"],
+            "properties": {
+              "loop_state": {"enum": [
+                "awaiting-proposal", "awaiting-owner", "awaiting-intervention",
+                "awaiting-reaudit", "next", "converged", "exhausted",
+                "gate-blocked", "needs-input"
+              ]}
+            }
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "cycle", "total_retries"],
+            "properties": {
+              "sequence": {"type": "integer", "minimum": 1, "maximum": 128},
+              "cycle": {"type": "integer", "minimum": 1, "maximum": 3},
+              "total_retries": {"type": "integer", "minimum": 0, "maximum": 128}
+            }
+          },
+          "references": {
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/reference"},
+                {
+                  "required": ["kind", "ref", "sha256"],
+                  "properties": {
+                    "kind": {"const": "loop"},
+                    "ref": {"pattern": "^memory/runs/[0-9a-f-]+/loops/[0-9a-f-]+/[0-9]{3}-[a-z][a-z-]*\\.json$"}
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
     },
     {
       "if": {"properties": {"event_type": {"enum": ["run_waiting", "run_finished", "run_failed", "run_aborted"]}}},

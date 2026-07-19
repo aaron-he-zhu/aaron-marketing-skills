@@ -32,7 +32,7 @@ jobs:
           python3 scripts/generate-auditor-runtime.py --check
           python3 scripts/generate-auditor-prompt-contracts.py --check
           python3 scripts/generate-auto-routing-shards.py --check
-          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter tests.test_eval_cases tests.test_behavior_profiles tests.test_auditor_prompt_contracts tests.test_codex_behavior_adapter tests.test_run_events tests.test_auto_routing_shards tests.test_context_resolver
+          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter tests.test_eval_cases tests.test_behavior_profiles tests.test_auditor_prompt_contracts tests.test_codex_behavior_adapter tests.test_run_events tests.test_audit_loop tests.test_audit_trends tests.test_auto_routing_shards tests.test_context_resolver
           bash tests/test_runtime_distribution.sh
 
       - name: Context budget and routing contracts

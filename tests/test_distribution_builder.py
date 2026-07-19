@@ -32,6 +32,7 @@ class DistributionBuilderTests(unittest.TestCase):
         self.assertEqual(120, len(plugin["skills"]))
         self.assertEqual(120, len(list(output.glob("*/*/*/SKILL.md"))) + len(list(output.glob("protocol/*/SKILL.md"))))
         for path in (
+            "scripts/audit-loop.py",
             "scripts/rubric-score.py",
             "scripts/validate-audit-artifact.py",
             "scripts/registry-events.py",
@@ -40,6 +41,8 @@ class DistributionBuilderTests(unittest.TestCase):
             "references/context-request.schema.json",
             "references/context-manifest.schema.json",
             "references/context-resolution.md",
+            "references/audit-loop-state.schema.json",
+            "references/audit-loop-protocol.md",
             "references/auto-routing-scenarios.md",
             "references/run-event.schema.json",
             "references/turn-snapshot.schema.json",
