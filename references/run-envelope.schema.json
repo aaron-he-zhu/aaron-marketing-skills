@@ -198,7 +198,8 @@
             {"type": "null"},
             {"enum": [
               "nonterminal", "missing-step", "hash-mismatch", "invalid-chain",
-              "event-mismatch", "validation-timeout", "validator-error"
+              "event-mismatch", "validation-timeout", "budget-exhausted",
+              "validator-error"
             ]}
           ]
         }
@@ -212,7 +213,8 @@
           "if": {"properties": {"validation_status": {"const": "unresolved"}}},
           "then": {"properties": {"failure_code": {"enum": [
             "nonterminal", "missing-step", "hash-mismatch", "invalid-chain",
-            "event-mismatch", "validation-timeout", "validator-error"
+            "event-mismatch", "validation-timeout", "budget-exhausted",
+            "validator-error"
           ]}}}
         }
       ]

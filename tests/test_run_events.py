@@ -788,7 +788,7 @@ class RunEventTests(unittest.TestCase):
                 ["valid", "unresolved"],
                 [item["validation_status"] for item in unresolved["loops"]],
             )
-            self.assertEqual("validator-error", unresolved["loops"][1]["failure_code"])
+            self.assertEqual("budget-exhausted", unresolved["loops"][1]["failure_code"])
 
         combined_minus_one = first["path"].stat().st_size + second["path"].stat().st_size - 1
         with mock.patch.object(runtime, "MAX_LOOP_CLOSURE_BYTES", combined_minus_one):

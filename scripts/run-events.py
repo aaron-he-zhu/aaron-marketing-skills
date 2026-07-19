@@ -100,7 +100,7 @@ LOOP_STEP_FIELDS = {
 }
 LOOP_CLOSURE_FAILURE_CODES = {
     "nonterminal", "missing-step", "hash-mismatch", "invalid-chain",
-    "event-mismatch", "validation-timeout", "validator-error",
+    "event-mismatch", "validation-timeout", "budget-exhausted", "validator-error",
 }
 INTERNAL_EVENT_TYPES = {
     "turn_snapshot_created", "save_point_created", "loop_state_changed", "run_waiting",
@@ -2765,7 +2765,7 @@ def _loop_closure_failure_code(exc):
     if "hash mismatch" in message:
         return "hash-mismatch"
     if "budget" in message or "limit" in message:
-        return "validator-error"
+        return "budget-exhausted"
     if any(token in message for token in (
             "event coverage", "event ancestry", "event does not", "event mismatch",
             "run parent", "selected branch")):
