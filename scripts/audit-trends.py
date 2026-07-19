@@ -541,8 +541,7 @@ def series_report(artifacts, loop_links=None):
     for (framework, profile, target), items in sorted(series.items()):
         items.sort(key=lambda item: (item["observed_at"], item["path"]))
         scored = [item for item in items if _score(item) is not None]
-        scored_catalogs = {item["catalog_version"] for item in scored}
-        score_comparable = len(scored) >= 2 and len(scored_catalogs) == 1
+        score_comparable = len(scored) >= 2 and _comparable(scored[0], scored[-1])
         delta = _score(scored[-1]) - _score(scored[0]) if score_comparable else None
         latest = items[-1]
         latest_score = _score(latest)

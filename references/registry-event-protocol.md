@@ -83,7 +83,10 @@ principal bindings) and labels itself `authority_verified: false` — the pendin
 signal is an advisory nudge, never an authorization input. It creates no runtime
 paths. The SessionStart hook surfaces stale intake (oldest verifiable pending
 proposal > 14 days), behind/missing/invalid/ahead projections, and unverifiable
-streams so neither the owner ritual queue nor projection repair can stall silently.
+streams. For every non-empty stream read without the host key, it also labels the
+pending/projection counts advisory and warns that resolved owner decisions were
+not authority-signature verified, so neither authority loss, the owner ritual
+queue, nor projection repair can stall silently.
 
 `owner-append` and `safety-append` succeed only when a trusted host injects `AARON_REGISTRY_HOST_KEY` and a valid `AARON_REGISTRY_CAPABILITY` for that one request. The signing key must remain in a host boundary where the agent cannot run arbitrary code or inspect the launched process environment; exposing the key to an agent-controlled shell defeats this authority model. Inject the token directly when launching the registry subprocess, and never place key/token values in a request file, prompt, shell argument, artifact, or log. The stdlib issuance function is for that trusted integration and tests, not an agent tool.
 

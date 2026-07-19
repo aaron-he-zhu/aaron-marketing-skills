@@ -1100,6 +1100,80 @@ def _validate_stream_fd(fd, parent_fd, parent_path, name, parent_identity=None):
         raise RegistryError("event stream changed while it was opened")
 
 
+def _read_bounded_runtime_file(path, label, max_bytes):
+    """Read one stable regular single-link runtime file without following links."""
+    parent_status = _lstat(path.parent, "%s parent" % label, missing_ok=True)
+    if parent_status is None:
+        return None
+    if statmod.S_ISLNK(parent_status.st_mode) or not statmod.S_ISDIR(parent_status.st_mode):
+        raise RegistryError("%s parent must be a real directory" % label)
+
+    parent_fd, parent_identity = _open_directory_anchor(path.parent)
+    fd = None
+    try:
+        entry = _anchored_lstat(
+            parent_fd, path.parent, path.name, missing_ok=True,
+            parent_identity=parent_identity,
+        )
+        if entry is None:
+            return None
+        if (statmod.S_ISLNK(entry.st_mode) or not statmod.S_ISREG(entry.st_mode)
+                or entry.st_nlink != 1):
+            raise RegistryError("%s must be a regular single-link file" % label)
+
+        flags = (
+            os.O_RDONLY
+            | getattr(os, "O_NOFOLLOW", 0)
+            | getattr(os, "O_NONBLOCK", 0)
+        )
+        fd = _open_anchored(
+            parent_fd, path.parent, path.name, flags,
+            parent_identity=parent_identity,
+        )
+        opened = os.fstat(fd)
+        current = _anchored_lstat(
+            parent_fd, path.parent, path.name,
+            parent_identity=parent_identity,
+        )
+        if (not statmod.S_ISREG(opened.st_mode) or opened.st_nlink != 1
+                or statmod.S_ISLNK(current.st_mode)
+                or not statmod.S_ISREG(current.st_mode) or current.st_nlink != 1
+                or (opened.st_dev, opened.st_ino) != (current.st_dev, current.st_ino)):
+            raise RegistryError("%s changed while it was opened" % label)
+        if opened.st_size > max_bytes:
+            raise RegistryError("%s exceeds size limit" % label)
+
+        before = (opened.st_size, opened.st_mtime_ns, opened.st_ctime_ns)
+        data = bytearray()
+        while len(data) <= max_bytes:
+            chunk = os.read(fd, min(65_536, max_bytes + 1 - len(data)))
+            if not chunk:
+                break
+            data.extend(chunk)
+        if len(data) > max_bytes:
+            raise RegistryError("%s exceeds size limit" % label)
+
+        after = os.fstat(fd)
+        _revalidate_directory_anchor(path.parent, parent_identity)
+        current = _anchored_lstat(
+            parent_fd, path.parent, path.name,
+            parent_identity=parent_identity,
+        )
+        if (statmod.S_ISLNK(current.st_mode) or not statmod.S_ISREG(current.st_mode)
+                or current.st_nlink != 1
+                or (after.st_dev, after.st_ino) != (current.st_dev, current.st_ino)
+                or before != (after.st_size, after.st_mtime_ns, after.st_ctime_ns)):
+            raise RegistryError("%s changed while it was read" % label)
+        return bytes(data)
+    except OSError as exc:
+        raise RegistryError("cannot read %s: %s" % (label, exc)) from exc
+    finally:
+        if fd is not None:
+            os.close(fd)
+        if parent_fd is not None:
+            os.close(parent_fd)
+
+
 @contextlib.contextmanager
 def locked_stream(path, exclusive=True):
     if exclusive and not _safe_mutation_dirfd_available():
@@ -1769,14 +1843,23 @@ def pending_report(root, now=None):
             )
             entry["oldest_pending_occurred_at"] = oldest["occurred_at"]
             entry["oldest_pending_age_days"] = _observed_age_days(oldest["occurred_at"], now)
-        _, projection_path, _ = memory_paths(root, registry, create=False)
         try:
-            raw_projection = Path(projection_path).read_text(encoding="utf-8")
-        except FileNotFoundError:
-            entry["projection_status"] = (
-                "not-required" if state["last_offset"] == 0 else "missing"
+            _, projection_path, _ = memory_paths(root, registry, create=False)
+            projection_bytes = _read_bounded_runtime_file(
+                projection_path, "projection", MAX_EVENT_BYTES,
             )
-        except (OSError, UnicodeError) as exc:
+            if projection_bytes is None:
+                entry["projection_status"] = (
+                    "not-required" if state["last_offset"] == 0 else "missing"
+                )
+                total += len(pending)
+                registries[registry] = entry
+                continue
+            try:
+                raw_projection = projection_bytes.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise RegistryError("projection must be UTF-8 JSON") from exc
+        except RegistryError as exc:
             entry["projection_status"] = "invalid"
             entry["projection_error"] = "cannot read projection: %s" % exc
         else:

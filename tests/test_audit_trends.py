@@ -243,7 +243,7 @@ class AuditTrendsTest(unittest.TestCase):
             self.assertNotIn("\x1b", result.stdout)
             self.assertIn("root\\x1b[2J", result.stdout)
 
-    def test_converging_series_binds_versions_hash_context_coverage_and_confidence(self):
+    def test_context_change_makes_score_delta_non_comparable(self):
         with tempfile.TemporaryDirectory() as tmp:
             first = put_artifact(
                 tmp, "a1.md", target="article-a", observed_at="2026-06-01",
@@ -257,7 +257,8 @@ class AuditTrendsTest(unittest.TestCase):
             result = run_tool(tmp, "--json")
             self.assertEqual(result.returncode, 0, result.stderr)
             row = json.loads(result.stdout)["series"][0]
-            self.assertEqual(row["score_delta"], 23)
+            self.assertFalse(row["score_comparable"])
+            self.assertIsNone(row["score_delta"])
             self.assertEqual(row["latest_verdict"], "SHIP")
             self.assertEqual(row["first_artifact_sha256"], digest(first))
             self.assertEqual(row["latest_artifact_sha256"], digest(latest))
@@ -274,6 +275,20 @@ class AuditTrendsTest(unittest.TestCase):
             self.assertEqual(row["evidence_coverage_delta"], 0)
             self.assertEqual(row["confidence_delta"], 1)
             self.assertEqual(row["unlinked_audit_transitions"], 1)
+
+    def test_same_catalog_and_context_scores_remain_comparable(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            put_artifact(
+                tmp, "a1.md", target="article-a", observed_at="2026-06-01",
+                verdict="FIX", score=55,
+            )
+            put_artifact(
+                tmp, "a2.md", target="article-a", observed_at="2026-07-01",
+                verdict="SHIP", score=78,
+            )
+            row = json.loads(run_tool(tmp, "--json").stdout)["series"][0]
+            self.assertTrue(row["score_comparable"])
+            self.assertEqual(row["score_delta"], 23)
 
     def test_stalled_series_and_framework_filter_preserve_prior_fields(self):
         with tempfile.TemporaryDirectory() as tmp:

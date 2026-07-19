@@ -94,21 +94,25 @@ try: d=json.load(sys.stdin)
 except Exception: sys.exit(0)
 tot=d.get("total_pending",0)
 if not isinstance(tot,int) or isinstance(tot,bool) or tot<0: tot=0
-oldest=-1; counts={k:0 for k in ("behind","missing","invalid","ahead")}; unverifiable=0
+oldest=-1; counts={k:0 for k in ("behind","missing","invalid","ahead")}; unverifiable=0; authority_unverified=0
 for e in d.get("registries",{}).values():
     if not isinstance(e,dict): continue
     if not e.get("verifiable"):
         unverifiable+=1
         continue
+    offset=e.get("stream_offset")
+    if (e.get("authority_verified") is False and isinstance(offset,int)
+            and not isinstance(offset,bool) and offset>0):
+        authority_unverified+=1
     a=e.get("oldest_pending_age_days")
     if isinstance(a,int) and not isinstance(a,bool) and a>oldest: oldest=a
     status=e.get("projection_status")
     if status in counts: counts[status]+=1
-print("%d %d %d %d %d %d %d" % (
+print("%d %d %d %d %d %d %d %d" % (
     tot,oldest,counts["behind"],counts["missing"],counts["invalid"],
-    counts["ahead"],unverifiable))' 2>/dev/null || true)"
+    counts["ahead"],unverifiable,authority_unverified))' 2>/dev/null || true)"
         if [ -n "$ps" ]; then
-          read -r ptot pold pbehind pmissing pinvalid pahead punverifiable <<< "$ps"
+          read -r ptot pold pbehind pmissing pinvalid pahead punverifiable pauthority <<< "$ps"
           if [ "$pold" -gt 14 ]; then
             body="$body
 
@@ -127,6 +131,9 @@ Projection integrity: ${pmissing} missing, ${pinvalid} invalid, and ${pahead} ah
           [ "$punverifiable" -gt 0 ] && { body="$body
 
 Registry verification: ${punverifiable} registry event stream(s) could not be verified; their pending counts and projection state were excluded. Run registry-events.py pending, repair the reported stream error, and verify it before relying on registry state."; added=1; }
+          [ "$pauthority" -gt 0 ] && { body="$body
+
+Registry authority: ${pauthority} non-empty registry event stream(s) were structurally verified but not authority-signature verified because the host key was unavailable. Treat pending and projection counts as advisory, and rerun registry-events.py pending with host authority verification before relying on resolved owner decisions."; added=1; }
         fi
       fi
     fi

@@ -469,6 +469,7 @@ assert_notcontains "current cache raises no limit warning" "$out11" "limit warni
 assert_notcontains "current cache raises no staleness signal" "$out11" "Staleness signal"
 
 echo "SessionStart — registry intake & projection-lag signals"
+HOOK_HOST_KEY="hook-test-host-key-material-32-bytes-minimum"
 
 # 12. An old pending proposal surfaces the owner-ritual nudge
 mkdir -p "$PROJ/memory/events"
@@ -479,6 +480,10 @@ python3 "$REPO/scripts/registry-events.py" --root "$PROJ" append entities "$PROJ
 out12="$(session)"
 assert_contains "old pending proposal surfaces owner-ritual nudge" "$out12" "pending owner review"
 assert_contains "nudge marks the >14d threshold" "$out12" ">14d"
+assert_contains "keyless non-empty registry surfaces authority warning" "$out12" "Registry authority"
+assert_contains "authority warning labels signature verification gap" "$out12" "not authority-signature verified"
+out12_verified="$(AARON_REGISTRY_HOST_KEY="$HOOK_HOST_KEY" session)"
+assert_notcontains "host-verified registry raises no authority warning" "$out12_verified" "Registry authority"
 
 # 13. A fresh pending proposal reports intake without the staleness threshold
 rm -rf "$PROJ/memory/events" "$PROJ/memory/projections"
@@ -488,6 +493,50 @@ python3 "$REPO/scripts/registry-events.py" --root "$PROJ" append entities "$PROJ
 out13="$(session)"
 assert_contains "fresh pending proposal reports intake" "$out13" "pending owner review"
 assert_notcontains "fresh proposal raises no staleness threshold" "$out13" ">14d"
+
+# A signed owner decision can reduce advisory pending to zero, but a keyless
+# SessionStart must still surface that its authority signature was not checked.
+python3 - "$REPO" "$PROJ" "$HOOK_HOST_KEY" <<'PY'
+import importlib.util
+import json
+import os
+from pathlib import Path
+import sys
+
+repo, root, host_key = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3]
+spec = importlib.util.spec_from_file_location(
+    "registry_events_hook_fixture", repo / "scripts/registry-events.py",
+)
+registry = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(registry)
+os.environ[registry.HOST_KEY_ENV] = host_key
+proposal = json.loads(
+    (root / "memory/events/entities.ndjson").read_text(encoding="utf-8").splitlines()[0]
+)
+request = {
+    "schema_version": "1.0",
+    "idempotency_key": "hook-accept-new",
+    "aggregate_id": proposal["aggregate_id"],
+    "operation": "accept",
+    "occurred_at": "2026-07-19T10:00:00Z",
+    "actor": {"type": "skill", "id": registry.OWNERS["entities"]},
+    "authorized_by": "user",
+    "authorization_ref": "fixture",
+    "source": {"type": "user-provided", "ref": "fixture", "observed_at": "2026-07-19"},
+    "payload": {},
+    "proposal_event_id": proposal["event_id"],
+}
+capability = registry.issue_host_capability(
+    host_key, "entities", request["actor"]["id"], ["accept"],
+    "2999-01-01T00:00:00Z", request=request, project_root=root,
+)
+registry.append_event(root, "entities", request, capability_token=capability)
+PY
+out13_resolved="$(session)"
+assert_notcontains "resolved advisory stream reports no pending proposal" "$out13_resolved" "pending owner review"
+assert_contains "resolved advisory stream still surfaces authority warning" "$out13_resolved" "Registry authority"
+out13_resolved_verified="$(AARON_REGISTRY_HOST_KEY="$HOOK_HOST_KEY" session)"
+assert_notcontains "verified resolved stream raises no authority warning" "$out13_resolved_verified" "Registry authority"
 
 # 14. A stored projection behind the stream head surfaces the lag note
 python3 - "$PROJ" <<'PY'
@@ -513,7 +562,7 @@ assert_contains "invalid projection surfaces integrity warning" "$out16" "Projec
 assert_contains "invalid projection is identified" "$out16" "1 invalid"
 
 # 17. A projection ahead of the stream is surfaced rather than reported as negative lag
-python3 "$REPO/scripts/registry-events.py" --root "$PROJ" project entities >/dev/null
+AARON_REGISTRY_HOST_KEY="$HOOK_HOST_KEY" python3 "$REPO/scripts/registry-events.py" --root "$PROJ" project entities >/dev/null
 python3 - "$PROJ" <<'PY'
 import json, pathlib, sys
 path = pathlib.Path(sys.argv[1]) / "memory/projections/entities.json"
@@ -538,6 +587,7 @@ assert_notcontains "empty project raises no intake signal" "$out19" "pending own
 assert_notcontains "empty project raises no lag signal" "$out19" "Projection lag"
 assert_notcontains "empty project raises no integrity signal" "$out19" "Projection integrity"
 assert_notcontains "empty project raises no verification signal" "$out19" "Registry verification"
+assert_notcontains "empty project raises no authority signal" "$out19" "Registry authority"
 
 echo "SessionStart — resume checkpoint"
 

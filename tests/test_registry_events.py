@@ -1418,6 +1418,47 @@ class RegistryEventTests(unittest.TestCase):
         self.assertEqual(creators["projection_status"], "invalid")
         self.assertIn("projection_error", creators)
 
+    @unittest.skipUnless(hasattr(os, "symlink"), "symlinks are unavailable")
+    def test_pending_report_rejects_symlinked_projection_without_reading_target(self):
+        projections = self.root / "memory/projections"
+        projections.mkdir(parents=True)
+        outside = self.root / "outside-projection.json"
+        outside.write_text(json.dumps({
+            "schema_version": registry.SCHEMA_VERSION,
+            "registry": "entities",
+            "last_offset": 0,
+        }), encoding="utf-8")
+        (projections / "entities.json").symlink_to(outside)
+
+        entities = registry.pending_report(self.root)["registries"]["entities"]
+        self.assertTrue(entities["verifiable"])
+        self.assertEqual(entities["projection_status"], "invalid")
+        self.assertIn("regular single-link file", entities["projection_error"])
+        self.assertIsNone(entities["projection_offset"])
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "FIFO creation is unavailable")
+    def test_pending_report_rejects_fifo_projection_without_blocking(self):
+        projections = self.root / "memory/projections"
+        projections.mkdir(parents=True)
+        os.mkfifo(projections / "entities.json", 0o600)
+
+        entities = registry.pending_report(self.root)["registries"]["entities"]
+        self.assertTrue(entities["verifiable"])
+        self.assertEqual(entities["projection_status"], "invalid")
+        self.assertIn("regular single-link file", entities["projection_error"])
+
+    def test_pending_report_rejects_oversized_projection(self):
+        projections = self.root / "memory/projections"
+        projections.mkdir(parents=True)
+        (projections / "entities.json").write_bytes(
+            b"x" * (registry.MAX_EVENT_BYTES + 1)
+        )
+
+        entities = registry.pending_report(self.root)["registries"]["entities"]
+        self.assertTrue(entities["verifiable"])
+        self.assertEqual(entities["projection_status"], "invalid")
+        self.assertIn("exceeds size limit", entities["projection_error"])
+
     def test_pending_report_marks_projection_ahead_without_negative_lag(self):
         registry.append_event(self.root, "creators", event("creators", "ahead-projection"))
         projection_path = self.root / "memory/projections/creators.json"
