@@ -24,7 +24,7 @@ memory/runs/<run-id>/
 ├── turns/<turn-id>/context-manifest.json
 ├── turns/<turn-id>/snapshot.json
 ├── save-points/<save-point-id>.json
-├── loops/<loop-id>/<sequence>-<transition-id>.json
+├── loops/<loop-id>/<sequence>-<transition>.json
 └── envelopes/<summarized-head-event-id>.json
 ```
 
