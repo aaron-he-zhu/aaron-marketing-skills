@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/save-point.schema.json",
+  "title": "Aaron save point",
+  "description": "A metadata-only recovery pointer into a verified run stream; it is not canonical marketing state. The runtime additionally requires chain_depth to equal visited_skills length minus one.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "save_point_id",
+    "run_id",
+    "turn_id",
+    "created_at",
+    "last_event_id",
+    "last_event_offset",
+    "last_event_hash",
+    "status",
+    "turn_snapshot",
+    "context_manifest",
+    "artifacts",
+    "registry_offsets",
+    "visited_skills",
+    "chain_depth",
+    "pending_handoff",
+    "next_action"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "save_point_id": {"type": "string", "format": "uuid"},
+    "run_id": {"type": "string", "format": "uuid"},
+    "turn_id": {"$ref": "#/$defs/safeId"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "last_event_id": {"type": "string", "format": "uuid"},
+    "last_event_offset": {"type": "integer", "minimum": 1},
+    "last_event_hash": {"$ref": "#/$defs/sha256"},
+    "status": {"enum": ["ready", "waiting", "needs-input", "blocked", "failed", "complete"]},
+    "turn_snapshot": {"$ref": "#/$defs/reference"},
+    "context_manifest": {"$ref": "#/$defs/contextReference"},
+    "artifacts": {"type": "array", "maxItems": 128, "items": {"$ref": "#/$defs/validatedReference"}},
+    "registry_offsets": {"$ref": "#/$defs/offsets"},
+    "visited_skills": {"type": "array", "maxItems": 4, "uniqueItems": true, "items": {"$ref": "#/$defs/safeId"}},
+    "chain_depth": {"type": "integer", "minimum": 0, "maximum": 3},
+    "pending_handoff": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "objective_code", "recommended_skill"],
+          "properties": {
+            "status": {"enum": ["proposed", "needs-input", "blocked"]},
+            "objective_code": {"$ref": "#/$defs/safeId"},
+            "recommended_skill": {"$ref": "#/$defs/safeId"}
+          }
+        }
+      ]
+    },
+    "next_action": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code"],
+          "properties": {
+            "code": {"$ref": "#/$defs/safeId"},
+            "not_before": {"type": "string", "format": "date-time"}
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "safeId": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "contextReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256", "context_signature"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "context_signature": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "validatedReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256", "validator", "validation_status"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "validator": {"$ref": "#/$defs/safeId"},
+        "validation_status": {"enum": ["valid", "not-required"]}
+      }
+    },
+    "offsets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entities", "creators", "claims", "consent", "launches", "channels", "narrative"],
+      "propertyNames": {"enum": ["entities", "creators", "claims", "consent", "launches", "channels", "narrative"]},
+      "properties": {
+        "entities": {"$ref": "#/$defs/offset"},
+        "creators": {"$ref": "#/$defs/offset"},
+        "claims": {"$ref": "#/$defs/offset"},
+        "consent": {"$ref": "#/$defs/offset"},
+        "launches": {"$ref": "#/$defs/offset"},
+        "channels": {"$ref": "#/$defs/offset"},
+        "narrative": {"$ref": "#/$defs/offset"}
+      }
+    },
+    "offset": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]}
+  }
+}

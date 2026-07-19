@@ -26,7 +26,7 @@ MUTABLE_RUNTIME = re.compile(
     re.I,
 )
 BARE_ROOT_RUNTIME_COMMAND = re.compile(
-    r"\bpython3\s+(?:\./)?scripts/(?:rubric-score|validate-audit-artifact|registry-events)\.py\b"
+    r"\bpython3\s+(?:\./)?scripts/(?:rubric-score|validate-audit-artifact|registry-events|run-events)\.py\b"
 )
 AUDIT_WRITE_INTENT = re.compile(
     r"\b(?:write|writes|save|saves|persist|persists|store|stores|storable)\b|ready for",
@@ -244,6 +244,24 @@ def check_distribution(catalog, expected_paths, failures):
     }
     if set(hooks) != expected_hook_events:
         failures.append("plugin hooks must declare the seven operated events")
+    expected_hook_modes = {
+        "SessionStart": "session-start",
+        "UserPromptSubmit": "user-prompt-submit",
+        "PreToolUse": "pre-tool-use",
+        "PostToolUse": "post-tool-use",
+        "PostToolUseFailure": "post-tool-failure",
+        "PostToolBatch": "post-tool-batch",
+        "Stop": "stop",
+    }
+    for event, mode in expected_hook_modes.items():
+        entries = hooks.get(event, [])
+        commands = entries[0].get("hooks", []) if len(entries) == 1 else []
+        command = commands[0] if len(commands) == 1 else {}
+        expected_args = ["${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh", mode]
+        if (
+                command.get("type") != "command" or command.get("command") != "bash"
+                or command.get("args") != expected_args):
+            failures.append("%s must invoke claude-hook.sh with mode %s" % (event, mode))
     for event in ("PreToolUse", "PostToolUse", "PostToolUseFailure"):
         entries = hooks.get(event, [])
         matcher = entries[0].get("matcher", "") if len(entries) == 1 else ""
@@ -258,8 +276,9 @@ def check_distribution(catalog, expected_paths, failures):
             failures.append("%s operated guard must retain a timeout of at least 60 seconds" % event)
     hook_runner = (ROOT / "hooks" / "claude-hook.sh").read_text(encoding="utf-8")
     for token in (
-        "pre-tool-use", "check-memory-private.py", "--preflight-hook", "post-tool-use", "post-tool-batch",
-        "pma", "saa", "stop_hook_active",
+        "pre-tool-use", "check-memory-private.py", "--preflight-hook", "post-tool-use",
+        "post-tool-failure", "post-tool-batch", "run-events.py", "record-hook", "resume",
+        "AARON_ACTIVE_RUN_ID", "pma", "saa", "stop_hook_active",
     ):
         if token not in hook_runner:
             failures.append("hook runner is missing operated guard %r" % token)

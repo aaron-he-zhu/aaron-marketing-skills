@@ -17,13 +17,13 @@ model provider, connectors, MCP servers, and storage/sync configuration have the
   are unsupported and denied when identifiable (a memory-namespace path shape or a bare-name variable
   assignment). The preflight governs only the host project's `memory/` namespace — destinations
   outside the project root (scratch directories, other repositories) are out of its jurisdiction and
-  pass through. The registry runtime independently checks every
-  final, temporary, and lock path immediately around its atomic write. Post-use/failure/batch and
+  pass through. The registry and opt-in run-event runtimes independently check every
+  final, temporary, and lock/projection path immediately around their atomic writes. Post-use/failure/batch and
   first-Stop hooks audit existing operational files. Hooks do not edit ignore rules and are not an
   OS sandbox; the staged pre-commit and all-tracked CI scans protect committed Git content from PII,
   not the validity of ignored runtime artifacts. The repository does not encrypt runtime memory.
 - Hooks do not send network requests. Session hooks may read bounded, sanitized excerpts from local
-  `memory/hot-cache.md` and counts from `memory/open-loops.md`; post-success, post-failure, and batch
+  `memory/hot-cache.md`, a metadata-only active-run resume summary, and counts from `memory/open-loops.md`; post-success, post-failure, and batch
   hooks run bounded local checks. The first Stop may block for repair; its required active-stop guard
   then prevents a loop rather than claiming an unconditional completion barrier.
 - Registry and audit writes require an explicit authorization path. An audit request alone does not
@@ -34,6 +34,13 @@ model provider, connectors, MCP servers, and storage/sync configuration have the
 Depending on use, runtime memory can contain campaign plans, URLs, claims, creator records, consent
 proof references, audit evidence, metrics, and open decisions. Seven registries store append-only
 events under `memory/events/` and generated views under `memory/projections/`.
+
+When a host explicitly enables it, `memory/runs/<run-id>/` stores non-authoritative event metadata,
+turn snapshots, save points, and run envelopes. The runtime accepts safe identifiers, relative or
+opaque references, hashes, registry offsets, status codes, and numeric metrics. It is designed not
+to store raw prompts, chain-of-thought, tool arguments/results, transcripts, customer content,
+contact details, credentials, or full source URLs. File/reference names can still be sensitive
+metadata; use neutral opaque IDs and a private/encrypted storage boundary where required.
 
 Consent aggregate IDs must be pseudonymous tokens/hashes supplied by the user's system. The runtime
 NFKC-normalizes strings before contact-pattern checks, exempts only actual timestamp fields from
@@ -70,6 +77,9 @@ count here.
 
 - Delete or archive local working memory according to the project's retention policy. Use
   `memory-management` for a permissioned inventory, export, consolidation, or erasure workflow.
+- Run evidence is not canonical registry history. Delete complete `memory/runs/<run-id>/`
+  directories under a bounded operational retention policy after needed evidence expires or is
+  exported; deletion does not revoke actions or erase other copies.
 - Registry history is append-only for integrity. A registry `erase` event removes projected payload
   and leaves a minimal audit/safety tombstone; it does not rewrite prior event bytes. A data-subject
   erasure is accepted only with a host-issued safety capability bound to that exact pseudonymous
@@ -99,4 +109,4 @@ For privacy questions: **hello@zhuhe.io**
 
 Material changes are recorded in Git history and release notes.
 
-*Last updated: 2026-07-11*
+*Last updated: 2026-07-19*

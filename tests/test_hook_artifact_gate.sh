@@ -565,6 +565,54 @@ ln -s "$PROJ/outside-checkpoint.txt" "$PROJ/memory/session-checkpoint.md"
 assert_notcontains "symlinked checkpoint is rejected" "$(session)" "CHECKPOINT_SECRET_MARKER"
 rm -f "$PROJ/memory/session-checkpoint.md" "$PROJ/outside-checkpoint.txt"
 
+echo "SessionStart — active run resume and metadata-only lifecycle trace"
+
+RUN_ID="11111111-1111-4111-8111-111111111111"
+cat > "$PROJ/run-start.json" <<EOF
+{"schema_version":"1.0","run_id":"$RUN_ID","idempotency_key":"hook-start","event_type":"run_started","occurred_at":"2026-07-19T10:00:00Z","actor":{"type":"host","id":"claude-code"},"parent_event_id":null,"turn_id":null,"status":"started","subject":{"kind":"run","ref":"$RUN_ID"},"references":[],"metrics":{},"dimensions":{}}
+EOF
+python3 "$REPO/scripts/run-events.py" --root "$PROJ" start "$PROJ/run-start.json" >/dev/null
+run_out="$(printf '{"cwd":"%s","session_id":"raw-session-id"}' "$PROJ" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" bash "$HOOK" session-start)"
+assert_contains "active run summary is injected" "$run_out" "Active run resume summary"
+assert_contains "active run summary names the run" "$run_out" "$RUN_ID"
+assert_contains "active run summary denies authority" "$run_out" "grants no registry authority"
+assert_notcontains "raw host session identity is not injected" "$run_out" "raw-session-id"
+assert_notcontains "raw host session identity is not persisted" "$(cat "$PROJ/memory/runs/$RUN_ID/events.ndjson")" "raw-session-id"
+
+trace_payload='{"cwd":"'$PROJ'","tool_name":"Write","tool_use_id":"raw-tool-id","tool_input":{"file_path":"README.md","content":"customer@example.com secret-value"}}'
+printf '%s' "$trace_payload" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" AARON_ACTIVE_TURN_ID="turn-1" bash "$HOOK" pre-tool-use >/dev/null
+printf '%s' "$trace_payload" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" AARON_ACTIVE_TURN_ID="turn-1" bash "$HOOK" post-tool-failure >/dev/null
+trace_stream="$(cat "$PROJ/memory/runs/$RUN_ID/events.ndjson")"
+assert_notcontains "trace omits raw tool identity" "$trace_stream" "raw-tool-id"
+assert_notcontains "trace omits tool payload PII" "$trace_stream" "customer@example.com"
+assert_notcontains "trace omits tool payload secrets" "$trace_stream" "secret-value"
+if python3 - "$PROJ/memory/runs/$RUN_ID/events.ndjson" <<'PY'
+import json, pathlib, sys
+events = [json.loads(line) for line in pathlib.Path(sys.argv[1]).read_text().splitlines()]
+failed = [event for event in events if event["event_type"] == "tool_finished"]
+assert len(failed) == 1
+assert failed[0]["status"] == "failed"
+assert failed[0]["reason_code"] == "tool-failure"
+PY
+then ok "PostToolUseFailure records a typed failed lifecycle event"; else bad "PostToolUseFailure lifecycle event is missing or malformed"; fi
+
+# A combined session must retain higher-value resume/checkpoint signals even
+# when HOT consumes its per-source excerpt budget.
+{ for i in $(seq 1 80); do printf 'hot-%02d %0400d\n' "$i" 0; done; } > "$PROJ/memory/hot-cache.md"
+printf 'resume_instruction: COMBINED_CHECKPOINT_MARKER\n' > "$PROJ/memory/session-checkpoint.md"
+combined_out="$(printf '{"cwd":"%s","session_id":"raw-session-id"}' "$PROJ" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" bash "$HOOK" session-start)"
+assert_contains "combined budget keeps active run summary" "$combined_out" "Active run resume summary"
+assert_contains "combined budget keeps checkpoint after large HOT" "$combined_out" "COMBINED_CHECKPOINT_MARKER"
+
+{ for i in $(seq 1 40); do printf 'legal-hot-%02d %0400d\n' "$i" 0; done; } > "$PROJ/memory/hot-cache.md"
+{ for i in $(seq 1 20); do printf 'legal-checkpoint-%02d %0200d\n' "$i" 0; done; } > "$PROJ/memory/session-checkpoint.md"
+legal_combined_out="$(printf '{"cwd":"%s","session_id":"raw-session-id"}' "$PROJ" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" bash "$HOOK" session-start)"
+assert_contains "legal stored HOT truncation is explicit" "$legal_combined_out" "Combined-context truncation: memory/hot-cache.md"
+assert_contains "legal stored checkpoint truncation is explicit" "$legal_combined_out" "Combined-context truncation: memory/session-checkpoint.md"
+assert_notcontains "legal stored HOT does not claim a storage-limit violation" "$legal_combined_out" "Hot cache limit warning"
+assert_notcontains "legal stored checkpoint does not claim a storage-limit violation" "$legal_combined_out" "Checkpoint limit warning"
+rm -f "$PROJ/memory/hot-cache.md" "$PROJ/memory/session-checkpoint.md" "$PROJ/run-start.json"
+
 echo ""
 echo "Results: $PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ]

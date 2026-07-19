@@ -33,7 +33,7 @@ A library of Claude Skills and slash commands that turns a chat agent into a mar
 | **Launch** | 16 | research → assemble → mobilize → prove | [RAMP](references/ramp-benchmark.md) preflight / execution / outcome profiles | `/aaron-marketing:launch` |
 | **Protocol layer** | 8 | — (shared machinery, outside the phase flows) | 7 truth registries (entity · creator · offer/claims · consent · launch · channel · narrative) + HOT/WARM/COLD memory | — |
 
-`/aaron-marketing:auto` routes any natural-language goal across all of it. Skills and commands are **plain Markdown**; small Bash/Python-stdlib runtimes provide hooks, validation, scoring, registry events, connectors, and CI checks (no `pip`, no build step). **Every skill runs at Tier 1 with data you provide**; connectors only automate retrieval or an explicitly approved mutation.
+`/aaron-marketing:auto` routes any natural-language goal across all of it. Skills and commands are **plain Markdown**; small Bash/Python-stdlib runtimes provide hooks, validation, scoring, registry events, private operational run events, connectors, and CI checks (no `pip`, no build step). **Every skill runs at Tier 1 with data you provide**; connectors only automate retrieval or an explicitly approved mutation.
 
 The authoritative typed topology is [`references/system-catalog.json`](references/system-catalog.json); see the [generated system architecture](docs/system-architecture.md) for the readable four-layer map, all 120 paths, registry owners, auditor sinks, and distribution profiles.
 
@@ -207,7 +207,7 @@ The `protocol/` directory holds the **shared truth & memory machinery** that sit
 | [narrative-registry](protocol/narrative-registry/SKILL.md) | Owns complete versioned narrative canon records | narrative | `memory/events/narrative.ndjson` |
 | [memory-management](protocol/memory-management/SKILL.md) | Manages authorized HOT/WARM/COLD working notes without impersonating a registry | all disciplines | non-canonical `memory/` working state |
 
-The registries follow a **sole-writer rule** (other skills submit via `registry-events.py` proposal events), and they *curate* — the gates *judge*. The genuinely horizontal layer beneath everything is the `references/` protocols ([auditor-runbook](references/auditor-runbook.md), [state-model](references/state-model.md), [skill-contract](references/skill-contract.md), [humanizer-slop](references/humanizer-slop.md), [measurement-protocol](references/measurement-protocol.md)) — shared by design as documents, not skills.
+The registries follow a **sole-writer rule** (other skills submit via `registry-events.py` proposal events), and they *curate* — the gates *judge*. The genuinely horizontal layer beneath everything is the `references/` protocols ([auditor-runbook](references/auditor-runbook.md), [state-model](references/state-model.md), [skill-contract](references/skill-contract.md), [runtime-protocol](references/runtime-protocol.md), [humanizer-slop](references/humanizer-slop.md), [measurement-protocol](references/measurement-protocol.md)) — shared by design as documents, not skills.
 
 ### Memory & automation hooks
 
@@ -219,15 +219,17 @@ The registries follow a **sole-writer rule** (other skills submit via `registry-
 | **WARM** | `memory/<subdir>/` | Per-skill working state and permissioned audit artifacts; registry projections are separate rebuildable views. |
 | **COLD** | `memory/archive/` | Demoted/older records, kept for recall. |
 
+Opt-in **run evidence** lives separately under `memory/runs/<run-id>/`: append-only metadata events, a derived session tree, turn snapshots, save points, and run envelopes. It is Git-ignored, retention-bounded, and explicitly non-authoritative — it cannot accept a registry proposal or authorize an external action. The stdlib [`run-events.py`](scripts/run-events.py) runtime and [Runtime Protocol](references/runtime-protocol.md) enforce this boundary.
+
 **Hooks** (`hooks/hooks.json`, runner `hooks/claude-hook.sh`) wire seven Claude Code events:
 
 | Event | Matcher | What it does |
 |-------|---------|--------------|
-| `SessionStart` | `startup\|resume\|clear\|compact` | Injects the **sanitized** hot-cache + load-time over-limit & oldest-dated-entry staleness signals + an open-loops pointer (prompt-injection lines are redacted; symlinked caches are rejected). |
-| `UserPromptSubmit` | (all) | Lightweight per-prompt context hook. |
-| `PreToolUse` | known write-capable tools | Exact-path direct `memory/**` writes must be Git-ignored; opaque shell/MCP memory mutations are unsupported and denied when identified. Registry writes repeat exact final/temp/lock checks inside their runtime. |
-| `PostToolUse` | known write-capable tools | After successful writes, audits the full operational-memory namespace and validates the exact audit target or bounded reserved-sink sweep. |
-| `PostToolUseFailure` | known write-capable tools | Runs the same post-state privacy and Artifact Gate checks after a tool reports failure, because a failed command may still have written files. |
+| `SessionStart` | `startup\|resume\|clear\|compact` | Injects a combined-budget **sanitized** hot-cache/checkpoint/integrity view and, only when `AARON_ACTIVE_RUN_ID` is explicit, a bounded untrusted run-resume summary. Per-source truncation is labeled; symlinked records are rejected. |
+| `UserPromptSubmit` | (all) | Lightweight per-prompt context hook; emits metadata-only turn lifecycle when an active run and stable turn ID are explicit. |
+| `PreToolUse` | known write-capable tools | Exact-path direct `memory/**` writes must be Git-ignored; opaque shell/MCP memory mutations are unsupported and denied when identified. Registry/run runtimes repeat exact atomic-path checks. An active run records only hashed IDs and typed metadata. |
+| `PostToolUse` | known write-capable tools | After successful writes, audits the full operational-memory namespace, validates the exact audit target or bounded reserved-sink sweep, and closes an opted-in tool lifecycle event. |
+| `PostToolUseFailure` | known write-capable tools | Runs the same post-state checks after a reported failure and records a typed failed lifecycle event when tracing is active, because a failed command may still have written files. |
 | `PostToolBatch` | (all) | Rechecks operational memory and the complete reserved sink after each parallel tool batch. |
 | `Stop` | (all) | Performs a final bounded sweep and can block once for repair. The required `stop_hook_active` loop guard permits the subsequent stop. Pre-commit/CI remain Git/PII backstops only; they do not validate ignored runtime artifacts. |
 
@@ -636,9 +638,9 @@ protocol/                                            # Protocol layer (8) — tr
 commands/        # 8 slash commands (auto, narrative, seo-geo, influencer, ad, email, launch, social)
 references/      # shared contract, state model, the 8 benchmarks, auditor runbook, platform packs
 evals/           # per-skill structural eval cases + structure-manifest.json
-hooks/           # hooks.json + claude-hook.sh (the only runtime logic)
-scripts/         # validate-skill.sh + connectors/ (stdlib) + CI guards
-memory/          # HOT/WARM/COLD scaffolding + registry stores (entities/creators/claims/consent/launch/channels/narrative-registry)
+hooks/           # Claude lifecycle wiring + bounded privacy/artifact/run-context runner
+scripts/         # stdlib deterministic runtimes, validators/generators, connectors, and CI guards
+memory/          # HOT/WARM/COLD scaffolding + registry stores + ignored non-authoritative run evidence
 docs/            # 9 localized READMEs + contributor docs (connector playbook, agent compatibility, …)
 .claude-plugin/  # plugin.json + marketplace.json mirror
 ```
@@ -649,7 +651,7 @@ This source repository contains both runtime and maintenance assets. User distri
 
 ## Design philosophy
 
-- **Skills are content.** The only code is the Bash validator, the Bash hook runner, and zero-dependency Python-stdlib connector/check helpers. No third-party / `pip` dependencies, ever — enforced by a dependency-creep guard.
+- **Skills are content.** Code stays in small Bash/Python-stdlib validators, deterministic runtimes, hooks, connectors, and maintenance guards. No third-party / `pip` dependencies, ever — enforced by a dependency-creep guard.
 - **Keyless first.** Every `~~category` has a free/own-data recipe; MCP and paid tools are pure convenience.
 - **Surgical & MECE.** Each skill owns one job with a crisp scope boundary; overlapping work ships as a *mode* of an existing skill rather than a new thin skill. Registries curate, gates judge, analyzers feed gates.
 - **No invented numbers.** Skills label every figure Measured / User-provided / Estimated and ship an AI-slop / banned-phrase detector.
@@ -671,6 +673,7 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 | `check-versions.sh` | Version-sync guard: system catalog, plugin/marketplace/OpenClaw manifests, root + localized README badges, AGENTS/CLAUDE/VERSIONS, GitHub About, and all 120 skill versions stay aligned. |
 | `tests/test_connectors_local.py` | Offline request-builder/parser tests spanning all 29 bundled connector modules (no network in CI). |
 | `tests/test_hook_artifact_gate.sh` | Behavior tests for the hook's Artifact Gate + SessionStart sanitization. |
+| `tests/test_run_events.py` | Operational event-tree/hash-chain, idempotency, concurrency, snapshot/save-point/envelope, privacy, recovery, and unsafe-path regressions. |
 
 Live endpoint drift is sampled separately by the **manual** [`scripts/connectors/smoke-live.sh`](scripts/connectors/smoke-live.sh) — one minimal real call per hosted connector listed in that script, with shape assertions (rate-limit answers count as SKIP); run it before a release, never in CI.
 

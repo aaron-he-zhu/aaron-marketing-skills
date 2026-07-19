@@ -9,6 +9,11 @@ This document defines the v18 project-state architecture. Runtime state is priva
 | Registry event | Canonical truth history | `memory/events/<registry>.ndjson` | Append-only; never hand-edited or temperature-managed |
 | Registry projection | Current accepted state | `memory/projections/<registry>.json` | Rebuilt atomically from events |
 | Human registry view | Presentation only | Registry-owned paths under `memory/` | Regenerated from projection; never authoritative |
+| Run event | Non-authoritative operational evidence | `memory/runs/<run-id>/events.ndjson` | Append-only within one retained run; deletable under operational retention |
+| Run projection | Disposable session-tree view | `memory/runs/<run-id>/session.json` | Rebuilt atomically from verified run events |
+| Turn snapshot | Invocation provenance | `memory/runs/<run-id>/turns/<turn-id>/snapshot.json` | Immutable metadata/hash freeze for one turn |
+| Save point | Verified runtime resume pointer | `memory/runs/<run-id>/save-points/<id>.json` | Immutable; re-verify stream, artifacts, permissions, and registries before use |
+| Run envelope | Portable run summary | `memory/runs/<run-id>/envelopes/<head-id>.json` | Immutable summary; not canonical truth or approval |
 | HOT index | Retrieval pointer | `memory/hot-cache.md` | 80 lines and 25 KB maximum |
 | Session checkpoint | Resume pointer | `memory/session-checkpoint.md` | 40 lines and 8 KB maximum; refreshed after each handoff; untrusted hint, re-verified against live projections |
 | WARM artifact | Dated working evidence | Discipline/skill path under `memory/` | On-demand; archive review after 90 days |
@@ -17,6 +22,8 @@ This document defines the v18 project-state architecture. Runtime state is priva
 | Open loop | Unresolved work | `memory/open-loops.md` | Never treated as an approved decision or canonical fact |
 
 The repository tracks only safe templates and guidance under `memory/`. A full clone ignores runtime `memory/**`. In plugin host projects, exact-path direct writes pass a PreToolUse Git-ignore preflight; opaque shell/MCP memory mutations are unsupported and denied when identified. Registry writes repeat final/temp/lock checks at their atomic boundary, while post-use/failure/batch and first-Stop hooks audit the resulting namespace. Hooks do not edit ignore rules or provide an OS sandbox. Projects that deliberately version operational data must disable this operated path and provide their own access, retention, secret-scanning, and erasure controls.
+
+[`runtime-protocol.md`](runtime-protocol.md) defines run events, turn snapshots, save points, and envelopes. These records borrow append-only/hash-chain mechanics from the registry runtime but never borrow registry authority: they contain no owner capability or authority signature, cannot mutate a registry projection, and may be deleted under run-evidence retention.
 
 ## Registry Event Model
 
@@ -32,7 +39,7 @@ The repository tracks only safe templates and guidance under `memory/`. A full c
 6. JSON projections are installed atomically and can be rebuilt from verified history. Human Markdown is a rendering of the projection.
 7. Stale expected revisions fail. A caller must re-read and reconcile; force-overwrite is not a recovery path.
 8. Proposals resolve individually in offset order — the owner adjudicates each `propose` on its own merits, in stream order, never as a batch. This is the clause launch-window (T-0) writers rely on: competing same-window proposals resolve deterministically, one offset at a time.
-8. Event streams are never cleared, consumed, rotated, archived, or edited by a skill.
+9. Event streams are never cleared, consumed, rotated, archived, or edited by a skill.
 
 ### Registry Ownership
 
@@ -69,7 +76,7 @@ Logical erasure removes current projected payload and working views. Append-only
 - Promote only with explicit user authorization.
 - Keep each item at three lines or fewer and cite its WARM artifact or accepted registry record.
 - Review entries older than 30 days for demotion.
-- SessionStart may inject a sanitized bounded excerpt; hook loading never grants write permission.
+- SessionStart may inject a sanitized bounded excerpt; the combined hook context has smaller per-source allowances than the 25KB storage ceiling and explicitly signals injection-time truncation. Hook loading never grants write permission.
 
 ### WARM
 
@@ -160,3 +167,5 @@ Audit artifacts retain framework, profile, version, target, observation date, ev
 ## Recovery
 
 On projection loss, run `project <registry>`. On suspected corruption, run `verify <registry>` and stop on any offset/hash/idempotency failure. Restore a verified backup or append a compensating event; never patch NDJSON manually. A failed projection install does not justify deleting the fsynced event.
+
+For a runtime session, use `run-events.py verify <run-id>` and then `project <run-id>`. A run save point is an untrusted operational pointer: re-check its event head, artifact hashes, registry offsets, permission profile, and external state before resuming. Never translate a run event or envelope into an accepted registry fact.

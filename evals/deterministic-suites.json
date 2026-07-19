@@ -18,6 +18,11 @@
       "timeout_seconds": 60
     },
     {
+      "id": "run-events-adversarial",
+      "command": ["{python}", "tests/test_run_events.py"],
+      "timeout_seconds": 60
+    },
+    {
       "id": "shared-http-and-connectors",
       "command": ["{python}", "tests/test_connectors_local.py"],
       "timeout_seconds": 120

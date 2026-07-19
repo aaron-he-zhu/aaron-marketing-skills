@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/turn-snapshot.schema.json",
+  "title": "Aaron turn snapshot",
+  "description": "A metadata-only freeze of the contract, context, tool set, registry offsets, and permission boundary visible to one turn.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "run_id",
+    "turn_id",
+    "parent_turn_id",
+    "created_at",
+    "skill",
+    "host",
+    "system_prompt_sha256",
+    "context_manifest",
+    "tools",
+    "toolset_sha256",
+    "registry_offsets",
+    "permission_profile"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "snapshot_id": {"type": "string", "format": "uuid"},
+    "run_id": {"type": "string", "format": "uuid"},
+    "turn_id": {"$ref": "#/$defs/safeId"},
+    "parent_turn_id": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/safeId"}
+      ]
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "contract_sha256"],
+      "dependentRequired": {
+        "prompt_contract_ref": ["prompt_contract_sha256"],
+        "prompt_contract_sha256": ["prompt_contract_ref"]
+      },
+      "properties": {
+        "name": {"$ref": "#/$defs/safeId"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
+        "contract_sha256": {"$ref": "#/$defs/sha256"},
+        "prompt_contract_ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "prompt_contract_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapter", "model_provider", "model_id"],
+      "properties": {
+        "adapter": {"$ref": "#/$defs/safeId"},
+        "adapter_version": {"$ref": "#/$defs/safeId"},
+        "model_provider": {"$ref": "#/$defs/safeId"},
+        "model_id": {"$ref": "#/$defs/safeId"}
+      }
+    },
+    "system_prompt_sha256": {"$ref": "#/$defs/sha256"},
+    "context_manifest": {"$ref": "#/$defs/manifestRef"},
+    "tools": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "mode", "schema_sha256"],
+        "properties": {
+          "name": {"$ref": "#/$defs/safeId"},
+          "mode": {"enum": ["read-only", "proposal-only", "mutating", "external"]},
+          "schema_sha256": {"$ref": "#/$defs/sha256"}
+        }
+      }
+    },
+    "toolset_sha256": {"$ref": "#/$defs/sha256"},
+    "registry_offsets": {"$ref": "#/$defs/offsets"},
+    "permission_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "sandbox", "network", "external_mutations"],
+      "properties": {
+        "mode": {"enum": ["disabled", "read-only", "proposal-only", "write-gated"]},
+        "sandbox": {"$ref": "#/$defs/safeId"},
+        "network": {"type": "boolean"},
+        "external_mutations": {"type": "boolean"}
+      }
+    }
+  },
+  "$defs": {
+    "safeId": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "manifestRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256", "bytes", "token_estimate", "estimator", "context_signature"],
+      "properties": {
+        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "token_estimate": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+        "estimator": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]},
+        "context_signature": {"$ref": "#/$defs/sha256"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"token_estimate": {"type": "null"}}},
+          "then": {"properties": {"estimator": {"type": "null"}}},
+          "else": {"properties": {"estimator": {"$ref": "#/$defs/safeId"}}}
+        }
+      ]
+    },
+    "offsets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entities", "creators", "claims", "consent", "launches", "channels", "narrative"],
+      "propertyNames": {"enum": ["entities", "creators", "claims", "consent", "launches", "channels", "narrative"]},
+      "properties": {
+        "entities": {"$ref": "#/$defs/offset"},
+        "creators": {"$ref": "#/$defs/offset"},
+        "claims": {"$ref": "#/$defs/offset"},
+        "consent": {"$ref": "#/$defs/offset"},
+        "launches": {"$ref": "#/$defs/offset"},
+        "channels": {"$ref": "#/$defs/offset"},
+        "narrative": {"$ref": "#/$defs/offset"}
+      }
+    },
+    "offset": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]}
+  }
+}

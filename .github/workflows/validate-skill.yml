@@ -30,7 +30,7 @@ jobs:
           python3 scripts/check-architecture.py
           python3 scripts/generate-system-docs.py --check
           python3 scripts/generate-auditor-runtime.py --check
-          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter
+          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter tests.test_run_events
           bash tests/test_runtime_distribution.sh
 
       - name: Context budget and routing contracts

@@ -111,7 +111,11 @@ class CatalogLayerTests(unittest.TestCase):
                 'python3 "$AARON_SKILLS_ROOT/scripts/rubric-score.py" score run.json'
             )
         )
-
+        self.assertIsNotNone(
+            self.module.BARE_ROOT_RUNTIME_COMMAND.search(
+                "Run python3 scripts/run-events.py verify run-id"
+            )
+        )
 
 class SymmetryTests(unittest.TestCase):
     @classmethod
@@ -227,6 +231,20 @@ class DistributionTests(unittest.TestCase):
 
     def test_pristine_distribution_surfaces_have_no_failures(self):
         self.assertEqual([], self.distribution_failures())
+
+    def test_hook_event_cannot_route_to_the_wrong_runner_mode(self):
+        hooks = json.loads((ROOT / "hooks" / "hooks.json").read_text(encoding="utf-8"))
+        hooks["hooks"]["PostToolUseFailure"][0]["hooks"][0]["args"][1] = "post-tool-use"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "hooks.json"
+            path.write_text(json.dumps(hooks), encoding="utf-8")
+            with mock.patch.object(self.module, "HOOKS_PATH", path):
+                failures = self.distribution_failures()
+        self.assertTrue(
+            any("PostToolUseFailure must invoke claude-hook.sh with mode post-tool-failure" in item
+                for item in failures),
+            failures,
+        )
 
     def test_openclaw_version_drift_fails(self):
         with tempfile.TemporaryDirectory() as tmp:

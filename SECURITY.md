@@ -32,7 +32,7 @@ Include:
 ## Scope
 
 This project is primarily Markdown skills plus zero-third-party-dependency Bash/Python runtimes:
-connectors, typed scoring, registry events, artifact validation, hooks, and CI guards. The primary
+connectors, typed scoring, registry events, operational run events, artifact validation, hooks, and CI guards. The primary
 security concerns are:
 
 - **Prompt injection**: Skill files or fetched content manipulated to produce harmful outputs
@@ -41,6 +41,7 @@ security concerns are:
 - **Placeholder misuse**: `~~tool` placeholders resolving to unintended targets
 - **Memory poisoning across sessions** — malicious content written to `memory/` that affects future session behavior (e.g., fake `approved_by: user` decisions, poisoned `memory/entities/` records)
 - **Registry integrity and authority bypass** — direct event edits, stale revisions, forged owners, replay/tamper, or unsafe projection use
+- **Run-trace leakage or authority confusion** — raw prompts/tool data copied into operational traces, unsafe trace paths, or a save point misread as business approval
 - **Sensitive local state leakage** — operational memory accidentally force-added to Git, shared, backed up, or synchronized without appropriate controls
 - **WebFetch-injected instructions** — prompt injection via target page HTML/meta/body attempting to manipulate audit outcomes or Artifact Gate validation
 
@@ -50,6 +51,7 @@ security concerns are:
 - **No credential storage**: Skills and connectors never store API keys; `docs/mcp-catalog.json` declares endpoints only, and the optional connector API keys (Open PageRank, PageSpeed, Resend) are read from the user's environment at call time and never written to disk
 - **Tool-agnostic placeholders**: Skills reference tools by category (`~~SEO tool`), never by hardcoded API endpoints
 - **Private runtime state by default**: a full clone Git-ignores `memory/**`; plugin-host writes are preflighted against the host worktree, and unignored or force-tracked runtime targets are refused
+- **Metadata-only run evidence**: the opt-in run runtime accepts closed IDs, refs, hashes, and numeric metadata; it rejects raw payload fields and never grants registry or external-action authority
 - **Fail-closed authority**: registry canonical mutations require a host-signed capability bound to one normalized request, aggregate, idempotency key, resolved project root, single-use ID, and expiry; the runtime revalidates under lock and signs the stored event content for replay. Request actor/auth strings are attribution only
 - **Apache 2.0 license**: Full source available for security review
 
@@ -154,6 +156,12 @@ Both are recommended, optional hardening — the bundle works without them.
   rejects inaccessible/symlinked paths and non-regular or multiply linked streams, anchors POSIX
   writes to directory descriptors, locks appends/rebuilds, assigns deterministic IDs and monotonic
   offsets, fsyncs writes, chains event hashes, and installs projections atomically.
+- `scripts/run-events.py` is the separate supported write path for non-authoritative operational
+  traces below `memory/runs/<run-id>/`. It applies the same bounded JSON, descriptor-anchored path,
+  locking, single-link, fsync, idempotency, hash-chain, and atomic-projection classes of control,
+  but intentionally has no owner capability or authority signature. Its hashes demonstrate local
+  continuity, not identity, truth, approval, or permission. `AARON_ACTIVE_RUN_ID` only opts a host
+  into metadata recording; it is never a capability.
 - Ordinary skills may submit `propose`; only a request/root-bound host-capability catalogued owner
   may accept/reject or emit canonical operations. Capability-authored events carry an HMAC authority
   signature, so editing and recomputing public SHA-256 chain fields cannot forge owner authority.
@@ -180,6 +188,10 @@ Both are recommended, optional hardening — the bundle works without them.
   `registry-events.py`. PostToolUse, PostToolUseFailure, PostToolBatch, and Stop audit every existing
   operational-memory file for tracked/unignored or unsafe state. Runtime memory is not encrypted;
   use an encrypted/private storage boundary when needed.
+- Run artifacts accept only relative/opaque safe references and hashes. Do not record raw prompts,
+  chain-of-thought, tool arguments/results, transcripts, customer content, contact details,
+  credentials, or full source URLs. A host hook records nothing unless an active run and stable
+  session/turn/tool identity are explicit; retry identity is hashed before persistence.
 - Claude Code hooks are lifecycle checks, not an OS sandbox: timeouts/errors may continue, opaque
   tools cannot be transactionally prevalidated, and the required active-Stop guard permits the
   second stop. Canonical registries therefore enforce their boundary in the runtime, while the

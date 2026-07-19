@@ -20,14 +20,20 @@
       "references/audit-run.schema.json",
       "references/framework-catalog.json",
       "references/registry-event.schema.json",
+      "references/run-envelope.schema.json",
+      "references/run-event.schema.json",
       "references/runtime-invocation.md",
-      "references/system-catalog.json"
+      "references/runtime-protocol.md",
+      "references/save-point.schema.json",
+      "references/system-catalog.json",
+      "references/turn-snapshot.schema.json"
     ],
     "runtime_scripts": [
       "scripts/audit-trends.py",
       "scripts/check-memory-private.py",
       "scripts/registry-events.py",
       "scripts/rubric-score.py",
+      "scripts/run-events.py",
       "scripts/validate-audit-artifact.py"
     ],
     "runtime_script_trees": []
