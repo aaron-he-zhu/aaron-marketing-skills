@@ -12,6 +12,7 @@ import argparse
 import contextlib
 import datetime as dt
 import hashlib
+import importlib.util
 import json
 import math
 import os
@@ -33,12 +34,19 @@ NAMESPACE = uuid.UUID("5a325540-897b-44fe-8022-a5c59dc12bcc")
 ZERO_HASH = "0" * 64
 MAX_EVENT_BYTES = 64_000
 MAX_DOCUMENT_BYTES = 1_000_000
+MAX_CONTEXT_MANIFEST_BYTES = 2_000_000
+MAX_REFERENCE_BYTES = 10_000_000
+MAX_REFERENCE_INSPECTION_BYTES = 64_000_000
+MAX_CONTEXT_MANIFESTS = 256
 MAX_EVENTS = 10_000
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 SAFE_REF = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:/-]{0,511}$")
 SAFE_FIELD = re.compile(r"^[A-Za-z_][A-Za-z0-9_.-]{0,63}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 SEMVER = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$")
+RFC3339 = re.compile(
+    r"^\d{4}-\d{2}-\d{2}[Tt]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:[Zz]|[+-]\d{2}:\d{2})$"
+)
 EVENT_TYPES = {
     "run_started", "route_selected", "context_resolved", "turn_started",
     "turn_snapshot_created", "hook_observed", "tool_requested", "tool_allowed",
@@ -102,9 +110,9 @@ def read_json(path, label="document"):
         raw = sys.stdin.buffer.read(MAX_DOCUMENT_BYTES + 1)
     else:
         try:
-            with open(path, "rb") as handle:
+            with anchored_regular_file(Path(path)) as handle:
                 raw = handle.read(MAX_DOCUMENT_BYTES + 1)
-        except OSError as exc:
+        except (OSError, RunEventError) as exc:
             raise RunEventError("cannot read %s %s: %s" % (label, path, exc)) from exc
     if len(raw) > MAX_DOCUMENT_BYTES:
         raise RunEventError("%s exceeds %d bytes" % (label, MAX_DOCUMENT_BYTES))
@@ -128,10 +136,15 @@ def sha256_json(value):
     return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
 
 
-def sha256_file(path):
+def sha256_file(path, max_bytes=MAX_REFERENCE_BYTES):
     digest = hashlib.sha256()
     try:
         with anchored_regular_file(path) as handle:
+            size = os.fstat(handle.fileno()).st_size
+            if size > max_bytes:
+                raise RunEventError(
+                    "referenced file exceeds %d bytes: %s" % (max_bytes, path)
+                )
             while True:
                 chunk = handle.read(1024 * 1024)
                 if not chunk:
@@ -142,17 +155,30 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
+def validate_finite_metric(value, label):
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        raise RunEventError("%s must be finite numeric metadata" % label)
+    try:
+        finite = math.isfinite(value)
+    except (OverflowError, TypeError, ValueError):
+        finite = False
+    if not finite:
+        raise RunEventError("%s must be finite numeric metadata" % label)
+    return value
+
+
 def now_iso():
     return dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 def parse_datetime(value, label):
-    if not isinstance(value, str) or not value:
-        raise RunEventError("%s must be a non-empty ISO date-time" % label)
+    if not isinstance(value, str) or not RFC3339.fullmatch(value):
+        raise RunEventError("%s must be an RFC 3339 date-time" % label)
     try:
-        parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
+        normalized = value.replace("t", "T").replace("z", "+00:00").replace("Z", "+00:00")
+        parsed = dt.datetime.fromisoformat(normalized)
     except ValueError as exc:
-        raise RunEventError("%s must be an ISO date-time" % label) from exc
+        raise RunEventError("%s must be an RFC 3339 date-time" % label) from exc
     if parsed.tzinfo is None:
         raise RunEventError("%s must include a timezone" % label)
     return parsed
@@ -167,6 +193,8 @@ def validate_uuid(value, label):
         raise RunEventError("%s must be a UUID string" % label) from exc
     if str(parsed) != value:
         raise RunEventError("%s must use canonical lowercase UUID form" % label)
+    if parsed.variant != uuid.RFC_4122 or parsed.version not in set(range(1, 9)):
+        raise RunEventError("%s must be a canonical RFC UUID version 1 through 8" % label)
     return value
 
 
@@ -188,6 +216,12 @@ def validate_ref(value, label):
 def validate_sha(value, label):
     if not isinstance(value, str) or not SHA256.fullmatch(value):
         raise RunEventError("%s must be a lowercase SHA-256 digest" % label)
+    return value
+
+
+def validate_enum(value, allowed, label):
+    if not isinstance(value, str) or value not in allowed:
+        raise RunEventError("%s is unsupported" % label)
     return value
 
 
@@ -214,8 +248,7 @@ def validate_offsets(value, label="registry_offsets"):
 
 def validate_reference(value, label):
     exact_object(value, {"kind", "ref"}, {"sha256", "revision", "offset"}, label)
-    if value["kind"] not in REFERENCE_KINDS:
-        raise RunEventError("%s.kind is unsupported" % label)
+    validate_enum(value["kind"], REFERENCE_KINDS, label + ".kind")
     validate_ref(value["ref"], label + ".ref")
     if "sha256" in value:
         validate_sha(value["sha256"], label + ".sha256")
@@ -232,12 +265,10 @@ def validate_event_request(request):
         raise RunEventError("event request schema_version must be %s" % SCHEMA_VERSION)
     validate_uuid(request["run_id"], "run_id")
     validate_safe_id(request["idempotency_key"], "idempotency_key")
-    if request["event_type"] not in EVENT_TYPES:
-        raise RunEventError("event_type is unsupported")
+    validate_enum(request["event_type"], EVENT_TYPES, "event_type")
     parse_datetime(request["occurred_at"], "occurred_at")
     exact_object(request["actor"], {"type", "id"}, set(), "actor")
-    if request["actor"]["type"] not in ACTOR_TYPES:
-        raise RunEventError("actor.type is unsupported")
+    validate_enum(request["actor"]["type"], ACTOR_TYPES, "actor.type")
     validate_safe_id(request["actor"]["id"], "actor.id")
     parent = request["parent_event_id"]
     if parent is not None:
@@ -245,11 +276,9 @@ def validate_event_request(request):
     turn_id = request["turn_id"]
     if turn_id is not None:
         validate_safe_id(turn_id, "turn_id")
-    if request["status"] not in STATUSES:
-        raise RunEventError("status is unsupported")
+    validate_enum(request["status"], STATUSES, "status")
     exact_object(request["subject"], {"kind", "ref"}, set(), "subject")
-    if request["subject"]["kind"] not in SUBJECT_KINDS:
-        raise RunEventError("subject.kind is unsupported")
+    validate_enum(request["subject"]["kind"], SUBJECT_KINDS, "subject.kind")
     validate_safe_id(request["subject"]["ref"], "subject.ref")
     if "reason_code" in request:
         validate_safe_id(request["reason_code"], "reason_code")
@@ -264,8 +293,7 @@ def validate_event_request(request):
     for key, value in metrics.items():
         if not SAFE_FIELD.fullmatch(key):
             raise RunEventError("metrics contains an unsafe field name")
-        if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):
-            raise RunEventError("metrics.%s must be finite numeric metadata" % key)
+        validate_finite_metric(value, "metrics.%s" % key)
     dimensions = request["dimensions"]
     if not isinstance(dimensions, dict) or len(dimensions) > 16:
         raise RunEventError("dimensions must be an object with at most 16 entries")
@@ -336,11 +364,29 @@ def validate_event_semantics(request):
             len(references) != 1 or references[0]["kind"] != typed_reference
             or "sha256" not in references[0]):
         raise RunEventError("%s requires one hashed %s reference" % (event_type, typed_reference))
+    if event_type == "turn_snapshot_created":
+        expected = "memory/runs/%s/turns/%s/snapshot.json" % (
+            request["run_id"], turn_id,
+        )
+        if references[0]["ref"] != expected:
+            raise RunEventError("turn_snapshot_created requires its canonical runtime reference")
+    if event_type == "save_point_created":
+        expected = "memory/runs/%s/save-points/%s.json" % (
+            request["run_id"], subject["ref"],
+        )
+        if references[0]["ref"] != expected:
+            raise RunEventError("save_point_created requires its canonical runtime reference")
     if event_type in {"run_waiting", *TERMINAL_TYPES} and (
             len(references) != 1 or references[0]["kind"] != "run-envelope"
             or "sha256" not in references[0]
             or "/envelopes/" not in references[0]["ref"]):
         raise RunEventError("run envelope events require one hashed envelope artifact reference")
+    if event_type in {"run_waiting", *TERMINAL_TYPES}:
+        expected = "memory/runs/%s/envelopes/%s.json" % (
+            request["run_id"], request["parent_event_id"],
+        )
+        if references[0]["ref"] != expected:
+            raise RunEventError("run envelope event requires its canonical runtime reference")
 
 
 def event_ancestry(events, parent_event_id):
@@ -746,8 +792,14 @@ def locked_stream(path, exclusive, create=True):
     flags = (os.O_RDWR | os.O_APPEND) if exclusive else os.O_RDONLY
     if exclusive and create:
         flags |= os.O_CREAT
-    flags |= getattr(os, "O_NOFOLLOW", 0)
-    preexisting = anchored_lstat(parent_fd, path.parent, path.name, missing_ok=True) is not None
+    flags |= getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+    pre_open = anchored_lstat(parent_fd, path.parent, path.name, missing_ok=True)
+    if pre_open is not None and (
+            statmod.S_ISLNK(pre_open.st_mode) or not statmod.S_ISREG(pre_open.st_mode)
+            or pre_open.st_nlink != 1):
+        os.close(parent_fd)
+        raise RunEventError("run event stream must be a stable single-link regular file")
+    preexisting = pre_open is not None
     try:
         fd = os.open(path.name, flags, 0o600, dir_fd=parent_fd)
     except OSError as exc:
@@ -759,12 +811,18 @@ def locked_stream(path, exclusive, create=True):
         if (
                 not statmod.S_ISREG(opened.st_mode) or opened.st_nlink != 1
                 or statmod.S_ISLNK(entry.st_mode)
-                or (opened.st_dev, opened.st_ino) != (entry.st_dev, entry.st_ino)):
+                or (opened.st_dev, opened.st_ino) != (entry.st_dev, entry.st_ino)
+                or (
+                    pre_open is not None
+                    and (opened.st_dev, opened.st_ino) != (pre_open.st_dev, pre_open.st_ino)
+                )):
             raise RunEventError("run event stream must be a stable single-link regular file")
         if exclusive:
             os.fchmod(fd, 0o600)
             if not preexisting:
                 os.fsync(parent_fd)
+        elif statmod.S_IMODE(opened.st_mode) != 0o600:
+            raise RunEventError("run event stream must use private file mode 0600")
         fcntl.flock(fd, fcntl.LOCK_EX if exclusive else fcntl.LOCK_SH)
         with os.fdopen(fd, "r+" if exclusive else "r", encoding="utf-8") as handle:
             fd = None
@@ -785,35 +843,139 @@ def locked_stream(path, exclusive, create=True):
 
 @contextlib.contextmanager
 def anchored_regular_file(path):
-    parent_fd, identity = open_directory_anchor(path.parent)
-    flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+    resolved_parent = normalized_root(path.parent)
+    parent_fd, identity = open_directory_anchor(resolved_parent)
+    fd = None
     try:
+        pre_open = anchored_lstat(parent_fd, resolved_parent, path.name)
+        if (
+                statmod.S_ISLNK(pre_open.st_mode) or not statmod.S_ISREG(pre_open.st_mode)
+                or pre_open.st_nlink != 1):
+            raise RunEventError(
+                "referenced file must be a stable single-link regular file: %s" % path
+            )
+        flags = (
+            os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+        )
         fd = os.open(path.name, flags, dir_fd=parent_fd)
-    except OSError as exc:
-        os.close(parent_fd)
-        raise RunEventError("cannot open referenced file %s: %s" % (path, exc)) from exc
-    try:
         opened = os.fstat(fd)
-        entry = anchored_lstat(parent_fd, path.parent, path.name)
+        entry = anchored_lstat(parent_fd, resolved_parent, path.name)
         if (
                 not statmod.S_ISREG(opened.st_mode) or opened.st_nlink != 1
                 or statmod.S_ISLNK(entry.st_mode)
-                or (opened.st_dev, opened.st_ino) != (entry.st_dev, entry.st_ino)):
+                or (opened.st_dev, opened.st_ino) != (entry.st_dev, entry.st_ino)
+                or (opened.st_dev, opened.st_ino) != (pre_open.st_dev, pre_open.st_ino)):
             raise RunEventError("referenced file must be a stable single-link regular file: %s" % path)
         with os.fdopen(fd, "rb") as handle:
             fd = None
             yield handle
-            revalidate_anchor(parent_fd, path.parent, identity)
+            revalidate_anchor(parent_fd, resolved_parent, identity)
             opened = os.fstat(handle.fileno())
-            entry = anchored_lstat(parent_fd, path.parent, path.name)
+            entry = anchored_lstat(parent_fd, resolved_parent, path.name)
             if (
                     opened.st_nlink != 1
                     or (opened.st_dev, opened.st_ino) != (entry.st_dev, entry.st_ino)):
                 raise RunEventError("referenced file changed during inspection: %s" % path)
+    except OSError as exc:
+        raise RunEventError("cannot open referenced file %s: %s" % (path, exc)) from exc
     finally:
         if fd is not None:
             os.close(fd)
         os.close(parent_fd)
+
+
+@contextlib.contextmanager
+def anchored_project_file(root, reference):
+    """Open a project-relative file without following any reference component."""
+    validate_ref(reference, "artifact ref")
+    root_path = normalized_root(root)
+    root_fd, root_identity = open_directory_anchor(root_path)
+    descriptors = [root_fd]
+    links = []
+    file_fd = None
+    parts = reference.split("/")
+    parent_fd = root_fd
+    parent_path = root_path
+    path = root_path.joinpath(*parts)
+    directory_flags = (
+        os.O_RDONLY | getattr(os, "O_DIRECTORY", 0) | getattr(os, "O_NOFOLLOW", 0)
+    )
+    try:
+        for component in parts[:-1]:
+            pre_open = anchored_lstat(parent_fd, parent_path, component)
+            if statmod.S_ISLNK(pre_open.st_mode) or not statmod.S_ISDIR(pre_open.st_mode):
+                raise RunEventError(
+                    "project reference directory must be a real directory: %s"
+                    % (parent_path / component)
+                )
+            child_fd = None
+            try:
+                child_fd = os.open(component, directory_flags, dir_fd=parent_fd)
+                opened = os.fstat(child_fd)
+                entry = anchored_lstat(parent_fd, parent_path, component)
+                identity = (opened.st_dev, opened.st_ino)
+                if (
+                        not statmod.S_ISDIR(opened.st_mode) or statmod.S_ISLNK(entry.st_mode)
+                        or identity != (entry.st_dev, entry.st_ino)
+                        or identity != (pre_open.st_dev, pre_open.st_ino)):
+                    raise RunEventError(
+                        "project reference directory changed or is unsafe: %s"
+                        % (parent_path / component)
+                    )
+            except Exception:
+                if child_fd is not None:
+                    os.close(child_fd)
+                raise
+            descriptors.append(child_fd)
+            links.append((parent_fd, parent_path, component, child_fd, identity))
+            parent_fd = child_fd
+            parent_path = parent_path / component
+
+        name = parts[-1]
+        pre_open = anchored_lstat(parent_fd, parent_path, name)
+        if (
+                statmod.S_ISLNK(pre_open.st_mode) or not statmod.S_ISREG(pre_open.st_mode)
+                or pre_open.st_nlink != 1):
+            raise RunEventError(
+                "referenced file must be a stable single-link regular file: %s" % path
+            )
+        flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0) | getattr(os, "O_NONBLOCK", 0)
+        file_fd = os.open(name, flags, dir_fd=parent_fd)
+        opened = os.fstat(file_fd)
+        entry = anchored_lstat(parent_fd, parent_path, name)
+        if (
+                not statmod.S_ISREG(opened.st_mode) or opened.st_nlink != 1
+                or statmod.S_ISLNK(entry.st_mode)
+                or (opened.st_dev, opened.st_ino) != (entry.st_dev, entry.st_ino)
+                or (opened.st_dev, opened.st_ino) != (pre_open.st_dev, pre_open.st_ino)):
+            raise RunEventError(
+                "referenced file must be a stable single-link regular file: %s" % path
+            )
+        with os.fdopen(file_fd, "rb") as handle:
+            file_fd = None
+            yield path, handle
+            after = os.fstat(handle.fileno())
+            current = anchored_lstat(parent_fd, parent_path, name)
+            if (
+                    after.st_nlink != 1
+                    or (after.st_dev, after.st_ino) != (current.st_dev, current.st_ino)):
+                raise RunEventError("referenced file changed during inspection: %s" % path)
+            for ancestor_fd, ancestor_path, component, child_fd, identity in reversed(links):
+                child = os.fstat(child_fd)
+                current = anchored_lstat(ancestor_fd, ancestor_path, component)
+                if (
+                        statmod.S_ISLNK(current.st_mode)
+                        or (child.st_dev, child.st_ino) != identity
+                        or (current.st_dev, current.st_ino) != identity):
+                    raise RunEventError("project reference directory changed during inspection")
+            revalidate_anchor(root_fd, root_path, root_identity)
+    except OSError as exc:
+        raise RunEventError("cannot open project reference %s: %s" % (reference, exc)) from exc
+    finally:
+        if file_fd is not None:
+            os.close(file_fd)
+        for descriptor in reversed(descriptors):
+            os.close(descriptor)
 
 
 def read_anchored_json(path, label):
@@ -831,6 +993,11 @@ def read_anchored_json(path, label):
 def anchored_file_size(path):
     with anchored_regular_file(path) as handle:
         return os.fstat(handle.fileno()).st_size
+
+
+def anchored_file_mode(path):
+    with anchored_regular_file(path) as handle:
+        return statmod.S_IMODE(os.fstat(handle.fileno()).st_mode)
 
 
 def atomic_write_json(root, path, value):
@@ -881,12 +1048,27 @@ def write_immutable_json(root, path, value):
     if status is not None:
         if statmod.S_ISLNK(status.st_mode) or not statmod.S_ISREG(status.st_mode) or status.st_nlink != 1:
             raise RunEventError("immutable runtime document must be a single-link regular file")
-        current = read_anchored_json(path, "existing runtime document")
-        if canonical_json(current) != canonical_json(value):
-            raise RunEventError("immutable runtime document already exists with different content: %s" % path)
     else:
         atomic_create_json(root, path, value)
-    return sha256_file(path)
+    root_path = normalized_root(root)
+    try:
+        reference = str(Path(os.path.abspath(path)).relative_to(root_path))
+    except ValueError as exc:
+        raise RunEventError("immutable runtime document escapes the project root") from exc
+    _installed_path, raw, metadata = _stable_project_read(
+        root_path, reference, MAX_DOCUMENT_BYTES, "immutable runtime document",
+    )
+    try:
+        installed = strict_json_loads(raw.decode("utf-8"), "immutable runtime document")
+    except UnicodeDecodeError as exc:
+        raise RunEventError("immutable runtime document must be UTF-8") from exc
+    if canonical_json(installed) != canonical_json(value):
+        raise RunEventError(
+            "immutable runtime document already exists with different content: %s" % path
+        )
+    if statmod.S_IMODE(metadata.st_mode) != 0o600:
+        raise RunEventError("immutable runtime document must use private file mode 0600")
+    return hashlib.sha256(raw).hexdigest()
 
 
 def recover_immutable_install(path):
@@ -1129,16 +1311,20 @@ def validate_snapshot(value):
     for index, tool in enumerate(value["tools"]):
         exact_object(tool, {"name", "mode", "schema_sha256"}, set(), "tools[%d]" % index)
         validate_safe_id(tool["name"], "tools[%d].name" % index)
-        if tool["mode"] not in {"read-only", "proposal-only", "mutating", "external"}:
-            raise RunEventError("tools[%d].mode is unsupported" % index)
+        validate_enum(
+            tool["mode"], {"read-only", "proposal-only", "mutating", "external"},
+            "tools[%d].mode" % index,
+        )
         validate_sha(tool["schema_sha256"], "tools[%d].schema_sha256" % index)
     validate_sha(value["toolset_sha256"], "toolset_sha256")
     if value["toolset_sha256"] != sha256_json(value["tools"]):
         raise RunEventError("toolset_sha256 does not match canonical tools")
     validate_offsets(value["registry_offsets"])
     profile = exact_object(value["permission_profile"], {"mode", "sandbox", "network", "external_mutations"}, set(), "permission_profile")
-    if profile["mode"] not in {"disabled", "read-only", "proposal-only", "write-gated"}:
-        raise RunEventError("permission_profile.mode is unsupported")
+    validate_enum(
+        profile["mode"], {"disabled", "read-only", "proposal-only", "write-gated"},
+        "permission_profile.mode",
+    )
     validate_safe_id(profile["sandbox"], "permission_profile.sandbox")
     for field in ("network", "external_mutations"):
         if not isinstance(profile[field], bool):
@@ -1181,8 +1367,10 @@ def validate_save_point(value):
     if not isinstance(value["last_event_offset"], int) or isinstance(value["last_event_offset"], bool) or value["last_event_offset"] < 1:
         raise RunEventError("last_event_offset must be a positive integer")
     validate_sha(value["last_event_hash"], "last_event_hash")
-    if value["status"] not in {"ready", "waiting", "needs-input", "blocked", "failed", "complete"}:
-        raise RunEventError("save point status is unsupported")
+    validate_enum(
+        value["status"], {"ready", "waiting", "needs-input", "blocked", "failed", "complete"},
+        "save point status",
+    )
     validate_artifact_ref(value["turn_snapshot"], "turn_snapshot")
     context_reference = exact_object(
         value["context_manifest"], {"ref", "sha256", "context_signature"}, set(),
@@ -1199,23 +1387,29 @@ def validate_save_point(value):
         validate_ref(reference["ref"], label + ".ref")
         validate_sha(reference["sha256"], label + ".sha256")
         validate_safe_id(reference["validator"], label + ".validator")
-        if reference["validation_status"] not in {"valid", "not-required"}:
-            raise RunEventError("%s.validation_status is unsupported" % label)
+        validate_enum(
+            reference["validation_status"], {"valid", "not-required"},
+            label + ".validation_status",
+        )
     validate_offsets(value["registry_offsets"])
     visited = value["visited_skills"]
-    if not isinstance(visited, list) or len(visited) > 4 or len(visited) != len(set(visited)):
-        raise RunEventError("visited_skills must contain at most 4 unique skills")
+    if not isinstance(visited, list) or not visited or len(visited) > 4:
+        raise RunEventError("visited_skills must contain 1 to 4 unique skills")
     for index, skill in enumerate(visited):
         validate_safe_id(skill, "visited_skills[%d]" % index)
+    if len(visited) != len(set(visited)):
+        raise RunEventError("visited_skills must contain 1 to 4 unique skills")
     if not isinstance(value["chain_depth"], int) or isinstance(value["chain_depth"], bool) or not 0 <= value["chain_depth"] <= 3:
         raise RunEventError("chain_depth must be an integer from 0 to 3")
-    if visited and value["chain_depth"] != len(visited) - 1:
+    if value["chain_depth"] != len(visited) - 1:
         raise RunEventError("chain_depth must equal visited_skills length minus one")
     handoff = value["pending_handoff"]
     if handoff is not None:
         exact_object(handoff, {"status", "objective_code", "recommended_skill"}, set(), "pending_handoff")
-        if handoff["status"] not in {"proposed", "needs-input", "blocked"}:
-            raise RunEventError("pending_handoff.status is unsupported")
+        validate_enum(
+            handoff["status"], {"proposed", "needs-input", "blocked"},
+            "pending_handoff.status",
+        )
         validate_safe_id(handoff["objective_code"], "pending_handoff.objective_code")
         validate_safe_id(handoff["recommended_skill"], "pending_handoff.recommended_skill")
     validate_next_action(value["next_action"])
@@ -1240,20 +1434,23 @@ def validate_envelope(value):
         ended = parse_datetime(value["ended_at"], "ended_at")
         if ended < started:
             raise RunEventError("ended_at cannot precede started_at")
-    if value["status"] not in {"waiting", "needs-input", "blocked", "succeeded", "failed", "aborted"}:
-        raise RunEventError("run envelope status is unsupported")
+    validate_enum(
+        value["status"], {"waiting", "needs-input", "blocked", "succeeded", "failed", "aborted"},
+        "run envelope status",
+    )
     if value["status"] in {"succeeded", "failed", "aborted"} and value["ended_at"] is None:
         raise RunEventError("terminal run envelope requires ended_at")
-    if value["evidence_mode"] not in {"none", "simulated", "real", "mixed"}:
-        raise RunEventError("evidence_mode is unsupported")
+    validate_enum(value["evidence_mode"], {"none", "simulated", "real", "mixed"}, "evidence_mode")
     route = exact_object(value["route"], {"skill", "version", "reason_code"}, set(), "route")
     validate_safe_id(route["skill"], "route.skill")
     if not isinstance(route["version"], str) or not SEMVER.fullmatch(route["version"]):
         raise RunEventError("route.version must be semver")
     validate_safe_id(route["reason_code"], "route.reason_code")
     manifests = value["context_manifests"]
-    if not isinstance(manifests, list) or not 1 <= len(manifests) <= 256:
-        raise RunEventError("context_manifests must contain 1 to 256 entries")
+    if not isinstance(manifests, list) or not 1 <= len(manifests) <= MAX_CONTEXT_MANIFESTS:
+        raise RunEventError(
+            "context_manifests must contain 1 to %d entries" % MAX_CONTEXT_MANIFESTS
+        )
     for index, reference in enumerate(manifests):
         label = "context_manifests[%d]" % index
         exact_object(reference, {"ref", "sha256", "context_signature"}, set(), label)
@@ -1274,11 +1471,16 @@ def validate_envelope(value):
     if not isinstance(value["metrics"], dict) or len(value["metrics"]) > 64:
         raise RunEventError("metrics must be an object with at most 64 entries")
     for key, metric in value["metrics"].items():
-        if not SAFE_FIELD.fullmatch(key) or not isinstance(metric, (int, float)) or isinstance(metric, bool) or not math.isfinite(metric):
+        if not SAFE_FIELD.fullmatch(key):
             raise RunEventError("run envelope metrics must be finite numeric metadata")
+        validate_finite_metric(metric, "run envelope metrics.%s" % key)
     failure_class = value["failure_class"]
-    if failure_class not in {None, "prompt", "routing", "context", "tool", "permission", "artifact", "loop", "unknown"}:
-        raise RunEventError("failure_class is unsupported")
+    if failure_class is not None:
+        validate_enum(
+            failure_class,
+            {"prompt", "routing", "context", "tool", "permission", "artifact", "loop", "unknown"},
+            "failure_class",
+        )
     if value["status"] in {"failed", "blocked", "aborted"} and failure_class is None:
         raise RunEventError("failed, blocked, or aborted run envelope requires failure_class")
     validate_next_action(value["next_action"])
@@ -1308,23 +1510,45 @@ def ensure_child_directories(root, run_dir, parts):
             os.close(descriptor)
 
 
-def resolve_project_reference(root, reference, expected_sha):
-    validate_ref(reference, "artifact ref")
-    path = root.joinpath(*reference.split("/"))
-    if sha256_file(path) != expected_sha:
+def _stable_project_read(root, reference, limit, label):
+    with anchored_project_file(root, reference) as (path, handle):
+        before = os.fstat(handle.fileno())
+        if before.st_size > limit:
+            raise RunEventError("%s exceeds %d bytes" % (label, limit))
+        raw = handle.read(limit + 1)
+        after = os.fstat(handle.fileno())
+        stable_fields = ("st_dev", "st_ino", "st_nlink", "st_size", "st_mtime_ns", "st_ctime_ns")
+        if len(raw) != before.st_size or any(
+                getattr(before, field) != getattr(after, field) for field in stable_fields):
+            raise RunEventError("%s changed during inspection" % label)
+    return path, raw, after
+
+
+def resolve_project_reference(root, reference, expected_sha, max_bytes=MAX_REFERENCE_BYTES):
+    path, raw, metadata = _stable_project_read(
+        root, reference, max_bytes, "referenced artifact",
+    )
+    if hashlib.sha256(raw).hexdigest() != expected_sha:
         raise RunEventError("referenced artifact hash mismatch: %s" % reference)
-    return path
+    return path, metadata.st_size
 
 
-def verified_json_reference(root, reference, expected_sha, label):
-    path = resolve_project_reference(root, reference, expected_sha)
-    return path, read_anchored_json(path, label)
+def verified_json_reference(root, reference, expected_sha, label, limit=MAX_DOCUMENT_BYTES):
+    validate_ref(reference, label + " ref")
+    path, raw, metadata = _stable_project_read(root, reference, limit, label)
+    if hashlib.sha256(raw).hexdigest() != expected_sha:
+        raise RunEventError("referenced artifact hash mismatch: %s" % reference)
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise RunEventError("%s must be UTF-8" % label) from exc
+    return path, strict_json_loads(text, label), metadata
 
 
 def validate_context_document(root, reference, expected_sha, expected_signature,
-                              run_id, turn_id=None):
-    path, document = verified_json_reference(
-        root, reference, expected_sha, "context manifest",
+                              run_id, turn_id=None, verify_sources=False):
+    path, document, metadata = verified_json_reference(
+        root, reference, expected_sha, "context manifest", MAX_CONTEXT_MANIFEST_BYTES,
     )
     if not isinstance(document, dict):
         raise RunEventError("context manifest must be an object")
@@ -1338,23 +1562,114 @@ def validate_context_document(root, reference, expected_sha, expected_signature,
     if document["context_signature"] != expected_signature:
         raise RunEventError("context manifest signature does not match its reference")
     validate_sha(document["context_signature"], "context manifest context_signature")
-    return path, document
+    if statmod.S_IMODE(metadata.st_mode) != 0o600:
+        raise RunEventError("context manifest must use private file mode 0600")
+    validator_path = Path(__file__).with_name("context-resolver.py")
+    if not validator_path.is_file():
+        raise RunEventError("context resolver is unavailable for manifest validation")
+    spec = importlib.util.spec_from_file_location("aaron_context_resolver", validator_path)
+    if spec is None or spec.loader is None:
+        raise RunEventError("context resolver cannot be loaded for manifest validation")
+    validator = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(validator)
+        validator.validate_manifest(document)
+        expected_reference = "memory/runs/%s/turns/%s/context-manifest.json" % (
+            document["run_id"], document["turn_id"],
+        )
+        if reference != expected_reference:
+            raise RunEventError(
+                "context manifest must use its canonical private run/turn reference: %s"
+                % expected_reference
+            )
+        validator.ensure_ignored(root, [reference])
+        if verify_sources:
+            validator.verify_manifest_sources(
+                document, Path(__file__).resolve().parents[1], root,
+            )
+    except RunEventError:
+        raise
+    except Exception as exc:
+        raise RunEventError("context manifest fails the resolver contract: %s" % exc) from exc
+    return path, document, metadata
+
+
+def validate_snapshot_context_binding(snapshot, context):
+    route = context["route"]
+    if snapshot["skill"]["name"] != route["target_skill"]:
+        raise RunEventError("turn snapshot skill does not match the context route")
+    if snapshot["skill"]["version"] != route["catalog_version"]:
+        raise RunEventError("turn snapshot skill version does not match the context catalog")
+    if snapshot["skill"]["contract_sha256"] != route["skill_sha256"]:
+        raise RunEventError("turn snapshot contract hash does not match the context target skill")
+    if snapshot["registry_offsets"] != context["registry_offsets"]:
+        raise RunEventError("turn snapshot registry offsets do not match its context manifest")
+    return snapshot
 
 
 def validate_snapshot_document(root, reference, expected_sha, run_id, turn_id):
-    _, document = verified_json_reference(root, reference, expected_sha, "turn snapshot")
+    path, document, metadata = verified_json_reference(
+        root, reference, expected_sha, "turn snapshot"
+    )
     normalized = validate_snapshot(document)
     if normalized["run_id"] != run_id or normalized["turn_id"] != turn_id:
         raise RunEventError("turn snapshot does not belong to the save-point run/turn")
+    expected_reference = "memory/runs/%s/turns/%s/snapshot.json" % (run_id, turn_id)
+    if reference != expected_reference:
+        raise RunEventError("turn snapshot must use its canonical private run/turn reference")
+    if statmod.S_IMODE(metadata.st_mode) != 0o600:
+        raise RunEventError("turn snapshot must use private file mode 0600")
+    ensure_ignored(root, [path])
     return normalized
 
 
 def validate_save_point_document(root, reference, expected_sha, run_id):
-    _, document = verified_json_reference(root, reference, expected_sha, "save point")
+    path, document, metadata = verified_json_reference(root, reference, expected_sha, "save point")
     normalized = validate_save_point(document)
     if normalized["run_id"] != run_id:
         raise RunEventError("save point does not belong to the envelope run")
+    expected_reference = "memory/runs/%s/save-points/%s.json" % (
+        run_id, normalized["save_point_id"],
+    )
+    if reference != expected_reference:
+        raise RunEventError("save point must use its canonical private run reference")
+    if statmod.S_IMODE(metadata.st_mode) != 0o600:
+        raise RunEventError("save point must use private file mode 0600")
+    ensure_ignored(root, [path])
     return normalized
+
+
+def selected_branch_snapshots(root, run_id, events, state):
+    events_by_id = {event["event_id"]: event for event in events}
+    snapshots = []
+    parent_turn_id = None
+    for event_id in state["selected_path_event_ids"]:
+        event = events_by_id[event_id]
+        if event["event_type"] != "turn_snapshot_created":
+            continue
+        reference = event["references"][0]
+        document = validate_snapshot_document(
+            root, reference["ref"], reference["sha256"], run_id, event["turn_id"],
+        )
+        if document["parent_turn_id"] != parent_turn_id:
+            raise RunEventError(
+                "turn snapshot parent_turn_id does not match selected-branch snapshot ancestry"
+            )
+        snapshots.append((event, document))
+        parent_turn_id = document["turn_id"]
+    return snapshots
+
+
+def ensure_snapshot_capacity(selected_events):
+    count = sum(
+        event.get("event_type") == "turn_snapshot_created" for event in selected_events
+    )
+    if count >= MAX_CONTEXT_MANIFESTS:
+        raise RunEventError(
+            "selected branch already has %d turn snapshots; start a child run before another turn"
+            % MAX_CONTEXT_MANIFESTS
+        )
+    return count
 
 
 def validate_audit_reference(root, reference):
@@ -1364,21 +1679,27 @@ def validate_audit_reference(root, reference):
         raise RunEventError(
             "memory/audits artifacts require validation_status=valid and validator=validate-audit-artifact"
         )
+    _path, raw, metadata = _stable_project_read(
+        root, reference["ref"], MAX_DOCUMENT_BYTES, "audit artifact",
+    )
+    if hashlib.sha256(raw).hexdigest() != reference["sha256"]:
+        raise RunEventError("referenced artifact hash mismatch: %s" % reference["ref"])
     validator = Path(__file__).with_name("validate-audit-artifact.py")
     if not validator.is_file():
         raise RunEventError("audit artifact validator is unavailable")
     try:
         result = subprocess.run(
-            [sys.executable, str(validator), str(root / reference["ref"]),
+            [sys.executable, str(validator), "-",
              "--relative-path", reference["ref"]],
-            cwd=root, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            cwd=root, input=raw, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
             check=False, timeout=30,
         )
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise RunEventError("audit artifact validation could not run: %s" % exc) from exc
     if result.returncode:
-        detail = " ".join(result.stdout.splitlines()[-3:])[:500]
+        detail = " ".join(result.stdout.decode("utf-8", errors="replace").splitlines()[-3:])[:500]
         raise RunEventError("audit artifact validation failed: %s" % (detail or "invalid artifact"))
+    return metadata.st_size
 
 
 def existing_artifact_result(root, existing, proposed, projection, expected_kind):
@@ -1389,9 +1710,12 @@ def existing_artifact_result(root, existing, proposed, projection, expected_kind
             or not isinstance(references[0].get("sha256"), str)):
         raise RunEventError("reserved idempotency key is occupied by an incompatible event")
     reference = references[0]
-    path, stored = verified_json_reference(
+    path, stored, metadata = verified_json_reference(
         root, reference["ref"], reference["sha256"], "existing typed runtime artifact",
     )
+    if statmod.S_IMODE(metadata.st_mode) != 0o600:
+        raise RunEventError("existing typed runtime artifact must use private file mode 0600")
+    ensure_ignored(root, [path])
     if canonical_json(stored) != canonical_json(proposed):
         raise RunEventError("idempotency key was already used with different artifact content")
     return {
@@ -1419,13 +1743,40 @@ def write_snapshot(root, run_id, value):
             )
         if not events or state["status"] not in {"active", "waiting"}:
             raise RunEventError("snapshot requires an active run")
-        context_path, _ = validate_context_document(
+        events_by_id = {event["event_id"]: event for event in events}
+        selected_events = [events_by_id[event_id] for event_id in state["selected_path_event_ids"]]
+        ensure_snapshot_capacity(selected_events)
+        turn_lifecycle = [
+            event["event_type"] for event in selected_events
+            if event["turn_id"] == normalized["turn_id"]
+            and event["event_type"] in {"turn_started", "turn_finished"}
+        ]
+        if turn_lifecycle and turn_lifecycle[-1] != "turn_started":
+            raise RunEventError("snapshot cannot follow a closed turn on the selected branch")
+        ancestor_turns = [
+            event["turn_id"] for event in selected_events
+            if event["event_type"] == "turn_snapshot_created"
+            and event["turn_id"] != normalized["turn_id"]
+        ]
+        expected_parent_turn = ancestor_turns[-1] if ancestor_turns else None
+        if normalized["parent_turn_id"] != expected_parent_turn:
+            raise RunEventError(
+                "turn snapshot parent_turn_id must match the selected-branch parent turn"
+            )
+        _context_path, context_document, context_metadata = validate_context_document(
             root_path, normalized["context_manifest"]["ref"],
             normalized["context_manifest"]["sha256"],
             normalized["context_manifest"]["context_signature"],
-            run_id, normalized["turn_id"],
+            run_id, normalized["turn_id"], verify_sources=True,
         )
-        if anchored_file_size(context_path) != normalized["context_manifest"]["bytes"]:
+        validate_snapshot_context_binding(normalized, context_document)
+        if "prompt_contract_ref" in normalized["skill"]:
+            resolve_project_reference(
+                root_path, normalized["skill"]["prompt_contract_ref"],
+                normalized["skill"]["prompt_contract_sha256"],
+                max_bytes=MAX_DOCUMENT_BYTES,
+            )
+        if context_metadata.st_size != normalized["context_manifest"]["bytes"]:
             raise RunEventError("context_manifest.bytes does not match the referenced file")
         target_dir = ensure_child_directories(root_path, run_dir, ["turns", normalized["turn_id"]])
         target = target_dir / "snapshot.json"
@@ -1482,24 +1833,56 @@ def write_save_point(root, run_id, value):
             root_path, normalized["turn_snapshot"]["ref"],
             normalized["turn_snapshot"]["sha256"], run_id, normalized["turn_id"],
         )
-        validate_context_document(
+        _context_path, context_document, _context_metadata = validate_context_document(
             root_path, normalized["context_manifest"]["ref"],
             normalized["context_manifest"]["sha256"],
             normalized["context_manifest"]["context_signature"],
-            run_id, normalized["turn_id"],
+            run_id, normalized["turn_id"], verify_sources=True,
         )
         if (
                 snapshot_document["context_manifest"]["sha256"] != normalized["context_manifest"]["sha256"]
                 or snapshot_document["context_manifest"]["context_signature"]
                 != normalized["context_manifest"]["context_signature"]):
             raise RunEventError("save point context does not match its turn snapshot")
+        validate_snapshot_context_binding(snapshot_document, context_document)
+        if normalized["registry_offsets"] != context_document["registry_offsets"]:
+            raise RunEventError("save point registry offsets do not match its context manifest")
+        branch_snapshots = selected_branch_snapshots(root_path, run_id, events, state)
+        branch_skill_history = [
+            document["skill"]["name"] for _event, document in branch_snapshots
+        ]
+        if not branch_skill_history or normalized["visited_skills"][-1] != branch_skill_history[-1]:
+            raise RunEventError(
+                "save point visited_skills must end with the current selected-branch skill"
+            )
+        history_cursor = len(branch_skill_history) - 1
+        for claimed_skill in reversed(normalized["visited_skills"]):
+            while history_cursor >= 0 and branch_skill_history[history_cursor] != claimed_skill:
+                history_cursor -= 1
+            if history_cursor < 0:
+                raise RunEventError(
+                    "save point visited_skills must be corroborated by selected-branch snapshots"
+                )
+            history_cursor -= 1
+        artifact_bytes = 0
         for reference in normalized["artifacts"]:
-            resolve_project_reference(root_path, reference["ref"], reference["sha256"])
             if reference["ref"].endswith(("/events.ndjson", "/session.json")):
                 raise RunEventError("save point artifacts cannot reference mutable runtime files")
             if reference["ref"].startswith("memory/audits/"):
-                validate_audit_reference(root_path, reference)
-            elif reference["validation_status"] == "valid":
+                reference_bytes = validate_audit_reference(root_path, reference)
+            else:
+                _path, reference_bytes = resolve_project_reference(
+                    root_path, reference["ref"], reference["sha256"],
+                )
+            artifact_bytes += reference_bytes
+            if artifact_bytes > MAX_REFERENCE_INSPECTION_BYTES:
+                raise RunEventError(
+                    "save point artifact references exceed %d inspected bytes"
+                    % MAX_REFERENCE_INSPECTION_BYTES
+                )
+            if (
+                    not reference["ref"].startswith("memory/audits/")
+                    and reference["validation_status"] == "valid"):
                 matches = [entry for entry in state["validated_artifacts"] if (
                     entry["ref"] == reference["ref"]
                     and entry["sha256"] == reference["sha256"]
@@ -1556,10 +1939,50 @@ def finish_run(root, run_id, value):
             raise RunEventError("run envelope started_at must match run_started")
         if normalized["status"] == "succeeded" and state["open_tool_refs"]:
             raise RunEventError("successful run cannot finish with unfinished tool calls")
+        context_documents = []
         for context_reference in normalized["context_manifests"]:
-            validate_context_document(
+            _context_path, context_document, _context_metadata = validate_context_document(
                 root_path, context_reference["ref"], context_reference["sha256"],
                 context_reference["context_signature"], run_id,
+            )
+            context_documents.append((context_reference, context_document))
+        context_by_identity = {
+            (reference["ref"], reference["sha256"], reference["context_signature"]): document
+            for reference, document in context_documents
+        }
+        observed_contexts = []
+        branch_snapshots = selected_branch_snapshots(root_path, run_id, events, state)
+        for _event, snapshot_document in branch_snapshots:
+            snapshot_context = snapshot_document["context_manifest"]
+            identity = (
+                snapshot_context["ref"], snapshot_context["sha256"],
+                snapshot_context["context_signature"],
+            )
+            observed_contexts.append({
+                "ref": identity[0], "sha256": identity[1],
+                "context_signature": identity[2],
+            })
+            if identity in context_by_identity:
+                validate_snapshot_context_binding(
+                    snapshot_document, context_by_identity[identity],
+                )
+        if not observed_contexts:
+            raise RunEventError("run envelope requires an ancestor turn snapshot")
+        if normalized["context_manifests"] != observed_contexts:
+            raise RunEventError(
+                "run envelope context manifests must match selected-branch turn snapshots"
+            )
+        terminal_context = context_documents[-1][1]
+        terminal_route = terminal_context["route"]
+        if normalized["route"] != {
+                "skill": terminal_route["target_skill"],
+                "version": terminal_route["catalog_version"],
+                "reason_code": terminal_route["reason_code"],
+        }:
+            raise RunEventError("run envelope route does not match its terminal context manifest")
+        if normalized["registry_offsets"] != terminal_context["registry_offsets"]:
+            raise RunEventError(
+                "run envelope registry offsets do not match its terminal context manifest"
             )
         references_to_verify = [*normalized["artifacts"]]
         if normalized["save_point"] is not None:
@@ -1573,15 +1996,57 @@ def finish_run(root, run_id, value):
                     normalized["save_point"]["ref"] != state["last_save_point_ref"]
                     or normalized["save_point"]["sha256"] != state["last_save_point_sha256"]):
                 raise RunEventError("run envelope must reference the latest save point on the selected branch")
-            if not any(
-                    reference["sha256"] == save_document["context_manifest"]["sha256"]
-                    and reference["context_signature"] == save_document["context_manifest"]["context_signature"]
-                    for reference in normalized["context_manifests"]):
+            events_by_id = {event["event_id"]: event for event in events}
+            selected_events = [events_by_id[event_id] for event_id in state["selected_path_event_ids"]]
+            matching_save_events = [
+                event for event in selected_events
+                if event["event_type"] == "save_point_created"
+                and event["references"][0]["ref"] == normalized["save_point"]["ref"]
+                and event["references"][0]["sha256"] == normalized["save_point"]["sha256"]
+            ]
+            if len(matching_save_events) != 1:
+                raise RunEventError("run envelope save point lacks one selected-branch event")
+            save_parent = events_by_id[matching_save_events[0]["parent_event_id"]]
+            if (
+                    save_document["last_event_id"] != save_parent["event_id"]
+                    or save_document["last_event_offset"] != save_parent["offset"]
+                    or save_document["last_event_hash"] != save_parent["event_hash"]):
+                raise RunEventError("run envelope save point head does not match its creation event")
+            matching_contexts = [
+                document for reference, document in context_documents
+                if reference == save_document["context_manifest"]
+            ]
+            if not matching_contexts:
                 raise RunEventError("run envelope omits the save point context manifest")
+            save_context = matching_contexts[0]
+            if save_document["registry_offsets"] != save_context["registry_offsets"]:
+                raise RunEventError(
+                    "run envelope save point offsets do not match its context manifest"
+                )
+            save_snapshot = validate_snapshot_document(
+                root_path, save_document["turn_snapshot"]["ref"],
+                save_document["turn_snapshot"]["sha256"], run_id,
+                save_document["turn_id"],
+            )
+            if any(
+                    save_snapshot["context_manifest"][field]
+                    != save_document["context_manifest"][field]
+                    for field in ("ref", "sha256", "context_signature")):
+                raise RunEventError("run envelope save point context does not match its snapshot")
+            validate_snapshot_context_binding(save_snapshot, save_context)
+        artifact_bytes = 0
         for reference in references_to_verify:
-            resolve_project_reference(root_path, reference["ref"], reference["sha256"])
             if reference["ref"].endswith(("/events.ndjson", "/session.json")):
                 raise RunEventError("run envelope artifacts cannot reference mutable runtime files")
+            _path, reference_bytes = resolve_project_reference(
+                root_path, reference["ref"], reference["sha256"],
+            )
+            artifact_bytes += reference_bytes
+            if artifact_bytes > MAX_REFERENCE_INSPECTION_BYTES:
+                raise RunEventError(
+                    "run envelope artifact references exceed %d inspected bytes"
+                    % MAX_REFERENCE_INSPECTION_BYTES
+                )
         target_dir = ensure_child_directories(root_path, run_dir, ["envelopes"])
         target = target_dir / (normalized["last_event_id"] + ".json")
         digest = write_immutable_json(root_path, target, normalized)

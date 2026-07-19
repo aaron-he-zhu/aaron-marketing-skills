@@ -127,7 +127,7 @@ def build_fixture(root: Path) -> None:
           SKILL_MD.format(name="fixture-skill", bundle=BUNDLE))
     write(root, "protocol/protocol-skill/SKILL.md",
           SKILL_MD.format(name="protocol-skill", bundle=BUNDLE))
-    write(root, "references/auto-routing-scenarios.md",
+    write(root, "evals/auto-routing-scenarios.source.md",
           '- expected_route: "/aaron-marketing:narrative"\n')
     write(root, "commands/narrative.md", "Route: fixture-skill\n")
     write(root, "narrative/README.md", "skills: fixture-skill\n")
@@ -172,7 +172,7 @@ class CheckVersionsTests(unittest.TestCase):
 
     def test_missing_routing_scenario_fails(self):
         def mutate(root):
-            write(root, "references/auto-routing-scenarios.md", "# empty\n")
+            write(root, "evals/auto-routing-scenarios.source.md", "# empty\n")
         code, out = self.run_guard(mutate)
         self.assertEqual(1, code, out)
         self.assertIn("auto routing coverage gap", out)

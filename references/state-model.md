@@ -11,6 +11,7 @@ This document defines the v18 project-state architecture. Runtime state is priva
 | Human registry view | Presentation only | Registry-owned paths under `memory/` | Regenerated from projection; never authoritative |
 | Run event | Non-authoritative operational evidence | `memory/runs/<run-id>/events.ndjson` | Append-only within one retained run; deletable under operational retention |
 | Run projection | Disposable session-tree view | `memory/runs/<run-id>/session.json` | Rebuilt atomically from verified run events |
+| Context manifest | Deterministic invocation provenance | `memory/runs/<run-id>/turns/<turn-id>/context-manifest.json` | Immutable metadata/hash selection; no source bodies or authority |
 | Turn snapshot | Invocation provenance | `memory/runs/<run-id>/turns/<turn-id>/snapshot.json` | Immutable metadata/hash freeze for one turn |
 | Save point | Verified runtime resume pointer | `memory/runs/<run-id>/save-points/<id>.json` | Immutable; re-verify stream, artifacts, permissions, and registries before use |
 | Run envelope | Portable run summary | `memory/runs/<run-id>/envelopes/<head-id>.json` | Immutable summary; not canonical truth or approval |
@@ -23,7 +24,7 @@ This document defines the v18 project-state architecture. Runtime state is priva
 
 The repository tracks only safe templates and guidance under `memory/`. A full clone ignores runtime `memory/**`. In plugin host projects, exact-path direct writes pass a PreToolUse Git-ignore preflight; opaque shell/MCP memory mutations are unsupported and denied when identified. Registry writes repeat final/temp/lock checks at their atomic boundary, while post-use/failure/batch and first-Stop hooks audit the resulting namespace. Hooks do not edit ignore rules or provide an OS sandbox. Projects that deliberately version operational data must disable this operated path and provide their own access, retention, secret-scanning, and erasure controls.
 
-[`runtime-protocol.md`](runtime-protocol.md) defines run events, turn snapshots, save points, and envelopes. These records borrow append-only/hash-chain mechanics from the registry runtime but never borrow registry authority: they contain no owner capability or authority signature, cannot mutate a registry projection, and may be deleted under run-evidence retention.
+[`context-resolution.md`](context-resolution.md) defines deterministic context selection and stable signatures; [`runtime-protocol.md`](runtime-protocol.md) binds those manifests into run events, turn snapshots, save points, and envelopes. These records borrow append-only/hash-chain mechanics from the registry runtime but never borrow registry authority: they contain no owner capability or authority signature, cannot mutate a registry projection, and may be deleted under run-evidence retention.
 
 ## Registry Event Model
 

@@ -89,6 +89,21 @@ def run_guard(root):
         capture_output=True, text=True, cwd=root)
 
 
+def add_auto_profile(root, shard_sizes):
+    (root / "commands").mkdir(exist_ok=True)
+    (root / "commands" / "auto.md").write_text("a" * 1000, encoding="utf-8")
+    refs = root / "references"
+    (refs / "aaron-product-api-contract.md").write_text("c" * 1000, encoding="utf-8")
+    (refs / "auto-routing-scenarios.md").write_text("i" * 1000, encoding="utf-8")
+    shards = refs / "auto-routing"
+    shards.mkdir(exist_ok=True)
+    sizes = list(shard_sizes)
+    while len(sizes) < 8:
+        sizes.append(100)
+    for index, size in enumerate(sizes[:8]):
+        (shards / ("shard-%d.md" % index)).write_text("s" * size, encoding="utf-8")
+
+
 class ContextBudgetTest(unittest.TestCase):
     def test_real_repository_passes(self):
         result = subprocess.run(["python3", str(GUARD)], capture_output=True, text=True, cwd=ROOT)
@@ -140,6 +155,31 @@ class ContextBudgetTest(unittest.TestCase):
             result = run_guard(root)
             self.assertEqual(result.returncode, 1)
             self.assertIn("no references/ activation reads", result.stdout)
+
+    def test_oversized_nested_reference_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = build_fixture(tmp)
+            nested = root / "references" / "nested"
+            nested.mkdir()
+            (nested / "oversized.md").write_text("x" * 60_000, encoding="utf-8")
+            result = run_guard(root)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("references/nested/oversized.md", result.stdout)
+
+    def test_oversized_auto_assembly_fails_even_when_each_shard_passes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = build_fixture(tmp)
+            add_auto_profile(root, [40_000, 30_000, 20_000])
+            result = run_guard(root)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("assembled context", result.stdout)
+
+    def test_bounded_auto_assembly_passes(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = build_fixture(tmp)
+            add_auto_profile(root, [20_000, 10_000, 5_000])
+            result = run_guard(root)
+            self.assertEqual(result.returncode, 0, result.stdout)
 
 
 if __name__ == "__main__":

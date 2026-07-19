@@ -36,6 +36,11 @@ class DistributionBuilderTests(unittest.TestCase):
             "scripts/validate-audit-artifact.py",
             "scripts/registry-events.py",
             "scripts/run-events.py",
+            "scripts/context-resolver.py",
+            "references/context-request.schema.json",
+            "references/context-manifest.schema.json",
+            "references/context-resolution.md",
+            "references/auto-routing-scenarios.md",
             "references/run-event.schema.json",
             "references/turn-snapshot.schema.json",
             "references/save-point.schema.json",
@@ -47,6 +52,13 @@ class DistributionBuilderTests(unittest.TestCase):
             "hooks/hooks.json",
         ):
             self.assertTrue((output / path).is_file(), path)
+        for shard in (
+            "narrative", "seo-geo", "social", "email", "ad", "influencer",
+            "launch", "cross-discipline",
+        ):
+            self.assertTrue((output / "references" / "auto-routing" / (shard + ".md")).is_file(), shard)
+        self.assertFalse((output / "evals/auto-routing-scenarios.source.md").exists())
+        self.assertFalse((output / "scripts/generate-auto-routing-shards.py").exists())
         self.assertTrue((output / "scripts/connectors/resend.py").is_file())
         self.assertTrue((output / "references/skill-contract.md").is_file())
         for path in ("tests", "evals", ".github", ".githooks", "docs", "AGENTS.md", "CONTRIBUTING.md"):

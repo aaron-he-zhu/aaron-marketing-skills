@@ -17,11 +17,13 @@ references/ or split the reference instead):
   2. Auditor activation chain: the byte sum of every references/ file listed
      in an auditor's "Runtime Contract" Read list <= ACTIVATION_MAX_BYTES
      (current worst: CORE-EEAT at ~93 KB).
-  3. Any single root references/*.md|*.json runtime file <= REFERENCE_MAX_BYTES
-     (current max: core-eeat-benchmark.md at ~40 KB).
+  3. Any single references/**/*.md|*.json runtime file <= REFERENCE_MAX_BYTES
+     (current max: an auto-routing shard at ~46 KB).
   4. memory/templates/hot-cache.md stays within the runtime HOT limits the
      hook enforces (80 lines / 25 KB) so the committed template can never
      ship over budget.
+  5. The largest valid `/auto` assembly (command + API contract + routing
+     index + three shards) <= AUTO_ASSEMBLY_MAX_BYTES.
 
 Usage:
   python3 scripts/check-context-budget.py   # CI gate; exit 1 on fail
@@ -36,12 +38,18 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_PATH = ROOT / ".claude-plugin" / "plugin.json"
 HOT_TEMPLATE = ROOT / "memory" / "templates" / "hot-cache.md"
+AUTO_COMMAND = ROOT / "commands" / "auto.md"
+AUTO_CONTRACT = ROOT / "references" / "aaron-product-api-contract.md"
+AUTO_INDEX = ROOT / "references" / "auto-routing-scenarios.md"
+AUTO_SHARDS = ROOT / "references" / "auto-routing"
 
 SKILL_MD_MAX_LINES = 220
 ACTIVATION_MAX_BYTES = 125_000
 REFERENCE_MAX_BYTES = 51_200
 HOT_MAX_LINES = 80
 HOT_MAX_BYTES = 25_600
+AUTO_ASSEMBLY_MAX_BYTES = 90_000
+AUTO_MAX_SHARDS = 3
 
 # Backticked repo-root reference paths inside an auditor runtime section,
 # e.g. `../../../references/auditor-runbook.md`.
@@ -54,17 +62,6 @@ RUNTIME_HEADING = re.compile(r"^### Runtime[^\n]*\n(.*?)(?=^#{2,3} |\Z)", re.M |
 # Generated only into standalone distributions, where it REPLACES the listed
 # repo files — counting it would double-book the chain.
 GENERATED_RUNTIME = "auditor-runtime.md"
-
-# Conform-or-declared: known over-budget references are exempt from the
-# default cap only up to their own declared ceiling (~10% growth headroom),
-# so an exemption can never silently balloon. New references get no entry.
-DECLARED_REFERENCE_CEILINGS = {
-    # The /aaron-marketing:auto scenario library is a single runtime-consulted
-    # resource (commands/auto.md); splitting it is a deliberate redesign, not
-    # a budget fix. Baseline 94,820 bytes at v18.
-    "auto-routing-scenarios.md": 105_000,
-}
-
 
 class BudgetError(ValueError):
     pass
@@ -141,14 +138,30 @@ def main():
             fail("%s activation chain is %d bytes (budget %d): %s"
                  % (rel, total, ACTIVATION_MAX_BYTES, ", ".join(chain)))
 
-    for path in sorted((ROOT / "references").iterdir()):
+    for path in sorted((ROOT / "references").rglob("*")):
         if path.suffix not in (".md", ".json") or not path.is_file():
             continue
         size = path.stat().st_size
-        ceiling = DECLARED_REFERENCE_CEILINGS.get(path.name, REFERENCE_MAX_BYTES)
-        if size > ceiling:
-            fail("references/%s is %d bytes (budget %d) — split the reference"
-                 % (path.name, size, ceiling))
+        if size > REFERENCE_MAX_BYTES:
+            fail("%s is %d bytes (budget %d) — split the reference"
+                 % (path.relative_to(ROOT), size, REFERENCE_MAX_BYTES))
+
+    auto_surfaces = (AUTO_COMMAND, AUTO_CONTRACT, AUTO_INDEX)
+    if any(path.exists() for path in auto_surfaces) and all(path.exists() for path in auto_surfaces):
+        shards = sorted(AUTO_SHARDS.glob("*.md")) if AUTO_SHARDS.is_dir() else []
+        if len(shards) != 8:
+            fail("auto-routing assembled profile requires exactly 8 generated shards (found %d)"
+                 % len(shards))
+        else:
+            base_bytes = sum(path.stat().st_size for path in auto_surfaces)
+            largest = sorted((path.stat().st_size for path in shards), reverse=True)[:AUTO_MAX_SHARDS]
+            assembled = base_bytes + sum(largest)
+            if assembled > AUTO_ASSEMBLY_MAX_BYTES:
+                fail("largest /auto assembled context is %d bytes (budget %d, max %d shards)"
+                     % (assembled, AUTO_ASSEMBLY_MAX_BYTES, AUTO_MAX_SHARDS))
+    elif any(path.exists() for path in auto_surfaces):
+        missing = [str(path.relative_to(ROOT)) for path in auto_surfaces if not path.exists()]
+        fail("auto-routing assembled profile is incomplete: missing %s" % ", ".join(missing))
 
     if HOT_TEMPLATE.is_file():
         hot = HOT_TEMPLATE.read_text(encoding="utf-8")
@@ -164,8 +177,9 @@ def main():
     if fails:
         print("\nCONTEXT BUDGET FAILED — %d issue(s)." % len(fails))
         return 1
-    print("Context budget passed: %d skills, auditor activation chains, root "
-          "references, HOT template all within budget." % len(skill_dirs()))
+    print("Context budget passed: %d skills, auditor activation chains, recursive "
+          "references, assembled /auto profile, and HOT template all within budget."
+          % len(skill_dirs()))
     return 0
 
 

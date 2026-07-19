@@ -27,8 +27,8 @@
   ],
   "properties": {
     "schema_version": {"const": "1.0"},
-    "run_id": {"type": "string", "format": "uuid"},
-    "parent_run_id": {"oneOf": [{"type": "null"}, {"type": "string", "format": "uuid"}]},
+    "run_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "parent_run_id": {"oneOf": [{"type": "null"}, {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}]},
     "started_at": {"type": "string", "format": "date-time"},
     "ended_at": {"oneOf": [{"type": "null"}, {"type": "string", "format": "date-time"}]},
     "status": {"enum": ["waiting", "needs-input", "blocked", "succeeded", "failed", "aborted"]},
@@ -44,7 +44,7 @@
       }
     },
     "context_manifests": {"type": "array", "minItems": 1, "maxItems": 256, "items": {"$ref": "#/$defs/contextReference"}},
-    "last_event_id": {"type": "string", "format": "uuid"},
+    "last_event_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
     "last_event_offset": {"type": "integer", "minimum": 1},
     "last_event_hash": {"$ref": "#/$defs/sha256"},
     "save_point": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/reference"}]},
@@ -99,7 +99,7 @@
       "additionalProperties": false,
       "required": ["ref", "sha256"],
       "properties": {
-        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
         "sha256": {"$ref": "#/$defs/sha256"}
       }
     },
@@ -108,7 +108,7 @@
       "additionalProperties": false,
       "required": ["ref", "sha256", "context_signature"],
       "properties": {
-        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
         "sha256": {"$ref": "#/$defs/sha256"},
         "context_signature": {"$ref": "#/$defs/sha256"}
       }

@@ -30,7 +30,8 @@ jobs:
           python3 scripts/check-architecture.py
           python3 scripts/generate-system-docs.py --check
           python3 scripts/generate-auditor-runtime.py --check
-          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter tests.test_run_events
+          python3 scripts/generate-auto-routing-shards.py --check
+          python3 -m unittest tests.test_architecture tests.test_distribution_builder tests.test_check_versions tests.test_validate_skill tests.test_behavior_evals_adapter tests.test_run_events tests.test_auto_routing_shards tests.test_context_resolver
           bash tests/test_runtime_distribution.sh
 
       - name: Context budget and routing contracts
@@ -38,7 +39,7 @@ jobs:
           set -euo pipefail
           python3 scripts/check-context-budget.py
           python3 scripts/check-routing.py
-          python3 -m unittest tests.test_context_budget tests.test_routing
+          python3 -m unittest tests.test_context_budget tests.test_routing tests.test_context_resolver
           bash tests/test_runtime_distribution.sh
 
       - name: Root references/ blob-main guard

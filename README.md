@@ -207,7 +207,7 @@ The `protocol/` directory holds the **shared truth & memory machinery** that sit
 | [narrative-registry](protocol/narrative-registry/SKILL.md) | Owns complete versioned narrative canon records | narrative | `memory/events/narrative.ndjson` |
 | [memory-management](protocol/memory-management/SKILL.md) | Manages authorized HOT/WARM/COLD working notes without impersonating a registry | all disciplines | non-canonical `memory/` working state |
 
-The registries follow a **sole-writer rule** (other skills submit via `registry-events.py` proposal events), and they *curate* — the gates *judge*. The genuinely horizontal layer beneath everything is the `references/` protocols ([auditor-runbook](references/auditor-runbook.md), [state-model](references/state-model.md), [skill-contract](references/skill-contract.md), [runtime-protocol](references/runtime-protocol.md), [humanizer-slop](references/humanizer-slop.md), [measurement-protocol](references/measurement-protocol.md)) — shared by design as documents, not skills.
+The registries follow a **sole-writer rule** (other skills submit via `registry-events.py` proposal events), and they *curate* — the gates *judge*. The genuinely horizontal layer beneath everything is the `references/` protocols ([auditor-runbook](references/auditor-runbook.md), [state-model](references/state-model.md), [skill-contract](references/skill-contract.md), [context-resolution](references/context-resolution.md), [runtime-protocol](references/runtime-protocol.md), [humanizer-slop](references/humanizer-slop.md), [measurement-protocol](references/measurement-protocol.md)) — shared by design as documents, not skills.
 
 ### Memory & automation hooks
 
@@ -220,6 +220,8 @@ The registries follow a **sole-writer rule** (other skills submit via `registry-
 | **COLD** | `memory/archive/` | Demoted/older records, kept for recall. |
 
 Opt-in **run evidence** lives separately under `memory/runs/<run-id>/`: append-only metadata events, a derived session tree, turn snapshots, save points, and run envelopes. It is Git-ignored, retention-bounded, and explicitly non-authoritative — it cannot accept a registry proposal or authorize an external action. The stdlib [`run-events.py`](scripts/run-events.py) runtime and [Runtime Protocol](references/runtime-protocol.md) enforce this boundary.
+
+Before a turn snapshot, the stdlib [`context-resolver.py`](scripts/context-resolver.py) can turn an explicit candidate request into a hash-bound [context manifest](references/context-resolution.md). It deterministically applies required/optional/forbidden policy, authority and freshness order, conflict/supersession rules, sensitivity and byte budgets, content dedupe, and typed omission reasons. It does not perform semantic retrieval or copy source content into the manifest. `/auto` likewise reads a generated index plus at most three discipline/cross-discipline [routing shards](references/auto-routing-scenarios.md), while one maintenance source preserves all 88 cases.
 
 **Hooks** (`hooks/hooks.json`, runner `hooks/claude-hook.sh`) wire seven Claude Code events:
 
@@ -674,6 +676,9 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 | `tests/test_connectors_local.py` | Offline request-builder/parser tests spanning all 29 bundled connector modules (no network in CI). |
 | `tests/test_hook_artifact_gate.sh` | Behavior tests for the hook's Artifact Gate + SessionStart sanitization. |
 | `tests/test_run_events.py` | Operational event-tree/hash-chain, idempotency, concurrency, snapshot/save-point/envelope, privacy, recovery, and unsafe-path regressions. |
+| `tests/test_context_resolver.py` | Deterministic required/optional selection, freshness, conflict, dedupe, sensitivity/budget, signature, path, and immutable-output regressions. |
+| `generate-auto-routing-shards.py --check` | Proves the runtime routing index and eight queryable shards are exact generated views of one 88-case source. |
+| `check-context-budget.py` | Recursive per-reference caps plus the largest valid three-shard `/auto` assembled-context budget. |
 
 Live endpoint drift is sampled separately by the **manual** [`scripts/connectors/smoke-live.sh`](scripts/connectors/smoke-live.sh) — one minimal real call per hosted connector listed in that script, with shape assertions (rate-limit answers count as SKIP); run it before a release, never in CI.
 

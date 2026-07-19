@@ -23,8 +23,8 @@
   ],
   "properties": {
     "schema_version": {"const": "1.0"},
-    "snapshot_id": {"type": "string", "format": "uuid"},
-    "run_id": {"type": "string", "format": "uuid"},
+    "snapshot_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "run_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
     "turn_id": {"$ref": "#/$defs/safeId"},
     "parent_turn_id": {
       "oneOf": [
@@ -45,7 +45,7 @@
         "name": {"$ref": "#/$defs/safeId"},
         "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
         "contract_sha256": {"$ref": "#/$defs/sha256"},
-        "prompt_contract_ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "prompt_contract_ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
         "prompt_contract_sha256": {"$ref": "#/$defs/sha256"}
       }
     },
@@ -98,7 +98,7 @@
       "additionalProperties": false,
       "required": ["ref", "sha256", "bytes", "token_estimate", "estimator", "context_signature"],
       "properties": {
-        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
         "sha256": {"$ref": "#/$defs/sha256"},
         "bytes": {"type": "integer", "minimum": 0},
         "token_estimate": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},

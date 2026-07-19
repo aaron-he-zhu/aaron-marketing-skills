@@ -1,4 +1,5 @@
 import importlib.util
+import io
 import json
 import os
 import pathlib
@@ -80,6 +81,13 @@ class AuditArtifactValidatorTests(unittest.TestCase):
         self.assertEqual(record["final_overall_score"], 80)
         self.assertEqual(record["catalog_version"], "18.0.0")
         self.assertEqual(record["context"]["currency"], "USD")
+
+    def test_stdin_validation_uses_the_supplied_bytes(self):
+        stdin = type("BinaryStdin", (), {"buffer": io.BytesIO(artifact().encode("utf-8"))})()
+        with mock.patch.object(validator.sys, "stdin", stdin):
+            record, errors = validator.validate("-", "memory/audits/ad/test.md")
+        self.assertEqual([], errors)
+        self.assertEqual("ROAS", record["framework"])
 
     def test_companion_schema_declares_current_catalog_and_state_machine(self):
         schema = json.loads(

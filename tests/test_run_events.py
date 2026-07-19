@@ -16,6 +16,11 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("run_events", ROOT / "scripts" / "run-events.py")
 runtime = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(runtime)
+CONTEXT_SPEC = importlib.util.spec_from_file_location(
+    "context_resolver", ROOT / "scripts" / "context-resolver.py"
+)
+context_runtime = importlib.util.module_from_spec(CONTEXT_SPEC)
+CONTEXT_SPEC.loader.exec_module(context_runtime)
 
 
 class RunEventTests(unittest.TestCase):
@@ -71,23 +76,48 @@ class RunEventTests(unittest.TestCase):
     def digest(path):
         return hashlib.sha256(path.read_bytes()).hexdigest()
 
-    def context_reference(self):
-        value = {
+    def context_manifest_value(self, run_id=None, turn_id="turn-1", candidates=None,
+                               target_skill="content-writer"):
+        request = {
             "schema_version": "1.0",
-            "run_id": self.run_id,
-            "turn_id": "turn-1",
-            "resources": [],
-            "context_signature": "c" * 64,
+            "run_id": run_id or self.run_id,
+            "turn_id": turn_id,
+            "as_of": "2026-07-19T10:00:00Z",
+            "route": {
+                "command": "seo-geo",
+                "target_skill": target_skill,
+                "reason_code": "fixture",
+                "scenario_shards": [],
+            },
+            "budget": {
+                "max_bytes": 1024,
+                "max_resources": 1,
+                "max_inspection_bytes": 2048,
+                "max_sensitivity": "internal",
+            },
+            "registry_offsets": self.offsets(None),
+            "candidates": list(candidates or []),
         }
-        path = self.write_json("context-manifest.json", value)
+        return context_runtime.resolve_context(request, ROOT, self.root)
+
+    def context_reference(self, value=None):
+        value = value or self.context_manifest_value()
+        relative = "memory/runs/%s/turns/%s/context-manifest.json" % (
+            value["run_id"], value["turn_id"],
+        )
+        (self.root / relative).parent.mkdir(parents=True, exist_ok=True)
+        digest, _existed = context_runtime.write_manifest(self.root, relative, value)
         return {
-            "ref": str(path.relative_to(self.root)),
-            "sha256": self.digest(path),
-            "context_signature": "c" * 64,
+            "ref": relative,
+            "sha256": digest,
+            "context_signature": value["context_signature"],
         }
 
     def snapshot_value(self, context, turn_id="turn-1", snapshot_id=None):
         tools = [{"name": "Read", "mode": "read-only", "schema_sha256": "2" * 64}]
+        context_document = json.loads(
+            (self.root / context["ref"]).read_text(encoding="utf-8")
+        )
         return {
             "schema_version": "1.0",
             "snapshot_id": snapshot_id or str(uuid.uuid4()),
@@ -96,9 +126,9 @@ class RunEventTests(unittest.TestCase):
             "parent_turn_id": None,
             "created_at": "2026-07-19T10:01:00Z",
             "skill": {
-                "name": "content-writer",
-                "version": "18.0.0",
-                "contract_sha256": "1" * 64,
+                "name": context_document["route"]["target_skill"],
+                "version": context_document["route"]["catalog_version"],
+                "contract_sha256": context_document["route"]["skill_sha256"],
             },
             "host": {
                 "adapter": "test-host",
@@ -325,6 +355,185 @@ class RunEventTests(unittest.TestCase):
                 self.request("too-late", parent=finished["event"]["event_id"]),
             )
 
+    def test_snapshot_binds_live_source_route_contract_offsets_and_private_ref(self):
+        root_event = self.start()["event"]
+        runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-start", event_type="turn_started", parent=root_event["event_id"],
+                turn_id="turn-1", status="started", subject={"kind": "turn", "ref": "turn-1"},
+            ),
+        )
+        source = self.root / "source.md"
+        source.write_text("source-v1", encoding="utf-8")
+        manifest = self.context_manifest_value(candidates=[{
+            "resource_id": "source",
+            "scope": "project",
+            "path": "source.md",
+            "role": "evidence",
+            "requirement": "required",
+            "authority": "working",
+            "observed_at": "2026-07-19T10:00:00Z",
+            "max_age_seconds": None,
+            "priority": 50,
+            "reason_code": "fixture",
+            "sensitivity": "internal",
+            "expected_sha256": None,
+            "conflict_group": None,
+            "supersedes": [],
+        }])
+        context = self.context_reference(manifest)
+
+        source.write_text("source-v2", encoding="utf-8")
+        with self.assertRaisesRegex(runtime.RunEventError, "source no longer matches"):
+            runtime.write_snapshot(self.root, self.run_id, self.snapshot_value(context))
+        source.write_text("source-v1", encoding="utf-8")
+
+        snapshot = self.snapshot_value(context)
+        snapshot["skill"]["name"] = "different-skill"
+        with self.assertRaisesRegex(runtime.RunEventError, "skill does not match"):
+            runtime.write_snapshot(self.root, self.run_id, snapshot)
+        snapshot = self.snapshot_value(context)
+        snapshot["skill"]["contract_sha256"] = "f" * 64
+        with self.assertRaisesRegex(runtime.RunEventError, "contract hash"):
+            runtime.write_snapshot(self.root, self.run_id, snapshot)
+        snapshot = self.snapshot_value(context)
+        snapshot["registry_offsets"]["claims"] = 9
+        with self.assertRaisesRegex(runtime.RunEventError, "registry offsets"):
+            runtime.write_snapshot(self.root, self.run_id, snapshot)
+        snapshot = self.snapshot_value(context)
+        snapshot["skill"]["prompt_contract_ref"] = "missing-prompt-contract.json"
+        snapshot["skill"]["prompt_contract_sha256"] = "e" * 64
+        with self.assertRaisesRegex(runtime.RunEventError, "missing-prompt-contract"):
+            runtime.write_snapshot(self.root, self.run_id, snapshot)
+
+        noncanonical = self.write_json("context-manifest.json", manifest)
+        noncanonical.chmod(0o600)
+        invalid_context = {
+            "ref": "context-manifest.json",
+            "sha256": self.digest(noncanonical),
+            "context_signature": manifest["context_signature"],
+        }
+        with self.assertRaisesRegex(runtime.RunEventError, "canonical private"):
+            runtime.write_snapshot(
+                self.root, self.run_id, self.snapshot_value(invalid_context),
+            )
+
+    def test_save_point_and_envelope_bind_branch_context_and_offsets(self):
+        root_event = self.start()["event"]
+        runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-start", event_type="turn_started", parent=root_event["event_id"],
+                turn_id="turn-1", status="started", subject={"kind": "turn", "ref": "turn-1"},
+            ),
+        )
+        context = self.context_reference()
+        snapshot = runtime.write_snapshot(self.root, self.run_id, self.snapshot_value(context))
+
+        bad_save = self.save_point_value(snapshot["artifact"], context, snapshot["projection"])
+        bad_save["registry_offsets"]["claims"] = 99
+        with self.assertRaisesRegex(runtime.RunEventError, "save point registry offsets"):
+            runtime.write_save_point(self.root, self.run_id, bad_save)
+        bad_save = self.save_point_value(snapshot["artifact"], context, snapshot["projection"])
+        bad_save["visited_skills"] = ["invented-skill"]
+        with self.assertRaisesRegex(runtime.RunEventError, "current selected-branch skill"):
+            runtime.write_save_point(self.root, self.run_id, bad_save)
+
+        no_snapshot_root = tempfile.TemporaryDirectory()
+        self.addCleanup(no_snapshot_root.cleanup)
+        no_snapshot_path = Path(no_snapshot_root.name)
+        other_run = str(uuid.uuid4())
+        old_root, old_run = self.root, self.run_id
+        self.root, self.run_id = no_snapshot_path, other_run
+        try:
+            started = self.start()
+            bare_context = self.context_reference()
+            envelope = self.envelope_value(bare_context, None, started["projection"])
+            with self.assertRaisesRegex(runtime.RunEventError, "ancestor turn snapshot"):
+                runtime.finish_run(self.root, self.run_id, envelope)
+        finally:
+            self.root, self.run_id = old_root, old_run
+
+        envelope = self.envelope_value(context, None, snapshot["projection"])
+        envelope["route"]["reason_code"] = "invented-route"
+        with self.assertRaisesRegex(runtime.RunEventError, "route does not match"):
+            runtime.finish_run(self.root, self.run_id, envelope)
+        envelope = self.envelope_value(context, None, snapshot["projection"])
+        envelope["registry_offsets"]["claims"] = 1
+        with self.assertRaisesRegex(runtime.RunEventError, "registry offsets"):
+            runtime.finish_run(self.root, self.run_id, envelope)
+
+    def test_snapshot_parent_turn_follows_selected_event_branch(self):
+        root = self.start()["event"]
+        first_turn = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-1", event_type="turn_started", parent=root["event_id"],
+                turn_id="turn-1", status="started", subject={"kind": "turn", "ref": "turn-1"},
+            ),
+        )
+        first_context = self.context_reference()
+        first_snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(first_context),
+        )
+        self.assertEqual(first_turn["event"]["event_id"], first_snapshot["event"]["parent_event_id"])
+
+        runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-2", event_type="turn_started",
+                parent=first_snapshot["event"]["event_id"], turn_id="turn-2", status="started",
+                subject={"kind": "turn", "ref": "turn-2"},
+            ),
+        )
+        second_context = self.context_reference(self.context_manifest_value(turn_id="turn-2"))
+        second = self.snapshot_value(second_context, turn_id="turn-2")
+        second["parent_turn_id"] = "invented-turn"
+        with self.assertRaisesRegex(runtime.RunEventError, "selected-branch parent turn"):
+            runtime.write_snapshot(self.root, self.run_id, second)
+
+        sibling = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-sibling", event_type="turn_started", parent=root["event_id"],
+                turn_id="turn-sibling", status="started",
+                subject={"kind": "turn", "ref": "turn-sibling"},
+            ),
+        )
+        sibling_context = self.context_reference(
+            self.context_manifest_value(turn_id="turn-sibling")
+        )
+        sibling_snapshot = self.snapshot_value(sibling_context, turn_id="turn-sibling")
+        sibling_snapshot["parent_turn_id"] = "turn-1"
+        with self.assertRaisesRegex(runtime.RunEventError, "selected-branch parent turn"):
+            runtime.write_snapshot(self.root, self.run_id, sibling_snapshot)
+        self.assertEqual(root["event_id"], sibling["event"]["parent_event_id"])
+
+    def test_repeated_same_skill_turns_do_not_consume_handoff_depth(self):
+        self.start()
+        previous_turn = None
+        latest_context = latest_snapshot = None
+        for index in range(1, 6):
+            turn_id = "turn-%d" % index
+            latest_context = self.context_reference(
+                self.context_manifest_value(turn_id=turn_id)
+            )
+            snapshot_value = self.snapshot_value(latest_context, turn_id=turn_id)
+            snapshot_value["parent_turn_id"] = previous_turn
+            latest_snapshot = runtime.write_snapshot(
+                self.root, self.run_id, snapshot_value,
+            )
+            previous_turn = turn_id
+        save = self.save_point_value(
+            latest_snapshot["artifact"], latest_context, latest_snapshot["projection"],
+        )
+        save["turn_id"] = "turn-5"
+        save["visited_skills"] = ["content-writer"]
+        save["chain_depth"] = 0
+        result = runtime.write_save_point(self.root, self.run_id, save)
+        self.assertEqual("save_point_created", result["event"]["event_type"])
+
     def test_save_point_refuses_unfinished_tool_and_stale_head(self):
         root_event = self.start()["event"]
         runtime.append_event(
@@ -353,8 +562,22 @@ class RunEventTests(unittest.TestCase):
 
     def test_repeated_waiting_envelopes_are_distinct_and_projected(self):
         started = self.start()
+        turn = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-start", event_type="turn_started",
+                parent=started["event"]["event_id"], turn_id="turn-1", status="started",
+                subject={"kind": "turn", "ref": "turn-1"},
+            ),
+        )
         context = self.context_reference()
-        first_value = self.envelope_value(context, None, started["projection"], status="waiting")
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
+        self.assertEqual(turn["event"]["event_id"], snapshot["event"]["parent_event_id"])
+        first_value = self.envelope_value(
+            context, None, snapshot["projection"], status="waiting",
+        )
         first_value["ended_at"] = None
         first_value["next_action"] = {"code": "readback", "not_before": "2026-07-20T10:00:00Z"}
         first = runtime.finish_run(self.root, self.run_id, first_value)
@@ -387,7 +610,9 @@ class RunEventTests(unittest.TestCase):
             turn_id=None, status="succeeded", subject={"kind": "run", "ref": self.run_id},
             references=[{
                 "kind": "run-envelope",
-                "ref": "memory/runs/%s/envelopes/forged.json" % self.run_id,
+                "ref": "memory/runs/%s/envelopes/%s.json" % (
+                    self.run_id, root_event["event_id"],
+                ),
                 "sha256": "a" * 64,
             }],
         )
@@ -423,13 +648,11 @@ class RunEventTests(unittest.TestCase):
         with self.assertRaisesRegex(runtime.RunEventError, "latest turn snapshot"):
             runtime.write_save_point(self.root, self.run_id, value)
 
-        wrong_context_path = self.write_json("wrong-context.json", {
-            "schema_version": "1.0", "run_id": str(uuid.uuid4()), "turn_id": "turn-1",
-            "resources": [], "context_signature": "c" * 64,
-        })
+        wrong_value = self.context_manifest_value(run_id=str(uuid.uuid4()))
+        wrong_context_path = self.write_json("wrong-context.json", wrong_value)
         snapshot_value = self.snapshot_value({
             "ref": "wrong-context.json", "sha256": self.digest(wrong_context_path),
-            "context_signature": "c" * 64,
+            "context_signature": wrong_value["context_signature"],
         }, snapshot_id=str(uuid.uuid4()))
         with self.assertRaisesRegex(runtime.RunEventError, "does not belong to this run"):
             runtime.write_snapshot(self.root, self.run_id, snapshot_value)
@@ -450,9 +673,20 @@ class RunEventTests(unittest.TestCase):
 
     def test_run_envelope_rejects_mutable_runtime_artifacts(self):
         started = self.start()
+        runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-start", event_type="turn_started",
+                parent=started["event"]["event_id"], turn_id="turn-1", status="started",
+                subject={"kind": "turn", "ref": "turn-1"},
+            ),
+        )
         context = self.context_reference()
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
         stream, _, _ = runtime.run_paths(self.root, self.run_id)
-        envelope = self.envelope_value(context, None, started["projection"])
+        envelope = self.envelope_value(context, None, snapshot["projection"])
         envelope["artifacts"] = [{
             "ref": "memory/runs/%s/events.ndjson" % self.run_id,
             "sha256": self.digest(stream),
@@ -684,6 +918,19 @@ class RunEventTests(unittest.TestCase):
         with self.assertRaisesRegex(runtime.RunEventError, "not Git-ignored|runtime path|secure runtime directory"):
             self.start()
 
+    def test_fifo_request_is_rejected_without_blocking(self):
+        fifo = self.root / "request.fifo"
+        os.mkfifo(fifo)
+        completed = subprocess.run(
+            [
+                os.environ.get("PYTHON", "python3"), str(ROOT / "scripts/run-events.py"),
+                "--root", str(self.root), "start", str(fifo),
+            ],
+            capture_output=True, text=True, timeout=3,
+        )
+        self.assertNotEqual(0, completed.returncode)
+        self.assertIn("regular file", completed.stderr)
+
     def test_stream_directory_entry_swap_is_detected_after_lock(self):
         self.start()
         stream, _, run_dir = runtime.run_paths(self.root, self.run_id)
@@ -693,6 +940,61 @@ class RunEventTests(unittest.TestCase):
                 stream.rename(original)
                 stream.write_text("", encoding="utf-8")
                 handle.seek(0, os.SEEK_END)
+
+    def test_stream_fifo_is_rejected_without_blocking(self):
+        run_dir = self.root / "memory" / "runs" / self.run_id
+        run_dir.mkdir(parents=True)
+        os.mkfifo(run_dir / "events.ndjson")
+        completed = subprocess.run(
+            [
+                os.environ.get("PYTHON", "python3"), str(ROOT / "scripts/run-events.py"),
+                "--root", str(self.root), "verify", self.run_id,
+            ],
+            capture_output=True, text=True, timeout=3,
+        )
+        self.assertNotEqual(0, completed.returncode)
+        self.assertIn("single-link regular file", completed.stderr)
+
+    def test_missing_reference_closes_directory_anchor(self):
+        descriptor = os.open(self.root, os.O_RDONLY)
+        identity = (os.fstat(descriptor).st_dev, os.fstat(descriptor).st_ino)
+        with mock.patch.object(runtime, "open_directory_anchor", return_value=(descriptor, identity)), \
+                mock.patch.object(
+                    runtime, "anchored_lstat",
+                    side_effect=runtime.RunEventError("missing fixture"),
+                ):
+            with self.assertRaisesRegex(runtime.RunEventError, "missing fixture"):
+                with runtime.anchored_regular_file(self.root / "missing.json"):
+                    pass
+        with self.assertRaises(OSError):
+            os.fstat(descriptor)
+
+    def test_project_references_reject_intermediate_symlinks_and_oversized_files(self):
+        with tempfile.TemporaryDirectory() as outside_name:
+            outside = Path(outside_name)
+            secret = outside / "nested" / "secret.txt"
+            secret.parent.mkdir()
+            secret.write_text("outside", encoding="utf-8")
+            (self.root / "alias").symlink_to(outside, target_is_directory=True)
+            with self.assertRaisesRegex(runtime.RunEventError, "real directory|unsafe"):
+                runtime.resolve_project_reference(
+                    self.root, "alias/nested/secret.txt", self.digest(secret),
+                )
+
+        oversized = self.root / "oversized.bin"
+        with oversized.open("wb") as handle:
+            handle.truncate(runtime.MAX_REFERENCE_BYTES + 1)
+        with self.assertRaisesRegex(runtime.RunEventError, "exceeds"):
+            runtime.resolve_project_reference(
+                self.root, "oversized.bin", "0" * 64,
+            )
+
+    def test_snapshot_capacity_preserves_a_finishable_envelope(self):
+        events = [{"event_type": "turn_snapshot_created"}] * (runtime.MAX_CONTEXT_MANIFESTS - 1)
+        self.assertEqual(runtime.MAX_CONTEXT_MANIFESTS - 1, runtime.ensure_snapshot_capacity(events))
+        events.append({"event_type": "turn_snapshot_created"})
+        with self.assertRaisesRegex(runtime.RunEventError, "start a child run"):
+            runtime.ensure_snapshot_capacity(events)
 
     def test_immutable_link_install_crash_residue_is_recovered(self):
         self.start()
@@ -708,6 +1010,37 @@ class RunEventTests(unittest.TestCase):
         self.assertFalse(temporary.exists())
         self.assertEqual(1, target.stat().st_nlink)
         self.assertEqual(runtime.sha256_file(target), runtime.write_immutable_json(root, target, {"fixture": True}))
+
+        target.chmod(0o400)
+        with self.assertRaisesRegex(runtime.RunEventError, "private file mode 0600"):
+            runtime.write_immutable_json(root, target, {"fixture": True})
+
+    def test_immutable_final_read_binds_content_mode_and_returned_hash(self):
+        self.start()
+        root = runtime.normalized_root(self.root)
+        _, _, run_dir = runtime.run_paths(root, self.run_id)
+        target_dir = runtime.ensure_child_directories(root, run_dir, ["save-points"])
+        target = target_dir / "binding.json"
+        proposed = {"fixture": "proposed"}
+        runtime.atomic_create_json(root, target, proposed)
+        attacker_raw = b'{"fixture":"swapped"}\n'
+        metadata = target.stat()
+        with mock.patch.object(
+                runtime, "_stable_project_read",
+                return_value=(target, attacker_raw, metadata)):
+            with self.assertRaisesRegex(runtime.RunEventError, "different content"):
+                runtime.write_immutable_json(root, target, proposed)
+
+        expected_raw = target.read_bytes()
+        digest = runtime.write_immutable_json(root, target, proposed)
+        self.assertEqual(hashlib.sha256(expected_raw).hexdigest(), digest)
+
+    def test_read_only_stream_operations_require_exact_private_mode(self):
+        self.start()
+        stream, _projection, _run_dir = runtime.run_paths(self.root, self.run_id)
+        stream.chmod(0o644)
+        with self.assertRaisesRegex(runtime.RunEventError, "private file mode 0600"):
+            runtime.load_events(self.root, self.run_id)
 
     def test_multiprocess_appends_keep_one_hash_chain(self):
         root_event = self.start()["event"]
@@ -756,6 +1089,49 @@ class RunEventTests(unittest.TestCase):
         with self.assertRaisesRegex(runtime.RunEventError, "absolute"):
             runtime.append_event(self.root, self.run_id, request)
 
+    def test_hostile_enum_uuid_and_datetime_inputs_fail_closed(self):
+        request = self.request("malformed", event_type={})
+        with self.assertRaisesRegex(runtime.RunEventError, "event_type"):
+            runtime.validate_event_request(request)
+
+        context = self.context_reference()
+        snapshot = self.snapshot_value(context)
+        snapshot["tools"][0]["mode"] = {}
+        with self.assertRaisesRegex(runtime.RunEventError, r"tools\[0\]\.mode"):
+            runtime.validate_snapshot(snapshot)
+
+        request_path = self.write_json("malformed-event.json", request)
+        completed = subprocess.run(
+            [
+                os.environ.get("PYTHON", "python3"), str(ROOT / "scripts/run-events.py"),
+                "--root", str(self.root), "start", str(request_path),
+            ],
+            capture_output=True, text=True, timeout=3,
+        )
+        self.assertEqual(1, completed.returncode)
+        self.assertNotIn("Traceback", completed.stderr)
+
+        huge_metric = self.request("huge-metric")
+        huge_metric["metrics"] = {"huge": 10 ** 400}
+        with self.assertRaisesRegex(runtime.RunEventError, "finite numeric metadata"):
+            runtime.validate_event_request(huge_metric)
+        huge_path = self.write_json("huge-metric.json", huge_metric)
+        completed = subprocess.run(
+            [
+                os.environ.get("PYTHON", "python3"), str(ROOT / "scripts" / "run-events.py"),
+                "--root", str(self.root), "start", str(huge_path),
+            ],
+            capture_output=True, text=True, timeout=3,
+        )
+        self.assertEqual(1, completed.returncode)
+        self.assertNotIn("Traceback", completed.stderr)
+        self.assertIn("finite numeric metadata", completed.stderr)
+        with self.assertRaisesRegex(runtime.RunEventError, "RFC UUID"):
+            runtime.validate_uuid("00000000-0000-4000-0000-000000000000", "uuid")
+        runtime.validate_uuid("01890f3e-7b2d-7cc0-98c4-dc0c0c07398f", "uuid-v7")
+        with self.assertRaisesRegex(runtime.RunEventError, "RFC 3339"):
+            runtime.parse_datetime("2026-07-19 10:00:00+00:00", "timestamp")
+
     def test_schema_contracts_are_strict_and_match_runtime_enums(self):
         event_schema = json.loads((ROOT / "references" / "run-event.schema.json").read_text())
         self.assertEqual(runtime.EVENT_TYPES, set(event_schema["properties"]["event_type"]["enum"]))
@@ -769,6 +1145,13 @@ class RunEventTests(unittest.TestCase):
             offsets = schema["$defs"]["offsets"]
             self.assertFalse(offsets["additionalProperties"])
             self.assertEqual(runtime.REGISTRIES, set(offsets["required"]))
+        snapshot_schema = json.loads((ROOT / "references/turn-snapshot.schema.json").read_text())
+        snapshot_ref_pattern = snapshot_schema["$defs"]["manifestRef"]["properties"]["ref"]["pattern"]
+        snapshot_uuid_pattern = snapshot_schema["properties"]["run_id"]["pattern"]
+        self.assertIsNone(re.fullmatch(snapshot_ref_pattern, "artifact/"))
+        self.assertIsNone(re.fullmatch(snapshot_uuid_pattern, self.run_id.upper()))
+        save_schema = json.loads((ROOT / "references/save-point.schema.json").read_text())
+        self.assertEqual(1, save_schema["properties"]["visited_skills"]["minItems"])
 
 
 if __name__ == "__main__":

@@ -20,6 +20,7 @@ The runtime accepts only closed metadata, safe IDs, relative/opaque references, 
 memory/runs/<run-id>/
 ├── events.ndjson
 ├── session.json
+├── turns/<turn-id>/context-manifest.json
 ├── turns/<turn-id>/snapshot.json
 ├── save-points/<save-point-id>.json
 └── envelopes/<summarized-head-event-id>.json
@@ -70,17 +71,19 @@ A turn snapshot freezes the conditions visible to one model turn without copying
 - permission, sandbox, network, and external-mutation posture;
 - `parent_turn_id` when the turn branches from another turn.
 
-The runtime verifies the referenced context file and the toolset digest before storing one immutable snapshot per turn.
+Resolve the manifest first under the deterministic [`context-resolution.md`](context-resolution.md) contract. Before storing one immutable snapshot per turn, the runtime requires the canonical private manifest path, reopens the current catalog, target `SKILL.md`, and selected sources, and binds the snapshot's skill name/version/contract hash and registry offsets to that manifest. It also verifies any optional project-relative prompt-contract reference and the toolset digest. `parent_turn_id` is derived from the nearest ancestor snapshot on the selected event branch; a sibling branch cannot claim another branch's turn. A selected branch is capped at 256 snapshots, matching the envelope's manifest capacity; start a child run before turn 257 so the run remains finishable. Explicit `turn_started`/`turn_finished` events remain optional host telemetry—snapshot correctness does not depend on a hook.
 
 ## Save point
 
 A save point binds a recovery instruction to the verified stream head (`last_event_id`, `last_event_offset`, and `last_event_hash`), the turn snapshot, the context manifest/signature, artifact hashes and validator states, all registry offsets, handoff depth, and a typed next action.
 
-Creation fails when the head changed, an observed tool call is unfinished, a referenced file is missing/unsafe/hash-mismatched, the automatic handoff depth exceeds three, or the immutable save-point ID was already used for different content. Re-run verification and reconcile; never edit the stream or save point in place.
+Creation fails when the head changed, an observed tool call is unfinished, a referenced file is missing/unsafe/hash-mismatched, or current context sources drifted. Project references are opened component-by-component from an anchored project-root descriptor, each file is capped at 10 MB, and a save point or envelope may inspect at most 64 MB of referenced artifacts. Audit artifacts are validated from the exact hash-checked bytes over stdin, avoiding a second path lookup. Registry offsets must equal the bound manifest and snapshot.
+
+In protocol v1, `visited_skills` is a caller-asserted current automatic-handoff chain. The runtime requires one to four unique skills, `chain_depth == len(visited_skills) - 1`, the current selected-branch skill last, and the claimed order to appear in selected-branch snapshots. Snapshot history alone cannot prove whether an intervening reroute was automatic or explicitly requested by a user, so v1 does **not** claim to derive or enforce the true three-handoff limit. A typed loop/route contract must supply reset-versus-automatic transition evidence before that stronger guarantee is available. Re-run verification and reconcile; never edit the stream or save point in place.
 
 ## Run envelope
 
-The envelope is a portable summary of the run, not the event history. It records the route, real/simulated evidence mode, every context manifest used across turns, the summarized head identity/hash, optional last save point, artifact hashes, registry offsets, numeric metrics, failure class, and typed next action. The sealing event references the immutable envelope file.
+The envelope is a portable summary of the run, not the event history. It records the route, real/simulated evidence mode, every context manifest used across turns, the summarized head identity/hash, optional last save point, artifact hashes, registry offsets, numeric metrics, failure class, and typed next action. Its ordered manifest references must exactly match turn snapshots on the selected event branch; its route and offsets come from the terminal manifest, rather than an independent caller claim. A run with no ancestor snapshot cannot emit a verified envelope. The sealing event references the immutable envelope file.
 
 Keep two provenance questions separate:
 
@@ -95,6 +98,7 @@ Resolve the bundle root according to [`runtime-invocation.md`](runtime-invocatio
 
 ```bash
 python3 "$AARON_SKILLS_ROOT/scripts/run-events.py" --root "$PROJECT_ROOT" start start-event.json
+python3 "$AARON_SKILLS_ROOT/scripts/context-resolver.py" resolve --request context-request.json --project-root "$PROJECT_ROOT" --output "$CONTEXT_MANIFEST"
 python3 "$AARON_SKILLS_ROOT/scripts/run-events.py" --root "$PROJECT_ROOT" append "$RUN_ID" event.json
 python3 "$AARON_SKILLS_ROOT/scripts/run-events.py" --root "$PROJECT_ROOT" snapshot "$RUN_ID" turn-snapshot.json
 python3 "$AARON_SKILLS_ROOT/scripts/run-events.py" --root "$PROJECT_ROOT" save-point "$RUN_ID" save-point.json

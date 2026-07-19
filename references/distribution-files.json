@@ -18,6 +18,10 @@
     "runtime_references": [
       "references/audit-artifact.schema.json",
       "references/audit-run.schema.json",
+      "references/auto-routing-scenarios.md",
+      "references/context-manifest.schema.json",
+      "references/context-request.schema.json",
+      "references/context-resolution.md",
       "references/framework-catalog.json",
       "references/registry-event.schema.json",
       "references/run-envelope.schema.json",
@@ -31,6 +35,7 @@
     "runtime_scripts": [
       "scripts/audit-trends.py",
       "scripts/check-memory-private.py",
+      "scripts/context-resolver.py",
       "scripts/registry-events.py",
       "scripts/rubric-score.py",
       "scripts/run-events.py",

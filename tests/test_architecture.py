@@ -116,6 +116,11 @@ class CatalogLayerTests(unittest.TestCase):
                 "Run python3 scripts/run-events.py verify run-id"
             )
         )
+        self.assertIsNotNone(
+            self.module.BARE_ROOT_RUNTIME_COMMAND.search(
+                "Run python3 scripts/context-resolver.py resolve request.json"
+            )
+        )
 
 class SymmetryTests(unittest.TestCase):
     @classmethod

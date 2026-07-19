@@ -30,7 +30,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 EVALS = os.path.join(ROOT, "evals")
 MANIFEST = os.path.join(EVALS, "structure-manifest.json")
-ROUTING_LIBRARY = os.path.join(ROOT, "references", "auto-routing-scenarios.md")
+ROUTING_SOURCE = os.path.join(ROOT, "evals", "auto-routing-scenarios.source.md")
+ROUTING_LABEL = "auto-routing-scenarios.source.md"
 
 # Phase directories and command selectors derive from the system catalog — the
 # single source of truth — so they can never drift from the real topology again.
@@ -58,6 +59,8 @@ CASE_LINE = re.compile(r"^\s*-?\s*(\{.*\})\s*$")
 TARGET_SKILL_RE = re.compile(r'target_skill:\s*"?([A-Za-z0-9_-]+)"?')
 # expected_route is a quoted chain like "/aaron-marketing:ad --phase activate -> ...".
 EXPECTED_ROUTE_RE = re.compile(r'expected_route:\s*"([^"]*)"')
+CASE_ID_RE = re.compile(r'(?:(?:^|[{,])\s*)id:\s*"([^"]+)"')
+SHARD_MARKER_RE = re.compile(r"^<!-- auto-routing-shard: ([a-z0-9-]+) -->$")
 ROUTE_SEG_CMD_RE = re.compile(r'/aaron-marketing:([a-z-]+)')
 ROUTE_SEG_SELECTOR_RE = re.compile(r'--(mode|phase)\s+([a-z-]+)')
 ROUTE_SEG_FLAG_RE = re.compile(r'--([a-z][a-z-]*)')
@@ -150,8 +153,8 @@ def lint_route_chain(route, lineno):
         cmd = m.group(1)
         spec = COMMAND_MODES.get(cmd)
         if spec is None:
-            fail("auto-routing-scenarios.md line %d: expected_route names unknown "
-                 "command '/aaron-marketing:%s'" % (lineno, cmd))
+            fail("%s line %d: expected_route names unknown "
+                 "command '/aaron-marketing:%s'" % (ROUTING_LABEL, lineno, cmd))
             continue
         exp_flag, allowed = spec
         phase = None
@@ -159,8 +162,8 @@ def lint_route_chain(route, lineno):
         if sel:
             flag, val = sel.group(1), sel.group(2)
             if flag != exp_flag or val not in allowed:
-                fail("auto-routing-scenarios.md line %d: expected_route '--%s %s' is not "
-                     "valid for /aaron-marketing:%s" % (lineno, flag, val, cmd))
+                fail("%s line %d: expected_route '--%s %s' is not "
+                     "valid for /aaron-marketing:%s" % (ROUTING_LABEL, lineno, flag, val, cmd))
             else:
                 phase = val
         extra = [f for f in ROUTE_SEG_FLAG_RE.findall(seg) if f not in ("mode", "phase")]
@@ -168,18 +171,18 @@ def lint_route_chain(route, lineno):
             legal = SEO_GEO_PHASE_FLAGS.get(phase, set())
             for f in extra:
                 if f not in legal:
-                    fail("auto-routing-scenarios.md line %d: '--%s' is not a flag of "
+                    fail("%s line %d: '--%s' is not a flag of "
                          "/aaron-marketing:seo-geo --phase %s (per-phase flag contract, "
-                         "commands/seo-geo.md)" % (lineno, f, phase or "<none>"))
+                         "commands/seo-geo.md)" % (ROUTING_LABEL, lineno, f, phase or "<none>"))
         elif cmd == "auto":
             for f in extra:
                 if f != "deep":
-                    fail("auto-routing-scenarios.md line %d: /aaron-marketing:auto takes "
-                         "only --deep, got '--%s'" % (lineno, f))
+                    fail("%s line %d: /aaron-marketing:auto takes "
+                         "only --deep, got '--%s'" % (ROUTING_LABEL, lineno, f))
         else:
             for f in extra:
-                fail("auto-routing-scenarios.md line %d: /aaron-marketing:%s routes carry "
-                     "no flags beyond --phase, got '--%s'" % (lineno, cmd, f))
+                fail("%s line %d: /aaron-marketing:%s routes carry "
+                     "no flags beyond --phase, got '--%s'" % (ROUTING_LABEL, lineno, cmd, f))
     for group in re.findall(r"\(([^)]*)\)", route):
         for element in re.split(r"->|,", group):
             element = element.strip()
@@ -187,42 +190,79 @@ def lint_route_chain(route, lineno):
                 continue
             tok = element.split()[0].strip("`")
             if SLUG_FORM.match(tok) and tok not in VALID_SLUGS:
-                fail("auto-routing-scenarios.md line %d: expected_route references "
-                     "unknown skill '%s'" % (lineno, tok))
+                fail("%s line %d: expected_route references unknown skill '%s'"
+                     % (ROUTING_LABEL, lineno, tok))
 
 
-def lint_routing_library():
-    """Guard the /aaron-marketing:auto routing library against skill-rename drift.
-
-    references/auto-routing-scenarios.md is a SECOND place that names skills by
-    slug (target_skill). check-evals otherwise only lints evals/<slug>/cases.md,
-    so a renamed or deleted skill used to leave a dangling routing target with NO
-    CI failure — the same drift class that once silently froze the library at the
-    v12 four-discipline era. Assert every target_skill in the library resolves to
-    a real skill. (Per-discipline coverage is guarded separately by
-    check-versions.sh; this guards slug validity.)
-    """
-    if not os.path.isfile(ROUTING_LIBRARY):
-        fail("references/auto-routing-scenarios.md missing — the /aaron-marketing:auto routing library")
+def lint_routing_source():
+    """Lint the one authoritative auto-routing source and its shard boundaries."""
+    if not os.path.isfile(ROUTING_SOURCE):
+        fail("evals/%s missing — the authoritative /aaron-marketing:auto cases"
+             % ROUTING_LABEL)
         return
-    text = open(ROUTING_LIBRARY, encoding="utf-8").read()
+    text = open(ROUTING_SOURCE, encoding="utf-8").read()
+    legal_markers = set(_CATALOG["disciplines"]) | {"cross-discipline"}
+    marker_lines = {}
+    marker_case_counts = {}
+    case_lines = {}
+    current_marker = None
     seen = 0
+
     for i, line in enumerate(text.splitlines(), 1):
+        marker = SHARD_MARKER_RE.fullmatch(line)
+        if marker:
+            current_marker = marker.group(1)
+            if current_marker in marker_lines:
+                fail("%s line %d: duplicate shard marker '%s' (first at line %d)"
+                     % (ROUTING_LABEL, i, current_marker, marker_lines[current_marker]))
+            else:
+                marker_lines[current_marker] = i
+                marker_case_counts[current_marker] = 0
+            continue
         if not CASE_LINE.match(line):
             continue
-        m = TARGET_SKILL_RE.search(line)
-        if not m:
-            fail("auto-routing-scenarios.md line %d: routing case has no target_skill" % i)
-            continue
         seen += 1
-        if m.group(1) not in VALID_SLUGS:
-            fail("auto-routing-scenarios.md line %d: target_skill '%s' is not a real skill"
-                 % (i, m.group(1)))
-        er = EXPECTED_ROUTE_RE.search(line)
-        if er:
-            lint_route_chain(er.group(1), i)
-    print("== routing-library lint: %d routing cases, target_skill + expected_route "
-          "(selector, per-phase flags, chained slugs) checked ==" % seen)
+        if current_marker is None:
+            fail("%s line %d: routing case appears before a shard marker"
+                 % (ROUTING_LABEL, i))
+        else:
+            marker_case_counts[current_marker] = marker_case_counts.get(current_marker, 0) + 1
+
+        case_id = CASE_ID_RE.search(line)
+        if not case_id:
+            fail("%s line %d: routing case has no quoted id" % (ROUTING_LABEL, i))
+        elif case_id.group(1) in case_lines:
+            fail("%s line %d: duplicate routing case id '%s' (first at line %d)"
+                 % (ROUTING_LABEL, i, case_id.group(1), case_lines[case_id.group(1)]))
+        else:
+            case_lines[case_id.group(1)] = i
+
+        target = TARGET_SKILL_RE.search(line)
+        if not target:
+            fail("%s line %d: routing case has no target_skill" % (ROUTING_LABEL, i))
+        elif target.group(1) not in VALID_SLUGS:
+            fail("%s line %d: target_skill '%s' is not a real skill"
+                 % (ROUTING_LABEL, i, target.group(1)))
+        expected_route = EXPECTED_ROUTE_RE.search(line)
+        if not expected_route:
+            fail("%s line %d: routing case has no quoted expected_route"
+                 % (ROUTING_LABEL, i))
+        else:
+            lint_route_chain(expected_route.group(1), i)
+
+    actual_markers = set(marker_lines)
+    for marker in sorted(actual_markers - legal_markers):
+        fail("%s line %d: shard marker '%s' is not a catalog discipline"
+             % (ROUTING_LABEL, marker_lines[marker], marker))
+    for marker in sorted(legal_markers - actual_markers):
+        fail("%s missing shard marker '%s'" % (ROUTING_LABEL, marker))
+    for marker, count in sorted(marker_case_counts.items()):
+        if marker in legal_markers and count == 0:
+            fail("%s shard marker '%s' has no routing cases" % (ROUTING_LABEL, marker))
+
+    print("== routing-source lint: %d routing cases across %d catalog-derived shards; "
+          "unique id + target_skill + expected_route checked =="
+          % (seen, len(marker_lines)))
 
 
 def build_manifest():
@@ -244,7 +284,7 @@ def main():
 
     print("== eval structural lint: %d skills, %d with cases.md ==" % (len(VALID_SLUGS), len(present)))
 
-    lint_routing_library()
+    lint_routing_source()
 
     if update:
         # Fail CLOSED: never write the regression baseline from a failing lint —

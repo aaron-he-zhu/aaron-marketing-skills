@@ -267,10 +267,10 @@ PY
 fi
 
 # ---- 6. auto-routing scenarios cover every command discipline ---------------
-# references/auto-routing-scenarios.md is the runtime routing data commands/auto.md
-# consults. It silently froze at the v12 four-discipline era (launch/social/narrative
-# shipped with ZERO expected_route scenarios) — assert every command discipline keeps
-# at least one routing scenario so a new discipline cannot ship uncovered again.
+# evals/auto-routing-scenarios.source.md is the one authoritative case corpus;
+# the runtime index/shards are generated from it. It silently froze at the v12
+# four-discipline era (launch/social/narrative shipped with ZERO expected_route
+# scenarios) — assert every command discipline keeps at least one routing case.
 # The discipline list is derived from the typed catalog so an 8th discipline
 # extends these guards automatically instead of silently skipping them.
 DISCIPLINES=$(python3 - <<'PY'
@@ -284,7 +284,7 @@ if [ -z "$DISCIPLINES" ]; then
   err "cannot derive discipline list from references/system-catalog.json"
 fi
 DISC_COUNT=$(wc -w <<< "$DISCIPLINES" | tr -d ' ')
-ROUTING="references/auto-routing-scenarios.md"
+ROUTING="evals/auto-routing-scenarios.source.md"
 if [ ! -f "$ROUTING" ]; then
   err "$ROUTING missing — the /aaron-marketing:auto routing contract"
 else

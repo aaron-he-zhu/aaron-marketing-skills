@@ -270,27 +270,30 @@ def load_framework_catalog():
 
 
 def validate(path, relative_path=None):
-    try:
-        before = os.lstat(path)
-        if stat.S_ISLNK(before.st_mode):
-            return None, ["artifact cannot be a symlink"]
-        if not stat.S_ISREG(before.st_mode):
-            return None, ["artifact must be a regular file"]
-        if before.st_nlink != 1:
-            return None, ["artifact cannot be a hard-linked file"]
-        flags = os.O_RDONLY
-        if hasattr(os, "O_NOFOLLOW"):
-            flags |= os.O_NOFOLLOW
-        descriptor = os.open(path, flags)
-        with os.fdopen(descriptor, "rb") as handle:
-            opened = os.fstat(handle.fileno())
-            if (opened.st_dev, opened.st_ino) != (before.st_dev, before.st_ino):
-                return None, ["artifact changed while it was opened"]
-            if not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1:
-                return None, ["artifact must remain a single-link regular file"]
-            raw = handle.read(MAX_ARTIFACT_BYTES + 1)
-    except OSError as exc:
-        return None, ["cannot read artifact: %s" % exc]
+    if str(path) == "-":
+        raw = sys.stdin.buffer.read(MAX_ARTIFACT_BYTES + 1)
+    else:
+        try:
+            before = os.lstat(path)
+            if stat.S_ISLNK(before.st_mode):
+                return None, ["artifact cannot be a symlink"]
+            if not stat.S_ISREG(before.st_mode):
+                return None, ["artifact must be a regular file"]
+            if before.st_nlink != 1:
+                return None, ["artifact cannot be a hard-linked file"]
+            flags = os.O_RDONLY
+            if hasattr(os, "O_NOFOLLOW"):
+                flags |= os.O_NOFOLLOW
+            descriptor = os.open(path, flags)
+            with os.fdopen(descriptor, "rb") as handle:
+                opened = os.fstat(handle.fileno())
+                if (opened.st_dev, opened.st_ino) != (before.st_dev, before.st_ino):
+                    return None, ["artifact changed while it was opened"]
+                if not stat.S_ISREG(opened.st_mode) or opened.st_nlink != 1:
+                    return None, ["artifact must remain a single-link regular file"]
+                raw = handle.read(MAX_ARTIFACT_BYTES + 1)
+        except OSError as exc:
+            return None, ["cannot read artifact: %s" % exc]
     if len(raw) > MAX_ARTIFACT_BYTES:
         return None, ["artifact exceeds %d-byte limit" % MAX_ARTIFACT_BYTES]
     try:

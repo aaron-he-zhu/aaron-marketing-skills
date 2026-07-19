@@ -1,0 +1,335 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/context-manifest.schema.json",
+  "title": "Aaron deterministic context manifest",
+  "description": "Shape contract for a metadata-only deterministic context record. Resource bodies remain at anchored bundle/project paths; verified status additionally requires scripts/context-resolver.py semantic validation for signatures, arithmetic, route identity, and live source checks.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "request", "request_sha256", "run_id", "turn_id", "as_of", "route", "budget",
+    "resources", "omitted", "conflicts", "registry_offsets", "token_estimate",
+    "estimator", "context_signature"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "request": {"$ref": "#/$defs/request"},
+    "request_sha256": {"$ref": "#/$defs/sha256"},
+    "run_id": {"$ref": "#/$defs/uuid"},
+    "turn_id": {"$ref": "#/$defs/safeId"},
+    "as_of": {"type": "string", "format": "date-time"},
+    "route": {"$ref": "#/$defs/route"},
+    "budget": {"$ref": "#/$defs/budget"},
+    "resources": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/resource"}},
+    "omitted": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/omission"}},
+    "conflicts": {"type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/conflict"}},
+    "registry_offsets": {"$ref": "#/$defs/offsets"},
+    "token_estimate": {"type": "null"},
+    "estimator": {"type": "null"},
+    "context_signature": {"$ref": "#/$defs/sha256"}
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "scenarioShard": {
+      "enum": [
+        "references/auto-routing/narrative.md",
+        "references/auto-routing/seo-geo.md",
+        "references/auto-routing/social.md",
+        "references/auto-routing/email.md",
+        "references/auto-routing/ad.md",
+        "references/auto-routing/influencer.md",
+        "references/auto-routing/launch.md",
+        "references/auto-routing/cross-discipline.md"
+      ]
+    },
+    "primaryScenarioShard": {
+      "enum": [
+        "references/auto-routing/narrative.md",
+        "references/auto-routing/seo-geo.md",
+        "references/auto-routing/social.md",
+        "references/auto-routing/email.md",
+        "references/auto-routing/ad.md",
+        "references/auto-routing/influencer.md",
+        "references/auto-routing/launch.md"
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "run_id", "turn_id", "as_of", "route", "budget",
+        "registry_offsets", "candidates"
+      ],
+      "properties": {
+        "schema_version": {"const": "1.0"},
+        "run_id": {"$ref": "#/$defs/uuid"},
+        "turn_id": {"$ref": "#/$defs/safeId"},
+        "as_of": {"type": "string", "format": "date-time"},
+        "route": {"$ref": "#/$defs/requestRoute"},
+        "budget": {"$ref": "#/$defs/requestBudget"},
+        "registry_offsets": {"$ref": "#/$defs/offsets"},
+        "candidates": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {"$ref": "#/$defs/candidate"}
+        }
+      }
+    },
+    "requestRoute": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "target_skill", "reason_code", "scenario_shards"],
+      "properties": {
+        "command": {"enum": ["auto", "narrative", "seo-geo", "social", "email", "ad", "influencer", "launch"]},
+        "target_skill": {"$ref": "#/$defs/safeId"},
+        "reason_code": {"$ref": "#/$defs/safeId"},
+        "scenario_shards": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/scenarioShard"}
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"command": {"const": "auto"}}, "required": ["command"]},
+          "then": {
+            "properties": {
+              "scenario_shards": {
+                "minItems": 1,
+                "maxItems": 3,
+                "contains": {"$ref": "#/$defs/primaryScenarioShard"},
+                "minContains": 1,
+                "maxContains": 2
+              }
+            }
+          },
+          "else": {"properties": {"scenario_shards": {"maxItems": 0}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "command": {"const": "auto"},
+              "scenario_shards": {
+                "contains": {"$ref": "#/$defs/primaryScenarioShard"},
+                "minContains": 2
+              }
+            },
+            "required": ["command", "scenario_shards"]
+          },
+          "then": {
+            "properties": {
+              "scenario_shards": {
+                "contains": {"const": "references/auto-routing/cross-discipline.md"},
+                "minContains": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "requestBudget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_bytes", "max_resources", "max_sensitivity", "max_inspection_bytes"],
+      "properties": {
+        "max_bytes": {"type": "integer", "minimum": 1, "maximum": 10000000},
+        "max_resources": {"type": "integer", "minimum": 1, "maximum": 256},
+        "max_inspection_bytes": {"type": "integer", "minimum": 1, "maximum": 64000000},
+        "max_sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resource_id", "scope", "path", "role", "requirement", "authority",
+        "observed_at", "max_age_seconds", "priority", "reason_code",
+        "sensitivity", "expected_sha256", "conflict_group", "supersedes"
+      ],
+      "properties": {
+        "resource_id": {"$ref": "#/$defs/safeId"},
+        "scope": {"enum": ["bundle", "project"]},
+        "path": {"$ref": "#/$defs/safePath"},
+        "role": {"$ref": "#/$defs/safeId"},
+        "requirement": {"enum": ["required", "optional", "forbidden"]},
+        "authority": {"enum": ["canonical", "approved", "working", "untrusted"]},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "max_age_seconds": {
+          "oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0, "maximum": 315576000}]
+        },
+        "priority": {"type": "integer", "minimum": 0, "maximum": 100},
+        "reason_code": {"$ref": "#/$defs/safeId"},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+        "expected_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "conflict_group": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]},
+        "supersedes": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safeId"}
+        }
+      }
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command", "target_skill", "reason_code", "scenario_shards",
+        "catalog_version", "catalog_sha256", "skill_sha256"
+      ],
+      "properties": {
+        "command": {"enum": ["auto", "narrative", "seo-geo", "social", "email", "ad", "influencer", "launch"]},
+        "target_skill": {"$ref": "#/$defs/safeId"},
+        "reason_code": {"$ref": "#/$defs/safeId"},
+        "scenario_shards": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/scenarioShard"}
+        },
+        "catalog_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+        "catalog_sha256": {"$ref": "#/$defs/sha256"},
+        "skill_sha256": {"$ref": "#/$defs/sha256"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"command": {"const": "auto"}}, "required": ["command"]},
+          "then": {
+            "properties": {
+              "scenario_shards": {
+                "minItems": 1,
+                "maxItems": 3,
+                "contains": {"$ref": "#/$defs/primaryScenarioShard"},
+                "minContains": 1,
+                "maxContains": 2
+              }
+            }
+          },
+          "else": {"properties": {"scenario_shards": {"maxItems": 0}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "command": {"const": "auto"},
+              "scenario_shards": {
+                "contains": {"$ref": "#/$defs/primaryScenarioShard"},
+                "minContains": 2
+              }
+            },
+            "required": ["command", "scenario_shards"]
+          },
+          "then": {
+            "properties": {
+              "scenario_shards": {
+                "contains": {"const": "references/auto-routing/cross-discipline.md"},
+                "minContains": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_bytes", "max_resources", "max_sensitivity", "max_inspection_bytes",
+        "selected_bytes", "selected_resources", "inspected_bytes"
+      ],
+      "properties": {
+        "max_bytes": {"type": "integer", "minimum": 1, "maximum": 10000000},
+        "max_resources": {"type": "integer", "minimum": 1, "maximum": 256},
+        "max_inspection_bytes": {"type": "integer", "minimum": 1, "maximum": 64000000},
+        "max_sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+        "selected_bytes": {"type": "integer", "minimum": 0, "maximum": 10000000},
+        "selected_resources": {"type": "integer", "minimum": 0, "maximum": 256},
+        "inspected_bytes": {"type": "integer", "minimum": 0, "maximum": 64000000}
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resource_id", "scope", "path", "role", "requirement", "authority",
+        "observed_at", "max_age_seconds", "priority", "reason_code", "sensitivity",
+        "sha256", "bytes", "conflict_group", "supersedes", "satisfies_resource_ids"
+      ],
+      "properties": {
+        "resource_id": {"$ref": "#/$defs/safeId"},
+        "scope": {"enum": ["bundle", "project"]},
+        "path": {"$ref": "#/$defs/safePath"},
+        "role": {"$ref": "#/$defs/safeId"},
+        "requirement": {"enum": ["required", "optional"]},
+        "authority": {"enum": ["canonical", "approved", "working", "untrusted"]},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "max_age_seconds": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0, "maximum": 315576000}]},
+        "priority": {"type": "integer", "minimum": 0, "maximum": 100},
+        "reason_code": {"$ref": "#/$defs/safeId"},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 0, "maximum": 10000000},
+        "conflict_group": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]},
+        "supersedes": {"type": "array", "maxItems": 32, "uniqueItems": true, "items": {"$ref": "#/$defs/safeId"}},
+        "satisfies_resource_ids": {"type": "array", "minItems": 1, "maxItems": 256, "uniqueItems": true, "items": {"$ref": "#/$defs/safeId"}}
+      }
+    },
+    "omission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["resource_id", "reason_code", "selected_resource_id"],
+      "properties": {
+        "resource_id": {"$ref": "#/$defs/safeId"},
+        "reason_code": {
+          "enum": [
+            "forbidden", "missing", "stale", "sensitivity-budget", "hash-mismatch",
+            "duplicate-content", "superseded", "byte-budget",
+            "resource-budget", "inspection-budget"
+          ]
+        },
+        "selected_resource_id": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]}
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "key", "winner_resource_id", "loser_resource_ids"],
+      "properties": {
+        "kind": {"enum": ["conflict-group", "supersedes"]},
+        "key": {"$ref": "#/$defs/safeId"},
+        "winner_resource_id": {"$ref": "#/$defs/safeId"},
+        "loser_resource_ids": {"type": "array", "minItems": 1, "maxItems": 256, "uniqueItems": true, "items": {"$ref": "#/$defs/safeId"}}
+      }
+    },
+    "offsets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entities", "creators", "claims", "consent", "launches", "channels", "narrative"],
+      "properties": {
+        "entities": {"$ref": "#/$defs/offset"},
+        "creators": {"$ref": "#/$defs/offset"},
+        "claims": {"$ref": "#/$defs/offset"},
+        "consent": {"$ref": "#/$defs/offset"},
+        "launches": {"$ref": "#/$defs/offset"},
+        "channels": {"$ref": "#/$defs/offset"},
+        "narrative": {"$ref": "#/$defs/offset"}
+      }
+    },
+    "offset": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]}
+  }
+}

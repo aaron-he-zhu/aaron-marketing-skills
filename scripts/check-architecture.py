@@ -26,7 +26,7 @@ MUTABLE_RUNTIME = re.compile(
     re.I,
 )
 BARE_ROOT_RUNTIME_COMMAND = re.compile(
-    r"\bpython3\s+(?:\./)?scripts/(?:rubric-score|validate-audit-artifact|registry-events|run-events)\.py\b"
+    r"\bpython3\s+(?:\./)?scripts/(?:rubric-score|validate-audit-artifact|registry-events|run-events|context-resolver)\.py\b"
 )
 AUDIT_WRITE_INTENT = re.compile(
     r"\b(?:write|writes|save|saves|persist|persists|store|stores|storable)\b|ready for",

@@ -28,7 +28,7 @@
   ],
   "properties": {
     "schema_version": {"const": "1.0"},
-    "run_id": {"type": "string", "format": "uuid"},
+    "run_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
     "idempotency_key": {"$ref": "#/$defs/safeId"},
     "event_type": {
       "enum": [
@@ -58,7 +58,7 @@
     "parent_event_id": {
       "oneOf": [
         {"type": "null"},
-        {"type": "string", "format": "uuid"}
+        {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}
       ]
     },
     "turn_id": {
@@ -89,7 +89,7 @@
       "propertyNames": {"enum": ["hook_name", "tool_name", "validator", "evidence_mode", "adapter_name", "model_id", "route_reason", "failure_class", "loop_state", "branch_reason"]},
       "additionalProperties": {"$ref": "#/$defs/safeId"}
     },
-    "event_id": {"type": "string", "format": "uuid"},
+    "event_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
     "offset": {"type": "integer", "minimum": 1},
     "recorded_at": {"type": "string", "format": "date-time"},
     "request_hash": {"$ref": "#/$defs/sha256"},
@@ -110,7 +110,7 @@
     },
     {
       "if": {"properties": {"event_type": {"not": {"const": "run_started"}}}},
-      "then": {"properties": {"parent_event_id": {"type": "string", "format": "uuid"}}}
+      "then": {"properties": {"parent_event_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}}}
     },
     {
       "if": {"properties": {"event_type": {"enum": ["run_waiting", "run_finished", "run_failed", "run_aborted"]}}},
