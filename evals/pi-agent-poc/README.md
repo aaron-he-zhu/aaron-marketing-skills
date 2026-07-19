@@ -80,7 +80,7 @@ The tests verify:
 - sequential and cross-adapter fork-ID collision rejection before Pi can overwrite a repo mapping;
 - no observed network/subprocess attempt and no changes beneath synthetic `memory/` or `registries/` sentinels.
 
-The network test starts a child process, installs observation/blocking hooks for `fetch`, `http`, `https`, `net`, and `child_process` before dynamically importing the adapter, and then exercises one turn. This is an observation probe, not a security sandbox or proof that a future dependency graph cannot reach the network by another mechanism.
+The network test starts a child process, installs observation/blocking hooks for `fetch`, `http`, `https`, `net`, `tls`, `dgram`, `dns`, `worker_threads`, and `child_process` (including the `execSync`/`execFileSync`/`spawnSync` synchronous variants) before dynamically importing the adapter, and then exercises one turn. This is an observation probe, not a security sandbox or proof that a future dependency graph cannot reach the network by another mechanism.
 
 ## Hard boundaries
 
