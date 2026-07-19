@@ -77,8 +77,14 @@ Directories are mode `0700`; step files and the short-lived lock file are mode
 `0600`. The runtime refuses symlinks, hard links, unsafe residue, non-contiguous
 steps, invalid UUID5 transition identities, and a broken previous-step SHA-256
 chain. Step occurrence times are monotonic, and terminal states accept no
-successor even after their deadline. The stream is capped at 128 steps; every
-document is size-checked before installation. A safe leftover from an
+successor even after their deadline. The stream is capped at 128 steps and the
+final step is reserved for a terminal transition (`converged`, `exhausted`,
+`needs-input`, `gate-blocked`): a non-terminal transition is refused once 127
+steps exist, so a loop that has burned its budget on leases, retries, or
+proposal cycles can never be stranded active — once the deadline passes, any
+action records the forced `deadline-expired` step and the loop always remains
+sealable; a full-length chain that does not end in a terminal state is rejected
+on read. Every document is size-checked before installation. A safe leftover from an
 interrupted immutable install is reclaimed before retrying the same request.
 Each v2 document also binds the exact selected run parent through
 `run_parent_event_id` and `run_parent_event_sha256`; a step cannot be moved to a

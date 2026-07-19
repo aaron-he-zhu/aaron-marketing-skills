@@ -432,8 +432,10 @@ def _validate_step(
     if document["cycle"] > document["max_cycles"]:
         raise AuditLoopError("cycle exceeds max_cycles")
     _bounded_integer(document["total_retries"], "total_retries", 0, MAX_STEPS)
-    _bounded_integer(document["state_retries"], "state_retries", 0, MAX_RETRIES + 1)
     _bounded_integer(document["max_retries"], "max_retries", 0, MAX_RETRIES)
+    _bounded_integer(
+        document["state_retries"], "state_retries", 0, document["max_retries"] + 1,
+    )
     _bounded_integer(document["backoff_seconds"], "backoff_seconds", 0, BACKOFF_MAX_SECONDS)
     parse_time(document["deadline"], "deadline")
     parse_time(document["occurred_at"], "occurred_at")
@@ -657,6 +659,12 @@ def _validate_step(
             expected_state = "needs-input"
         if document["state"] != expected_state:
             raise AuditLoopError("re-audit verdict/confidence does not match terminal decision")
+        if (expected_state == "converged"
+                and (audit["status"] != "DONE"
+                     or audit["score_state"] != "SCORED")):
+            raise AuditLoopError(
+                "converged re-audit requires DONE status and SCORED score_state"
+            )
 
 
 def _recover_residue(loop_dir, name):
@@ -760,6 +768,11 @@ def _load_steps(
             intervention_occurred_at = document["occurred_at"]
         elif document["transition"] == "cycle-advanced":
             intervention_occurred_at = None
+    if (len(steps) == MAX_STEPS
+            and steps[-1]["document"]["state"] not in TERMINAL_STATES):
+        raise AuditLoopError(
+            "a %d-step loop must end in a terminal state" % MAX_STEPS
+        )
     _check_read_deadline(deadline_monotonic)
     try:
         descriptor, identity = runtime.open_directory_anchor(loop_dir)
@@ -1454,6 +1467,13 @@ def _apply_action_under_coordinator(action, **options):
                         action, steps[-1]["document"], occurred_at, request_hash,
                         options, root,
                     )
+                    if (len(steps) >= MAX_STEPS - 1
+                            and document["state"] not in TERMINAL_STATES):
+                        raise AuditLoopError(
+                            "loop step budget exhausted: the final step is "
+                            "reserved for a terminal transition; after the "
+                            "deadline any action records deadline-expired"
+                        )
 
                 sequence = document["sequence"]
                 filename = "%03d-%s.json" % (sequence, document["transition"])

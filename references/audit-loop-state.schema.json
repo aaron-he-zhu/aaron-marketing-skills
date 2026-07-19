@@ -57,8 +57,8 @@
       "properties": {
         "ref": {"$ref": "#/$defs/reference"},
         "sha256": {"$ref": "#/$defs/sha256"},
-        "schema_version": {"const": "3.0"},
-        "runbook_version": {"const": "3.0.0"},
+        "schema_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+$"},
+        "runbook_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
         "catalog_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
         "framework": {"enum": ["CORE-EEAT", "CITE", "STAR", "ROAS", "SEND", "RAMP", "ECHO", "TALE"]},
         "profile": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},

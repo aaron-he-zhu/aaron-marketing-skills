@@ -429,6 +429,49 @@ class AuditLoopTests(unittest.TestCase):
         self.assertEqual("needs-input", result["step"]["state"])
         self.assertEqual("ship-confidence-low", result["step"]["reason_code"])
 
+    def test_converged_reaudit_requires_done_and_scored_audit(self):
+        head = self.to_reaudit()
+        reaudit = self.write(
+            "inputs/ship.md",
+            artifact(verdict="SHIP", confidence="high", observed_at="2026-07-20", score=91),
+        )
+        head = self.lease(head, "reaudit-token")
+        result = self.leased_action(
+            "reaudit", head, "reaudit-token", audit_ref=self.relative(reaudit),
+            audit_sha256=self.digest(reaudit),
+        )
+        self.assertEqual("converged", result["step"]["state"])
+        steps = loop.read_loop(self.root, self.run_id, self.loop_id)
+        final = steps[-1]["document"]
+        prior = steps[-2]
+        intervention_at = next(
+            item["document"]["occurred_at"] for item in steps
+            if item["document"]["transition"] == "intervention-recorded"
+        )
+        for field, value in (
+                ("status", "DONE_WITH_CONCERNS"), ("score_state", "NOT_SCORED")):
+            tampered = json.loads(json.dumps(final))
+            tampered["latest_audit"][field] = value
+            with self.subTest(field=field):
+                with self.assertRaisesRegex(
+                        loop.AuditLoopError, "converged re-audit requires"):
+                    loop._validate_step(
+                        tampered, len(steps), self.run_id, self.loop_id,
+                        prior["document"], prior["ref"], prior["sha256"],
+                        intervention_occurred_at=intervention_at,
+                    )
+
+    def test_state_retries_are_bounded_by_the_loops_own_max_retries(self):
+        self.start(max_retries=2)
+        steps = loop.read_loop(self.root, self.run_id, self.loop_id)
+        tampered = json.loads(json.dumps(steps[0]["document"]))
+        tampered["state_retries"] = 4
+        with self.assertRaisesRegex(
+                loop.AuditLoopError, "state_retries must be an integer between 0 and 3"):
+            loop._validate_step(
+                tampered, 1, self.run_id, self.loop_id, None, None, loop.ZERO_HASH,
+            )
+
     def test_owner_rejection_is_typed_preserves_identity_and_needs_input(self):
         head = self.start()
         head = self.lease(head, "proposal-token")
@@ -1024,6 +1067,40 @@ class AuditLoopTests(unittest.TestCase):
         self.assertEqual("deadline-expired", expired["step"]["reason_code"])
         self.assertFalse(expired["step"]["external_mutation_authorized"])
 
+    def test_final_step_is_reserved_for_terminal_transitions(self):
+        with mock.patch.object(loop, "MAX_STEPS", 4):
+            head = self.start(deadline="2026-07-19T10:00:30Z")
+            head = self.lease(head, "proposal-token")
+            head = self.leased_action(
+                "proposal", head, "proposal-token",
+                proposal_ref=self.relative(self.proposal),
+                proposal_sha256=self.digest(self.proposal),
+            )
+            self.assertEqual(3, head["step"]["sequence"])
+            with self.assertRaisesRegex(
+                    loop.AuditLoopError, "reserved for a terminal transition"):
+                self.lease(head, "owner-token")
+            expired = self.lease(head, "late-token", seconds=31)
+            self.assertEqual(4, expired["step"]["sequence"])
+            self.assertEqual("deadline-expired", expired["step"]["transition"])
+            self.assertEqual("exhausted", expired["step"]["state"])
+
+    def test_full_length_non_terminal_chain_is_rejected_on_read(self):
+        with mock.patch.object(loop, "MAX_STEPS", 5):
+            head = self.start(deadline="2026-07-19T10:00:30Z")
+            head = self.lease(head, "t2")
+            head = self.leased_action(
+                "proposal", head, "t2",
+                proposal_ref=self.relative(self.proposal),
+                proposal_sha256=self.digest(self.proposal),
+            )
+            head = self.lease(head, "t4")
+            self.assertEqual(4, head["step"]["sequence"])
+        with mock.patch.object(loop, "MAX_STEPS", 4):
+            with self.assertRaisesRegex(
+                    loop.AuditLoopError, "must end in a terminal state"):
+                self.lease(head, "t5", seconds=5)
+
     def test_terminal_heads_reject_post_deadline_successors(self):
         head = self.start(deadline="2026-07-19T10:00:05Z")["step"]
         for state in sorted(loop.TERMINAL_STATES):
@@ -1293,6 +1370,14 @@ class AuditLoopTests(unittest.TestCase):
             ["medium", "high"],
             convergence["properties"]["score_confidence"]["enum"],
         )
+        self.assertEqual("DONE", convergence["properties"]["status"]["const"])
+        self.assertEqual("SHIP", convergence["properties"]["verdict"]["const"])
+        self.assertEqual("SCORED", convergence["properties"]["score_state"]["const"])
+        identity = schema["$defs"]["auditIdentity"]["properties"]
+        self.assertIn("pattern", identity["schema_version"])
+        self.assertNotIn("const", identity["schema_version"])
+        self.assertIn("pattern", identity["runbook_version"])
+        self.assertNotIn("const", identity["runbook_version"])
         owner_accept = schema["allOf"][2]["then"]["properties"]
         owner_reject = schema["allOf"][3]["then"]["properties"]
         retry_exhausted = schema["allOf"][4]["then"]["properties"]
