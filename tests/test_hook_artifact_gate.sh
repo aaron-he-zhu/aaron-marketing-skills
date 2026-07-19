@@ -500,15 +500,48 @@ PY
 out14="$(session)"
 assert_contains "stale projection surfaces the lag note" "$out14" "Projection lag"
 
-# 15. No registry events means no intake or lag signals at all
-rm -rf "$PROJ/memory/events" "$PROJ/memory/projections"
+# 15. A missing projection for a non-empty stream surfaces an integrity warning
+rm -f "$PROJ/memory/projections/entities.json"
 out15="$(session)"
-assert_notcontains "empty project raises no intake signal" "$out15" "pending owner review"
-assert_notcontains "empty project raises no lag signal" "$out15" "Projection lag"
+assert_contains "missing projection surfaces integrity warning" "$out15" "Projection integrity"
+assert_contains "missing projection is identified" "$out15" "1 missing"
+
+# 16. A malformed projection is surfaced rather than treated as unknown lag
+printf '{not-json\n' > "$PROJ/memory/projections/entities.json"
+out16="$(session)"
+assert_contains "invalid projection surfaces integrity warning" "$out16" "Projection integrity"
+assert_contains "invalid projection is identified" "$out16" "1 invalid"
+
+# 17. A projection ahead of the stream is surfaced rather than reported as negative lag
+python3 "$REPO/scripts/registry-events.py" --root "$PROJ" project entities >/dev/null
+python3 - "$PROJ" <<'PY'
+import json, pathlib, sys
+path = pathlib.Path(sys.argv[1]) / "memory/projections/entities.json"
+stored = json.loads(path.read_text(encoding="utf-8"))
+stored["last_offset"] += 1
+path.write_text(json.dumps(stored), encoding="utf-8")
+PY
+out17="$(session)"
+assert_contains "ahead projection surfaces integrity warning" "$out17" "Projection integrity"
+assert_contains "ahead projection is identified" "$out17" "1 ahead-of-stream"
+
+# 18. An unverifiable event stream surfaces a verification warning
+printf 'not-json\n' >> "$PROJ/memory/events/entities.ndjson"
+out18="$(session)"
+assert_contains "unverifiable stream surfaces verification warning" "$out18" "Registry verification"
+assert_contains "unverifiable stream count is identified" "$out18" "1 registry event stream"
+
+# 19. No registry events means no intake or projection signals at all
+rm -rf "$PROJ/memory/events" "$PROJ/memory/projections"
+out19="$(session)"
+assert_notcontains "empty project raises no intake signal" "$out19" "pending owner review"
+assert_notcontains "empty project raises no lag signal" "$out19" "Projection lag"
+assert_notcontains "empty project raises no integrity signal" "$out19" "Projection integrity"
+assert_notcontains "empty project raises no verification signal" "$out19" "Registry verification"
 
 echo "SessionStart — resume checkpoint"
 
-# 16. A session checkpoint is injected as untrusted resume context
+# 20. A session checkpoint is injected as untrusted resume context
 cat > "$PROJ/memory/session-checkpoint.md" <<'EOF'
 updated_at: 2026-07-18
 active_skill: keyword-research

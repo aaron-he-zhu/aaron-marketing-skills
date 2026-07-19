@@ -6,7 +6,7 @@
 - **Catalog version:** 18.0.0
 - **Framework:** ECHO
 - **Auditor:** social-quality-auditor
-- **Source digest:** `sha256:d4fe3fc60345495bd921da2a2b117d44d092be4711f291e7287798ea429ac821`
+- **Source digest:** `sha256:b2b211f9c856499614fbf06d3ebe88f6f375621f10cc6829a26f0824aa9a7803`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 

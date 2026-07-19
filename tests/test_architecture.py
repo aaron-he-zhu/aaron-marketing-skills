@@ -5,9 +5,12 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
+import stat
 import tempfile
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +22,48 @@ def load_module():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def load_generator_module():
+    path = ROOT / "scripts" / "generate-system-docs.py"
+    spec = importlib.util.spec_from_file_location("generate_system_docs", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class GeneratorAtomicWriteTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.module = load_generator_module()
+
+    def test_atomic_write_preserves_existing_permissions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "generated.md"
+            target.write_bytes(b"old")
+            target.chmod(0o640)
+            self.module.atomic_write(target, b"new")
+            self.assertEqual(target.read_bytes(), b"new")
+            self.assertEqual(stat.S_IMODE(target.stat().st_mode), 0o640)
+
+    def test_atomic_write_does_not_require_os_fchmod(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+                self.module.os, "fchmod", None):
+            target = Path(tmp) / "generated.md"
+            self.module.atomic_write(target, b"portable")
+            self.assertEqual(target.read_bytes(), b"portable")
+
+    def test_atomic_write_closes_fd_and_cleans_temp_when_fdopen_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "generated.md"
+            real_close = os.close
+            with mock.patch.object(
+                    self.module.os, "fdopen", side_effect=OSError("fixture failure")), \
+                    mock.patch.object(self.module.os, "close", wraps=real_close) as close:
+                with self.assertRaisesRegex(OSError, "fixture failure"):
+                    self.module.atomic_write(target, b"new")
+            close.assert_called_once()
+            self.assertEqual(list(Path(tmp).iterdir()), [])
 
 
 class CatalogLayerTests(unittest.TestCase):

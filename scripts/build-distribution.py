@@ -144,7 +144,11 @@ def build_plugin(destination, catalog, manifest, slim_frontmatter=False):
         raise DistributionError("plugin distribution manifest contains duplicate entries")
     for relative in entries:
         copy_entry(relative, destination, tree_ignore=plugin_ignored)
-    markdown_seeds = ["commands/%s.md" % command for command in catalog["commands"]]
+    markdown_seeds = [
+        relative for relative in profile["root_files"]
+        if Path(relative).suffix == ".md"
+    ]
+    markdown_seeds += ["commands/%s.md" % command for command in catalog["commands"]]
     markdown_seeds += [path + "/SKILL.md" for path in skills]
     referenced = set(profile["runtime_references"])
     for relative in markdown_seeds:

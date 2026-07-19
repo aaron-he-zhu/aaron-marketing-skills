@@ -17,6 +17,7 @@ Convergence signals per (framework, profile, target) series:
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 from pathlib import Path
 import re
@@ -27,6 +28,9 @@ FRAMEWORKS = {"CORE-EEAT", "CITE", "STAR", "ROAS", "SEND", "RAMP", "ECHO", "TALE
 FIELDS = ("class", "framework", "profile", "target", "observed_at", "status",
           "verdict", "score_state", "veto_count", "raw_overall_score",
           "final_overall_score")
+REQUIRED_SERIES_FIELDS = (
+    "framework", "profile", "target", "observed_at", "status", "verdict", "score_state",
+)
 
 
 def scalar(value):
@@ -54,7 +58,14 @@ def parse_artifact(path):
         key, raw = match.groups()
         if key in FIELDS and key not in values:
             values[key] = scalar(raw)
-    if values.get("framework") not in FRAMEWORKS or not values.get("observed_at"):
+    if values.get("class") != "auditor-output":
+        return None
+    if (values.get("framework") not in FRAMEWORKS
+            or any(not values.get(name) for name in REQUIRED_SERIES_FIELDS)):
+        return None
+    try:
+        dt.date.fromisoformat(values["observed_at"])
+    except (TypeError, ValueError):
         return None
     for name in ("veto_count", "raw_overall_score", "final_overall_score"):
         if name in values:
@@ -87,18 +98,32 @@ def series_report(artifacts):
     rows = []
     for (framework, profile, target), items in sorted(series.items()):
         items.sort(key=lambda i: (i["observed_at"], i["path"]))
-        scored = [i for i in items if isinstance(i.get("final_overall_score"), int)]
+        scored = [
+            i for i in items
+            if i.get("score_state") == "SCORED"
+            and isinstance(i.get("final_overall_score"), int)
+        ]
         delta = scored[-1]["final_overall_score"] - scored[0]["final_overall_score"] \
             if len(scored) >= 2 else None
+        latest = items[-1]
+        latest_score = (
+            latest.get("final_overall_score")
+            if latest.get("score_state") == "SCORED"
+            and isinstance(latest.get("final_overall_score"), int)
+            else None
+        )
         rows.append({
             "framework": framework,
             "profile": profile,
             "target": target,
             "audits": len(items),
             "first": items[0]["observed_at"],
-            "latest": items[-1]["observed_at"],
-            "latest_verdict": items[-1].get("verdict", "?"),
-            "latest_score": scored[-1]["final_overall_score"] if scored else None,
+            "latest": latest["observed_at"],
+            "latest_verdict": latest["verdict"],
+            "latest_score_state": latest["score_state"],
+            "latest_score": latest_score,
+            "latest_scored_at": scored[-1]["observed_at"] if scored else None,
+            "latest_scored_score": scored[-1]["final_overall_score"] if scored else None,
             "score_delta": delta,
             "stalled": len(items) >= 3 and not any(
                 i.get("verdict") == "SHIP" for i in items),

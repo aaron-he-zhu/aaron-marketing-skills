@@ -77,16 +77,23 @@ Open loops: memory/open-loops.md tracks ${olc} item(s) — surface any that look
 import json,sys
 try: d=json.load(sys.stdin)
 except Exception: sys.exit(0)
-tot=d.get("total_pending",0); oldest=-1; lagged=0
+tot=d.get("total_pending",0)
+if not isinstance(tot,int) or isinstance(tot,bool) or tot<0: tot=0
+oldest=-1; counts={k:0 for k in ("behind","missing","invalid","ahead")}; unverifiable=0
 for e in d.get("registries",{}).values():
-    if not e.get("verifiable"): continue
+    if not isinstance(e,dict): continue
+    if not e.get("verifiable"):
+        unverifiable+=1
+        continue
     a=e.get("oldest_pending_age_days")
     if isinstance(a,int) and not isinstance(a,bool) and a>oldest: oldest=a
-    lag=e.get("projection_lag")
-    if isinstance(lag,int) and not isinstance(lag,bool) and lag>0: lagged+=1
-print("%d %d %d" % (tot,oldest,lagged))' 2>/dev/null || true)"
+    status=e.get("projection_status")
+    if status in counts: counts[status]+=1
+print("%d %d %d %d %d %d %d" % (
+    tot,oldest,counts["behind"],counts["missing"],counts["invalid"],
+    counts["ahead"],unverifiable))' 2>/dev/null || true)"
         if [ -n "$ps" ]; then
-          ptot="${ps%% *}"; prest="${ps#* }"; pold="${prest%% *}"; plag="${prest##* }"
+          read -r ptot pold pbehind pmissing pinvalid pahead punverifiable <<< "$ps"
           if [ "$pold" -gt 14 ]; then
             body="$body
 
@@ -96,9 +103,15 @@ Registry intake: ${ptot} proposal(s) pending owner review; the oldest is ${pold}
 
 Registry intake: ${ptot} proposal(s) pending owner review (oldest ${pold} day(s))."; added=1
           fi
-          [ "$plag" -gt 0 ] && { body="$body
+          [ "$pbehind" -gt 0 ] && { body="$body
 
-Projection lag: ${plag} registr(y/ies) have a stored projection behind the event stream — rebuild with registry-events.py project <registry> before relying on it."; added=1; }
+Projection lag: ${pbehind} registr(y/ies) have a stored projection behind the event stream — rebuild with registry-events.py project <registry> before relying on it."; added=1; }
+          { [ "$pmissing" -gt 0 ] || [ "$pinvalid" -gt 0 ] || [ "$pahead" -gt 0 ]; } && { body="$body
+
+Projection integrity: ${pmissing} missing, ${pinvalid} invalid, and ${pahead} ahead-of-stream projection(s). Verify the event stream, then rebuild affected projections with registry-events.py project <registry> before relying on them."; added=1; }
+          [ "$punverifiable" -gt 0 ] && { body="$body
+
+Registry verification: ${punverifiable} registry event stream(s) could not be verified; their pending counts and projection state were excluded. Run registry-events.py pending, repair the reported stream error, and verify it before relying on registry state."; added=1; }
         fi
       fi
     fi

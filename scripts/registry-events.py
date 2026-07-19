@@ -1715,13 +1715,11 @@ def is_suppressed(root, aggregate_id):
 
 
 def _observed_age_days(value, now):
-    """Whole days between an occurred_at date/date-time and now; None if naive."""
+    """Whole days between a timezone-aware occurred_at and now."""
     try:
-        parsed = dt.datetime.fromisoformat(value.replace("Z", "+00:00"))
-    except (ValueError, AttributeError):
+        parsed = parse_datetime(value, "occurred_at")
+    except RegistryError:
         return None
-    if parsed.tzinfo is None:
-        parsed = parsed.replace(tzinfo=dt.timezone.utc)
     return max(0, (now - parsed).days)
 
 
@@ -1729,8 +1727,12 @@ def pending_report(root, now=None):
     """Read-only cross-registry intake/lag report. Never creates runtime paths.
 
     Per registry: pending proposal count, the oldest pending proposal's
-    occurred_at and age in days, and projection lag (stream head offset minus
-    the stored projection's last_offset). When the host authority key is
+    occurred_at and age in days, plus an explicit projection status. A valid
+    projection is current, behind, or ahead; an absent projection is either
+    not-required for an empty stream or missing for a non-empty stream; malformed
+    or unreadable projections are invalid. ``projection_lag`` remains a
+    backward-compatible non-negative value only for current/behind projections.
+    When the host authority key is
     available the stream is fully verified (authority_verified: true); without
     it the report falls back to the publicly verifiable structure — canonical
     JSON, offsets, hash chain, request hashes, principal bindings — and labels
@@ -1747,7 +1749,8 @@ def pending_report(root, now=None):
         entry = {"verifiable": True, "authority_verified": authority_verified,
                  "pending": 0,
                  "oldest_pending_occurred_at": None, "oldest_pending_age_days": None,
-                 "stream_offset": 0, "projection_offset": None, "projection_lag": None}
+                 "stream_offset": 0, "projection_offset": None,
+                 "projection_lag": None, "projection_status": "unknown"}
         try:
             state = load_state(root, registry, create=False,
                                verify_authority=authority_verified)
@@ -1760,18 +1763,49 @@ def pending_report(root, now=None):
         entry["pending"] = len(pending)
         entry["stream_offset"] = state["last_offset"]
         if pending:
-            oldest = min(pending, key=lambda item: item["occurred_at"])
+            oldest = min(
+                pending,
+                key=lambda item: parse_datetime(item["occurred_at"], "occurred_at"),
+            )
             entry["oldest_pending_occurred_at"] = oldest["occurred_at"]
             entry["oldest_pending_age_days"] = _observed_age_days(oldest["occurred_at"], now)
         _, projection_path, _ = memory_paths(root, registry, create=False)
         try:
-            stored = json.loads(Path(projection_path).read_text(encoding="utf-8"))
-            stored_offset = stored.get("last_offset")
-        except (OSError, ValueError):
-            stored_offset = None
-        entry["projection_offset"] = stored_offset
-        if isinstance(stored_offset, int) and not isinstance(stored_offset, bool):
-            entry["projection_lag"] = state["last_offset"] - stored_offset
+            raw_projection = Path(projection_path).read_text(encoding="utf-8")
+        except FileNotFoundError:
+            entry["projection_status"] = (
+                "not-required" if state["last_offset"] == 0 else "missing"
+            )
+        except (OSError, UnicodeError) as exc:
+            entry["projection_status"] = "invalid"
+            entry["projection_error"] = "cannot read projection: %s" % exc
+        else:
+            try:
+                stored = strict_json_loads(raw_projection, "projection")
+                if not isinstance(stored, dict):
+                    raise RegistryError("projection must be a JSON object")
+                if stored.get("schema_version") != SCHEMA_VERSION:
+                    raise RegistryError("projection has an unsupported schema_version")
+                if stored.get("registry") != registry:
+                    raise RegistryError("projection has the wrong registry")
+                stored_offset = stored.get("last_offset")
+                if (not isinstance(stored_offset, int)
+                        or isinstance(stored_offset, bool) or stored_offset < 0):
+                    raise RegistryError("projection last_offset must be a non-negative integer")
+            except RegistryError as exc:
+                entry["projection_status"] = "invalid"
+                entry["projection_error"] = str(exc)
+            else:
+                entry["projection_offset"] = stored_offset
+                delta = state["last_offset"] - stored_offset
+                if delta > 0:
+                    entry["projection_status"] = "behind"
+                    entry["projection_lag"] = delta
+                elif delta < 0:
+                    entry["projection_status"] = "ahead"
+                else:
+                    entry["projection_status"] = "current"
+                    entry["projection_lag"] = 0
         total += len(pending)
         registries[registry] = entry
     return {"registries": registries, "total_pending": total,

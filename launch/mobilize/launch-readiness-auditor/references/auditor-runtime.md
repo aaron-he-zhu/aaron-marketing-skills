@@ -6,7 +6,7 @@
 - **Catalog version:** 18.0.0
 - **Framework:** RAMP
 - **Auditor:** launch-readiness-auditor
-- **Source digest:** `sha256:277978d6fca84757a5b5f05338c63044fc7e02f2e8e5f225add00dad8820b56d`
+- **Source digest:** `sha256:8761baa7590ca96012e9ba6c4084e49af979cd4c0b6f4f159781ac72e0918de2`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 

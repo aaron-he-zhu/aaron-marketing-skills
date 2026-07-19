@@ -222,18 +222,22 @@ def atomic_write(path, content):
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temp_name = tempfile.mkstemp(prefix=".%s." % path.name, dir=str(path.parent))
     try:
-        if path.exists():
-            os.fchmod(fd, path.stat().st_mode & 0o777)
-        else:
-            os.fchmod(fd, 0o644)
-        with os.fdopen(fd, "wb") as handle:
+        mode = path.stat().st_mode & 0o777 if path.exists() else 0o644
+        os.chmod(temp_name, mode)
+        handle = os.fdopen(fd, "wb")
+        fd = None  # ``handle`` owns the descriptor from this point onward.
+        with handle:
             handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temp_name, path)
     finally:
-        if os.path.exists(temp_name):
+        if fd is not None:
+            os.close(fd)
+        try:
             os.unlink(temp_name)
+        except FileNotFoundError:
+            pass
 
 
 def main(argv=None):

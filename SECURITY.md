@@ -108,30 +108,40 @@ The `scripts/connectors/*.py` helpers make outbound HTTP(S) requests through one
 
 The hooks are lifecycle checks, not an OS sandbox — model self-restraint plus Bash
 hooks is one layer, not a boundary. Two runs deserve a real OS containment layer:
-`--live` connector mutations, and unattended scheduled runs ([docs/scheduling.md](docs/scheduling.md)).
+`--live` connector mutations, and unattended scheduled runs
+([references/scheduling.md](references/scheduling.md)).
 Both are recommended, optional hardening — the bundle works without them.
 
-- **macOS (seatbelt)**: deny-by-default profile that allows only outbound network
-  and the project directory, then run the connector under it:
+- **macOS (Seatbelt)**: this verified baseline is a **write-containment** profile:
+  the process may read its interpreter/runtime and make outbound connections, but
+  may write only inside the project. A stricter confidentiality profile must
+  replace `(allow file-read*)` with explicit read-only paths for the selected
+  Python installation and its system libraries.
 
   ```bash
   cat > /tmp/aaron-live.sb <<'EOF'
   (version 1) (deny default)
+  (allow file-read*)
   (allow network-outbound)
-  (allow file-read* file-write* (subpath "/path/to/project"))
+  (allow file-write* (subpath "/path/to/project"))
   (allow process-exec)
   EOF
-  sandbox-exec -f /tmp/aaron-live.sb python3 scripts/connectors/resend.py send --live ...
+  cd /path/to/project
+  PYTHON_BIN="$(command -v python3)"
+  sandbox-exec -f /tmp/aaron-live.sb "$PYTHON_BIN" scripts/connectors/resend.py send --live ...
   ```
 
-- **Linux (bubblewrap)**: same shape — unshare everything, bind only the project,
-  keep network (connectors need it), and drop write access outside the bind:
+- **Linux (bubblewrap)**: unshare the host namespaces, retain network, expose the
+  interpreter plus read-only `/etc` for DNS and CA trust, and bind only the project
+  as writable. `--ro-bind-try` keeps merged-`/usr` distributions portable.
 
   ```bash
   bwrap --unshare-all --share-net --die-with-parent \
-    --robind /usr /usr --robind /lib /lib --robind /lib64 /lib64 \
-    --bind /path/to/project /path/to/project --dev /dev \
-    python3 scripts/connectors/resend.py send --live ...
+    --ro-bind /usr /usr --ro-bind /etc /etc \
+    --ro-bind-try /lib /lib --ro-bind-try /lib64 /lib64 \
+    --bind /path/to/project /path/to/project \
+    --tmpfs /tmp --dev /dev --proc /proc --chdir /path/to/project \
+    /usr/bin/python3 scripts/connectors/resend.py send --live ...
   ```
 
 - Keep `AARON_REGISTRY_HOST_KEY` outside any sandbox that runs agent-launched code:

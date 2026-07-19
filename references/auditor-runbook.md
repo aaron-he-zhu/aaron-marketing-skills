@@ -100,7 +100,7 @@ Always qualify IDs outside a single-framework table. Item definitions remain in 
 
 The durable Markdown artifact uses scalar YAML frontmatter plus a deterministic body subset:
 
-> **Trend review.** Saved artifacts are a per-gate time series. `python3 scripts/audit-trends.py [--root DIR]` renders each (framework, profile, target) series — audit count, latest verdict/score, first→latest score delta — and flags **stalled** series (3+ audits without a SHIP). A stalled series is a loop that is not converging: escalate the underlying finding instead of re-auditing the same state. The tool is read-only and ships with the plugin runtime.
+> **Trend review.** Saved artifacts are a per-gate time series. `python3 scripts/audit-trends.py [--root DIR]` renders each (framework, profile, target) series — audit count, latest verdict/current score, first→latest-scored delta — and flags **stalled** series (3+ audits without a SHIP). If the latest audit is `NOT_SCORED`, its current score is blank; JSON output keeps the earlier value separately as `latest_scored_score` / `latest_scored_at`, never as the latest score. Structurally incomplete files are counted as skipped, not treated as evidence. A stalled series is a loop that is not converging: escalate the underlying finding instead of re-auditing the same state. The tool is read-only and ships with the plugin runtime.
 
 ```yaml
 ---

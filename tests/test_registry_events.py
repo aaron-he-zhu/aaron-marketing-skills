@@ -1306,6 +1306,10 @@ class RegistryEventTests(unittest.TestCase):
         self.assertEqual(report["total_pending"], 0)
         self.assertEqual(set(report["registries"]), registry.REGISTRIES)
         self.assertTrue(all(e["verifiable"] for e in report["registries"].values()))
+        self.assertTrue(all(
+            e["projection_status"] == "not-required"
+            for e in report["registries"].values()
+        ))
         self.assertFalse((self.root / "memory").exists())
 
     def test_pending_report_counts_and_ages_proposals(self):
@@ -1330,7 +1334,33 @@ class RegistryEventTests(unittest.TestCase):
         self.assertEqual(entities["pending"], 1)
         self.assertEqual(entities["oldest_pending_age_days"], 17)
         self.assertEqual(entities["projection_lag"], 0)
+        self.assertEqual(entities["projection_status"], "current")
         self.assertEqual(report["registries"]["claims"]["oldest_pending_age_days"], 9)
+
+    def test_pending_report_orders_timezone_offsets_chronologically(self):
+        first_instant = event(
+            "entities", "pending-offset-first", aggregate_id="record-first",
+            operation="propose", proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+            occurred_at="2026-07-10T00:30:00+14:00",
+        )
+        later_instant = event(
+            "entities", "pending-offset-later", aggregate_id="record-later",
+            operation="propose", proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+            occurred_at="2026-07-09T23:45:00-12:00",
+        )
+        registry.append_event(self.root, "entities", first_instant)
+        registry.append_event(self.root, "entities", later_instant)
+        report = registry.pending_report(
+            self.root, now=dt.datetime(2026, 7, 12, tzinfo=dt.timezone.utc),
+        )
+        entities = report["registries"]["entities"]
+        self.assertEqual(
+            entities["oldest_pending_occurred_at"],
+            "2026-07-10T00:30:00+14:00",
+        )
+        self.assertEqual(entities["oldest_pending_age_days"], 2)
 
     def test_pending_report_resolved_proposal_drops_out(self):
         proposal = event(
@@ -1360,6 +1390,44 @@ class RegistryEventTests(unittest.TestCase):
         self.assertEqual(creators["stream_offset"], 2)
         self.assertEqual(creators["projection_offset"], 1)
         self.assertEqual(creators["projection_lag"], 1)
+        self.assertEqual(creators["projection_status"], "behind")
+
+    def test_pending_report_marks_missing_projection_for_nonempty_stream(self):
+        registry.append_event(self.root, "creators", event("creators", "missing-projection"))
+        projection_path = self.root / "memory/projections/creators.json"
+        projection_path.unlink()
+        creators = registry.pending_report(self.root)["registries"]["creators"]
+        self.assertEqual(creators["projection_status"], "missing")
+        self.assertIsNone(creators["projection_offset"])
+        self.assertIsNone(creators["projection_lag"])
+
+    def test_pending_report_marks_invalid_projection(self):
+        registry.append_event(self.root, "creators", event("creators", "invalid-projection"))
+        projection_path = self.root / "memory/projections/creators.json"
+        projection_path.write_text("{not-json", encoding="utf-8")
+        creators = registry.pending_report(self.root)["registries"]["creators"]
+        self.assertEqual(creators["projection_status"], "invalid")
+        self.assertIn("projection_error", creators)
+        self.assertIsNone(creators["projection_lag"])
+
+    def test_pending_report_marks_non_utf8_projection_invalid(self):
+        registry.append_event(self.root, "creators", event("creators", "binary-projection"))
+        projection_path = self.root / "memory/projections/creators.json"
+        projection_path.write_bytes(b"\xff")
+        creators = registry.pending_report(self.root)["registries"]["creators"]
+        self.assertEqual(creators["projection_status"], "invalid")
+        self.assertIn("projection_error", creators)
+
+    def test_pending_report_marks_projection_ahead_without_negative_lag(self):
+        registry.append_event(self.root, "creators", event("creators", "ahead-projection"))
+        projection_path = self.root / "memory/projections/creators.json"
+        stored = json.loads(projection_path.read_text(encoding="utf-8"))
+        stored["last_offset"] = 2
+        projection_path.write_text(json.dumps(stored), encoding="utf-8")
+        creators = registry.pending_report(self.root)["registries"]["creators"]
+        self.assertEqual(creators["projection_status"], "ahead")
+        self.assertEqual(creators["projection_offset"], 2)
+        self.assertIsNone(creators["projection_lag"])
 
     def test_pending_report_marks_unverifiable_stream(self):
         registry.append_event(self.root, "creators", event("creators", "signed-1"))
@@ -1369,6 +1437,7 @@ class RegistryEventTests(unittest.TestCase):
         report = registry.pending_report(self.root)
         creators = report["registries"]["creators"]
         self.assertFalse(creators["verifiable"])
+        self.assertEqual(creators["projection_status"], "unknown")
         self.assertIn("error", creators)
         self.assertEqual(report["registries"]["entities"]["pending"], 0)
 

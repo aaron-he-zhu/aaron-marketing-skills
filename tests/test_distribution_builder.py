@@ -36,6 +36,7 @@ class DistributionBuilderTests(unittest.TestCase):
             "scripts/validate-audit-artifact.py",
             "scripts/registry-events.py",
             "references/system-catalog.json",
+            "references/scheduling.md",
             "commands/auto.md",
             "hooks/hooks.json",
         ):
@@ -88,20 +89,29 @@ class DistributionBuilderTests(unittest.TestCase):
         runtime_roots.extend(output / path.removeprefix("./") for path in json.loads(
             (output / ".claude-plugin/plugin.json").read_text(encoding="utf-8")
         )["skills"])
+        sources = [(path, True) for path in output.glob("*.md") if path.is_file()]
         for runtime_root in runtime_roots:
-            for source in runtime_root.rglob("*.md"):
-                for raw in MARKDOWN_LINK.findall(source.read_text(encoding="utf-8")):
-                    target = raw.strip().lstrip("<").rstrip(">").split("#", 1)[0]
-                    if target == "url" or not target or re.match(r"^[A-Za-z][A-Za-z0-9+.-]*:", target):
-                        continue
-                    resolved = (source.parent / target).resolve()
+            sources.extend((path, False) for path in runtime_root.rglob("*.md"))
+        for source, runtime_only in sources:
+            for raw in MARKDOWN_LINK.findall(source.read_text(encoding="utf-8")):
+                target = raw.strip().lstrip("<").rstrip(">").split("#", 1)[0]
+                if target == "url" or not target or re.match(r"^[A-Za-z][A-Za-z0-9+.-]*:", target):
+                    continue
+                resolved = (source.parent / target).resolve()
+                if runtime_only:
                     try:
-                        resolved.relative_to(output.resolve())
+                        relative = resolved.relative_to(output.resolve())
                     except ValueError:
+                        continue
+                    if not relative.parts or relative.parts[0] not in {"references", "scripts"}:
+                        continue
+                try:
+                    resolved.relative_to(output.resolve())
+                except ValueError:
+                    missing.append("%s -> %s" % (source.relative_to(output), target))
+                else:
+                    if not resolved.exists():
                         missing.append("%s -> %s" % (source.relative_to(output), target))
-                    else:
-                        if not resolved.exists():
-                            missing.append("%s -> %s" % (source.relative_to(output), target))
         self.assertEqual([], missing)
 
     def test_unknown_skill_fails(self):

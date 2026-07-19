@@ -7,7 +7,7 @@ as **proposals** for the next owner ritual. Nothing here grants new authority �
 a scheduled session is still an agent session:
 
 - registry writes stay `operation: propose`; canonical acceptance remains the
-  owner-run terminal step in [registry-event-protocol.md](../references/registry-event-protocol.md);
+  owner-run terminal step in [registry-event-protocol.md](registry-event-protocol.md);
 - auditors return `NOT_SCORED` when the deterministic runtime is unavailable;
 - network-mutating connectors (`resend.py`, `indexpush.py`) stay dry-run unless `--live`
   is deliberately configured — never put `--live` into an unattended schedule.
@@ -29,9 +29,21 @@ that is the contract working, not a failure.
 
 ## Cron (Linux / macOS)
 
+Create the private log directory once before installing either scheduler. Pre-create
+the files at mode `0600`, and keep the scheduler umasks below so deleted or rotated
+files are also recreated privately:
+
+```bash
+install -d -m 700 "$HOME/.local/log"
+touch "$HOME/.local/log/aaron-rank-tracker.log" \
+  "$HOME/.local/log/aaron-monitor.log" \
+  "$HOME/.local/log/aaron-monitor.err"
+chmod 600 "$HOME/.local/log"/aaron-*.log
+```
+
 ```cron
 # Weekly rank tracking, Mondays 07:30 — proposals only, log to a private file.
-30 7 * * 1  cd /path/to/project && /usr/local/bin/claude -p \
+30 7 * * 1  umask 077 && cd /path/to/project && /usr/local/bin/claude -p \
   "Run rank-tracker for our priority keywords; save results as a WARM artifact and submit any durable truth as registry proposals." \
   >> "$HOME/.local/log/aaron-rank-tracker.log" 2>&1
 ```
@@ -53,6 +65,8 @@ that is the contract working, not a failure.
     <string>Run performance-monitor on the last 7 days; save a WARM artifact; proposals only.</string>
   </array>
   <key>WorkingDirectory</key><string>/path/to/project</string>
+  <!-- launchd uses decimal integers: 63 is octal 077. -->
+  <key>Umask</key><integer>63</integer>
   <key>StartCalendarInterval</key>
   <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>7</integer><key>Minute</key><integer>45</integer></dict>
   <key>StandardOutPath</key><string>/Users/you/.local/log/aaron-monitor.log</string>
@@ -71,10 +85,11 @@ Scheduled runs produce proposals; the owner ritual resolves them. Two existing
 signals keep that queue visible instead of silently stalling:
 
 - the SessionStart hook reports **pending-proposal intake age** (nudges when the
-  oldest verifiable pending proposal exceeds 14 days) and **projection lag**;
+  oldest verifiable pending proposal exceeds 14 days), **projection health**
+  (behind/missing/invalid/ahead), and unverifiable event streams;
 - `python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" pending` gives the same
   report on demand, per registry, read-only (resolve `AARON_SKILLS_ROOT` per
-  [runtime-invocation.md](../references/runtime-invocation.md)).
+  [runtime-invocation.md](runtime-invocation.md)).
 
 A healthy cadence is therefore: scheduled monitors propose → next session surfaces
 the queue → owner ritual accepts/rejects → projections rebuild → the next monitor
