@@ -76,6 +76,31 @@
       "id": "local-links",
       "command": ["{python}", "scripts/check-local-links.py"],
       "timeout_seconds": 60
+    },
+    {
+      "id": "context-budget",
+      "command": ["{python}", "scripts/check-context-budget.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "context-budget-regressions",
+      "command": ["{python}", "tests/test_context_budget.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "routing-lint",
+      "command": ["{python}", "scripts/check-routing.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "routing-lint-regressions",
+      "command": ["{python}", "tests/test_routing.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "audit-trends-regressions",
+      "command": ["{python}", "tests/test_audit_trends.py"],
+      "timeout_seconds": 60
     }
   ]
 }

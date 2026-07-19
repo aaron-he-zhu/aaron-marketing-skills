@@ -118,6 +118,30 @@ A standalone install bundles **only each skill's folder** (its `SKILL.md` + own 
 
 **Positioning in one line**: Claude Code plugin = the operated product (gates checked by deterministic runtimes plus bounded lifecycle hooks, memory persisted, connectors wired, registry proposals flowing into the owner-run acceptance ritual); any other host = the same 120 authored procedures, with deterministic scoring, registry runtime access, hooks, and connectors degraded exactly as listed above. Canonical registry acceptance is owner-run in every form — no install grants an agent session that authority.
 
+## The write-before validation contract (hookless hosts)
+
+The Claude Code Artifact Gate is a hook; hosts without a PreToolUse equivalent enforce nothing at write time. The gate's *logic* is host-agnostic, though — `scripts/validate-audit-artifact.py` is a stdlib CLI. Any host (or a human operator) can hold the same contract by validating **before** the write lands:
+
+```bash
+AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"
+# 1. Assemble the complete artifact content; stage it as a draft file.
+# 2. Validate the draft against its intended sink path (structure + reserved path):
+python3 "$AARON_SKILLS_ROOT/scripts/validate-audit-artifact.py" \
+  /path/to/draft.md --relative-path memory/audits/<class>/<file>.md
+# 3. Only on exit 0, pass the exact validated bytes to the host's full-content writer.
+# 4. Revalidate the landed target before claiming it was saved:
+python3 "$AARON_SKILLS_ROOT/scripts/validate-audit-artifact.py" \
+  memory/audits/<class>/<file>.md --relative-path memory/audits/<class>/<file>.md
+```
+
+Rules that make this equivalent to the hook gate:
+
+- Validate **content**, not intent: the bytes validated in step 2 must be the bytes written in step 3 — no post-validation edits, appends, or template re-renders.
+- Exit code is the verdict: non-zero means do not write. A prose summary of validation errors is not permission to proceed.
+- Validation is structure, not authorization: a passing draft still needs the user's write permission (`references/auditor-runbook.md` §3), and the multi-veto BLOCK / NOT_SCORED semantics in `references/skill-contract.md` are unchanged.
+- Sweep form for batch/audit reviews: `--scan-root memory/audits` validates every artifact in the reserved sink (what the Stop hook runs on Claude Code).
+- Hosts with their own hook/pretool systems (OpenClaw, Hermes, Cursor, …) can call the same two commands from their extension point; the CLI is network-free and stdlib-only.
+
 ## For contributors
 
 - Never mirror skills into `.agents/skills/` or `.claude/skills/` inside this repo — manifest-driven discovery already covers every host, and committed symlinks would not survive iCloud/Windows checkouts.

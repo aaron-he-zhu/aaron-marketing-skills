@@ -24,6 +24,7 @@
       "references/system-catalog.json"
     ],
     "runtime_scripts": [
+      "scripts/audit-trends.py",
       "scripts/check-memory-private.py",
       "scripts/registry-events.py",
       "scripts/rubric-score.py",

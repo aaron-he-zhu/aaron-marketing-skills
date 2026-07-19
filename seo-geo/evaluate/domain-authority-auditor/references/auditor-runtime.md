@@ -6,7 +6,7 @@
 - **Catalog version:** 18.0.0
 - **Framework:** CITE
 - **Auditor:** domain-authority-auditor
-- **Source digest:** `sha256:36f4108c9ac2d6057fecdc8dde4817c6545f4dd2e9d4dae0a8246503559b887e`
+- **Source digest:** `sha256:6eb213ca78b35e7afb9fbb453defc0b3fe3bd573efc52765c8fe515db2f967c4`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
