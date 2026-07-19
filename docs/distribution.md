@@ -9,7 +9,13 @@ distributed?" is `scripts/registry-status.sh`.
 > ClawHub package source via `publish-package.sh --from-build` — adopted at
 > v17.0.0 when the full git archive first exceeded ClawHub's upload limit
 > (413). The GitHub-source mode remains the default for as long as it fits.
-> The profile's manifest and link-closure are CI-checked.
+> The profile's manifest and link-closure are CI-checked. An optional
+> `--slim-frontmatter` flag strips the publishing-only frontmatter keys
+> (`slug`/`displayName`/`summary` — SkillHub listing identity used only by the
+> owner-run publish step) from the shipped SKILL.md files, trimming per-load
+> frontmatter cost on every installed host; routing surfaces
+> (`description`/`when_to_use`) and host extensions (`metadata.hermes`/
+> `openclaw`) are untouched.
 
 ## Channels
 

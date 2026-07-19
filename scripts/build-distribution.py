@@ -135,7 +135,7 @@ def prepare_destination(destination):
     destination.mkdir(parents=True, exist_ok=True)
 
 
-def build_plugin(destination, catalog, manifest):
+def build_plugin(destination, catalog, manifest, slim_frontmatter=False):
     profile = manifest["plugin"]
     skills = skill_paths(catalog)
     entries = profile["root_files"] + profile["trees"]
@@ -153,6 +153,34 @@ def build_plugin(destination, catalog, manifest):
     for forbidden in manifest["excluded_top_level"]:
         if (destination / forbidden).exists():
             raise DistributionError("maintenance path leaked into plugin: %s" % forbidden)
+    if slim_frontmatter:
+        for skill in skills:
+            slim_skill_frontmatter(destination / skill / "SKILL.md")
+
+
+# Frontmatter keys that exist only for publishing-time registries (SkillHub's
+# `slug`/`displayName`/`summary` listing identity). They are dead weight on
+# every installed host: `skillhub publish` runs from the source repo, so the
+# distribution can drop them. Host extensions (metadata.hermes/openclaw) and
+# the routing surface (description/when_to_use) stay untouched.
+SLIM_FRONTMATTER_KEYS = ("slug", "displayName", "summary")
+
+
+def slim_skill_frontmatter(skill_file):
+    lines = skill_file.read_text(encoding="utf-8").splitlines(keepends=True)
+    if not lines or lines[0].strip() != "---":
+        raise DistributionError("cannot slim frontmatter: %s has no frontmatter" % skill_file)
+    try:
+        end = next(i for i in range(1, len(lines)) if lines[i].strip() == "---")
+    except StopIteration as exc:
+        raise DistributionError("cannot slim frontmatter: %s is unterminated" % skill_file) from exc
+    kept = [line for line in lines[1:end]
+            if not any(line.startswith(key + ":") for key in SLIM_FRONTMATTER_KEYS)]
+    required = ("name:", "version:", "description:", "metadata:")
+    if any(not any(k.startswith(prefix) for k in kept) for prefix in required):
+        raise DistributionError(
+            "slimming %s would drop a required frontmatter key — refusing" % skill_file)
+    skill_file.write_text("".join([lines[0], *kept, *lines[end:]]), encoding="utf-8")
 
 
 def build_standalone(destination, catalog, requested):
@@ -177,13 +205,22 @@ def main(argv=None):
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--plugin", action="store_true")
     group.add_argument("--skill", metavar="DISCIPLINE/PHASE/SKILL")
+    parser.add_argument(
+        "--slim-frontmatter",
+        action="store_true",
+        help="Plugin builds only: strip publishing-only frontmatter keys "
+             "(slug/displayName/summary) from shipped SKILL.md files.",
+    )
     args = parser.parse_args(argv)
     try:
         catalog = load_json(CATALOG)
         manifest = load_json(MANIFEST)
         prepare_destination(args.output)
+        if args.slim_frontmatter and not args.plugin:
+            raise DistributionError("--slim-frontmatter applies to --plugin builds only")
         if args.plugin:
-            build_plugin(args.output, catalog, manifest)
+            build_plugin(args.output, catalog, manifest,
+                         slim_frontmatter=args.slim_frontmatter)
             kind = "plugin"
         else:
             build_standalone(args.output, catalog, args.skill)

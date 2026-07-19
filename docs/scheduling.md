@@ -1,0 +1,81 @@
+# Scheduled Runs — episodic cadence for always-on disciplines
+
+The L2 channel disciplines are "always-on", but the bundle itself runs only when a
+host session runs it. This page is the bridge: OS-level schedulers that wake an
+agent session on a cadence, run one monitoring-class skill, and leave durable truth
+as **proposals** for the next owner ritual. Nothing here grants new authority —
+a scheduled session is still an agent session:
+
+- registry writes stay `operation: propose`; canonical acceptance remains the
+  owner-run terminal step in [registry-event-protocol.md](../references/registry-event-protocol.md);
+- auditors return `NOT_SCORED` when the deterministic runtime is unavailable;
+- network-mutating connectors (`resend.py`, `indexpush.py`) stay dry-run unless `--live`
+  is deliberately configured — never put `--live` into an unattended schedule.
+
+## What to schedule (and what not to)
+
+Schedule **monitoring/evaluate-class** skills — read-mostly, proposal-producing:
+
+| Cadence | Example skills |
+|---------|----------------|
+| Daily | `inbox-placement-monitor`, `budget-pacing-monitor`, `deliverability-qa` |
+| Weekly | `rank-tracker`, `performance-monitor`, `social-pulse-monitor`, `competitor-tracker` |
+| Monthly | `domain-authority-auditor`, `content-quality-auditor` (gates), `memory-management` archive review |
+
+Do **not** schedule builders (publication-shaped output), registry owners (owner
+ritual is human), or anything whose first action is an external side effect. A
+scheduled run that hits an authority boundary stops and surfaces `NEEDS_INPUT` —
+that is the contract working, not a failure.
+
+## Cron (Linux / macOS)
+
+```cron
+# Weekly rank tracking, Mondays 07:30 — proposals only, log to a private file.
+30 7 * * 1  cd /path/to/project && /usr/local/bin/claude -p \
+  "Run rank-tracker for our priority keywords; save results as a WARM artifact and submit any durable truth as registry proposals." \
+  >> "$HOME/.local/log/aaron-rank-tracker.log" 2>&1
+```
+
+## launchd (macOS)
+
+`~/Library/LaunchAgents/com.aaron.marketing.weekly-monitor.plist`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.aaron.marketing.weekly-monitor</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/local/bin/claude</string>
+    <string>-p</string>
+    <string>Run performance-monitor on the last 7 days; save a WARM artifact; proposals only.</string>
+  </array>
+  <key>WorkingDirectory</key><string>/path/to/project</string>
+  <key>StartCalendarInterval</key>
+  <dict><key>Weekday</key><integer>1</integer><key>Hour</key><integer>7</integer><key>Minute</key><integer>45</integer></dict>
+  <key>StandardOutPath</key><string>/Users/you/.local/log/aaron-monitor.log</string>
+  <key>StandardErrorPath</key><string>/Users/you/.local/log/aaron-monitor.err</string>
+</dict>
+</plist>
+```
+
+```bash
+launchctl load ~/Library/LaunchAgents/com.aaron.marketing.weekly-monitor.plist
+```
+
+## The loop closes in the next interactive session
+
+Scheduled runs produce proposals; the owner ritual resolves them. Two existing
+signals keep that queue visible instead of silently stalling:
+
+- the SessionStart hook reports **pending-proposal intake age** (nudges when the
+  oldest verifiable pending proposal exceeds 14 days) and **projection lag**;
+- `python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" pending` gives the same
+  report on demand, per registry, read-only (resolve `AARON_SKILLS_ROOT` per
+  [runtime-invocation.md](../references/runtime-invocation.md)).
+
+A healthy cadence is therefore: scheduled monitors propose → next session surfaces
+the queue → owner ritual accepts/rejects → projections rebuild → the next monitor
+reads fresh state.

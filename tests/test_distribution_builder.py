@@ -58,6 +58,29 @@ class DistributionBuilderTests(unittest.TestCase):
         self.assertFalse((output / "scripts").exists())
         self.assertFalse((output / ".claude-plugin").exists())
 
+    def test_slim_frontmatter_strips_publishing_keys_only(self):
+        output = self.build("--plugin", "--slim-frontmatter")
+        skills = list(output.glob("*/*/*/SKILL.md")) + list(output.glob("protocol/*/SKILL.md"))
+        self.assertEqual(120, len(skills))
+        for skill in skills:
+            frontmatter = skill.read_text(encoding="utf-8").split("---")[1]
+            for stripped in ("slug:", "displayName:", "summary:"):
+                self.assertNotIn(stripped, frontmatter, skill)
+            for required in ("name:", "version:", "description:", "metadata:",
+                             "license:", "compatibility:"):
+                self.assertIn(required, frontmatter, skill)
+
+    def test_slim_frontmatter_rejects_standalone(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        output = Path(temporary.name) / "distribution"
+        result = subprocess.run(
+            [sys.executable, str(BUILDER), "--output", str(output),
+             "--skill", "narrative/evaluate/narrative-quality-auditor", "--slim-frontmatter"],
+            cwd=ROOT, capture_output=True, text=True)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("--slim-frontmatter applies to --plugin builds only", result.stderr)
+
     def test_plugin_runtime_markdown_links_are_closed(self):
         output = self.build("--plugin")
         missing = []

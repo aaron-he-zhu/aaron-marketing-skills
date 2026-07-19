@@ -104,6 +104,40 @@ The `scripts/connectors/*.py` helpers make outbound HTTP(S) requests through one
   escalation is a deliberate, visible step. Index push uses site-bound ownership material and
   does not auto-retry mutation endpoints without idempotency guarantees.
 
+## OS-level sandboxing (recommended for `--live` and scheduled runs)
+
+The hooks are lifecycle checks, not an OS sandbox — model self-restraint plus Bash
+hooks is one layer, not a boundary. Two runs deserve a real OS containment layer:
+`--live` connector mutations, and unattended scheduled runs ([docs/scheduling.md](docs/scheduling.md)).
+Both are recommended, optional hardening — the bundle works without them.
+
+- **macOS (seatbelt)**: deny-by-default profile that allows only outbound network
+  and the project directory, then run the connector under it:
+
+  ```bash
+  cat > /tmp/aaron-live.sb <<'EOF'
+  (version 1) (deny default)
+  (allow network-outbound)
+  (allow file-read* file-write* (subpath "/path/to/project"))
+  (allow process-exec)
+  EOF
+  sandbox-exec -f /tmp/aaron-live.sb python3 scripts/connectors/resend.py send --live ...
+  ```
+
+- **Linux (bubblewrap)**: same shape — unshare everything, bind only the project,
+  keep network (connectors need it), and drop write access outside the bind:
+
+  ```bash
+  bwrap --unshare-all --share-net --die-with-parent \
+    --robind /usr /usr --robind /lib /lib --robind /lib64 /lib64 \
+    --bind /path/to/project /path/to/project --dev /dev \
+    python3 scripts/connectors/resend.py send --live ...
+  ```
+
+- Keep `AARON_REGISTRY_HOST_KEY` outside any sandbox that runs agent-launched code:
+  the Owner Ritual stays in the owner's own terminal, sandboxing the agent side
+  never substitutes for that separation.
+
 ## Registry, memory, and artifact integrity
 
 - `scripts/registry-events.py` is the only supported NDJSON write path. It validates bounded JSON,

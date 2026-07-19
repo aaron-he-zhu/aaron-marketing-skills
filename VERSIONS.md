@@ -127,7 +127,7 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | launch-registry | protocol | 18.0.0 | 2026-07-12 |
 | channel-registry | protocol | 18.0.0 | 2026-07-12 |
 | narrative-registry | protocol | 18.0.0 | 2026-07-12 |
-| memory-management | protocol | 18.0.0 | 2026-07-12 |
+| memory-management | protocol | 18.0.1 | 2026-07-18 |
 
 ## Changelog
 

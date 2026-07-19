@@ -10,6 +10,7 @@ This document defines the v18 project-state architecture. Runtime state is priva
 | Registry projection | Current accepted state | `memory/projections/<registry>.json` | Rebuilt atomically from events |
 | Human registry view | Presentation only | Registry-owned paths under `memory/` | Regenerated from projection; never authoritative |
 | HOT index | Retrieval pointer | `memory/hot-cache.md` | 80 lines and 25 KB maximum |
+| Session checkpoint | Resume pointer | `memory/session-checkpoint.md` | 40 lines and 8 KB maximum; refreshed after each handoff; untrusted hint, re-verified against live projections |
 | WARM artifact | Dated working evidence | Discipline/skill path under `memory/` | On-demand; archive review after 90 days |
 | COLD artifact | Historical evidence | `memory/archive/` | Read only when requested; no automatic deletion |
 | Approved decision | User governance input | `memory/decisions.md` | Requires approval provenance; cannot override a live safety control |
