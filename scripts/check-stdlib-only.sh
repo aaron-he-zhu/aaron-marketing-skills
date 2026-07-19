@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Dependency-creep guard — the moat protector.
 #
-# This project's contract: the ONLY allowed code is the bash validator + Python
-# *stdlib-only* connector/check helpers. No pip / third-party deps, ever. This
-# guard fails CLOSED: every top-level module imported by scripts/*.py and
-# scripts/connectors/*.py and scripts/adapters/*.py must be on the ALLOWLIST — (a) the Python standard
+# This project's core plugin/distribution and maintenance-Python contract: every
+# guarded Python surface below is *stdlib-only*. Isolated, non-distributed eval
+# probes are outside this guard. The guard fails CLOSED: every top-level
+# module imported by scripts/*.py, scripts/connectors/*.py,
+# scripts/adapters/*.py, and tests/*.py must be on the ALLOWLIST — (a) the Python standard
 # library (sys.stdlib_module_names, queried from the interpreter at runtime) or
 # (b) a local module in those same directories (derived from the .py filenames,
 # e.g. _http, robots). Anything else — numpy, requests, yaml, or a brand-new
@@ -68,10 +69,10 @@ for node in ast.walk(tree):
 done
 
 if [ -n "$violations" ]; then
-  echo "DEPENDENCY-CREEP VIOLATION — non-allowlisted import(s) found under scripts/:"
+  echo "DEPENDENCY-CREEP VIOLATION — non-allowlisted import(s) found in a guarded core/maintenance Python surface:"
   printf '%s' "$violations"
   echo ""
-  echo "Only the Python standard library (plus the repo's own scripts/ modules) is allowed. Reimplement with stdlib (urllib, json, re, csv, html.parser, ...) or drop the dependency."
+  echo "Only the Python standard library (plus the repo's own local modules) is allowed on guarded scripts/tests surfaces. Reimplement with stdlib (urllib, json, re, csv, html.parser, ...) or drop the dependency."
   exit 1
 fi
 
@@ -90,5 +91,5 @@ if [ -n "$ad_hits" ]; then
   exit 1
 fi
 
-echo "moat guard clean — no third-party imports under scripts/, no required keyed ad APIs in ad/."
+echo "core/distribution moat guard clean — no third-party imports in guarded scripts/tests, no required keyed ad APIs in ad/."
 exit 0

@@ -657,7 +657,7 @@ This source repository contains both runtime and maintenance assets. User distri
 
 ## Design philosophy
 
-- **Skills are content.** Code stays in small Bash/Python-stdlib validators, deterministic runtimes, hooks, connectors, and maintenance guards. No third-party / `pip` dependencies, ever — enforced by a dependency-creep guard.
+- **Skills are content.** Core plugin/distribution and repository-maintenance code stays in small Bash/Python-stdlib validators, deterministic runtimes, hooks, connectors, and maintenance guards. No third-party / `pip` dependencies are permitted on those shipped or guard-scanned Python surfaces — enforced by a dependency-creep guard. Isolated probes under `evals/` are excluded from distributions and may carry a locked, path-scoped development toolchain.
 - **Keyless first.** Every `~~category` has a free/own-data recipe; MCP and paid tools are pure convenience.
 - **Surgical & MECE.** Each skill owns one job with a crisp scope boundary; overlapping work ships as a *mode* of an existing skill rather than a new thin skill. Registries curate, gates judge, analyzers feed gates.
 - **No invented numbers.** Skills label every figure Measured / User-provided / Estimated and ship an AI-slop / banned-phrase detector.

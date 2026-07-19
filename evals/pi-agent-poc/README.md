@@ -54,6 +54,12 @@ Construction owns an exact `new InMemorySessionRepo()` internally. The public co
 
 ## Run the probe
 
+Local execution is manual. Automated execution is limited to the path-isolated
+[`pi-agent-poc.yml`](../../.github/workflows/pi-agent-poc.yml) workflow, which runs only when this
+directory or that workflow changes. The root `validate-skill.yml` job—including its
+credential-free semantic-profile checks—does not install or execute this PoC, so ordinary root CI
+does not install its 96-package dependency graph.
+
 Use Node `>=22.19.0` and stay inside this directory:
 
 ```bash
