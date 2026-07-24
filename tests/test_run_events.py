@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import tempfile
 import threading
+import time
 import unittest
 import uuid
 from unittest import mock
@@ -121,6 +122,55 @@ class RunEventTests(unittest.TestCase):
     @staticmethod
     def digest(path):
         return hashlib.sha256(path.read_bytes()).hexdigest()
+
+    def communicate_process_group(self, processes, timeout=60):
+        """Collect one started process group and always reap every child on failure."""
+        deadline = time.monotonic() + timeout
+        results = {}
+        failure = None
+        try:
+            for process in processes:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    raise subprocess.TimeoutExpired(process.args, timeout)
+                stdout, stderr = process.communicate(timeout=remaining)
+                results[process] = (stdout, stderr, process.returncode)
+        except Exception as exc:
+            failure = exc
+
+        if failure is not None:
+            for process in processes:
+                if process.poll() is None:
+                    try:
+                        process.terminate()
+                    except ProcessLookupError:
+                        pass
+            for process in processes:
+                if process in results:
+                    continue
+                try:
+                    stdout, stderr = process.communicate(timeout=5)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    stdout, stderr = process.communicate()
+                results[process] = (stdout, stderr, process.returncode)
+            if isinstance(failure, subprocess.TimeoutExpired):
+                details = [
+                    {
+                        "args": process.args,
+                        "returncode": results[process][2],
+                        "stdout": results[process][0],
+                        "stderr": results[process][1],
+                    }
+                    for process in processes
+                ]
+                self.fail(
+                    "multiprocess commands exceeded the %ds group deadline: %r"
+                    % (timeout, details)
+                )
+            raise failure
+
+        return [results[process] for process in processes]
 
     def version_skew_bundle(self, target_skill, skill_version):
         bundle = self.root / "version-skew-bundle"
@@ -1791,6 +1841,17 @@ class RunEventTests(unittest.TestCase):
 
     def test_multiprocess_appends_keep_one_hash_chain(self):
         root_event = self.start()["event"]
+        # This case targets coordinator/hash-chain behavior. Privacy probing has
+        # dedicated tests, so give these children a deterministic non-Git root.
+        stub_bin = self.root / "test-bin"
+        stub_bin.mkdir()
+        git_stub = stub_bin / "git"
+        git_stub.write_text("#!/bin/sh\nexit 1\n", encoding="utf-8")
+        git_stub.chmod(0o700)
+        child_environment = dict(os.environ)
+        child_environment["PATH"] = (
+            str(stub_bin) + os.pathsep + child_environment.get("PATH", "")
+        )
         processes = []
         for index in range(6):
             request_path = self.write_json(
@@ -1806,8 +1867,9 @@ class RunEventTests(unittest.TestCase):
                     "--root", str(self.root), "append", self.run_id, str(request_path),
                 ],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+                env=child_environment,
             ))
-        results = [process.communicate(timeout=20) + (process.returncode,) for process in processes]
+        results = self.communicate_process_group(processes)
         self.assertTrue(all(returncode == 0 for _, _, returncode in results), results)
         events = runtime.load_events(self.root, self.run_id)
         self.assertEqual(7, len(events))
