@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import tempfile
 import threading
@@ -121,15 +122,45 @@ class RunEventTests(unittest.TestCase):
     def digest(path):
         return hashlib.sha256(path.read_bytes()).hexdigest()
 
+    def version_skew_bundle(self, target_skill, skill_version):
+        bundle = self.root / "version-skew-bundle"
+        catalog_source = ROOT / "references" / "system-catalog.json"
+        catalog = json.loads(catalog_source.read_text(encoding="utf-8"))
+        _version, locations, _commands = context_runtime._catalog_index(catalog)
+        skill_relative = locations[target_skill]
+
+        catalog_target = bundle / "references" / "system-catalog.json"
+        catalog_target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(catalog_source, catalog_target)
+        skill_target = bundle / skill_relative
+        skill_target.parent.mkdir(parents=True, exist_ok=True)
+        lines = (ROOT / skill_relative).read_text(
+            encoding="utf-8"
+        ).splitlines(keepends=True)
+        version_lines = [
+            offset for offset, line in enumerate(lines)
+            if line.startswith("version:")
+        ]
+        self.assertEqual(1, len(version_lines))
+        offset = version_lines[0]
+        newline = "\n" if lines[offset].endswith("\n") else ""
+        lines[offset] = 'version: "%s"%s' % (skill_version, newline)
+        skill_target.write_text("".join(lines), encoding="utf-8")
+        validator_target = bundle / "scripts" / "context-resolver.py"
+        validator_target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / "scripts" / "context-resolver.py", validator_target)
+        return bundle, catalog["architecture_version"]
+
     def context_manifest_value(self, run_id=None, turn_id="turn-1", candidates=None,
-                               target_skill="content-writer"):
+                               target_skill="content-writer", command="seo-geo",
+                               bundle_root=ROOT):
         request = {
             "schema_version": "1.0",
             "run_id": run_id or self.run_id,
             "turn_id": turn_id,
             "as_of": "2026-07-19T10:00:00Z",
             "route": {
-                "command": "seo-geo",
+                "command": command,
                 "target_skill": target_skill,
                 "reason_code": "fixture",
                 "scenario_shards": [],
@@ -143,7 +174,7 @@ class RunEventTests(unittest.TestCase):
             "registry_offsets": self.offsets(None),
             "candidates": list(candidates or []),
         }
-        return context_runtime.resolve_context(request, ROOT, self.root)
+        return context_runtime.resolve_context(request, bundle_root, self.root)
 
     def context_reference(self, value=None):
         value = value or self.context_manifest_value()
@@ -175,7 +206,7 @@ class RunEventTests(unittest.TestCase):
             "created_at": "2026-07-19T10:01:00Z",
             "skill": {
                 "name": context_document["route"]["target_skill"],
-                "version": context_document["route"]["catalog_version"],
+                "version": context_document["route"]["skill_version"],
                 "contract_sha256": context_document["route"]["skill_sha256"],
             },
             "host": {
@@ -239,7 +270,7 @@ class RunEventTests(unittest.TestCase):
             "evidence_mode": "simulated",
             "route": {
                 "skill": context_document["route"]["target_skill"],
-                "version": context_document["route"]["catalog_version"],
+                "version": context_document["route"]["skill_version"],
                 "reason_code": context_document["route"]["reason_code"],
             },
             "context_manifests": [context],
@@ -892,6 +923,64 @@ class RunEventTests(unittest.TestCase):
             runtime.append_event(
                 self.root, self.run_id,
                 self.request("too-late", parent=finished["event"]["event_id"]),
+            )
+
+    def test_snapshot_and_envelope_bind_skill_version_not_catalog_version(self):
+        fixture_skill_version = "18.0.1"
+        bundle, catalog_version = self.version_skew_bundle(
+            "voice-dossier-builder", fixture_skill_version
+        )
+        root_event = self.start()["event"]
+        turn = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-version-split", event_type="turn_started",
+                parent=root_event["event_id"], turn_id="turn-1", status="started",
+                subject={"kind": "turn", "ref": "turn-1"},
+            ),
+        )
+        self.select_route(
+            key="route-version-split", parent=turn["event"]["event_id"],
+            target="voice-dossier-builder", command="social",
+        )
+        context = self.context_reference(
+            self.context_manifest_value(
+                target_skill="voice-dossier-builder", command="social",
+                bundle_root=bundle,
+            )
+        )
+        context_document = json.loads(
+            (self.root / context["ref"]).read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            catalog_version, context_document["route"]["catalog_version"]
+        )
+        self.assertEqual(
+            fixture_skill_version, context_document["route"]["skill_version"]
+        )
+        self.assertNotEqual(
+            context_document["route"]["catalog_version"],
+            context_document["route"]["skill_version"],
+        )
+
+        fixture_runtime_path = bundle / "scripts" / "run-events.py"
+        with mock.patch.object(runtime, "__file__", str(fixture_runtime_path)):
+            snapshot = runtime.write_snapshot(
+                self.root, self.run_id, self.snapshot_value(context),
+            )
+            stored_snapshot = json.loads(
+                (self.root / snapshot["artifact"]["ref"]).read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                fixture_skill_version, stored_snapshot["skill"]["version"]
+            )
+            envelope = self.envelope_value(context, None, snapshot["projection"])
+            finished = runtime.finish_run(self.root, self.run_id, envelope)
+            stored_envelope = json.loads(
+                (self.root / finished["artifact"]["ref"]).read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                fixture_skill_version, stored_envelope["route"]["version"]
             )
 
     def test_snapshot_binds_live_source_route_contract_offsets_and_private_ref(self):

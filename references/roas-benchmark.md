@@ -57,7 +57,7 @@ For `R=75 O=80 A=85 S=78`, direct response is `78`; prospecting is `80`; increme
 | `ROAS-O2` | The offer violates an applicable platform/restricted-category rule. |
 | `ROAS-A1` | Placement evidence shows a material brand-safety breach. |
 
-No data or no access is `unknown`, producing `NEEDS_INPUT/UNDECIDED`; it is not a veto. iOS/ATT modeled data may be partial or weak evidence but is not automatically a failure. One verified veto caps the final score at 59; two or more produce `verdict: BLOCK` and no final score.
+No data or no access is `unknown`, producing `NEEDS_INPUT/UNDECIDED`; it is not a veto. iOS/ATT modeled data may be partial or weak evidence but is not automatically a failure. Only an `ad-account-auditor` invocation qualifies veto evidence and applies the truth table: one verified veto caps the final score at 59; two or more produce `verdict: BLOCK` and no final score. Every other skill reports potential ROAS control evidence and hands it off without calling it a verified veto or emitting a gate verdict.
 
 Premature scaling and learning-phase disruption are high-severity `S2` findings, not automatic vetoes.
 

@@ -41,7 +41,7 @@ body
 
 VERSIONS_MD = """# Versions
 
-**Current release**: `{bundle}`
+**Current release**: `{bundle}` (2026-01-01).
 
 ### v{bundle} — Fixture release (2026-01-01)
 
@@ -90,7 +90,12 @@ def build_fixture(root: Path) -> None:
     write(root, "references/system-catalog.json", json.dumps({
         "bundle_version": BUNDLE,
         "commands": ["auto", "narrative"],
-        "disciplines": {"narrative": {"phases": {"trace": ["fixture-skill"]}}},
+        "disciplines": {
+            "narrative": {
+                "phase_order": ["trace"],
+                "phases": {"trace": ["fixture-skill"]},
+            },
+        },
         "protocol": {"skills": ["protocol-skill"]},
     }))
     write(root, "references/framework-catalog.json",
@@ -136,15 +141,108 @@ def build_fixture(root: Path) -> None:
     shutil.copy(GUARD, root / "scripts" / "check-versions.sh")
 
 
+def build_release_fixture(root: Path) -> None:
+    """Build the exact 120-skill cohort required by release-only mode."""
+    build_fixture(root)
+    (root / "narrative/trace/fixture-skill/SKILL.md").unlink()
+    narrative_skills = ["fixture-skill-%03d" % index for index in range(1, 120)]
+    skill_paths = [
+        "./narrative/trace/%s" % name for name in narrative_skills
+    ] + ["./protocol/protocol-skill"]
+    write(root, ".claude-plugin/plugin.json", json.dumps({
+        "version": BUNDLE,
+        "skills": skill_paths,
+    }, indent=2) + "\n")
+    write(root, "references/system-catalog.json", json.dumps({
+        "bundle_version": BUNDLE,
+        "commands": ["auto", "narrative"],
+        "disciplines": {
+            "narrative": {
+                "phase_order": ["trace"],
+                "phases": {"trace": narrative_skills},
+            },
+        },
+        "protocol": {"skills": ["protocol-skill"]},
+    }))
+    for name in narrative_skills:
+        write(
+            root,
+            "narrative/trace/%s/SKILL.md" % name,
+            SKILL_MD.format(name=name, bundle=BUNDLE),
+        )
+    rows = [
+        "| %s | narrative | %s | 2026-01-01 |" % (name, BUNDLE)
+        for name in narrative_skills
+    ]
+    rows.append("| protocol-skill | protocol | %s | 2026-01-01 |" % BUNDLE)
+    write(
+        root,
+        "VERSIONS.md",
+        "# Versions\n\n"
+        "**Current release**: `%s` (2026-01-01).\n\n"
+        "### v%s — Fixture release (2026-01-01)\n\n"
+        "| skill | category | version | date |\n"
+        "|-------|----------|---------|------|\n%s\n"
+        % (BUNDLE, BUNDLE, "\n".join(rows)),
+    )
+    topology_en = (
+        "**120 marketing skills** in this bundle.\n\n"
+        "| Layer | Skills | Loop | Frameworks | Entry |\n"
+        "|-------|--------|------|------------|-------|\n"
+        "| L1 | 119 | T | F | `/aaron-marketing:narrative` |\n"
+        "| L4 | 1 | - | - | — |\n\n"
+        "| `/aaron-marketing:auto` | auto |\n"
+        "| `/aaron-marketing:narrative` | narrative |\n"
+    )
+    topology_zh = (
+        "**120 个营销技能**。\n\n"
+        "| 层 | 技能 | 循环 | 框架 | 入口 |\n"
+        "|----|------|------|------|------|\n"
+        "| L1 | 119 | T | F | `/aaron-marketing:narrative` |\n"
+        "| L4 | 1 | - | - | — |\n\n"
+        "| `/aaron-marketing:auto` | auto |\n"
+        "| `/aaron-marketing:narrative` | narrative |\n"
+    )
+    write(
+        root,
+        "README.md",
+        "![v](https://img.shields.io/badge/version-%s-orange)\n\n"
+        "- **[VERSIONS.md](VERSIONS.md)** — changelog (current bundle: `%s`).\n\n"
+        "current bundle: `%s`\n\n%s" % (BUNDLE, BUNDLE, BUNDLE, topology_en),
+    )
+    write(
+        root,
+        "docs/README.zh.md",
+        "![v](https://img.shields.io/badge/version-%s-orange)\n\n"
+        "- **[VERSIONS.md](VERSIONS.md)** — 更新日志（当前包：`%s`）。\n\n"
+        "当前包：`%s`\n\n%s" % (BUNDLE, BUNDLE, BUNDLE, topology_zh),
+    )
+    all_names = narrative_skills + ["protocol-skill"]
+    write(
+        root,
+        "CLAUDE.md",
+        "Current bundle version: `%s`\n\n%s\n" % (BUNDLE, "\n".join(all_names)),
+    )
+    write(root, ".github/repo-about.json",
+          json.dumps({"description": "120 fixture skills"}))
+    skill_inventory = "\n".join(narrative_skills)
+    write(root, "commands/narrative.md", "Route:\n%s\n" % skill_inventory)
+    write(root, "narrative/README.md", "skills:\n%s\n" % skill_inventory)
+    write(root, "narrative/README.zh.md", "技能:\n%s\n" % skill_inventory)
+
+
 class CheckVersionsTests(unittest.TestCase):
-    def run_guard(self, mutate=None):
+    def run_guard(self, mutate=None, args=None, release_fixture=False):
         with tempfile.TemporaryDirectory() as tmp:
             fixture = Path(tmp)
-            build_fixture(fixture)
+            if release_fixture:
+                build_release_fixture(fixture)
+            else:
+                build_fixture(fixture)
             if mutate is not None:
                 mutate(fixture)
             result = subprocess.run(
-                ["bash", "scripts/check-versions.sh"],
+                ["bash", "scripts/check-versions.sh", *(args or [])],
                 cwd=fixture, capture_output=True, text=True,
             )
             return result.returncode, result.stdout + result.stderr
@@ -220,11 +318,175 @@ class CheckVersionsTests(unittest.TestCase):
         def mutate(root):
             catalog = json.loads(
                 (root / "references/system-catalog.json").read_text(encoding="utf-8"))
-            catalog["disciplines"]["podcast"] = {"phases": {"plan": []}}
+            catalog["disciplines"]["podcast"] = {
+                "phase_order": ["plan"],
+                "phases": {"plan": []},
+            }
             write(root, "references/system-catalog.json", json.dumps(catalog))
         code, out = self.run_guard(mutate)
         self.assertEqual(1, code, out)
         self.assertIn("/aaron-marketing:podcast (auto routing coverage gap)", out)
+
+    def test_normal_mode_allows_per_skill_patch_skew(self):
+        def mutate(root):
+            path = root / "narrative/trace/fixture-skill/SKILL.md"
+            write(
+                root,
+                "narrative/trace/fixture-skill/SKILL.md",
+                path.read_text(encoding="utf-8").replace(BUNDLE, "1.0.1"),
+            )
+            versions = (root / "VERSIONS.md").read_text(encoding="utf-8")
+            write(
+                root,
+                "VERSIONS.md",
+                versions.replace(
+                    "| fixture-skill | narrative | 1.0.0 | 2026-01-01 |",
+                    "| fixture-skill | narrative | 1.0.1 | 2026-01-02 |",
+                ),
+            )
+        code, out = self.run_guard(mutate)
+        self.assertEqual(0, code, out)
+        self.assertIn("version-sync clean", out)
+
+    def test_release_mode_accepts_exact_120_skill_cohort(self):
+        code, out = self.run_guard(
+            args=["--release-all-current"], release_fixture=True,
+        )
+        self.assertEqual(0, code, out)
+        self.assertIn("release-all-current cohort is exactly 120/120", out)
+
+    def test_release_mode_rejects_non_120_cohort(self):
+        code, out = self.run_guard(args=["--release-all-current"])
+        self.assertEqual(1, code, out)
+        self.assertIn(
+            "release-all-current requires exactly 120 catalog skill targets; found 2",
+            out,
+        )
+
+    def test_release_mode_ignores_incidental_skill_outside_catalog(self):
+        def mutate(root):
+            write(
+                root,
+                "narrative/trace/incidental-skill/SKILL.md",
+                SKILL_MD.format(name="incidental-skill", bundle=BUNDLE),
+            )
+        code, out = self.run_guard(
+            mutate, args=["--release-all-current"], release_fixture=True,
+        )
+        self.assertEqual(0, code, out)
+        self.assertIn("release-all-current cohort is exactly 120/120", out)
+        self.assertNotIn("incidental-skill", out)
+
+    def test_release_mode_rejects_missing_catalog_target(self):
+        def mutate(root):
+            (
+                root
+                / "narrative/trace/fixture-skill-001/SKILL.md"
+            ).unlink()
+        code, out = self.run_guard(
+            mutate, args=["--release-all-current"], release_fixture=True,
+        )
+        self.assertEqual(1, code, out)
+        self.assertIn(
+            "catalog target is missing: "
+            "narrative/trace/fixture-skill-001/SKILL.md",
+            out,
+        )
+
+    def test_release_mode_rejects_duplicate_catalog_target(self):
+        def mutate(root):
+            catalog_path = root / "references/system-catalog.json"
+            catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+            catalog["disciplines"]["narrative"]["phases"]["trace"].append(
+                "fixture-skill-001"
+            )
+            write(root, "references/system-catalog.json", json.dumps(catalog))
+        code, out = self.run_guard(
+            mutate, args=["--release-all-current"], release_fixture=True,
+        )
+        self.assertEqual(1, code, out)
+        self.assertIn("catalog has duplicate skill targets", out)
+        self.assertIn("catalog has duplicate skill IDs: fixture-skill-001", out)
+
+    def test_release_mode_rejects_noncanonical_catalog_path_component(self):
+        def mutate(root):
+            catalog_path = root / "references/system-catalog.json"
+            catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+            catalog["disciplines"]["narrative"]["phases"]["trace"][0] = (
+                "../outside"
+            )
+            write(root, "references/system-catalog.json", json.dumps(catalog))
+        code, out = self.run_guard(
+            mutate, args=["--release-all-current"], release_fixture=True,
+        )
+        self.assertEqual(1, code, out)
+        self.assertIn(
+            "catalog skill is not a canonical path component: "
+            "narrative/trace/'../outside'",
+            out,
+        )
+
+    def test_release_mode_rejects_patch_skew(self):
+        def mutate(root):
+            relative = "narrative/trace/fixture-skill-001/SKILL.md"
+            text = (root / relative).read_text(encoding="utf-8")
+            write(root, relative, text.replace(BUNDLE, "1.0.1"))
+            versions = (root / "VERSIONS.md").read_text(encoding="utf-8")
+            write(
+                root,
+                "VERSIONS.md",
+                versions.replace(
+                    "| fixture-skill-001 | narrative | 1.0.0 | 2026-01-01 |",
+                    "| fixture-skill-001 | narrative | 1.0.1 | 2026-01-02 |",
+                ),
+            )
+        code, out = self.run_guard(
+            mutate, args=["--release-all-current"], release_fixture=True,
+        )
+        self.assertEqual(1, code, out)
+        self.assertIn("top-level version 1.0.1 != bundle 1.0.0", out)
+        self.assertIn("metadata.version '1.0.1' != bundle 1.0.0", out)
+        self.assertIn("date 2026-01-02 != release date 2026-01-01", out)
+
+    def test_release_mode_rejects_row_date_drift(self):
+        def mutate(root):
+            versions = (root / "VERSIONS.md").read_text(encoding="utf-8")
+            write(
+                root,
+                "VERSIONS.md",
+                versions.replace(
+                    "| fixture-skill-001 | narrative | 1.0.0 | 2026-01-01 |",
+                    "| fixture-skill-001 | narrative | 1.0.0 | 2026-01-02 |",
+                ),
+            )
+        code, out = self.run_guard(
+            mutate, args=["--release-all-current"], release_fixture=True,
+        )
+        self.assertEqual(1, code, out)
+        self.assertIn("date 2026-01-02 != release date 2026-01-01", out)
+
+    def test_release_mode_rejects_invalid_iso_date(self):
+        def mutate(root):
+            versions = (root / "VERSIONS.md").read_text(encoding="utf-8")
+            write(
+                root,
+                "VERSIONS.md",
+                versions.replace(
+                    "**Current release**: `1.0.0` (2026-01-01).",
+                    "**Current release**: `1.0.0` (2026-99-99).",
+                ).replace("2026-01-01 |", "2026-99-99 |"),
+            )
+        code, out = self.run_guard(
+            mutate, args=["--release-all-current"], release_fixture=True,
+        )
+        self.assertEqual(1, code, out)
+        self.assertIn("Current release date is invalid: 2026-99-99", out)
+        self.assertIn("has an invalid date: 2026-99-99", out)
+
+    def test_unknown_flag_fails_closed(self):
+        code, out = self.run_guard(args=["--surprise"])
+        self.assertEqual(2, code, out)
+        self.assertIn("usage: scripts/check-versions.sh", out)
 
 
 if __name__ == "__main__":

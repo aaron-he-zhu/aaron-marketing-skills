@@ -1,0 +1,309 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 140,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "stage/date/embargo/submission/manifest/outcome facts have event IDs and provenance, pending proposals are resolved, and projection verifies."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 180,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 142
+        },
+        "text": "Mobilize/prove skills submit `propose`"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 338,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 182
+        },
+        "text": "only a host-capability `launch-registry` principal accepts/rejects/upserts/transitions. `launch-readiness-auditor` consumes the result but cannot mutate it."
+      }
+    ],
+    "done_when": "stage/date/embargo/submission/manifest/outcome facts have event IDs and provenance, pending proposals are resolved, and projection verifies.\n\nMobilize/prove skills submit `propose`; only a host-capability `launch-registry` principal accepts/rejects/upserts/transitions. `launch-readiness-auditor` consumes the result but cannot mutate it.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "protocol/launch-registry/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 54
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 52
+      },
+      {
+        "path": "references/registry-event-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
+        "source_line": 34
+      },
+      {
+        "path": "references/runtime-invocation.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "source_line": 34
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 53
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/events/launches.ndjson",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:launch-registry",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 95,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "launch-tier-planner"
+        ],
+        "text": "- **Plan tier/type:** [launch-tier-planner](../../launch/research/launch-tier-planner/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 192,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 96
+        },
+        "target_skills": [
+          "launch-window-planner"
+        ],
+        "text": "- **Plan window:** [launch-window-planner](../../launch/research/launch-window-planner/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 297,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 193
+        },
+        "target_skills": [
+          "launch-readiness-auditor"
+        ],
+        "text": "- **Run preflight:** [launch-readiness-auditor](../../launch/mobilize/launch-readiness-auditor/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 402,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 298
+        },
+        "target_skills": [
+          "launch-day-conductor"
+        ],
+        "text": "- **Execute approved plan:** [launch-day-conductor](../../launch/mobilize/launch-day-conductor/SKILL.md)"
+      }
+    ],
+    "next_best": "- **Plan tier/type:** [launch-tier-planner](../../launch/research/launch-tier-planner/SKILL.md)\n- **Plan window:** [launch-window-planner](../../launch/research/launch-window-planner/SKILL.md)\n- **Run preflight:** [launch-readiness-auditor](../../launch/mobilize/launch-readiness-auditor/SKILL.md)\n- **Execute approved plan:** [launch-day-conductor](../../launch/mobilize/launch-day-conductor/SKILL.md)",
+    "summary": "Include aggregate ID, current revision/state, accepted/rejected event IDs, authoritative dates/embargo, unresolved conflicts, and one next skill.",
+    "summary_ref": {
+      "path": "protocol/launch-registry/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "launch-day-conductor",
+      "launch-readiness-auditor",
+      "launch-tier-planner",
+      "launch-window-planner"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "protocol",
+    "name": "launch-registry",
+    "path": "protocol/launch-registry/SKILL.md",
+    "phase": "protocol",
+    "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<launch aggregate-id, transition, or pending-proposal review>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 97,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "`memory/events/launches.ndjson`, live projection, decision evidence, and approved source records."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "`memory/events/launches.ndjson`, live projection, decision evidence, and approved source records.",
+    "source": {
+      "path": "protocol/launch-registry/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 41,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "owner events through `registry-events.py`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 103,
+          "path": "protocol/launch-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205",
+          "span_basis": "field-text",
+          "start_char": 43
+        },
+        "text": "per-launch dossiers and `calendar.md` are regenerated views."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "protocol/launch-registry/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205"
+    },
+    "summary": "owner events through `registry-events.py`; per-launch dossiers and `calendar.md` are regenerated views.",
+    "summary_source": "writes-fallback",
+    "writes": "owner events through `registry-events.py`; per-launch dossiers and `calendar.md` are regenerated views."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for RAMP scoring — use launch-readiness-auditor; not for planning tier/window — use launch-tier-planner. 发布台账/发布日历/阶段与禁运期记录",
+    "description": "Use when the user asks to \"log this launch\", query a launch date/embargo, record a stage transition, or update submissions/outcomes; curates launch facts through the append-only launches event stream with optimistic revisions and derived dossier/calendar views. Not for RAMP scoring — use launch-readiness-auditor; not for planning tier/window — use launch-tier-planner. 发布台账/发布日历/阶段与禁运期记录",
+    "source": {
+      "path": "protocol/launch-registry/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "49753571c79b50423cb4905e7bad61b504e94b4ee0adecde2a2014c34ae09205"
+    },
+    "trigger_phrases": [
+      "log this launch"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when recording/querying launch tier/type/stage/date/embargo, submission events, manifest version, outcome snapshot, or accepting pending launch proposals."
+  },
+  "schema_version": "1.0"
+}

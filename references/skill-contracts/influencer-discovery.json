@@ -1,0 +1,405 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 42,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "- The required search criteria are present"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 139,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 44
+        },
+        "text": "otherwise stop with `NEEDS_INPUT` and name the missing criteria without fabricating candidates."
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 263,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 142
+        },
+        "text": "- A candidate pool exists with at least the requested count screened past follower, engagement, and brand-safety filters."
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 418,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 266
+        },
+        "text": "- Each shortlisted influencer has a profile with metrics, audience read, and a preliminary discovery-triage signal that is not a STAR Suitability score."
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 511,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 421
+        },
+        "text": "- A tiered shortlist (must-reach / strong / consider) is compiled with next-step pointers."
+      }
+    ],
+    "done_when": "- The required search criteria are present; otherwise stop with `NEEDS_INPUT` and name the missing criteria without fabricating candidates.\n  - A candidate pool exists with at least the requested count screened past follower, engagement, and brand-safety filters.\n  - Each shortlisted influencer has a profile with metrics, audience read, and a preliminary discovery-triage signal that is not a STAR Suitability score.\n  - A tiered shortlist (must-reach / strong / consider) is compiled with next-step pointers.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/scout/influencer-discovery/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 48
+      },
+      {
+        "path": "influencer/scout/influencer-discovery/references/creator-dossier.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "e2ed5d78577970624e5cc61f81fabf380137c83e72e3958ad5fa08766c2fcf7e",
+        "source_line": 57
+      },
+      {
+        "path": "influencer/scout/influencer-discovery/references/platform-vetting.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f5006653a345ff1c064cf67faa0bf99b068e8099f10b71bf636d391988671b22",
+        "source_line": 56
+      },
+      {
+        "path": "influencer/scout/influencer-discovery/references/templates.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "f68b680dbeb95d4accd3d0e9fdf5fd4f433695e5cf026ce4eff1ef48dfaf7534",
+        "source_line": 52
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 31
+      },
+      {
+        "path": "references/star-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "d5e6cec23805026c8371cac0336026fb88ca4262c6ad48f52164b00925768e91",
+        "source_line": 77
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 75
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 46
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/creators",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:influencer-discovery",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before outreach.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 132,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "fit-scorer"
+        ],
+        "text": "**Primary**: [fit-scorer](../fit-scorer/SKILL.md) — score and rank the discovered candidates with weighted criteria before outreach."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 174,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 134
+        },
+        "target_skills": [],
+        "text": "**Alternates (same influencer family)**:"
+      },
+      {
+        "condition": "when discovery surfaced competitor-saturated creators and you want to map the competitive field first.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 344,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 175
+        },
+        "target_skills": [
+          "competitor-tracker"
+        ],
+        "text": "- [competitor-tracker](../../target/competitor-tracker/SKILL.md) — when discovery surfaced competitor-saturated creators and you want to map the competitive field first."
+      },
+      {
+        "condition": "when the target audience is still fuzzy and criteria need sharpening before a re-search.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 484,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 345
+        },
+        "target_skills": [
+          "audience-mapper"
+        ],
+        "text": "- [audience-mapper](../audience-mapper/SKILL.md) — when the target audience is still fuzzy and criteria need sharpening before a re-search."
+      },
+      {
+        "condition": "If a skill has already been invoked this session, stop and report chain-complete rather than re-invoking it. Max chain depth is 3 hops from the originating request",
+        "extraction_status": "classified",
+        "item_id": "handoff-05",
+        "kind": "termination",
+        "source": {
+          "end_char": 690,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 486
+        },
+        "target_skills": [],
+        "text": "**Termination**: Maintain a visited-set. If a skill has already been invoked this session, stop and report chain-complete rather than re-invoking it. Max chain depth is 3 hops from the originating request"
+      },
+      {
+        "condition": "when reached.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 724,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 692
+        },
+        "target_skills": [],
+        "text": "stop and summarize when reached."
+      }
+    ],
+    "next_best": "**Primary**: [fit-scorer](../fit-scorer/SKILL.md) — score and rank the discovered candidates with weighted criteria before outreach.\n\n**Alternates (same influencer family)**:\n- [competitor-tracker](../../target/competitor-tracker/SKILL.md) — when discovery surfaced competitor-saturated creators and you want to map the competitive field first.\n- [audience-mapper](../audience-mapper/SKILL.md) — when the target audience is still fuzzy and criteria need sharpening before a re-search.\n\n**Termination**: Maintain a visited-set. If a skill has already been invoked this session, stop and report chain-complete rather than re-invoking it. Max chain depth is 3 hops from the originating request; stop and summarize when reached.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "influencer/scout/influencer-discovery/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "audience-mapper",
+      "competitor-tracker",
+      "fit-scorer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "influencer",
+    "name": "influencer-discovery",
+    "path": "influencer/scout/influencer-discovery/SKILL.md",
+    "phase": "scout",
+    "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+    "version": "18.0.1"
+  },
+  "input_contract": {
+    "argument_hint": "<brand or niche> [platform] [follower-range]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 138,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "brand/product, niche or category, target platforms, follower range, engagement floor, location/language, audience demographics, exclusions"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 231,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 140
+        },
+        "text": "prior `entity-registry` brand profile and any `audience-mapper` output if present in memory"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 411,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 233
+        },
+        "text": "existing roster records under `memory/creators/` (dedupe the candidate pool against creators already rostered by [creator-registry](../../../protocol/creator-registry/SKILL.md))."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "brand/product, niche or category, target platforms, follower range, engagement floor, location/language, audience demographics, exclusions; prior `entity-registry` brand profile and any `audience-mapper` output if present in memory; existing roster records under `memory/creators/` (dedupe the candidate pool against creators already rostered by [creator-registry](../../../protocol/creator-registry/SKILL.md)).",
+    "source": {
+      "path": "influencer/scout/influencer-discovery/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 544,
+          "path": "influencer/scout/influencer-discovery/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "only with separate exact authorization, discovery results to `memory/influencer/influencer-discovery/YYYY-MM-DD-<topic>.md` — search criteria, candidate pool stats, per-influencer profiles, tiered shortlist with preliminary triage signals. Roster-worthy shortlisted creators (verified handles, contact path, audience stats) go as one-line updates to `memory/events/creators.ndjson` only via a separately authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical records under `memory/creators/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/scout/influencer-discovery/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b"
+    },
+    "summary": "only with separate exact authorization, discovery results to `memory/influencer/influencer-discovery/YYYY-MM-DD-<topic>.md` — search criteria, candidate pool stats, per-influencer profiles, tiered shortlist with preliminary triage signals. Roster-worthy shortlisted creators (verified handles, contact path, audience stats) go as one-line updates to `memory/events/creators.ndjson` only via a separately authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical records under `memory/creators/`.",
+    "summary_source": "writes-fallback",
+    "writes": "only with separate exact authorization, discovery results to `memory/influencer/influencer-discovery/YYYY-MM-DD-<topic>.md` — search criteria, candidate pool stats, per-influencer profiles, tiered shortlist with preliminary triage signals. Roster-worthy shortlisted creators (verified handles, contact path, audience stats) go as one-line updates to `memory/events/creators.ndjson` only via a separately authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical records under `memory/creators/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for STAR scoring or ranking a known shortlist — use fit-scorer. 达人挖掘/找达人/创作者名单",
+    "description": "Use when the user asks to \"find influencers\", \"build an influencer list\", or \"discover creators in [niche]\"; produces a multi-platform candidate pool, per-influencer profiles, authenticity red-flag screening, and a tiered shortlist with preliminary triage signals. Not for STAR scoring or ranking a known shortlist — use fit-scorer. 达人挖掘/找达人/创作者名单",
+    "source": {
+      "path": "influencer/scout/influencer-discovery/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "150c4194f2f52b67bf4568a3bfd9a227143b5cdba2fe52d60d9cd63e9734885b"
+    },
+    "trigger_phrases": [
+      "build an influencer list",
+      "discover creators in [niche]",
+      "find influencers"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Activate when building an influencer roster from scratch, expanding into a new platform or niche, replacing churned partners, finding micro and nano creators at scale, identifying which influencers a competitor partners with, or standing up an always-on discovery pipeline. The user names a niche, platform, follower band, or brand and wants a list of candidate creators to evaluate."
+  },
+  "schema_version": "1.0"
+}

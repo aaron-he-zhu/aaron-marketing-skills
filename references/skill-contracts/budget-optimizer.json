@@ -1,0 +1,292 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 72,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "1. Allocation sums to 100% of the stated budget with a contingency line."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 149,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 75
+        },
+        "text": "2. Every projected metric is labeled Measured / User-provided / Estimated."
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 208,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 152
+        },
+        "text": "3. One recommended scenario is named with its rationale."
+      }
+    ],
+    "done_when": "1. Allocation sums to 100% of the stated budget with a contingency line.\n  2. Every projected metric is labeled Measured / User-provided / Estimated.\n  3. One recommended scenario is named with its rationale.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/target/budget-optimizer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 51
+      },
+      {
+        "path": "influencer/target/budget-optimizer/references/templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "7b6cedc8eb35bcfee0aef20023086249bfc9586633ec9e902d8be8a626fa17ec",
+        "source_line": 55
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 35
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 111
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:budget-optimizer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 181,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "outreach-manager"
+        ],
+        "text": "**Primary**: [outreach-manager](../../activate/outreach-manager/SKILL.md) — once the allocation is funded and the tier mix is locked, move to recruiting the influencers it pays for."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 223,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 183
+        },
+        "target_skills": [],
+        "text": "**Alternates** (same influencer family):"
+      },
+      {
+        "condition": "if you need to source candidates that fit each tier's per-influencer budget first.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 377,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 225
+        },
+        "target_skills": [
+          "influencer-discovery"
+        ],
+        "text": "- [influencer-discovery](../../scout/influencer-discovery/SKILL.md) — if you need to source candidates that fit each tier's per-influencer budget first."
+      },
+      {
+        "condition": "if the budget exposed a gap in the underlying campaign plan.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 491,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 378
+        },
+        "target_skills": [
+          "campaign-planner"
+        ],
+        "text": "- [campaign-planner](../campaign-planner/SKILL.md) — if the budget exposed a gap in the underlying campaign plan."
+      },
+      {
+        "condition": "If the recommended next skill was already invoked in this session's chain, stop and report chain-complete instead of re-invoking. Default `max-depth: 3`. When routing is ambiguous, present the options and stop rather than auto-following.",
+        "extraction_status": "classified",
+        "item_id": "handoff-05",
+        "kind": "termination",
+        "source": {
+          "end_char": 767,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 493
+        },
+        "target_skills": [],
+        "text": "**Termination**: keep a visited-set. If the recommended next skill was already invoked in this session's chain, stop and report chain-complete instead of re-invoking. Default `max-depth: 3`. When routing is ambiguous, present the options and stop rather than auto-following."
+      }
+    ],
+    "next_best": "**Primary**: [outreach-manager](../../activate/outreach-manager/SKILL.md) — once the allocation is funded and the tier mix is locked, move to recruiting the influencers it pays for.\n\n**Alternates** (same influencer family):\n\n- [influencer-discovery](../../scout/influencer-discovery/SKILL.md) — if you need to source candidates that fit each tier's per-influencer budget first.\n- [campaign-planner](../campaign-planner/SKILL.md) — if the budget exposed a gap in the underlying campaign plan.\n\n**Termination**: keep a visited-set. If the recommended next skill was already invoked in this session's chain, stop and report chain-complete instead of re-invoking. Default `max-depth: 3`. When routing is ambiguous, present the options and stop rather than auto-following.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "influencer/target/budget-optimizer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "campaign-planner",
+      "influencer-discovery",
+      "outreach-manager"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "influencer",
+    "name": "budget-optimizer",
+    "path": "influencer/target/budget-optimizer/SKILL.md",
+    "phase": "target",
+    "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<total budget> [platforms] [campaign goal]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "classified",
+        "kind": "evidence-input",
+        "requirement": "optional",
+        "source": {
+          "end_char": 310,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "total budget, fixed vs influencer-available split, campaign goal, target platforms, tier constraints (max per influencer, minimum count), industry, and — for mid-campaign work — spend-to-date and per-influencer results. Connector data via `~~influencer database` / `~~social platform analytics` when available."
+      }
+    ],
+    "extraction_status": "classified",
+    "reads": "total budget, fixed vs influencer-available split, campaign goal, target platforms, tier constraints (max per influencer, minimum count), industry, and — for mid-campaign work — spend-to-date and per-influencer results. Connector data via `~~influencer database` / `~~social platform analytics` when available.",
+    "source": {
+      "path": "influencer/target/budget-optimizer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 248,
+          "path": "influencer/target/budget-optimizer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a budget allocation recommendation (tier / platform / content tables), ROI and cost-efficiency projections, scenario comparison, optimization strategies, plus a handoff summary. Save path: `memory/influencer/budget-optimizer/YYYY-MM-DD-<topic>.md`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/target/budget-optimizer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19"
+    },
+    "summary": "a budget allocation recommendation (tier / platform / content tables), ROI and cost-efficiency projections, scenario comparison, optimization strategies, plus a handoff summary. Save path: `memory/influencer/budget-optimizer/YYYY-MM-DD-<topic>.md`.",
+    "summary_source": "writes-fallback",
+    "writes": "a budget allocation recommendation (tier / platform / content tables), ROI and cost-efficiency projections, scenario comparison, optimization strategies, plus a handoff summary. Save path: `memory/influencer/budget-optimizer/YYYY-MM-DD-<topic>.md`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for building the full campaign plan — use campaign-planner. 达人预算分配/投放预算优化",
+    "description": "Use when the user asks to \"allocate my influencer budget\", \"optimize spend across tiers\", or \"compare budget scenarios\"; produces a tier/platform/content allocation table, ROI and CPM/CPE projections, scenario comparisons, and mid-campaign reallocation moves. Not for building the full campaign plan — use campaign-planner. 达人预算分配/投放预算优化",
+    "source": {
+      "path": "influencer/target/budget-optimizer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "348c86c72547a8951772240c21466f86175de104b30687f1ecc7f5e57933ba19"
+    },
+    "trigger_phrases": [
+      "allocate my influencer budget",
+      "compare budget scenarios",
+      "optimize spend across tiers"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when planning budget allocation for a new influencer campaign, splitting spend across nano/micro/macro tiers or platforms, estimating influencer costs and projecting ROI, modeling conservative vs aggressive scenarios, justifying a budget request, or reallocating budget mid-campaign based on performance."
+  },
+  "schema_version": "1.0"
+}

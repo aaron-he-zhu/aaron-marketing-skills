@@ -1,0 +1,308 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 96,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the preference center has a defined topic set and at least two cadence tiers plus a pause option"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 189,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 98
+        },
+        "text": "the opt-down ladder specifies its ordered down-tier steps and the sunset it terminates into"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 303,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 191
+        },
+        "text": "every preference choice maps to an explicit suppression or frequency rule the ESP and consent-registry can honor"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 447,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 305
+        },
+        "text": "and the SEND **N** preference-center / frequency-options sub-item note is emitted (Pass/Partial/Fail rationale, not the full dimension score)."
+      }
+    ],
+    "done_when": "the preference center has a defined topic set and at least two cadence tiers plus a pause option; the opt-down ladder specifies its ordered down-tier steps and the sunset it terminates into; every preference choice maps to an explicit suppression or frequency rule the ESP and consent-registry can honor; and the SEND **N** preference-center / frequency-options sub-item note is emitted (Pass/Partial/Fail rationale, not the full dimension score).",
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/nurture/preference-frequency-manager/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 36
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 40
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 64
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 32
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:preference-frequency-manager",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 234,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "email-sequence-designer"
+        ],
+        "text": "- **Primary**: [email-sequence-designer](../email-sequence-designer/SKILL.md) — wire the ladder's cadence tiers into the lifecycle flow map and the global send-cap / quiet-hours governance so the preference center and the flows agree."
+      },
+      {
+        "condition": "If the preference center + ladder are ready for the gate**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — score the profile-weighted EQS and rule N1 (unsubscribe integrity)",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 437,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 235
+        },
+        "target_skills": [
+          "email-quality-auditor"
+        ],
+        "text": "- **If the preference center + ladder are ready for the gate**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — score the profile-weighted EQS and rule N1 (unsubscribe integrity)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 509,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 439
+        },
+        "target_skills": [],
+        "text": "this ladder is the mitigation that should turn an N1 risk into a Pass."
+      },
+      {
+        "condition": "If the choice-to-rule mapping needs to be recorded as canonical suppression**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — persist each topic/cadence/pause rule as the honored suppression record.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 731,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 510
+        },
+        "target_skills": [
+          "consent-registry"
+        ],
+        "text": "- **If the choice-to-rule mapping needs to be recorded as canonical suppression**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — persist each topic/cadence/pause rule as the honored suppression record."
+      },
+      {
+        "condition": "If the primary next skill (email-sequence-designer) has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between the sequence-designer and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on N1, route back here to repair the opt-down path rather than chaining onward.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1286,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 733
+        },
+        "target_skills": [],
+        "text": "Termination note: keep a visited-set of skills invoked this session. If the primary next skill (email-sequence-designer) has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between the sequence-designer and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on N1, route back here to repair the opt-down path rather than chaining onward."
+      }
+    ],
+    "next_best": "- **Primary**: [email-sequence-designer](../email-sequence-designer/SKILL.md) — wire the ladder's cadence tiers into the lifecycle flow map and the global send-cap / quiet-hours governance so the preference center and the flows agree.\n- **If the preference center + ladder are ready for the gate**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — score the profile-weighted EQS and rule N1 (unsubscribe integrity); this ladder is the mitigation that should turn an N1 risk into a Pass.\n- **If the choice-to-rule mapping needs to be recorded as canonical suppression**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — persist each topic/cadence/pause rule as the honored suppression record.\n\nTermination note: keep a visited-set of skills invoked this session. If the primary next skill (email-sequence-designer) has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between the sequence-designer and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on N1, route back here to repair the opt-down path rather than chaining onward.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "email/nurture/preference-frequency-manager/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "consent-registry",
+      "email-quality-auditor",
+      "email-sequence-designer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "email",
+    "name": "preference-frequency-manager",
+    "path": "email/nurture/preference-frequency-manager/SKILL.md",
+    "phase": "nurture",
+    "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<preference-center or opt-down goal> [platform/ESP] [topic set] [audience/segment]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "classified",
+        "kind": "evidence-input",
+        "requirement": "optional",
+        "source": {
+          "end_char": 599,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the topic set and cadence tiers to offer, the target segment (from the user or from [list-segment-builder](../../setup/list-segment-builder/SKILL.md) when present), the flow/cadence context (from [email-sequence-designer](../email-sequence-designer/SKILL.md) when present, so the ladder's tiers match the program's send frequencies), and a manual `~~email platform` (ESP) export of current preference-center fields and opt-out/preference-update signals when available. Consent and suppression facts are read from, and written back to, [consent-registry](../../../protocol/consent-registry/SKILL.md)."
+      }
+    ],
+    "extraction_status": "classified",
+    "reads": "the topic set and cadence tiers to offer, the target segment (from the user or from [list-segment-builder](../../setup/list-segment-builder/SKILL.md) when present), the flow/cadence context (from [email-sequence-designer](../email-sequence-designer/SKILL.md) when present, so the ladder's tiers match the program's send frequencies), and a manual `~~email platform` (ESP) export of current preference-center fields and opt-out/preference-update signals when available. Consent and suppression facts are read from, and written back to, [consent-registry](../../../protocol/consent-registry/SKILL.md).",
+    "source": {
+      "path": "email/nurture/preference-frequency-manager/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 197,
+          "path": "email/nurture/preference-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing preference-center spec + opt-down ladder + choice-to-rule mapping, and a reusable handoff summary to `memory/email/preference-frequency-manager/YYYY-MM-DD-<preference-or-segment>.md`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/nurture/preference-frequency-manager/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54"
+    },
+    "summary": "a preference-center field spec (topic groups, cadence tiers, channel toggles, save/confirm behavior), a frequency/topic opt-down ladder (the down-tier steps offered on the unsubscribe path and their order), a preference-choice → suppression/frequency mapping (what each selection tells the ESP and consent-registry to honor), a SEND **N** sub-item note on preference-center / frequency options offered, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing preference-center spec + opt-down ladder + choice-to-rule mapping, and a reusable handoff summary to `memory/email/preference-frequency-manager/YYYY-MM-DD-<preference-or-segment>.md`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the lifecycle flow map or cadence governance — use email-sequence-designer; not for the consent/suppression record itself — use consent-registry; not for computing EQS or ruling the N1 unsubscribe veto — use email-quality-auditor. 邮件偏好中心/降频阶梯设计/退订替代降档",
+    "description": "Use when the user asks to \"build a preference center\", \"set up a frequency opt-down ladder\", \"give people a step-down instead of unsubscribe\", or \"design a topic/cadence preference page\"; produces a preference-center field spec, a frequency/topic opt-down ladder (down-tier paths that substitute for a hard unsubscribe), a preference-to-suppression mapping, and a SEND N-dimension sub-item note on preference-center / frequency options offered. Not for the lifecycle flow map or cadence governance — use email-sequence-designer; not for the consent/suppression record itself — use consent-registry; not for computing EQS or ruling the N1 unsubscribe veto — use email-quality-auditor. 邮件偏好中心/降频阶梯设计/退订替代降档",
+    "source": {
+      "path": "email/nurture/preference-frequency-manager/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "6c99041f010fa88121d21e803d1a2e984b023f032fa5c7cd4ca3338a6812de54"
+    },
+    "trigger_phrases": [
+      "build a preference center",
+      "design a topic/cadence preference page",
+      "give people a step-down instead of unsubscribe",
+      "set up a frequency opt-down ladder"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when designing the subscriber-facing preference center and the frequency/topic opt-down ladder that gives a subject a step-down path instead of a hard unsubscribe: the preference-page field set (topics, cadence tiers, channel toggles), the down-tier ladder (weekly to monthly to pause to sunset), the mapping from each preference choice to the suppression/frequency rule the ESP and consent-registry must honor, and the SEND N sub-item on preference-center / frequency options offered. Activate when unsubscribe pressure, list fatigue, or a rising opt-out rate means people need a lighter-touch exit before they leave the list entirely — this is the N1-veto mitigation, not the N1 verdict."
+  },
+  "schema_version": "1.0"
+}

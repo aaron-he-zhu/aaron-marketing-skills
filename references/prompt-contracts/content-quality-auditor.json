@@ -65,16 +65,16 @@
       },
       "semantic_case": {
         "expected_behavior": [
-          "Map every applicable unobserved item to unknown.",
+          "Map CORE-EEAT-T04 explicitly to unknown.",
           "Return NEEDS_INPUT, UNDECIDED, and score_state NOT_SCORED.",
           "Omit raw and final scores rather than estimating missing evidence."
         ],
         "failure_modes": [
-          "Missing evidence is converted to pass, partial, fail, N/A, or a veto.",
-          "A total score or gate verdict is emitted despite incomplete required coverage."
+          "Missing evidence for CORE-EEAT-T04 is converted to pass, partial, fail, N/A, or a veto.",
+          "A raw or final total score, or a decisive SHIP, FIX, or BLOCK verdict, is emitted despite incomplete required coverage and no independently gate-determining vetoes."
         ],
-        "input_summary": "Run content-quality-auditor with incomplete required evidence coverage.",
-        "scenario": "At least one applicable CORE-EEAT item lacks evidence and no veto is verified."
+        "input_summary": "Run content-quality-auditor; the only unobserved applicable item is CORE-EEAT-T04.",
+        "scenario": "One declared CORE-EEAT profile has otherwise complete item evidence, but CORE-EEAT-T04 is applicable and has no observed evidence. No veto failure is verified and no persistence is requested."
       }
     },
     {
@@ -230,7 +230,7 @@
     "runtime_sources": [
       {
         "path": "references/auditor-runbook.md",
-        "sha256": "b893aee6a1fe5d8570c26bd63a179b7329b715f870575ef7f833c4d94e800a59"
+        "sha256": "9f51665d80078a1bcb4cbf5dacf4ea4de4c18be8b1d28ddf9678b34e936a83e5"
       },
       {
         "path": "references/scoring-semantics.md",
@@ -331,12 +331,12 @@
   "skill": {
     "name": "content-quality-auditor",
     "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
-    "sha256": "8e3f8f25c7569adf262f3435c7d5daa508e072253e79a85ad9e76314eb9de1d4",
-    "version": "18.0.0"
+    "sha256": "7a02e10b9dd1a9eb644f1723c29fd82f593844686920ce1f42efbb4b1edae0f5",
+    "version": "18.0.1"
   },
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "625b7567f0099d0e12f1ef64a190a6e8535d7d6cf89194927b0f607f465b3de0",
+    "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
     "version": "18.0.0"
   }
 }

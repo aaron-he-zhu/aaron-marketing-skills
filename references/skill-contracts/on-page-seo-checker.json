@@ -1,0 +1,262 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 51,
+          "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every on-page element has a /10 score with evidence"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 90,
+          "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999",
+          "span_basis": "field-text",
+          "start_char": 53
+        },
+        "text": "fixes are ranked by impact (P0/P1/P2)"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 142,
+          "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999",
+          "span_basis": "field-text",
+          "start_char": 92
+        },
+        "text": "an overall score and handoff summary are produced."
+      }
+    ],
+    "done_when": "every on-page element has a /10 score with evidence; fixes are ranked by impact (P0/P1/P2); an overall score and handoff summary are produced.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 67
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 67
+      },
+      {
+        "path": "references/core-eeat-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "9d52b38631ccfc2aa0e3592e464d44d72ddf7502b763ad0a970de9b47889093d",
+        "source_line": 96
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 13
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 69
+      },
+      {
+        "path": "seo-geo/tune/on-page-seo-checker/references/audit-example.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a2c0ebff60a5315572a19a57d9c4a2df0f18bfc0c092d48697bc266c62546246",
+        "source_line": 113
+      },
+      {
+        "path": "seo-geo/tune/on-page-seo-checker/references/audit-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "940c4d42657a533a9f1c1aac25addcd3f6d8192cd62df974f787bdfb48ca0e64",
+        "source_line": 79
+      },
+      {
+        "path": "seo-geo/tune/on-page-seo-checker/references/bulk-audit-playbook.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "1b8a4aebf7d5e0ea4b73113e6bb4482b00632a4767a78a9efce2e2e50be60033",
+        "source_line": 49
+      },
+      {
+        "path": "seo-geo/tune/on-page-seo-checker/references/scoring-rubric.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "031fea0ec2306d77d40398026bfc74e8d12ea0fc64434a663c562998fe2dcafd",
+        "source_line": 123
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:on-page-seo-checker",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 300,
+          "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "content-writer",
+          "serp-markup-builder",
+          "site-structure-optimizer",
+          "technical-seo-checker"
+        ],
+        "text": "Primary: [content-writer](../../implement/content-writer/SKILL.md). Also consider [technical-seo-checker](../technical-seo-checker/SKILL.md), [serp-markup-builder](../../implement/serp-markup-builder/SKILL.md), or [site-structure-optimizer](../site-structure-optimizer/SKILL.md) by finding dimension."
+      }
+    ],
+    "next_best": "Primary: [content-writer](../../implement/content-writer/SKILL.md). Also consider [technical-seo-checker](../technical-seo-checker/SKILL.md), [serp-markup-builder](../../implement/serp-markup-builder/SKILL.md), or [site-structure-optimizer](../site-structure-optimizer/SKILL.md) by finding dimension.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-writer",
+      "serp-markup-builder",
+      "site-structure-optimizer",
+      "technical-seo-checker"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "on-page-seo-checker",
+    "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+    "phase": "tune",
+    "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<URL> [keyword]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 79,
+          "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the page URL or HTML, target keyword, page type, competitor URLs, and symptoms."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the page URL or HTML, target keyword, page type, competitor URLs, and symptoms.",
+    "source": {
+      "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 133,
+          "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing audit or optimization plan plus a reusable summary that can be stored under `memory/seo-geo/tune/on-page-seo-checker/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999"
+    },
+    "summary": "a scored diagnosis, prioritized repair plan, and a short handoff summary ready for `memory/seo-geo/tune/on-page-seo-checker/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing audit or optimization plan plus a reusable summary that can be stored under `memory/seo-geo/tune/on-page-seo-checker/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for E-E-A-T / publish-readiness scoring — use content-quality-auditor; not for crawl / CWV / indexing — use technical-seo-checker. 页面SEO审计/排名诊断",
+    "description": "Use when the user asks to \"audit on-page SEO\" or \"diagnose why a single page dropped\"; scores titles, meta, header structure, keyword placement, links, and images with prioritized fixes. Not for E-E-A-T / publish-readiness scoring — use content-quality-auditor; not for crawl / CWV / indexing — use technical-seo-checker. 页面SEO审计/排名诊断",
+    "source": {
+      "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "46d37714d206e776a7f57b565856148364376a6129ef0775843d2f02cde6b999"
+    },
+    "trigger_phrases": [
+      "audit on-page SEO",
+      "diagnose why a single page dropped"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when auditing a page's on-page SEO health, checking heading structure, keyword placement, image optimization, or content quality signals."
+  },
+  "schema_version": "1.0"
+}

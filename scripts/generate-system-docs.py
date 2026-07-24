@@ -24,7 +24,30 @@ def load_catalog():
         raise ValueError("cannot load system catalog: %s" % exc) from exc
 
 
-def render(catalog):
+def load_capability_profiles(catalog):
+    reference = catalog.get("capability_profiles")
+    if (
+        not isinstance(reference, dict)
+        or reference.get("source") != "references/capability-profiles.json"
+        or not isinstance(reference.get("sha256"), str)
+    ):
+        raise ValueError("catalog capability_profiles reference is invalid")
+    source_path = ROOT / reference["source"]
+    try:
+        content = source_path.read_bytes()
+        profiles = json.loads(content)
+    except (OSError, ValueError) as exc:
+        raise ValueError("cannot load capability profiles: %s" % exc) from exc
+    actual_digest = hashlib.sha256(content).hexdigest()
+    if actual_digest != reference["sha256"]:
+        raise ValueError(
+            "capability profile digest drift: catalog=%s actual=%s"
+            % (reference["sha256"], actual_digest)
+        )
+    return profiles
+
+
+def render(catalog, capability_profiles):
     canonical = json.dumps(catalog, sort_keys=True, ensure_ascii=False, separators=(",", ":"))
     digest = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
     lines = [
@@ -44,11 +67,42 @@ def render(catalog):
             catalog["counts"]["commands"],
         ),
         "",
+        "## Runtime Capability Profiles",
+        "",
+        "The capability matrix is delegated to [`%s`](../%s) (`sha256:%s`), preserving **Lite ⊂ Pro ⊂ Governed** without duplicating it in the system catalog."
+        % (
+            catalog["capability_profiles"]["source"],
+            catalog["capability_profiles"]["source"],
+            catalog["capability_profiles"]["sha256"],
+        ),
+        "",
+        "Universal overlays applied to every profile: %s."
+        % " · ".join("`%s`" % item for item in capability_profiles["always_on_overlays"]),
+        "",
+        "| Profile | Rank | Capability count | Adds at this tier |",
+        "|---|---:|---:|---|",
+    ]
+    previous = set()
+    capability_order = capability_profiles["capability_order"]
+    for name in capability_profiles["profile_order"]:
+        profile = capability_profiles["profiles"][name]
+        current = set(profile["capabilities"])
+        additions = [item for item in capability_order if item in current - previous]
+        lines.append(
+            "| **%s** | %d | %d | %s |"
+            % (
+                name.title(), profile["rank"], len(current),
+                " · ".join("`%s`" % item for item in additions),
+            )
+        )
+        previous = current
+    lines.extend([
+        "",
         "## Four Layers",
         "",
         "| Layer | Purpose | Disciplines | Cadence |",
         "|---|---|---|---|",
-    ]
+    ])
     for layer in catalog["layers"]:
         lines.append(
             "| **%s · %s** | %s | %s | %s |"
@@ -247,7 +301,8 @@ def main(argv=None):
     mode.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
     try:
-        expected = render(load_catalog())
+        catalog = load_catalog()
+        expected = render(catalog, load_capability_profiles(catalog))
         if args.write:
             atomic_write(OUTPUT_PATH, expected)
             print("wrote %s" % OUTPUT_PATH.relative_to(ROOT))

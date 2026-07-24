@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "profile": "smoke",
+  "minimum_cases": 24,
+  "maximum_age_days": 30,
+  "required_execution_mode": "real",
+  "required_status": "passed",
+  "require_current_case_selection": true,
+  "require_current_runner": true,
+  "require_current_protocol_schema": true,
+  "require_project_adapter": true,
+  "require_isolated_project_adapter": true,
+  "require_staged_project_adapter": true,
+  "required_project_adapter_ref": "scripts/adapters/codex-behavior-adapter.py",
+  "required_project_adapter_dependencies": [
+    "evals/codex-behavior-candidate-output.schema.json",
+    "evals/codex-behavior-model-output.schema.json"
+  ],
+  "require_single_execution_identity": true,
+  "require_distinct_judge_model": true
+}

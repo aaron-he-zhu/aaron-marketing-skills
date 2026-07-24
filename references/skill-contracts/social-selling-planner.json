@@ -1,0 +1,415 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 74,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the block is time-boxed with a comment quality bar and give:ask discipline"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 180,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 76
+        },
+        "text": "every play names its trigger signal, a value-add first move, and the warm-touch threshold before any ask"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 258,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 182
+        },
+        "text": "every volume norm is labeled Estimated/community-derived with a named source"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 314,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 260
+        },
+        "text": "and no step automates engagement, connections, or DMs."
+      }
+    ],
+    "done_when": "the block is time-boxed with a comment quality bar and give:ask discipline; every play names its trigger signal, a value-add first move, and the warm-touch threshold before any ask; every volume norm is labeled Estimated/community-derived with a named source; and no step automates engagement, connections, or DMs.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/host/social-selling-planner/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 59
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/channels",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/social/social-pulse-monitor",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:social-selling-planner",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 204,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "social-pulse-monitor"
+        ],
+        "text": "- **Primary**: [social-pulse-monitor](../../observe/social-pulse-monitor/SKILL.md) — stand up or refresh the B2B trigger watchlist (funding / hiring / launch signals) the trigger-response plays depend on."
+      },
+      {
+        "condition": "If a warm 1:1 has crossed the ask threshold**: [outreach-manager](../../../influencer/activate/outreach-manager/SKILL.md) — move to pitch mechanics with the touch history attached.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 389,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 205
+        },
+        "target_skills": [
+          "outreach-manager"
+        ],
+        "text": "- **If a warm 1:1 has crossed the ask threshold**: [outreach-manager](../../../influencer/activate/outreach-manager/SKILL.md) — move to pitch mechanics with the touch history attached."
+      },
+      {
+        "condition": "If the motion is actually cold email**: [cold-outbound-sequencer](../../../email/deliver/cold-outbound-sequencer/SKILL.md) — sequence design with its own compliance rules",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 564,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 390
+        },
+        "target_skills": [
+          "cold-outbound-sequencer"
+        ],
+        "text": "- **If the motion is actually cold email**: [cold-outbound-sequencer](../../../email/deliver/cold-outbound-sequencer/SKILL.md) — sequence design with its own compliance rules"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 603,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 566
+        },
+        "target_skills": [],
+        "text": "do not disguise it as social selling."
+      },
+      {
+        "condition": "when the operating block is saved and the cadence commitment candidate is filed.",
+        "extraction_status": "classified",
+        "item_id": "handoff-05",
+        "kind": "termination",
+        "source": {
+          "end_char": 963,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 605
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the operating block is saved and the cadence commitment candidate is filed."
+      }
+    ],
+    "next_best": "- **Primary**: [social-pulse-monitor](../../observe/social-pulse-monitor/SKILL.md) — stand up or refresh the B2B trigger watchlist (funding / hiring / launch signals) the trigger-response plays depend on.\n- **If a warm 1:1 has crossed the ask threshold**: [outreach-manager](../../../influencer/activate/outreach-manager/SKILL.md) — move to pitch mechanics with the touch history attached.\n- **If the motion is actually cold email**: [cold-outbound-sequencer](../../../email/deliver/cold-outbound-sequencer/SKILL.md) — sequence design with its own compliance rules; do not disguise it as social selling.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the operating block is saved and the cadence commitment candidate is filed.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/host/social-selling-planner/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "cold-outbound-sequencer",
+      "outreach-manager",
+      "social-pulse-monitor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "social-selling-planner",
+    "path": "social/host/social-selling-planner/SKILL.md",
+    "phase": "host",
+    "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<target-account list or fired trigger signal> [platform] [--quarterly-diagnostic]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 56,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "target-account list and pipeline context (User-provided)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 222,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 58
+        },
+        "text": "the B2B trigger watchlist and fired signals from [social-pulse-monitor](../../observe/social-pulse-monitor/SKILL.md) output in `memory/social/social-pulse-monitor/`"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 385,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 224
+        },
+        "text": "the channel dossier, voice card pointer, and existing cadence commitments in `memory/channels/` ([channel-registry](../../../protocol/channel-registry/SKILL.md))"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 451,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 387
+        },
+        "text": "platform native analytics as user exports (Measured, as-of date)"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 498,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 453
+        },
+        "text": "an SSI screenshot when offered (User-provided"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 545,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 500
+        },
+        "text": "the number itself Estimated, vendor-defined)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "target-account list and pipeline context (User-provided); the B2B trigger watchlist and fired signals from [social-pulse-monitor](../../observe/social-pulse-monitor/SKILL.md) output in `memory/social/social-pulse-monitor/`; the channel dossier, voice card pointer, and existing cadence commitments in `memory/channels/` ([channel-registry](../../../protocol/channel-registry/SKILL.md)); platform native analytics as user exports (Measured, as-of date); an SSI screenshot when offered (User-provided; the number itself Estimated, vendor-defined).",
+    "source": {
+      "path": "social/host/social-selling-planner/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 62,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the operating block to `memory/social/social-selling-planner/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 283,
+          "path": "social/host/social-selling-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816",
+          "span_basis": "field-text",
+          "start_char": 64
+        },
+        "text": "the committed daily block and any cadence change as dated proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` — never to `memory/channels/` directly."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/host/social-selling-planner/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816"
+    },
+    "summary": "the operating block — a time-boxed daily engagement-block spec with target-account tiers and a comment quality bar, warm-touch-before-ask cadence rules with an explicit ask threshold, trigger-response plays keyed to the watchlist signal types, and a quarterly diagnostic template — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the operating block to `memory/social/social-selling-planner/`; the committed daily block and any cadence change as dated proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` — never to `memory/channels/` directly."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for cold email sequences — use cold-outbound-sequencer. 社交销售/创始人日常互动块/热身触达节奏/触发信号剧本",
+    "description": "Use when the user asks to \"set up my founder social-selling routine\", \"build a daily engagement block for target accounts\", or \"turn funding / hiring signals into selling plays\"; produces the founder/seller daily operating block — a time-boxed engagement-block spec (substantive value-add comments on target-account posts, never a pitch), warm-touch-before-ask cadence rules, trigger-response plays consuming the social-pulse-monitor B2B trigger watchlist (funding / hiring / launch signals), and a quarterly diagnostic that reads LinkedIn SSI as an input diagnostic only (Estimated, vendor-defined — never a target metric). All volume norms are Estimated/community-derived; all execution is human — zero mass-DM, zero connection-request automation, zero engagement automation (LinkedIn UA §8.2 red line); 1:1 pitch and DM mechanics route to outreach-manager. Not for cold email sequences — use cold-outbound-sequencer. 社交销售/创始人日常互动块/热身触达节奏/触发信号剧本",
+    "source": {
+      "path": "social/host/social-selling-planner/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "60f6a39427741ab3887df9c3777bbc892f03b04514cd0ff88222dfb586994816"
+    },
+    "trigger_phrases": [
+      "build a daily engagement block for target accounts",
+      "set up my founder social-selling routine",
+      "turn funding / hiring signals into selling plays"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when a founder or seller needs the daily social-selling operating block for a B2B founder-led motion: which target-account posts to comment on today and to what quality bar, how many warm touches must precede any ask, what to do the day a watchlist signal fires (funding round, hiring wave, product launch), or the quarterly diagnostic that reads LinkedIn SSI as an input only — never a target. Not the 1:1 pitch/DM mechanics (outreach-manager) and not cold email sequences (cold-outbound-sequencer)."
+  },
+  "schema_version": "1.0"
+}

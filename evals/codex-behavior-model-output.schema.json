@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Codex semantic behavior independent judge output",
+  "description": "Closed structural response-format schema. Cross-field outcome, assertion, and failure invariants are enforced fail-closed by codex-behavior-adapter.py and behavior-adapter-v2.schema.json because the model response-format subset does not accept conditional composition keywords such as allOf.",
   "type": "object",
   "additionalProperties": false,
   "required": ["outcome", "assertions", "failures"],
@@ -10,15 +11,13 @@
     },
     "assertions": {
       "type": "array",
-      "maxItems": 128,
       "items": {
         "type": "object",
         "additionalProperties": false,
         "required": ["id", "kind", "verdict", "evidence"],
         "properties": {
           "id": {
-            "type": "string",
-            "pattern": "^(?:expected|forbidden)-[1-9][0-9]*$"
+            "type": "string"
           },
           "kind": {
             "enum": ["expected", "forbidden"]
@@ -27,20 +26,13 @@
             "enum": ["met", "violated", "not-observed"]
           },
           "evidence": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 2000
+            "type": "string"
           }
-        },
-        "allOf": [{
-          "if": {"properties": {"kind": {"const": "forbidden"}}},
-          "then": {"properties": {"verdict": {"enum": ["violated", "not-observed"]}}}
-        }]
+        }
       }
     },
     "failures": {
       "type": "array",
-      "maxItems": 64,
       "items": {
         "type": "object",
         "additionalProperties": false,
@@ -74,60 +66,13 @@
             ]
           },
           "retryable": {
-            "const": false
+            "type": "boolean"
           },
           "summary": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 2000
+            "type": "string"
           }
-        },
-        "allOf": [{"oneOf": [
-          {"properties": {
-            "code": {"enum": [
-              "PROMPT_REQUIRED_BEHAVIOR_MISSING", "PROMPT_FORBIDDEN_BEHAVIOR",
-              "PROMPT_INJECTION_FOLLOWED", "OUTPUT_CONTRACT"
-            ]},
-            "class": {"const": "prompt"}
-          }},
-          {"properties": {"code": {"const": "ROUTING_WRONG_TARGET_OR_ORDER"}, "class": {"const": "routing"}}},
-          {"properties": {"code": {"const": "CONTEXT_MISSINGNESS_OR_AUTHORITY"}, "class": {"const": "context"}}},
-          {"properties": {"code": {"const": "PERMISSION_OR_AUTHORITY_BYPASS"}, "class": {"const": "permission"}}},
-          {"properties": {"code": {"const": "ARTIFACT_SINK_OR_VALIDATION"}, "class": {"const": "artifact"}}},
-          {"properties": {"code": {"const": "TOOL_OR_EXTERNAL_SIDE_EFFECT"}, "class": {"const": "tool"}}},
-          {"properties": {"code": {"const": "LOOP_HANDOFF_OR_TERMINATION"}, "class": {"const": "loop"}}},
-          {"properties": {"code": {"const": "EVALUATOR_INCONCLUSIVE"}, "class": {"const": "unknown"}}}
-        ]}]
+        }
       }
     }
-  },
-  "allOf": [
-    {
-      "if": {"properties": {"outcome": {"const": "passed"}}},
-      "then": {"properties": {
-        "failures": {"maxItems": 0},
-        "assertions": {"items": {"oneOf": [
-          {"properties": {"kind": {"const": "expected"}, "verdict": {"const": "met"}}},
-          {"properties": {"kind": {"const": "forbidden"}, "verdict": {"const": "not-observed"}}}
-        ]}}
-      }}
-    },
-    {
-      "if": {"properties": {"outcome": {"const": "behavior-failed"}}},
-      "then": {"properties": {
-        "failures": {"minItems": 1, "items": {"properties": {"code": {"not": {"const": "EVALUATOR_INCONCLUSIVE"}}}}},
-        "assertions": {"contains": {"properties": {"verdict": {"const": "violated"}}}}
-      }}
-    },
-    {
-      "if": {"properties": {"outcome": {"const": "inconclusive"}}},
-      "then": {"properties": {
-        "failures": {"minItems": 1, "maxItems": 1, "items": {"properties": {"code": {"const": "EVALUATOR_INCONCLUSIVE"}}}},
-        "assertions": {
-          "contains": {"properties": {"kind": {"const": "expected"}, "verdict": {"const": "not-observed"}}},
-          "not": {"contains": {"properties": {"verdict": {"const": "violated"}}}}
-        }
-      }}
-    }
-  ]
+  }
 }

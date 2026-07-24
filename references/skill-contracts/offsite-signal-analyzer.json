@@ -1,0 +1,292 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 209,
+          "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "- `backlinks` — referring domains, anchor mix, and toxic-link share are reported with each metric source-tagged (or N/A), the toxic ratio is computed, and at least 3 link-building or disavow actions are named."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 438,
+          "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+          "span_basis": "field-text",
+          "start_char": 212
+        },
+        "text": "- `ai-referrals` — the AI source list is explicit, every figure is source-tagged, AI sessions and conversion are compared to organic for the same window, and any movement is read against a control per the measurement protocol."
+      }
+    ],
+    "done_when": "- `backlinks` — referring domains, anchor mix, and toxic-link share are reported with each metric source-tagged (or N/A), the toxic ratio is computed, and at least 3 link-building or disavow actions are named.\n  - `ai-referrals` — the AI source list is explicit, every figure is source-tagged, AI sessions and conversion are compared to organic for the same window, and any movement is read against a control per the measurement protocol.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 50
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 50
+      },
+      {
+        "path": "references/cite-domain-rating.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "21b39ac7028849d98dc8fd0cf0fdc608448790119e5e12e3db22959d13ff2d1b",
+        "source_line": 4
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 119
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 42
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 68
+      },
+      {
+        "path": "seo-geo/evaluate/offsite-signal-analyzer/references/backlinks-analysis-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "1f483d87c8090ad3371111f6423641195395f11a05fee3505515c854f500094e",
+        "source_line": 96
+      },
+      {
+        "path": "seo-geo/evaluate/offsite-signal-analyzer/references/link-quality-rubric.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "4d8f7c0eb93211f2dcdca00af77f0ff28c101618c37e0f787372d5257c21c1c2",
+        "source_line": 90
+      },
+      {
+        "path": "seo-geo/evaluate/offsite-signal-analyzer/references/outreach-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae46464d7557c281009429641f937c8d5ebca3adc4b881097eaaecbd4fc13eb3",
+        "source_line": 92
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:offsite-signal-analyzer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 167,
+          "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "domain-authority-auditor"
+        ],
+        "text": "- `backlinks`, toxic ratio > 15% or authority concern → [domain-authority-auditor](../domain-authority-auditor/SKILL.md) for formal CITE scoring. Otherwise → Terminal."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 320,
+          "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+          "span_basis": "field-text",
+          "start_char": 168
+        },
+        "target_skills": [
+          "performance-monitor"
+        ],
+        "text": "- `ai-referrals` → roll the AI channel into a full stakeholder report with [performance-monitor](../performance-monitor/SKILL.md). Otherwise → Terminal."
+      },
+      {
+        "condition": "if the target already ran in this chain, STOP and report chain-complete), `max-depth: 3`, and ambiguity-stop per [skill-contract.md §Termination rules](../../../references/skill-contract.md). Do not auto-run both modes in one chain — finish the requested mode, then recommend.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 630,
+          "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+          "span_basis": "field-text",
+          "start_char": 322
+        },
+        "target_skills": [],
+        "text": "Termination: visited-set check (if the target already ran in this chain, STOP and report chain-complete), `max-depth: 3`, and ambiguity-stop per [skill-contract.md §Termination rules](../../../references/skill-contract.md). Do not auto-run both modes in one chain — finish the requested mode, then recommend."
+      }
+    ],
+    "next_best": "- `backlinks`, toxic ratio > 15% or authority concern → [domain-authority-auditor](../domain-authority-auditor/SKILL.md) for formal CITE scoring. Otherwise → Terminal.\n- `ai-referrals` → roll the AI channel into a full stakeholder report with [performance-monitor](../performance-monitor/SKILL.md). Otherwise → Terminal.\n\nTermination: visited-set check (if the target already ran in this chain, STOP and report chain-complete), `max-depth: 3`, and ambiguity-stop per [skill-contract.md §Termination rules](../../../references/skill-contract.md). Do not auto-run both modes in one chain — finish the requested mode, then recommend.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md). Include which mode ran and, for ai-referrals, the final AI source regex as evidence.",
+    "summary_ref": {
+      "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "domain-authority-auditor",
+      "performance-monitor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "offsite-signal-analyzer",
+    "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+    "phase": "evaluate",
+    "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<domain or URL> [--mode backlinks|ai-referrals] [date range]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 133,
+          "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "- `backlinks` — target domain, backlink/referring-domain exports, competitor domains, anchor data, any user-provided or tool metrics."
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 313,
+          "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+          "span_basis": "field-text",
+          "start_char": 136
+        },
+        "text": "- `ai-referrals` — domain, date range, the user's GA4 export / Search Console data and/or server access logs, conversion event/goal, and any prior AI-traffic baseline in memory."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "- `backlinks` — target domain, backlink/referring-domain exports, competitor domains, anchor data, any user-provided or tool metrics.\n  - `ai-referrals` — domain, date range, the user's GA4 export / Search Console data and/or server access logs, conversion event/goal, and any prior AI-traffic baseline in memory.",
+    "source": {
+      "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 95,
+          "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing monitoring deliverable and a reusable handoff summary under `memory/monitoring/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7"
+    },
+    "summary": "for `backlinks`, a backlink report (profile overview, quality/anchors/toxicity, competitive gap, change tracking) or delta summary; for `ai-referrals`, an AI-referral channel definition plus trend, top landing pages, and AI-vs-organic conversion. Both plus the standard handoff summary ready for `memory/monitoring/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing monitoring deliverable and a reusable handoff summary under `memory/monitoring/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for internal links — use site-structure-optimizer; not for keyword positions — use rank-tracker; not for multi-metric stakeholder reports — use performance-monitor. 外链分析/反向链接/AI流量/AI引荐/ChatGPT流量/AI转化",
+    "description": "Use when the user asks to \"analyze backlinks\", \"analyze my off-site signals\", or \"track AI traffic / ChatGPT / Perplexity referrals\"; profiles referring domains, anchor-text mix, toxic links, and disavow candidates (backlinks mode) or isolates AI-assistant referral sessions in GA4/GSC/logs and reports their trend, landing pages, and AI-vs-organic conversion (ai-referrals mode). Not for internal links — use site-structure-optimizer; not for keyword positions — use rank-tracker; not for multi-metric stakeholder reports — use performance-monitor. 外链分析/反向链接/AI流量/AI引荐/ChatGPT流量/AI转化",
+    "source": {
+      "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "53f1d17d3f8be05d7f84f7eb2468231a0b3f98019a3ee89c3e0808fe0eaa4ea7"
+    },
+    "trigger_phrases": [
+      "analyze backlinks",
+      "analyze my off-site signals",
+      "track AI traffic / ChatGPT / Perplexity referrals"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when analyzing off-site signals for a domain. Two modes: mode=backlinks for backlink profiles, referring-domain quality, anchor-text distribution, toxic-link and disavow review, and competitor link gaps; mode=ai-referrals for isolating AI-assistant referral sessions (ChatGPT, Perplexity, Gemini, Copilot, Claude) in the user's own GA4, Search Console, or server logs and reporting their trend, top landing pages, and AI-vs-organic conversion. Also triggers on 外链分析, 反向链接, AI流量, AI引荐流量, ChatGPT/Perplexity referral sessions. Not for internal links (site-structure-optimizer), keyword positions (rank-tracker), or full stakeholder reports (performance-monitor)."
+  },
+  "schema_version": "1.0"
+}

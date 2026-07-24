@@ -1,0 +1,309 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 149,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the chosen mode's core outputs are produced (architecture: hierarchy + URL taxonomy + nav spec + hub/spoke plan + Mermaid map listing orphans/islands"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 269,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 151
+        },
+        "text": "linking: orphans listed with disposition + anchor distribution checked against thresholds + source/target/anchor plan)"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 322,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 271
+        },
+        "text": "a structure score and handoff summary are produced."
+      }
+    ],
+    "done_when": "the chosen mode's core outputs are produced (architecture: hierarchy + URL taxonomy + nav spec + hub/spoke plan + Mermaid map listing orphans/islands; linking: orphans listed with disposition + anchor distribution checked against thresholds + source/target/anchor plan); a structure score and handoff summary are produced.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 51
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 51
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 19
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 57
+      },
+      {
+        "path": "seo-geo/tune/site-structure-optimizer/references/link-architecture-patterns.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3f370936f77dd13389e2e85b6b1311c09da2515f9952285eb77e168a98e58bbf",
+        "source_line": 78
+      },
+      {
+        "path": "seo-geo/tune/site-structure-optimizer/references/linking-example.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "829fca26a6aa323be0cdf203eb26b43da51d495364c853d4a2d4cf2fa4bf7cda",
+        "source_line": 126
+      },
+      {
+        "path": "seo-geo/tune/site-structure-optimizer/references/linking-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "05f77d9fbc76137e062df1c502eb8a386b065bc01d6aae9bf79c7c83e2316c15",
+        "source_line": 81
+      },
+      {
+        "path": "seo-geo/tune/site-structure-optimizer/references/mermaid-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71b453792bb537fdd3b1611fab97c24ff50c29ecb7c1b16aba54af2b441500a7",
+        "source_line": 73
+      },
+      {
+        "path": "seo-geo/tune/site-structure-optimizer/references/site-type-patterns.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "2faa3b6d0d11a097dcacecc38f28976d744bf19fdcb208e7e155211ad1ed8d3f",
+        "source_line": 68
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:site-structure-optimizer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 165,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [],
+        "text": "Termination: apply the global visited-set / `max-depth: 3` / ambiguity-stop rules from [skill-contract.md §Termination rules](../../../references/skill-contract.md)."
+      },
+      {
+        "condition": "If you ran **architecture** mode: primary → run this skill again in **linking** mode to optimize the actual links inside the new structure. If linking was already run this chain, STOP (visited-set) and report chain-complete.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 393,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 167
+        },
+        "target_skills": [],
+        "text": "- If you ran **architecture** mode: primary → run this skill again in **linking** mode to optimize the actual links inside the new structure. If linking was already run this chain, STOP (visited-set) and report chain-complete."
+      },
+      {
+        "condition": "If you ran **linking** mode: primary → [on-page-seo-checker](../on-page-seo-checker/SKILL.md) — verify that revised internal links support page-level goals.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 552,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 394
+        },
+        "target_skills": [
+          "on-page-seo-checker"
+        ],
+        "text": "- If you ran **linking** mode: primary → [on-page-seo-checker](../on-page-seo-checker/SKILL.md) — verify that revised internal links support page-level goals."
+      },
+      {
+        "condition": "If the structure is publish-ready and a scored gate is needed: [content-quality-auditor](../content-quality-auditor/SKILL.md) — the only skill that computes the CORE-EEAT score and runs the T04/C01/R10 vetoes. Stop after the gate returns a verdict.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 803,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 553
+        },
+        "target_skills": [
+          "content-quality-auditor"
+        ],
+        "text": "- If the structure is publish-ready and a scored gate is needed: [content-quality-auditor](../content-quality-auditor/SKILL.md) — the only skill that computes the CORE-EEAT score and runs the T04/C01/R10 vetoes. Stop after the gate returns a verdict."
+      }
+    ],
+    "next_best": "Termination: apply the global visited-set / `max-depth: 3` / ambiguity-stop rules from [skill-contract.md §Termination rules](../../../references/skill-contract.md).\n\n- If you ran **architecture** mode: primary → run this skill again in **linking** mode to optimize the actual links inside the new structure. If linking was already run this chain, STOP (visited-set) and report chain-complete.\n- If you ran **linking** mode: primary → [on-page-seo-checker](../on-page-seo-checker/SKILL.md) — verify that revised internal links support page-level goals.\n- If the structure is publish-ready and a scored gate is needed: [content-quality-auditor](../content-quality-auditor/SKILL.md) — the only skill that computes the CORE-EEAT score and runs the T04/C01/R10 vetoes. Stop after the gate returns a verdict.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-quality-auditor",
+      "on-page-seo-checker"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "site-structure-optimizer",
+    "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+    "phase": "tune",
+    "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "[--mode architecture|linking] <domain, sitemap, or page list + site type>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 166,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "site type, goals, page inventory or sitemap, key page URLs, audiences, content categories, existing URLs to preserve, and (linking mode) the article/URL to link from."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "site type, goals, page inventory or sitemap, key page URLs, audiences, content categories, existing URLs to preserve, and (linking mode) the article/URL to link from.",
+    "source": {
+      "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 126,
+          "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing structure plan plus a reusable summary that can be stored under `memory/seo-geo/tune/site-structure-optimizer/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9"
+    },
+    "summary": "(mode-dependent): architecture mode → a page hierarchy (ASCII tree), a URL map table, a navigation spec, a hub/spoke link plan, a Mermaid site map flagging orphans/islands, an **architecture score /100**. Linking mode → a scored diagnosis, orphan list with disposition, anchor distribution check, and a prioritized source/target/anchor plan (**structure score /100**). Both emit a short handoff summary ready for `memory/seo-geo/tune/site-structure-optimizer/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing structure plan plus a reusable summary that can be stored under `memory/seo-geo/tune/site-structure-optimizer/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for external backlinks — use offsite-signal-analyzer; not for XML sitemap or indexation issues — use technical-seo-checker. 网站架构/信息架构/站点地图/内链优化",
+    "description": "Use when the user asks to \"plan my site structure\", \"design the page hierarchy / navigation / URL taxonomy\", \"fix internal linking\", or \"find orphan pages\"; runs two modes — architecture (hierarchy, nav, URL patterns, hub/spoke clusters, Mermaid site maps) and linking (link graph, authority flow, anchor text, orphan disposition, source/target/anchor plan) — and outputs a structure score /100 plus a handoff summary. Not for external backlinks — use offsite-signal-analyzer; not for XML sitemap or indexation issues — use technical-seo-checker. 网站架构/信息架构/站点地图/内链优化",
+    "source": {
+      "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "c69889d44151b9c39fbb1f68a84f19e921406b789616c43e2896697cde2279d9"
+    },
+    "trigger_phrases": [
+      "design the page hierarchy / navigation / URL taxonomy",
+      "find orphan pages",
+      "fix internal linking",
+      "plan my site structure"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when planning or restructuring a site (page hierarchy, navigation, URL taxonomy, hub/spoke topic clusters, visual sitemap) OR when fixing internal link structure (orphan pages, anchor-text distribution, authority flow, crawl depth). One skill, two altitudes: architecture designs the structure; linking optimizes the links inside it."
+  },
+  "schema_version": "1.0"
+}

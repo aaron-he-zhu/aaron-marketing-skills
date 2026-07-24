@@ -23,6 +23,7 @@
 
 set -u
 cd "$(cd "$(dirname "$0")/.." && pwd)"
+source scripts/publish-common.sh
 
 DRY_RUN=0
 ACCEPT_MIT0=0
@@ -58,26 +59,54 @@ EOF
   exit 1
 fi
 
+PUBLISH_COMMIT=""; PUBLISH_REPO=""; BUILD_ROOT=""; SOURCE_ROOT="."
+if [ "$DRY_RUN" -eq 0 ]; then
+  BUILD_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/aaron-clawhub-skills.XXXXXX")" || {
+    echo "FAIL: cannot create a private publish build directory" >&2; exit 1;
+  }
+  trap '[ -n "${BUILD_ROOT:-}" ] && rm -rf -- "$BUILD_ROOT"' EXIT
+  SOURCE_ROOT="$BUILD_ROOT/source"
+  RELEASE_IDENTITY="$(publish_prepare_release_source "$SOURCE_ROOT")" || exit 1
+  PUBLISH_REPO="${RELEASE_IDENTITY%%$'\t'*}"
+  PUBLISH_COMMIT="${RELEASE_IDENTITY#*$'\t'}"
+  echo "Live provenance: $PUBLISH_REPO@$PUBLISH_COMMIT (clean, reachable from origin/main)"
+fi
+
 # Skill dirs from the manifest (the same list every other host installs from)
-SKILL_DIRS=$(python3 -c "
-import json
-for p in json.load(open('.claude-plugin/plugin.json'))['skills']:
-    print(p[2:] if p.startswith('./') else p)
-")
+SKILL_DIRS=$(python3 -c '
+import json, sys
+for p in json.load(open(sys.argv[1]))["skills"]:
+    print(p[2:] if p.startswith("./") else p)
+' "$SOURCE_ROOT/.claude-plugin/plugin.json") || {
+  echo "FAIL: cannot read the pinned plugin skill manifest" >&2
+  exit 1
+}
+[ -n "$SKILL_DIRS" ] || { echo "FAIL: pinned plugin skill manifest is empty" >&2; exit 1; }
 
 fail=0 count=0
 for dir in $SKILL_DIRS; do
   name=$(basename "$dir")
   if [ -n "$ONLY_SKILL" ] && [ "$name" != "$ONLY_SKILL" ]; then continue; fi
-  if [ ! -f "$dir/SKILL.md" ]; then
+  if [ ! -f "$SOURCE_ROOT/$dir/SKILL.md" ]; then
     echo "FAIL: $dir/SKILL.md missing" >&2; fail=1; continue
   fi
-  version=$(sed -n 's/^version: *"\([0-9][0-9.]*\)".*/\1/p' "$dir/SKILL.md" | head -1)
+  version=$(sed -n 's/^version: *"\([0-9][0-9.]*\)".*/\1/p' "$SOURCE_ROOT/$dir/SKILL.md" | head -1)
   if [ -z "$version" ]; then
     echo "FAIL: no version in $dir/SKILL.md" >&2; fail=1; continue
   fi
 
-  cmd=(clawhub skill publish "$dir" --version "$version")
+  publish_dir="$SOURCE_ROOT/$dir"
+  if [ "$DRY_RUN" -eq 0 ]; then
+    publish_dir="$BUILD_ROOT/$name"
+    publish_build_verified_skill \
+      "$dir" "$publish_dir" "$PUBLISH_REPO" "$PUBLISH_COMMIT" "$SOURCE_ROOT" || {
+        echo "FAIL: cannot build verified publish payload for $name" >&2
+        fail=1
+        continue
+      }
+  fi
+
+  cmd=(clawhub skill publish "$publish_dir" --version "$version")
   [ "$DRY_RUN" -eq 1 ] && cmd+=(--dry-run)
   [ -n "$OWNER" ] && cmd+=(--owner "$OWNER")
 

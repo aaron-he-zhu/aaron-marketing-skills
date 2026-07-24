@@ -1,0 +1,394 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 155,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "(new) the draft satisfies target intent with natural keyword use, H1/H2 structure, meta description, one snippet-targetable block, and evidence-safe claims"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 216,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 157
+        },
+        "text": "(refresh) decay drivers and concrete updates are documented"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 337,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 218
+        },
+        "text": "both modes report `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`."
+      }
+    ],
+    "done_when": "(new) the draft satisfies target intent with natural keyword use, H1/H2 structure, meta description, one snippet-targetable block, and evidence-safe claims; (refresh) decay drivers and concrete updates are documented; both modes report `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/implement/content-writer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 47
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 55
+      },
+      {
+        "path": "references/humanizer-slop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
+        "source_line": 111
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 84
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 43
+      },
+      {
+        "path": "seo-geo/implement/content-writer/references/content-decay-signals.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "70b8e92f3d65b4030c47488a99f97690d2245ee59492d5010bf607dbf1b0b0cb",
+        "source_line": 78
+      },
+      {
+        "path": "seo-geo/implement/content-writer/references/content-structure-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f37dfd001669a2c35a44fa6be5b34b99c4eb4c38fe71a471a990cf88252f8bd6",
+        "source_line": 106
+      },
+      {
+        "path": "seo-geo/implement/content-writer/references/instructions-detail.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "24605115a253effc44386066b559370b680433ddc908f68b3ba8e54da91700e1",
+        "source_line": 59
+      },
+      {
+        "path": "seo-geo/implement/content-writer/references/refresh-example.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f3ade02aca9a770f120508a4f20050ef7ac8d176ca73cce5edad7b1fb4995ca2",
+        "source_line": 109
+      },
+      {
+        "path": "seo-geo/implement/content-writer/references/refresh-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e5add0c5b21c08dd9c72853f34831c4bb40ad8ae2e7b4315dc27650fecf1d42f",
+        "source_line": 108
+      },
+      {
+        "path": "seo-geo/implement/content-writer/references/seo-writing-checklist.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "2444caf310b03243501af872e5e087854f79a935d289b185dd1e6fc9a06cb0eb",
+        "source_line": 104
+      },
+      {
+        "path": "seo-geo/implement/content-writer/references/title-formulas.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e9d0d47c2c93dce7e8a04622c7cf7f26dc63116795b4a0feb167e7271fe43f29",
+        "source_line": 105
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/claims.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/narrative.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:content-writer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before publishing.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 168,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "content-quality-auditor"
+        ],
+        "text": "- **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — gate the draft (new) or re-score the refreshed page (refresh) before publishing."
+      },
+      {
+        "condition": "when the draft is ready but AI-citation/GEO readiness is the open question.",
+        "extraction_status": "classified",
+        "item_id": "handoff-02",
+        "kind": "conditional",
+        "source": {
+          "end_char": 322,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 169
+        },
+        "target_skills": [
+          "geo-content-optimizer"
+        ],
+        "text": "- **Conditional**: [geo-content-optimizer](../geo-content-optimizer/SKILL.md) when the draft is ready but AI-citation/GEO readiness is the open question."
+      },
+      {
+        "condition": "if the recommended target already ran in this chain, STOP and report chain-complete), `max-depth: 3`, and ambiguity-stop (present options instead of auto-following). The chain terminates at the auditor's verdict: SHIP → stop",
+        "extraction_status": "classified",
+        "item_id": "handoff-03",
+        "kind": "termination",
+        "source": {
+          "end_char": 686,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 324
+        },
+        "target_skills": [],
+        "text": "**Termination**: apply the global rules from [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set (if the recommended target already ran in this chain, STOP and report chain-complete), `max-depth: 3`, and ambiguity-stop (present options instead of auto-following). The chain terminates at the auditor's verdict: SHIP → stop"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 715,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 688
+        },
+        "target_skills": [],
+        "text": "FIX → return here for edits"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 751,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 717
+        },
+        "target_skills": [],
+        "text": "BLOCK → stop and surface the veto."
+      }
+    ],
+    "next_best": "- **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — gate the draft (new) or re-score the refreshed page (refresh) before publishing.\n- **Conditional**: [geo-content-optimizer](../geo-content-optimizer/SKILL.md) when the draft is ready but AI-citation/GEO readiness is the open question.\n\n**Termination**: apply the global rules from [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set (if the recommended target already ran in this chain, STOP and report chain-complete), `max-depth: 3`, and ambiguity-stop (present options instead of auto-following). The chain terminates at the auditor's verdict: SHIP → stop; FIX → return here for edits; BLOCK → stop and surface the veto.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md), including the Narrative/claims dependency tuple.",
+    "summary_ref": {
+      "path": "seo-geo/implement/content-writer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-quality-auditor",
+      "geo-content-optimizer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "content-writer",
+    "path": "seo-geo/implement/content-writer/SKILL.md",
+    "phase": "implement",
+    "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "[--mode new|refresh] <topic/keyword or URL of existing content>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 135,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the brief, target keywords, page intent, entity inputs, `memory/projections/narrative.json`, and `memory/projections/claims.json` (new)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 275,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 137
+        },
+        "text": "those same truth projections plus candidate URL/content, traffic/ranking history, publish/update dates, and competitor examples (refresh)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the brief, target keywords, page intent, entity inputs, `memory/projections/narrative.json`, and `memory/projections/claims.json` (new); those same truth projections plus candidate URL/content, traffic/ranking history, publish/update dates, and competitor examples (refresh).",
+    "source": {
+      "path": "seo-geo/implement/content-writer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 111,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing content deliverable and, with permission, a dated artifact under `memory/content/content-writer/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 224,
+          "path": "seo-geo/implement/content-writer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f",
+          "span_basis": "field-text",
+          "start_char": 113
+        },
+        "text": "unresolved durable claims are submitted through `registry-events.py` as authorized `operation: propose` events."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/implement/content-writer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f"
+    },
+    "summary": "mode `new` → a ready-to-use draft; mode `refresh` → a scored decay diagnosis plus a prioritized update plan (and optional refreshed copy). Both emit the standard handoff summary for `memory/content/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing content deliverable and, with permission, a dated artifact under `memory/content/content-writer/`; unresolved durable claims are submitted through `registry-events.py` as authorized `operation: propose` events."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for AI-citation/GEO readiness scoring — use geo-content-optimizer; not for publish-gate scoring — use content-quality-auditor. SEO文章写作/内容更新/排名恢复",
+    "description": "Use when the user asks to \"write SEO content\", \"draft a blog post / landing page\", \"update outdated content\", or \"fix traffic/ranking decay\"; two modes — new drafts pages with keywords, headers, snippets, and evidence boundaries; refresh scores decay, prioritizes update work, and produces a republish plan with GEO guidance. Not for AI-citation/GEO readiness scoring — use geo-content-optimizer; not for publish-gate scoring — use content-quality-auditor. SEO文章写作/内容更新/排名恢复",
+    "source": {
+      "path": "seo-geo/implement/content-writer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "14b9de5d4922a376e00a0b99b5cae6aaeb5375fd21b7d25c000f226b40c76c2f"
+    },
+    "trigger_phrases": [
+      "draft a blog post / landing page",
+      "fix traffic/ranking decay",
+      "update outdated content",
+      "write SEO content"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when writing SEO articles, blog posts, landing pages, or product descriptions targeting a keyword (mode: new), OR when updating outdated content, refreshing old articles, or recovering pages that lost traffic/rankings (mode: refresh)."
+  },
+  "schema_version": "1.0"
+}

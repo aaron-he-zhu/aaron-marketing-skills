@@ -68,6 +68,36 @@
       "timeout_seconds": 120
     },
     {
+      "id": "distribution-supply-chain",
+      "command": ["{python}", "tests/test_distribution_builder.py"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "publisher-release-safety",
+      "command": ["{python}", "-m", "unittest", "tests.test_publish_release", "tests.test_publish_state"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "machine-contract-context-planning",
+      "command": ["{python}", "-m", "unittest", "tests.test_skill_contracts", "tests.test_context_plan"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "supported-runtime-controller",
+      "command": ["{python}", "-m", "unittest", "tests.test_runtime_controller"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "workflow-graph-loop",
+      "command": ["{python}", "-m", "unittest", "tests.test_workflow_graph", "tests.test_workflow_loop"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "five-engineering-maturity-contract",
+      "command": ["{python}", "-m", "unittest", "tests.test_engineering_maturity", "tests.test_semantic_evidence_verifier", "tests.test_behavior_evals_adapter"],
+      "timeout_seconds": 120
+    },
+    {
       "id": "standalone-auditor-runtime",
       "command": ["{python}", "scripts/generate-auditor-runtime.py", "--check"],
       "timeout_seconds": 60

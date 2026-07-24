@@ -19,8 +19,10 @@ from pathlib import Path
 import re
 import shlex
 import shutil
+import stat
 import subprocess
 import sys
+import tempfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,6 +34,18 @@ SUITES_PATH = ROOT / "evals" / "deterministic-suites.json"
 PROFILES_PATH = ROOT / "evals" / "behavior-profiles.json"
 RUN_EVENTS_PATH = ROOT / "scripts" / "run-events.py"
 PROTOCOL_SCHEMA_REF = "evals/behavior-adapter-v2.schema.json"
+OFFICIAL_PROJECT_ADAPTER_REF = "scripts/adapters/codex-behavior-adapter.py"
+OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES = (
+    "evals/codex-behavior-candidate-output.schema.json",
+    "evals/codex-behavior-model-output.schema.json",
+)
+OFFICIAL_ADAPTER_PYTHON_FLAGS = ("-I", "-S")
+OFFICIAL_ADAPTER_STAGE_LAYOUT = "private-python-runtime-v1"
+OFFICIAL_ADAPTER_ENVIRONMENT_POLICY = "isolated-allowlist-v1"
+OFFICIAL_ADAPTER_ENVIRONMENT_ALLOWLIST = (
+    "CODEX_HOME", "HOME", "LANG", "LC_ALL", "PATH", "TMPDIR",
+)
+MACHINE_CONTRACT_INDEX_REF = "references/skill-contracts/index.json"
 ZERO_HASH = "0" * 64
 TERMINAL_EVAL_OUTCOMES = {"passed", "behavior-failed", "inconclusive"}
 MAX_EVIDENCE_LINE_BYTES = 1_500_000
@@ -52,8 +66,17 @@ EXECUTION_KEYS = {
     "model_provider", "model_id", "judge_model_id", "model_revision", "prompt_template_version",
     "adapter_implementation_sha256", "prompt_template_sha256", "parameters_sha256",
     "candidate_response_sha256",
-    "judge_response_sha256", "response_sha256",
+    "judge_response_sha256", "judge_attempts", "response_sha256",
     "started_at", "ended_at", "latency_ms",
+}
+JUDGE_ATTEMPT_KEYS = {
+    "attempt", "response_sha256", "size_bytes", "disposition", "diagnostic_code",
+}
+JUDGE_DIAGNOSTIC_CODES = {
+    "JUDGE_EMPTY_OUTPUT", "JUDGE_INVALID_UTF8", "JUDGE_INVALID_JSON",
+    "JUDGE_TOP_LEVEL_SHAPE", "JUDGE_OUTCOME", "JUDGE_ASSERTION_COVERAGE",
+    "JUDGE_ASSERTION_IDENTITY", "JUDGE_ASSERTION_SHAPE", "JUDGE_ASSERTION_VALUE",
+    "JUDGE_FAILURE_SHAPE", "JUDGE_FAILURE_TAXONOMY", "JUDGE_OUTCOME_INVARIANT",
 }
 ASSERTION_KEYS = {"id", "kind", "verdict", "evidence"}
 FAILURE_KEYS = {"code", "class", "retryable", "summary"}
@@ -105,6 +128,16 @@ FAILURE_CODE_CLASS = {
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SAFE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$")
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$")
+PROTOCOL_ROUTING_COMMAND = {
+    "channel-registry": "social",
+    "consent-registry": "email",
+    "creator-registry": "influencer",
+    "entity-registry": "seo-geo",
+    "launch-registry": "launch",
+    "memory-management": "seo-geo",
+    "narrative-registry": "narrative",
+    "offer-claims-registry": "ad",
+}
 
 
 class BehaviorEvalError(ValueError):
@@ -327,6 +360,161 @@ def skill_identity(slug):
     }
 
 
+def _current_source_binding(reference, digest, label):
+    if (
+            not isinstance(reference, str) or not reference
+            or not isinstance(digest, str) or not SHA256_RE.fullmatch(digest)
+            or hashlib.sha256(project_bytes(reference)).hexdigest() != digest):
+        raise BehaviorEvalError("%s binding is invalid or stale" % label)
+    return {"ref": reference, "sha256": digest}
+
+
+def _merge_source_refs(*groups):
+    merged = []
+    seen = {}
+    for group in groups:
+        for binding in group:
+            exact_object(binding, {"ref", "sha256"}, "prompt source binding")
+            reference = binding["ref"]
+            digest = binding["sha256"]
+            _current_source_binding(reference, digest, "prompt source")
+            if reference in seen:
+                if seen[reference] != digest:
+                    raise BehaviorEvalError("one prompt source has conflicting hashes")
+                continue
+            seen[reference] = digest
+            merged.append({"ref": reference, "sha256": digest})
+    if not 1 <= len(merged) <= 32:
+        raise BehaviorEvalError("prompt source expansion must contain 1..32 unique bindings")
+    return merged
+
+
+def load_skill_machine_contracts():
+    index, _index_sha = load_project_json(MACHINE_CONTRACT_INDEX_REF)
+    exact_object(
+        index,
+        {
+            "$schema", "schema_version", "source_catalog", "shared_contract",
+            "contract_schema", "contract_count", "contracts",
+        },
+        "skill machine-contract index",
+    )
+    if index["schema_version"] != "1.0":
+        raise BehaviorEvalError("skill machine-contract index version is unsupported")
+    for key in ("source_catalog", "shared_contract", "contract_schema"):
+        binding = index[key]
+        required = {"path", "sha256"} | ({"version"} if key == "source_catalog" else set())
+        exact_object(binding, required, "skill machine-contract index.%s" % key)
+        _current_source_binding(
+            binding["path"], binding["sha256"],
+            "skill machine-contract index.%s" % key,
+        )
+        if key == "source_catalog":
+            nonempty_string(binding["version"], "skill machine-contract source version", 128)
+
+    entries = index["contracts"]
+    if (
+            not isinstance(entries, list)
+            or not isinstance(index["contract_count"], int)
+            or isinstance(index["contract_count"], bool)
+            or index["contract_count"] != 120
+            or len(entries) != index["contract_count"]):
+        raise BehaviorEvalError("skill machine-contract index coverage is invalid")
+
+    result = {}
+    seen_refs = set()
+    for entry in entries:
+        exact_object(
+            entry, {"skill", "contract_ref", "contract_sha256"},
+            "skill machine-contract index entry",
+        )
+        skill = entry["skill"]
+        contract_ref = entry["contract_ref"]
+        digest = entry["contract_sha256"]
+        if (
+                not isinstance(skill, str) or not SAFE_ID_RE.fullmatch(skill)
+                or contract_ref != "references/skill-contracts/%s.json" % skill
+                or skill in result or contract_ref in seen_refs):
+            raise BehaviorEvalError("skill machine-contract index entry is malformed")
+        contract, actual_digest = load_project_json(contract_ref)
+        if actual_digest != digest:
+            raise BehaviorEvalError("skill machine contract hash drift: %s" % contract_ref)
+        identity = contract.get("identity")
+        context_hints = contract.get("context_hints")
+        expected_identity = skill_identity(skill)
+        if (
+                contract.get("schema_version") != "1.0"
+                or contract.get("contract_id") != "skill:%s" % skill
+                or not isinstance(identity, dict)
+                or identity.get("name") != skill
+                or identity.get("path") != expected_identity["path"]
+                or identity.get("version") != expected_identity["version"]
+                or identity.get("sha256") != expected_identity["skill_sha256"]
+                or not isinstance(identity.get("discipline"), str)
+                or not isinstance(context_hints, dict)
+                or not isinstance(context_hints.get("bundle_references"), list)):
+            raise BehaviorEvalError("skill machine contract identity is invalid: %s" % contract_ref)
+
+        sources = [
+            _current_source_binding(contract_ref, digest, "skill machine contract"),
+            _current_source_binding(
+                expected_identity["path"], expected_identity["skill_sha256"], "target skill",
+            ),
+            _current_source_binding(
+                index["shared_contract"]["path"], index["shared_contract"]["sha256"],
+                "shared skill execution contract",
+            ),
+            _current_source_binding(
+                index["source_catalog"]["path"], index["source_catalog"]["sha256"],
+                "system catalog",
+            ),
+        ]
+        for position, source in enumerate(context_hints["bundle_references"], 1):
+            exact_object(
+                source,
+                {"path", "reason_code", "requirement", "sha256", "source_line"},
+                "skill machine-contract context reference",
+            )
+            if source["requirement"] not in {"required", "optional"}:
+                raise BehaviorEvalError("skill machine-contract context requirement is invalid")
+            sources.append(_current_source_binding(
+                source["path"], source["sha256"],
+                "skill machine-contract context reference %d" % position,
+            ))
+        result[skill] = {
+            "kind": "machine-skill",
+            "contract_id": contract["contract_id"],
+            "contract_ref": contract_ref,
+            "contract_sha256": digest,
+            "source_refs": _merge_source_refs(sources),
+            "discipline": identity["discipline"],
+        }
+        seen_refs.add(contract_ref)
+    if len(result) != index["contract_count"]:
+        raise BehaviorEvalError("skill machine-contract index coverage is incomplete")
+    return result
+
+
+def auto_routing_source_refs(skill, discipline):
+    command = discipline
+    if discipline == "protocol":
+        command = PROTOCOL_ROUTING_COMMAND.get(skill)
+    if command not in {"narrative", "seo-geo", "social", "email", "ad", "influencer", "launch"}:
+        raise BehaviorEvalError("auto-routing case has no deterministic discipline command")
+    references = [
+        "commands/auto.md",
+        "commands/%s.md" % command,
+        "references/aaron-product-api-contract.md",
+    ]
+    return [
+        _current_source_binding(
+            reference, hashlib.sha256(project_bytes(reference)).hexdigest(),
+            "auto-routing runtime source",
+        )
+        for reference in references
+    ]
+
+
 def load_auditor_prompt_contracts():
     index_ref = "references/prompt-contracts/index.json"
     index, _index_sha = load_project_json(index_ref)
@@ -505,6 +693,7 @@ def load_auditor_prompt_contracts():
 
 def build_v2_requests(cases, profile, selection_reasons):
     contracts, derived_case_bindings = load_auditor_prompt_contracts()
+    machine_contracts = load_skill_machine_contracts()
     requests = []
     required_case_keys = {
         "id", "type", "case_provenance", "evidence_binding", "target_skill", "scenario",
@@ -521,19 +710,36 @@ def build_v2_requests(cases, profile, selection_reasons):
                     "derived auditor case does not match its current prompt-contract variant"
                 )
         target = skill_identity(case["target_skill"])
-        prompt_contract = contracts.get(case["target_skill"])
-        if prompt_contract is None and case["source_group"] == "derived-auditor":
+        machine_contract = machine_contracts.get(case["target_skill"])
+        if machine_contract is None:
+            raise BehaviorEvalError("semantic case has no current skill machine contract")
+        auditor_contract = contracts.get(case["target_skill"])
+        if auditor_contract is None and case["source_group"] == "derived-auditor":
             raise BehaviorEvalError("derived auditor case has no bound prompt contract")
-        if prompt_contract is None:
+        if auditor_contract is None:
             prompt_contract = {
-                "kind": "authored",
-                "contract_id": "authored:%s:%s" % (target["skill"], target["version"]),
-                "contract_ref": target["path"],
-                "contract_sha256": target["skill_sha256"],
-                "source_refs": [{
-                    "ref": target["path"], "sha256": target["skill_sha256"],
-                }],
+                key: machine_contract[key]
+                for key in (
+                    "kind", "contract_id", "contract_ref", "contract_sha256", "source_refs",
+                )
             }
+        else:
+            prompt_contract = {
+                key: auditor_contract[key]
+                for key in (
+                    "kind", "contract_id", "contract_ref", "contract_sha256", "source_refs",
+                )
+            }
+            prompt_contract["source_refs"] = _merge_source_refs(
+                prompt_contract["source_refs"], machine_contract["source_refs"],
+            )
+        if case["source_group"] == "auto-routing":
+            prompt_contract["source_refs"] = _merge_source_refs(
+                prompt_contract["source_refs"],
+                auto_routing_source_refs(
+                    case["target_skill"], machine_contract["discipline"],
+                ),
+            )
         reasons = selection_reasons.get(case["id"], ["profile:%s" % profile])
         if not isinstance(reasons, list) or not reasons:
             raise BehaviorEvalError("semantic case selection reasons are missing")
@@ -622,6 +828,66 @@ def validate_v2_adapter_result(
             "candidate_response_sha256", "judge_response_sha256", "response_sha256"):
         if not isinstance(execution[key], str) or not SHA256_RE.fullmatch(execution[key]):
             raise BehaviorEvalError("execution_provenance.%s must be SHA-256" % key)
+    judge_attempts = execution["judge_attempts"]
+    if not isinstance(judge_attempts, list) or len(judge_attempts) > 2:
+        raise BehaviorEvalError(
+            "execution_provenance.judge_attempts must contain at most two entries"
+        )
+    accepted_attempts = []
+    for position, attempt in enumerate(judge_attempts, 1):
+        exact_object(
+            attempt, JUDGE_ATTEMPT_KEYS,
+            "execution_provenance.judge_attempts[%d]" % (position - 1),
+        )
+        if attempt["attempt"] != position:
+            raise BehaviorEvalError("judge attempt indexes must be contiguous from one")
+        if (
+                not isinstance(attempt["response_sha256"], str)
+                or not SHA256_RE.fullmatch(attempt["response_sha256"])):
+            raise BehaviorEvalError("judge attempt response_sha256 must be SHA-256")
+        if (
+                not isinstance(attempt["size_bytes"], int)
+                or isinstance(attempt["size_bytes"], bool)
+                or not 0 <= attempt["size_bytes"] <= 1_000_000):
+            raise BehaviorEvalError("judge attempt size_bytes is out of range")
+        disposition = attempt["disposition"]
+        diagnostic = attempt["diagnostic_code"]
+        if disposition == "accepted":
+            if diagnostic is not None:
+                raise BehaviorEvalError("accepted judge attempt cannot carry a diagnostic")
+            if attempt["size_bytes"] == 0:
+                raise BehaviorEvalError("accepted judge attempt cannot be empty")
+            accepted_attempts.append(position)
+        elif disposition == "protocol-rejected":
+            if diagnostic not in JUDGE_DIAGNOSTIC_CODES:
+                raise BehaviorEvalError(
+                    "protocol-rejected judge attempt requires a closed diagnostic"
+                )
+        else:
+            raise BehaviorEvalError("judge attempt disposition is unsupported")
+    empty_sha256 = hashlib.sha256(b"").hexdigest()
+    expected_judge_sha256 = (
+        judge_attempts[-1]["response_sha256"] if judge_attempts else empty_sha256
+    )
+    if execution["judge_response_sha256"] != expected_judge_sha256:
+        raise BehaviorEvalError(
+            "execution_provenance.judge_response_sha256 does not bind the last judge attempt"
+        )
+    expected_response_sha256 = sha256_json({
+        "candidate_response_sha256": execution["candidate_response_sha256"],
+        "judge_attempts": judge_attempts,
+    })
+    if execution["response_sha256"] != expected_response_sha256:
+        raise BehaviorEvalError(
+            "execution_provenance.response_sha256 does not bind the full judge ledger"
+        )
+    if outcome in {"passed", "behavior-failed", "inconclusive"}:
+        if accepted_attempts != [len(judge_attempts)] or not judge_attempts:
+            raise BehaviorEvalError(
+                "terminal judge outcome requires exactly one accepted final attempt"
+            )
+    elif accepted_attempts:
+        raise BehaviorEvalError("failed execution cannot contain an accepted judge attempt")
     started = parse_timestamp(execution["started_at"], "execution_provenance.started_at")
     ended = parse_timestamp(execution["ended_at"], "execution_provenance.ended_at")
     if ended < started:
@@ -779,7 +1045,30 @@ def _stable_file_digest(path, maximum, label):
     return resolved, {"sha256": digest.hexdigest(), "size_bytes": total}
 
 
-def bind_adapter_command(command, implementation_ref=None):
+def _staged_file_identity(reference, raw, mode):
+    return {
+        "ref": reference,
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "size_bytes": len(raw),
+        "mode": mode,
+    }
+
+
+def _staged_runtime_identity(implementation, dependencies):
+    files = [implementation, *dependencies]
+    payload = {
+        "layout_version": OFFICIAL_ADAPTER_STAGE_LAYOUT,
+        "files": files,
+    }
+    return {
+        "layout_version": OFFICIAL_ADAPTER_STAGE_LAYOUT,
+        "implementation": implementation,
+        "runtime_dependencies": dependencies,
+        "aggregate_sha256": sha256_json(payload),
+    }
+
+
+def _bind_adapter_command_details(command, implementation_ref=None):
     executable = command[0] if os.path.isabs(command[0]) else shutil.which(command[0])
     if not executable:
         raise BehaviorEvalError("ADAPTER_CRASH: semantic adapter executable is unavailable")
@@ -791,6 +1080,10 @@ def bind_adapter_command(command, implementation_ref=None):
 
     implementation_path = None
     implementation_index = None
+    runtime_dependencies = []
+    staged_runtime = None
+    source_snapshots = {}
+    execution_binding = {"kind": "unconstrained", "script_argv_index": None}
     if implementation_ref is not None:
         raw = project_bytes(implementation_ref)
         expected = (ROOT / implementation_ref).resolve(strict=True)
@@ -810,12 +1103,65 @@ def bind_adapter_command(command, implementation_ref=None):
             raise BehaviorEvalError(
                 "--adapter-implementation-ref must identify a file in --adapter-command"
             )
+        current_python = Path(sys.executable).resolve(strict=True)
+        if implementation_index != 1 or executable_path != current_python:
+            raise BehaviorEvalError(
+                "ADAPTER_PROVENANCE: an explicit project adapter must be argv[1] "
+                "of the current Python interpreter"
+            )
+        if expected.suffix != ".py":
+            raise BehaviorEvalError(
+                "ADAPTER_PROVENANCE: an explicit project adapter must be a Python script"
+            )
         implementation_identity = {
             "ref": implementation_ref,
             "sha256": hashlib.sha256(raw).hexdigest(),
             "size_bytes": len(raw),
             "argv_index": implementation_index,
         }
+        execution_binding = {
+            "kind": "current-python-script",
+            "interpreter_path": str(current_python),
+            "script_argv_index": implementation_index,
+        }
+        if implementation_ref == OFFICIAL_PROJECT_ADAPTER_REF:
+            if any(
+                    argument == "--project-root"
+                    or argument.startswith("--project-root=")
+                    for argument in bound_command[2:]):
+                raise BehaviorEvalError(
+                    "ADAPTER_PROVENANCE: --project-root is reserved to the isolated runner"
+                )
+            source_snapshots[implementation_ref] = raw
+            for reference in OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES:
+                dependency_raw = project_bytes(reference)
+                source_snapshots[reference] = dependency_raw
+                runtime_dependencies.append({
+                    "ref": reference,
+                    "sha256": hashlib.sha256(dependency_raw).hexdigest(),
+                    "size_bytes": len(dependency_raw),
+                })
+            staged_implementation = _staged_file_identity(
+                implementation_ref, raw, "0400",
+            )
+            staged_dependencies = [
+                _staged_file_identity(reference, source_snapshots[reference], "0400")
+                for reference in OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES
+            ]
+            staged_runtime = _staged_runtime_identity(
+                staged_implementation, staged_dependencies,
+            )
+            execution_binding = {
+                "kind": "isolated-staged-current-python-script",
+                "interpreter_path": str(current_python),
+                "source_script_argv_index": implementation_index,
+                "staged_script_argv_index": 3,
+                "python_flags": list(OFFICIAL_ADAPTER_PYTHON_FLAGS),
+                "environment_policy": OFFICIAL_ADAPTER_ENVIRONMENT_POLICY,
+                "environment_allowlist": list(OFFICIAL_ADAPTER_ENVIRONMENT_ALLOWLIST),
+                "site_import": False,
+                "project_root_mode": "runner-root-argument",
+            }
     else:
         for index, argument in enumerate(bound_command[1:], 1):
             if not argument.endswith((".py", ".sh")):
@@ -843,11 +1189,133 @@ def bind_adapter_command(command, implementation_ref=None):
         "executable_sha256": executable_identity["sha256"],
         "executable_size_bytes": executable_identity["size_bytes"],
         "implementation": implementation_identity,
+        "execution_binding": execution_binding,
+        "runtime_dependencies": runtime_dependencies,
+        "staged_runtime": staged_runtime,
+    }, source_snapshots
+
+
+def bind_adapter_command(command, implementation_ref=None):
+    """Return the stable public command identity without exposing staged bytes."""
+    bound_command, identity, _source_snapshots = _bind_adapter_command_details(
+        command, implementation_ref=implementation_ref,
+    )
+    return bound_command, identity
+
+
+def _write_private_stage_file(path, raw, mode):
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    descriptor = os.open(path, flags, mode)
+    try:
+        offset = 0
+        while offset < len(raw):
+            offset += os.write(descriptor, raw[offset:])
+        os.fchmod(descriptor, mode)
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def _verify_staged_file(path, expected, label):
+    try:
+        entry = os.lstat(path)
+    except OSError as exc:
+        raise BehaviorEvalError("ADAPTER_PROVENANCE: cannot inspect %s" % label) from exc
+    expected_mode = int(expected["mode"], 8)
+    if (
+            not stat.S_ISREG(entry.st_mode) or stat.S_ISLNK(entry.st_mode)
+            or entry.st_nlink != 1 or stat.S_IMODE(entry.st_mode) != expected_mode):
+        raise BehaviorEvalError(
+            "ADAPTER_PROVENANCE: %s is not the staged private regular file" % label
+        )
+    resolved, actual = _stable_file_digest(path, 32_000_000, label)
+    if (
+            resolved != path.resolve(strict=True)
+            or actual["sha256"] != expected["sha256"]
+            or actual["size_bytes"] != expected["size_bytes"]):
+        raise BehaviorEvalError("ADAPTER_PROVENANCE: %s identity changed" % label)
+
+
+def _official_adapter_environment(stage_root):
+    environment = {
+        "LANG": "C",
+        "LC_ALL": "C",
+        "PATH": os.defpath,
+        "TMPDIR": str(stage_root / "tmp"),
     }
+    home = os.environ.get("HOME") or str(Path.home())
+    if not home or "\x00" in home or not Path(home).is_absolute():
+        raise BehaviorEvalError(
+            "ADAPTER_PROVENANCE: HOME must be absolute for isolated adapter"
+        )
+    environment["HOME"] = home
+    codex_home = os.environ.get("CODEX_HOME")
+    if codex_home:
+        if "\x00" in codex_home or not Path(codex_home).is_absolute():
+            raise BehaviorEvalError(
+                "ADAPTER_PROVENANCE: CODEX_HOME must be absolute for isolated adapter"
+            )
+        environment["CODEX_HOME"] = codex_home
+    if not set(environment) <= set(OFFICIAL_ADAPTER_ENVIRONMENT_ALLOWLIST):
+        raise BehaviorEvalError("ADAPTER_PROVENANCE: isolated adapter environment escaped allowlist")
+    return environment
+
+
+@contextlib.contextmanager
+def stage_bound_adapter(command, identity, source_snapshots):
+    """Install and execute the official adapter from one already-bound byte snapshot."""
+    binding = identity.get("execution_binding")
+    if not isinstance(binding, dict) or binding.get("kind") != (
+            "isolated-staged-current-python-script"):
+        yield command, None, ROOT
+        return
+    staged = identity.get("staged_runtime")
+    if not isinstance(staged, dict):
+        raise BehaviorEvalError("ADAPTER_PROVENANCE: staged adapter identity is missing")
+    expected_files = [staged["implementation"], *staged["runtime_dependencies"]]
+    if set(source_snapshots) != {item["ref"] for item in expected_files}:
+        raise BehaviorEvalError("ADAPTER_PROVENANCE: staged adapter source snapshot is incomplete")
+    temporary = tempfile.TemporaryDirectory(prefix="aaron-semantic-adapter-")
+    stage_root = Path(temporary.name).resolve()
+    try:
+        os.chmod(stage_root, 0o700)
+        (stage_root / "tmp").mkdir(mode=0o700)
+        for item in expected_files:
+            raw = source_snapshots[item["ref"]]
+            if (
+                    hashlib.sha256(raw).hexdigest() != item["sha256"]
+                    or len(raw) != item["size_bytes"]):
+                raise BehaviorEvalError(
+                    "ADAPTER_PROVENANCE: staged adapter source snapshot identity changed"
+                )
+            _write_private_stage_file(stage_root / item["ref"], raw, int(item["mode"], 8))
+        for directory in (
+                stage_root / "scripts" / "adapters", stage_root / "scripts",
+                stage_root / "evals"):
+            os.chmod(directory, 0o500)
+        os.chmod(stage_root, 0o500)
+        staged_script = stage_root / staged["implementation"]["ref"]
+        execution_command = [
+            command[0], *binding["python_flags"], str(staged_script),
+            "--project-root", str(ROOT), *command[2:],
+        ]
+        environment = _official_adapter_environment(stage_root)
+        verify_bound_adapter_command(execution_command, identity)
+        yield execution_command, environment, stage_root
+    finally:
+        for directory in (
+                stage_root, stage_root / "scripts", stage_root / "scripts" / "adapters",
+                stage_root / "evals", stage_root / "tmp"):
+            try:
+                os.chmod(directory, 0o700)
+            except OSError:
+                pass
+        temporary.cleanup()
 
 
 def verify_bound_adapter_command(command, identity):
-    """Re-hash executable and implementation immediately around every batch."""
+    """Re-hash the executable and every actual runtime file around each batch."""
     executable_path, executable_identity = _stable_file_digest(
         command[0], 536_870_912, "bound semantic adapter command executable",
     )
@@ -858,8 +1326,52 @@ def verify_bound_adapter_command(command, identity):
         raise BehaviorEvalError(
             "ADAPTER_PROVENANCE: semantic adapter command executable identity changed"
         )
+    binding = identity.get("execution_binding")
+    if not isinstance(binding, dict):
+        raise BehaviorEvalError("ADAPTER_PROVENANCE: adapter execution binding is missing")
     implementation = identity["implementation"]
-    index = implementation["argv_index"]
+    source_index = implementation["argv_index"]
+    if binding.get("kind") == "isolated-staged-current-python-script":
+        expected_binding = {
+            "kind": "isolated-staged-current-python-script",
+            "interpreter_path": str(Path(sys.executable).resolve(strict=True)),
+            "source_script_argv_index": 1,
+            "staged_script_argv_index": 3,
+            "python_flags": list(OFFICIAL_ADAPTER_PYTHON_FLAGS),
+            "environment_policy": OFFICIAL_ADAPTER_ENVIRONMENT_POLICY,
+            "environment_allowlist": list(OFFICIAL_ADAPTER_ENVIRONMENT_ALLOWLIST),
+            "site_import": False,
+            "project_root_mode": "runner-root-argument",
+        }
+        staged = identity.get("staged_runtime")
+        if binding != expected_binding or source_index != 1 or not isinstance(staged, dict):
+            raise BehaviorEvalError("ADAPTER_PROVENANCE: isolated adapter binding is invalid")
+        index = binding["staged_script_argv_index"]
+        if (
+                command[1:3] != list(OFFICIAL_ADAPTER_PYTHON_FLAGS)
+                or command[4:6] != ["--project-root", str(ROOT)]
+                or not 0 <= index < len(command)
+                or executable_path != Path(sys.executable).resolve(strict=True)):
+            raise BehaviorEvalError("ADAPTER_PROVENANCE: isolated Python bootstrap is invalid")
+        stage_root = Path(command[index]).resolve(strict=True).parents[2]
+        expected_command_path = stage_root / staged["implementation"]["ref"]
+        if Path(command[index]).resolve(strict=True) != expected_command_path:
+            raise BehaviorEvalError("ADAPTER_PROVENANCE: staged adapter path is invalid")
+        expected_staged = _staged_runtime_identity(
+            staged["implementation"], staged["runtime_dependencies"],
+        )
+        if staged != expected_staged:
+            raise BehaviorEvalError("ADAPTER_PROVENANCE: staged adapter aggregate is invalid")
+        _verify_staged_file(
+            expected_command_path, staged["implementation"], "staged semantic adapter",
+        )
+        for dependency in staged["runtime_dependencies"]:
+            _verify_staged_file(
+                stage_root / dependency["ref"], dependency,
+                "staged semantic adapter dependency %s" % dependency["ref"],
+            )
+        return
+    index = source_index
     if not isinstance(index, int) or isinstance(index, bool) or not 0 <= index < len(command):
         raise BehaviorEvalError("ADAPTER_PROVENANCE: adapter implementation binding is invalid")
     implementation_path, implementation_identity = _stable_file_digest(
@@ -873,6 +1385,17 @@ def verify_bound_adapter_command(command, identity):
         raise BehaviorEvalError(
             "ADAPTER_PROVENANCE: semantic adapter implementation identity changed"
         )
+    if binding.get("kind") == "current-python-script":
+        current_python = Path(sys.executable).resolve(strict=True)
+        if (
+                set(binding) != {"kind", "interpreter_path", "script_argv_index"}
+                or binding["script_argv_index"] != 1
+                or index != 1
+                or executable_path != current_python
+                or binding["interpreter_path"] != str(current_python)):
+            raise BehaviorEvalError(
+                "ADAPTER_PROVENANCE: project adapter is not executed by the current Python runtime"
+            )
 
 
 def _path_entry_exists(path):
@@ -1266,7 +1789,7 @@ def run_adapter_v2(
         raise BehaviorEvalError("cannot parse --adapter-command: %s" % exc) from exc
     if not command:
         raise BehaviorEvalError("--adapter-command cannot be empty")
-    command, command_identity = bind_adapter_command(
+    logical_command, command_identity, source_snapshots = _bind_adapter_command_details(
         command, implementation_ref=adapter_implementation_ref,
     )
     cases = selection["cases"]
@@ -1278,9 +1801,15 @@ def run_adapter_v2(
         batch_size = len(requests) or 1
     if not isinstance(batch_size, int) or isinstance(batch_size, bool) or not 1 <= batch_size <= 1000:
         raise BehaviorEvalError("adapter v2 batch_size must be 1..1000")
-    with semantic_evidence_session(
-            evidence_run_id, resume_evidence, requests, selection, command, command_identity,
-            required_execution_mode, evidence_root=evidence_root) as evidence:
+    with contextlib.ExitStack() as stack:
+        command, adapter_environment, adapter_cwd = stack.enter_context(
+            stage_bound_adapter(logical_command, command_identity, source_snapshots)
+        )
+        evidence = stack.enter_context(semantic_evidence_session(
+            evidence_run_id, resume_evidence, requests, selection,
+            logical_command, command_identity, required_execution_mode,
+            evidence_root=evidence_root,
+        ))
         pending = evidence.pending_requests() if evidence else requests
         batch_count = (len(pending) + batch_size - 1) // batch_size
         print(
@@ -1298,7 +1827,8 @@ def run_adapter_v2(
                 try:
                     result = subprocess.run(
                         command,
-                        cwd=ROOT,
+                        cwd=adapter_cwd,
+                        env=adapter_environment,
                         input=payload,
                         text=True,
                         stdout=subprocess.PIPE,

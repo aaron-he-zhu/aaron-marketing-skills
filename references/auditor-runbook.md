@@ -96,6 +96,28 @@ Always qualify IDs outside a single-framework table. Item definitions remain in 
 
 `status: BLOCKED` must never mean “the business gate said no.” Conversely, `status: DONE` does not imply `SHIP`.
 
+### Conversation Result Header
+
+Every user-facing audit result must begin with these exact typed fields; prose
+translations may follow but never replace them:
+
+```markdown
+**Status:** `DONE` | `DONE_WITH_CONCERNS` | `NEEDS_INPUT` | `BLOCKED`
+**Verdict:** `SHIP` | `FIX` | `BLOCK` | `UNDECIDED`
+**Score state:** `SCORED` | `NOT_SCORED`
+**Raw score:** <number> | omitted
+**Final score:** <number> | omitted
+```
+
+When applicable evidence is unobserved, add an **Unknown items** list before
+findings. Map every explicitly identified missing item with its qualified ID and
+the literal state `unknown` (for example, ``- `CORE-EEAT-T04`: `unknown` —
+required disclosure evidence was not observed``). Do not substitute phrases
+such as “evidence gap,” “not scored,” or “needs evidence” for the typed status,
+verdict, score state, or item state. With any applicable `unknown`, use
+`NEEDS_INPUT` / `UNDECIDED` / `NOT_SCORED` and omit both scores unless two other
+verified vetoes already determine `BLOCK` under the table above.
+
 ## 5. Artifact Contract
 
 The durable Markdown artifact uses scalar YAML frontmatter plus a deterministic body subset:

@@ -6,7 +6,7 @@
 - **Catalog version:** 18.0.0
 - **Framework:** SEND
 - **Auditor:** email-quality-auditor
-- **Source digest:** `sha256:9a904307115ab037717e80aafae8d9fd1d8a654a3565af141197e82a6bf2b8fe`
+- **Source digest:** `sha256:dde82492243e8a0d46bb85bd24c9c24b89f5b8411dfc6e8671591261be28571e`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 

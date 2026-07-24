@@ -1,0 +1,1190 @@
+{
+  "$schema": "../workflow-graph-edge-shard.schema.json",
+  "authority": "authoritative-workflow-graph-source-shard",
+  "edges": [
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "ad/orchestrate/landing-experience-checker/SKILL.md:83",
+      "condition_text": "Primary: ad-account-auditor — once the page passes preflight, score the account against ROAS and run the launch go/no-go (it computes the RQS and the O1/O2 vetoes; this skill does not).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "landing-experience-checker",
+      "gate": "ad-account-auditor",
+      "id": "landing-experience-checker--ad-account-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-account-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "ad/orchestrate/landing-experience-checker/SKILL.md:84",
+      "condition_text": "If a check is marked Fix (page copy, layout, or form): landing-optimizer — it owns the actual page repair; return here to re-preflight after the fix.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "landing-experience-checker",
+      "gate": null,
+      "id": "landing-experience-checker--landing-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "landing-optimizer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "ad/orchestrate/landing-experience-checker/SKILL.md:85",
+      "condition_text": "If the live-offer wording on the page drifted from the registered offer: offer-claims-registry — reconcile the canonical offer terms, then re-run the message-match check.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "landing-experience-checker",
+      "gate": null,
+      "id": "landing-experience-checker--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/report/landing-optimizer/SKILL.md:108",
+      "condition_text": "content-amplifier — when the audit shows the page needs more creator content to feature.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "landing-optimizer",
+      "gate": null,
+      "id": "landing-optimizer--content-amplifier",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "content-amplifier",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/report/landing-optimizer/SKILL.md:104",
+      "condition_text": "Primary: performance-analyzer — measure whether the optimizations actually moved conversion, AOV, and attribution.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "landing-optimizer",
+      "gate": null,
+      "id": "landing-optimizer--performance-analyzer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "performance-analyzer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/report/landing-optimizer/SKILL.md:109",
+      "condition_text": "roi-calculator — when the page's conversion is validated and you want to translate it into ROI and payback math.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "landing-optimizer",
+      "gate": null,
+      "id": "landing-optimizer--roi-calculator",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "roi-calculator",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:89",
+      "condition_text": "If community / directory submissions are the next gap: community-launch-runner — per-platform submission under platform rules.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-asset-packager",
+      "gate": null,
+      "id": "launch-asset-packager--community-launch-runner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "community-launch-runner",
+      "type": "fan-out"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:87",
+      "condition_text": "Primary: launch-readiness-auditor — run the appropriate RAMP preflight profile before the launch window opens.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-asset-packager",
+      "gate": "launch-readiness-auditor",
+      "id": "launch-asset-packager--launch-readiness-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-readiness-auditor",
+      "type": "fan-out"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:88",
+      "condition_text": "If the press kit is final and the media motion starts: press-media-relations — pitch and embargo mechanics on top of the finished kit.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-asset-packager",
+      "gate": null,
+      "id": "launch-asset-packager--press-media-relations",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "press-media-relations",
+      "type": "fan-out"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:85",
+      "condition_text": "If feedback and threads piled up during the day: launch-feedback-synthesizer — triage themes before they go stale.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-day-conductor",
+      "gate": null,
+      "id": "launch-day-conductor--launch-feedback-synthesizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-feedback-synthesizer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:84",
+      "condition_text": "Primary: launch-monitor — track the sustained T-0 to T+30 window with the D0 snapshot as baseline.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-day-conductor",
+      "gate": null,
+      "id": "launch-day-conductor--launch-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "launch-monitor",
+      "type": "join"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:86",
+      "condition_text": "For each submitted proposal: launch-registry — resolve by event ID and offset while preserving the original occurrence time and source.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-day-conductor",
+      "gate": null,
+      "id": "launch-day-conductor--launch-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "launch-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/prove/launch-feedback-synthesizer/SKILL.md:84",
+      "condition_text": "If the harvested proof should be reused across channels: content-amplifier — repurpose testimonials and shipped-loop material.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-feedback-synthesizer",
+      "gate": null,
+      "id": "launch-feedback-synthesizer--content-amplifier",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "content-amplifier",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "launch/prove/launch-feedback-synthesizer/SKILL.md:83",
+      "condition_text": "Primary: launch-retro-analyzer — feed the theme digest and loop metrics into the D1/W1/M1 retro.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-feedback-synthesizer",
+      "gate": null,
+      "id": "launch-feedback-synthesizer--launch-retro-analyzer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "launch-retro-analyzer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/prove/launch-feedback-synthesizer/SKILL.md:85",
+      "condition_text": "If a shipped theme is big enough to be its own moment: momentum-planner — book the \"you asked, we shipped\" beat into the T+1→T+30 plan.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-feedback-synthesizer",
+      "gate": null,
+      "id": "launch-feedback-synthesizer--momentum-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "momentum-planner",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/prove/launch-monitor/SKILL.md:87",
+      "condition_text": "If feedback themes are piling up mid-window: launch-feedback-synthesizer — triage themes and harvest compliant social proof.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-monitor",
+      "gate": null,
+      "id": "launch-monitor--launch-feedback-synthesizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-feedback-synthesizer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "launch/prove/launch-monitor/SKILL.md:86",
+      "condition_text": "Primary: launch-retro-analyzer — run the D1/W1/M1 retro on the snapshots once the window closes.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-monitor",
+      "gate": null,
+      "id": "launch-monitor--launch-retro-analyzer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "launch-retro-analyzer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "launch/prove/launch-monitor/SKILL.md:88",
+      "condition_text": "If the window is over and monitoring should continue: performance-monitor — the long-run watch outside launch scope.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-monitor",
+      "gate": null,
+      "id": "launch-monitor--performance-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "performance-monitor",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:117",
+      "condition_text": "Asset/technical fixes: launch-asset-packager",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "launch-readiness-auditor",
+      "gate": null,
+      "id": "launch-readiness-auditor--launch-asset-packager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-asset-packager",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:118",
+      "condition_text": "Execute approved plan: launch-day-conductor",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-readiness-auditor",
+      "gate": "launch-readiness-auditor",
+      "id": "launch-readiness-auditor--launch-day-conductor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "external-action-approval"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "execution-approval",
+        "handoff-summary"
+      ],
+      "to": "launch-day-conductor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:119",
+      "condition_text": "Outcome monitoring: launch-monitor",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-readiness-auditor",
+      "gate": null,
+      "id": "launch-readiness-auditor--launch-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "launch-monitor",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:116",
+      "condition_text": "Stage/commitment facts: launch-registry",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-readiness-auditor",
+      "gate": null,
+      "id": "launch-readiness-auditor--launch-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "launch-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/launch-registry/SKILL.md:75",
+      "condition_text": "Execute approved plan: launch-day-conductor",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-registry",
+      "gate": null,
+      "id": "launch-registry--launch-day-conductor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "launch-day-conductor",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "protocol/launch-registry/SKILL.md:74",
+      "condition_text": "Run preflight: launch-readiness-auditor",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-registry",
+      "gate": "launch-readiness-auditor",
+      "id": "launch-registry--launch-readiness-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-readiness-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/launch-registry/SKILL.md:72",
+      "condition_text": "Plan tier/type: launch-tier-planner",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-registry",
+      "gate": null,
+      "id": "launch-registry--launch-tier-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "launch-tier-planner",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/launch-registry/SKILL.md:73",
+      "condition_text": "Plan window: launch-window-planner",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-registry",
+      "gate": null,
+      "id": "launch-registry--launch-window-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "launch-window-planner",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:89",
+      "condition_text": "If the launch memory should be closed out: memory-management — archive the campaign records once the registry has attached the outcome snapshot.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-retro-analyzer",
+      "gate": null,
+      "id": "launch-retro-analyzer--memory-management",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "memory-management",
+      "type": "memory"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:87",
+      "condition_text": "Primary: momentum-planner — turn the keep decisions into the T+1→T+30 momentum plan and identify the next launch moment.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-retro-analyzer",
+      "gate": null,
+      "id": "launch-retro-analyzer--momentum-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "momentum-planner",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:88",
+      "condition_text": "If stakeholders need a formatted writeup: report-generator — package the retro into a stakeholder-facing report.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-retro-analyzer",
+      "gate": null,
+      "id": "launch-retro-analyzer--report-generator",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "report-generator",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/research/launch-tier-planner/SKILL.md:85",
+      "condition_text": "If spend allocation across launch channels is the next gap: budget-optimizer — allocate the budget the effort matrix implies.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-tier-planner",
+      "gate": null,
+      "id": "launch-tier-planner--budget-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "budget-optimizer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "launch/research/launch-tier-planner/SKILL.md:84",
+      "condition_text": "If the plan is formed and needs a pre-check: launch-readiness-auditor — early RAMP profile result read on the declared tier, targets, and risk register.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-tier-planner",
+      "gate": "launch-readiness-auditor",
+      "id": "launch-tier-planner--launch-readiness-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-readiness-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "launch/research/launch-tier-planner/SKILL.md:83",
+      "condition_text": "Primary: launch-window-planner — pick the date and window for the declared tier (event cycles, competitor calendar, review-latency buffers).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-tier-planner",
+      "gate": null,
+      "id": "launch-tier-planner--launch-window-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "launch-window-planner",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/research/launch-window-planner/SKILL.md:87",
+      "condition_text": "If the stage ladder to GA is the next gap: early-access-designer — design the waitlist→beta→GA gating the window must respect.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-window-planner",
+      "gate": null,
+      "id": "launch-window-planner--early-access-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "early-access-designer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/research/launch-window-planner/SKILL.md:88",
+      "condition_text": "If the window is set and assets are next: launch-asset-packager — build the tier-scoped asset manifest against the now-fixed date.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-window-planner",
+      "gate": null,
+      "id": "launch-window-planner--launch-asset-packager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-asset-packager",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "launch/research/launch-window-planner/SKILL.md:86",
+      "condition_text": "Primary: launch-registry — turn the chosen window into the canonical record (date + stage + embargo lift moment) every other launch skill coordinates against.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "launch-window-planner",
+      "gate": null,
+      "id": "launch-window-planner--launch-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "launch-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "email/setup/list-growth-designer/SKILL.md:84",
+      "condition_text": "Primary: consent-registry — formalize the opt-in records the new capture flow will produce (lawful basis + timestamp per subject).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-growth-designer",
+      "gate": null,
+      "id": "list-growth-designer--consent-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability",
+        "safety-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "consent-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "email/setup/list-growth-designer/SKILL.md:85",
+      "condition_text": "If the welcome / confirmation flow is the next gap: email-sequence-designer — design the flow new subscribers enter.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-growth-designer",
+      "gate": null,
+      "id": "list-growth-designer--email-sequence-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-sequence-designer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "email/setup/list-growth-designer/SKILL.md:86",
+      "condition_text": "If the signup page / popup needs building: landing-optimizer — the post-click / capture-surface UX.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-growth-designer",
+      "gate": null,
+      "id": "list-growth-designer--landing-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "landing-optimizer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:85",
+      "condition_text": "If the point-in-time send signal needs verifying before the next campaign: deliverability-qa — the one-time S1 auth pre-flight (a different job from this ongoing watch).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-hygiene-monitor",
+      "gate": null,
+      "id": "list-hygiene-monitor--deliverability-qa",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "deliverability-qa",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:86",
+      "condition_text": "If the hygiene reads are ready to roll into a verdict: email-quality-auditor — score the full EQS and enforce S1/S2/N1/D1, including the suppression-leakage N1 candidate this run flagged.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-hygiene-monitor",
+      "gate": "email-quality-auditor",
+      "id": "list-hygiene-monitor--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    }
+  ],
+  "schema_version": "1.0",
+  "shard_id": "edges-04"
+}

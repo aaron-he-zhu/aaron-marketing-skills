@@ -12,11 +12,15 @@
 set -u
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 HOOK="$REPO/hooks/claude-hook.sh"
+CURRENT_CATALOG_VERSION="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["properties"]["catalog_version"]["const"])' "$REPO/references/audit-artifact.schema.json")" || exit 1
 PASS=0
 FAIL=0
 
 PROJ="$(mktemp -d)"
-trap 'rm -rf "$PROJ"' EXIT
+FAST_PROJ=""
+FAST_BIN=""
+FAST_TRACE=""
+trap 'rm -rf "$PROJ"; [ -z "${FAST_PROJ:-}" ] || rm -rf "$FAST_PROJ"; [ -z "${FAST_BIN:-}" ] || rm -rf "$FAST_BIN"; [ -z "${FAST_TRACE:-}" ] || rm -f "$FAST_TRACE"' EXIT
 mkdir -p "$PROJ/memory/audits/content"
 
 # Run the post-tool-use gate against memory/audits/<file>; echoes hook stdout.
@@ -55,16 +59,19 @@ raise SystemExit(0 if value.get("decision") == "block" else 1)'; then
 }
 assert_contains()    { case "$2" in *"$3"*) ok "$1";; *) bad "$1 (missing: $3)";; esac; }
 assert_notcontains() { case "$2" in *"$3"*) bad "$1 (should not contain: $3)";; *) ok "$1";; esac; }
+current_catalog_artifact() {
+  sed "s/__CURRENT_CATALOG_VERSION__/$CURRENT_CATALOG_VERSION/g"
+}
 
 echo "Artifact Gate — auditor-output validation"
 
 # 1. Compliant artifact (cap group after a blank line, the documented §1 format) -> PASS
-cat > "$PROJ/memory/audits/content/good.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/content/good.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: CORE-EEAT
 profile: product-review
 ---
@@ -101,12 +108,12 @@ sed '/^final_overall_score:/d' "$PROJ/memory/audits/content/good.md" > "$PROJ/me
 assert_block "missing final_overall_score (non-BLOCKED) blocks" "$(gate content/missing_final.md)"
 
 # 3. A completed multi-veto audit has status DONE + verdict BLOCK, with no final score.
-cat > "$PROJ/memory/audits/content/blocked_ok.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/content/blocked_ok.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: CORE-EEAT
 profile: product-review
 ---
@@ -150,12 +157,12 @@ sed 's/score_confidence: not_scored/score_confidence: high/' \
 assert_block "every NOT_SCORED artifact requires not_scored confidence" "$(gate content/blocked_with_gap_bad_confidence.md)"
 
 # 4. An execution failure is unscored/undecided and still requires typed control fields.
-cat > "$PROJ/memory/audits/content/blocked_nocap.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/content/blocked_nocap.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: CORE-EEAT
 profile: product-review
 ---
@@ -200,12 +207,12 @@ echo "Artifact Gate — STAR influencer (creator-content-auditor) artifacts"
 mkdir -p "$PROJ/memory/audits/influencer" "$PROJ/memory/audits/ad" "$PROJ/memory/influencer/creator-content-auditor"
 
 # STAR-1. Compliant creator-content-auditor ART artifact (Approved->DONE) under memory/audits/influencer/ -> PASS
-cat > "$PROJ/memory/audits/influencer/cr_good.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/influencer/cr_good.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: STAR
 profile: awareness
 ---
@@ -234,12 +241,12 @@ EOF
 assert_pass "STAR creator-content-auditor artifact (DONE) passes the gate" "$(gate influencer/cr_good.md)"
 
 # STAR-2. One verified veto is a completed FIX with the universal Low-band ceiling.
-cat > "$PROJ/memory/audits/influencer/cr_veto.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/influencer/cr_veto.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: STAR
 profile: awareness
 ---
@@ -283,12 +290,12 @@ draft_out="$(printf '{"tool_input":{"file_path":"memory/influencer/creator-conte
 assert_pass "creator-content-auditor draft outside memory/audits/ is not gated (fail-open)" "$draft_out"
 
 # STAR-5. ROAS ad-account-auditor artifact under memory/audits/ad/ -> PASS (explicit paid-consumer coverage)
-cat > "$PROJ/memory/audits/ad/aa_good.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/ad/aa_good.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: ROAS
 profile: direct-response
 ---
@@ -470,6 +477,8 @@ assert_notcontains "current cache raises no staleness signal" "$out11" "Stalenes
 
 echo "SessionStart — registry intake & projection-lag signals"
 HOOK_HOST_KEY="hook-test-host-key-material-32-bytes-minimum"
+mkdir -p "$PROJ/.aaron-marketing"
+printf '{"schema_version":"1.0","profile":"governed"}\n' > "$PROJ/.aaron-marketing/profile.json"
 
 # 12. An old pending proposal surfaces the owner-ritual nudge
 mkdir -p "$PROJ/memory/events"
@@ -662,6 +671,65 @@ assert_contains "legal stored checkpoint truncation is explicit" "$legal_combine
 assert_notcontains "legal stored HOT does not claim a storage-limit violation" "$legal_combined_out" "Hot cache limit warning"
 assert_notcontains "legal stored checkpoint does not claim a storage-limit violation" "$legal_combined_out" "Checkpoint limit warning"
 rm -f "$PROJ/memory/hot-cache.md" "$PROJ/memory/session-checkpoint.md" "$PROJ/run-start.json"
+
+echo "Profile fast path — Lite ordinary tools stay stateless"
+
+FAST_PROJ="$(mktemp -d)"
+FAST_BIN="$(mktemp -d)"
+FAST_TRACE="$(mktemp)"
+REAL_PYTHON="$(command -v python3)"
+cat > "$FAST_BIN/python3" <<'EOF'
+#!/usr/bin/env bash
+printf '%s\n' "$*" >> "$AARON_TEST_PYTHON_TRACE"
+exec "$AARON_TEST_REAL_PYTHON" "$@"
+EOF
+chmod +x "$FAST_BIN/python3"
+fast_payload='{"tool_name":"Write","tool_input":{"file_path":"README.md","content":"ordinary fixture"},"cwd":"'"$FAST_PROJ"'"}'
+for _task in $(seq 1 20); do
+  printf '%s' "$fast_payload" |
+    PATH="$FAST_BIN:$PATH" \
+    AARON_TEST_PYTHON_TRACE="$FAST_TRACE" \
+    AARON_TEST_REAL_PYTHON="$REAL_PYTHON" \
+    CLAUDE_PROJECT_DIR="$FAST_PROJ" \
+    CLAUDE_PLUGIN_ROOT="$REPO" \
+    bash "$HOOK" pre-tool-use >/dev/null
+done
+if [ -z "$(find "$FAST_PROJ" -mindepth 1 -print -quit)" ]; then
+  ok "20 ordinary Lite hook calls create zero project files"
+else
+  bad "20 ordinary Lite hook calls created project state"
+fi
+assert_contains "ordinary Lite calls resolve the profile" "$(cat "$FAST_TRACE")" "profile-resolver.py"
+assert_notcontains "ordinary Lite calls do not invoke registry runtime" "$(cat "$FAST_TRACE")" "registry-events.py"
+assert_notcontains "ordinary Lite calls do not invoke run runtime" "$(cat "$FAST_TRACE")" "run-events.py"
+assert_notcontains "ordinary Lite calls do not invoke controller" "$(cat "$FAST_TRACE")" "runtime-controller.py"
+assert_notcontains "ordinary Lite calls do not invoke graph runtime" "$(cat "$FAST_TRACE")" "workflow-graph.py"
+assert_notcontains "ordinary Lite calls do not invoke loop runtime" "$(cat "$FAST_TRACE")" "workflow-loop.py"
+
+git -C "$FAST_PROJ" init --quiet
+mkdir -p "$FAST_PROJ/memory"
+printf '# private project state\n' > "$FAST_PROJ/memory/hot-cache.md"
+memory_payload='{"tool_name":"Write","tool_input":{"file_path":"memory/hot-cache.md","content":"customer@example.com"},"cwd":"'"$FAST_PROJ"'"}'
+memory_out="$(
+  printf '%s' "$memory_payload" |
+    CLAUDE_PROJECT_DIR="$FAST_PROJ" CLAUDE_PLUGIN_ROOT="$REPO" \
+    bash "$HOOK" pre-tool-use
+)"
+assert_deny "memory writes do not bypass the privacy preflight" "$memory_out"
+rm -rf "$FAST_PROJ/memory"
+
+opaque_payload='{"tool_name":"mcp__publisher__send","tool_input":{"path":"README.md"},"cwd":"'"$FAST_PROJ"'"}'
+opaque_trace="$(mktemp)"
+printf '%s' "$opaque_payload" |
+  PATH="$FAST_BIN:$PATH" \
+  AARON_TEST_PYTHON_TRACE="$opaque_trace" \
+  AARON_TEST_REAL_PYTHON="$REAL_PYTHON" \
+  CLAUDE_PROJECT_DIR="$FAST_PROJ" \
+  CLAUDE_PLUGIN_ROOT="$REPO" \
+  bash "$HOOK" pre-tool-use >/dev/null
+assert_contains "opaque external tools retain the memory privacy preflight" "$(cat "$opaque_trace")" "check-memory-private.py"
+assert_contains "opaque external tools retain the artifact preflight" "$(cat "$opaque_trace")" "validate-audit-artifact.py"
+rm -f "$opaque_trace"
 
 echo ""
 echo "Results: $PASS passed, $FAIL failed"

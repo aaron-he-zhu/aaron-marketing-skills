@@ -1,0 +1,378 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 75,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the mode is decided (assigned mode carries its risk flags in the blueprint)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 113,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 77
+        },
+        "text": "every roster row has all four fields"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 177,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 115
+        },
+        "text": "every share kit has per-person variation and a disclosure line"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 260,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 179
+        },
+        "text": "and posting windows are staggered with the anti-pod guardrails stated in the kit."
+      }
+    ],
+    "done_when": "the mode is decided (assigned mode carries its risk flags in the blueprint); every roster row has all four fields; every share kit has per-person variation and a disclosure line; and posting windows are staggered with the anti-pod guardrails stated in the kit.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/craft/advocacy-program-designer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/claims/claims-ledger.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/events/channels.ndjson",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:advocacy-program-designer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before anyone posts.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 186,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "social-quality-auditor"
+        ],
+        "text": "- **Primary**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — run the pre-publish gate on the program and its first kit (ECHO C2/H1 exposure) before anyone posts."
+      },
+      {
+        "condition": "If 3+ advocate rows are pending as pending proposals**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — promote them into `advocate-roster.md` so the gate has a fact base.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 380,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 187
+        },
+        "target_skills": [
+          "channel-registry"
+        ],
+        "text": "- **If 3+ advocate rows are pending as pending proposals**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — promote them into `advocate-roster.md` so the gate has a fact base."
+      },
+      {
+        "condition": "If the roster needs recruiting first**: [outreach-manager](../../../influencer/activate/outreach-manager/SKILL.md) — run the 1:1 invite and follow-up mechanics, then return with opt-in evidence.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 579,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 381
+        },
+        "target_skills": [
+          "outreach-manager"
+        ],
+        "text": "- **If the roster needs recruiting first**: [outreach-manager](../../../influencer/activate/outreach-manager/SKILL.md) — run the 1:1 invite and follow-up mechanics, then return with opt-in evidence."
+      },
+      {
+        "condition": "when the blueprint is delivered and roster rows are as pending proposals.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 932,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 581
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the blueprint is delivered and roster rows are as pending proposals."
+      }
+    ],
+    "next_best": "- **Primary**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — run the pre-publish gate on the program and its first kit (ECHO C2/H1 exposure) before anyone posts.\n- **If 3+ advocate rows are pending as pending proposals**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — promote them into `advocate-roster.md` so the gate has a fact base.\n- **If the roster needs recruiting first**: [outreach-manager](../../../influencer/activate/outreach-manager/SKILL.md) — run the 1:1 invite and follow-up mechanics, then return with opt-in evidence.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the blueprint is delivered and roster rows are as pending proposals.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/craft/advocacy-program-designer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "channel-registry",
+      "outreach-manager",
+      "social-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "advocacy-program-designer",
+    "path": "social/craft/advocacy-program-designer/SKILL.md",
+    "phase": "craft",
+    "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<opt-in | assigned> [advocate list / team size] [platforms]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 85,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "program goal, mode preference, participant list, and target platforms (User-provided)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 255,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 87
+        },
+        "text": "the existing `advocate-roster.md` and pending rows in `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` (read-only)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 302,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 257
+        },
+        "text": "the source post or asset each share kit wraps"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 397,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 304
+        },
+        "text": "approved claim wording from `memory/claims/claims-ledger.md` where kits carry product claims."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "program goal, mode preference, participant list, and target platforms (User-provided); the existing `advocate-roster.md` and pending rows in `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` (read-only); the source post or asset each share kit wraps; approved claim wording from `memory/claims/claims-ledger.md` where kits carry product claims.",
+    "source": {
+      "path": "social/craft/advocacy-program-designer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 68,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the blueprint and kits to `memory/social/advocacy-program-designer/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 281,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 70
+        },
+        "text": "advocate rows (handle, disclosure line, opt-in date, voluntary-basis evidence — minimal person data) to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 451,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1",
+          "span_basis": "field-text",
+          "start_char": 283
+        },
+        "text": "product claims lacking approved wording marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/craft/advocacy-program-designer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1"
+    },
+    "summary": "an advocacy program blueprint — mode decision (with assigned-mode risks flagged), voluntary opt-in roster spec, share kits with mandatory per-person variation, staggered human posting windows with anti-pod guardrails, per-person disclosure lines, and a Slack/Teams distribution spec — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the blueprint and kits to `memory/social/advocacy-program-designer/`; advocate rows (handle, disclosure line, opt-in date, voluntary-basis evidence — minimal person data) to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only; product claims lacking approved wording marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for paid creator campaigns — use campaign-planner. 员工倡导/创始人IP分享/内部分享计划/披露合规",
+    "description": "Use when the user asks to \"design an employee advocacy program\", \"set up founder-led sharing\", or \"build a share kit for the team\"; produces an advocacy program blueprint in two modes — participation-driven opt-in (default) or top-down assigned with its coercion and authenticity risks flagged — with a voluntary opt-in roster spec submitted as channel-registry proposal events, share kits with mandatory per-person variation, staggered human posting windows plus anti-pod guardrails (no coordinated identical reshares, no engagement rings), per-person material-connection disclosure lines per FTC and 《互联网广告管理办法》, and a Slack/Teams distribution spec. Not for paid creator campaigns — use campaign-planner. 员工倡导/创始人IP分享/内部分享计划/披露合规",
+    "source": {
+      "path": "social/craft/advocacy-program-designer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "0e87a8dfd29f4f3d359512f05811743d5bf926d52ae3123be4796a3f72656bd1"
+    },
+    "trigger_phrases": [
+      "build a share kit for the team",
+      "design an employee advocacy program",
+      "set up founder-led sharing"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when designing an employee-advocacy or founder-led sharing program: choosing opt-in vs assigned mode, speccing the voluntary advocate roster, writing share kits with per-person variation, setting staggered human posting windows and anti-pod guardrails, drafting material-connection disclosure lines, or speccing the Slack/Teams kit distribution. The Craft-phase upstream of the ECHO C2 (disclosure) and H1 (manufactured-engagement) vetoes. Not 1:1 recruitment mechanics (outreach-manager) and not paid creator campaigns (campaign-planner)."
+  },
+  "schema_version": "1.0"
+}

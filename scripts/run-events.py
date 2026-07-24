@@ -2414,8 +2414,8 @@ def validate_snapshot_context_binding(snapshot, context, route_state=None):
     route = context["route"]
     if snapshot["skill"]["name"] != route["target_skill"]:
         raise RunEventError("turn snapshot skill does not match the context route")
-    if snapshot["skill"]["version"] != route["catalog_version"]:
-        raise RunEventError("turn snapshot skill version does not match the context catalog")
+    if snapshot["skill"]["version"] != route["skill_version"]:
+        raise RunEventError("turn snapshot skill version does not match the context target skill")
     if snapshot["skill"]["contract_sha256"] != route["skill_sha256"]:
         raise RunEventError("turn snapshot contract hash does not match the context target skill")
     if snapshot["registry_offsets"] != context["registry_offsets"]:
@@ -3057,7 +3057,7 @@ def _finish_run_under_coordinator(root, run_id, value):
             )
         if normalized["route"] != {
                 "skill": terminal_route["target_skill"],
-                "version": terminal_route["catalog_version"],
+                "version": terminal_route["skill_version"],
                 "reason_code": terminal_route["reason_code"],
         }:
             raise RunEventError("run envelope route does not match its terminal context manifest")

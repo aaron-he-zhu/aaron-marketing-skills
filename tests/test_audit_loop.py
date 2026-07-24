@@ -14,6 +14,9 @@ import uuid
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CURRENT_CATALOG_VERSION = json.loads(
+    (ROOT / "references" / "audit-artifact.schema.json").read_text(encoding="utf-8")
+)["properties"]["catalog_version"]["const"]
 SPEC = importlib.util.spec_from_file_location(
     "audit_loop", ROOT / "scripts" / "audit-loop.py"
 )
@@ -59,7 +62,7 @@ def artifact(
 class: auditor-output
 schema_version: 3.0
 runbook_version: 3.0.0
-catalog_version: 18.0.0
+catalog_version: {catalog_version}
 framework: CORE-EEAT
 profile: blog-post
 ---
@@ -88,6 +91,7 @@ cap_applied: false
         coverage=coverage,
         confidence=confidence_value,
         scores=scores,
+        catalog_version=CURRENT_CATALOG_VERSION,
     )
 
 

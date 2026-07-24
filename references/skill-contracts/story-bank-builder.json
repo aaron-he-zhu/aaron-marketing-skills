@@ -1,0 +1,370 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 88,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "each story unit is tagged to exactly one pillar and to the claim ID(s) its proofs map to"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 210,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 90
+        },
+        "text": "every proof point carries a Measured / User-provided / `[needs source]` label with no unverified number asserted as fact"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 362,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 212
+        },
+        "text": "and every `[needs source]` proof is submitted to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+      }
+    ],
+    "done_when": "each story unit is tagged to exactly one pillar and to the claim ID(s) its proofs map to; every proof point carries a Measured / User-provided / `[needs source]` label with no unverified number asserted as fact; and every `[needs source]` proof is submitted to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/architect/story-bank-builder/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/tale-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "source_line": 4
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/claims/claims-ledger.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/narrative-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:story-bank-builder",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 196,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "narrative-cascade-planner"
+        ],
+        "text": "- **Primary**: [narrative-cascade-planner](../../land/narrative-cascade-planner/SKILL.md) — map the story bank onto homepage, pricing, deck, and social surfaces as per-surface message-match specs."
+      },
+      {
+        "condition": "If 3+ proofs are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before any story ships its proof wording.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 387,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 197
+        },
+        "target_skills": [
+          "offer-claims-registry"
+        ],
+        "text": "- **If 3+ proofs are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before any story ships its proof wording."
+      },
+      {
+        "condition": "If the pillars themselves look incomplete or orphaned**: [message-system-architect](../message-system-architect/SKILL.md) — repair the message house before tagging more stories to a shaky pillar set.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 591,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 388
+        },
+        "target_skills": [
+          "message-system-architect"
+        ],
+        "text": "- **If the pillars themselves look incomplete or orphaned**: [message-system-architect](../message-system-architect/SKILL.md) — repair the message house before tagging more stories to a shaky pillar set."
+      },
+      {
+        "condition": "when the story bank is saved, every story is tagged to a pillar and claim ID, and the `[needs source]` proofs are as pending proposals.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 1006,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 593
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the story bank is saved, every story is tagged to a pillar and claim ID, and the `[needs source]` proofs are as pending proposals."
+      }
+    ],
+    "next_best": "- **Primary**: [narrative-cascade-planner](../../land/narrative-cascade-planner/SKILL.md) — map the story bank onto homepage, pricing, deck, and social surfaces as per-surface message-match specs.\n- **If 3+ proofs are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before any story ships its proof wording.\n- **If the pillars themselves look incomplete or orphaned**: [message-system-architect](../message-system-architect/SKILL.md) — repair the message house before tagging more stories to a shaky pillar set.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the story bank is saved, every story is tagged to a pillar and claim ID, and the `[needs source]` proofs are as pending proposals.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "narrative/architect/story-bank-builder/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "message-system-architect",
+      "narrative-cascade-planner",
+      "offer-claims-registry"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "narrative",
+    "name": "story-bank-builder",
+    "path": "narrative/architect/story-bank-builder/SKILL.md",
+    "phase": "architect",
+    "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / brand> [interview or case material] [pillars] [claims-ledger path]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "unclassified",
+        "requirement": "required",
+        "source": {
+          "end_char": 129,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "interview transcripts, case notes, testimonials, and win-loss material (User-provided — the user must have the right to use them)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 285,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 131
+        },
+        "text": "the durable message house and pillars from [message-system-architect](../message-system-architect/SKILL.md) (`memory/narrative-registry/` canon or pasted)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 366,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 287
+        },
+        "text": "brand voice from [brand-language-codifier](../brand-language-codifier/SKILL.md)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 439,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 368
+        },
+        "text": "approved claim wording in `memory/claims/claims-ledger.md` (read-only)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "interview transcripts, case notes, testimonials, and win-loss material (User-provided — the user must have the right to use them); the durable message house and pillars from [message-system-architect](../message-system-architect/SKILL.md) (`memory/narrative-registry/` canon or pasted); brand voice from [brand-language-codifier](../brand-language-codifier/SKILL.md); approved claim wording in `memory/claims/claims-ledger.md` (read-only).",
+    "source": {
+      "path": "narrative/architect/story-bank-builder/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 56,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the story bank to `memory/narrative/story-bank-builder/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 280,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 58
+        },
+        "text": "every proof not already approved in the ledger marked `[needs source]` and submitted to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` (this skill never adjudicates it)"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 534,
+          "path": "narrative/architect/story-bank-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9",
+          "span_basis": "field-text",
+          "start_char": 282
+        },
+        "text": "any canon-grade story element route only to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) is the sole writer of its records."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/architect/story-bank-builder/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9"
+    },
+    "summary": "a story bank document — a set of reusable story units (origin, founder, customer, transformation, proof) each with a one-line premise, the arc beats, the pillar it supports, the claim-ledger ID(s) its proofs map to, and every proof labeled Measured / User-provided / `[needs source]` — plus a `[needs source]` list of unbacked proofs and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the story bank to `memory/narrative/story-bank-builder/`; every proof not already approved in the ledger marked `[needs source]` and submitted to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` (this skill never adjudicates it); any canon-grade story element route only to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) is the sole writer of its records."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for authoring the message house or pillars — use message-system-architect; not for brand voice or naming rules — use brand-language-codifier; not for finished long-form prose — use content-writer; not for adjudicating whether a proof is true — use offer-claims-registry. 品牌故事库/起源客户转化/证据故事单元",
+    "description": "Use when the user asks to \"build a story bank\", \"collect our origin and customer stories\", or \"assemble reusable proof stories for the message\"; assembles reusable narrative units — origin, founder, customer, transformation, and proof stories — each tagged to a claims-ledger ID and a message-house pillar, with every proof labeled Measured / User-provided / [needs source]. Not for authoring the message house or pillars — use message-system-architect; not for brand voice or naming rules — use brand-language-codifier; not for finished long-form prose — use content-writer; not for adjudicating whether a proof is true — use offer-claims-registry. 品牌故事库/起源客户转化/证据故事单元",
+    "source": {
+      "path": "narrative/architect/story-bank-builder/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "72f308c58f6bcd8f69c8f86cfd8347ecd6778a7a93d59283d460fe2e111f9df9"
+    },
+    "trigger_phrases": [
+      "assemble reusable proof stories for the message",
+      "build a story bank",
+      "collect our origin and customer stories"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when the durable message house and brand voice exist and you need a bank of reusable story units — origin, founder, customer, transformation, proof — each tagged to a claim ID and a pillar, so every downstream surface pulls the same stories instead of reinventing them. The fourth move of the TALE Architect phase; supplies A-dimension story raw material and E-dimension proof assets. Not the message house itself and not finished copy."
+  },
+  "schema_version": "1.0"
+}

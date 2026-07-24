@@ -1,0 +1,386 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 200,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the mode's play-pack `Done when` line is satisfied (see each pack), the required input was present or `NEEDS_INPUT` was returned, and any mode-specific blocker is flagged rather than shipped silently."
+      }
+    ],
+    "done_when": "the mode's play-pack `Done when` line is satisfied (see each pack), the required input was present or `NEEDS_INPUT` was returned, and any mode-specific blocker is flagged rather than shipped silently.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/implement/page-play-builder/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 61
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 61
+      },
+      {
+        "path": "references/humanizer-slop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
+        "source_line": 89
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 46
+      },
+      {
+        "path": "seo-geo/implement/geo-content-optimizer/references/medium-github-surfaces.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "8b3b0e08ba06cb78e4f25feeec0762da02006a407935628ba158bf46fd6ffd18",
+        "source_line": 88
+      },
+      {
+        "path": "seo-geo/implement/page-play-builder/references/comparison.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e0753816c1844b0a71892bd1dc286527f0042721a9524446e1485af067e76643",
+        "source_line": 29
+      },
+      {
+        "path": "seo-geo/implement/page-play-builder/references/local.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "441a24e8e999358aa5e6a4df60b290913046c6334bceb1b3cbfba4b4c9340f8c",
+        "source_line": 30
+      },
+      {
+        "path": "seo-geo/implement/page-play-builder/references/parasite.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3b77026b81b17731f0cf5c860e218aea6ffe2dadd3ac2cae8f1fbb42fcfb0f10",
+        "source_line": 28
+      },
+      {
+        "path": "seo-geo/implement/page-play-builder/references/programmatic.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b9ffaf307662d9759d89fbea9923b7a97883078f5ece3c1c3477f956099aab6d",
+        "source_line": 27
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:page-play-builder",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 76,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [],
+        "text": "The handoff is **mode-conditional**. Follow the branch for the mode that ran"
+      },
+      {
+        "condition": "if the target was already invoked in this chain",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 198,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 78
+        },
+        "target_skills": [],
+        "text": "global termination rules apply to all branches (visited-set check — stop if the target was already invoked in this chain"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 214,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 200
+        },
+        "target_skills": [],
+        "text": "`max-depth: 3`"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 235,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 216
+        },
+        "target_skills": [],
+        "text": "stop-on-ambiguity)."
+      },
+      {
+        "condition": "before mass publish.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 422,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 237
+        },
+        "target_skills": [
+          "content-quality-auditor"
+        ],
+        "text": "- **programmatic** → **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — gate a representative page sample for thin/duplicate risk before mass publish."
+      },
+      {
+        "condition": "If the auditor returns SHIP and schema is the gap*: [serp-markup-builder](../serp-markup-builder/SKILL.md).",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 721,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 423
+        },
+        "target_skills": [
+          "content-quality-auditor",
+          "serp-markup-builder"
+        ],
+        "text": "- **comparison** → **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — gate the page for publish readiness (honesty + source items map to CORE-EEAT Trust). *If the auditor returns SHIP and schema is the gap*: [serp-markup-builder](../serp-markup-builder/SKILL.md)."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-07",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 882,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 722
+        },
+        "target_skills": [
+          "geo-content-optimizer"
+        ],
+        "text": "- **parasite** → **Primary**: [geo-content-optimizer](../geo-content-optimizer/SKILL.md) — tune each selected placement so answer engines can quote and cite it."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-08",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1026,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 883
+        },
+        "target_skills": [
+          "on-page-seo-checker"
+        ],
+        "text": "- **local** → **Primary**: [on-page-seo-checker](../../tune/on-page-seo-checker/SKILL.md) — audit the location/service-area pages once drafted."
+      },
+      {
+        "condition": "If the recommended target was already visited this session, report **chain-complete** instead of re-invoking.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-09",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1137,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 1028
+        },
+        "target_skills": [],
+        "text": "If the recommended target was already visited this session, report **chain-complete** instead of re-invoking."
+      }
+    ],
+    "next_best": "The handoff is **mode-conditional**. Follow the branch for the mode that ran; global termination rules apply to all branches (visited-set check — stop if the target was already invoked in this chain; `max-depth: 3`; stop-on-ambiguity).\n\n- **programmatic** → **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — gate a representative page sample for thin/duplicate risk before mass publish.\n- **comparison** → **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — gate the page for publish readiness (honesty + source items map to CORE-EEAT Trust). *If the auditor returns SHIP and schema is the gap*: [serp-markup-builder](../serp-markup-builder/SKILL.md).\n- **parasite** → **Primary**: [geo-content-optimizer](../geo-content-optimizer/SKILL.md) — tune each selected placement so answer engines can quote and cite it.\n- **local** → **Primary**: [on-page-seo-checker](../../tune/on-page-seo-checker/SKILL.md) — audit the location/service-area pages once drafted.\n\nIf the recommended target was already visited this session, report **chain-complete** instead of re-invoking.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md). Name the mode that ran in the **Objective** line so the next skill knows which guardrail verdict it is inheriting.",
+    "summary_ref": {
+      "path": "seo-geo/implement/page-play-builder/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-quality-auditor",
+      "geo-content-optimizer",
+      "on-page-seo-checker",
+      "serp-markup-builder"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "page-play-builder",
+    "path": "seo-geo/implement/page-play-builder/SKILL.md",
+    "phase": "implement",
+    "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<mode: programmatic|parasite|comparison|local> <primary input> [dataset / competitor / platforms / location]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "classified",
+        "kind": "evidence-input",
+        "requirement": "optional",
+        "source": {
+          "end_char": 242,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the chosen mode and its required input (see selector), product/ICP context, and any live URLs, competitor facts, platform rules, or directory listings the user can paste or export. All modes implicitly read prior project state when available."
+      }
+    ],
+    "extraction_status": "classified",
+    "reads": "the chosen mode and its required input (see selector), product/ICP context, and any live URLs, competitor facts, platform rules, or directory listings the user can paste or export. All modes implicitly read prior project state when available.",
+    "source": {
+      "path": "seo-geo/implement/page-play-builder/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 129,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the mode deliverable plus a reusable handoff summary to `memory/content/`. Comparison mode also writes a per-competitor data file"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 179,
+          "path": "seo-geo/implement/page-play-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa",
+          "span_basis": "field-text",
+          "start_char": 131
+        },
+        "text": "local mode also writes the canonical NAP record."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "seo-geo/implement/page-play-builder/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa"
+    },
+    "summary": "the deliverable for the selected mode (a page-system plan / a platform plan / a comparison page / a local-SEO pack), each carrying its own guardrail verdict, plus the standard handoff summary written to `memory/content/`.",
+    "summary_source": "expected-output",
+    "writes": "the mode deliverable plus a reusable handoff summary to `memory/content/`. Comparison mode also writes a per-competitor data file; local mode also writes the canonical NAP record."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for finding what to target — use keyword-research or content-gap-analysis; not for drafting one standalone article — use content-writer; not for scoring a page for publish — use content-quality-auditor. 程序化SEO/批量页面/寄生SEO/借势权重/对比页/vs页/替代页/本地SEO/谷歌商家档案/NAP一致性",
+    "description": "Use when the user asks to \"build programmatic SEO pages\", \"generate pages at scale\", \"rank on a high-authority third-party site\", \"borrow domain authority\", \"build a vs / alternative page\", \"do local SEO\", \"optimize a Google Business Profile\", or \"fix NAP\" — one page-build router with four modes: programmatic (template × dataset systems), parasite (barnacle publishing on Medium/Reddit/LinkedIn/GitHub), comparison (vs / alternative pages in four formats), and local (GBP + NAP + citations + location pages), each with its own thin/duplicate, honesty, or reputation-abuse guardrail. Not for finding what to target — use keyword-research or content-gap-analysis; not for drafting one standalone article — use content-writer; not for scoring a page for publish — use content-quality-auditor. 程序化SEO/批量页面/寄生SEO/借势权重/对比页/vs页/替代页/本地SEO/谷歌商家档案/NAP一致性",
+    "source": {
+      "path": "seo-geo/implement/page-play-builder/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "44a4a4ef6d5e6e20c03fda73602a3450202a812dce2132fecda7011c864328fa"
+    },
+    "trigger_phrases": [
+      "borrow domain authority",
+      "build a vs / alternative page",
+      "build programmatic SEO pages",
+      "do local SEO",
+      "fix NAP",
+      "generate pages at scale",
+      "optimize a Google Business Profile",
+      "rank on a high-authority third-party site"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when the user wants to build SEO pages that are NOT a single hand-written article. Programmatic mode: generate hundreds or thousands of pages from one template plus a structured dataset (locations, comparisons, integrations, glossary, personas), pick a pSEO playbook, or audit a template-x-data set for thin/duplicate risk. Parasite mode: choose or stage third-party-platform publishing (Medium, Reddit, LinkedIn Articles, Quora, GitHub, Dev.to, Stack Overflow) that links back to an owned site, or check a plan against Google's site-reputation-abuse policy. Comparison mode: build a vs page, competitor comparison, or alternative/alternatives page. Local mode: optimize a Google Business Profile, audit NAP consistency, build citations, or plan location and service-area pages. Also fires on 程序化SEO, 寄生SEO, 对比页, 本地SEO, GBP, local pack, barnacle SEO."
+  },
+  "schema_version": "1.0"
+}

@@ -1,0 +1,1187 @@
+{
+  "$schema": "../workflow-graph-edge-shard.schema.json",
+  "authority": "authoritative-workflow-graph-source-shard",
+  "edges": [
+    {
+      "condition_code": "conditional",
+      "condition_source": "ad/research/campaign-architect/SKILL.md:84",
+      "condition_text": "If the launch should run as an experiment: ad-test-designer — design the launch test (hypothesis, single variable, sample/duration) on the new structure.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "campaign-architect",
+      "gate": null,
+      "id": "campaign-architect--ad-test-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-test-designer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/target/campaign-planner/SKILL.md:94",
+      "condition_text": "Primary: brief-generator — convert the approved plan into concrete influencer briefs.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "campaign-planner",
+      "gate": null,
+      "id": "campaign-planner--brief-generator",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "brief-generator",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/target/campaign-planner/SKILL.md:95",
+      "condition_text": "Alternate: budget-optimizer — pressure-test and optimize the budget split before locking the plan.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "campaign-planner",
+      "gate": null,
+      "id": "campaign-planner--budget-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "budget-optimizer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/target/campaign-planner/SKILL.md:96",
+      "condition_text": "Alternate: influencer-discovery — build the shortlist against the selection criteria defined here.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "campaign-planner",
+      "gate": null,
+      "id": "campaign-planner--influencer-discovery",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "influencer-discovery",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "narrative/trace/category-narrative-mapper/SKILL.md:85",
+      "condition_text": "If the beachhead's beliefs and objections are still unknown: audience-belief-mapper — capture the switching forces before the arc is designed.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "category-narrative-mapper",
+      "gate": null,
+      "id": "category-narrative-mapper--audience-belief-mapper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "audience-belief-mapper",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "narrative/trace/category-narrative-mapper/SKILL.md:84",
+      "condition_text": "If the positioning canvas does not exist yet: positioning-mapper — build the canvas first, using the named alternatives this map surfaced.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "category-narrative-mapper",
+      "gate": null,
+      "id": "category-narrative-mapper--positioning-mapper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "positioning-mapper",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/trace/category-narrative-mapper/SKILL.md:83",
+      "condition_text": "Primary: positioning-truth-tracer — reconcile our positioning against the mapped category terrain and the claims ledger.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "category-narrative-mapper",
+      "gate": null,
+      "id": "category-narrative-mapper--positioning-truth-tracer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "positioning-truth-tracer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "social/explore/channel-portfolio-planner/SKILL.md:84",
+      "condition_text": "If audience evidence was missing: audience-mapper — build the segment evidence first, then return to score the matrix against it.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "channel-portfolio-planner",
+      "gate": null,
+      "id": "channel-portfolio-planner--audience-mapper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "audience-mapper",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "social/explore/channel-portfolio-planner/SKILL.md:83",
+      "condition_text": "If 3+ proposal events were queued: channel-registry — promote the proposed channels into dossiers so the E1 fact base exists before warming starts.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "channel-portfolio-planner",
+      "gate": null,
+      "id": "channel-portfolio-planner--channel-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "channel-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "social/explore/channel-portfolio-planner/SKILL.md:82",
+      "condition_text": "Primary: voice-dossier-builder — codify brand/founder voice and content pillars for the selected channels before anything is drafted.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "channel-portfolio-planner",
+      "gate": null,
+      "id": "channel-portfolio-planner--voice-dossier-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "voice-dossier-builder",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/channel-registry/SKILL.md:73",
+      "condition_text": "Portfolio decision: channel-portfolio-planner",
+      "documentation_required": true,
+      "exception": null,
+      "from": "channel-registry",
+      "gate": null,
+      "id": "channel-registry--channel-portfolio-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "channel-portfolio-planner",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/channel-registry/SKILL.md:75",
+      "condition_text": "UGC permission work: engagement-inbox-manager",
+      "documentation_required": true,
+      "exception": null,
+      "from": "channel-registry",
+      "gate": null,
+      "id": "channel-registry--engagement-inbox-manager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "engagement-inbox-manager",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/channel-registry/SKILL.md:74",
+      "condition_text": "Warmup: participation-warmup-planner",
+      "documentation_required": true,
+      "exception": null,
+      "from": "channel-registry",
+      "gate": null,
+      "id": "channel-registry--participation-warmup-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "participation-warmup-planner",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "protocol/channel-registry/SKILL.md:76",
+      "condition_text": "Asset/program gate: social-quality-auditor",
+      "documentation_required": true,
+      "exception": null,
+      "from": "channel-registry",
+      "gate": "social-quality-auditor",
+      "id": "channel-registry--social-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "social-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "email/deliver/cold-outbound-sequencer/SKILL.md:88",
+      "condition_text": "Primary: consent-registry — record the lawful basis for each list source before send, so the S2 consent sub-item has a real answer at the gate.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "cold-outbound-sequencer",
+      "gate": null,
+      "id": "cold-outbound-sequencer--consent-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability",
+        "safety-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "consent-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "email/deliver/cold-outbound-sequencer/SKILL.md:90",
+      "condition_text": "If each step now needs copy: email-creative-builder — write the subject/body/CTA and the live CAN-SPAM footer for each designed step.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "cold-outbound-sequencer",
+      "gate": null,
+      "id": "cold-outbound-sequencer--email-creative-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-creative-builder",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "email/deliver/cold-outbound-sequencer/SKILL.md:89",
+      "condition_text": "If the sequence is ready for the gate: email-quality-auditor — score the profile-weighted EQS and enforce S1 (authentication), S2 (consent), N1 (unsubscribe), and D1 (claims).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "cold-outbound-sequencer",
+      "gate": "email-quality-auditor",
+      "id": "cold-outbound-sequencer--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:83",
+      "condition_text": "If launch day needs an hour-blocked coordinator across all lanes: launch-day-conductor.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "community-launch-runner",
+      "gate": null,
+      "id": "community-launch-runner--launch-day-conductor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-day-conductor",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:82",
+      "condition_text": "Primary: launch-monitor — arm the T-0→T+30 telemetry read on the submitted channels.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "community-launch-runner",
+      "gate": null,
+      "id": "community-launch-runner--launch-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "launch-monitor",
+      "type": "join"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:84",
+      "condition_text": "If the media/analyst lane is the next gap: press-media-relations.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "community-launch-runner",
+      "gate": null,
+      "id": "community-launch-runner--press-media-relations",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "press-media-relations",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "seo-geo/survey/competitor-analysis/SKILL.md:123",
+      "condition_text": "Primary: content-gap-analysis. Also: serp-analysis and offsite-signal-analyzer. If the goal is a head-to-head \"us vs them\" page, hand the vetted competitor set to page-play-builder.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "competitor-analysis",
+      "gate": null,
+      "id": "competitor-analysis--content-gap-analysis",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "content-gap-analysis",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "seo-geo/survey/competitor-analysis/SKILL.md:123",
+      "condition_text": "Primary: content-gap-analysis. Also: serp-analysis and offsite-signal-analyzer. If the goal is a head-to-head \"us vs them\" page, hand the vetted competitor set to page-play-builder.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "competitor-analysis",
+      "gate": null,
+      "id": "competitor-analysis--offsite-signal-analyzer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "offsite-signal-analyzer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "seo-geo/survey/competitor-analysis/SKILL.md:123",
+      "condition_text": "Primary: content-gap-analysis. Also: serp-analysis and offsite-signal-analyzer. If the goal is a head-to-head \"us vs them\" page, hand the vetted competitor set to page-play-builder.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "competitor-analysis",
+      "gate": null,
+      "id": "competitor-analysis--page-play-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "page-play-builder",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "seo-geo/survey/competitor-analysis/SKILL.md:123",
+      "condition_text": "Primary: content-gap-analysis. Also: serp-analysis and offsite-signal-analyzer. If the goal is a head-to-head \"us vs them\" page, hand the vetted competitor set to page-play-builder.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "competitor-analysis",
+      "gate": null,
+      "id": "competitor-analysis--serp-analysis",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "serp-analysis",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/target/competitor-tracker/SKILL.md:95",
+      "condition_text": "Primary: campaign-planner — turn competitive gaps into a differentiated campaign.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "competitor-tracker",
+      "gate": null,
+      "id": "competitor-tracker--campaign-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "campaign-planner",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/target/competitor-tracker/SKILL.md:97",
+      "condition_text": "Alternate (Scout): fit-scorer — score a competitor's roster against your brand before you poach.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "competitor-tracker",
+      "gate": null,
+      "id": "competitor-tracker--fit-scorer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "fit-scorer",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/target/competitor-tracker/SKILL.md:96",
+      "condition_text": "Alternate (Scout): influencer-discovery — pursue the untapped and former-competitor creators this analysis surfaced.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "competitor-tracker",
+      "gate": null,
+      "id": "competitor-tracker--influencer-discovery",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "influencer-discovery",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/consent-registry/SKILL.md:78",
+      "condition_text": "Deliverability incident: deliverability-qa",
+      "documentation_required": true,
+      "exception": null,
+      "from": "consent-registry",
+      "gate": null,
+      "id": "consent-registry--deliverability-qa",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "deliverability-qa",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "protocol/consent-registry/SKILL.md:77",
+      "condition_text": "Audit SEND: email-quality-auditor",
+      "documentation_required": true,
+      "exception": null,
+      "from": "consent-registry",
+      "gate": "email-quality-auditor",
+      "id": "consent-registry--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/consent-registry/SKILL.md:76",
+      "condition_text": "Apply exclusions: list-segment-builder",
+      "documentation_required": true,
+      "exception": null,
+      "from": "consent-registry",
+      "gate": null,
+      "id": "consent-registry--list-segment-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "list-segment-builder",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/consent-registry/SKILL.md:79",
+      "condition_text": "Erase/archive: memory-management",
+      "documentation_required": true,
+      "exception": null,
+      "from": "consent-registry",
+      "gate": null,
+      "id": "consent-registry--memory-management",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "memory-management",
+      "type": "memory"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "influencer/activate/content-amplifier/SKILL.md:157",
+      "condition_text": "budget-optimizer — reallocate paid budget across the recommended tiers (paid).",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "content-amplifier",
+      "gate": null,
+      "id": "content-amplifier--budget-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "budget-optimizer",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/activate/content-amplifier/SKILL.md:156",
+      "condition_text": "contract-helper — secure or expand usage rights before reuse (repurpose).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-amplifier",
+      "gate": null,
+      "id": "content-amplifier--contract-helper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "contract-helper",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "influencer/activate/content-amplifier/SKILL.md:152",
+      "condition_text": "*repurpose mode* → landing-optimizer — drop the repurposed testimonials, hero videos, and quote cards onto the pages that convert.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-amplifier",
+      "gate": null,
+      "id": "content-amplifier--landing-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "landing-optimizer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "influencer/activate/content-amplifier/SKILL.md:151",
+      "condition_text": "*paid mode* → performance-analyzer — measure amplification results once campaigns are live.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-amplifier",
+      "gate": null,
+      "id": "content-amplifier--performance-analyzer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "performance-analyzer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "seo-geo/survey/content-gap-analysis/SKILL.md:117",
+      "condition_text": "Primary: content-writer.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-gap-analysis",
+      "gate": null,
+      "id": "content-gap-analysis--content-writer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "content-writer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:172",
+      "condition_text": "FIX content: content-writer",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "content-quality-auditor",
+      "gate": null,
+      "id": "content-quality-auditor--content-writer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "content-writer",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:175",
+      "condition_text": "Add domain context: domain-authority-auditor",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-quality-auditor",
+      "gate": "domain-authority-auditor",
+      "id": "content-quality-auditor--domain-authority-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "domain-authority-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:174",
+      "condition_text": "Resolve claims: offer-claims-registry",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-quality-auditor",
+      "gate": null,
+      "id": "content-quality-auditor--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:173",
+      "condition_text": "FIX technical evidence: technical-seo-checker",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-quality-auditor",
+      "gate": null,
+      "id": "content-quality-auditor--technical-seo-checker",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "technical-seo-checker",
+      "type": "conditional"
+    }
+  ],
+  "schema_version": "1.0",
+  "shard_id": "edges-01"
+}

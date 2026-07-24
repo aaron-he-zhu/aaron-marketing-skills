@@ -1,0 +1,316 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 217,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every unit fits current format limits, maps to an accepted destination-page claim, contains no unsupported/policy-prohibited wording, covers at least two angles, and reports the full Narrative/claims dependency tuple."
+      }
+    ],
+    "done_when": "every unit fits current format limits, maps to an accepted destination-page claim, contains no unsupported/policy-prohibited wording, covers at least two angles, and reports the full Narrative/claims dependency tuple.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 35
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 41
+      },
+      {
+        "path": "ad/orchestrate/ad-creative-builder/references/ad-format-specs.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "0667f5a644a44a250a9e79b7474605385af0b2d61e22200e3b29fa66c1c0a2f1",
+        "source_line": 45
+      },
+      {
+        "path": "ad/orchestrate/ad-creative-builder/references/angle-matrix.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "68c3824a275b8e9135e356a64475d0849348b40bcd663b9060c151f77f14c59d",
+        "source_line": 46
+      },
+      {
+        "path": "references/humanizer-slop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
+        "source_line": 50
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 64
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 31
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/claims.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/narrative.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:ad-creative-builder",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 154,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "ad-account-auditor"
+        ],
+        "text": "- **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the creative against ROAS (O1/O2 veto checks) once a set is ready."
+      },
+      {
+        "condition": "If units carry `[needs source]` flags or unregistered claims**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claims with evidence provenance and approved wording, then swap the resolved wording back into the flagged units.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 425,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 155
+        },
+        "target_skills": [
+          "offer-claims-registry"
+        ],
+        "text": "- **If units carry `[needs source]` flags or unregistered claims**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claims with evidence provenance and approved wording, then swap the resolved wording back into the flagged units."
+      },
+      {
+        "condition": "If the destination URL is weak or missing** (NEEDS_INPUT): [landing-optimizer](../../../influencer/report/landing-optimizer/SKILL.md) — fix the post-click page so message-match is achievable, then return here.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 639,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 426
+        },
+        "target_skills": [
+          "landing-optimizer"
+        ],
+        "text": "- **If the destination URL is weak or missing** (NEEDS_INPUT): [landing-optimizer](../../../influencer/report/landing-optimizer/SKILL.md) — fix the post-click page so message-match is achievable, then return here."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 765,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 640
+        },
+        "target_skills": [],
+        "text": "- Global visited-set / max-depth termination contract from [skill-contract.md](../../../references/skill-contract.md) applies"
+      },
+      {
+        "condition": "when the creative set is auditor-ready.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 811,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 767
+        },
+        "target_skills": [],
+        "text": "stop when the creative set is auditor-ready."
+      }
+    ],
+    "next_best": "- **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the creative against ROAS (O1/O2 veto checks) once a set is ready.\n- **If units carry `[needs source]` flags or unregistered claims**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claims with evidence provenance and approved wording, then swap the resolved wording back into the flagged units.\n- **If the destination URL is weak or missing** (NEEDS_INPUT): [landing-optimizer](../../../influencer/report/landing-optimizer/SKILL.md) — fix the post-click page so message-match is achievable, then return here.\n- Global visited-set / max-depth termination contract from [skill-contract.md](../../../references/skill-contract.md) applies; stop when the creative set is auditor-ready.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md), including `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`.",
+    "summary_ref": {
+      "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "landing-optimizer",
+      "offer-claims-registry"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "ad-creative-builder",
+    "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+    "phase": "orchestrate",
+    "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product/offer> <destination URL> [platform: google|meta|...]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 172,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the offer, destination URL, platform/format, audience/intent, existing variants, `memory/projections/narrative.json`, and `memory/projections/claims.json` at named offsets."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the offer, destination URL, platform/format, audience/intent, existing variants, `memory/projections/narrative.json`, and `memory/projections/claims.json` at named offsets.",
+    "source": {
+      "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "partially-classified",
+        "kind": "unclassified",
+        "permission_posture": "permission-required",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 64,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing creative set and, with permission, a WARM artifact"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 159,
+          "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21",
+          "span_basis": "field-text",
+          "start_char": 66
+        },
+        "text": "unresolved claims become authorized `operation: propose` events through `registry-events.py`."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21"
+    },
+    "summary": "a ready-to-import creative set (RSA headlines/descriptions, hooks, angle matrix) with a per-unit message-match note to the destination URL, plus the standard handoff summary for `memory/ad/ad-creative-builder/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing creative set and, with permission, a WARM artifact; unresolved claims become authorized `operation: propose` events through `registry-events.py`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for scoring an ad account — use ad-account-auditor; not for the post-click page — use landing-optimizer; not for organic articles — use content-writer. 广告创意/广告文案/RSA标题",
+    "description": "Use when the user asks to \"write ad copy\", \"generate RSA headlines\", or \"build ad creative at volume\"; produces ad units — RSA headlines/descriptions, hooks, and an angle matrix — message-matched to the destination landing page. Not for scoring an ad account — use ad-account-auditor; not for the post-click page — use landing-optimizer; not for organic articles — use content-writer. 广告创意/广告文案/RSA标题",
+    "source": {
+      "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "1b147c5d8484834d8b4c968047e1370b4ce802de841c4163cdbdca6b2e984c21"
+    },
+    "trigger_phrases": [
+      "build ad creative at volume",
+      "generate RSA headlines",
+      "write ad copy"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when generating or iterating paid-ad creative: RSA headlines and descriptions, hooks, and an angle matrix for Search/Social campaigns, kept message-matched to a destination URL. Also when the user wants creative variants to test."
+  },
+  "schema_version": "1.0"
+}

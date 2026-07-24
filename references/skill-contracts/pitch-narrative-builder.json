@@ -1,0 +1,391 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 64,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the arc names all five beats and each maps to at least one slide"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 169,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 66
+        },
+        "text": "every proof beat is tied to an approved claim ID or marked `[needs source]` and submitted to candidates"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 211,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 171
+        },
+        "text": "the ask has an audience-specific variant"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 333,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 213
+        },
+        "text": "and no beat contradicts the canon's positioning statement, pillars, or claim wording (the `L`/`L1` message-match check)."
+      }
+    ],
+    "done_when": "the arc names all five beats and each maps to at least one slide; every proof beat is tied to an approved claim ID or marked `[needs source]` and submitted to candidates; the ask has an audience-specific variant; and no beat contradicts the canon's positioning statement, pillars, or claim wording (the `L`/`L1` message-match check).",
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/humanizer-slop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
+        "source_line": 49
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/tale-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "source_line": 4
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/claims/claims-ledger.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/narrative-registry/canon.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:pitch-narrative-builder",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 166,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "narrative-enablement-kit"
+        ],
+        "text": "- **Primary**: [narrative-enablement-kit](../narrative-enablement-kit/SKILL.md) — turn the pitch into the elevator ladder, spokesperson Q&A, and approved boilerplate."
+      },
+      {
+        "condition": "If 3+ proof beats are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before the deck ships the wording.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 355,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 167
+        },
+        "target_skills": [
+          "offer-claims-registry"
+        ],
+        "text": "- **If 3+ proof beats are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before the deck ships the wording."
+      },
+      {
+        "condition": "If the sales deck must go live and be checked against every surface**: [narrative-quality-auditor](../../evaluate/narrative-quality-auditor/SKILL.md) — run the pre-publish consistency mode (single surface vs canon go/no-go).",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 584,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 356
+        },
+        "target_skills": [
+          "narrative-quality-auditor"
+        ],
+        "text": "- **If the sales deck must go live and be checked against every surface**: [narrative-quality-auditor](../../evaluate/narrative-quality-auditor/SKILL.md) — run the pre-publish consistency mode (single surface vs canon go/no-go)."
+      },
+      {
+        "condition": "when the pitch narrative and slide-beat outline are delivered and every proof beat is tied to a claim ID or as pending proposals.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 993,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 586
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the pitch narrative and slide-beat outline are delivered and every proof beat is tied to a claim ID or as pending proposals."
+      }
+    ],
+    "next_best": "- **Primary**: [narrative-enablement-kit](../narrative-enablement-kit/SKILL.md) — turn the pitch into the elevator ladder, spokesperson Q&A, and approved boilerplate.\n- **If 3+ proof beats are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before the deck ships the wording.\n- **If the sales deck must go live and be checked against every surface**: [narrative-quality-auditor](../../evaluate/narrative-quality-auditor/SKILL.md) — run the pre-publish consistency mode (single surface vs canon go/no-go).\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the pitch narrative and slide-beat outline are delivered and every proof beat is tied to a claim ID or as pending proposals.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "narrative-enablement-kit",
+      "narrative-quality-auditor",
+      "offer-claims-registry"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "narrative",
+    "name": "pitch-narrative-builder",
+    "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+    "phase": "land",
+    "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<company / product> [audience: investors|sales|both] [canon path] [story bank path]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 205,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the narrative canon from [narrative-registry](../../../protocol/narrative-registry/SKILL.md) (`memory/narrative-registry/canon.md` — positioning statement, main narrative, pillars + claim IDs, boilerplate)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 292,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 207
+        },
+        "text": "the story bank from [story-bank-builder](../../architect/story-bank-builder/SKILL.md)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 398,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 294
+        },
+        "text": "the positioning truth set from [positioning-truth-tracer](../../trace/positioning-truth-tracer/SKILL.md)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 470,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 400
+        },
+        "text": "approved claim wording in `memory/claims/claims-ledger.md` (read-only)"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 529,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 472
+        },
+        "text": "company traction/metrics for proof beats (User-provided)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the narrative canon from [narrative-registry](../../../protocol/narrative-registry/SKILL.md) (`memory/narrative-registry/canon.md` — positioning statement, main narrative, pillars + claim IDs, boilerplate); the story bank from [story-bank-builder](../../architect/story-bank-builder/SKILL.md); the positioning truth set from [positioning-truth-tracer](../../trace/positioning-truth-tracer/SKILL.md); approved claim wording in `memory/claims/claims-ledger.md` (read-only); company traction/metrics for proof beats (User-provided).",
+    "source": {
+      "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 87,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the pitch narrative + slide-beat outline to `memory/narrative/pitch-narrative-builder/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 368,
+          "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1",
+          "span_basis": "field-text",
+          "start_char": 89
+        },
+        "text": "every unsubstantiated proof or comparative claim tagged `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` — never to `memory/claims/claims-ledger.md` and never to `memory/narrative-registry/` canonical files."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1"
+    },
+    "summary": "a pitch narrative for the requested audience (sales / fundraising / both) — the five-beat arc (problem → shift → product-as-hero → proof → ask), a slide-beat outline mapping each beat to one or more slides, the claim ID each proof beat rests on (or `[needs source]`), a per-audience ask variant (fundraising: raise/use-of-funds framing; sales: next-step framing), a list of proof beats with no approved claim, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the pitch narrative + slide-beat outline to `memory/narrative/pitch-narrative-builder/`; every unsubstantiated proof or comparative claim tagged `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` — never to `memory/claims/claims-ledger.md` and never to `memory/narrative-registry/` canonical files."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the launch-window battle cards and talk track — use sales-enablement-kit; not for the durable message hierarchy or the arc itself — use message-system-architect / strategic-narrative-designer; not for finished deck visual design — out of scope; not for claim adjudication — use offer-claims-registry. 路演叙事/融资故事/销售 pitch/幻灯节拍",
+    "description": "Use when the user asks to \"build our pitch deck narrative\", \"write a fundraising story\", or \"structure the sales pitch narrative\"; derives from the narrative canon a company pitch/deck narrative — problem → the undeniable shift → product-as-hero → proof → the ask — as a slide-beat outline (one narrative beat per slide, with the claim ID each proof beat rests on), for both a sales pitch and a fundraising deck. Every proof beat is labeled Measured / User-provided / '[needs source]' and unverified ones route to the claims candidates. Not for the launch-window battle cards and talk track — use sales-enablement-kit; not for the durable message hierarchy or the arc itself — use message-system-architect / strategic-narrative-designer; not for finished deck visual design — out of scope; not for claim adjudication — use offer-claims-registry. 路演叙事/融资故事/销售 pitch/幻灯节拍",
+    "source": {
+      "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "777a09e683ae3211be00c9ba0d170a54dc4293dae84250ddc8fa2875f7eafac1"
+    },
+    "trigger_phrases": [
+      "build our pitch deck narrative",
+      "structure the sales pitch narrative",
+      "write a fundraising story"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when deriving a company pitch narrative from an existing narrative canon: the problem → shift → product-as-hero → proof → ask arc rendered as a per-slide beat outline for a sales pitch or a fundraising deck, with each proof beat tied to a claim-ledger ID. The Land-phase expression of the canon in deck form — distinct from launch-window sales-enablement-kit and from the durable arc (strategic-narrative-designer). Not the battle cards, not the message hierarchy, not the finished slide design."
+  },
+  "schema_version": "1.0"
+}

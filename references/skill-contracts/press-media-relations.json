@@ -1,0 +1,385 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 111,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the three tiers are populated and right-sized to the launch tier with one named angle per Tier-1/Tier-2 contact"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 236,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 113
+        },
+        "text": "embargo terms and the timing skeleton reference the launch-registry date (or the missing record is flagged as an open loop)"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 364,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 238
+        },
+        "text": "and the press-release draft contains no invented quote or number — every claim traces to the ledger or carries [needs source]."
+      }
+    ],
+    "done_when": "the three tiers are populated and right-sized to the launch tier with one named angle per Tier-1/Tier-2 contact; embargo terms and the timing skeleton reference the launch-registry date (or the missing record is flagged as an open loop); and the press-release draft contains no invented quote or number — every claim traces to the ledger or carries [needs source].",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/mobilize/press-media-relations/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/claims/claims-ledger.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/launch-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:press-media-relations",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 176,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "outreach-manager"
+        ],
+        "text": "- **Primary**: [outreach-manager](../../../influencer/activate/outreach-manager/SKILL.md) — execute the pitch sequence, follow-ups, and negotiation from this list and skeleton."
+      },
+      {
+        "condition": "If the launch gate is next**: [launch-readiness-auditor](../launch-readiness-auditor/SKILL.md) — the media motion feeds its `M` dimension and the T-1 go/no-go check.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 346,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 177
+        },
+        "target_skills": [
+          "launch-readiness-auditor"
+        ],
+        "text": "- **If the launch gate is next**: [launch-readiness-auditor](../launch-readiness-auditor/SKILL.md) — the media motion feeds its `M` dimension and the T-1 go/no-go check."
+      },
+      {
+        "condition": "If coverage tracking is next**: [launch-monitor](../../prove/launch-monitor/SKILL.md) — watch the news echo from T-0 onward.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 475,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 347
+        },
+        "target_skills": [
+          "launch-monitor"
+        ],
+        "text": "- **If coverage tracking is next**: [launch-monitor](../../prove/launch-monitor/SKILL.md) — watch the news echo from T-0 onward."
+      },
+      {
+        "condition": "when the list, embargo skeleton, and drafts are packaged for the outreach engine.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 836,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 477
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the list, embargo skeleton, and drafts are packaged for the outreach engine."
+      }
+    ],
+    "next_best": "- **Primary**: [outreach-manager](../../../influencer/activate/outreach-manager/SKILL.md) — execute the pitch sequence, follow-ups, and negotiation from this list and skeleton.\n- **If the launch gate is next**: [launch-readiness-auditor](../launch-readiness-auditor/SKILL.md) — the media motion feeds its `M` dimension and the T-1 go/no-go check.\n- **If coverage tracking is next**: [launch-monitor](../../prove/launch-monitor/SKILL.md) — watch the news echo from T-0 onward.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the list, embargo skeleton, and drafts are packaged for the outreach engine.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "launch/mobilize/press-media-relations/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "launch-monitor",
+      "launch-readiness-auditor",
+      "outreach-manager"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "press-media-relations",
+    "path": "launch/mobilize/press-media-relations/SKILL.md",
+    "phase": "mobilize",
+    "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / launch moment> [target verticals] [launch tier] [launch date]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 148,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "launch tier/type and the authoritative date/stage from `memory/launch-registry/` (via [launch-registry](../../../protocol/launch-registry/SKILL.md))"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 270,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 150
+        },
+        "text": "the message house and narrative spine from [message-house-builder](../../assemble/message-house-builder/SKILL.md) output"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 332,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 272
+        },
+        "text": "approved claim wording from `memory/claims/claims-ledger.md`"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 412,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 334
+        },
+        "text": "target verticals and existing journalist/analyst relationships (User-provided)"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 479,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 414
+        },
+        "text": "`~~brand monitor` category-coverage signals for outlet discovery."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "launch tier/type and the authoritative date/stage from `memory/launch-registry/` (via [launch-registry](../../../protocol/launch-registry/SKILL.md)); the message house and narrative spine from [message-house-builder](../../assemble/message-house-builder/SKILL.md) output; approved claim wording from `memory/claims/claims-ledger.md`; target verticals and existing journalist/analyst relationships (User-provided); `~~brand monitor` category-coverage signals for outlet discovery.",
+    "source": {
+      "path": "launch/mobilize/press-media-relations/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 82,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the media plan + release/briefing drafts to `memory/launch/press-media-relations/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 323,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 84
+        },
+        "text": "embargo and exclusive commitments to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` (the registry formalizes them — this skill never writes `memory/launch-registry/` records directly)"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 497,
+          "path": "launch/mobilize/press-media-relations/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c",
+          "span_basis": "field-text",
+          "start_char": 325
+        },
+        "text": "any unsubstantiated product/comparative claim to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` marked [needs source]."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/mobilize/press-media-relations/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c"
+    },
+    "summary": "a three-tier media/analyst list (Tier 1 exclusive candidates, Tier 2 vertical press, Tier 3 communities and newsletters) with a per-contact angle, embargo terms plus a pitch timing skeleton (cadence labeled Estimated; lift moment from the launch-registry record), a press-release draft with zero fabricated quotes or numbers, an analyst briefing outline, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the media plan + release/briefing drafts to `memory/launch/press-media-relations/`; embargo and exclusive commitments to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` (the registry formalizes them — this skill never writes `memory/launch-registry/` records directly); any unsubstantiated product/comparative claim to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` marked [needs source]."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for press-kit assets — use launch-asset-packager; not for follow-up sequence mechanics — use outreach-manager; not for post-launch news-echo monitoring — use launch-monitor. 媒体名单/禁运期pitch/新闻稿/分析师简报",
+    "description": "Use when the user asks to \"build a media list for my launch\", \"write a launch press release\", or \"pitch press under embargo\"; produces a three-tier media and analyst list (Tier 1 exclusive candidates, Tier 2 vertical press, Tier 3 communities and newsletters), an embargo pitch timing skeleton keyed to the launch-registry date, a press-release draft in standard structure with no fabricated quotes or numbers, and an analyst briefing outline. Not for press-kit assets — use launch-asset-packager; not for follow-up sequence mechanics — use outreach-manager; not for post-launch news-echo monitoring — use launch-monitor. 媒体名单/禁运期pitch/新闻稿/分析师简报",
+    "source": {
+      "path": "launch/mobilize/press-media-relations/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "e8203e85d1334f454a8ce7feea4212b1b03ebbc23fa902bc7e1e0d6f67bdb74c"
+    },
+    "trigger_phrases": [
+      "build a media list for my launch",
+      "pitch press under embargo",
+      "write a launch press release"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when a launch needs a media and analyst motion: building a tiered press list, choosing an exclusive-vs-broad embargo strategy, drafting the press release and analyst briefing, and sequencing embargoed pitches against the authoritative launch date. The list / embargo / angle / release layer above pitch execution (outreach-manager) and press-kit assets (launch-asset-packager)."
+  },
+  "schema_version": "1.0"
+}

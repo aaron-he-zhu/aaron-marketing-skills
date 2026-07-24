@@ -1,0 +1,372 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 56,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "each segment is named and grounded in an exported column"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 101,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 58
+        },
+        "text": "every size is labeled Measured or Estimated"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 165,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 103
+        },
+        "text": "RFM tiers use the user's own recency/frequency/monetary fields"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 342,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 167
+        },
+        "text": "the suppression list reconciles against the consent-registry (unsubscribed + hard-bounced + complained + consent-withdrawn) or flags NEEDS_INPUT where no consent record exists"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 397,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 344
+        },
+        "text": "and the SEND **E** relevance of each bucket is noted."
+      }
+    ],
+    "done_when": "each segment is named and grounded in an exported column; every size is labeled Measured or Estimated; RFM tiers use the user's own recency/frequency/monetary fields; the suppression list reconciles against the consent-registry (unsubscribed + hard-bounced + complained + consent-withdrawn) or flags NEEDS_INPUT where no consent record exists; and the SEND **E** relevance of each bucket is noted.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/setup/list-segment-builder/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 36
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 44
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 32
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 38
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/consent",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "restricted"
+      }
+    ]
+  },
+  "contract_id": "skill:list-segment-builder",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 138,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "email-creative-builder"
+        ],
+        "text": "- **Primary**: [email-creative-builder](../../engage/email-creative-builder/SKILL.md) — compose a message-matched unit for the top segment"
+      },
+      {
+        "condition": "when the next gap is a lifecycle flow per stage.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 265,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 140
+        },
+        "target_skills": [
+          "email-sequence-designer"
+        ],
+        "text": "or [email-sequence-designer](../../nurture/email-sequence-designer/SKILL.md) when the next gap is a lifecycle flow per stage."
+      },
+      {
+        "condition": "If consent records are missing or stale for a cohort**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record lawful basis and opt-in facts before that cohort is mailable (registry is the sole writer of `memory/consent/`).",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 511,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 266
+        },
+        "target_skills": [
+          "consent-registry"
+        ],
+        "text": "- **If consent records are missing or stale for a cohort**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record lawful basis and opt-in facts before that cohort is mailable (registry is the sole writer of `memory/consent/`)."
+      },
+      {
+        "condition": "when routing is ambiguous (e.g. both creative and sequence are equally the next gap). Segmentation is upstream of the EQS gate: hand off to a compose/flow skill, then stop",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 917,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 512
+        },
+        "target_skills": [],
+        "text": "- **Termination**: apply the global rule from [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (do not re-invoke a skill already run in this chain), `max-depth: 3`, and stop-and-report when routing is ambiguous (e.g. both creative and sequence are equally the next gap). Segmentation is upstream of the EQS gate: hand off to a compose/flow skill, then stop"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1043,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 919
+        },
+        "target_skills": [
+          "email-quality-auditor"
+        ],
+        "text": "do not self-invoke [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — the gate is triggered separately."
+      }
+    ],
+    "next_best": "- **Primary**: [email-creative-builder](../../engage/email-creative-builder/SKILL.md) — compose a message-matched unit for the top segment; or [email-sequence-designer](../../nurture/email-sequence-designer/SKILL.md) when the next gap is a lifecycle flow per stage.\n- **If consent records are missing or stale for a cohort**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record lawful basis and opt-in facts before that cohort is mailable (registry is the sole writer of `memory/consent/`).\n- **Termination**: apply the global rule from [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (do not re-invoke a skill already run in this chain), `max-depth: 3`, and stop-and-report when routing is ambiguous (e.g. both creative and sequence are equally the next gap). Segmentation is upstream of the EQS gate: hand off to a compose/flow skill, then stop; do not self-invoke [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — the gate is triggered separately.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "email/setup/list-segment-builder/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "consent-registry",
+      "email-creative-builder",
+      "email-quality-auditor",
+      "email-sequence-designer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "email",
+    "name": "list-segment-builder",
+    "path": "email/setup/list-segment-builder/SKILL.md",
+    "phase": "setup",
+    "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<list/CRM CSV or GA4/ecommerce export> [goal: promo|retention|cold] [ESP]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 202,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the user's own list/CRM CSV (subscribe date, last-open/last-click date, opt-in status), ESP campaign export (opens/clicks per subscriber), GA4/ecommerce export (order recency, frequency, monetary value)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 247,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 204
+        },
+        "text": "the program goal (promo / retention / cold)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 372,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 249
+        },
+        "text": "and consent/suppression facts from the [consent-registry](../../../protocol/consent-registry/SKILL.md) (`memory/consent/`)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the user's own list/CRM CSV (subscribe date, last-open/last-click date, opt-in status), ESP campaign export (opens/clicks per subscriber), GA4/ecommerce export (order recency, frequency, monetary value); the program goal (promo / retention / cold); and consent/suppression facts from the [consent-registry](../../../protocol/consent-registry/SKILL.md) (`memory/consent/`).",
+    "source": {
+      "path": "email/setup/list-segment-builder/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 87,
+          "path": "email/setup/list-segment-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing segment map and reusable summary to `memory/email/list-segment-builder/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/setup/list-segment-builder/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c"
+    },
+    "summary": "a",
+    "summary_source": "expected-output",
+    "writes": "a user-facing segment map and reusable summary to `memory/email/list-segment-builder/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for scoring EQS or running vetoes — use email-quality-auditor; not for authentication or spam-content checks — use deliverability-qa. 邮件列表分群/生命周期分群/抑制名单/流失召回",
+    "description": "Use when the user asks to \"build email segments from my list\", \"make engaged / lapsed / RFM segments\", \"set up cart-abandoner or lifecycle-stage audiences\", or \"build a suppression list of unsubscribes and bounces\"; turns the user's OWN list/CRM/GA4/ecommerce export into behavioral, attribute, and lifecycle-stage segments plus a suppression list, with per-segment sizes labeled Measured/Estimated, informing the SEND E (Engagement/targeting) dimension. Not for scoring EQS or running vetoes — use email-quality-auditor; not for authentication or spam-content checks — use deliverability-qa. 邮件列表分群/生命周期分群/抑制名单/流失召回",
+    "source": {
+      "path": "email/setup/list-segment-builder/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "8ddc55d7dcfce77f017f58972788c0addc9f62bd7c65ac83bf771db79d349a5c"
+    },
+    "trigger_phrases": [
+      "build a suppression list of unsubscribes and bounces",
+      "build email segments from my list",
+      "make engaged / lapsed / RFM segments",
+      "set up cart-abandoner or lifecycle-stage audiences"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when preparing WHO to email before any send is designed: segmenting an exported list/CRM/GA4/ecommerce export into behavioral segments (engaged-90d, cart-abandoners), RFM tiers, and lifecycle stages (new, active, lapsed, win-back), and building the suppression list (unsubscribed, hard-bounced, spam-complained, consent-withdrawn) by reading the consent-registry as the source of truth for consent and suppression facts."
+  },
+  "schema_version": "1.0"
+}

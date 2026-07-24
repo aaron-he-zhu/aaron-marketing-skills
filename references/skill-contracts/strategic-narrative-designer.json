@@ -1,0 +1,386 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 101,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "all five beats are present and the shift is stated as an undeniable, dated change (not a vague trend)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 231,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 103
+        },
+        "text": "the promised-land beat's proof is either labeled Measured / User-provided or marked `[needs source]` and submitted to candidates"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 312,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 233
+        },
+        "text": "and no beat contradicts the positioning truth set or an existing canon version."
+      }
+    ],
+    "done_when": "all five beats are present and the shift is stated as an undeniable, dated change (not a vague trend); the promised-land beat's proof is either labeled Measured / User-provided or marked `[needs source]` and submitted to candidates; and no beat contradicts the positioning truth set or an existing canon version.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/tale-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "source_line": 4
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/claims/claims-ledger.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/narrative-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/narrative/audience-belief-mapper",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/narrative/positioning-truth-tracer",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:strategic-narrative-designer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 161,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "message-system-architect"
+        ],
+        "text": "- **Primary**: [message-system-architect](../message-system-architect/SKILL.md) — author the durable message house on top of the finished arc and seed the canon."
+      },
+      {
+        "condition": "If the positioning truth set is missing or stale**: [positioning-truth-tracer](../../trace/positioning-truth-tracer/SKILL.md) — reconcile positioning against shippable reality first, then return to build the arc.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 378,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 162
+        },
+        "target_skills": [
+          "positioning-truth-tracer"
+        ],
+        "text": "- **If the positioning truth set is missing or stale**: [positioning-truth-tracer](../../trace/positioning-truth-tracer/SKILL.md) — reconcile positioning against shippable reality first, then return to build the arc."
+      },
+      {
+        "condition": "If 3+ proof beats are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before the promised-land beat ships the wording.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 581,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 379
+        },
+        "target_skills": [
+          "offer-claims-registry"
+        ],
+        "text": "- **If 3+ proof beats are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before the promised-land beat ships the wording."
+      },
+      {
+        "condition": "when the five-beat arc is saved and the promised-land proof is either labeled or as pending proposals.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 963,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 583
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the five-beat arc is saved and the promised-land proof is either labeled or as pending proposals."
+      }
+    ],
+    "next_best": "- **Primary**: [message-system-architect](../message-system-architect/SKILL.md) — author the durable message house on top of the finished arc and seed the canon.\n- **If the positioning truth set is missing or stale**: [positioning-truth-tracer](../../trace/positioning-truth-tracer/SKILL.md) — reconcile positioning against shippable reality first, then return to build the arc.\n- **If 3+ proof beats are pending as proposals**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — substantiate or reject them before the promised-land beat ships the wording.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the five-beat arc is saved and the promised-land proof is either labeled or as pending proposals.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "message-system-architect",
+      "offer-claims-registry",
+      "positioning-truth-tracer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "narrative",
+    "name": "strategic-narrative-designer",
+    "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+    "phase": "architect",
+    "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / brand> [positioning truth set path] [belief map path]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 161,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the positioning truth set from [positioning-truth-tracer](../../trace/positioning-truth-tracer/SKILL.md) (`memory/narrative/positioning-truth-tracer/` or pasted)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 323,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 163
+        },
+        "text": "the belief / objection / four-forces map from [audience-belief-mapper](../../trace/audience-belief-mapper/SKILL.md) (`memory/narrative/audience-belief-mapper/`)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 395,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 325
+        },
+        "text": "approved claim wording in `memory/claims/claims-ledger.md` (read-only)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 495,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 397
+        },
+        "text": "any existing canon in `memory/narrative-registry/` so the arc does not contradict a prior version."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the positioning truth set from [positioning-truth-tracer](../../trace/positioning-truth-tracer/SKILL.md) (`memory/narrative/positioning-truth-tracer/` or pasted); the belief / objection / four-forces map from [audience-belief-mapper](../../trace/audience-belief-mapper/SKILL.md) (`memory/narrative/audience-belief-mapper/`); approved claim wording in `memory/claims/claims-ledger.md` (read-only); any existing canon in `memory/narrative-registry/` so the arc does not contradict a prior version.",
+    "source": {
+      "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 59,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the arc to `memory/narrative/strategic-narrative-designer/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 271,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 61
+        },
+        "text": "every unsubstantiated proof beat to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` tagged `[needs source]` — never `memory/claims/claims-ledger.md` directly"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 582,
+          "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f",
+          "span_basis": "field-text",
+          "start_char": 273
+        },
+        "text": "a canon-grade arc (the durable spine, once stable) proposed to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) is the sole writer of `memory/narrative-registry/` canonical files."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f"
+    },
+    "summary": "a five-beat strategic narrative arc — old world (status quo + shaky assumptions), the undeniable shift, winners vs losers under the new rules, the promised land, and proof the promised land is real — each proof beat labeled Measured / User-provided / `[needs source]`, the objection reframes drawn from the belief map, a `[needs source]` list for the ledger, plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the arc to `memory/narrative/strategic-narrative-designer/`; every unsubstantiated proof beat to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` tagged `[needs source]` — never `memory/claims/claims-ledger.md` directly; a canon-grade arc (the durable spine, once stable) proposed to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) is the sole writer of `memory/narrative-registry/` canonical files."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the message house hierarchy — use message-system-architect; not for the pitch deck narrative — use pitch-narrative-builder; not for claim substantiation — use offer-claims-registry. 变革叙事弧/旧世界/应许之地/战略叙事结构",
+    "description": "Use when the user asks to \"design our change narrative\", \"build the old-world-to-new-game story arc\", or \"frame the shift our category is undergoing\"; produces a Raskin-style strategic narrative arc — old world → the undeniable shift → winners vs losers under the new rules → the promised land → proof the promised land is real — derived from the positioning truth set and the belief/objection map, feeding the TALE Architecture arc sub-item. Every proof beat is labeled Measured / User-provided / [needs source] and this skill never adjudicates a claim. Not for the message house hierarchy — use message-system-architect; not for the pitch deck narrative — use pitch-narrative-builder; not for claim substantiation — use offer-claims-registry. 变革叙事弧/旧世界/应许之地/战略叙事结构",
+    "source": {
+      "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "9e1f8f269b7ba28bafa8462428d3132877b467d51b1d7fb325c333b27a77530f"
+    },
+    "trigger_phrases": [
+      "build the old-world-to-new-game story arc",
+      "design our change narrative",
+      "frame the shift our category is undergoing"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when building the durable strategic narrative arc before the message house exists: naming the old world and its assumptions, the undeniable shift, the winners and losers under the new rules, the promised land, and the proof it is real. The first Architect move of the TALE loop, taking the positioning truth set and belief map as upstream and handing the arc to message-system-architect. Not the message-house hierarchy itself and not the pitch deck."
+  },
+  "schema_version": "1.0"
+}

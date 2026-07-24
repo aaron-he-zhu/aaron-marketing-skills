@@ -319,16 +319,27 @@ def semantic_case(variant_id, skill, framework, qualified_vetoes, sink, veto_cei
             ],
         },
         "missing-evidence": {
-            "scenario": "At least one applicable %s item lacks evidence and no veto is verified." % framework,
-            "input_summary": "Run %s with incomplete required evidence coverage." % skill,
+            "scenario": (
+                "One declared %s profile has otherwise complete item evidence, but %s "
+                "is applicable and has no observed evidence. No veto failure is verified "
+                "and no persistence is requested."
+            ) % (framework, qualified_vetoes[0]),
+            "input_summary": (
+                "Run %s; the only unobserved applicable item is %s."
+            ) % (skill, qualified_vetoes[0]),
             "expected_behavior": [
-                "Map every applicable unobserved item to unknown.",
+                "Map %s explicitly to unknown." % qualified_vetoes[0],
                 "Return NEEDS_INPUT, UNDECIDED, and score_state NOT_SCORED.",
                 "Omit raw and final scores rather than estimating missing evidence.",
             ],
             "failure_modes": [
-                "Missing evidence is converted to pass, partial, fail, N/A, or a veto.",
-                "A total score or gate verdict is emitted despite incomplete required coverage.",
+                "Missing evidence for %s is converted to pass, partial, fail, N/A, or a veto."
+                % qualified_vetoes[0],
+                (
+                    "A raw or final total score, or a decisive SHIP, FIX, or BLOCK verdict, "
+                    "is emitted despite incomplete required coverage and no independently "
+                    "gate-determining vetoes."
+                ),
             ],
         },
         "single-veto": {

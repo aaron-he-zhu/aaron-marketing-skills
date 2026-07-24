@@ -1,0 +1,1196 @@
+{
+  "$schema": "../workflow-graph-edge-shard.schema.json",
+  "authority": "authoritative-workflow-graph-source-shard",
+  "edges": [
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "seo-geo/implement/content-writer/SKILL.md:133",
+      "condition_text": "Primary: content-quality-auditor — gate the draft (new) or re-score the refreshed page (refresh) before publishing.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-writer",
+      "gate": "content-quality-auditor",
+      "id": "content-writer--content-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "content-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "seo-geo/implement/content-writer/SKILL.md:134",
+      "condition_text": "Conditional: geo-content-optimizer when the draft is ready but AI-citation/GEO readiness is the open question.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "content-writer",
+      "gate": null,
+      "id": "content-writer--geo-content-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "geo-content-optimizer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/activate/contract-helper/SKILL.md:85",
+      "condition_text": "Primary: content-amplifier — once the agreement is signed and usage rights are locked, amplify the licensed content into paid and owned channels.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "contract-helper",
+      "gate": null,
+      "id": "contract-helper--content-amplifier",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "content-amplifier",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "influencer/activate/contract-helper/SKILL.md:88",
+      "condition_text": "creator-content-auditor — run the approval workflow the contract defines.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "contract-helper",
+      "gate": "creator-content-auditor",
+      "id": "contract-helper--creator-content-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "creator-content-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "influencer/activate/contract-helper/SKILL.md:89",
+      "condition_text": "outreach-manager — if terms stall, return to negotiation before re-drafting.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "contract-helper",
+      "gate": null,
+      "id": "contract-helper--outreach-manager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "outreach-manager",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "ad/activate/conversion-signal-qa/SKILL.md:80",
+      "condition_text": "Primary: ad-account-auditor — once the plumbing is launch-ready, the auditor scores R1/R2 and the full RQS before any budget increase.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "conversion-signal-qa",
+      "gate": "ad-account-auditor",
+      "id": "conversion-signal-qa--ad-account-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-account-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "ad/activate/conversion-value-mapper/SKILL.md:80",
+      "condition_text": "Primary: ad-account-auditor — once the value model is launch-ready, the auditor scores R1/R2 and the full RQS before any budget increase.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "conversion-value-mapper",
+      "gate": "ad-account-auditor",
+      "id": "conversion-value-mapper--ad-account-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-account-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "ad/activate/conversion-value-mapper/SKILL.md:82",
+      "condition_text": "Termination: follow the global rules — visited-set (skip any skill already run this chain), max-depth: 3, and ambiguity stop (report options rather than auto-follow). If the value-vs-count reconciliation shows a cross-platform double-count rather than a value-model gap, the one hop is attribution-reconciler instead; if the event turns out not to fire at all, hop back to conversion-signal-qa. Do not chain both plus the auditor in one pass — hand off to a single next move and stop.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "conversion-value-mapper",
+      "gate": null,
+      "id": "conversion-value-mapper--attribution-reconciler",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "attribution-reconciler",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "ad/activate/conversion-value-mapper/SKILL.md:82",
+      "condition_text": "Termination: follow the global rules — visited-set (skip any skill already run this chain), max-depth: 3, and ambiguity stop (report options rather than auto-follow). If the value-vs-count reconciliation shows a cross-platform double-count rather than a value-model gap, the one hop is attribution-reconciler instead; if the event turns out not to fire at all, hop back to conversion-signal-qa. Do not chain both plus the auditor in one pass — hand off to a single next move and stop.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "conversion-value-mapper",
+      "gate": null,
+      "id": "conversion-value-mapper--conversion-signal-qa",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "conversion-signal-qa",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:122",
+      "condition_text": "Brief mismatch: brief-generator",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "creator-content-auditor",
+      "gate": null,
+      "id": "creator-content-auditor--brief-generator",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "brief-generator",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:125",
+      "condition_text": "Approved asset amplification: content-amplifier",
+      "documentation_required": true,
+      "exception": null,
+      "from": "creator-content-auditor",
+      "gate": null,
+      "id": "creator-content-auditor--content-amplifier",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "content-amplifier",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:124",
+      "condition_text": "Rights/terms: contract-helper",
+      "documentation_required": true,
+      "exception": null,
+      "from": "creator-content-auditor",
+      "gate": null,
+      "id": "creator-content-auditor--contract-helper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "contract-helper",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:123",
+      "condition_text": "Claim fix: offer-claims-registry",
+      "documentation_required": true,
+      "exception": null,
+      "from": "creator-content-auditor",
+      "gate": null,
+      "id": "creator-content-auditor--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/creator-registry/SKILL.md:78",
+      "condition_text": "Terms/rights: contract-helper",
+      "documentation_required": true,
+      "exception": null,
+      "from": "creator-registry",
+      "gate": null,
+      "id": "creator-registry--contract-helper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "contract-helper",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/creator-registry/SKILL.md:77",
+      "condition_text": "New fit decision: fit-scorer",
+      "documentation_required": true,
+      "exception": null,
+      "from": "creator-registry",
+      "gate": null,
+      "id": "creator-registry--fit-scorer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "fit-scorer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/creator-registry/SKILL.md:80",
+      "condition_text": "Archive/erase: memory-management",
+      "documentation_required": true,
+      "exception": null,
+      "from": "creator-registry",
+      "gate": null,
+      "id": "creator-registry--memory-management",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "memory-management",
+      "type": "memory"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "protocol/creator-registry/SKILL.md:79",
+      "condition_text": "Re-engagement: outreach-manager",
+      "documentation_required": true,
+      "exception": null,
+      "from": "creator-registry",
+      "gate": null,
+      "id": "creator-registry--outreach-manager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "outreach-manager",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "social/host/crisis-response-planner/SKILL.md:85",
+      "condition_text": "If pause/un-pause markers are pending: channel-registry — reconcile the incident's state markers into the channel dossiers.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "crisis-response-planner",
+      "gate": null,
+      "id": "crisis-response-planner--channel-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "channel-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "social/host/crisis-response-planner/SKILL.md:86",
+      "condition_text": "If the incident exposed a missing or stale baseline: social-pulse-monitor — rebuild the 7-day baseline and spike thresholds the ladder depends on.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "crisis-response-planner",
+      "gate": null,
+      "id": "crisis-response-planner--social-pulse-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "social-pulse-monitor",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "social/host/crisis-response-planner/SKILL.md:84",
+      "condition_text": "Primary: social-quality-auditor — after the all-clear, re-run pre-publish mode on the paused queue before anything ships again.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "crisis-response-planner",
+      "gate": "social-quality-auditor",
+      "id": "crisis-response-planner--social-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "social-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "social/observe/dark-social-attributor/SKILL.md:85",
+      "condition_text": "If paid-platform conversion claims disagree with analytics: attribution-reconciler — that reconciliation is its lane, not this skill's.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "dark-social-attributor",
+      "gate": null,
+      "id": "dark-social-attributor--attribution-reconciler",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "attribution-reconciler",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "social/observe/dark-social-attributor/SKILL.md:84",
+      "condition_text": "Primary: social-measurement-loop — write the declared method, labels, and caveats into the metric dictionary so every future readout inherits them.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "dark-social-attributor",
+      "gate": null,
+      "id": "dark-social-attributor--social-measurement-loop",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "social-measurement-loop",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "social/observe/dark-social-attributor/SKILL.md:86",
+      "condition_text": "If the branded-lift read shows a spike with no known cause: social-pulse-monitor — chase the mention source before attributing it to sharing.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "dark-social-attributor",
+      "gate": null,
+      "id": "dark-social-attributor--social-pulse-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "social-pulse-monitor",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "email/setup/deliverability-qa/SKILL.md:92",
+      "condition_text": "If S2 consent is missing or unrecorded: consent-registry — record lawful basis + opt-in before the auditor can clear S2.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "deliverability-qa",
+      "gate": null,
+      "id": "deliverability-qa--consent-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability",
+        "safety-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "consent-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "email/setup/deliverability-qa/SKILL.md:90",
+      "condition_text": "Primary: email-quality-auditor — once S is verified, the auditor scores the full EQS and enforces S1/S2/N1/D1 before any send or scale-up.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "deliverability-qa",
+      "gate": "email-quality-auditor",
+      "id": "deliverability-qa--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "email/setup/deliverability-qa/SKILL.md:93",
+      "condition_text": "If the user wants the recurring hygiene / bounce-complaint trend, not this one-time snapshot: list-hygiene-monitor — the standing list-decay + suppression-drift watch over time; this pre-flight owns the snapshot, that skill owns the trend.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "deliverability-qa",
+      "gate": null,
+      "id": "deliverability-qa--list-hygiene-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "list-hygiene-monitor",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "email/setup/deliverability-qa/SKILL.md:91",
+      "condition_text": "If the list itself needs segmenting/suppression next: list-segment-builder — turn the verified list into behavioral + lifecycle segments and suppression rules (SEND-E targeting).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "deliverability-qa",
+      "gate": null,
+      "id": "deliverability-qa--list-segment-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "list-segment-builder",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:155",
+      "condition_text": "Audit representative content: content-quality-auditor",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "domain-authority-auditor",
+      "gate": "content-quality-auditor",
+      "id": "domain-authority-auditor--content-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "content-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:153",
+      "condition_text": "Repair entity state: entity-registry",
+      "documentation_required": true,
+      "exception": null,
+      "from": "domain-authority-auditor",
+      "gate": null,
+      "id": "domain-authority-auditor--entity-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "entity-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:152",
+      "condition_text": "Investigate links: offsite-signal-analyzer",
+      "documentation_required": true,
+      "exception": null,
+      "from": "domain-authority-auditor",
+      "gate": null,
+      "id": "domain-authority-auditor--offsite-signal-analyzer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "offsite-signal-analyzer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:154",
+      "condition_text": "Verify technical/index state: technical-seo-checker",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "domain-authority-auditor",
+      "gate": null,
+      "id": "domain-authority-auditor--technical-seo-checker",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "technical-seo-checker",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "email/engage/dynamic-content-personalizer/SKILL.md:94",
+      "condition_text": "Primary: email-render-builder — assemble the personalized template into a rendered, cross-client-safe email; or email-quality-auditor to score the finished unit and run the vetoes.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "dynamic-content-personalizer",
+      "gate": "email-quality-auditor",
+      "id": "dynamic-content-personalizer--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "email/engage/dynamic-content-personalizer/SKILL.md:94",
+      "condition_text": "Primary: email-render-builder — assemble the personalized template into a rendered, cross-client-safe email; or email-quality-auditor to score the finished unit and run the vetoes.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "dynamic-content-personalizer",
+      "gate": null,
+      "id": "dynamic-content-personalizer--email-render-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "email-render-builder",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "email/engage/dynamic-content-personalizer/SKILL.md:96",
+      "condition_text": "If the segments the conditionals key on don't exist yet or are stale: list-segment-builder — build the named segments first, then return.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "dynamic-content-personalizer",
+      "gate": null,
+      "id": "dynamic-content-personalizer--list-segment-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "list-segment-builder",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "email/engage/dynamic-content-personalizer/SKILL.md:95",
+      "condition_text": "If a personalized line makes an unregistered promotional claim: offer-claims-registry — register lawful wording before that variation ships (registry is the sole writer of memory/claims/).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "dynamic-content-personalizer",
+      "gate": null,
+      "id": "dynamic-content-personalizer--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/research/early-access-designer/SKILL.md:89",
+      "condition_text": "If tester feedback is already flowing: launch-feedback-synthesizer — triage the feedback and run the notify-on-status-change loop specced here.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "early-access-designer",
+      "gate": null,
+      "id": "early-access-designer--launch-feedback-synthesizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-feedback-synthesizer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "launch/research/early-access-designer/SKILL.md:87",
+      "condition_text": "Primary: launch-registry — formalize the stage definitions, target dates, and the GA opt-out-inclusion decision as the canonical record other launch skills (and the RAMP-R1 check) trust.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "early-access-designer",
+      "gate": null,
+      "id": "early-access-designer--launch-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "launch-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/research/early-access-designer/SKILL.md:88",
+      "condition_text": "If the waitlist itself still needs filling: list-growth-designer — the acquisition strategy + capture-flow spec that feeds this ladder.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "early-access-designer",
+      "gate": null,
+      "id": "early-access-designer--list-growth-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "list-growth-designer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "email/engage/email-creative-builder/SKILL.md:96",
+      "condition_text": "To score + run the claim veto: email-quality-auditor — computes the profile-weighted EQS and enforces D1 (claim integrity) plus the other vetoes. This skill does neither.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "email-creative-builder",
+      "gate": "email-quality-auditor",
+      "id": "email-creative-builder--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "email/engage/email-creative-builder/SKILL.md:98",
+      "condition_text": "If the destination URL is weak or missing (NEEDS_INPUT): landing-optimizer — fix the post-click page so message-match is achievable, then return here.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "email-creative-builder",
+      "gate": null,
+      "id": "email-creative-builder--landing-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "landing-optimizer",
+      "type": "cross-discipline"
+    }
+  ],
+  "schema_version": "1.0",
+  "shard_id": "edges-02"
+}

@@ -6,7 +6,7 @@
 - **Catalog version:** 18.0.0
 - **Framework:** STAR
 - **Auditor:** creator-content-auditor
-- **Source digest:** `sha256:c6f14ebd3c0e8027a9d253aa184d291ba63cb5bd440b040787d82c4f377c5471`
+- **Source digest:** `sha256:d650a593f238439fdf42da5b95b57304476fb6e92f4404b42b9b69770747a300`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 

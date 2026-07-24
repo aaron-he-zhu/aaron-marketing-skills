@@ -1,0 +1,361 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 83,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "at least two candidate windows are compared with conflict / tailwind / risk columns"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 144,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 85
+        },
+        "text": "the launch-week vs rolling call is stated with its tradeoff"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 233,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 146
+        },
+        "text": "the embargo window names a lift moment + timezone (or embargo is marked not-applicable)"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 374,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 235
+        },
+        "text": "and every timing input is labeled Measured / User-provided / Estimated with its source — platform timing lore is never presented as a rule."
+      }
+    ],
+    "done_when": "at least two candidate windows are compared with conflict / tailwind / risk columns; the launch-week vs rolling call is stated with its tradeoff; the embargo window names a lift moment + timezone (or embargo is marked not-applicable); and every timing input is labeled Measured / User-provided / Estimated with its source — platform timing lore is never presented as a rule.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/research/launch-window-planner/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 40
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 44
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 36
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/launch-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:launch-window-planner",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 210,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "launch-registry"
+        ],
+        "text": "- **Primary**: [launch-registry](../../../protocol/launch-registry/SKILL.md) — turn the chosen window into the canonical record (date + stage + embargo lift moment) every other launch skill coordinates against."
+      },
+      {
+        "condition": "If the stage ladder to GA is the next gap**: [early-access-designer](../early-access-designer/SKILL.md) — design the waitlist→beta→GA gating the window must respect.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 380,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 211
+        },
+        "target_skills": [
+          "early-access-designer"
+        ],
+        "text": "- **If the stage ladder to GA is the next gap**: [early-access-designer](../early-access-designer/SKILL.md) — design the waitlist→beta→GA gating the window must respect."
+      },
+      {
+        "condition": "If the window is set and assets are next**: [launch-asset-packager](../../assemble/launch-asset-packager/SKILL.md) — build the tier-scoped asset manifest against the now-fixed date.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 566,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 381
+        },
+        "target_skills": [
+          "launch-asset-packager"
+        ],
+        "text": "- **If the window is set and assets are next**: [launch-asset-packager](../../assemble/launch-asset-packager/SKILL.md) — build the tier-scoped asset manifest against the now-fixed date."
+      },
+      {
+        "condition": "when the window comparison and embargo definition are submitted to the registry proposals.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 936,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 568
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the window comparison and embargo definition are submitted to the registry proposals."
+      }
+    ],
+    "next_best": "- **Primary**: [launch-registry](../../../protocol/launch-registry/SKILL.md) — turn the chosen window into the canonical record (date + stage + embargo lift moment) every other launch skill coordinates against.\n- **If the stage ladder to GA is the next gap**: [early-access-designer](../early-access-designer/SKILL.md) — design the waitlist→beta→GA gating the window must respect.\n- **If the window is set and assets are next**: [launch-asset-packager](../../assemble/launch-asset-packager/SKILL.md) — build the tier-scoped asset manifest against the now-fixed date.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the window comparison and embargo definition are submitted to the registry proposals.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "launch/research/launch-window-planner/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "early-access-designer",
+      "launch-asset-packager",
+      "launch-registry"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "launch-window-planner",
+    "path": "launch/research/launch-window-planner/SKILL.md",
+    "phase": "research",
+    "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / launch stage> [candidate dates or quarter] [tier] [constraints]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 128,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "launch goal, tier, and hard constraints (team availability, store-review submissions, partner/press commitments — User-provided)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 191,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 130
+        },
+        "text": "the stage record in `memory/launch-registry/` when one exists"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 372,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 193
+        },
+        "text": "competitor launch history via `scripts/connectors/producthunt.py`, community rhythm via `scripts/connectors/hn.py`, and news pulse via `scripts/connectors/gdelt.py` (all Measured)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 485,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 374
+        },
+        "text": "the industry event calendar (User-provided). When a connector is unavailable, the user pastes the data instead."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "launch goal, tier, and hard constraints (team availability, store-review submissions, partner/press commitments — User-provided); the stage record in `memory/launch-registry/` when one exists; competitor launch history via `scripts/connectors/producthunt.py`, community rhythm via `scripts/connectors/hn.py`, and news pulse via `scripts/connectors/gdelt.py` (all Measured); the industry event calendar (User-provided). When a connector is unavailable, the user pastes the data instead.",
+    "source": {
+      "path": "launch/research/launch-window-planner/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 80,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the window comparison + recommendation to `memory/launch/launch-window-planner/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 387,
+          "path": "launch/research/launch-window-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25",
+          "span_basis": "field-text",
+          "start_char": 82
+        },
+        "text": "the chosen window, buffer, and embargo facts are submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for [launch-registry](../../../protocol/launch-registry/SKILL.md) to formalize — this skill never writes `memory/launch-registry/` directly."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/research/launch-window-planner/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25"
+    },
+    "summary": "a candidate-window comparison table (conflict / tailwind / risk per window), a launch-week vs rolling format call with rationale, store-review buffer padding (labeled Estimated), an embargo window definition (lift moment + timezone + committed parties), and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the window comparison + recommendation to `memory/launch/launch-window-planner/`; the chosen window, buffer, and embargo facts are submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for [launch-registry](../../../protocol/launch-registry/SKILL.md) to formalize — this skill never writes `memory/launch-registry/` directly."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for judging the cultural moment itself — use trend-spotter; not for launch-day execution — use launch-day-conductor. 发布择时/发布窗口/竞品日历/禁运期窗口/审核缓冲",
+    "description": "Use when the user asks to \"pick a launch date\", \"plan the launch window\", or \"set the embargo and lift time\"; produces a candidate-window comparison table (conflict / tailwind / risk per window) built from industry-event cycles and the competitor launch calendar, a launch-week vs rolling-release format call, store-review buffer padding (labeled Estimated), and an embargo window definition (lift moment + timezone) submitted to the launch registry as a candidate. Not for judging the cultural moment itself — use trend-spotter; not for launch-day execution — use launch-day-conductor. 发布择时/发布窗口/竞品日历/禁运期窗口/审核缓冲",
+    "source": {
+      "path": "launch/research/launch-window-planner/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "de848789d14ac8f82edaae95f012576566757faa6f832de0fbc88e5e22ac4e25"
+    },
+    "trigger_phrases": [
+      "pick a launch date",
+      "plan the launch window",
+      "set the embargo and lift time"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when choosing a launch date or window: scanning industry events and conference cycles, mapping the competitor launch calendar, padding for store-review latency, choosing a launch-week vs rolling format, or defining the embargo window and lift moment. The timing layer of launch research — the chosen window becomes canonical only after launch-registry records it."
+  },
+  "schema_version": "1.0"
+}

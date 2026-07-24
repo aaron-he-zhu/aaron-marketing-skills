@@ -1,0 +1,1186 @@
+{
+  "$schema": "../workflow-graph-edge-shard.schema.json",
+  "authority": "authoritative-workflow-graph-source-shard",
+  "edges": [
+    {
+      "condition_code": "unclassified",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:121",
+      "condition_text": "Attribution: attribution-reconciler",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-account-auditor",
+      "gate": null,
+      "id": "ad-account-auditor--attribution-reconciler",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "attribution-reconciler",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:123",
+      "condition_text": "Pacing: budget-pacing-monitor",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-account-auditor",
+      "gate": null,
+      "id": "ad-account-auditor--budget-pacing-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "budget-pacing-monitor",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:122",
+      "condition_text": "Structure/audience: campaign-architect",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "ad-account-auditor",
+      "gate": null,
+      "id": "ad-account-auditor--campaign-architect",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "campaign-architect",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:119",
+      "condition_text": "Tracking: conversion-signal-qa",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-account-auditor",
+      "gate": null,
+      "id": "ad-account-auditor--conversion-signal-qa",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "conversion-signal-qa",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:120",
+      "condition_text": "Claims/disclosures: offer-claims-registry — the approved claim/disclosure state behind ROAS-O1",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-account-auditor",
+      "gate": null,
+      "id": "ad-account-auditor--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "ad/orchestrate/ad-creative-builder/SKILL.md:83",
+      "condition_text": "Primary: ad-account-auditor — score the creative against ROAS (O1/O2 veto checks) once a set is ready.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-creative-builder",
+      "gate": "ad-account-auditor",
+      "id": "ad-creative-builder--ad-account-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-account-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "ad/orchestrate/ad-creative-builder/SKILL.md:85",
+      "condition_text": "If the destination URL is weak or missing (NEEDS_INPUT): landing-optimizer — fix the post-click page so message-match is achievable, then return here.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-creative-builder",
+      "gate": null,
+      "id": "ad-creative-builder--landing-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "landing-optimizer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "ad/orchestrate/ad-creative-builder/SKILL.md:84",
+      "condition_text": "If units carry [needs source] flags or unregistered claims: offer-claims-registry — register the claims with evidence provenance and approved wording, then swap the resolved wording back into the flagged units.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-creative-builder",
+      "gate": null,
+      "id": "ad-creative-builder--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "ad/orchestrate/ad-test-designer/SKILL.md:90",
+      "condition_text": "Primary: ad-creative-builder after the decision owner approves a direction, or paid-measurement-loop to read an approved shipped change over a fixed window. If the action rule or owner is missing, stop with decision: UNDECIDED; do not silently convert statistical flags into an action.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-test-designer",
+      "gate": null,
+      "id": "ad-test-designer--ad-creative-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-creative-builder",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "ad/orchestrate/ad-test-designer/SKILL.md:90",
+      "condition_text": "Primary: ad-creative-builder after the decision owner approves a direction, or paid-measurement-loop to read an approved shipped change over a fixed window. If the action rule or owner is missing, stop with decision: UNDECIDED; do not silently convert statistical flags into an action.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "ad-test-designer",
+      "gate": null,
+      "id": "ad-test-designer--paid-measurement-loop",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "paid-measurement-loop",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:85",
+      "condition_text": "If 3+ advocate rows are pending as pending proposals: channel-registry — promote them into advocate-roster.md so the gate has a fact base.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "advocacy-program-designer",
+      "gate": null,
+      "id": "advocacy-program-designer--channel-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "channel-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:86",
+      "condition_text": "If the roster needs recruiting first: outreach-manager — run the 1:1 invite and follow-up mechanics, then return with opt-in evidence.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "advocacy-program-designer",
+      "gate": null,
+      "id": "advocacy-program-designer--outreach-manager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "outreach-manager",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:84",
+      "condition_text": "Primary: social-quality-auditor — run the pre-publish gate on the program and its first kit (ECHO C2/H1 exposure) before anyone posts.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "advocacy-program-designer",
+      "gate": "social-quality-auditor",
+      "id": "advocacy-program-designer--social-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "social-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:97",
+      "condition_text": "Alternates: report-generator once the ratios are in, or ad-account-auditor if the reconciliation surfaces a point-in-time integrity problem (broken tracking, systemic double-count) that needs the gate.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "attribution-reconciler",
+      "gate": "ad-account-auditor",
+      "id": "attribution-reconciler--ad-account-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-account-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:97",
+      "condition_text": "Alternates: report-generator once the ratios are in, or ad-account-auditor if the reconciliation surfaces a point-in-time integrity problem (broken tracking, systemic double-count) that needs the gate.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "attribution-reconciler",
+      "gate": null,
+      "id": "attribution-reconciler--report-generator",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "report-generator",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:95",
+      "condition_text": "Primary: roi-calculator — turn the de-duped, normalized counts into ROAS/CPA/ROI.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "attribution-reconciler",
+      "gate": null,
+      "id": "attribution-reconciler--roi-calculator",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "roi-calculator",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "narrative/trace/audience-belief-mapper/SKILL.md:84",
+      "condition_text": "If the persona base is missing: audience-mapper — build the segment evidence first, then return to map beliefs against it.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "audience-belief-mapper",
+      "gate": null,
+      "id": "audience-belief-mapper--audience-mapper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "audience-mapper",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "narrative/trace/audience-belief-mapper/SKILL.md:85",
+      "condition_text": "If the positioning canvas still needs reconciling: positioning-truth-tracer — reconcile the canvas against shippable reality before the arc is built.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "audience-belief-mapper",
+      "gate": null,
+      "id": "audience-belief-mapper--positioning-truth-tracer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "positioning-truth-tracer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/trace/audience-belief-mapper/SKILL.md:83",
+      "condition_text": "Primary: strategic-narrative-designer — build the old-world→promised-land arc from the beliefs and four forces.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "audience-belief-mapper",
+      "gate": null,
+      "id": "audience-belief-mapper--strategic-narrative-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "strategic-narrative-designer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "influencer/scout/audience-mapper/SKILL.md:114",
+      "condition_text": "After a shortlist exists: fit-scorer — score candidates on Suitability and run the STAR-S2/STAR-S6 vetoes (this skill does not score).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "audience-mapper",
+      "gate": null,
+      "id": "audience-mapper--fit-scorer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "fit-scorer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/scout/audience-mapper/SKILL.md:112",
+      "condition_text": "Primary: influencer-discovery — once the selection criteria (audience mode) or the voice tiers + red lines (niche mode) are written and promoted, find and shortlist specific creators against them.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "audience-mapper",
+      "gate": null,
+      "id": "audience-mapper--influencer-discovery",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "influencer-discovery",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "influencer/scout/audience-mapper/SKILL.md:113",
+      "condition_text": "If the audience/niche is set but you need live momentum first: trend-spotter — surface what is currently moving so partnerships ride live signal; then STOP if it was already visited this chain.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "audience-mapper",
+      "gate": null,
+      "id": "audience-mapper--trend-spotter",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "trend-spotter",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "ad/research/audience-segment-builder/SKILL.md:80",
+      "condition_text": "If the account structure already exists and creative is the next gap: ad-creative-builder — angle-match creative variants to the named segments and funnel stages.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "audience-segment-builder",
+      "gate": null,
+      "id": "audience-segment-builder--ad-creative-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-creative-builder",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "ad/research/audience-segment-builder/SKILL.md:79",
+      "condition_text": "Primary: campaign-architect — consume these segments into campaign types, ad groups, and match types.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "audience-segment-builder",
+      "gate": null,
+      "id": "audience-segment-builder--campaign-architect",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "campaign-architect",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "ad/orchestrate/bid-strategy-planner/SKILL.md:98",
+      "condition_text": "Primary: ad-account-auditor — score the campaign against ROAS (the S lever and the premature-scaling guardrail) once the strategy, target, and portfolio are set.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "bid-strategy-planner",
+      "gate": "ad-account-auditor",
+      "id": "bid-strategy-planner--ad-account-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-account-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "ad/orchestrate/bid-strategy-planner/SKILL.md:99",
+      "condition_text": "If the budget behind the bid is not yet allocated: budget-optimizer — set the spend envelope the strategy bids within, then return here.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "bid-strategy-planner",
+      "gate": null,
+      "id": "bid-strategy-planner--budget-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "budget-optimizer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "ad/orchestrate/bid-strategy-planner/SKILL.md:100",
+      "condition_text": "If the plan is live and you need in-flight pacing, not a starting plan (NEEDS_INPUT): budget-pacing-monitor — reads spend/delivery against plan mid-flight; this skill only sets the entry plan.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "bid-strategy-planner",
+      "gate": null,
+      "id": "bid-strategy-planner--budget-pacing-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "budget-pacing-monitor",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "narrative/architect/brand-language-codifier/SKILL.md:85",
+      "condition_text": "If the durable message house is missing or incomplete: message-system-architect — author the message hierarchy first, then return to codify voice under it.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "brand-language-codifier",
+      "gate": null,
+      "id": "brand-language-codifier--message-system-architect",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "message-system-architect",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "narrative/architect/brand-language-codifier/SKILL.md:86",
+      "condition_text": "If the codified rules need to become canon now: narrative-registry — promote the staged voice + naming candidates into memory/narrative-registry/canon.md.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "brand-language-codifier",
+      "gate": null,
+      "id": "brand-language-codifier--narrative-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "narrative-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/architect/brand-language-codifier/SKILL.md:84",
+      "condition_text": "Primary: story-bank-builder — assemble reusable story units in the newly codified voice, tagged to claim IDs and pillars.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "brand-language-codifier",
+      "gate": null,
+      "id": "brand-language-codifier--story-bank-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "story-bank-builder",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/target/brief-generator/SKILL.md:99",
+      "condition_text": "Primary: budget-optimizer - Once the brief defines deliverables, set how spend is split across creators and platforms.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "brief-generator",
+      "gate": null,
+      "id": "brief-generator--budget-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "budget-optimizer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "influencer/target/brief-generator/SKILL.md:101",
+      "condition_text": "campaign-planner - Re-plan campaign scope if the brief surfaces new deliverable needs.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "brief-generator",
+      "gate": null,
+      "id": "brief-generator--campaign-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "campaign-planner",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "influencer/target/brief-generator/SKILL.md:102",
+      "condition_text": "outreach-manager - Send the finished brief to selected creators.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "brief-generator",
+      "gate": null,
+      "id": "brief-generator--outreach-manager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "outreach-manager",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "influencer/target/budget-optimizer/SKILL.md:141",
+      "condition_text": "campaign-planner — if the budget exposed a gap in the underlying campaign plan.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "budget-optimizer",
+      "gate": null,
+      "id": "budget-optimizer--campaign-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "campaign-planner",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "influencer/target/budget-optimizer/SKILL.md:140",
+      "condition_text": "influencer-discovery — if you need to source candidates that fit each tier's per-influencer budget first.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "budget-optimizer",
+      "gate": null,
+      "id": "budget-optimizer--influencer-discovery",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "influencer-discovery",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/target/budget-optimizer/SKILL.md:136",
+      "condition_text": "Primary: outreach-manager — once the allocation is funded and the tier mix is locked, move to recruiting the influencers it pays for.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "budget-optimizer",
+      "gate": null,
+      "id": "budget-optimizer--outreach-manager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "outreach-manager",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "ad/scale/budget-pacing-monitor/SKILL.md:81",
+      "condition_text": "Alternates: if the pace gap looks like a structural problem (broken tracking, systemic over-delivery, delivery halted) rather than a spend-shape issue, route to ad-account-auditor for the gate. If the verdict is On-track or Hold (inside the band, or still in learning), STOP — there is nothing to reallocate; report chain-complete. Visited-set and max-depth: 3 termination rules apply per Skill Contract; if the next target was already run this chain, STOP and report chain-complete.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "budget-pacing-monitor",
+      "gate": "ad-account-auditor",
+      "id": "budget-pacing-monitor--ad-account-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-account-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "ad/scale/budget-pacing-monitor/SKILL.md:79",
+      "condition_text": "Primary: if a reallocation trigger fired, hand off to budget-optimizer — it computes the new allocation (this skill only decides the move is warranted and by roughly how much pace is off).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "budget-pacing-monitor",
+      "gate": null,
+      "id": "budget-pacing-monitor--budget-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "budget-optimizer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "ad/research/campaign-architect/SKILL.md:82",
+      "condition_text": "Primary: ad-account-auditor — score the full RQS and enforce the ROAS veto items.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "campaign-architect",
+      "gate": "ad-account-auditor",
+      "id": "campaign-architect--ad-account-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "ad-account-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "ad/research/campaign-architect/SKILL.md:83",
+      "condition_text": "If the structure is approved and creatives are the next gap: ad-creative-builder — build the ad/creative set for the approved structure.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "campaign-architect",
+      "gate": null,
+      "id": "campaign-architect--ad-creative-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "ad-creative-builder",
+      "type": "sequential"
+    }
+  ],
+  "schema_version": "1.0",
+  "shard_id": "edges-00"
+}

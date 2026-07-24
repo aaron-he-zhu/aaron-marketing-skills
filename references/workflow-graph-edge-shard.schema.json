@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workflow-graph-edge-shard.schema.json",
+  "title": "Authoritative workflow graph edge shard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "authority", "shard_id", "edges"],
+  "properties": {
+    "$schema": { "const": "../workflow-graph-edge-shard.schema.json" },
+    "schema_version": { "const": "1.0" },
+    "authority": { "const": "authoritative-workflow-graph-source-shard" },
+    "shard_id": { "type": "string", "pattern": "^edges-[0-9]{2}$" },
+    "edges": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 40,
+      "items": { "$ref": "workflow-graph-source.schema.json#/$defs/edge" }
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 34,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a falsifiable hypothesis is stated"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 80,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 36
+        },
+        "text": "the matrix isolates one variable per variant"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 180,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 82
+        },
+        "text": "baseline, MDE, alpha, power, multiplicity/sequential policy, duration, and guardrails are declared"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 354,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 182
+        },
+        "text": "and a read-out reports effect/interval/statistical/practical flags with `Calculated` provenance. Without a precommitted action rule and owner, return `decision: UNDECIDED`."
+      }
+    ],
+    "done_when": "a falsifiable hypothesis is stated; the matrix isolates one variable per variant; baseline, MDE, alpha, power, multiplicity/sequential policy, duration, and guardrails are declared; and a read-out reports effect/interval/statistical/practical flags with `Calculated` provenance. Without a precommitted action rule and owner, return `decision: UNDECIDED`.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 33
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 47
+      },
+      {
+        "path": "ad/orchestrate/ad-test-designer/references/test-design-guide.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bddb2d721ea625fca32b14d0d12d70df34a26b451992250dac33f50f9130cacc",
+        "source_line": 51
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 60
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 60
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 29
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:ad-test-designer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "after the decision owner approves a direction, or [paid-measurement-loop](../../scale/paid-measurement-loop/SKILL.md) to read an approved shipped change over a fixed window. If the action rule or owner is missing, stop with `decision: UNDECIDED`",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 309,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "ad-creative-builder",
+          "paid-measurement-loop"
+        ],
+        "text": "Primary: [ad-creative-builder](../ad-creative-builder/SKILL.md) after the decision owner approves a direction, or [paid-measurement-loop](../../scale/paid-measurement-loop/SKILL.md) to read an approved shipped change over a fixed window. If the action rule or owner is missing, stop with `decision: UNDECIDED`"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 368,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 311
+        },
+        "target_skills": [],
+        "text": "do not silently convert statistical flags into an action."
+      }
+    ],
+    "next_best": "Primary: [ad-creative-builder](../ad-creative-builder/SKILL.md) after the decision owner approves a direction, or [paid-measurement-loop](../../scale/paid-measurement-loop/SKILL.md) to read an approved shipped change over a fixed window. If the action rule or owner is missing, stop with `decision: UNDECIDED`; do not silently convert statistical flags into an action.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-creative-builder",
+      "paid-measurement-loop"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "ad-test-designer",
+    "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+    "phase": "orchestrate",
+    "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<what to test / results CSV> [profile: direct-response|prospecting|incremental-profit] [baseline] [alpha/power/MDE]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 133,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "what the user wants to test, the ROAS profile (`direct-response|prospecting|incremental-profit`), baseline CVR/CTR and traffic volume"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 239,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 135
+        },
+        "text": "for a read-out, the user's own exported results CSV (variant, sessions/impressions, conversions/clicks)."
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "what the user wants to test, the ROAS profile (`direct-response|prospecting|incremental-profit`), baseline CVR/CTR and traffic volume; for a read-out, the user's own exported results CSV (variant, sessions/impressions, conversions/clicks).",
+    "source": {
+      "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 71,
+          "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing test-design or read-out doc plus a `### Handoff Summary`."
+      }
+    ],
+    "extraction_status": "unclassified",
+    "source": {
+      "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e"
+    },
+    "summary": "a test design (hypothesis, variant matrix, primary/secondary/guardrail metrics, sample-size + duration + power plan)",
+    "summary_source": "expected-output",
+    "writes": "a user-facing test-design or read-out doc plus a `### Handoff Summary`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for producing variants — use ad-creative-builder; not for reading back one shipped change — use paid-measurement-loop. 广告AB测试设计/实验设计/显著性判定/增效测试",
+    "description": "Use when the user asks to \"design an A/B test\", \"set up a creative/landing test\", \"run an incrementality test\", or \"is this result statistically and practically material?\"; produces a hypothesis, variant matrix, sample-size/duration/power plan, and a documented effect/uncertainty read from own exported results. It applies only a precommitted owner-approved action rule; the statistical helper never chooses a business action. Not for producing variants — use ad-creative-builder; not for reading back one shipped change — use paid-measurement-loop. 广告AB测试设计/实验设计/显著性判定/增效测试",
+    "source": {
+      "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "5a74bc09aa09be602bd1f1134afc0b5d048be34150f9bfa80fff14263ad5f67e"
+    },
+    "trigger_phrases": [
+      "design an A/B test",
+      "is this result statistically and practically material?",
+      "run an incrementality test",
+      "set up a creative/landing test"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when designing a creative/landing A/B/n or incrementality test, or when reading effect size, uncertainty, and guardrails from a finished own-data test. Apply a business action only when its owner and decision rule were precommitted; otherwise return decision UNDECIDED. Not for generating variants (use ad-creative-builder) or reading back one already-shipped change (use paid-measurement-loop)."
+  },
+  "schema_version": "1.0"
+}

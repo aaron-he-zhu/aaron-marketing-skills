@@ -1,0 +1,324 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 74,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every converting query above the harvest threshold is routed to add / move"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 130,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 76
+        },
+        "text": "every wasted query is negated with a stated match type"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 218,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 132
+        },
+        "text": "the n-gram waste report names its top spend-draining tokens with Measured cost figures"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 285,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 220
+        },
+        "text": "and the ROAS **S** score is emitted with the typed profile named."
+      }
+    ],
+    "done_when": "every converting query above the harvest threshold is routed to add / move; every wasted query is negated with a stated match type; the n-gram waste report names its top spend-draining tokens with Measured cost figures; and the ROAS **S** score is emitted with the typed profile named.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/research/search-term-miner/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 36
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 40
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 42
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 32
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:search-term-miner",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 215,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [],
+        "text": "Global termination applies (visited-set, `max-depth: 3`, ambiguity-stop) — see [skill-contract.md §Termination rules](../../../references/skill-contract.md). Do not re-invoke a skill already in this session's chain."
+      },
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-02",
+        "kind": "primary",
+        "source": {
+          "end_char": 391,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 217
+        },
+        "target_skills": [
+          "ad-account-auditor"
+        ],
+        "text": "- **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the full RQS and enforce the ROAS veto items with the negatives + S score as evidence."
+      },
+      {
+        "condition": "If the harvest exposes a structure gap** (converting queries have no matching ad group): [campaign-architect](../campaign-architect/SKILL.md) — add the intent theme to the account skeleton, then STOP if it was already visited this chain.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 633,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 392
+        },
+        "target_skills": [
+          "campaign-architect"
+        ],
+        "text": "- **If the harvest exposes a structure gap** (converting queries have no matching ad group): [campaign-architect](../campaign-architect/SKILL.md) — add the intent theme to the account skeleton, then STOP if it was already visited this chain."
+      },
+      {
+        "condition": "If the waste is a bidding/pacing problem rather than a query problem**: [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — reallocate spend",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 801,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 634
+        },
+        "target_skills": [
+          "budget-optimizer"
+        ],
+        "text": "- **If the waste is a bidding/pacing problem rather than a query problem**: [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — reallocate spend"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 824,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 803
+        },
+        "target_skills": [],
+        "text": "do not re-run mining."
+      },
+      {
+        "condition": "if the goal was only the negative-keyword list and it is delivered, report chain-complete and stop.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 940,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 825
+        },
+        "target_skills": [],
+        "text": "- **Terminal**: if the goal was only the negative-keyword list and it is delivered, report chain-complete and stop."
+      }
+    ],
+    "next_best": "Global termination applies (visited-set, `max-depth: 3`, ambiguity-stop) — see [skill-contract.md §Termination rules](../../../references/skill-contract.md). Do not re-invoke a skill already in this session's chain.\n\n- **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the full RQS and enforce the ROAS veto items with the negatives + S score as evidence.\n- **If the harvest exposes a structure gap** (converting queries have no matching ad group): [campaign-architect](../campaign-architect/SKILL.md) — add the intent theme to the account skeleton, then STOP if it was already visited this chain.\n- **If the waste is a bidding/pacing problem rather than a query problem**: [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — reallocate spend; do not re-run mining.\n- **Terminal**: if the goal was only the negative-keyword list and it is delivered, report chain-complete and stop.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "ad/research/search-term-miner/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "budget-optimizer",
+      "campaign-architect"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "search-term-miner",
+    "path": "ad/research/search-term-miner/SKILL.md",
+    "phase": "research",
+    "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<search-terms export path/paste> [goal] [conversion column]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 280,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the exported search-terms report (query, impressions, clicks, cost, conversions, conv. value), the ROAS profile (`direct-response|prospecting|incremental-profit`), and the existing ad-group/negative structure from [campaign-architect](../campaign-architect/SKILL.md) when present."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the exported search-terms report (query, impressions, clicks, cost, conversions, conv. value), the ROAS profile (`direct-response|prospecting|incremental-profit`), and the existing ad-group/negative structure from [campaign-architect](../campaign-architect/SKILL.md) when present.",
+    "source": {
+      "path": "ad/research/search-term-miner/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 81,
+          "path": "ad/research/search-term-miner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing mining diff and reusable summary to `memory/ad/search-term-miner/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/research/search-term-miner/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d"
+    },
+    "summary": "a maintenance diff (add / negate / move), a set of harvested keywords/ad-groups from converting queries, a standing negative-keyword list, an n-gram waste report ranking the tokens draining spend without converting, a ROAS **S** dimension score with notes, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing mining diff and reusable summary to `memory/ad/search-term-miner/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for account structure — use campaign-architect; not for budget split — use budget-optimizer; not for computing the final RQS — use ad-account-auditor. 付费广告搜索词挖掘/否定关键词/浪费词清单",
+    "description": "Use when the user asks to \"mine my search terms\", \"find new keywords from converting queries\", \"build a negative-keyword list\", or \"cut wasted paid spend\"; harvests converting queries into new keywords/ad-groups, builds a standing negative-keyword list and an n-gram waste report from the search-terms export, and delivers a maintenance diff (add / negate / move). Not for account structure — use campaign-architect; not for budget split — use budget-optimizer; not for computing the final RQS — use ad-account-auditor. 付费广告搜索词挖掘/否定关键词/浪费词清单",
+    "source": {
+      "path": "ad/research/search-term-miner/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "1b47c8095bd6c1ec2c7ff24f1527e9b8d4105b81dbd7f23fedb4bf1d852a1d0d"
+    },
+    "trigger_phrases": [
+      "build a negative-keyword list",
+      "cut wasted paid spend",
+      "find new keywords from converting queries",
+      "mine my search terms"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use on a recurring cadence to mine a fresh search-terms report: promote converting queries into new keywords or ad groups, build and grow a standing negative-keyword list, and produce an n-gram waste report that names the tokens draining spend without converting."
+  },
+  "schema_version": "1.0"
+}

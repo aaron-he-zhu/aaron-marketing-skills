@@ -2,6 +2,7 @@
 """Fail-closed architecture conformance checks for the system catalog."""
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -18,6 +19,12 @@ MARKETPLACE_PATHS = [ROOT / "marketplace.json", ROOT / ".claude-plugin" / "marke
 OPENCLAW_PATH = ROOT / "openclaw.plugin.json"
 HOOKS_PATH = ROOT / "hooks" / "hooks.json"
 REGISTRY_RUNTIME = ROOT / "scripts" / "registry-events.py"
+CAPABILITY_PROFILE_SOURCE = "references/capability-profiles.json"
+CAPABILITY_PROFILE_ORDER = ("lite", "pro", "governed")
+REQUIRED_ALWAYS_ON_OVERLAYS = (
+    "consent", "claims", "pii-secrets", "external-mutation",
+    "audit-verdict", "release-provenance",
+)
 LEGACY_COMPOSITE = re.compile(r"\b(?:LQS|NQS)\b|goal-weight(?:ed)? column", re.I)
 LEGACY_SCORING = re.compile(r"min\s*\(\s*raw\s*,\s*60\s*\)|\bgoal[- /]?weight(?:s|ed)?\b|\bgoal column\b", re.I)
 FAIL_OPEN_GATE = re.compile(r"unmarked.{0,80}(?:pass|allow|放行|通過|통과)", re.I)
@@ -128,11 +135,11 @@ def check_catalog_shape(catalog, expected_paths, failures):
     required_top = {
         "$schema", "schema_version", "architecture_version", "bundle_version", "counts",
         "logical_order", "layers", "commands", "disciplines", "protocol", "registries",
-        "auditors", "l1_dependency", "symmetry", "distribution_profiles",
+        "auditors", "l1_dependency", "symmetry", "distribution_profiles", "capability_profiles",
     }
     if set(catalog) != required_top:
         failures.append("system catalog top-level keys differ from the strict contract")
-    if catalog.get("$schema") != "./system-catalog.schema.json" or catalog.get("schema_version") != "1.1":
+    if catalog.get("$schema") != "./system-catalog.schema.json" or catalog.get("schema_version") != "1.2":
         failures.append("system catalog schema identity/version is invalid")
     counts = catalog.get("counts", {})
     actual = {
@@ -177,6 +184,94 @@ def check_catalog_shape(catalog, expected_paths, failures):
                 "%s declares layer %r but layer membership is %r"
                 % (discipline, declared, membership)
             )
+
+
+def check_capability_profiles(catalog, failures):
+    reference = catalog.get("capability_profiles")
+    if not isinstance(reference, dict) or set(reference) != {"source", "sha256"}:
+        failures.append("capability_profiles must be an exact source/sha256 reference")
+        return
+    if reference.get("source") != CAPABILITY_PROFILE_SOURCE:
+        failures.append(
+            "capability_profiles source must be %s" % CAPABILITY_PROFILE_SOURCE
+        )
+        return
+    expected_digest = reference.get("sha256")
+    if not isinstance(expected_digest, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_digest):
+        failures.append("capability_profiles sha256 must be 64 lowercase hexadecimal characters")
+        return
+    source_path = ROOT / CAPABILITY_PROFILE_SOURCE
+    if not source_path.is_file():
+        failures.append("capability profile SSOT is missing: %s" % CAPABILITY_PROFILE_SOURCE)
+        return
+    actual_digest = hashlib.sha256(source_path.read_bytes()).hexdigest()
+    if actual_digest != expected_digest:
+        failures.append(
+            "capability profile SSOT digest drift: catalog=%s actual=%s"
+            % (expected_digest, actual_digest)
+        )
+        return
+    try:
+        profiles_catalog = load_json(source_path)
+    except ArchitectureError as exc:
+        failures.append(str(exc))
+        return
+    profile_order = profiles_catalog.get("profile_order")
+    profiles = profiles_catalog.get("profiles")
+    capability_order = profiles_catalog.get("capability_order")
+    overlays = profiles_catalog.get("always_on_overlays")
+    if profile_order != list(CAPABILITY_PROFILE_ORDER):
+        failures.append("capability profile order must be lite, pro, governed")
+    if not isinstance(profiles, dict) or set(profiles) != set(CAPABILITY_PROFILE_ORDER):
+        failures.append("capability profile SSOT must define exactly lite, pro, and governed")
+        return
+    if (
+        not isinstance(capability_order, list)
+        or not capability_order
+        or len(capability_order) != len(set(capability_order))
+        or not all(isinstance(item, str) and item for item in capability_order)
+    ):
+        failures.append("capability_order must contain unique non-empty capability identifiers")
+        return
+    if (
+        not isinstance(overlays, list)
+        or overlays != list(REQUIRED_ALWAYS_ON_OVERLAYS)
+    ):
+        failures.append(
+            "always_on_overlays must retain the six universal safety/provenance overlays"
+        )
+    capability_universe = set(capability_order)
+    capability_sets = {}
+    for rank, name in enumerate(CAPABILITY_PROFILE_ORDER):
+        profile = profiles.get(name)
+        capabilities = profile.get("capabilities") if isinstance(profile, dict) else None
+        if (
+            not isinstance(profile, dict)
+            or set(profile) != {"rank", "capabilities"}
+            or profile.get("rank") != rank
+            or not isinstance(capabilities, list)
+            or len(capabilities) != len(set(capabilities))
+            or any(item not in capability_universe for item in capabilities)
+        ):
+            failures.append(
+                "capability profile %s must have rank %d and unique declared capabilities"
+                % (name, rank)
+            )
+            continue
+        ordered = [item for item in capability_order if item in set(capabilities)]
+        if capabilities != ordered:
+            failures.append(
+                "capability profile %s capabilities must follow capability_order" % name
+            )
+        capability_sets[name] = set(capabilities)
+    if len(capability_sets) == len(CAPABILITY_PROFILE_ORDER):
+        if not (
+            capability_sets["lite"] < capability_sets["pro"]
+            and capability_sets["pro"] < capability_sets["governed"]
+        ):
+            failures.append("capability lattice must preserve Lite ⊂ Pro ⊂ Governed")
+        if capability_sets["governed"] != capability_universe:
+            failures.append("Governed must include every declared capability")
 
 
 def check_skills(catalog, expected_paths, failures):
@@ -735,6 +830,7 @@ def main():
         catalog = load_json(CATALOG_PATH)
         expected_paths = expected_skill_paths(catalog, failures)
         check_catalog_shape(catalog, expected_paths, failures)
+        check_capability_profiles(catalog, failures)
         check_skills(catalog, expected_paths, failures)
         check_distribution(catalog, expected_paths, failures)
         check_frameworks(catalog, failures)

@@ -2,10 +2,12 @@
 
 ## Supported Versions
 
+<!-- GENERATED:BEGIN release-surface:supported-major -->
 | Version | Supported |
 |---------|-----------|
 | 18.x    | Yes (current line) |
 | < 18    | No        |
+<!-- GENERATED:END release-surface:supported-major -->
 
 Policy: only the latest minor of the current major line receives fixes; older majors are unsupported — upgrade to the current release.
 
@@ -42,6 +44,7 @@ security concerns are:
 - **Memory poisoning across sessions** — malicious content written to `memory/` that affects future session behavior (e.g., fake `approved_by: user` decisions, poisoned `memory/entities/` records)
 - **Registry integrity and authority bypass** — direct event edits, stale revisions, forged owners, replay/tamper, or unsafe projection use
 - **Run-trace leakage or authority confusion** — raw prompts/tool data copied into operational traces, unsafe trace paths, or a save point misread as business approval
+- **Workflow approval forgery or replay** — caller-supplied actor labels, stale evidence, unsigned gate releases, approval reuse, or trust-anchor substitution
 - **Sensitive local state leakage** — operational memory accidentally force-added to Git, shared, backed up, or synchronized without appropriate controls
 - **WebFetch-injected instructions** — prompt injection via target page HTML/meta/body attempting to manipulate audit outcomes or Artifact Gate validation
 
@@ -52,6 +55,10 @@ security concerns are:
 - **Tool-agnostic placeholders**: Skills reference tools by category (`~~SEO tool`), never by hardcoded API endpoints
 - **Private runtime state by default**: a full clone Git-ignores `memory/**`; plugin-host writes are preflighted against the host worktree, and unignored or force-tracked runtime targets are refused
 - **Metadata-only run evidence**: the opt-in run runtime accepts closed IDs, refs, hashes, and numeric metadata; it rejects raw payload fields and never grants registry or external-action authority
+- **Capability is not authority**: Lite, Pro, and Governed form a monotonic mechanism lattice under one physical package ceiling. A higher profile may expose a runtime, but never grants registry-owner authority, consent, claims approval, or permission for an external mutation; those request-specific checks remain independent and fail closed
+- **Externally anchored workflow approval**: gate release requires a host-signed, short-lived RS256 record bound to one run, loop, successor action, validator-clean audit digest, and single-use nonce. The public trust anchor is outside the repository, byte-pinned into the immutable plan, and revalidated on replay; run-event actor strings never confer authority
+- **Isolated semantic bootstrap**: the official model adapter is copied with its two schemas from one stable source-byte snapshot into a private read-only runtime, launched by the current Python with `-I -S`, and given an explicit environment allowlist with no inherited `PYTHON*`; every staged file is re-hashed around each batch and the evidence manifest binds both source and staged identities
+- **Bounded judge protocol recovery**: each semantic candidate is executed once; only strict-JSON or closed local judge-protocol rejection can trigger one fresh judge regeneration. The repair prompt carries a closed diagnostic code plus the rejected output hash and byte length, never the rejected raw bytes. An ordered two-entry maximum ledger is hash-bound into provenance, and the runner requires exactly one accepted final attempt for any judge-derived terminal outcome
 - **Fail-closed authority**: registry canonical mutations require a host-signed capability bound to one normalized request, aggregate, idempotency key, resolved project root, single-use ID, and expiry; the runtime revalidates under lock and signs the stored event content for replay. Request actor/auth strings are attribution only
 - **Apache 2.0 license**: Full source available for security review
 
@@ -152,6 +159,29 @@ Both are recommended, optional hardening — the bundle works without them.
 
 ## Registry, memory, and artifact integrity
 
+- A fresh project resolves to Lite without writing a marker, including under a
+  Governed-ceiling package. Package manifests bind the physical ceiling and
+  profile-definition hash; config/environment/CLI requests cannot raise that
+  ceiling. Consent, claims, PII/secrets, external-mutation approval,
+  audit-verdict integrity, and release provenance are non-disableable overlays
+  in every profile. Profile diagnostics and switching are read-only: lowering a
+  profile never deletes or rewrites existing state.
+- Nonterminal run streams without the v19 runtime identity fail with
+  `LEGACY_RUN_BLOCKED`. Only the pinned runtime that created a legacy stream may
+  finish/abort it; v19 will not resume, checkpoint, terminate, or start a
+  Governed run around it. Never hand-edit an event stream to bypass this gate.
+- `scripts/build-distribution.py` rejects repository symlinks at every input boundary, along with
+  non-regular special files and multiply linked files; it copies regular files with no-follow
+  opens, and writes a per-file SHA-256 manifest that is verified before success. Every live release
+  publisher/projector first requires a clean commit reachable from successfully refreshed
+  `origin/main`; only canonical `github.com` HTTPS/SSH/scp origins are accepted and Git URL rewrites
+  are refused. Origin/rewrite state is rechecked after the literal fetch, and every entrypoint
+  consumes one indivisible repository+commit identity; orchestrated child publishers must
+  independently verify and match the parent's tuple. Registry skills, built bundle packages, the GitHub About projection, and downstream
+  family projections export that exact Git object into a private temporary tree (or use `git show`
+  for an exact object) and never reread mutable worktree payload inputs after the gate. Registry resume
+  state is repository/version-scoped, owner-private, locked, bounded, and atomically replaced
+  outside shared `/tmp` state.
 - `scripts/registry-events.py` is the only supported NDJSON write path. It validates bounded JSON,
   rejects inaccessible/symlinked paths and non-regular or multiply linked streams, anchors POSIX
   writes to directory descriptors, locks appends/rebuilds, assigns deterministic IDs and monotonic
@@ -162,6 +192,20 @@ Both are recommended, optional hardening — the bundle works without them.
   but intentionally has no owner capability or authority signature. Its hashes demonstrate local
   continuity, not identity, truth, approval, or permission. `AARON_ACTIVE_RUN_ID` only opts a host
   into metadata recording; it is never a capability.
+- `scripts/workflow-loop.py` takes the run coordinator lock through durable plan installation, so
+  its immutable evidence cutoff cannot race a concurrent run-event append. Evidence must be later
+  than that cutoff. A graph release gate additionally requires a validator-clean accepted audit and
+  an RS256-signed approval artifact whose run, loop, successor action, exact audit hash, validity
+  window, key ID, and nonce all match. The runtime pins the external public trust-anchor digest in
+  the plan, rejects missing or drifted anchors, and records consumed nonces across revision cycles.
+  `AARON_WORKFLOW_APPROVAL_TRUST_ANCHOR` and its separately supplied SHA-256 pin must be provisioned
+  by a host wrapper that an agent cannot override; the corresponding private key must remain in a
+  signer the agent cannot read or invoke with arbitrary claims. Otherwise the signature boundary is
+  intentionally void, just as exposing a registry host key voids registry authority.
+  Approval chronology and expiry use runtime-assigned persistence time: run-event `recorded_at` for
+  the audit and approval and hash-covered workflow-event `recorded_at` for the action. Workflow
+  recorded times are strictly increasing. Caller-controlled `occurred_at` cannot revive an expired
+  record, while later verification reuses the persisted action time instead of the current clock.
 - Ordinary skills may submit `propose`; only a request/root-bound host-capability catalogued owner
   may accept/reject or emit canonical operations. Capability-authored events carry an HMAC authority
   signature, so editing and recomputing public SHA-256 chain fields cannot forge owner authority.

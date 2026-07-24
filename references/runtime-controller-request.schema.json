@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/runtime-controller-request.schema.json",
+  "title": "Aaron runtime controller request",
+  "description": "Closed requests for the supported start, checkpoint, and finish controller operations.",
+  "oneOf": [
+    {"$ref": "#/$defs/start"},
+    {"$ref": "#/$defs/checkpoint"},
+    {"$ref": "#/$defs/finish"}
+  ],
+  "$defs": {
+    "safeId": {"type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "uuid": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+    "offset": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+    "offsets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entities", "creators", "claims", "consent", "launches", "channels", "narrative"],
+      "properties": {
+        "entities": {"$ref": "#/$defs/offset"},
+        "creators": {"$ref": "#/$defs/offset"},
+        "claims": {"$ref": "#/$defs/offset"},
+        "consent": {"$ref": "#/$defs/offset"},
+        "launches": {"$ref": "#/$defs/offset"},
+        "channels": {"$ref": "#/$defs/offset"},
+        "narrative": {"$ref": "#/$defs/offset"}
+      }
+    },
+    "head": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event_id", "offset", "hash"],
+      "properties": {
+        "event_id": {"$ref": "#/$defs/uuid"},
+        "offset": {"type": "integer", "minimum": 1, "maximum": 10000},
+        "hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "nextAction": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code"],
+          "properties": {
+            "code": {"$ref": "#/$defs/safeId"},
+            "not_before": {"type": "string", "format": "date-time"}
+          }
+        }
+      ]
+    },
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256"],
+      "properties": {"ref": {"$ref": "#/$defs/ref"}, "sha256": {"$ref": "#/$defs/sha256"}}
+    },
+    "validatedArtifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256", "validator", "validation_status"],
+      "properties": {
+        "ref": {"$ref": "#/$defs/ref"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "validator": {"$ref": "#/$defs/safeId"},
+        "validation_status": {"enum": ["valid", "not-required"]}
+      }
+    },
+    "start": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "run_id", "parent_run_id", "turn_id", "as_of", "route",
+        "budget", "registry_offsets", "host", "system_prompt_sha256", "tools",
+        "permission_profile"
+      ],
+      "properties": {
+        "schema_version": {"const": "1.0"},
+        "run_id": {"$ref": "#/$defs/uuid"},
+        "parent_run_id": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/uuid"}]},
+        "turn_id": {"$ref": "#/$defs/safeId"},
+        "as_of": {"type": "string", "format": "date-time"},
+        "route": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["target_skill", "command", "reason_code"],
+          "properties": {
+            "target_skill": {"$ref": "#/$defs/safeId"},
+            "command": {"oneOf": [{"type": "null"}, {"enum": ["auto", "narrative", "seo-geo", "social", "email", "ad", "influencer", "launch"]}]},
+            "reason_code": {"$ref": "#/$defs/safeId"}
+          }
+        },
+        "budget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max_tokens", "bytes_per_token", "max_resources", "max_sensitivity", "prefix_file_limit"],
+          "properties": {
+            "max_tokens": {"type": "integer", "minimum": 1, "maximum": 1000000},
+            "bytes_per_token": {"type": "integer", "minimum": 1, "maximum": 16},
+            "max_resources": {"type": "integer", "minimum": 1, "maximum": 256},
+            "max_sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+            "prefix_file_limit": {"type": "integer", "minimum": 1, "maximum": 256}
+          }
+        },
+        "registry_offsets": {"$ref": "#/$defs/offsets"},
+        "host": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["adapter", "model_provider", "model_id"],
+          "properties": {
+            "adapter": {"$ref": "#/$defs/safeId"},
+            "adapter_version": {"$ref": "#/$defs/safeId"},
+            "model_provider": {"$ref": "#/$defs/safeId"},
+            "model_id": {"$ref": "#/$defs/safeId"}
+          }
+        },
+        "system_prompt_sha256": {"$ref": "#/$defs/sha256"},
+        "tools": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "mode", "schema_sha256"],
+            "properties": {
+              "name": {"$ref": "#/$defs/safeId"},
+              "mode": {"enum": ["read-only", "proposal-only", "mutating", "external"]},
+              "schema_sha256": {"$ref": "#/$defs/sha256"}
+            }
+          }
+        },
+        "permission_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "sandbox", "network", "external_mutations"],
+          "properties": {
+            "mode": {"enum": ["disabled", "read-only", "proposal-only", "write-gated"]},
+            "sandbox": {"$ref": "#/$defs/safeId"},
+            "network": {"type": "boolean"},
+            "external_mutations": {"type": "boolean"}
+          },
+          "allOf": [
+            {
+              "if": {"properties": {"external_mutations": {"const": true}}, "required": ["external_mutations"]},
+              "then": {"properties": {"mode": {"const": "write-gated"}}}
+            }
+          ]
+        }
+      }
+    },
+    "checkpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "checkpoint_id", "occurred_at", "expected_head", "status", "artifacts", "pending_handoff", "next_action"],
+      "properties": {
+        "schema_version": {"const": "1.0"},
+        "checkpoint_id": {"$ref": "#/$defs/uuid"},
+        "occurred_at": {"type": "string", "format": "date-time"},
+        "expected_head": {"$ref": "#/$defs/head"},
+        "status": {"enum": ["ready", "waiting", "needs-input", "blocked", "failed", "complete"]},
+        "artifacts": {"type": "array", "maxItems": 128, "items": {"$ref": "#/$defs/validatedArtifactRef"}},
+        "pending_handoff": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["status", "objective_code", "recommended_skill"],
+              "properties": {
+                "status": {"enum": ["proposed", "needs-input", "blocked"]},
+                "objective_code": {"$ref": "#/$defs/safeId"},
+                "recommended_skill": {"$ref": "#/$defs/safeId"}
+              }
+            }
+          ]
+        },
+        "next_action": {"$ref": "#/$defs/nextAction"}
+      }
+    },
+    "finish": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "occurred_at", "expected_head", "status", "evidence_mode", "artifacts", "metrics", "failure_class", "next_action"],
+      "properties": {
+        "schema_version": {"const": "1.0"},
+        "occurred_at": {"type": "string", "format": "date-time"},
+        "expected_head": {"$ref": "#/$defs/head"},
+        "status": {"enum": ["waiting", "needs-input", "blocked", "succeeded", "failed", "aborted"]},
+        "evidence_mode": {"enum": ["none", "simulated", "real", "mixed"]},
+        "artifacts": {"type": "array", "maxItems": 128, "items": {"$ref": "#/$defs/artifactRef"}},
+        "metrics": {
+          "type": "object",
+          "maxProperties": 48,
+          "propertyNames": {"pattern": "^(?!controller\\.)[A-Za-z_][A-Za-z0-9_.-]{0,63}$"},
+          "additionalProperties": {"type": "number"}
+        },
+        "failure_class": {"oneOf": [{"type": "null"}, {"enum": ["prompt", "routing", "context", "tool", "permission", "artifact", "loop", "unknown"]}]},
+        "next_action": {"$ref": "#/$defs/nextAction"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"enum": ["failed", "blocked", "aborted"]}}, "required": ["status"]},
+          "then": {"properties": {"failure_class": {"enum": ["prompt", "routing", "context", "tool", "permission", "artifact", "loop", "unknown"]}}},
+          "else": {"properties": {"failure_class": {"type": "null"}}}
+        }
+      ]
+    }
+  }
+}

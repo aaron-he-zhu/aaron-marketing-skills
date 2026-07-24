@@ -1,0 +1,218 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 356,
+          "path": "ad/scale/attribution-reconciler/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every platform conversion is reconciled to the order-ID truth set (matched / double-counted / unmatched), windows and currency are normalized to a common basis, at least one attribution-model comparison is shown, incrementality is read where a holdout exists (or marked N/A), and the ratio/ROAS math is handed to `roi-calculator` rather than computed here."
+      }
+    ],
+    "done_when": "every platform conversion is reconciled to the order-ID truth set (matched / double-counted / unmatched), windows and currency are normalized to a common basis, at least one attribution-model comparison is shown, incrementality is read where a holdout exists (or marked N/A), and the ratio/ROAS math is handed to `roi-calculator` rather than computed here.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/scale/attribution-reconciler/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 37
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 50
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 75
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 33
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:attribution-reconciler",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 139,
+          "path": "ad/scale/attribution-reconciler/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "roi-calculator"
+        ],
+        "text": "**Primary**: [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md) — turn the de-duped, normalized counts into ROAS/CPA/ROI."
+      },
+      {
+        "condition": "if the reconciliation surfaces a point-in-time integrity problem (broken tracking, systemic double-count) that needs the gate.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 444,
+          "path": "ad/scale/attribution-reconciler/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52",
+          "span_basis": "field-text",
+          "start_char": 141
+        },
+        "target_skills": [
+          "ad-account-auditor",
+          "report-generator"
+        ],
+        "text": "Alternates: [report-generator](../../../influencer/report/report-generator/SKILL.md) once the ratios are in, or [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) if the reconciliation surfaces a point-in-time integrity problem (broken tracking, systemic double-count) that needs the gate."
+      }
+    ],
+    "next_best": "**Primary**: [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md) — turn the de-duped, normalized counts into ROAS/CPA/ROI.\n\nAlternates: [report-generator](../../../influencer/report/report-generator/SKILL.md) once the ratios are in, or [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) if the reconciliation surfaces a point-in-time integrity problem (broken tracking, systemic double-count) that needs the gate.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "ad/scale/attribution-reconciler/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "report-generator",
+      "roi-calculator"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "attribution-reconciler",
+    "path": "ad/scale/attribution-reconciler/SKILL.md",
+    "phase": "scale",
+    "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<GA4/ecommerce order-ID export> [platform conversion exports] [goal: DR|prospecting]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 17,
+          "path": "ad/scale/attribution-reconciler/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the GA4/ecommerce"
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "the GA4/ecommerce",
+    "source": {
+      "path": "ad/scale/attribution-reconciler/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 202,
+          "path": "ad/scale/attribution-reconciler/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a reconciliation workbook at `memory/ad/attribution-reconciler/YYYY-MM-DD-<topic>.md` — match table, de-duped counts, normalized view, model-comparison table, incrementality read, and a handoff summary."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/scale/attribution-reconciler/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52"
+    },
+    "summary": "a reconciliation workbook that maps every platform-reported conversion to (or away from) an order in the truth set, a de-duped conversion count per platform, a normalized-window/currency view, an attribution-model comparison table, and an incrementality read if a holdout exists.",
+    "summary_source": "expected-output",
+    "writes": "a reconciliation workbook at `memory/ad/attribution-reconciler/YYYY-MM-DD-<topic>.md` — match table, de-duped counts, normalized view, model-comparison table, incrementality read, and a handoff summary."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the point-in-time R2 veto or RQS gate — use ad-account-auditor; not for the ROI/ROAS ratio math itself — use roi-calculator; not for organic dark-social share attribution or GA4 direct-traffic decomposition — use dark-social-attributor. 付费广告归因对账/去重/增量",
+    "description": "Use when platform-reported conversions disagree with GA4/ecommerce, when you suspect Meta and Google are double-counting the same sales, or for a standing (monthly) reconciliation workbook that de-dups stacked credit against an order-ID truth set, normalizes attribution windows and currency, compares attribution models, and reads incrementality from a geo/holdout test. Not for the point-in-time R2 veto or RQS gate — use ad-account-auditor; not for the ROI/ROAS ratio math itself — use roi-calculator; not for organic dark-social share attribution or GA4 direct-traffic decomposition — use dark-social-attributor. 付费广告归因对账/去重/增量",
+    "source": {
+      "path": "ad/scale/attribution-reconciler/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "26f75b94130bb3a1a563c789f39d1121f06e626d843d1f3d850f425984a92b52"
+    },
+    "trigger_phrases": [
+      "Use when running a standing reconciliation of platform-reported conversions against the GA4/ecommerce order-ID truth set: de-dup stacked credit across Meta + Google, normalize differing attribution windows and currency, compare attribution models side by side, and read incrementality where a geo/holdout test exists. Activate when the user has each platform's conversion export plus an order-ID export and wants to know which conversions are real and not double-counted."
+    ],
+    "trigger_source": "when-to-use-fallback",
+    "when_to_use": "Use when running a standing reconciliation of platform-reported conversions against the GA4/ecommerce order-ID truth set: de-dup stacked credit across Meta + Google, normalize differing attribution windows and currency, compare attribution models side by side, and read incrementality where a geo/holdout test exists. Activate when the user has each platform's conversion export plus an order-ID export and wants to know which conversions are real and not double-counted."
+  },
+  "schema_version": "1.0"
+}

@@ -1,0 +1,384 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 85,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the method doc names every heuristic with an Estimated/proxy label and a named source"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 200,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 87
+        },
+        "text": "the instrumentation spec covers UTM-tagged share links plus the replaced self-reported field with its coding plan"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 316,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 202
+        },
+        "text": "and the decomposition and branded-lift reads name their denominators with no derived number presented as Measured."
+      }
+    ],
+    "done_when": "the method doc names every heuristic with an Estimated/proxy label and a named source; the instrumentation spec covers UTM-tagged share links plus the replaced self-reported field with its coding plan; and the decomposition and branded-lift reads name their denominators with no derived number presented as Measured.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/observe/dark-social-attributor/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/social/owned-community-loop.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "a107683884a667eb513e230e212005e2077640e08e5cd9ec291ba0ffcaf04d19",
+        "source_line": 26
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/channels",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:dark-social-attributor",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 192,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "social-measurement-loop"
+        ],
+        "text": "- **Primary**: [social-measurement-loop](../social-measurement-loop/SKILL.md) — write the declared method, labels, and caveats into the metric dictionary so every future readout inherits them."
+      },
+      {
+        "condition": "If paid-platform conversion claims disagree with analytics**: [attribution-reconciler](../../../ad/scale/attribution-reconciler/SKILL.md) — that reconciliation is its lane, not this skill's.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 387,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 193
+        },
+        "target_skills": [
+          "attribution-reconciler"
+        ],
+        "text": "- **If paid-platform conversion claims disagree with analytics**: [attribution-reconciler](../../../ad/scale/attribution-reconciler/SKILL.md) — that reconciliation is its lane, not this skill's."
+      },
+      {
+        "condition": "If the branded-lift read shows a spike with no known cause**: [social-pulse-monitor](../social-pulse-monitor/SKILL.md) — chase the mention source before attributing it to sharing.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 571,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 388
+        },
+        "target_skills": [
+          "social-pulse-monitor"
+        ],
+        "text": "- **If the branded-lift read shows a spike with no known cause**: [social-pulse-monitor](../social-pulse-monitor/SKILL.md) — chase the mention source before attributing it to sharing."
+      },
+      {
+        "condition": "when the method doc is saved and the instrumentation spec is in the user's hands.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 932,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 573
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the method doc is saved and the instrumentation spec is in the user's hands."
+      }
+    ],
+    "next_best": "- **Primary**: [social-measurement-loop](../social-measurement-loop/SKILL.md) — write the declared method, labels, and caveats into the metric dictionary so every future readout inherits them.\n- **If paid-platform conversion claims disagree with analytics**: [attribution-reconciler](../../../ad/scale/attribution-reconciler/SKILL.md) — that reconciliation is its lane, not this skill's.\n- **If the branded-lift read shows a spike with no known cause**: [social-pulse-monitor](../social-pulse-monitor/SKILL.md) — chase the mention source before attributing it to sharing.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the method doc is saved and the instrumentation spec is in the user's hands.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/observe/dark-social-attributor/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "attribution-reconciler",
+      "social-measurement-loop",
+      "social-pulse-monitor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "dark-social-attributor",
+    "path": "social/observe/dark-social-attributor/SKILL.md",
+    "phase": "observe",
+    "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<GA4/GSC exports or site> [share-surface inventory] [existing form fields]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 94,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "GA4 landing-page/channel exports and GSC branded-query series (Measured, own data, as-of dated"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 117,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 96
+        },
+        "text": "User-provided export)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 171,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 119
+        },
+        "text": "the share-surface and form inventory (User-provided)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 279,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 173
+        },
+        "text": "active-channel dossiers and cadence commitments from `memory/channels/` (channel-registry SSOT, read-only)"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 387,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 281
+        },
+        "text": "the owned share-loop spec in [owned-community-loop.md](../../../references/social/owned-community-loop.md)"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 494,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 389
+        },
+        "text": "`scripts/connectors/pageviews.py` (keyless Wikipedia attention series) as the external attention control."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "GA4 landing-page/channel exports and GSC branded-query series (Measured, own data, as-of dated; User-provided export); the share-surface and form inventory (User-provided); active-channel dossiers and cadence commitments from `memory/channels/` (channel-registry SSOT, read-only); the owned share-loop spec in [owned-community-loop.md](../../../references/social/owned-community-loop.md); `scripts/connectors/pageviews.py` (keyless Wikipedia attention series) as the external attention control.",
+    "source": {
+      "path": "social/observe/dark-social-attributor/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 51,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the pack to `memory/social/dark-social-attributor/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 387,
+          "path": "social/observe/dark-social-attributor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963",
+          "span_basis": "field-text",
+          "start_char": 53
+        },
+        "text": "any channel-grade fact it surfaces (stale link-in-bio, a share surface tied to a handle, a cadence commitment) goes to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [channel-registry](../../../protocol/channel-registry/SKILL.md) is the sole writer of `memory/channels/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/observe/dark-social-attributor/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963"
+    },
+    "summary": "a dark-social attribution pack — (1) a share-link/UTM hygiene spec for owned share surfaces, (2) a self-reported attribution field design that replaces an existing form field (free-text first, coding plan later), (3) a GA4 direct-traffic decomposition read with each heuristic labeled Estimated/proxy, (4) a branded-search-lift proxy read (GSC + `pageviews.py`), and (5) the one-page declared-method doc — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the pack to `memory/social/dark-social-attributor/`; any channel-grade fact it surfaces (stale link-in-bio, a share surface tied to a handle, a cadence commitment) goes to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [channel-registry](../../../protocol/channel-registry/SKILL.md) is the sole writer of `memory/channels/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for paid-channel attribution reconciliation (platform-claimed vs analytics conversions) — use attribution-reconciler. 暗社交归因/直接流量分解/自报来源字段/分享链路UTM",
+    "description": "Use when the user asks to \"figure out where our direct traffic really comes from\", \"measure dark social\", \"add a how-did-you-hear-about-us field\", or \"show social drives signups without click data\"; produces a share-link/UTM hygiene spec for owned share surfaces, a self-reported attribution field design that replaces an existing form field (free-text first, coded later), a GA4 direct-traffic decomposition read (deep-URL directs, mobile-app skew, private-push correlation) with every derived number hard-labeled Estimated/proxy, and a branded-search-lift proxy from GSC plus Wikipedia pageviews — the declared dark-social method behind ECHO O2. Not for paid-channel attribution reconciliation (platform-claimed vs analytics conversions) — use attribution-reconciler. 暗社交归因/直接流量分解/自报来源字段/分享链路UTM",
+    "source": {
+      "path": "social/observe/dark-social-attributor/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "505cae42de52ec4ccd0bd8f1de7acbda69c80cdddfa14a3962ff4298f1252963"
+    },
+    "trigger_phrases": [
+      "add a how-did-you-hear-about-us field",
+      "figure out where our direct traffic really comes from",
+      "measure dark social",
+      "show social drives signups without click data"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when direct traffic is unexplained, social ROI is questioned without click evidence, share buttons carry naked URLs, or a how-did-you-hear field is being designed: declares the dark-social estimation method (ECHO O2) and specs the instrumentation — share-link/UTM hygiene, a self-reported attribution field that replaces an existing form field, GA4 direct-traffic decomposition heuristics, and a branded-search-lift proxy via GSC + pageviews.py. Every derived number is Estimated/proxy by construction. Not for reconciling paid-platform conversion claims (attribution-reconciler) and not the metric dictionary or write-back loop (social-measurement-loop)."
+  },
+  "schema_version": "1.0"
+}

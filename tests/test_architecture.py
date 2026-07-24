@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
 import os
@@ -121,6 +122,80 @@ class CatalogLayerTests(unittest.TestCase):
                 "Run python3 scripts/context-resolver.py resolve request.json"
             )
         )
+
+
+class CapabilityProfileReferenceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.module = load_module()
+        cls.generator = load_generator_module()
+        with (ROOT / "references" / "system-catalog.json").open(encoding="utf-8") as handle:
+            cls.catalog = json.load(handle)
+        with (ROOT / "references" / "capability-profiles.json").open(encoding="utf-8") as handle:
+            cls.profiles = json.load(handle)
+
+    def failures_for(self, catalog):
+        failures = []
+        self.module.check_capability_profiles(catalog, failures)
+        return failures
+
+    def test_current_reference_and_lattice_are_valid(self):
+        self.assertEqual([], self.failures_for(copy.deepcopy(self.catalog)))
+
+    def test_digest_drift_fails_closed(self):
+        catalog = copy.deepcopy(self.catalog)
+        catalog["capability_profiles"]["sha256"] = "0" * 64
+        failures = self.failures_for(catalog)
+        self.assertTrue(
+            any("capability profile SSOT digest drift" in item for item in failures),
+            failures,
+        )
+
+    def test_non_monotonic_lattice_fails(self):
+        profiles = copy.deepcopy(self.profiles)
+        profiles["profiles"]["pro"]["capabilities"].remove(
+            profiles["profiles"]["lite"]["capabilities"][0]
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_root = Path(tmp)
+            source = tmp_root / "references" / "capability-profiles.json"
+            source.parent.mkdir(parents=True)
+            content = (json.dumps(profiles, indent=2, sort_keys=True) + "\n").encode()
+            source.write_bytes(content)
+            catalog = copy.deepcopy(self.catalog)
+            catalog["capability_profiles"]["sha256"] = hashlib.sha256(content).hexdigest()
+            with mock.patch.object(self.module, "ROOT", tmp_root):
+                failures = self.failures_for(catalog)
+        self.assertTrue(
+            any("Lite ⊂ Pro ⊂ Governed" in item for item in failures),
+            failures,
+        )
+
+    def test_universal_overlay_removal_fails(self):
+        profiles = copy.deepcopy(self.profiles)
+        profiles["always_on_overlays"].remove("consent")
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_root = Path(tmp)
+            source = tmp_root / "references" / "capability-profiles.json"
+            source.parent.mkdir(parents=True)
+            content = (json.dumps(profiles, indent=2, sort_keys=True) + "\n").encode()
+            source.write_bytes(content)
+            catalog = copy.deepcopy(self.catalog)
+            catalog["capability_profiles"]["sha256"] = hashlib.sha256(content).hexdigest()
+            with mock.patch.object(self.module, "ROOT", tmp_root):
+                failures = self.failures_for(catalog)
+        self.assertTrue(
+            any("always_on_overlays" in item for item in failures),
+            failures,
+        )
+
+    def test_generated_view_names_reference_profiles_and_overlays(self):
+        rendered = self.generator.render(self.catalog, self.profiles).decode("utf-8")
+        self.assertIn("## Runtime Capability Profiles", rendered)
+        self.assertIn("Lite ⊂ Pro ⊂ Governed", rendered)
+        self.assertIn("`release-provenance`", rendered)
+        self.assertIn(self.catalog["capability_profiles"]["sha256"], rendered)
+
 
 class SymmetryTests(unittest.TestCase):
     @classmethod

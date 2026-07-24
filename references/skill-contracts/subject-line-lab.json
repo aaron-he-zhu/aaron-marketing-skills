@@ -1,0 +1,352 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 383,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "each variant carries a stable id + angle label, each is pre-scored on all four heuristics (spam / length-truncation desktop+mobile / emoji / preview render), every flag is labeled Measured (character count) or Estimated (render limit / spam-pattern), a ranked shortlist names which variants advance and which are cut and why, and no pre-score is presented as a pass/fail EQS verdict."
+      }
+    ],
+    "done_when": "each variant carries a stable id + angle label, each is pre-scored on all four heuristics (spam / length-truncation desktop+mobile / emoji / preview render), every flag is labeled Measured (character count) or Estimated (render limit / spam-pattern), a ranked shortlist names which variants advance and which are cut and why, and no pre-score is presented as a pass/fail EQS verdict.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/engage/subject-line-lab/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 40
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 44
+      },
+      {
+        "path": "email/engage/email-creative-builder/references/subject-line-specs.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "540b5675c4eb649dba21a993f5489785dc09d68317b71036c8b7eca6c77862f2",
+        "source_line": 28
+      },
+      {
+        "path": "email/engage/subject-line-lab/references/spam-trigger-checklist.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bc92ff8f4d2d025ae50626866949b72dd74275c9720440ff70c640faa205d7fe",
+        "source_line": 28
+      },
+      {
+        "path": "references/humanizer-slop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
+        "source_line": 53
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 72
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 36
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:subject-line-lab",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 248,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "send-experiment-designer"
+        ],
+        "text": "- **Primary**: [send-experiment-designer](../../deliver/send-experiment-designer/SKILL.md) — design the one-variable-per-cell A/B / send-time test across the surviving ranked subject variants (their `SUBJ-*` ids carry straight into the test cells)."
+      },
+      {
+        "condition": "If the subject is ahead of the body** (no creative yet): [email-creative-builder](../email-creative-builder/SKILL.md) — write the body, one CTA, and plain-text alternate around the chosen subject, then return here to lock the variant set.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 491,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 249
+        },
+        "target_skills": [
+          "email-creative-builder"
+        ],
+        "text": "- **If the subject is ahead of the body** (no creative yet): [email-creative-builder](../email-creative-builder/SKILL.md) — write the body, one CTA, and plain-text alternate around the chosen subject, then return here to lock the variant set."
+      },
+      {
+        "condition": "If a spam-pattern flag needs a full placement read**: [deliverability-qa](../../setup/deliverability-qa/SKILL.md) — run the SEND-S spam-content + SPF/DKIM/DMARC authentication scan",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 676,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 492
+        },
+        "target_skills": [
+          "deliverability-qa"
+        ],
+        "text": "- **If a spam-pattern flag needs a full placement read**: [deliverability-qa](../../setup/deliverability-qa/SKILL.md) — run the SEND-S spam-content + SPF/DKIM/DMARC authentication scan"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 748,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 678
+        },
+        "target_skills": [],
+        "text": "this skill only pre-flags subject-level patterns, it does not score S."
+      },
+      {
+        "condition": "If a subject carries a `[needs source]` claim**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claim with evidence provenance and approved wording, then swap the resolved wording back into the flagged variant.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1005,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 749
+        },
+        "target_skills": [
+          "offer-claims-registry"
+        ],
+        "text": "- **If a subject carries a `[needs source]` claim**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claim with evidence provenance and approved wording, then swap the resolved wording back into the flagged variant."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1243,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 1006
+        },
+        "target_skills": [
+          "email-quality-auditor"
+        ],
+        "text": "- **To score + run the vetoes** (terminal for this chain): [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — computes the profile-weighted EQS and enforces S1/S2/N1/D1. This skill computes no score and runs no veto."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-07",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1381,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 1244
+        },
+        "target_skills": [],
+        "text": "- Global visited-set / max-depth (default 3) termination contract from [skill-contract.md](../../../references/skill-contract.md) applies"
+      },
+      {
+        "condition": "if the recommended next skill was already run this session, or routing is ambiguous, stop and report options instead of auto-following. Stop once the variant set is ranked and test-ready.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-08",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1570,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 1383
+        },
+        "target_skills": [],
+        "text": "if the recommended next skill was already run this session, or routing is ambiguous, stop and report options instead of auto-following. Stop once the variant set is ranked and test-ready."
+      }
+    ],
+    "next_best": "- **Primary**: [send-experiment-designer](../../deliver/send-experiment-designer/SKILL.md) — design the one-variable-per-cell A/B / send-time test across the surviving ranked subject variants (their `SUBJ-*` ids carry straight into the test cells).\n- **If the subject is ahead of the body** (no creative yet): [email-creative-builder](../email-creative-builder/SKILL.md) — write the body, one CTA, and plain-text alternate around the chosen subject, then return here to lock the variant set.\n- **If a spam-pattern flag needs a full placement read**: [deliverability-qa](../../setup/deliverability-qa/SKILL.md) — run the SEND-S spam-content + SPF/DKIM/DMARC authentication scan; this skill only pre-flags subject-level patterns, it does not score S.\n- **If a subject carries a `[needs source]` claim**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claim with evidence provenance and approved wording, then swap the resolved wording back into the flagged variant.\n- **To score + run the vetoes** (terminal for this chain): [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — computes the profile-weighted EQS and enforces S1/S2/N1/D1. This skill computes no score and runs no veto.\n- Global visited-set / max-depth (default 3) termination contract from [skill-contract.md](../../../references/skill-contract.md) applies; if the recommended next skill was already run this session, or routing is ambiguous, stop and report options instead of auto-following. Stop once the variant set is ranked and test-ready.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md): Status / Objective / Key Findings / Evidence (label each Measured / User-provided / Estimated) / Assumptions / Open Loops / Recommended Next Skill.",
+    "summary_ref": {
+      "path": "email/engage/subject-line-lab/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "deliverability-qa",
+      "email-creative-builder",
+      "email-quality-auditor",
+      "offer-claims-registry",
+      "send-experiment-designer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "email",
+    "name": "subject-line-lab",
+    "path": "email/engage/subject-line-lab/SKILL.md",
+    "phase": "engage",
+    "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+    "version": "18.0.1"
+  },
+  "input_contract": {
+    "argument_hint": "<subject candidates or angle> [from-name] [mode: promo|cold|newsletter]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 245,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the subject candidates to score (or the offer/angle to generate from), the from-name, the mode (B2C promo/lifecycle · B2B cold-outbound · newsletter), the preheader (or intent to draft one), and any past-campaign subject/open export the user has"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 466,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 247
+        },
+        "text": "render limits from [references/subject-line-specs.md](../email-creative-builder/references/subject-line-specs.md) and spam-pattern flags from [references/spam-trigger-checklist.md](references/spam-trigger-checklist.md)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the subject candidates to score (or the offer/angle to generate from), the from-name, the mode (B2C promo/lifecycle · B2B cold-outbound · newsletter), the preheader (or intent to draft one), and any past-campaign subject/open export the user has; render limits from [references/subject-line-specs.md](../email-creative-builder/references/subject-line-specs.md) and spam-pattern flags from [references/spam-trigger-checklist.md](references/spam-trigger-checklist.md).",
+    "source": {
+      "path": "email/engage/subject-line-lab/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 101,
+          "path": "email/engage/subject-line-lab/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing variant set + pre-score card (the pre-test **E** bench) and a reusable handoff summary."
+      }
+    ],
+    "extraction_status": "unclassified",
+    "source": {
+      "path": "email/engage/subject-line-lab/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc"
+    },
+    "summary": "a subject-line + preheader variant set (3-8 variants, each with a stable variant id and an angle label) and a per-variant heuristic pre-score card covering spam-trigger flags, desktop + mobile length/truncation, emoji count, and the rendered inbox preview — plus a ranked shortlist of survivors and the standard handoff summary for `memory/email/subject-line-lab/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing variant set + pre-score card (the pre-test **E** bench) and a reusable handoff summary."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the body copy or CTA — use email-creative-builder; not for the A/B test design or significance read — use send-experiment-designer; not for the profile-weighted EQS or the S1/S2/N1/D1 vetoes — use email-quality-auditor. 邮件主题行生成/主题行预打分/截断与垃圾词检查",
+    "description": "Use when the user asks to \"generate subject line variants\", \"pre-score my subject lines\", or \"will this subject get truncated / trigger spam filters\"; produces a labeled subject + preheader variant set and a per-variant heuristic pre-score card — spam-trigger flags, length/truncation across desktop + mobile, emoji-count, and the inbox preview render (from-name + subject + preheader) — before any test is run. Not for the body copy or CTA — use email-creative-builder; not for the A/B test design or significance read — use send-experiment-designer; not for the profile-weighted EQS or the S1/S2/N1/D1 vetoes — use email-quality-auditor. 邮件主题行生成/主题行预打分/截断与垃圾词检查",
+    "source": {
+      "path": "email/engage/subject-line-lab/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "a6d84261a17d26cdcace66979a373cc6803cdf7afc2fe596d2b8754225c697fc"
+    },
+    "trigger_phrases": [
+      "generate subject line variants",
+      "pre-score my subject lines",
+      "will this subject get truncated / trigger spam filters"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when generating or pre-screening a subject-line + preheader variant set before a test: draft 3-8 angle-labeled variants and heuristically pre-score each on spam-trigger patterns, desktop + mobile length/truncation, emoji count, and the rendered inbox preview (from-name + subject + preheader). Covers B2C promo/lifecycle, B2B cold-outbound, and newsletter modes. Use to rank candidates and cut the weak ones before handing survivors to the A/B test — not to write the body, design the test, or compute the EQS."
+  },
+  "schema_version": "1.0"
+}

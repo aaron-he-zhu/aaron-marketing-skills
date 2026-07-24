@@ -1,0 +1,250 @@
+"""Release-outcome gate tests using pseudonymous synthetic fixtures."""
+from __future__ import annotations
+
+import copy
+import hashlib
+import importlib.util
+import json
+from pathlib import Path
+import stat
+import sys
+import tempfile
+import unittest
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location(
+    "profile_outcomes", ROOT / "scripts" / "verify-profile-outcomes.py"
+)
+assert SPEC and SPEC.loader
+profile_outcomes = importlib.util.module_from_spec(SPEC)
+sys.modules[SPEC.name] = profile_outcomes
+SPEC.loader.exec_module(profile_outcomes)
+
+
+def digest(label: str) -> str:
+    return hashlib.sha256(label.encode("utf-8")).hexdigest()
+
+
+def result(profile: str, shadow: bool = False) -> dict:
+    lite = profile == "lite"
+    return {
+        "time_to_first_usable_seconds": 70 if lite else 100,
+        "tokens": 700 if lite else 1000,
+        "turns": 7 if lite else 10,
+        "unnecessary_confirmations": 0,
+        "escalated_to_governed": False,
+        "evidence_chain_complete": (not lite) if shadow else True,
+        "recovery_attempted": shadow,
+        "recovery_success": (False if lite else True) if shadow else None,
+        "mandatory_approval_hit": True,
+        "consent_hit": True,
+        "claims_hit": True,
+        "external_action_hit": True,
+        "safety_failures": [],
+    }
+
+
+def project(index: int, kind: str, discipline: str, structure: str) -> dict:
+    shadow = kind == "shadow"
+    return {
+        "project_hash": digest("project-%d-%s" % (index, kind)),
+        "brief_snapshot_sha256": digest("brief-%d-%s" % (index, kind)),
+        "evidence_sha256": digest("evidence-%d-%s" % (index, kind)),
+        "provenance": "real-project",
+        "kind": kind,
+        "discipline": discipline,
+        "task_structure": structure,
+        "randomized_order": "lite-first" if index % 2 else "governed-first",
+        "requires_governed": shadow,
+        "reviewers": [
+            {
+                "id_hash": digest("reviewer-a"),
+                "blind": True,
+                "lite_adoption": "adopt",
+                "governed_adoption": "adopt",
+            },
+            {
+                "id_hash": digest("reviewer-b"),
+                "blind": True,
+                "lite_adoption": "minor",
+                "governed_adoption": "minor",
+            },
+        ],
+        "lite": result("lite", shadow=shadow),
+        "governed": result("governed", shadow=shadow),
+    }
+
+
+def valid_evidence() -> dict:
+    projects = []
+    index = 0
+    for discipline in profile_outcomes.DISCIPLINES:
+        for _ in range(2):
+            projects.append(project(index, "pilot", discipline, "single"))
+            index += 1
+    structures = ["single"] * 35 + ["multi"] * 21 + ["cross"] * 14
+    for position, structure in enumerate(structures):
+        discipline = profile_outcomes.DISCIPLINES[position % 7]
+        row = project(index, "paired", discipline, structure)
+        if position < 7:
+            row["lite"]["escalated_to_governed"] = True
+        projects.append(row)
+        index += 1
+    for discipline in profile_outcomes.DISCIPLINES:
+        for _ in range(4):
+            projects.append(project(index, "shadow", discipline, "cross"))
+            index += 1
+    return {
+        "schema_version": "1.0",
+        "release_candidate": "19.0.0-rc.1",
+        "source_commit": "a" * 40,
+        "model_identity": {
+            "provider": "fixture",
+            "model": "fixture-model",
+            "version": "1",
+            "toolset_sha256": digest("tools"),
+        },
+        "attestation": {
+            "method": "owner-attested-private-evidence",
+            "collector_id_hash": digest("collector"),
+            "evidence_manifest_sha256": digest("private-manifest"),
+            "signed_at": "2099-01-01T00:00:00Z",
+        },
+        "projects": projects,
+    }
+
+
+class ProfileOutcomeTests(unittest.TestCase):
+    def test_complete_real_project_cohort_passes(self):
+        evidence = valid_evidence()
+        summary = profile_outcomes.evaluate(evidence)
+        self.assertTrue(summary["passed"])
+        self.assertEqual(summary["counts"], {"pilot": 14, "paired": 70, "shadow": 28})
+        self.assertEqual(summary["safety_failure_count"], 0)
+        self.assertLess(summary["lite_escalation_rate"], 0.15)
+
+    def test_simulated_project_is_rejected_during_strict_load_validation(self):
+        evidence = valid_evidence()
+        evidence["projects"][0]["provenance"] = "simulated"
+        # Exercise the same strict project validation without filesystem I/O.
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "evidence.json"
+            path.write_text(json.dumps(evidence), encoding="utf-8")
+            with self.assertRaisesRegex(profile_outcomes.OutcomeError, "real-project"):
+                profile_outcomes.load_evidence(path)
+
+    def test_unknown_raw_brief_field_is_rejected(self):
+        evidence = valid_evidence()
+        evidence["projects"][0]["brief_text"] = "forbidden raw material"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "evidence.json"
+            path.write_text(json.dumps(evidence), encoding="utf-8")
+            with self.assertRaisesRegex(profile_outcomes.OutcomeError, "invalid fields"):
+                profile_outcomes.load_evidence(path)
+
+    def test_safety_failure_blocks_release(self):
+        evidence = valid_evidence()
+        evidence["projects"][0]["lite"]["safety_failures"] = ["unauthorized mutation"]
+        with self.assertRaisesRegex(profile_outcomes.OutcomeError, "safety failures"):
+            profile_outcomes.evaluate(evidence)
+
+    def test_missing_shadow_projects_blocks_release(self):
+        evidence = valid_evidence()
+        evidence["projects"] = [
+            row for row in evidence["projects"] if row["kind"] != "shadow"
+        ]
+        with self.assertRaisesRegex(profile_outcomes.OutcomeError, "shadow requires"):
+            profile_outcomes.evaluate(evidence)
+
+    def test_expected_release_identity_accepts_the_exact_rc_source(self):
+        evidence = valid_evidence()
+        profile_outcomes.verify_expected_identity(
+            evidence,
+            source_commit="a" * 40,
+            release_candidate="19.0.0-rc.1",
+        )
+
+    def test_expected_release_identity_rejects_other_source_or_rc(self):
+        evidence = valid_evidence()
+        with self.assertRaisesRegex(profile_outcomes.OutcomeError, "source_commit"):
+            profile_outcomes.verify_expected_identity(
+                evidence, source_commit="b" * 40
+            )
+        with self.assertRaisesRegex(
+            profile_outcomes.OutcomeError, "release_candidate"
+        ):
+            profile_outcomes.verify_expected_identity(
+                evidence, release_candidate="19.0.0-rc.2"
+            )
+
+    def test_duplicate_brief_or_evidence_digest_is_rejected(self):
+        for field in ("brief_snapshot_sha256", "evidence_sha256"):
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as tmp:
+                evidence = valid_evidence()
+                evidence["projects"][1][field] = evidence["projects"][0][field]
+                path = Path(tmp) / "evidence.json"
+                path.write_text(json.dumps(evidence), encoding="utf-8")
+                with self.assertRaisesRegex(
+                    profile_outcomes.OutcomeError, "duplicate %s" % field
+                ):
+                    profile_outcomes.load_evidence(path)
+
+    def test_randomized_order_must_be_balanced_globally_and_by_discipline(self):
+        evidence = valid_evidence()
+        paired = [row for row in evidence["projects"] if row["kind"] == "paired"]
+        for row in paired:
+            row["randomized_order"] = "lite-first"
+        with self.assertRaisesRegex(
+            profile_outcomes.OutcomeError, "randomized order"
+        ):
+            profile_outcomes.evaluate(evidence)
+
+    def test_private_manifest_digest_must_match_attestation(self):
+        evidence = valid_evidence()
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = Path(tmp) / "private-manifest.json"
+            manifest.write_bytes(b"private-manifest")
+            digest_value, raw = profile_outcomes.verify_private_manifest(
+                evidence, manifest
+            )
+            self.assertEqual(digest("private-manifest"), digest_value)
+            self.assertEqual(b"private-manifest", raw)
+            manifest.write_bytes(b"different-private-manifest")
+            with self.assertRaisesRegex(
+                profile_outcomes.OutcomeError, "digest"
+            ):
+                profile_outcomes.verify_private_manifest(evidence, manifest)
+
+    def test_receipt_binds_exact_inputs_without_project_data(self):
+        evidence = valid_evidence()
+        summary = profile_outcomes.evaluate(evidence)
+        evidence_bytes = json.dumps(
+            evidence, sort_keys=True, separators=(",", ":")
+        ).encode("utf-8")
+        receipt = profile_outcomes.build_receipt(
+            evidence,
+            summary,
+            evidence_bytes=evidence_bytes,
+            evidence_manifest_sha256=digest("private-manifest"),
+        )
+        self.assertTrue(receipt["passed"])
+        self.assertEqual("a" * 40, receipt["source_commit"])
+        self.assertEqual(
+            hashlib.sha256(evidence_bytes).hexdigest(),
+            receipt["evidence_sha256"],
+        )
+        self.assertNotIn('"projects"', json.dumps(receipt, sort_keys=True))
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "receipt.json"
+            written = profile_outcomes.write_private_receipt(path, receipt)
+            self.assertEqual(path.resolve(), written)
+            self.assertEqual(0o600, stat.S_IMODE(path.stat().st_mode))
+            with self.assertRaisesRegex(
+                profile_outcomes.OutcomeError, "without overwriting"
+            ):
+                profile_outcomes.write_private_receipt(path, receipt)
+
+
+if __name__ == "__main__":
+    unittest.main()

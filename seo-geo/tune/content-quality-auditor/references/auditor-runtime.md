@@ -6,7 +6,7 @@
 - **Catalog version:** 18.0.0
 - **Framework:** CORE-EEAT
 - **Auditor:** content-quality-auditor
-- **Source digest:** `sha256:56d2b5fb41d53916d6f21dc71835b70a5269e4a2098afb43daa291b30a2f8e82`
+- **Source digest:** `sha256:81b823fb03ed46fcf7310bd606f281fecdd56198417f11d60624f1a41cf2d112`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 

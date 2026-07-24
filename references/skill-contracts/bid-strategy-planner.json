@@ -1,0 +1,322 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 99,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "1. One bid strategy is named with a rationale tied to the goal and the conversion-volume threshold."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 227,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 102
+        },
+        "text": "2. The starting target is stated with its derivation, and every input metric is labeled Measured / User-provided / Estimated."
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 328,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 230
+        },
+        "text": "3. A learning-phase entry plan names the conversions-to-exit estimate and the do-not-touch window."
+      }
+    ],
+    "done_when": "1. One bid strategy is named with a rationale tied to the goal and the conversion-volume threshold.\n  2. The starting target is stated with its derivation, and every input metric is labeled Measured / User-provided / Estimated.\n  3. A learning-phase entry plan names the conversions-to-exit estimate and the do-not-touch window.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 46
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 50
+      },
+      {
+        "path": "ad/orchestrate/bid-strategy-planner/references/bid-strategy-matrix.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "cb7896c7afffc764d6a739949c7324cd09279d2596d5e35a55e175c8efeb7176",
+        "source_line": 53
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 73
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 35
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 75
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:bid-strategy-planner",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 217,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "ad-account-auditor"
+        ],
+        "text": "- **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the campaign against ROAS (the **S** lever and the premature-scaling guardrail) once the strategy, target, and portfolio are set."
+      },
+      {
+        "condition": "If the budget behind the bid is not yet allocated**: [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — set the spend envelope the strategy bids within, then return here.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 416,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 218
+        },
+        "target_skills": [
+          "budget-optimizer"
+        ],
+        "text": "- **If the budget behind the bid is not yet allocated**: [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — set the spend envelope the strategy bids within, then return here."
+      },
+      {
+        "condition": "If the plan is live and you need in-flight pacing, not a starting plan** (NEEDS_INPUT): [budget-pacing-monitor](../../scale/budget-pacing-monitor/SKILL.md) — reads spend/delivery against plan mid-flight",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 623,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 417
+        },
+        "target_skills": [
+          "budget-pacing-monitor"
+        ],
+        "text": "- **If the plan is live and you need in-flight pacing, not a starting plan** (NEEDS_INPUT): [budget-pacing-monitor](../../scale/budget-pacing-monitor/SKILL.md) — reads spend/delivery against plan mid-flight"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 661,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 625
+        },
+        "target_skills": [],
+        "text": "this skill only sets the entry plan."
+      },
+      {
+        "condition": "If the recommended next skill was already invoked in this session's chain, stop and report chain-complete. Default `max-depth: 3`. When routing is ambiguous, present the options and stop rather than auto-following",
+        "extraction_status": "classified",
+        "item_id": "handoff-05",
+        "kind": "termination",
+        "source": {
+          "end_char": 914,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 662
+        },
+        "target_skills": [],
+        "text": "- **Termination**: keep a visited-set. If the recommended next skill was already invoked in this session's chain, stop and report chain-complete. Default `max-depth: 3`. When routing is ambiguous, present the options and stop rather than auto-following"
+      },
+      {
+        "condition": "if the auditor returns a BLOCK verdict, stop and route to the named fix rather than re-running this skill.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1022,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 916
+        },
+        "target_skills": [],
+        "text": "if the auditor returns a BLOCK verdict, stop and route to the named fix rather than re-running this skill."
+      }
+    ],
+    "next_best": "- **Primary**: [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — score the campaign against ROAS (the **S** lever and the premature-scaling guardrail) once the strategy, target, and portfolio are set.\n- **If the budget behind the bid is not yet allocated**: [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — set the spend envelope the strategy bids within, then return here.\n- **If the plan is live and you need in-flight pacing, not a starting plan** (NEEDS_INPUT): [budget-pacing-monitor](../../scale/budget-pacing-monitor/SKILL.md) — reads spend/delivery against plan mid-flight; this skill only sets the entry plan.\n- **Termination**: keep a visited-set. If the recommended next skill was already invoked in this session's chain, stop and report chain-complete. Default `max-depth: 3`. When routing is ambiguous, present the options and stop rather than auto-following; if the auditor returns a BLOCK verdict, stop and route to the named fix rather than re-running this skill.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "budget-optimizer",
+      "budget-pacing-monitor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "bid-strategy-planner",
+    "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+    "phase": "orchestrate",
+    "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<goal: DR|prospecting> [conversion history: CPA/ROAS + volume] [campaign set]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "classified",
+        "kind": "evidence-input",
+        "requirement": "optional",
+        "source": {
+          "end_char": 382,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "ROAS profile (`direct-response|prospecting|incremental-profit`), conversion history (CPA / ROAS + conversion volume from the user's own GA4/ecommerce export), current bid strategy if restructuring, campaign set + budgets, and any minimum-daily-conversion or account-structure constraints. Connector data via `~~web analytics` / `~~ecommerce` (own-data manual export) when available."
+      }
+    ],
+    "extraction_status": "classified",
+    "reads": "ROAS profile (`direct-response|prospecting|incremental-profit`), conversion history (CPA / ROAS + conversion volume from the user's own GA4/ecommerce export), current bid strategy if restructuring, campaign set + budgets, and any minimum-daily-conversion or account-structure constraints. Connector data via `~~web analytics` / `~~ecommerce` (own-data manual export) when available.",
+    "source": {
+      "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 204,
+          "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a bid-strategy recommendation (strategy + starting target + portfolio map + learning-phase entry plan) and a reusable handoff summary. Save path: `memory/ad/bid-strategy-planner/YYYY-MM-DD-<campaign>.md`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4"
+    },
+    "summary": "a bid-strategy recommendation (strategy + starting target + portfolio map + learning-phase entry plan) and a reusable handoff summary. Save path: `memory/ad/bid-strategy-planner/YYYY-MM-DD-<campaign>.md`.",
+    "summary_source": "writes-fallback",
+    "writes": "a bid-strategy recommendation (strategy + starting target + portfolio map + learning-phase entry plan) and a reusable handoff summary. Save path: `memory/ad/bid-strategy-planner/YYYY-MM-DD-<campaign>.md`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for splitting the budget across campaigns — use budget-optimizer; not for in-flight pacing/scale moves — use budget-pacing-monitor; not for scoring the account — use ad-account-auditor. 出价策略/tCPA目标/tROAS/学习期",
+    "description": "Use when the user asks to \"pick a bid strategy\", \"set a tCPA/tROAS target\", or \"plan the learning-phase entry\"; produces a bid-strategy choice (tCPA / tROAS / max-conversions / manual CPC), the starting target math, a portfolio grouping map, and a learning-phase entry plan. Not for splitting the budget across campaigns — use budget-optimizer; not for in-flight pacing/scale moves — use budget-pacing-monitor; not for scoring the account — use ad-account-auditor. 出价策略/tCPA目标/tROAS/学习期",
+    "source": {
+      "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "6a5d5c9316672e7b471a0c1809bc171e2b312f77f7201a0f0fa64511f92d63b4"
+    },
+    "trigger_phrases": [
+      "pick a bid strategy",
+      "plan the learning-phase entry",
+      "set a tCPA/tROAS target"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when choosing a bid strategy for a new or restructured paid campaign, setting an initial tCPA or tROAS target from CPA/ROAS history, deciding between automated (tCPA/tROAS/max-conversions) and manual CPC bidding, grouping campaigns into a bid portfolio, or planning how a campaign enters and exits the learning phase without churn. Not in-flight pacing — that is budget-pacing-monitor."
+  },
+  "schema_version": "1.0"
+}

@@ -241,6 +241,24 @@ class ContextResolverTests(unittest.TestCase):
         self.assertEqual(1, len(manifest["resources"]))
         self.assertEqual("duplicate-content", manifest["omitted"][0]["reason_code"])
 
+    def test_candidate_order_invariance(self):
+        self.write_project("alpha.md", "alpha")
+        self.write_project("beta.md", "beta")
+        candidates = [
+            self.candidate("alpha", "alpha.md", priority=10),
+            self.candidate("beta", "beta.md", priority=20),
+        ]
+        first = resolver.resolve_context(
+            self.request(candidates), self.bundle, self.project,
+        )
+        reordered = self.request(list(reversed(candidates)))
+        reordered["run_id"] = str(uuid.uuid4())
+        reordered["turn_id"] = "turn-reordered"
+        second = resolver.resolve_context(reordered, self.bundle, self.project)
+        self.assertEqual(first["resources"], second["resources"])
+        self.assertEqual(first["omitted"], second["omitted"])
+        self.assertEqual(first["context_signature"], second["context_signature"])
+
     def test_required_resources_fail_closed(self):
         self.write_project("stale.md", "stale")
         self.write_project("secret.md", "secret")
@@ -376,7 +394,7 @@ class ContextResolverTests(unittest.TestCase):
         with self.assertRaisesRegex(resolver.ContextResolutionError, "absent from system catalog"):
             resolver.validate_route_against_catalog(wrong_target, self.bundle)
 
-    def test_symlink_hardlink_traversal_and_future_observation_rejected(self):
+    def test_symlink_hardlink_special_traversal_and_future_observation_rejected(self):
         self.write_project("real.md", "source")
         os.symlink("real.md", self.project / "link.md")
         request = self.request([self.candidate("link", "link.md")])
@@ -576,7 +594,7 @@ class ContextResolverTests(unittest.TestCase):
         with self.assertRaisesRegex(resolver.ContextResolutionError, "catalog identity"):
             resolver.verify_manifest_sources(manifest, self.bundle, self.project)
 
-    def test_aggregate_inspection_budget_prioritizes_required_and_is_reported(self):
+    def test_budget_omission_and_required_overflow_fail_closed(self):
         self.write_project("required.md", "req!")
         self.write_project("optional.md", "opt")
         optional = self.candidate("optional", "optional.md", priority=100)
@@ -635,7 +653,15 @@ class ContextResolverTests(unittest.TestCase):
     def test_real_repository_quoted_skill_version_and_schema_contracts(self):
         manifest = resolver.resolve_context(self.request([]), ROOT, self.project)
         skill_path = ROOT / "seo-geo/implement/content-writer/SKILL.md"
+        skill_version = resolver._frontmatter_scalar(
+            skill_path.read_text(encoding="utf-8"), "version"
+        )
+        catalog_version = json.loads(
+            (ROOT / "references/system-catalog.json").read_text(encoding="utf-8")
+        )["architecture_version"]
         self.assertEqual(hashlib.sha256(skill_path.read_bytes()).hexdigest(), manifest["route"]["skill_sha256"])
+        self.assertEqual(skill_version, manifest["route"]["skill_version"])
+        self.assertEqual(catalog_version, manifest["route"]["catalog_version"])
 
         request_schema = json.loads(
             (ROOT / "references/context-request.schema.json").read_text(encoding="utf-8")
@@ -644,6 +670,7 @@ class ContextResolverTests(unittest.TestCase):
             (ROOT / "references/context-manifest.schema.json").read_text(encoding="utf-8")
         )
         self.assertIn("skill_sha256", manifest_schema["$defs"]["route"]["required"])
+        self.assertIn("skill_version", manifest_schema["$defs"]["route"]["required"])
         self.assertIn("inspected_bytes", manifest_schema["$defs"]["budget"]["required"])
         self.assertIn("max_inspection_bytes", request_schema["$defs"]["budget"]["required"])
         for schema in (request_schema, manifest_schema):

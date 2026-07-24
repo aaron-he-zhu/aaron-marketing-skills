@@ -278,6 +278,13 @@ class AuditorPromptContractTests(unittest.TestCase):
             self.assertEqual(missing["expected"]["status_any_of"], ["NEEDS_INPUT"])
             self.assertEqual(missing["expected"]["verdict_any_of"], ["UNDECIDED"])
             self.assertEqual(missing["expected"]["raw_score_policy"], "omit")
+            missing_failure_text = " ".join(
+                missing["semantic_case"]["failure_modes"]
+            )
+            self.assertNotIn("gate verdict", missing_failure_text.lower())
+            self.assertNotIn("UNDECIDED", missing_failure_text)
+            for decisive_verdict in ("SHIP", "FIX", "BLOCK"):
+                self.assertIn(decisive_verdict, missing_failure_text)
 
             single = variants["single-veto"]
             self.assertEqual(single["input"]["verified_veto_ids"], vetoes[:1])

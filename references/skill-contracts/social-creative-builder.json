@@ -1,0 +1,294 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 215,
+          "path": "social/craft/social-creative-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "each platform package is genuinely native, claims are accepted/context-valid or visibly blocked, alt text and variant tags exist, the negative checklist passes, and the Narrative/claims dependency tuple is reported."
+      }
+    ],
+    "done_when": "each platform package is genuinely native, claims are accepted/context-valid or visibly blocked, alt text and variant tags exist, the negative checklist passes, and the Narrative/claims dependency tuple is reported.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/craft/social-creative-builder/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 39
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 43
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 4
+      },
+      {
+        "path": "references/humanizer-slop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
+        "source_line": 51
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 33
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/channels.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/claims.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/narrative.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:social-creative-builder",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before anything ships.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 148,
+          "path": "social/craft/social-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "social-quality-auditor"
+        ],
+        "text": "- **Primary**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — run pre-publish mode on the package set before anything ships."
+      },
+      {
+        "condition": "If claims carry `[needs source]` flags**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claims with evidence, then swap the approved wording back in.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 345,
+          "path": "social/craft/social-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+          "span_basis": "field-text",
+          "start_char": 149
+        },
+        "target_skills": [
+          "offer-claims-registry"
+        ],
+        "text": "- **If claims carry `[needs source]` flags**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claims with evidence, then swap the approved wording back in."
+      },
+      {
+        "condition": "If the packages need slots**: [social-calendar-builder](../social-calendar-builder/SKILL.md) — place them against the committed cadence.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 486,
+          "path": "social/craft/social-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+          "span_basis": "field-text",
+          "start_char": 346
+        },
+        "target_skills": [
+          "social-calendar-builder"
+        ],
+        "text": "- **If the packages need slots**: [social-calendar-builder](../social-calendar-builder/SKILL.md) — place them against the committed cadence."
+      },
+      {
+        "condition": "when the tagged, ready-to-paste package set is delivered and the gate is recommended.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 806,
+          "path": "social/craft/social-creative-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+          "span_basis": "field-text",
+          "start_char": 488
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check, `max-depth: 3`, and an ambiguity stop (present options instead of auto-following). Stop when the tagged, ready-to-paste package set is delivered and the gate is recommended."
+      }
+    ],
+    "next_best": "- **Primary**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — run pre-publish mode on the package set before anything ships.\n- **If claims carry `[needs source]` flags**: [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) — register the claims with evidence, then swap the approved wording back in.\n- **If the packages need slots**: [social-calendar-builder](../social-calendar-builder/SKILL.md) — place them against the committed cadence.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check, `max-depth: 3`, and an ambiguity stop (present options instead of auto-following). Stop when the tagged, ready-to-paste package set is delivered and the gate is recommended.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md), including the Narrative/claims dependency tuple and channels projection offset.\n\nRequired fields: `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status: verified | approved-fallback | blocked`.",
+    "summary_ref": {
+      "path": "social/craft/social-creative-builder/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "offer-claims-registry",
+      "social-calendar-builder",
+      "social-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "social-creative-builder",
+    "path": "social/craft/social-creative-builder/SKILL.md",
+    "phase": "craft",
+    "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<idea/topic> <target platforms> [carousel mode] [destination URL]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "classified",
+        "kind": "project-resource",
+        "requirement": "optional",
+        "source": {
+          "end_char": 198,
+          "path": "social/craft/social-creative-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the idea, platforms, destination, `memory/projections/narrative.json`, `memory/projections/claims.json`, `memory/projections/channels.json`, dated official norm cards, and optional calendar context."
+      }
+    ],
+    "extraction_status": "classified",
+    "reads": "the idea, platforms, destination, `memory/projections/narrative.json`, `memory/projections/claims.json`, `memory/projections/channels.json`, dated official norm cards, and optional calendar context.",
+    "source": {
+      "path": "social/craft/social-creative-builder/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 75,
+          "path": "social/craft/social-creative-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the package set to `memory/social/social-creative-builder/` with permission"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 204,
+          "path": "social/craft/social-creative-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc",
+          "span_basis": "field-text",
+          "start_char": 77
+        },
+        "text": "unresolved claims and channel observations become separate authorized `operation: propose` events through `registry-events.py`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/craft/social-creative-builder/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc"
+    },
+    "summary": "one package per requested platform, ready to paste — copy, hashtags/tags, link + first-comment placement where the norm card calls for it, disclosure lines where required, alt text — every variant tagged `{formula | hook family | CTA type | signal optimized}`, every claim ledger-traced or `[needs source]`-flagged, and (in carousel mode) a slide-by-slide spec; plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the package set to `memory/social/social-creative-builder/` with permission; unresolved claims and channel observations become separate authorized `operation: propose` events through `registry-events.py`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for creator deliverable briefs — use brief-generator; not for repurposing existing assets with paid boost — use content-amplifier. 社媒文案/一稿多发改写/小红书笔记/轮播图脚本",
+    "description": "Use when the user asks to \"turn this idea into posts for every platform\", \"write the X thread / LinkedIn post / 小红书 note\", or \"spec the carousel slides\"; turns one idea into N platform-native ready-to-paste packages — post/thread, caption, Threads text, 小红书 note, link post with first-comment placement — each adapted per the dated platform norm card (never verbatim cross-posting), every product claim held to approved claims-ledger wording or flagged [needs source], every variant tagged {formula | hook family | CTA type | signal optimized}, plus a carousel slide-spec mode (intro/content/outro slide roles, per-element char budgets, 小红书 3:4 / IG 4:5 / LinkedIn document PDF artboards, text-safe-zone + alt-text checklist). Not for creator deliverable briefs — use brief-generator; not for repurposing existing assets with paid boost — use content-amplifier. 社媒文案/一稿多发改写/小红书笔记/轮播图脚本",
+    "source": {
+      "path": "social/craft/social-creative-builder/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "1e5610ca668d54bcd4b2d7ef2cc07b9180705b0c35f4c488a198b4641ec05dbc"
+    },
+    "trigger_phrases": [
+      "spec the carousel slides",
+      "turn this idea into posts for every platform",
+      "write the X thread / LinkedIn post / 小红书 note"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when converting one approved idea into platform-native social packages: post/thread, caption, Threads text, 小红书 note, link post with first-comment placement, or a carousel slide spec — each adapted to the dated norm card, the voice card, and approved claim wording, delivered ready-to-paste for a human to publish. Not the posting calendar, not the video beat sheet, and never auto-posting."
+  },
+  "schema_version": "1.0"
+}

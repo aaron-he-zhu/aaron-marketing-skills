@@ -1,0 +1,287 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 155,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a complete version is accepted atomically with source/date/revision, old versions remain replayable, and consumers receive the exact canon/version pointer."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 366,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 157
+        },
+        "text": "Narrative skills submit complete `propose` events. Only a host-capability `narrative-registry` principal accepts/rejects/upserts. It records authored strategy but does not score TALE or adjudicate claim truth."
+      }
+    ],
+    "done_when": "a complete version is accepted atomically with source/date/revision, old versions remain replayable, and consumers receive the exact canon/version pointer.\n\nNarrative skills submit complete `propose` events. Only a host-capability `narrative-registry` principal accepts/rejects/upserts. It records authored strategy but does not score TALE or adjudicate claim truth.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "protocol/narrative-registry/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 59
+      },
+      {
+        "path": "references/registry-event-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
+        "source_line": 34
+      },
+      {
+        "path": "references/runtime-invocation.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "source_line": 34
+      },
+      {
+        "path": "references/tale-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "source_line": 57
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/events/narrative.ndjson",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:narrative-registry",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 108,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "message-system-architect"
+        ],
+        "text": "- **Author system:** [message-system-architect](../../narrative/architect/message-system-architect/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 212,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 109
+        },
+        "target_skills": [
+          "positioning-truth-tracer"
+        ],
+        "text": "- **Verify truth:** [positioning-truth-tracer](../../narrative/trace/positioning-truth-tracer/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 312,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 213
+        },
+        "target_skills": [
+          "narrative-cascade-planner"
+        ],
+        "text": "- **Cascade:** [narrative-cascade-planner](../../narrative/land/narrative-cascade-planner/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 422,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 313
+        },
+        "target_skills": [
+          "narrative-quality-auditor"
+        ],
+        "text": "- **Audit profile:** [narrative-quality-auditor](../../narrative/evaluate/narrative-quality-auditor/SKILL.md)"
+      }
+    ],
+    "next_best": "- **Author system:** [message-system-architect](../../narrative/architect/message-system-architect/SKILL.md)\n- **Verify truth:** [positioning-truth-tracer](../../narrative/trace/positioning-truth-tracer/SKILL.md)\n- **Cascade:** [narrative-cascade-planner](../../narrative/land/narrative-cascade-planner/SKILL.md)\n- **Audit profile:** [narrative-quality-auditor](../../narrative/evaluate/narrative-quality-auditor/SKILL.md)",
+    "summary": "Include brand ID, canon version/revision/event ID, superseded version, claim/proof pointers, unresolved contradictions, and one next skill.",
+    "summary_ref": {
+      "path": "protocol/narrative-registry/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "message-system-architect",
+      "narrative-cascade-planner",
+      "narrative-quality-auditor",
+      "positioning-truth-tracer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "protocol",
+    "name": "narrative-registry",
+    "path": "protocol/narrative-registry/SKILL.md",
+    "phase": "protocol",
+    "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<brand aggregate-id, canon version, or pending-proposal review>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 111,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "`memory/events/narrative.ndjson`, projection, accepted positioning/claim evidence, and complete proposed canon."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "`memory/events/narrative.ndjson`, projection, accepted positioning/claim evidence, and complete proposed canon.",
+    "source": {
+      "path": "protocol/narrative-registry/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 45,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "narrative events through `registry-events.py`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 92,
+          "path": "protocol/narrative-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "span_basis": "field-text",
+          "start_char": 47
+        },
+        "text": "`canon.md`/`versions.md` are generated views."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "protocol/narrative-registry/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+    },
+    "summary": "narrative events through `registry-events.py`; `canon.md`/`versions.md` are generated views.",
+    "summary_source": "writes-fallback",
+    "writes": "narrative events through `registry-events.py`; `canon.md`/`versions.md` are generated views."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for TALE scoring — use narrative-quality-auditor; not for authoring the system — use message-system-architect. 品牌叙事台账/canon 记录/语气与命名规范",
+    "description": "Use when the user asks to record/query the brand narrative canon, tagline, message hierarchy, voice/naming rules, or a canon re-version; curates complete versioned canon events through the append-only narrative stream and derived views. Not for TALE scoring — use narrative-quality-auditor; not for authoring the system — use message-system-architect. 品牌叙事台账/canon 记录/语气与命名规范",
+    "source": {
+      "path": "protocol/narrative-registry/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+    },
+    "trigger_phrases": [
+      "Use when recording/querying a brand's canonical positioning, narrative, message hierarchy, proof/claim pointers, voice/naming rules, conditional boilerplates, or accepting/rejecting a complete canon-version proposal."
+    ],
+    "trigger_source": "when-to-use-fallback",
+    "when_to_use": "Use when recording/querying a brand's canonical positioning, narrative, message hierarchy, proof/claim pointers, voice/naming rules, conditional boilerplates, or accepting/rejecting a complete canon-version proposal."
+  },
+  "schema_version": "1.0"
+}

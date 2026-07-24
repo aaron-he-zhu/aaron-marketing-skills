@@ -1,0 +1,367 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 129,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the T+1→T+30 calendar lists dated moments, each classified milestone / shipped-loop / badge (no content-distribution slots on it)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 249,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 131
+        },
+        "text": "the announcement-tier routing (major / medium / minor) is stated with the tier heuristic labeled Estimated and sourced"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 407,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 251
+        },
+        "text": "and the next Tier-1 candidate is named with its spacing vs the last Tier-1 moment from `calendar.md` — or marked NEEDS_INPUT when no calendar record exists."
+      }
+    ],
+    "done_when": "the T+1→T+30 calendar lists dated moments, each classified milestone / shipped-loop / badge (no content-distribution slots on it); the announcement-tier routing (major / medium / minor) is stated with the tier heuristic labeled Estimated and sourced; and the next Tier-1 candidate is named with its spacing vs the last Tier-1 moment from `calendar.md` — or marked NEEDS_INPUT when no calendar record exists.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/prove/momentum-planner/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:momentum-planner",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 177,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "launch-registry"
+        ],
+        "text": "- **Primary**: [launch-registry](../../../protocol/launch-registry/SKILL.md) — write the booked next moment and its dates into the launch calendar (via the submitted proposals)."
+      },
+      {
+        "condition": "If distribution of the moments is the next gap**: [content-amplifier](../../../influencer/activate/content-amplifier/SKILL.md) — build the reuse map and amplification calendar for the moments this plan scheduled.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 394,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 178
+        },
+        "target_skills": [
+          "content-amplifier"
+        ],
+        "text": "- **If distribution of the moments is the next gap**: [content-amplifier](../../../influencer/activate/content-amplifier/SKILL.md) — build the reuse map and amplification calendar for the moments this plan scheduled."
+      },
+      {
+        "condition": "If the next moment is a full launch**: [launch-tier-planner](../../research/launch-tier-planner/SKILL.md) — declare its tier, type, and risk register from scratch.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 562,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 395
+        },
+        "target_skills": [
+          "launch-tier-planner"
+        ],
+        "text": "- **If the next moment is a full launch**: [launch-tier-planner](../../research/launch-tier-planner/SKILL.md) — declare its tier, type, and risk register from scratch."
+      },
+      {
+        "condition": "when the moment calendar is booked into accepted projection state and the spike-to-owned briefs are handed to their owners.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 965,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 564
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the moment calendar is booked into accepted projection state and the spike-to-owned briefs are handed to their owners."
+      }
+    ],
+    "next_best": "- **Primary**: [launch-registry](../../../protocol/launch-registry/SKILL.md) — write the booked next moment and its dates into the launch calendar (via the submitted proposals).\n- **If distribution of the moments is the next gap**: [content-amplifier](../../../influencer/activate/content-amplifier/SKILL.md) — build the reuse map and amplification calendar for the moments this plan scheduled.\n- **If the next moment is a full launch**: [launch-tier-planner](../../research/launch-tier-planner/SKILL.md) — declare its tier, type, and risk register from scratch.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the moment calendar is booked into accepted projection state and the spike-to-owned briefs are handed to their owners.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "launch/prove/momentum-planner/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-amplifier",
+      "launch-registry",
+      "launch-tier-planner"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "momentum-planner",
+    "path": "launch/prove/momentum-planner/SKILL.md",
+    "phase": "prove",
+    "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<launch slug / spike data> [window: T+1→T+30] [candidate next moments]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 66,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "launch spike + decay data (own `~~web analytics` export — Measured"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 85,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 68
+        },
+        "text": "or User-provided)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 143,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 87
+        },
+        "text": "the shipping roadmap / changelog backlog (User-provided)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "bundle-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 269,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 145
+        },
+        "text": "the launch dossier and `calendar.md` spacing facts via a [launch-registry](../../../protocol/launch-registry/SKILL.md) query"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 368,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 271
+        },
+        "text": "the retro summary from [launch-retro-analyzer](../launch-retro-analyzer/SKILL.md) when one exists"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 421,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 370
+        },
+        "text": "`~~brand monitor` echo for badge / roundup moments."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "launch spike + decay data (own `~~web analytics` export — Measured; or User-provided); the shipping roadmap / changelog backlog (User-provided); the launch dossier and `calendar.md` spacing facts via a [launch-registry](../../../protocol/launch-registry/SKILL.md) query; the retro summary from [launch-retro-analyzer](../launch-retro-analyzer/SKILL.md) when one exists; `~~brand monitor` echo for badge / roundup moments.",
+    "source": {
+      "path": "launch/prove/momentum-planner/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 85,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing momentum plan + a reusable summary to `memory/launch/momentum-planner/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 313,
+          "path": "launch/prove/momentum-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28",
+          "span_basis": "field-text",
+          "start_char": 87
+        },
+        "text": "next-moment and date facts to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for launch-registry to formalize — this skill never writes the calendar or dossiers directly."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/prove/momentum-planner/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28"
+    },
+    "summary": "a T+1→T+30 momentum plan — a dated launch-moment calendar with each moment classified (milestone / shipped-loop / badge), an announcement-tier routing rule for the changelog cadence, a relaunch legitimacy call, spike-to-owned handoff briefs addressed to their owning skills, the next Tier-1 moment candidate with its spacing check, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing momentum plan + a reusable summary to `memory/launch/momentum-planner/`; next-moment and date facts to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for launch-registry to formalize — this skill never writes the calendar or dossiers directly."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the 30-day content-reuse map or paid amplification execution — use content-amplifier; not for planning the next launch end to end — use launch-tier-planner. 抗第二周断崖/changelog-as-GTM/relaunch/下一发布时刻",
+    "description": "Use when the user asks to \"keep the launch momentum going after launch week\", \"plan a changelog / release-notes cadence as GTM\", or \"is this update worth a relaunch\"; produces a T+1→T+30 momentum plan — a launch-moment calendar (milestone / shipped-loop / badge moments only), announcement-tier routing (major = full-channel, medium = targeted, minor = changelog-only), a relaunch legitimacy call, spike-to-owned handoff briefs, and the next Tier-1 moment with launch-stacking spacing. Not for the 30-day content-reuse map or paid amplification execution — use content-amplifier; not for planning the next launch end to end — use launch-tier-planner. 抗第二周断崖/changelog-as-GTM/relaunch/下一发布时刻",
+    "source": {
+      "path": "launch/prove/momentum-planner/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "06b3956cbaa0facc049555354eb1b04683a27dc45ebb5a66dc663adb0c92af28"
+    },
+    "trigger_phrases": [
+      "is this update worth a relaunch",
+      "keep the launch momentum going after launch week",
+      "plan a changelog / release-notes cadence as GTM"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when a launch spike is fading and the T+1 to T+30 window needs planned launch moments: milestone announcements, shipped-loop release moments, badge / award moments, a changelog or release-notes-as-GTM cadence, a relaunch legitimacy call, or picking and spacing the next Tier-1 moment against the launch calendar. The moment-scheduling layer above content repurposing (content-amplifier) and below the next full launch plan (launch-tier-planner)."
+  },
+  "schema_version": "1.0"
+}

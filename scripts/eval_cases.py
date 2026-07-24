@@ -940,7 +940,7 @@ def _load_impact_map(root: Path) -> dict[str, Any]:
         "rules",
     }:
         raise EvalCaseError("%s has invalid top-level fields" % reference)
-    if value["schema_version"] != "1.0" or value["unmatched_policy"] != "smoke-only":
+    if value["schema_version"] != "1.1" or value["unmatched_policy"] != "smoke-only":
         raise EvalCaseError("%s has unsupported policy/version" % reference)
     if not isinstance(value["rules"], list) or not value["rules"]:
         raise EvalCaseError("%s rules must be a non-empty list" % reference)
@@ -957,7 +957,12 @@ def _load_impact_map(root: Path) -> dict[str, Any]:
     }
     for position, rule in enumerate(value["rules"]):
         label = "%s rules[%d]" % (reference, position)
-        if not isinstance(rule, dict) or set(rule) != {"id", "patterns", "selector"}:
+        if not isinstance(rule, dict) or set(rule) != {
+            "id",
+            "patterns",
+            "selector",
+            "severity",
+        }:
             raise EvalCaseError("%s has invalid fields" % label)
         rule_id = _validate_string(rule["id"], label + ".id")
         if not ID_RE.fullmatch(rule_id) or rule_id in seen:
@@ -969,6 +974,8 @@ def _load_impact_map(root: Path) -> dict[str, Any]:
                 raise EvalCaseError("%s has unsafe pattern %r" % (label, pattern))
         if rule["selector"] not in legal_selectors:
             raise EvalCaseError("%s has unknown selector %r" % (label, rule["selector"]))
+        if rule["severity"] not in {"S0", "S1", "S2", "S3"}:
+            raise EvalCaseError("%s has unknown severity %r" % (label, rule["severity"]))
     return value
 
 

@@ -1,8 +1,12 @@
 {
   "$schema": "./system-catalog.schema.json",
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "architecture_version": "18.0.0",
   "bundle_version": "18.0.0",
+  "capability_profiles": {
+    "source": "references/capability-profiles.json",
+    "sha256": "a1bb5825bc677a4a5a452254f5d0b87a5fc21efb8ddc1dcecf31107f1318bc40"
+  },
   "counts": {
     "disciplines": 7,
     "discipline_skills": 112,

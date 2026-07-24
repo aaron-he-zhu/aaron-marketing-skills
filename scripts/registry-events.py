@@ -8,6 +8,7 @@ import contextlib
 import datetime as dt
 import hashlib
 import hmac
+import importlib.util
 import json
 import math
 import os
@@ -26,6 +27,7 @@ except ImportError:  # pragma: no cover - exercised only on non-POSIX hosts
     fcntl = None
 
 
+ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "1.0"
 REGISTRIES = {"entities", "creators", "claims", "consent", "launches", "channels", "narrative"}
 OWNERS = {
@@ -111,6 +113,47 @@ CONSENT_REASON_CODES = {
 
 class RegistryError(ValueError):
     pass
+
+
+def _load_profile_runtime():
+    path = ROOT / "scripts" / "profile-resolver.py"
+    spec = importlib.util.spec_from_file_location(
+        "aaron_profile_resolver_registry", path
+    )
+    if spec is None or spec.loader is None:
+        raise RegistryError("profile runtime cannot be loaded: %s" % path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+profile_runtime = _load_profile_runtime()
+
+
+def require_registry_mutation(
+        root, registry=None, request=None, *, bundle_root=ROOT, profile=None,
+        environ=None):
+    """Enforce the profile write boundary before creating any registry path."""
+    if (
+            registry == "consent" and isinstance(request, dict)
+            and request.get("operation") == "suppress"):
+        return {
+            "safety_exception": "consent-deny-only-suppress",
+            "registry_write_allowed": True,
+        }
+    try:
+        resolution = profile_runtime.resolve_profile(
+            root, bundle_root=bundle_root, cli_profile=profile, environ=environ,
+        )
+    except profile_runtime.ProfileError as exc:
+        raise RegistryError(str(exc)) from exc
+    if not resolution["policy"]["registry_write_allowed"]:
+        raise RegistryError(
+            "%s: canonical registry mutation requires an effective Governed "
+            "profile; consent deny-only suppress is the only profile exception"
+            % resolution["reason_code"]
+        )
+    return resolution
 
 
 def strict_json_loads(value, label="JSON"):
@@ -1680,10 +1723,31 @@ def write_projections(registry, state, projection_path, suppressions_path):
         })
 
 
-def append_event(root, registry, request, capability_token=None):
+def _preflight_registry_target(root, registry):
+    """Preserve the registry runtime's stricter path diagnostics before policy."""
+    stream_path, _projection_path, _suppressions_path = memory_paths(
+        root, registry, create=False
+    )
+    stream_status = _lstat(stream_path, "event stream", missing_ok=True)
+    if stream_status is None:
+        return
+    if not statmod.S_ISREG(stream_status.st_mode):
+        raise RegistryError("event stream must be a regular file")
+    if stream_status.st_nlink != 1:
+        raise RegistryError("event stream must have exactly one hard link")
+
+
+def append_event(
+        root, registry, request, capability_token=None, *, bundle_root=ROOT,
+        profile=None, environ=None):
     normalized = validate_request(registry, request)
     request_hash = sha256_json(normalized)
     root_hash = project_root_hash(root)
+    _preflight_registry_target(root, registry)
+    require_registry_mutation(
+        root, registry, normalized, bundle_root=bundle_root, profile=profile,
+        environ=environ,
+    )
     # Reject invalid authority before creating runtime paths, then repeat the
     # complete verification while holding the exclusive append lock.
     authorize_request(registry, normalized, root_hash, capability_token)
@@ -1765,7 +1829,14 @@ def load_state(root, registry, create=False, verify_authority=True):
     return state
 
 
-def rebuild_projection(root, registry):
+def rebuild_projection(
+        root, registry, *, bundle_root=ROOT, profile=None, environ=None):
+    project_root_hash(root)
+    _preflight_registry_target(root, registry)
+    require_registry_mutation(
+        root, registry, None, bundle_root=bundle_root, profile=profile,
+        environ=environ,
+    )
     stream_path, projection_path, suppressions_path = memory_paths(root, registry, create=True)
     root_hash = project_root_hash(root)
     # Use the writer lock on every platform. On hosts without shared locks this
@@ -1911,6 +1982,10 @@ def load_request(path):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=os.getcwd(), help="Project root containing memory/.")
+    parser.add_argument(
+        "--profile", choices=profile_runtime.PROFILE_NAMES,
+        help="One-invocation capability profile; does not persist project config.",
+    )
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("init")
     append = sub.add_parser("append")
@@ -1944,11 +2019,17 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.command == "init":
+            require_registry_mutation(
+                args.root, bundle_root=ROOT, profile=args.profile,
+            )
             for registry in sorted(REGISTRIES):
                 memory_paths(args.root, registry, create=True)
             result = {"initialized": True, "registries": sorted(REGISTRIES)}
         elif args.command == "append":
-            result = append_event(args.root, args.registry, load_request(args.event_json))
+            result = append_event(
+                args.root, args.registry, load_request(args.event_json),
+                profile=args.profile,
+            )
         elif args.command in {"owner-append", "safety-append"}:
             capability = os.environ.get(HOST_CAPABILITY_ENV)
             if not capability:
@@ -1974,7 +2055,7 @@ def main(argv=None):
                 )
             result = append_event(
                 args.root, args.registry, normalized,
-                capability_token=capability,
+                capability_token=capability, profile=args.profile,
             )
         elif args.command == "verify":
             state = load_state(args.root, args.registry, create=False)
@@ -1982,7 +2063,9 @@ def main(argv=None):
                       "last_offset": state["last_offset"], "records": len(state["records"]),
                       "pending": len(state["pending"])}
         elif args.command == "project":
-            state = rebuild_projection(args.root, args.registry)
+            state = rebuild_projection(
+                args.root, args.registry, profile=args.profile,
+            )
             result = {"projected": True, "registry": args.registry,
                       "last_offset": state["last_offset"]}
         elif args.command == "get":

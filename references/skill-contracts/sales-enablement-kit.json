@@ -1,0 +1,400 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 130,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every named alternative has a battle card whose factual lines are traceable or marked `[needs source]` and submitted as candidates"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 208,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 132
+        },
+        "text": "the talk track contains no fact absent from the message house / PR-FAQ spine"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 290,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 210
+        },
+        "text": "the objection table pairs each objection with a response and an evidence pointer"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 406,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 292
+        },
+        "text": "and the internal announcement states who says what, when, and what stays embargoed until the registry lift moment."
+      }
+    ],
+    "done_when": "every named alternative has a battle card whose factual lines are traceable or marked `[needs source]` and submitted as candidates; the talk track contains no fact absent from the message house / PR-FAQ spine; the objection table pairs each objection with a response and an evidence pointer; and the internal announcement states who says what, when, and what stays embargoed until the registry lift moment.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/claims/claims-ledger.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/launch-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:sales-enablement-kit",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 227,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "launch-readiness-auditor"
+        ],
+        "text": "- **Primary**: [launch-readiness-auditor](../../mobilize/launch-readiness-auditor/SKILL.md) — score the launch (RAMP profile result + vetoes), including the `A` enablement and `R` internal-readiness sub-items this kit just fed."
+      },
+      {
+        "condition": "If the media/analyst motion is next**: [press-media-relations](../../mobilize/press-media-relations/SKILL.md) — the external pitch lane, under the same embargo record.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 399,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 228
+        },
+        "target_skills": [
+          "press-media-relations"
+        ],
+        "text": "- **If the media/analyst motion is next**: [press-media-relations](../../mobilize/press-media-relations/SKILL.md) — the external pitch lane, under the same embargo record."
+      },
+      {
+        "condition": "If the B2B outbound lane opens with the launch**: [cold-outbound-sequencer](../../../email/deliver/cold-outbound-sequencer/SKILL.md) — sequences built on this talk track.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 574,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 400
+        },
+        "target_skills": [
+          "cold-outbound-sequencer"
+        ],
+        "text": "- **If the B2B outbound lane opens with the launch**: [cold-outbound-sequencer](../../../email/deliver/cold-outbound-sequencer/SKILL.md) — sequences built on this talk track."
+      },
+      {
+        "condition": "when the kit is derived, the claim candidates are submitted, and the gate has what it needs.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 946,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 576
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the kit is derived, the claim candidates are submitted, and the gate has what it needs."
+      }
+    ],
+    "next_best": "- **Primary**: [launch-readiness-auditor](../../mobilize/launch-readiness-auditor/SKILL.md) — score the launch (RAMP profile result + vetoes), including the `A` enablement and `R` internal-readiness sub-items this kit just fed.\n- **If the media/analyst motion is next**: [press-media-relations](../../mobilize/press-media-relations/SKILL.md) — the external pitch lane, under the same embargo record.\n- **If the B2B outbound lane opens with the launch**: [cold-outbound-sequencer](../../../email/deliver/cold-outbound-sequencer/SKILL.md) — sequences built on this talk track.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the kit is derived, the claim candidates are submitted, and the gate has what it needs.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "cold-outbound-sequencer",
+      "launch-readiness-auditor",
+      "press-media-relations"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "sales-enablement-kit",
+    "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+    "phase": "assemble",
+    "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / launch> [named alternatives] [sales team context]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 125,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the message house + PR-FAQ spine (User-provided, or the output of [message-house-builder](../message-house-builder/SKILL.md))"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 189,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 127
+        },
+        "text": "the named competitive alternatives from the positioning canvas"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 251,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 191
+        },
+        "text": "approved claim wording from `memory/claims/claims-ledger.md`"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 398,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 253
+        },
+        "text": "the authoritative date/stage/embargo record in `memory/launch-registry/` (owned by [launch-registry](../../../protocol/launch-registry/SKILL.md))"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "partially-classified",
+        "kind": "unclassified",
+        "requirement": "optional",
+        "source": {
+          "end_char": 492,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 400
+        },
+        "text": "prior competitor dossiers from competitor-tracker / competitor-analysis runs when available."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the message house + PR-FAQ spine (User-provided, or the output of [message-house-builder](../message-house-builder/SKILL.md)); the named competitive alternatives from the positioning canvas; approved claim wording from `memory/claims/claims-ledger.md`; the authoritative date/stage/embargo record in `memory/launch-registry/` (owned by [launch-registry](../../../protocol/launch-registry/SKILL.md)); prior competitor dossiers from competitor-tracker / competitor-analysis runs when available.",
+    "source": {
+      "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 80,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the enablement kit + a reusable summary to `memory/launch/sales-enablement-kit/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 372,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 82
+        },
+        "text": "battle-card facts without a source to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` marked `[needs source]` for [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) to adjudicate — this skill never rules on a claim"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 550,
+          "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "span_basis": "field-text",
+          "start_char": 374
+        },
+        "text": "any new date/stage/embargo fact only to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` — never to the registry directly."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+    },
+    "summary": "a sales-led enablement kit — one battle card per named alternative, a talk track derived from the PR-FAQ spine, an objection-handling table (objection → response → evidence), internal FAQ + CS macros, and an internal launch announcement keyed to the embargo lift — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the enablement kit + a reusable summary to `memory/launch/sales-enablement-kit/`; battle-card facts without a source to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` marked `[needs source]` for [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) to adjudicate — this skill never rules on a claim; any new date/stage/embargo fact only to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` — never to the registry directly."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the external message house — use message-house-builder; not for competitor tracking itself — use competitor-tracker or competitor-analysis; not for outbound sequences — use cold-outbound-sequencer. 销售赋能/battle card/销售叙事/异议处理/内部FAQ",
+    "description": "Use when the user asks to \"build battle cards\", \"prep the sales team for launch\", or \"write the internal launch FAQ\"; produces the internal enablement kit for a sales-led launch — battle cards vs each named alternative (where we win / where they win / trap questions, every fact traceable), a sales talk track derived from the PR-FAQ spine, an objection-handling table (objection → response → evidence), internal FAQ + CS macros, and an internal launch announcement with embargo discipline. Not for the external message house — use message-house-builder; not for competitor tracking itself — use competitor-tracker or competitor-analysis; not for outbound sequences — use cold-outbound-sequencer. 销售赋能/battle card/销售叙事/异议处理/内部FAQ",
+    "source": {
+      "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+    },
+    "trigger_phrases": [
+      "build battle cards",
+      "prep the sales team for launch",
+      "write the internal launch FAQ"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when preparing internal teams for a sales-led launch: battle cards against named alternatives, a launch talk track for sales, an objection-handling table, internal FAQ and CS macros, or the internal launch announcement keyed to the embargo lift. The internal-enablement layer that derives from the external message house (message-house-builder) and sits above the outbound sequence (cold-outbound-sequencer)."
+  },
+  "schema_version": "1.0"
+}

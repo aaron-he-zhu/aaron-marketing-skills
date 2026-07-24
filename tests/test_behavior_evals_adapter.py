@@ -12,7 +12,9 @@ import hashlib
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
+import subprocess
 import tempfile
 import textwrap
 import unittest
@@ -75,6 +77,17 @@ for line in sys.stdin:
         assertions.append({"id": "expected-%d" % index, "kind": "expected", "verdict": "met", "evidence": "observed"})
     for index, _ in enumerate(request["case"]["failure_modes"], 1):
         assertions.append({"id": "forbidden-%d" % index, "kind": "forbidden", "verdict": "not-observed", "evidence": "not observed"})
+    candidate_sha256 = "3" * 64
+    judge_attempt = {
+        "attempt": 1, "response_sha256": "4" * 64, "size_bytes": 1,
+        "disposition": "accepted", "diagnostic_code": None,
+    }
+    judge_attempts = [judge_attempt]
+    judge_sha256 = judge_attempts[-1]["response_sha256"] if judge_attempts else hashlib.sha256(b"").hexdigest()
+    response_sha256 = hashlib.sha256(json.dumps({
+        "candidate_response_sha256": candidate_sha256,
+        "judge_attempts": judge_attempts,
+    }, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
     print(json.dumps({
         "kind": "behavior-eval-result", "protocol_version": "2.0",
         "case_id": request["case"]["id"], "request_sha256": request["request_sha256"],
@@ -85,8 +98,9 @@ for line in sys.stdin:
             "model_id": "fixture-model", "judge_model_id": "fixture-judge", "model_revision": None,
             "adapter_implementation_sha256": hashlib.sha256(open(__file__, "rb").read()).hexdigest(),
             "prompt_template_version": "1.0.0", "prompt_template_sha256": "1" * 64,
-            "parameters_sha256": "2" * 64, "candidate_response_sha256": "3" * 64,
-            "judge_response_sha256": "4" * 64, "response_sha256": "5" * 64,
+            "parameters_sha256": "2" * 64, "candidate_response_sha256": candidate_sha256,
+            "judge_response_sha256": judge_sha256, "judge_attempts": judge_attempts,
+            "response_sha256": response_sha256,
             "started_at": "2026-07-19T10:00:00Z", "ended_at": "2026-07-19T10:00:01Z",
             "latency_ms": 1000
         },
@@ -116,6 +130,7 @@ BEHAVIOR_FAIL_V2_ADAPTER = (
 )
 HOST_FAIL_V2_ADAPTER = (
     PASS_V2_ADAPTER
+    .replace("judge_attempts = [judge_attempt]", "judge_attempts = []")
     .replace('"verdict": "met"', '"verdict": "not-observed"')
     .replace('"outcome": "passed"', '"outcome": "host-failed"')
     .replace(
@@ -163,6 +178,21 @@ ADAPTER_FAIL_V2_ADAPTER = (
         '"code": "HOST_TIMEOUT", "class": "host", "retryable": True',
         '"code": "ADAPTER_PROTOCOL", "class": "adapter", "retryable": False',
     )
+)
+LEDGER_TAMPER_V2_ADAPTER = PASS_V2_ADAPTER.replace(
+    "    print(json.dumps({\n",
+    "    judge_attempts[0]['size_bytes'] = 2\n    print(json.dumps({\n",
+)
+EMPTY_ACCEPTED_V2_ADAPTER = PASS_V2_ADAPTER.replace(
+    '"attempt": 1, "response_sha256": "4" * 64, "size_bytes": 1,',
+    '"attempt": 1, "response_sha256": "4" * 64, "size_bytes": 0,',
+)
+ACCEPTED_NOT_LAST_V2_ADAPTER = PASS_V2_ADAPTER.replace(
+    "    judge_attempts = [judge_attempt]\n",
+    "    judge_attempts = [judge_attempt, {\n"
+    "        'attempt': 2, 'response_sha256': '6' * 64, 'size_bytes': 1,\n"
+    "        'disposition': 'protocol-rejected', 'diagnostic_code': 'JUDGE_INVALID_JSON',\n"
+    "    }]\n",
 )
 
 
@@ -281,6 +311,121 @@ class AdapterTests(unittest.TestCase):
         self.assertIn("references/framework-catalog.json", references)
         self.assertIn("references/auditor-runbook.md", references)
         self.assertIn("references/core-eeat-benchmark.md", references)
+        self.assertIn("references/skill-contracts/content-quality-auditor.json", references)
+        self.assertIn("references/skill-contract.md", references)
+
+    def test_v2_authored_case_consumes_machine_contract_and_runtime_context(self):
+        selection = self.module.select_semantic_cases(
+            "smoke", {"routing-chain-visited-set-001"}
+        )
+        request = self.module.build_v2_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"]
+        )[0]
+        contract = request["prompt_contract"]
+        references = {item["ref"] for item in contract["source_refs"]}
+        self.assertEqual("machine-skill", contract["kind"])
+        self.assertEqual("skill:keyword-research", contract["contract_id"])
+        self.assertEqual(
+            "references/skill-contracts/keyword-research.json", contract["contract_ref"],
+        )
+        self.assertIn(contract["contract_ref"], references)
+        self.assertIn("seo-geo/survey/keyword-research/SKILL.md", references)
+        self.assertIn("references/skill-contract.md", references)
+
+    def test_auto_routing_case_binds_router_and_primary_command_without_case_corpus(self):
+        selection = self.module.select_semantic_cases(
+            "smoke", {"paid-prelaunch-account-audit-001"}
+        )
+        request = self.module.build_v2_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"]
+        )[0]
+        references = {item["ref"] for item in request["prompt_contract"]["source_refs"]}
+        self.assertIn("commands/auto.md", references)
+        self.assertIn("commands/ad.md", references)
+        self.assertIn("references/aaron-product-api-contract.md", references)
+        self.assertNotIn("evals/auto-routing-scenarios.source.md", references)
+        self.assertNotIn("references/auto-routing/ad.md", references)
+
+    def test_nightly_700_requests_are_constructible_with_bounded_refs(self):
+        selection = self.module.select_semantic_cases("nightly", set())
+        self.assertEqual("nightly", selection["profile"])
+        self.assertEqual(700, len(selection["cases"]))
+
+        requests = self.module.build_v2_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"]
+        )
+        self.assertEqual(700, len(requests))
+        self.assertEqual(
+            [case["id"] for case in selection["cases"]],
+            [request["case"]["id"] for request in requests],
+        )
+        self.assertEqual(700, len({request["request_sha256"] for request in requests}))
+        for request in requests:
+            references = [
+                item["ref"] for item in request["prompt_contract"]["source_refs"]
+            ]
+            self.assertLessEqual(1, len(references), request["case"]["id"])
+            self.assertLessEqual(len(references), 32, request["case"]["id"])
+            self.assertEqual(len(references), len(set(references)), request["case"]["id"])
+
+    def test_memory_management_auto_requests_bind_seo_command_without_case_corpus(self):
+        case_ids = {"auto-memory-cleanup-001", "auto-privacy-erasure-001"}
+        selection = self.module.select_semantic_cases("nightly", case_ids)
+        requests = self.module.build_v2_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"]
+        )
+        self.assertEqual(case_ids, {request["case"]["id"] for request in requests})
+        self.assertEqual(2, len(requests))
+        for request in requests:
+            self.assertEqual("memory-management", request["target"]["skill"])
+            self.assertEqual("auto-routing", request["case"]["source_group"])
+            references = {
+                item["ref"] for item in request["prompt_contract"]["source_refs"]
+            }
+            self.assertIn("commands/auto.md", references)
+            self.assertIn("commands/seo-geo.md", references)
+            self.assertFalse(
+                any(reference.startswith("evals/") for reference in references),
+                references,
+            )
+            self.assertFalse(
+                any(reference.startswith("references/auto-routing/")
+                    for reference in references),
+                references,
+            )
+
+    def test_prompt_source_expansion_rejects_33_unique_refs(self):
+        paths = [
+            path for path in sorted((ROOT / "references").rglob("*"))
+            if path.is_file() and not path.is_symlink()
+        ][:33]
+        self.assertEqual(33, len(paths))
+        bindings = [
+            {
+                "ref": str(path.relative_to(ROOT)),
+                "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            }
+            for path in paths
+        ]
+        with self.assertRaisesRegex(
+                self.module.BehaviorEvalError, "1\\.\\.32 unique bindings"):
+            self.module._merge_source_refs(bindings)
+
+    def test_machine_contract_index_hash_drift_fails_closed(self):
+        index, digest = self.module.load_project_json(self.module.MACHINE_CONTRACT_INDEX_REF)
+        stale = copy.deepcopy(index)
+        stale["contracts"][0]["contract_sha256"] = "0" * 64
+        original = self.module.load_project_json
+
+        def load(reference):
+            if reference == self.module.MACHINE_CONTRACT_INDEX_REF:
+                return stale, digest
+            return original(reference)
+
+        with mock.patch.object(self.module, "load_project_json", side_effect=load):
+            with self.assertRaises(self.module.BehaviorEvalError) as ctx:
+                self.module.load_skill_machine_contracts()
+        self.assertIn("hash drift", str(ctx.exception))
 
     def test_prompt_contract_index_is_required_and_cannot_be_a_symlink(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -334,6 +479,21 @@ class AdapterTests(unittest.TestCase):
         with self.assertRaises(self.module.BehaviorEvalError) as ctx:
             self.run_v2_with(MISSING_ASSERTION_V2_ADAPTER)
         self.assertIn("assertion coverage", str(ctx.exception))
+
+    def test_v2_judge_ledger_tamper_fails_closed(self):
+        with self.assertRaises(self.module.BehaviorEvalError) as ctx:
+            self.run_v2_with(LEDGER_TAMPER_V2_ADAPTER)
+        self.assertIn("full judge ledger", str(ctx.exception))
+
+    def test_v2_accepted_judge_attempt_cannot_be_empty(self):
+        with self.assertRaises(self.module.BehaviorEvalError) as ctx:
+            self.run_v2_with(EMPTY_ACCEPTED_V2_ADAPTER)
+        self.assertIn("cannot be empty", str(ctx.exception))
+
+    def test_v2_terminal_outcome_requires_accepted_final_attempt(self):
+        with self.assertRaises(self.module.BehaviorEvalError) as ctx:
+            self.run_v2_with(ACCEPTED_NOT_LAST_V2_ADAPTER)
+        self.assertIn("accepted final attempt", str(ctx.exception))
 
     def test_v2_simulated_execution_cannot_satisfy_real_profile(self):
         with self.assertRaises(self.module.BehaviorEvalError) as ctx:
@@ -484,6 +644,162 @@ class AdapterTests(unittest.TestCase):
                     "--evidence-run-id", "123e4567-e89b-42d3-a456-426614174002",
                 ])
         self.assertEqual(2, ctx.exception.code)
+
+    def test_explicit_project_adapter_cannot_be_a_dummy_argv_argument(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            dummy = Path(tmp) / "dummy.py"
+            dummy.write_text("raise SystemExit(0)\n", encoding="utf-8")
+            with self.assertRaisesRegex(
+                    self.module.BehaviorEvalError, "must be argv\\[1\\]"):
+                self.module.bind_adapter_command(
+                    [
+                        self.module.sys.executable,
+                        str(dummy),
+                        "scripts/adapters/codex-behavior-adapter.py",
+                    ],
+                    implementation_ref="scripts/adapters/codex-behavior-adapter.py",
+                )
+
+    def test_official_project_adapter_binds_current_python_and_runtime_schemas(self):
+        command, identity, snapshots = self.module._bind_adapter_command_details(
+            [
+                self.module.sys.executable,
+                "scripts/adapters/codex-behavior-adapter.py",
+            ],
+            implementation_ref="scripts/adapters/codex-behavior-adapter.py",
+        )
+        self.assertEqual(1, identity["implementation"]["argv_index"])
+        self.assertEqual(
+            "isolated-staged-current-python-script",
+            identity["execution_binding"]["kind"],
+        )
+        self.assertEqual(["-I", "-S"], identity["execution_binding"]["python_flags"])
+        self.assertEqual(
+            list(self.module.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES),
+            [item["ref"] for item in identity["runtime_dependencies"]],
+        )
+        self.assertEqual("private-python-runtime-v1", identity["staged_runtime"]["layout_version"])
+        with self.module.stage_bound_adapter(command, identity, snapshots) as staged:
+            staged_command, environment, stage_root = staged
+            self.assertEqual(["-I", "-S"], staged_command[1:3])
+            self.assertNotEqual(
+                str(ROOT / self.module.OFFICIAL_PROJECT_ADAPTER_REF), staged_command[3],
+            )
+            self.assertEqual(
+                set(environment),
+                set(environment) & set(self.module.OFFICIAL_ADAPTER_ENVIRONMENT_ALLOWLIST),
+            )
+            self.assertFalse(any(key.startswith("PYTHON") for key in environment))
+            self.assertEqual(stage_root, Path(staged_command[3]).parents[2])
+            self.module.verify_bound_adapter_command(staged_command, identity)
+
+    def test_official_adapter_bootstrap_ignores_pythonpath_sitecustomize(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            marker = base / "sitecustomize-ran"
+            poison = base / "poison"
+            poison.mkdir()
+            (poison / "sitecustomize.py").write_text(
+                "from pathlib import Path\n"
+                "Path(%r).write_text('ran', encoding='utf-8')\n"
+                "raise SystemExit(73)\n" % str(marker),
+                encoding="utf-8",
+            )
+            codex = base / "codex"
+            codex.write_text("#!/bin/sh\nexit 1\n", encoding="utf-8")
+            os.chmod(codex, 0o700)
+            command, identity, snapshots = self.module._bind_adapter_command_details(
+                [
+                    self.module.sys.executable,
+                    self.module.OFFICIAL_PROJECT_ADAPTER_REF,
+                    "--codex-bin", str(codex),
+                    "--codex-sha256", hashlib.sha256(codex.read_bytes()).hexdigest(),
+                    "--model", "fixture-model",
+                ],
+                implementation_ref=self.module.OFFICIAL_PROJECT_ADAPTER_REF,
+            )
+            with mock.patch.dict(
+                    os.environ,
+                    {"PYTHONPATH": str(poison), "PYTHONSTARTUP": str(poison / "sitecustomize.py")},
+                    clear=False):
+                with self.module.stage_bound_adapter(command, identity, snapshots) as staged:
+                    staged_command, environment, stage_root = staged
+                    completed = subprocess.run(
+                        staged_command, cwd=stage_root, env=environment, input="", text=True,
+                        stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
+                    )
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            self.assertFalse(marker.exists())
+
+    def test_official_adapter_rejects_caller_supplied_project_root_override(self):
+        for override in ("--project-root", "--project-root=/tmp/evil"):
+            command = [
+                self.module.sys.executable,
+                self.module.OFFICIAL_PROJECT_ADAPTER_REF,
+                override,
+            ]
+            if override == "--project-root":
+                command.append("/tmp/evil")
+            with self.subTest(override=override), self.assertRaisesRegex(
+                    self.module.BehaviorEvalError, "reserved to the isolated runner"):
+                self.module.bind_adapter_command(
+                    command,
+                    implementation_ref=self.module.OFFICIAL_PROJECT_ADAPTER_REF,
+                )
+
+    def test_official_adapter_schema_source_swap_cannot_reach_staged_runtime(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp) / "project"
+            adapter = project / self.module.OFFICIAL_PROJECT_ADAPTER_REF
+            candidate = project / self.module.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES[0]
+            judge = project / self.module.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES[1]
+            adapter.parent.mkdir(parents=True)
+            candidate.parent.mkdir(parents=True, exist_ok=True)
+            adapter.write_text(
+                "from pathlib import Path\n"
+                "root = Path(__file__).resolve().parents[2]\n"
+                "print((root / %r).read_text(encoding='utf-8'))\n" % str(
+                    self.module.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES[0]
+                ),
+                encoding="utf-8",
+            )
+            candidate.write_text("bound-schema", encoding="utf-8")
+            judge.write_text("judge-schema", encoding="utf-8")
+            with mock.patch.object(self.module, "ROOT", project):
+                command, identity, snapshots = self.module._bind_adapter_command_details(
+                    [self.module.sys.executable, self.module.OFFICIAL_PROJECT_ADAPTER_REF],
+                    implementation_ref=self.module.OFFICIAL_PROJECT_ADAPTER_REF,
+                )
+                with self.module.stage_bound_adapter(command, identity, snapshots) as staged:
+                    staged_command, environment, stage_root = staged
+                    candidate.write_text("transient-attacker-schema", encoding="utf-8")
+                    try:
+                        completed = subprocess.run(
+                            staged_command, cwd=stage_root, env=environment, text=True,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
+                        )
+                    finally:
+                        candidate.write_text("bound-schema", encoding="utf-8")
+                    self.module.verify_bound_adapter_command(staged_command, identity)
+            self.assertEqual(0, completed.returncode, completed.stderr)
+            self.assertEqual("bound-schema", completed.stdout.strip())
+
+    def test_staged_runtime_dependency_mutation_fails_batch_verification(self):
+        command, identity, snapshots = self.module._bind_adapter_command_details(
+            [self.module.sys.executable, self.module.OFFICIAL_PROJECT_ADAPTER_REF],
+            implementation_ref=self.module.OFFICIAL_PROJECT_ADAPTER_REF,
+        )
+        with self.module.stage_bound_adapter(command, identity, snapshots) as staged:
+            staged_command, _environment, stage_root = staged
+            dependency = (
+                stage_root / self.module.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES[0]
+            )
+            os.chmod(dependency.parent, 0o700)
+            os.chmod(dependency, 0o600)
+            dependency.write_bytes(dependency.read_bytes() + b"\n")
+            with self.assertRaisesRegex(
+                    self.module.BehaviorEvalError, "staged semantic adapter dependency"):
+                self.module.verify_bound_adapter_command(staged_command, identity)
 
     def test_strict_json_rejects_duplicate_keys_and_non_finite_numbers(self):
         for raw in ('{"value": 1, "value": 2}', '{"value": NaN}'):

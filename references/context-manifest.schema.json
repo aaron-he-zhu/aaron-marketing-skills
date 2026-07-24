@@ -82,6 +82,7 @@
         "as_of": {"type": "string", "format": "date-time"},
         "route": {"$ref": "#/$defs/requestRoute"},
         "budget": {"$ref": "#/$defs/requestBudget"},
+        "planner": {"$ref": "#/$defs/planner"},
         "registry_offsets": {"$ref": "#/$defs/offsets"},
         "candidates": {
           "type": "array",
@@ -154,6 +155,77 @@
         "max_sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]}
       }
     },
+    "plannerFileRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "planner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planner_version", "generator", "skill_contract", "contract_index",
+        "system_catalog", "candidate_discovery", "freshness", "token_budget"
+      ],
+      "properties": {
+        "planner_version": {"const": "1.0"},
+        "generator": {"const": "context-plan-v1"},
+        "skill_contract": {"$ref": "#/$defs/plannerFileRef"},
+        "contract_index": {"$ref": "#/$defs/plannerFileRef"},
+        "system_catalog": {"$ref": "#/$defs/plannerFileRef"},
+        "candidate_discovery": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "hints_sha256", "candidate_set_sha256", "prefix_file_limit", "prefix_outcomes"],
+          "properties": {
+            "mode": {"const": "closed-machine-contract"},
+            "hints_sha256": {"$ref": "#/$defs/sha256"},
+            "candidate_set_sha256": {"$ref": "#/$defs/sha256"},
+            "prefix_file_limit": {"type": "integer", "minimum": 1, "maximum": 256},
+            "prefix_outcomes": {
+              "type": "array", "maxItems": 256,
+              "items": {"$ref": "#/$defs/prefixOutcome"}
+            }
+          }
+        },
+        "freshness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["observed_at_basis", "default_max_age_seconds"],
+          "properties": {
+            "observed_at_basis": {"const": "planner-as-of-inspection"},
+            "default_max_age_seconds": {"type": "null"}
+          }
+        },
+        "token_budget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max_tokens", "bytes_per_token", "derived_max_bytes", "estimator", "enforcement"],
+          "properties": {
+            "max_tokens": {"type": "integer", "minimum": 1, "maximum": 10000000},
+            "bytes_per_token": {"type": "integer", "minimum": 1, "maximum": 16},
+            "derived_max_bytes": {"type": "integer", "minimum": 1, "maximum": 10000000},
+            "estimator": {"const": "utf8-bytes-per-token-proxy-v1"},
+            "enforcement": {"const": "derived-byte-ceiling"}
+          }
+        }
+      }
+    },
+    "prefixOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "status", "file_count", "reason_code"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "status": {"enum": ["enumerated", "unresolved"]},
+        "file_count": {"type": "integer", "minimum": 0, "maximum": 256},
+        "reason_code": {"oneOf": [{"type": "null"}, {"const": "missing-prefix"}]}
+      }
+    },
     "candidate": {
       "type": "object",
       "additionalProperties": false,
@@ -191,7 +263,7 @@
       "additionalProperties": false,
       "required": [
         "command", "target_skill", "reason_code", "scenario_shards",
-        "catalog_version", "catalog_sha256", "skill_sha256"
+        "catalog_version", "catalog_sha256", "skill_version", "skill_sha256"
       ],
       "properties": {
         "command": {"enum": ["auto", "narrative", "seo-geo", "social", "email", "ad", "influencer", "launch"]},
@@ -205,6 +277,7 @@
         },
         "catalog_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
         "catalog_sha256": {"$ref": "#/$defs/sha256"},
+        "skill_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
         "skill_sha256": {"$ref": "#/$defs/sha256"}
       },
       "allOf": [

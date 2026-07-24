@@ -16,6 +16,13 @@ Infer the ECHO-loop phase from the goal (or honor `--phase`) and route to the ma
 - **Host** — social-quality-auditor (asset gate or separate program-maturity profile; channel/claim/rights evidence from projections), engagement-inbox-manager (DRAFT replies/rights evidence only), social-selling-planner (human operating block), crisis-response-planner (human-executed pause protocol)
 - **Observe** — social-pulse-monitor (always-on listening via `bluesky.py`/`fediverse.py`/`discourse.py`/`hn.py`/`gdelt.py`/`tavily.py`; X/IG/TikTok/LinkedIn are proxy-only, labeled), share-of-voice-tracker (locked competitor panel), dark-social-attributor (UTM/share hygiene + self-reported field + GA4 direct decomposition, all Estimated-labeled), social-measurement-loop (denominator-locked metric dictionary, community-health mode, write-back); reuse roi-calculator / report-generator / performance-analyzer
 
+For publish readiness, use `/aaron-marketing:social --phase host` and run
+`social-quality-auditor asset-gate` against the accepted channel, claims, and
+rights projections. Apply the gate when those accepted-state references are
+present; map any missing profile evidence to `Unknown`/`NEEDS_INPUT`, return the
+typed gate result, and keep the separate publish action behind explicit
+approval.
+
 ## Rules
 
 - `social-quality-auditor` runs `asset-gate` for a publish package or one separate program-maturity profile. The asset gate verifies relevant E1/C1/C2/H1/H2/O1 controls; publishing/unpausing remains a separate explicit action.

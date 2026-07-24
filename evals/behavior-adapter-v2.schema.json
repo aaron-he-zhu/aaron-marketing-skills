@@ -112,7 +112,7 @@
           "additionalProperties": false,
           "required": ["kind", "contract_id", "contract_ref", "contract_sha256", "source_refs"],
           "properties": {
-            "kind": {"enum": ["authored", "derived-auditor"]},
+            "kind": {"enum": ["authored", "machine-skill", "derived-auditor"]},
             "contract_id": {"$ref": "#/$defs/safeId"},
             "contract_ref": {"$ref": "#/$defs/safeRef"},
             "contract_sha256": {"$ref": "#/$defs/sha256"},
@@ -124,6 +124,41 @@
         }
       }
     },
+    "judgeDiagnosticCode": {
+      "enum": [
+        "JUDGE_EMPTY_OUTPUT", "JUDGE_INVALID_UTF8", "JUDGE_INVALID_JSON",
+        "JUDGE_TOP_LEVEL_SHAPE", "JUDGE_OUTCOME", "JUDGE_ASSERTION_COVERAGE",
+        "JUDGE_ASSERTION_IDENTITY", "JUDGE_ASSERTION_SHAPE", "JUDGE_ASSERTION_VALUE",
+        "JUDGE_FAILURE_SHAPE", "JUDGE_FAILURE_TAXONOMY", "JUDGE_OUTCOME_INVARIANT"
+      ]
+    },
+    "judgeAttempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempt", "response_sha256", "size_bytes", "disposition", "diagnostic_code"
+      ],
+      "properties": {
+        "attempt": {"type": "integer", "minimum": 1, "maximum": 2},
+        "response_sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 0, "maximum": 1000000},
+        "disposition": {"enum": ["accepted", "protocol-rejected"]},
+        "diagnostic_code": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/judgeDiagnosticCode"}]
+        }
+      },
+      "allOf": [{
+        "if": {
+          "properties": {"disposition": {"const": "accepted"}},
+          "required": ["disposition"]
+        },
+        "then": {"properties": {
+          "diagnostic_code": {"type": "null"},
+          "size_bytes": {"minimum": 1}
+        }},
+        "else": {"properties": {"diagnostic_code": {"$ref": "#/$defs/judgeDiagnosticCode"}}}
+      }]
+    },
     "execution": {
       "type": "object",
       "additionalProperties": false,
@@ -132,7 +167,7 @@
         "model_provider", "model_id", "judge_model_id", "model_revision", "prompt_template_version",
         "adapter_implementation_sha256", "prompt_template_sha256", "parameters_sha256",
         "candidate_response_sha256",
-        "judge_response_sha256", "response_sha256",
+        "judge_response_sha256", "judge_attempts", "response_sha256",
         "started_at", "ended_at", "latency_ms"
       ],
       "properties": {
@@ -151,6 +186,10 @@
         "parameters_sha256": {"$ref": "#/$defs/sha256"},
         "candidate_response_sha256": {"$ref": "#/$defs/sha256"},
         "judge_response_sha256": {"$ref": "#/$defs/sha256"},
+        "judge_attempts": {
+          "type": "array", "minItems": 0, "maxItems": 2,
+          "items": {"$ref": "#/$defs/judgeAttempt"}
+        },
         "response_sha256": {"$ref": "#/$defs/sha256"},
         "started_at": {"type": "string", "format": "date-time"},
         "ended_at": {"type": "string", "format": "date-time"},

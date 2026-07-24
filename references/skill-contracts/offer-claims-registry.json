@@ -1,0 +1,311 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 158,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every accepted record has exact wording/terms, evidence provenance, status, review/expiry, event ID/offset, and no pending proposal was destructively removed."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 189,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 160
+        },
+        "text": "All builders submit `propose`"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 388,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 191
+        },
+        "text": "only a host-capability `offer-claims-registry` principal accepts/rejects or writes canonical claim/offer events. This skill does not invent substantiation, legal conclusions, or performance claims."
+      }
+    ],
+    "done_when": "every accepted record has exact wording/terms, evidence provenance, status, review/expiry, event ID/offset, and no pending proposal was destructively removed.\n\nAll builders submit `propose`; only a host-capability `offer-claims-registry` principal accepts/rejects or writes canonical claim/offer events. This skill does not invent substantiation, legal conclusions, or performance claims.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "protocol/offer-claims-registry/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 54
+      },
+      {
+        "path": "protocol/offer-claims-registry/references/claims-ledger-schema.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e3255615d15a3b6138075b30bc55afd5fa0e945fec397a50a4cf6246a18665a2",
+        "source_line": 52
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 53
+      },
+      {
+        "path": "references/registry-event-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
+        "source_line": 34
+      },
+      {
+        "path": "references/runtime-invocation.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/events/claims.ndjson",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:offer-claims-registry",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 89,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "ad-account-auditor"
+        ],
+        "text": "- **Paid use audit:** [ad-account-auditor](../../ad/activate/ad-account-auditor/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 202,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 90
+        },
+        "target_skills": [
+          "creator-content-auditor"
+        ],
+        "text": "- **Creator asset audit:** [creator-content-auditor](../../influencer/activate/creator-content-auditor/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 300,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 203
+        },
+        "target_skills": [
+          "proof-point-packager"
+        ],
+        "text": "- **Narrative proof:** [proof-point-packager](../../narrative/land/proof-point-packager/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 372,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 301
+        },
+        "target_skills": [
+          "memory-management"
+        ],
+        "text": "- **Archive/erase:** [memory-management](../memory-management/SKILL.md)"
+      }
+    ],
+    "next_best": "- **Paid use audit:** [ad-account-auditor](../../ad/activate/ad-account-auditor/SKILL.md)\n- **Creator asset audit:** [creator-content-auditor](../../influencer/activate/creator-content-auditor/SKILL.md)\n- **Narrative proof:** [proof-point-packager](../../narrative/land/proof-point-packager/SKILL.md)\n- **Archive/erase:** [memory-management](../memory-management/SKILL.md)",
+    "summary": "Use the shared handoff and include changed aggregate IDs, event IDs, revisions, unresolved evidence gaps, and one next skill.",
+    "summary_ref": {
+      "path": "protocol/offer-claims-registry/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "creator-content-auditor",
+      "memory-management",
+      "proof-point-packager"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "protocol",
+    "name": "offer-claims-registry",
+    "path": "protocol/offer-claims-registry/SKILL.md",
+    "phase": "protocol",
+    "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+    "version": "18.0.1"
+  },
+  "input_contract": {
+    "argument_hint": "<claim/offer aggregate-id or 'review pending proposals'>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 82,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "`memory/events/claims.ndjson`, its projection, source evidence, and rendered uses."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "`memory/events/claims.ndjson`, its projection, source evidence, and rendered uses.",
+    "source": {
+      "path": "protocol/offer-claims-registry/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 42,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "claims events through `registry-events.py`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 107,
+          "path": "protocol/offer-claims-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226",
+          "span_basis": "field-text",
+          "start_char": 44
+        },
+        "text": "`claims-ledger.md` and `offers.md` are regenerated human views."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "protocol/offer-claims-registry/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226"
+    },
+    "summary": "claims events through `registry-events.py`; `claims-ledger.md` and `offers.md` are regenerated human views.",
+    "summary_source": "writes-fallback",
+    "writes": "claims events through `registry-events.py`; `claims-ledger.md` and `offers.md` are regenerated human views."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for scoring claim vetoes — use the relevant auditor; not for writing ad copy — use ad-creative-builder. 广告声明台账/优惠信息登记/证据溯源",
+    "description": "Use when the user asks to \"register this claim\", \"log our current offers\", or \"where is the proof for this figure\"; curates claim wording, evidence, disclosures, terms, review dates, and live offers through the append-only claims event stream. Not for scoring claim vetoes — use the relevant auditor; not for writing ad copy — use ad-creative-builder. 广告声明台账/优惠信息登记/证据溯源",
+    "source": {
+      "path": "protocol/offer-claims-registry/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "ac1a3166d88c5566f5f36c8a8fa7b1707737f11561befb411c45db8b59291226"
+    },
+    "trigger_phrases": [
+      "log our current offers",
+      "register this claim",
+      "where is the proof for this figure"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when registering, updating, expiring, or querying claims/offers; resolving pending [needs source] proposals; recording substantiation, approved wording, disclosures, terms, usage, and review dates."
+  },
+  "schema_version": "1.0"
+}

@@ -1,0 +1,352 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 106,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "placement is stated per mailbox provider from the seed test (inbox/spam/promotions, never pass-by-default)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 188,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 108
+        },
+        "text": "the Postmaster + SNDS reputation trend is read with the direction and the number"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 274,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 190
+        },
+        "text": "the send-over-send delta names each regression or states \"no regression vs baseline\""
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 341,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 276
+        },
+        "text": "every metric carries a Measured / User-provided / Estimated label"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 471,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 343
+        },
+        "text": "and the SEND-`S` placement read is emitted with the typed profile named and any missing-provider gaps called out as NEEDS_INPUT."
+      }
+    ],
+    "done_when": "placement is stated per mailbox provider from the seed test (inbox/spam/promotions, never pass-by-default); the Postmaster + SNDS reputation trend is read with the direction and the number; the send-over-send delta names each regression or states \"no regression vs baseline\"; every metric carries a Measured / User-provided / Estimated label; and the SEND-`S` placement read is emitted with the typed profile named and any missing-provider gaps called out as NEEDS_INPUT.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 36
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "email/deliver/inbox-placement-monitor/references/placement-telemetry-checklist.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "a8b805c1c633862d360b544007480be3500053e0331cd9491a4665addb278d8d",
+        "source_line": 60
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 61
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 73
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 38
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:inbox-placement-monitor",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "outcome",
+        "source": {
+          "end_char": 228,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "deliverability-qa"
+        ],
+        "text": "- **Primary — a regression traces to an auth/reputation fix**: [deliverability-qa](../../setup/deliverability-qa/SKILL.md) — re-run the `S1` auth pre-flight + static reputation read to fix the root cause behind a placement drop."
+      },
+      {
+        "condition": "If the snapshot feeds a pre-send go/no-go**: [email-quality-auditor](../email-quality-auditor/SKILL.md) — fold the placement snapshot into the full EQS and enforce `S1`/`S2`/`N1`/`D1` before the next broadcast.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 443,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 229
+        },
+        "target_skills": [
+          "email-quality-auditor"
+        ],
+        "text": "- **If the snapshot feeds a pre-send go/no-go**: [email-quality-auditor](../email-quality-auditor/SKILL.md) — fold the placement snapshot into the full EQS and enforce `S1`/`S2`/`N1`/`D1` before the next broadcast."
+      },
+      {
+        "condition": "If placement is holding and only the experiment read is next**: [send-experiment-designer](../send-experiment-designer/SKILL.md) — design or read out the next A/B / send-time / hold-out test.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 639,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 444
+        },
+        "target_skills": [
+          "send-experiment-designer"
+        ],
+        "text": "- **If placement is holding and only the experiment read is next**: [send-experiment-designer](../send-experiment-designer/SKILL.md) — design or read out the next A/B / send-time / hold-out test."
+      },
+      {
+        "condition": "If a mailbox provider is **NEEDS_INPUT** (missing from the seed test) or there is no prior baseline, state the gap and stop rather than chaining further",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 1064,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 641
+        },
+        "target_skills": [],
+        "text": "**Termination**: follow the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). If a mailbox provider is **NEEDS_INPUT** (missing from the seed test) or there is no prior baseline, state the gap and stop rather than chaining further"
+      },
+      {
+        "condition": "if placement is holding with no regression, this is a terminal healthy read — report chain-complete.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1166,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 1066
+        },
+        "target_skills": [],
+        "text": "if placement is holding with no regression, this is a terminal healthy read — report chain-complete."
+      }
+    ],
+    "next_best": "- **Primary — a regression traces to an auth/reputation fix**: [deliverability-qa](../../setup/deliverability-qa/SKILL.md) — re-run the `S1` auth pre-flight + static reputation read to fix the root cause behind a placement drop.\n- **If the snapshot feeds a pre-send go/no-go**: [email-quality-auditor](../email-quality-auditor/SKILL.md) — fold the placement snapshot into the full EQS and enforce `S1`/`S2`/`N1`/`D1` before the next broadcast.\n- **If placement is holding and only the experiment read is next**: [send-experiment-designer](../send-experiment-designer/SKILL.md) — design or read out the next A/B / send-time / hold-out test.\n\n**Termination**: follow the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). If a mailbox provider is **NEEDS_INPUT** (missing from the seed test) or there is no prior baseline, state the gap and stop rather than chaining further; if placement is holding with no regression, this is a terminal healthy read — report chain-complete.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md). This is a non-auditor skill: it does **not** emit `cap_applied` / `raw_overall_score` / `final_overall_score` — those belong to [email-quality-auditor](../email-quality-auditor/SKILL.md). Report the placement snapshot and reputation trend; let the gate cap and roll up.",
+    "summary_ref": {
+      "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "deliverability-qa",
+      "email-quality-auditor",
+      "send-experiment-designer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "email",
+    "name": "inbox-placement-monitor",
+    "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+    "phase": "deliver",
+    "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<sending domain / program> [seed-list placement test + Postmaster/SNDS export] [prior send baseline] [goal: promo|retention|cold]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 80,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "sending domain + SEND profile (`promotional|retention|cold-outbound|newsletter`)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 83,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 82
+        },
+        "text": "a"
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "sending domain + SEND profile (`promotional|retention|cold-outbound|newsletter`); a",
+    "source": {
+      "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 137,
+          "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing placement + reputation-trend report plus a reusable SEND-`S` placement snapshot to `memory/email/inbox-placement-monitor/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5"
+    },
+    "summary": "a per-provider placement read (inbox / spam / promotions %, per Gmail, Outlook/Microsoft, Yahoo, Apple) from the seed-list test; a domain/IP reputation trend from Gmail Postmaster Tools and Microsoft SNDS (high/medium/low/bad, complaint-rate curve, IP status); a send-over-send delta naming each regression with its number; the SEND-`S` placement sub-item read (inbox-placement ≥ threshold, spam-complaint < 0.1%) with the typed profile named; and the standard handoff summary. Every metric is labeled Measured / User-provided / Estimated — never invent a placement number; if a provider's export is missing, mark that provider **NEEDS_INPUT**.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing placement + reputation-trend report plus a reusable SEND-`S` placement snapshot to `memory/email/inbox-placement-monitor/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the pre-send SPF/DKIM/DMARC auth pre-flight — use deliverability-qa; not for computing the EQS or running the vetoes — use email-quality-auditor. 邮件收件箱落点监测/收件箱vs垃圾邮件/Postmaster声誉趋势",
+    "description": "Use when the user asks to \"track where my emails are actually landing after I send\", \"read my seed-list inbox vs spam vs promotions results\", \"trend my Gmail Postmaster / Microsoft SNDS reputation\", or \"did placement drop after my last send\"; produces a per-provider inbox/spam/promotions placement read, a domain/IP reputation trend from Postmaster + SNDS, a send-over-send delta with named regressions, and a reusable SEND-S placement snapshot on your own exported telemetry. Not for the pre-send SPF/DKIM/DMARC auth pre-flight — use deliverability-qa; not for computing the EQS or running the vetoes — use email-quality-auditor. 邮件收件箱落点监测/收件箱vs垃圾邮件/Postmaster声誉趋势",
+    "source": {
+      "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "12181f8c19449bfae66b8b477ef92b2152e9c7a906a3ce22ee9e58565a6634e5"
+    },
+    "trigger_phrases": [
+      "did placement drop after my last send",
+      "read my seed-list inbox vs spam vs promotions results",
+      "track where my emails are actually landing after I send",
+      "trend my Gmail Postmaster / Microsoft SNDS reputation"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use AFTER a send, to track where mail actually landed and how reputation is trending over time: seed-list inbox vs spam vs promotions placement per mailbox provider (Gmail, Outlook/Microsoft, Yahoo, Apple), Gmail Postmaster Tools + Microsoft SNDS domain/IP reputation trend, and the send-over-send placement delta with named regressions. Run it to BUILD and TREND the post-send SEND S placement signal; run deliverability-qa for the pre-send auth/reputation pre-flight and email-quality-auditor to SCORE the full EQS and enforce S1/S2/N1/D1."
+  },
+  "schema_version": "1.0"
+}

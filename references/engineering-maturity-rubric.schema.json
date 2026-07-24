@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/engineering-maturity-rubric.schema.json",
+  "title": "Engineering Maturity Rubric",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "schema_version", "target_score", "hard_gate_cap", "control_weight", "dimensions"],
+  "properties": {
+    "$schema": {"const": "./engineering-maturity-rubric.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "target_score": {"const": 95},
+    "hard_gate_cap": {"const": 90},
+    "control_weight": {"const": 5},
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt", "context", "harness", "loop", "graph"],
+      "properties": {
+        "prompt": {"$ref": "#/$defs/controls"},
+        "context": {"$ref": "#/$defs/controls"},
+        "harness": {"$ref": "#/$defs/controls"},
+        "loop": {"$ref": "#/$defs/controls"},
+        "graph": {"$ref": "#/$defs/controls"}
+      }
+    }
+  },
+  "$defs": {
+    "controls": {
+      "type": "array",
+      "minItems": 20,
+      "maxItems": 20,
+      "items": {"$ref": "#/$defs/control"}
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "control", "evidence_class", "hard_gate"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[PCHLG][0-9]{2}$"},
+        "control": {"type": "string", "minLength": 8},
+        "evidence_class": {"enum": ["S", "D", "E", "R", "O"]},
+        "hard_gate": {"type": "boolean"}
+      }
+    }
+  }
+}

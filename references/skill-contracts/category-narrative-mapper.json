@@ -1,0 +1,362 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 85,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "at least two dominant category stories are named with the language conventions listed"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 229,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 87
+        },
+        "text": "every named competitor has a teardown row (arc, claimed onlyness, proof pattern) sourced with a Measured URL or marked User-provided/Estimated"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 325,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 231
+        },
+        "text": "and at least one competitor drift note compares current copy against a dated archive snapshot."
+      }
+    ],
+    "done_when": "at least two dominant category stories are named with the language conventions listed; every named competitor has a teardown row (arc, claimed onlyness, proof pattern) sourced with a Measured URL or marked User-provided/Estimated; and at least one competitor drift note compares current copy against a dated archive snapshot.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/tale-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "source_line": 4
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/research/competitor-analysis",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:category-narrative-mapper",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 166,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "positioning-truth-tracer"
+        ],
+        "text": "- **Primary**: [positioning-truth-tracer](../positioning-truth-tracer/SKILL.md) — reconcile our positioning against the mapped category terrain and the claims ledger."
+      },
+      {
+        "condition": "If the positioning canvas does not exist yet**: [positioning-mapper](../../../launch/research/positioning-mapper/SKILL.md) — build the canvas first, using the named alternatives this map surfaced.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 367,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 167
+        },
+        "target_skills": [
+          "positioning-mapper"
+        ],
+        "text": "- **If the positioning canvas does not exist yet**: [positioning-mapper](../../../launch/research/positioning-mapper/SKILL.md) — build the canvas first, using the named alternatives this map surfaced."
+      },
+      {
+        "condition": "If the beachhead's beliefs and objections are still unknown**: [audience-belief-mapper](../audience-belief-mapper/SKILL.md) — capture the switching forces before the arc is designed.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 554,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 368
+        },
+        "target_skills": [
+          "audience-belief-mapper"
+        ],
+        "text": "- **If the beachhead's beliefs and objections are still unknown**: [audience-belief-mapper](../audience-belief-mapper/SKILL.md) — capture the switching forces before the arc is designed."
+      },
+      {
+        "condition": "when the map is saved and each named competitor has a teardown row.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 901,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 556
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the map is saved and each named competitor has a teardown row."
+      }
+    ],
+    "next_best": "- **Primary**: [positioning-truth-tracer](../positioning-truth-tracer/SKILL.md) — reconcile our positioning against the mapped category terrain and the claims ledger.\n- **If the positioning canvas does not exist yet**: [positioning-mapper](../../../launch/research/positioning-mapper/SKILL.md) — build the canvas first, using the named alternatives this map surfaced.\n- **If the beachhead's beliefs and objections are still unknown**: [audience-belief-mapper](../audience-belief-mapper/SKILL.md) — capture the switching forces before the arc is designed.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the map is saved and each named competitor has a teardown row.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "audience-belief-mapper",
+      "positioning-mapper",
+      "positioning-truth-tracer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "narrative",
+    "name": "category-narrative-mapper",
+    "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+    "phase": "trace",
+    "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<category / product> [named competitors] [competitor URLs]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 145,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "prior [competitor-analysis](../../../seo-geo/survey/competitor-analysis/SKILL.md) findings in `memory/research/competitor-analysis/` when present"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 281,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 147
+        },
+        "text": "competitor public messaging via `scripts/connectors/firecrawl.py` (scrape) and `scripts/connectors/tavily.py` (search — proxy-labeled)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 360,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 283
+        },
+        "text": "archived competitor copy via `scripts/connectors/wayback.py` (change history)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 471,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 362
+        },
+        "text": "the user's own list of named competitors and URLs (User-provided). Robots pre-flight applies to every scrape."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "prior [competitor-analysis](../../../seo-geo/survey/competitor-analysis/SKILL.md) findings in `memory/research/competitor-analysis/` when present; competitor public messaging via `scripts/connectors/firecrawl.py` (scrape) and `scripts/connectors/tavily.py` (search — proxy-labeled); archived competitor copy via `scripts/connectors/wayback.py` (change history); the user's own list of named competitors and URLs (User-provided). Robots pre-flight applies to every scrape.",
+    "source": {
+      "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 75,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the category narrative map to `memory/narrative/category-narrative-mapper/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 416,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 77
+        },
+        "text": "any product or comparative claim it surfaces from a competitor that the user might echo is marked `[needs source]` and routed to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` — this skill never adjudicates it. Nothing durable is written to `memory/narrative-registry/` canonical files"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 514,
+          "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0",
+          "span_basis": "field-text",
+          "start_char": 418
+        },
+        "text": "canon is the sole domain of [narrative-registry](../../../protocol/narrative-registry/SKILL.md)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0"
+    },
+    "summary": "a category narrative map — the dominant category stories and points of view, the language conventions and framing clichés (approved/overused terms), a per-competitor narrative teardown table (arc, claimed onlyness sentence, proof pattern, primary framing), and a messaging-drift note per rival (today's copy vs archived copy, with as-of dates) — every line labeled Measured / User-provided / Estimated, plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the category narrative map to `memory/narrative/category-narrative-mapper/`; any product or comparative claim it surfaces from a competitor that the user might echo is marked `[needs source]` and routed to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` — this skill never adjudicates it. Nothing durable is written to `memory/narrative-registry/` canonical files; canon is the sole domain of [narrative-registry](../../../protocol/narrative-registry/SKILL.md)."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the positioning canvas itself — use positioning-mapper; not for the beachhead's beliefs and objections — use audience-belief-mapper; not for SERP keyword targeting — use keyword-research; not for claim adjudication — use offer-claims-registry. 品类叙事/竞争叙事拆解/语言惯例/叙事演变",
+    "description": "Use when the user asks to \"map the category narrative\", \"tear down how competitors tell their story\", or \"find the language conventions in our market\"; produces a category narrative map — the dominant stories and points of view in the category, its language conventions and framing clichés, and a per-competitor narrative teardown (arc, claimed onlyness, proof pattern) plus how each rival's messaging has shifted over time (scraped copy vs archived copy). Not for the positioning canvas itself — use positioning-mapper; not for the beachhead's beliefs and objections — use audience-belief-mapper; not for SERP keyword targeting — use keyword-research; not for claim adjudication — use offer-claims-registry. 品类叙事/竞争叙事拆解/语言惯例/叙事演变",
+    "source": {
+      "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "8a4ae4cea1a802260a3de0f81c6ecc2843fe4515cc84f2f6dc352312cb5590d0"
+    },
+    "trigger_phrases": [
+      "find the language conventions in our market",
+      "map the category narrative",
+      "tear down how competitors tell their story"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when tracing the category's narrative landscape before authoring any brand canon: naming the dominant stories and points of view, recording the language conventions and framing clichés, teardown of each named competitor's narrative (arc, claimed onlyness, proof pattern), and how their messaging has drifted over time. The second move of the TALE Trace phase, feeding the Truth dimension's category-frame and named-alternatives sub-items. Not the positioning canvas and not audience belief work."
+  },
+  "schema_version": "1.0"
+}

@@ -11,7 +11,9 @@ from __future__ import annotations
 import argparse
 import contextlib
 import datetime as dt
+import gzip
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -28,10 +30,15 @@ MAX_MANIFEST_BYTES = 2_000_000
 MAX_CONTEXT_BYTES = 10_000_000
 MAX_INSPECTION_BYTES = 64_000_000
 MAX_CANDIDATES = 256
+SKILL_CONTRACT_TREE = "references/skill-contracts"
+SKILL_CONTRACT_PACK = "references/skill-contracts.pack.json.gz"
+SKILL_CONTRACT_PACK_MAX_BYTES = 1_000_000
+SKILL_CONTRACT_PACK_MAX_EXPANDED_BYTES = 5_000_000
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 SAFE_PATH = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:/-]{0,511}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
-SEMVER = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
+CATALOG_SEMVER = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
+SKILL_SEMVER = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$")
 RFC3339 = re.compile(
     r"^\d{4}-\d{2}-\d{2}[Tt]\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:[Zz]|[+-]\d{2}:\d{2})$"
 )
@@ -322,8 +329,8 @@ def _read_fd(fd, limit):
     return b"".join(chunks)
 
 
-def anchored_read(root, relative, limit, root_label="context root", inspection_limit=None,
-                  return_metadata=False):
+def _anchored_file_read(root, relative, limit, root_label="context root",
+                        inspection_limit=None, return_metadata=False):
     """Read a stable single-link regular file below a directory descriptor."""
     validate_relative_path(relative, "context path")
     root_path, root_fd, root_identity = _open_root(root, root_label)
@@ -445,6 +452,165 @@ def anchored_read(root, relative, limit, root_label="context root", inspection_l
             os.close(descriptor)
 
 
+_COMPACT_CONTRACT_CACHE = {}
+
+
+def _compact_contract_files(root, root_label):
+    compressed = _anchored_file_read(
+        root,
+        SKILL_CONTRACT_PACK,
+        SKILL_CONTRACT_PACK_MAX_BYTES,
+        root_label,
+    )
+    normalized = normalized_root(root, root_label)
+    key = (str(normalized), hashlib.sha256(compressed).hexdigest())
+    cached = _COMPACT_CONTRACT_CACHE.get(key)
+    if cached is not None:
+        return cached
+    try:
+        with gzip.GzipFile(fileobj=io.BytesIO(compressed), mode="rb") as handle:
+            expanded = handle.read(SKILL_CONTRACT_PACK_MAX_EXPANDED_BYTES + 1)
+    except (OSError, EOFError) as exc:
+        raise ContextResolutionError(
+            "compact skill-contract pack is not valid gzip: %s" % exc
+        ) from exc
+    if len(expanded) > SKILL_CONTRACT_PACK_MAX_EXPANDED_BYTES:
+        raise ContextResolutionError(
+            "compact skill-contract pack exceeds the expanded-byte limit"
+        )
+    try:
+        pack = strict_json_loads(
+            expanded.decode("utf-8"), "compact skill-contract pack"
+        )
+    except UnicodeDecodeError as exc:
+        raise ContextResolutionError(
+            "compact skill-contract pack must contain UTF-8 JSON"
+        ) from exc
+    exact_object(
+        pack,
+        {
+            "schema_version", "encoding", "source_tree", "file_count",
+            "files_sha256", "files",
+        },
+        set(),
+        "compact skill-contract pack",
+    )
+    if (
+            pack["schema_version"] != "1.0"
+            or pack["encoding"] != "canonical-json-v1"
+            or pack["source_tree"] != SKILL_CONTRACT_TREE
+            or pack["file_count"] != 121
+            or not isinstance(pack["files"], list)
+            or len(pack["files"]) != pack["file_count"]):
+        raise ContextResolutionError(
+            "compact skill-contract pack identity/count is invalid"
+        )
+    validate_sha(pack["files_sha256"], "compact skill-contract files_sha256")
+    files = {}
+    descriptors = []
+    for position, item in enumerate(pack["files"]):
+        label = "compact skill-contract pack.files[%d]" % position
+        exact_object(
+            item,
+            {"path", "bytes", "sha256", "content"},
+            set(),
+            label,
+        )
+        path = validate_relative_path(item["path"], label + ".path")
+        if (
+                not path.startswith(SKILL_CONTRACT_TREE + "/")
+                or not path.endswith(".json")):
+            raise ContextResolutionError(
+                "%s path is outside the machine-contract tree" % label
+            )
+        if path in files:
+            raise ContextResolutionError(
+                "compact skill-contract pack contains duplicate path %s" % path
+            )
+        size = validate_int(
+            item["bytes"], label + ".bytes", 1, MAX_CONTEXT_BYTES
+        )
+        validate_sha(item["sha256"], label + ".sha256")
+        if not isinstance(item["content"], dict):
+            raise ContextResolutionError(
+                "%s.content must be an object" % label
+            )
+        try:
+            content = (
+                json.dumps(
+                    item["content"],
+                    ensure_ascii=False,
+                    allow_nan=False,
+                    indent=2,
+                    sort_keys=True,
+                )
+                + "\n"
+            ).encode("utf-8")
+        except (TypeError, ValueError, OverflowError, RecursionError) as exc:
+            raise ContextResolutionError(
+                "%s.content cannot be canonically encoded" % label
+            ) from exc
+        if len(content) != size or hashlib.sha256(content).hexdigest() != item["sha256"]:
+            raise ContextResolutionError(
+                "%s content differs from its size/hash" % label
+            )
+        files[path] = content
+        descriptors.append({
+            "path": path,
+            "bytes": size,
+            "sha256": item["sha256"],
+        })
+    if "%s/index.json" % SKILL_CONTRACT_TREE not in files:
+        raise ContextResolutionError(
+            "compact skill-contract pack has no index"
+        )
+    if sha256_json(descriptors) != pack["files_sha256"]:
+        raise ContextResolutionError(
+            "compact skill-contract pack aggregate hash is invalid"
+        )
+    if len(_COMPACT_CONTRACT_CACHE) >= 4:
+        _COMPACT_CONTRACT_CACHE.clear()
+    _COMPACT_CONTRACT_CACHE[key] = files
+    return files
+
+
+def anchored_read(root, relative, limit, root_label="context root", inspection_limit=None,
+                  return_metadata=False):
+    """Read a real file, or one exact machine-contract member from its pack."""
+    try:
+        return _anchored_file_read(
+            root, relative, limit, root_label,
+            inspection_limit=inspection_limit,
+            return_metadata=return_metadata,
+        )
+    except ContextSourceMissing as original:
+        if not relative.startswith(SKILL_CONTRACT_TREE + "/"):
+            raise
+        try:
+            files = _compact_contract_files(root, root_label)
+        except ContextSourceMissing:
+            raise original
+        try:
+            content = files[relative]
+        except KeyError as exc:
+            raise ContextSourceMissing(
+                "context source is absent from compact skill-contract pack: %s"
+                % relative
+            ) from exc
+        if return_metadata:
+            raise ContextResolutionError(
+                "compact skill-contract members do not expose filesystem metadata"
+            )
+        if len(content) > limit:
+            raise ContextSourceTooLarge(relative, len(content), limit)
+        inspection_bytes = len(content) * 2
+        if inspection_limit is not None and inspection_bytes > inspection_limit:
+            raise ContextInspectionBudgetExceeded(
+                relative, inspection_bytes, inspection_limit
+            )
+        return content
+
+
 def read_json_document(path, label, limit):
     path = Path(path)
     root = path.parent if str(path.parent) else Path(".")
@@ -459,7 +625,7 @@ def read_json_document(path, label, limit):
 def _validate_route(value, label, manifest=False):
     required = {"command", "target_skill", "reason_code", "scenario_shards"}
     if manifest:
-        required |= {"catalog_version", "catalog_sha256", "skill_sha256"}
+        required |= {"catalog_version", "catalog_sha256", "skill_version", "skill_sha256"}
     exact_object(value, required, set(), label)
     validate_enum(value["command"], COMMANDS, label + ".command")
     validate_safe_id(value["target_skill"], label + ".target_skill")
@@ -489,9 +655,12 @@ def _validate_route(value, label, manifest=False):
     elif shards:
         raise ContextResolutionError("only /auto may declare scenario shards")
     if manifest:
-        if not isinstance(value["catalog_version"], str) or not SEMVER.fullmatch(
+        if not isinstance(value["catalog_version"], str) or not CATALOG_SEMVER.fullmatch(
                 value["catalog_version"]):
             raise ContextResolutionError("%s.catalog_version must be semver" % label)
+        if not isinstance(value["skill_version"], str) or not SKILL_SEMVER.fullmatch(
+                value["skill_version"]):
+            raise ContextResolutionError("%s.skill_version must be semver" % label)
         validate_sha(value["catalog_sha256"], label + ".catalog_sha256")
         validate_sha(value["skill_sha256"], label + ".skill_sha256")
     return value
@@ -524,6 +693,109 @@ def _validate_budget(value, label="budget", manifest=False):
             raise ContextResolutionError("inspected_bytes exceeds max_inspection_bytes")
         if value["selected_bytes"] * 2 > value["inspected_bytes"]:
             raise ContextResolutionError("inspected_bytes cannot cover selected stable reads")
+    return value
+
+
+def _validate_planner(value, request):
+    """Validate optional planner provenance without making planners mandatory."""
+    exact_object(
+        value,
+        {
+            "planner_version", "generator", "skill_contract", "contract_index",
+            "system_catalog", "candidate_discovery", "freshness", "token_budget",
+        },
+        set(),
+        "planner",
+    )
+    if value["planner_version"] != "1.0" or value["generator"] != "context-plan-v1":
+        raise ContextResolutionError("planner identity is unsupported")
+    for field in ("skill_contract", "contract_index", "system_catalog"):
+        reference = value[field]
+        exact_object(reference, {"path", "sha256"}, set(), "planner." + field)
+        validate_relative_path(reference["path"], "planner.%s.path" % field)
+        validate_sha(reference["sha256"], "planner.%s.sha256" % field)
+
+    discovery = value["candidate_discovery"]
+    exact_object(
+        discovery,
+        {
+            "mode", "hints_sha256", "candidate_set_sha256", "prefix_file_limit",
+            "prefix_outcomes",
+        },
+        set(),
+        "planner.candidate_discovery",
+    )
+    if discovery["mode"] != "closed-machine-contract":
+        raise ContextResolutionError("planner candidate discovery mode is unsupported")
+    validate_sha(discovery["hints_sha256"], "planner.candidate_discovery.hints_sha256")
+    validate_sha(
+        discovery["candidate_set_sha256"],
+        "planner.candidate_discovery.candidate_set_sha256",
+    )
+    validate_int(
+        discovery["prefix_file_limit"],
+        "planner.candidate_discovery.prefix_file_limit", 1, MAX_CANDIDATES,
+    )
+    outcomes = discovery["prefix_outcomes"]
+    if not isinstance(outcomes, list) or len(outcomes) > MAX_CANDIDATES:
+        raise ContextResolutionError("planner prefix_outcomes must be a bounded array")
+    outcome_paths = []
+    for index, outcome in enumerate(outcomes):
+        label = "planner.candidate_discovery.prefix_outcomes[%d]" % index
+        exact_object(
+            outcome, {"path", "status", "file_count", "reason_code"}, set(), label
+        )
+        validate_relative_path(outcome["path"], label + ".path")
+        validate_enum(outcome["status"], {"enumerated", "unresolved"}, label + ".status")
+        validate_int(outcome["file_count"], label + ".file_count", 0, MAX_CANDIDATES)
+        if outcome["status"] == "enumerated":
+            if outcome["reason_code"] is not None:
+                raise ContextResolutionError("enumerated prefix outcome cannot have a reason")
+        elif outcome["reason_code"] != "missing-prefix" or outcome["file_count"] != 0:
+            raise ContextResolutionError(
+                "unresolved prefix outcome must use missing-prefix with zero files"
+            )
+        outcome_paths.append(outcome["path"])
+    if outcome_paths != sorted(set(outcome_paths)):
+        raise ContextResolutionError("planner prefix_outcomes must have unique sorted paths")
+    if discovery["candidate_set_sha256"] != sha256_json(request["candidates"]):
+        raise ContextResolutionError("planner candidate_set_sha256 does not match candidates")
+
+    freshness = value["freshness"]
+    exact_object(
+        freshness, {"observed_at_basis", "default_max_age_seconds"}, set(),
+        "planner.freshness",
+    )
+    if freshness["observed_at_basis"] != "planner-as-of-inspection":
+        raise ContextResolutionError("planner freshness basis is unsupported")
+    if freshness["default_max_age_seconds"] is not None:
+        raise ContextResolutionError("planner default freshness must remain explicitly unbounded")
+    if any(candidate["observed_at"] != request["as_of"] for candidate in request["candidates"]):
+        raise ContextResolutionError("planner candidates must use request as_of as observation time")
+
+    token_budget = value["token_budget"]
+    exact_object(
+        token_budget,
+        {"max_tokens", "bytes_per_token", "derived_max_bytes", "estimator", "enforcement"},
+        set(),
+        "planner.token_budget",
+    )
+    max_tokens = validate_int(
+        token_budget["max_tokens"], "planner.token_budget.max_tokens", 1, MAX_CONTEXT_BYTES,
+    )
+    bytes_per_token = validate_int(
+        token_budget["bytes_per_token"], "planner.token_budget.bytes_per_token", 1, 16,
+    )
+    derived = validate_int(
+        token_budget["derived_max_bytes"], "planner.token_budget.derived_max_bytes",
+        1, MAX_CONTEXT_BYTES,
+    )
+    if token_budget["estimator"] != "utf8-bytes-per-token-proxy-v1":
+        raise ContextResolutionError("planner token estimator is unsupported")
+    if token_budget["enforcement"] != "derived-byte-ceiling":
+        raise ContextResolutionError("planner token enforcement is unsupported")
+    if derived != max_tokens * bytes_per_token or derived != request["budget"]["max_bytes"]:
+        raise ContextResolutionError("planner token budget does not match request byte budget")
     return value
 
 
@@ -586,7 +858,7 @@ def validate_request(value):
         "schema_version", "run_id", "turn_id", "as_of", "route", "budget",
         "registry_offsets", "candidates",
     }
-    exact_object(value, required, set(), "context request")
+    exact_object(value, required, {"planner"}, "context request")
     if value["schema_version"] != SCHEMA_VERSION:
         raise ContextResolutionError("context request schema_version must be %s" % SCHEMA_VERSION)
     validate_uuid(value["run_id"], "run_id")
@@ -621,6 +893,8 @@ def validate_request(value):
                     or seen[target]["requirement"] == "forbidden"):
                 raise ContextResolutionError("forbidden candidates cannot participate in supersedes")
     _assert_acyclic(candidates)
+    if "planner" in value:
+        _validate_planner(value["planner"], value)
     by_path = {}
     for candidate in candidates:
         by_path.setdefault((candidate["scope"], candidate["path"]), []).append(candidate)
@@ -677,7 +951,7 @@ def _catalog_index(catalog):
         if field not in catalog:
             raise ContextResolutionError("system catalog is missing %s" % field)
     version = catalog["architecture_version"]
-    if not isinstance(version, str) or not SEMVER.fullmatch(version):
+    if not isinstance(version, str) or not CATALOG_SEMVER.fullmatch(version):
         raise ContextResolutionError("system catalog architecture_version must be semver")
     commands = catalog["commands"]
     if (
@@ -773,9 +1047,13 @@ def validate_route_against_catalog(request, bundle_root, catalog_data=None):
         raise ContextResolutionError("target SKILL.md must be UTF-8") from exc
     if _frontmatter_scalar(skill_text, "name") != skill:
         raise ContextResolutionError("target SKILL.md name does not match the catalog")
-    if _frontmatter_scalar(skill_text, "version") != version:
-        raise ContextResolutionError("target SKILL.md version does not match the catalog")
-    return catalog_sha, version, hashlib.sha256(skill_raw).hexdigest()
+    # Skill versions are independently tracked and may move ahead of the
+    # architecture/catalog version.  The route binds both hashes; requiring
+    # equality between those two distinct version domains rejects valid skills.
+    skill_version = _frontmatter_scalar(skill_text, "version")
+    if not isinstance(skill_version, str) or not SKILL_SEMVER.fullmatch(skill_version):
+        raise ContextResolutionError("target SKILL.md version must be semver")
+    return catalog_sha, version, skill_version, hashlib.sha256(skill_raw).hexdigest()
 
 
 def _age_microseconds(as_of, observed):
@@ -838,7 +1116,7 @@ def resolve_context(request, bundle_root, project_root):
     bundle_path = normalized_root(bundle_root, "bundle root")
     project_path = normalized_root(project_root, "project root")
     catalog_data = load_catalog(bundle_path)
-    catalog_sha, catalog_version, skill_sha = validate_route_against_catalog(
+    catalog_sha, catalog_version, skill_version, skill_sha = validate_route_against_catalog(
         request, bundle_path, catalog_data
     )
     roots = {"bundle": bundle_path, "project": project_path}
@@ -1060,6 +1338,7 @@ def resolve_context(request, bundle_root, project_root):
     route["scenario_shards"] = sorted(route["scenario_shards"])
     route["catalog_version"] = catalog_version
     route["catalog_sha256"] = catalog_sha
+    route["skill_version"] = skill_version
     route["skill_sha256"] = skill_sha
     manifest = {
         "schema_version": SCHEMA_VERSION,
@@ -1261,7 +1540,9 @@ def verify_manifest_sources(value, bundle_root, project_root):
             raise ContextResolutionError(
                 "context manifest catalog identity no longer matches the bundle"
             )
-        if current["route"]["skill_sha256"] != value["route"]["skill_sha256"]:
+        if any(
+                current["route"][field] != value["route"][field]
+                for field in ("skill_version", "skill_sha256")):
             raise ContextResolutionError(
                 "context manifest target skill no longer matches the bundle"
             )

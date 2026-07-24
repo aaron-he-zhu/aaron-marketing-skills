@@ -1,6 +1,10 @@
 # Aaron Marketing Skills — Claude Code Context
 
-This plugin provides **120 skills and 8 commands** across Narrative, SEO/GEO, Organic Social, Email, Paid Ads, Influencer, and Product Launch, plus a shared protocol layer. All 120 skills follow one contract and are auto-loaded by context; commands use `/aaron-marketing:`. Current bundle version: `18.0.0` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)). The typed topology is [`references/system-catalog.json`](references/system-catalog.json); [`docs/system-architecture.md`](docs/system-architecture.md) is its generated human view.
+This plugin provides **120 skills and 8 commands** across Narrative, SEO/GEO, Organic Social, Email, Paid Ads, Influencer, and Product Launch, plus a shared protocol layer. All 120 skills follow one contract and are auto-loaded by context; commands use `/aaron-marketing:`. The typed topology is [`references/system-catalog.json`](references/system-catalog.json); [`docs/system-architecture.md`](docs/system-architecture.md) is its generated human view.
+
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
+Current bundle version: `18.0.0` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)).
+<!-- GENERATED:END release-surface:current-bundle -->
 
 > Umbrella repo, renamed from `seo-geo-claude-skills` (stars/forks/issues/history carried over by the GitHub rename). This repo is the **SSOT for the whole repo family** — 8 benchmark mirrors and 7 discipline signpost repos are declared in [docs/repo-family.md](docs/repo-family.md). The SEO/GEO and influencer former standalones preserve their final lines at tags `v9.9.12` / `standalone-final`. Release sync is owner-run via `scripts/sync-family.sh` (dry-run default); `family-drift.yml` is read-only. **No family repo is created or synced outside that registry.**
 

@@ -16,11 +16,11 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | message-system-architect | architect | 18.0.0 | 2026-07-12 |
 | brand-language-codifier | architect | 18.0.0 | 2026-07-12 |
 | story-bank-builder | architect | 18.0.0 | 2026-07-12 |
-| narrative-cascade-planner | land | 18.0.0 | 2026-07-12 |
+| narrative-cascade-planner | land | 18.0.1 | 2026-07-23 |
 | pitch-narrative-builder | land | 18.0.0 | 2026-07-12 |
 | narrative-enablement-kit | land | 18.0.0 | 2026-07-12 |
 | proof-point-packager | land | 18.0.0 | 2026-07-12 |
-| narrative-quality-auditor | evaluate | 18.0.0 | 2026-07-12 |
+| narrative-quality-auditor | evaluate | 18.0.1 | 2026-07-22 |
 | message-test-designer | evaluate | 18.0.0 | 2026-07-12 |
 | narrative-resonance-monitor | evaluate | 18.0.0 | 2026-07-12 |
 | narrative-drift-monitor | evaluate | 18.0.0 | 2026-07-12 |
@@ -32,11 +32,11 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | geo-content-optimizer | implement | 18.0.0 | 2026-07-12 |
 | serp-markup-builder | implement | 18.0.0 | 2026-07-12 |
 | page-play-builder | implement | 18.0.0 | 2026-07-12 |
-| content-quality-auditor | tune | 18.0.0 | 2026-07-12 |
+| content-quality-auditor | tune | 18.0.1 | 2026-07-22 |
 | technical-seo-checker | tune | 18.0.0 | 2026-07-12 |
 | on-page-seo-checker | tune | 18.0.0 | 2026-07-12 |
 | site-structure-optimizer | tune | 18.0.0 | 2026-07-12 |
-| domain-authority-auditor | evaluate | 18.0.0 | 2026-07-12 |
+| domain-authority-auditor | evaluate | 18.0.1 | 2026-07-22 |
 | rank-tracker | evaluate | 18.0.0 | 2026-07-12 |
 | performance-monitor | evaluate | 18.0.0 | 2026-07-12 |
 | offsite-signal-analyzer | evaluate | 18.0.0 | 2026-07-12 |
@@ -48,7 +48,7 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | social-creative-builder | craft | 18.0.0 | 2026-07-12 |
 | short-video-scripter | craft | 18.0.0 | 2026-07-12 |
 | advocacy-program-designer | craft | 18.0.0 | 2026-07-12 |
-| social-quality-auditor | host | 18.0.0 | 2026-07-12 |
+| social-quality-auditor | host | 18.0.1 | 2026-07-22 |
 | engagement-inbox-manager | host | 18.0.0 | 2026-07-12 |
 | social-selling-planner | host | 18.0.0 | 2026-07-12 |
 | crisis-response-planner | host | 18.0.0 | 2026-07-12 |
@@ -56,23 +56,23 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | share-of-voice-tracker | observe | 18.0.0 | 2026-07-12 |
 | dark-social-attributor | observe | 18.0.0 | 2026-07-12 |
 | social-measurement-loop | observe | 18.0.0 | 2026-07-12 |
-| deliverability-qa | email | 18.0.0 | 2026-07-12 |
+| deliverability-qa | email | 18.0.1 | 2026-07-23 |
 | list-segment-builder | email | 18.0.0 | 2026-07-12 |
 | list-growth-designer | email | 18.0.0 | 2026-07-12 |
 | list-hygiene-monitor | email | 18.0.0 | 2026-07-12 |
 | email-creative-builder | email | 18.0.0 | 2026-07-12 |
-| subject-line-lab | email | 18.0.0 | 2026-07-12 |
+| subject-line-lab | email | 18.0.1 | 2026-07-23 |
 | email-render-builder | email | 18.0.0 | 2026-07-12 |
 | dynamic-content-personalizer | email | 18.0.0 | 2026-07-12 |
 | email-sequence-designer | email | 18.0.0 | 2026-07-12 |
 | newsletter-monetization-planner | email | 18.0.0 | 2026-07-12 |
 | preference-frequency-manager | email | 18.0.0 | 2026-07-12 |
 | reactivation-specialist | email | 18.0.0 | 2026-07-12 |
-| email-quality-auditor | email | 18.0.0 | 2026-07-12 |
+| email-quality-auditor | email | 18.0.1 | 2026-07-22 |
 | send-experiment-designer | email | 18.0.0 | 2026-07-12 |
 | inbox-placement-monitor | email | 18.0.0 | 2026-07-12 |
-| cold-outbound-sequencer | email | 18.0.0 | 2026-07-12 |
-| campaign-architect | paid | 18.0.0 | 2026-07-12 |
+| cold-outbound-sequencer | email | 18.0.1 | 2026-07-23 |
+| campaign-architect | paid | 18.0.1 | 2026-07-23 |
 | audience-segment-builder | paid | 18.0.0 | 2026-07-12 |
 | search-term-miner | paid | 18.0.0 | 2026-07-12 |
 | product-feed-optimizer | paid | 18.0.0 | 2026-07-12 |
@@ -80,24 +80,24 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | ad-test-designer | paid | 18.0.0 | 2026-07-12 |
 | bid-strategy-planner | paid | 18.0.0 | 2026-07-12 |
 | landing-experience-checker | paid | 18.0.0 | 2026-07-12 |
-| ad-account-auditor | paid | 18.0.0 | 2026-07-12 |
+| ad-account-auditor | paid | 18.0.1 | 2026-07-22 |
 | conversion-signal-qa | paid | 18.0.0 | 2026-07-12 |
-| placement-exclusion-manager | paid | 18.0.0 | 2026-07-12 |
+| placement-exclusion-manager | paid | 18.0.1 | 2026-07-23 |
 | conversion-value-mapper | paid | 18.0.0 | 2026-07-12 |
-| paid-measurement-loop | paid | 18.0.0 | 2026-07-12 |
+| paid-measurement-loop | paid | 18.0.1 | 2026-07-23 |
 | attribution-reconciler | paid | 18.0.0 | 2026-07-12 |
 | budget-pacing-monitor | paid | 18.0.0 | 2026-07-12 |
 | fatigue-frequency-manager | paid | 18.0.0 | 2026-07-12 |
 | audience-mapper | scout | 18.0.0 | 2026-07-12 |
 | trend-spotter | scout | 18.0.0 | 2026-07-12 |
-| influencer-discovery | scout | 18.0.0 | 2026-07-12 |
-| fit-scorer | scout | 18.0.0 | 2026-07-12 |
+| influencer-discovery | scout | 18.0.1 | 2026-07-23 |
+| fit-scorer | scout | 18.0.1 | 2026-07-23 |
 | competitor-tracker | target | 18.0.0 | 2026-07-12 |
 | campaign-planner | target | 18.0.0 | 2026-07-12 |
 | brief-generator | target | 18.0.0 | 2026-07-12 |
 | budget-optimizer | target | 18.0.0 | 2026-07-12 |
 | outreach-manager | activate | 18.0.0 | 2026-07-12 |
-| creator-content-auditor | activate | 18.0.0 | 2026-07-12 |
+| creator-content-auditor | activate | 18.0.1 | 2026-07-22 |
 | contract-helper | activate | 18.0.0 | 2026-07-12 |
 | content-amplifier | activate | 18.0.0 | 2026-07-12 |
 | landing-optimizer | report | 18.0.0 | 2026-07-12 |
@@ -112,7 +112,7 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | launch-asset-packager | launch | 18.0.0 | 2026-07-12 |
 | pricing-packaging-planner | launch | 18.0.0 | 2026-07-12 |
 | sales-enablement-kit | launch | 18.0.0 | 2026-07-12 |
-| launch-readiness-auditor | launch | 18.0.0 | 2026-07-12 |
+| launch-readiness-auditor | launch | 18.0.2 | 2026-07-23 |
 | launch-day-conductor | launch | 18.0.0 | 2026-07-12 |
 | community-launch-runner | launch | 18.0.0 | 2026-07-12 |
 | press-media-relations | launch | 18.0.0 | 2026-07-12 |
@@ -122,14 +122,19 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | momentum-planner | launch | 18.0.0 | 2026-07-12 |
 | entity-registry | protocol | 18.0.0 | 2026-07-12 |
 | creator-registry | protocol | 18.0.0 | 2026-07-12 |
-| offer-claims-registry | protocol | 18.0.0 | 2026-07-12 |
-| consent-registry | protocol | 18.0.0 | 2026-07-12 |
+| offer-claims-registry | protocol | 18.0.1 | 2026-07-23 |
+| consent-registry | protocol | 18.0.1 | 2026-07-23 |
 | launch-registry | protocol | 18.0.0 | 2026-07-12 |
 | channel-registry | protocol | 18.0.0 | 2026-07-12 |
 | narrative-registry | protocol | 18.0.0 | 2026-07-12 |
 | memory-management | protocol | 18.0.1 | 2026-07-18 |
 
 ## Changelog
+
+### Post-release skill patches
+
+- **2026-07-23 — Stable-ID, minimum-input, and deny-only routing precision.** `launch-readiness-auditor` moves to `18.0.2` and must preserve stable RAMP item IDs verbatim in Unknown lists; `offer-claims-registry` moves to `18.0.1` and asks for one exact claim/offer statement before broader evidence intake when no real seed exists; `consent-registry` moves to `18.0.1` and keeps immediate suppression ahead of generic proposal degradation. The bundle remains `18.0.0`.
+- **2026-07-22 — Auditor result-contract hardening.** The eight auditor-class gates move to `18.0.1`. Each now requires the shared exact typed conversation-result header and explicit qualified `unknown` items before findings; generated standalone runtimes and prompt/machine contracts are refreshed from those sources. The bundle remains `18.0.0`; no skills are added or removed.
 
 ### v18.0.0 — Seven-discipline symmetry unification (2026-07-12)
 

@@ -24,6 +24,7 @@ Infer the SITE-loop phase from the goal (or honor `--phase`) and route to the ma
 
 - Discover search demand, SERP intent, topic clusters, and content opportunities; keep AI-answer-inclusion diagnosis in `--phase tune --visibility`.
 - With `--competitors`, compare across rankings, content coverage, backlinks, authority, and AI citation visibility; return a battlecard, gaps, priority opportunities, and evidence mode.
+- For the `competitor_gap` scenario (`--competitors`), explicitly run both `data_insufficient` and `geo_visibility_claim`; require competitors, market, and domain as blocking inputs. AI citation visibility is not an optional metric that may be estimated: without observed query, market/locale, engine, date, and citation evidence, keep the AI gap Unknown/`NEEDS_INPUT` and do not claim it.
 - With `--map` (or a known opportunity set), turn findings into a content architecture, topic/entity map, and internal-link plan: clusters, pillar/supporting pages, orphan risks, anchor guidance, and next briefs.
 - Keep evidence mode visible (tool vs. estimate); hand off to `--phase implement` for production.
 

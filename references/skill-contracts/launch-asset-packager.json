@@ -1,0 +1,294 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 247,
+          "path": "launch/assemble/launch-asset-packager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "each tier channel has owner/spec/status, required kit sections and character counts are explicit, the go-live checklist names executors, the manifest proposal is recorded, and the Narrative/claims dependency tuple matches the source message house."
+      }
+    ],
+    "done_when": "each tier channel has owner/spec/status, required kit sections and character counts are explicit, the go-live checklist names executors, the manifest proposal is recorded, and the Narrative/claims dependency tuple matches the source message house.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/assemble/launch-asset-packager/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 39
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 43
+      },
+      {
+        "path": "launch/assemble/launch-asset-packager/references/asset-specs.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "990f7964452eb4a1eaa91cfe91f706d16a86b61847ce8582817974c104bb6d5d",
+        "source_line": 46
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 64
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 33
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/claims.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/launches.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/narrative.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:launch-asset-packager",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before the launch window opens.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 168,
+          "path": "launch/assemble/launch-asset-packager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "launch-readiness-auditor"
+        ],
+        "text": "- **Primary**: [launch-readiness-auditor](../../mobilize/launch-readiness-auditor/SKILL.md) — run the appropriate RAMP preflight profile before the launch window opens."
+      },
+      {
+        "condition": "If the press kit is final and the media motion starts**: [press-media-relations](../../mobilize/press-media-relations/SKILL.md) — pitch and embargo mechanics on top of the finished kit.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 358,
+          "path": "launch/assemble/launch-asset-packager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+          "span_basis": "field-text",
+          "start_char": 169
+        },
+        "target_skills": [
+          "press-media-relations"
+        ],
+        "text": "- **If the press kit is final and the media motion starts**: [press-media-relations](../../mobilize/press-media-relations/SKILL.md) — pitch and embargo mechanics on top of the finished kit."
+      },
+      {
+        "condition": "If community / directory submissions are the next gap**: [community-launch-runner](../../mobilize/community-launch-runner/SKILL.md) — per-platform submission under platform rules.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 542,
+          "path": "launch/assemble/launch-asset-packager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+          "span_basis": "field-text",
+          "start_char": 359
+        },
+        "target_skills": [
+          "community-launch-runner"
+        ],
+        "text": "- **If community / directory submissions are the next gap**: [community-launch-runner](../../mobilize/community-launch-runner/SKILL.md) — per-platform submission under platform rules."
+      },
+      {
+        "condition": "when the manifest is frozen and handed to the gate.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 873,
+          "path": "launch/assemble/launch-asset-packager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+          "span_basis": "field-text",
+          "start_char": 544
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the manifest is frozen and handed to the gate."
+      }
+    ],
+    "next_best": "- **Primary**: [launch-readiness-auditor](../../mobilize/launch-readiness-auditor/SKILL.md) — run the appropriate RAMP preflight profile before the launch window opens.\n- **If the press kit is final and the media motion starts**: [press-media-relations](../../mobilize/press-media-relations/SKILL.md) — pitch and embargo mechanics on top of the finished kit.\n- **If community / directory submissions are the next gap**: [community-launch-runner](../../mobilize/community-launch-runner/SKILL.md) — per-platform submission under platform rules.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the manifest is frozen and handed to the gate.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md), preserving the Narrative/claims dependency tuple from the source message house.\n\nRequired fields: `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status: verified | approved-fallback | blocked`.",
+    "summary_ref": {
+      "path": "launch/assemble/launch-asset-packager/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "community-launch-runner",
+      "launch-readiness-auditor",
+      "press-media-relations"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "launch-asset-packager",
+    "path": "launch/assemble/launch-asset-packager/SKILL.md",
+    "phase": "assemble",
+    "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product + launch tier> [channels] [target stores: ios/android/both] [existing assets]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 217,
+          "path": "launch/assemble/launch-asset-packager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "launch tier/type/channels, accepted message-house handoff, `memory/projections/narrative.json`, `memory/projections/claims.json`, `memory/projections/launches.json`, asset/pricing inventory, and store-console exports."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "launch tier/type/channels, accepted message-house handoff, `memory/projections/narrative.json`, `memory/projections/claims.json`, `memory/projections/launches.json`, asset/pricing inventory, and store-console exports.",
+    "source": {
+      "path": "launch/assemble/launch-asset-packager/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 76,
+          "path": "launch/assemble/launch-asset-packager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the manifest/specs to `memory/launch/launch-asset-packager/` with permission"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 205,
+          "path": "launch/assemble/launch-asset-packager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4",
+          "span_basis": "field-text",
+          "start_char": 78
+        },
+        "text": "frozen manifest and unresolved claim facts become separate authorized `operation: propose` events through `registry-events.py`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/assemble/launch-asset-packager/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4"
+    },
+    "summary": "a tier-scoped asset manifest (artifact · owner · spec source · status), a press kit section spec, demo script + screenshot specs, a launch FAQ outline, dual-store listing drafts with Measured character counts against the official budgets, a technical go-live checklist (manifest only), and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the manifest/specs to `memory/launch/launch-asset-packager/` with permission; frozen manifest and unresolved claim facts become separate authorized `operation: propose` events through `registry-events.py`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the message copy itself — use message-house-builder or content-writer; not for landing page UX — use landing-optimizer; not for keyword research beyond the store surfaces — use keyword-research. 发布资产打包/press kit/商店listing规格/上线检查清单",
+    "description": "Use when the user asks to \"package the launch assets\", \"build a press kit\", or \"prep the store listing and go-live checklist\"; produces a tier-scoped launch asset manifest with production status — a press kit spec (factsheet, description, history, features, videos, images, logo and icon, awards, contact), demo script and screenshot specs, a launch FAQ, dual-store listing metadata drafts against the official character budgets (per App Store Connect / Play Console documentation), and a technical go-live checklist manifest (robots flip, sitemap, OG tags, analytics verification — execution stays with technical-seo-checker and serp-markup-builder). Not for the message copy itself — use message-house-builder or content-writer; not for landing page UX — use landing-optimizer; not for keyword research beyond the store surfaces — use keyword-research. 发布资产打包/press kit/商店listing规格/上线检查清单",
+    "source": {
+      "path": "launch/assemble/launch-asset-packager/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "1d38851d886b8d07f7c45840b1c4c5fc1ae7449f17274d9249c058af78a802f4"
+    },
+    "trigger_phrases": [
+      "build a press kit",
+      "package the launch assets",
+      "prep the store listing and go-live checklist"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when assembling the asset kit for a declared launch tier: the manifest with owners and production status, press kit sections per the presskit() convention, demo script and screenshot specs, a launch FAQ, App Store / Play listing character budgets, and the technical go-live checklist. The manifest layer between message-house-builder (the copy) and launch-readiness-auditor (the gate)."
+  },
+  "schema_version": "1.0"
+}

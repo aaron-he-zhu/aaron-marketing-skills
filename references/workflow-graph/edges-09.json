@@ -1,0 +1,479 @@
+{
+  "$schema": "../workflow-graph-edge-shard.schema.json",
+  "authority": "authoritative-workflow-graph-source-shard",
+  "edges": [
+    {
+      "condition_code": "governance",
+      "condition_source": "narrative/architect/story-bank-builder/SKILL.md:85",
+      "condition_text": "If 3+ proofs are pending as proposals: offer-claims-registry — substantiate or reject them before any story ships its proof wording.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "story-bank-builder",
+      "gate": null,
+      "id": "story-bank-builder--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/architect/strategic-narrative-designer/SKILL.md:83",
+      "condition_text": "Primary: message-system-architect — author the durable message house on top of the finished arc and seed the canon.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "strategic-narrative-designer",
+      "gate": null,
+      "id": "strategic-narrative-designer--message-system-architect",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "message-system-architect",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "narrative/architect/strategic-narrative-designer/SKILL.md:85",
+      "condition_text": "If 3+ proof beats are pending as proposals: offer-claims-registry — substantiate or reject them before the promised-land beat ships the wording.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "strategic-narrative-designer",
+      "gate": null,
+      "id": "strategic-narrative-designer--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "narrative/architect/strategic-narrative-designer/SKILL.md:84",
+      "condition_text": "If the positioning truth set is missing or stale: positioning-truth-tracer — reconcile positioning against shippable reality first, then return to build the arc.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "strategic-narrative-designer",
+      "gate": null,
+      "id": "strategic-narrative-designer--positioning-truth-tracer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "positioning-truth-tracer",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "email/engage/subject-line-lab/SKILL.md:93",
+      "condition_text": "If a spam-pattern flag needs a full placement read: deliverability-qa — run the SEND-S spam-content + SPF/DKIM/DMARC authentication scan; this skill only pre-flags subject-level patterns, it does not score S.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "subject-line-lab",
+      "gate": null,
+      "id": "subject-line-lab--deliverability-qa",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "deliverability-qa",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "email/engage/subject-line-lab/SKILL.md:92",
+      "condition_text": "If the subject is ahead of the body (no creative yet): email-creative-builder — write the body, one CTA, and plain-text alternate around the chosen subject, then return here to lock the variant set.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "subject-line-lab",
+      "gate": null,
+      "id": "subject-line-lab--email-creative-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "email-creative-builder",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "email/engage/subject-line-lab/SKILL.md:95",
+      "condition_text": "To score + run the vetoes (terminal for this chain): email-quality-auditor — computes the profile-weighted EQS and enforces S1/S2/N1/D1. This skill computes no score and runs no veto.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "subject-line-lab",
+      "gate": "email-quality-auditor",
+      "id": "subject-line-lab--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "email/engage/subject-line-lab/SKILL.md:94",
+      "condition_text": "If a subject carries a [needs source] claim: offer-claims-registry — register the claim with evidence provenance and approved wording, then swap the resolved wording back into the flagged variant.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "subject-line-lab",
+      "gate": null,
+      "id": "subject-line-lab--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "email/engage/subject-line-lab/SKILL.md:91",
+      "condition_text": "Primary: send-experiment-designer — design the one-variable-per-cell A/B / send-time test across the surviving ranked subject variants (their SUBJ-* ids carry straight into the test cells).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "subject-line-lab",
+      "gate": null,
+      "id": "subject-line-lab--send-experiment-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "send-experiment-designer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "seo-geo/tune/technical-seo-checker/SKILL.md:166",
+      "condition_text": "Primary: on-page-seo-checker — continue from infrastructure issues into page-level remediation.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "technical-seo-checker",
+      "gate": null,
+      "id": "technical-seo-checker--on-page-seo-checker",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "on-page-seo-checker",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:97",
+      "condition_text": "Alternate: audience-mapper — confirm which trends actually resonate with your audience before committing.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "trend-spotter",
+      "gate": null,
+      "id": "trend-spotter--audience-mapper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "audience-mapper",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:98",
+      "condition_text": "Alternate: fit-scorer — score which creators fit the chosen trends and the brand before committing.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "trend-spotter",
+      "gate": null,
+      "id": "trend-spotter--fit-scorer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "fit-scorer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:96",
+      "condition_text": "Primary: influencer-discovery — turn the chosen trends into a shortlist of creators who can execute them.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "trend-spotter",
+      "gate": null,
+      "id": "trend-spotter--influencer-discovery",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "influencer-discovery",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "social/explore/voice-dossier-builder/SKILL.md:87",
+      "condition_text": "If no channel set is decided yet: channel-portfolio-planner — pick the channels first, then map registers onto them.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "voice-dossier-builder",
+      "gate": null,
+      "id": "voice-dossier-builder--channel-portfolio-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "channel-portfolio-planner",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "social/explore/voice-dossier-builder/SKILL.md:85",
+      "condition_text": "Primary: platform-norm-profiler — the dossier says how you sound; the dated norm cards say what each platform allows. Craft needs both before drafting.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "voice-dossier-builder",
+      "gate": null,
+      "id": "voice-dossier-builder--platform-norm-profiler",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "platform-norm-profiler",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "social/explore/voice-dossier-builder/SKILL.md:86",
+      "condition_text": "If norm cards are already current: social-calendar-builder — apply the pillars and cadence to the always-on calendar.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "voice-dossier-builder",
+      "gate": null,
+      "id": "voice-dossier-builder--social-calendar-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "social-calendar-builder",
+      "type": "sequential"
+    }
+  ],
+  "schema_version": "1.0",
+  "shard_id": "edges-09"
+}

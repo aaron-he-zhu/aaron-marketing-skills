@@ -6,7 +6,9 @@
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
+<!-- GENERATED:BEGIN release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-18.0.0-orange" alt="Version"></a>
+<!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
 </p>
@@ -46,6 +48,7 @@ The authoritative typed topology is [`references/system-catalog.json`](reference
 - [Why this library](#why-this-library)
 - [Install](#install)
 - [First run](#first-run)
+- [Capability profiles](#capability-profiles)
 - [Architecture](#architecture)
   - [The shared skill contract](#the-shared-skill-contract)
   - [The system: a four-layer marketing operating system](#the-system-a-four-layer-marketing-operating-system)
@@ -128,6 +131,36 @@ Or use the slash commands — `/auto` for routing, or a discipline entrypoint:
 ```
 
 `/aaron-marketing:auto` infers intent and runs the smallest useful workflow, stopping only at blocking decisions. Every skill works with pasted data; optional tools are documented in [CONNECTORS.md](CONNECTORS.md).
+
+---
+
+## Capability profiles
+
+A fresh project runs **Lite**, including when you installed the full
+Governed-ceiling plugin. Choose a larger profile only when the job needs its
+mechanisms:
+
+| Profile | Adds | Typical use |
+|---|---|---|
+| **Lite** | The 120 authored skills, `/auto`, deterministic scoring, inline delivery, canonical-state reads | Briefs, plans, drafts, analysis, and most day-to-day work |
+| **Pro** | Connectors and explicitly requested saved audits | Tool-assisted research and persistent audit artifacts |
+| **Governed** | Memory/registry writes, verified run evidence, deterministic context, controller, workflow and audit loops | Stateful, recoverable, independently verifiable operations |
+
+The installed archive is a hard ceiling; the effective project profile may be
+lower. Select the archive in the installer/admin surface, or select the logical
+profile through a one-invocation `--profile`, `AARON_MARKETING_PROFILE`, or the
+closed `.aaron-marketing/profile.json` project config. These controls do not add
+a slash command: the public grammar remains exactly `/auto` plus the seven
+discipline commands, and every profile preserves the seven 4×4 loops and their
+TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP acronyms.
+
+Profiles never disable consent, claims, PII/secret handling, external-mutation
+approval, audit-verdict integrity, or release provenance. Switching profiles
+also never deletes existing state. Standalone one-folder installs have a Lite
+physical ceiling and degrade fail-closed when a root runtime is absent.
+Configuration, archive selection, legacy-project migration, and
+`LEGACY_RUN_BLOCKED` recovery are documented in
+[`references/capability-profiles.md`](references/capability-profiles.md).
 
 ---
 
@@ -651,7 +684,7 @@ docs/            # 9 localized READMEs + contributor docs (connector playbook, a
 .claude-plugin/  # plugin.json + marketplace.json mirror
 ```
 
-This source repository contains both runtime and maintenance assets. User distributions are allowlisted by [`references/distribution-files.json`](references/distribution-files.json) and built with `python3 scripts/build-distribution.py --output <dir> --plugin`; tests, evals, CI, generators, and contributor-only documentation are intentionally excluded. A standalone skill build uses `--skill <catalog-path>` and contains only that skill directory.
+This source repository contains both runtime and maintenance assets. User distributions are allowlisted by [`references/distribution-files.json`](references/distribution-files.json) and built with `python3 scripts/build-distribution.py --output <dir> --plugin --profile lite|pro|governed`; tests, evals, CI, generators, and contributor-only documentation are intentionally excluded. A standalone skill build uses `--skill <catalog-path>`, contains only that skill directory, and declares a Lite ceiling. Bare `--plugin` remains a deprecated Governed-ceiling alias through v20; release automation selects the profile explicitly. Every output carries a per-file SHA-256 `distribution-manifest.json`; the builder rejects symlinks, special files, and multiply linked files, and `--verify-manifest <dir>` revalidates the complete payload. Every live release publisher/projector enforces clean, freshly refreshed pushed provenance; per-skill and built-package registry payloads come from a private export of that commit and bind its repository/commit identity into the verified manifest.
 
 ---
 
@@ -678,9 +711,16 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 | `check-stdlib-only.sh` | Dependency-creep guard + the Paid-Ads keyed-API red line. |
 | `check-versions.sh` | Version-sync guard: system catalog, plugin/marketplace/OpenClaw manifests, root + localized README badges, AGENTS/CLAUDE/VERSIONS, GitHub About, and all 120 skill versions stay aligned. |
 | `tests/test_connectors_local.py` | Offline request-builder/parser tests spanning all 29 bundled connector modules (no network in CI). |
+| `tests/test_distribution_builder.py` | Distribution closure, per-file SHA-256 manifest, tamper detection, and adversarial symlink/hardlink/special-file rejection. |
+| `tests/test_release_assets.py` + `tests/test_create_github_release.py` + `tests/test_final_release_gate.py` | Exact-commit deterministic Lite/Pro/Governed archives, checksum/ledger integrity, private outcome receipt binding, immutable tag/Release orchestration, downloaded-asset verification, and live-publisher final-gate enforcement. |
+| `tests/test_publish_release.py` + `tests/test_publish_state.py` + `tests/test_registry_status.py` | Every live release entrypoint's clean/refreshed/pushed gate, commit-bound canonical registry snapshots/resume state, verified package payloads and remote source/content confirmation, plus dry-run independence. |
 | `tests/test_hook_artifact_gate.sh` | Behavior tests for the hook's Artifact Gate + SessionStart sanitization. |
 | `tests/test_run_events.py` | Operational event-tree/hash-chain, idempotency, concurrency, snapshot/save-point/envelope, privacy, recovery, and unsafe-path regressions. |
 | `tests/test_context_resolver.py` | Deterministic required/optional selection, freshness, conflict, dedupe, sensitivity/budget, signature, path, and immutable-output regressions. |
+| `generate-skill-contracts.py --check` | Proves all 120 skills have current hash-bound routing/input/output/completion/handoff machine contracts. |
+| `workflow-graph.py --check` + `tests/test_workflow_graph.py` | Proves the authoritative 120-node/374-edge graph, typed conditions, bounded re-entry, reachability, and Product Launch fan-out/join projection. |
+| `tests/test_workflow_loop.py` | Executes the real Product Launch graph through the generic bounded loop with route-matched evidence, independent validators, sibling isolation, retry/cycle/deadline/budget/stall/recovery, and explicit terminal outcomes. |
+| `check-engineering-maturity.py` | Scores 20 controls each for Prompt, Context, Harness, Loop, and Graph; each dimension must reach 95/100 and pass its hard gates, including current real-provider smoke evidence. |
 | `generate-auto-routing-shards.py --check` | Proves the runtime routing index and eight queryable shards are exact generated views of one 88-case source. |
 | `generate-auditor-prompt-contracts.py --check` | Proves the eight gate prompt contracts and 40 semantic variants match current catalogs, skills, runtime sources, and hashes. |
 | `check-context-budget.py` | Recursive per-reference caps plus the largest valid three-shard `/auto` assembled-context budget. |
@@ -692,7 +732,9 @@ Live endpoint drift is sampled separately by the **manual** [`scripts/connectors
 ## Contributing & project docs
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — authoring rules, the contribution checklist, and the authoritative 10-surface tracking list.
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
 - **[VERSIONS.md](VERSIONS.md)** — per-skill versions + changelog (current bundle: `18.0.0`).
+<!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](SECURITY.md)** · **[PRIVACY.md](PRIVACY.md)** · **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** — security, privacy, and community policy.
 - **[CLAUDE.md](CLAUDE.md)** / **[AGENTS.md](AGENTS.md)** — agent-facing context for this repo.
 

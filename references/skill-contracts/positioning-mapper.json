@@ -1,0 +1,385 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 105,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the alternatives list includes at least one non-vendor option (status quo / spreadsheet / manual process)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 212,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 107
+        },
+        "text": "every unique attribute is either verifiable or marked `[needs source]` and submitted to claims candidates"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 316,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 214
+        },
+        "text": "and the beachhead is scored on all three criteria with the onlyness statement holding in one sentence."
+      }
+    ],
+    "done_when": "the alternatives list includes at least one non-vendor option (status quo / spreadsheet / manual process); every unique attribute is either verifiable or marked `[needs source]` and submitted to claims candidates; and the beachhead is scored on all three criteria with the onlyness statement holding in one sentence.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/research/positioning-mapper/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 42
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/launch-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/research/competitor-analysis",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:positioning-mapper",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 154,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "message-house-builder"
+        ],
+        "text": "- **Primary**: [message-house-builder](../../assemble/message-house-builder/SKILL.md) — build the message house and PR-FAQ spine from the finished canvas."
+      },
+      {
+        "condition": "If the launch tier/type is not yet declared**: [launch-tier-planner](../launch-tier-planner/SKILL.md) — declare tier and type and open the risk register now that the canvas says what is worth launching.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 361,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 155
+        },
+        "target_skills": [
+          "launch-tier-planner"
+        ],
+        "text": "- **If the launch tier/type is not yet declared**: [launch-tier-planner](../launch-tier-planner/SKILL.md) — declare tier and type and open the risk register now that the canvas says what is worth launching."
+      },
+      {
+        "condition": "If persona evidence is missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to score the beachhead.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 541,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 362
+        },
+        "target_skills": [
+          "audience-mapper"
+        ],
+        "text": "- **If persona evidence is missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to score the beachhead."
+      },
+      {
+        "condition": "when the canvas is saved and the onlyness statement holds.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 879,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 543
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the canvas is saved and the onlyness statement holds."
+      }
+    ],
+    "next_best": "- **Primary**: [message-house-builder](../../assemble/message-house-builder/SKILL.md) — build the message house and PR-FAQ spine from the finished canvas.\n- **If the launch tier/type is not yet declared**: [launch-tier-planner](../launch-tier-planner/SKILL.md) — declare tier and type and open the risk register now that the canvas says what is worth launching.\n- **If persona evidence is missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to score the beachhead.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the canvas is saved and the onlyness statement holds.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "launch/research/positioning-mapper/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "audience-mapper",
+      "launch-tier-planner",
+      "message-house-builder"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "positioning-mapper",
+    "path": "launch/research/positioning-mapper/SKILL.md",
+    "phase": "research",
+    "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / offering> [known alternatives] [candidate segments]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 49,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "product facts and capability list (User-provided)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 108,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 51
+        },
+        "text": "win-loss reasons and user-interview notes (User-provided)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 251,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 110
+        },
+        "text": "[competitor-analysis](../../../seo-geo/survey/competitor-analysis/SKILL.md) findings from `memory/research/competitor-analysis/` when present"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 347,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 253
+        },
+        "text": "the stage record in `memory/launch-registry/` so the canvas matches what is actually shippable"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 485,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 349
+        },
+        "text": "competitor public messaging via `scripts/connectors/firecrawl.py` / `scripts/connectors/tavily.py` (keyless, robots pre-flight applies)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "product facts and capability list (User-provided); win-loss reasons and user-interview notes (User-provided); [competitor-analysis](../../../seo-geo/survey/competitor-analysis/SKILL.md) findings from `memory/research/competitor-analysis/` when present; the stage record in `memory/launch-registry/` so the canvas matches what is actually shippable; competitor public messaging via `scripts/connectors/firecrawl.py` / `scripts/connectors/tavily.py` (keyless, robots pre-flight applies).",
+    "source": {
+      "path": "launch/research/positioning-mapper/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 49,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the canvas to `memory/launch/positioning-mapper/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 259,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 51
+        },
+        "text": "unverifiable or comparative attribute claims marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` (this skill never adjudicates them)"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 522,
+          "path": "launch/research/positioning-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5",
+          "span_basis": "field-text",
+          "start_char": 261
+        },
+        "text": "any registry-grade stage/date fact it surfaces goes to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [launch-registry](../../../protocol/launch-registry/SKILL.md) is the sole writer of its records."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/research/positioning-mapper/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5"
+    },
+    "summary": "a positioning canvas document — named competitive alternatives (including status quo), unique attributes with verifiability status, value themes as attribute→benefit→value chains, a beachhead segment scored on serviceability / pain intensity / reachability, a one-sentence onlyness statement — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the canvas to `memory/launch/positioning-mapper/`; unverifiable or comparative attribute claims marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` (this skill never adjudicates them); any registry-grade stage/date fact it surfaces goes to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [launch-registry](../../../protocol/launch-registry/SKILL.md) is the sole writer of its records."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the message house or per-channel launch copy — use message-house-builder; not for audience/persona profiling itself — use audience-mapper; not for SEO keyword positioning — use keyword-research. 定位画布/竞争替代品/独特价值/滩头细分",
+    "description": "Use when the user asks to \"map our positioning\", \"name our competitive alternatives\", or \"pick a beachhead segment for the launch\"; produces a Dunford-style positioning canvas — named competitive alternatives (including spreadsheet and status quo), unique attributes (verifiable, or routed to the claims ledger), value themes (attribute→benefit→value chains), a target beachhead segment scored on serviceability / pain intensity / reachability, and a one-sentence onlyness statement — the sole upstream of the message house and the entity-signal source for the canonical entity profile. Not for the message house or per-channel launch copy — use message-house-builder; not for audience/persona profiling itself — use audience-mapper; not for SEO keyword positioning — use keyword-research. 定位画布/竞争替代品/独特价值/滩头细分",
+    "source": {
+      "path": "launch/research/positioning-mapper/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "1787264683ce6254d9a73623c89acf007426ee9459a1f02c122cfcdf7e4ec7f5"
+    },
+    "trigger_phrases": [
+      "map our positioning",
+      "name our competitive alternatives",
+      "pick a beachhead segment for the launch"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when defining launch positioning before any launch copy exists: naming the real competitive alternatives (including spreadsheet / manual process / status quo), isolating unique attributes, mapping value themes, choosing the beachhead segment, or writing the onlyness statement. The first move of the RAMP Research phase, the sole upstream of message-house-builder, and the entity-signal source for entity-registry. Not the message house itself and not persona research."
+  },
+  "schema_version": "1.0"
+}

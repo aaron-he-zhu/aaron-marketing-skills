@@ -1,0 +1,364 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 215,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the six signal categories have Pass/Partial/Fail/Unknown observations with evidence, identity conflicts are resolved or left open, every accepted change has an event ID/offset/revision, and `verify entities` passes."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 519,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 217
+        },
+        "text": "Only a host-capability `entity-registry` principal may accept/reject proposals or upsert/transition canonical entity state. Other skills may append only `operation: propose`. A host-capability `memory-management` principal may tombstone or erase under explicit authority. The NDJSON stream is canonical"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 611,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 521
+        },
+        "text": "JSON and Markdown projections are rebuildable views and must never be edited as authority."
+      }
+    ],
+    "done_when": "the six signal categories have Pass/Partial/Fail/Unknown observations with evidence, identity conflicts are resolved or left open, every accepted change has an event ID/offset/revision, and `verify entities` passes.\n\nOnly a host-capability `entity-registry` principal may accept/reject proposals or upsert/transition canonical entity state. Other skills may append only `operation: propose`. A host-capability `memory-management` principal may tombstone or erase under explicit authority. The NDJSON stream is canonical; JSON and Markdown projections are rebuildable views and must never be edited as authority.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "protocol/entity-registry/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "protocol/entity-registry/references/entity-signal-checklist.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "0f652a6a6a5659ec53448183c4200a63b8067a8c3e1293c071ce49462caf6958",
+        "source_line": 75
+      },
+      {
+        "path": "protocol/entity-registry/references/knowledge-graph-guide.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "c19a6dd7e01fd13773c28253a66deafb4f1ff2c73c913216e38257fcdcd86364",
+        "source_line": 76
+      },
+      {
+        "path": "protocol/entity-registry/references/knowledge-panel-wikidata-guide.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "962ffc1685ad13ad71fa863774e3a2c5768fc294e69e2a5a6a8a2ad90e1b2a69",
+        "source_line": 77
+      },
+      {
+        "path": "references/entity-geo-handoff-schema.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "25cc6dc95c6a9c9eed0f9ac3c601a536da6fe3c5186678caed2b8c0a762b5e7a",
+        "source_line": 53
+      },
+      {
+        "path": "references/registry-event-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
+        "source_line": 53
+      },
+      {
+        "path": "references/registry-event.schema.json",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "131cde942c33755578e8650bdf831d168f53d20b06a6b44aa9a8f8244a39ef9c",
+        "source_line": 67
+      },
+      {
+        "path": "references/runtime-invocation.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "source_line": 53
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 30
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 78
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/events/entities.ndjson",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "canonical",
+        "kind": "file",
+        "path": "memory/projections/entities.json",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:entity-registry",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 104,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "serp-markup-builder"
+        ],
+        "text": "- **Schema implementation:** [serp-markup-builder](../../seo-geo/implement/serp-markup-builder/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 212,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 105
+        },
+        "target_skills": [
+          "geo-content-optimizer"
+        ],
+        "text": "- **AI-citable page work:** [geo-content-optimizer](../../seo-geo/implement/geo-content-optimizer/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 294,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 213
+        },
+        "target_skills": [
+          "content-writer"
+        ],
+        "text": "- **New page:** [content-writer](../../seo-geo/implement/content-writer/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 369,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 295
+        },
+        "target_skills": [
+          "narrative-registry"
+        ],
+        "text": "- **Canon conflict:** [narrative-registry](../narrative-registry/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 441,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 370
+        },
+        "target_skills": [
+          "memory-management"
+        ],
+        "text": "- **Archive/erase:** [memory-management](../memory-management/SKILL.md)"
+      }
+    ],
+    "next_best": "- **Schema implementation:** [serp-markup-builder](../../seo-geo/implement/serp-markup-builder/SKILL.md)\n- **AI-citable page work:** [geo-content-optimizer](../../seo-geo/implement/geo-content-optimizer/SKILL.md)\n- **New page:** [content-writer](../../seo-geo/implement/content-writer/SKILL.md)\n- **Canon conflict:** [narrative-registry](../narrative-registry/SKILL.md)\n- **Archive/erase:** [memory-management](../memory-management/SKILL.md)",
+    "summary": "Use [skill-contract.md](../../references/skill-contract.md). Include changed event IDs, latest projection offset/revision, unresolved identity conflicts, Narrative/claims dependency tuple, and one next skill.",
+    "summary_ref": {
+      "path": "protocol/entity-registry/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-writer",
+      "geo-content-optimizer",
+      "memory-management",
+      "narrative-registry",
+      "serp-markup-builder"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "protocol",
+    "name": "entity-registry",
+    "path": "protocol/entity-registry/SKILL.md",
+    "phase": "protocol",
+    "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+    "version": "18.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<entity aggregate-id/name or 'review entity proposals'>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "classified",
+        "kind": "project-resource",
+        "requirement": "optional",
+        "source": {
+          "end_char": 160,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "`memory/events/entities.ndjson`, `memory/projections/entities.json`, the Narrative and claims projections, verified source records, and optional rendered views."
+      }
+    ],
+    "extraction_status": "classified",
+    "reads": "`memory/events/entities.ndjson`, `memory/projections/entities.json`, the Narrative and claims projections, verified source records, and optional rendered views.",
+    "source": {
+      "path": "protocol/entity-registry/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 61,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "authorized entity events through `scripts/registry-events.py`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 159,
+          "path": "protocol/entity-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70",
+          "span_basis": "field-text",
+          "start_char": 63
+        },
+        "text": "a Markdown view under `memory/entities/` may then be regenerated from accepted projection state."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "protocol/entity-registry/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70"
+    },
+    "summary": "authorized entity events through `scripts/registry-events.py`; a Markdown view under `memory/entities/` may then be regenerated from accepted projection state.",
+    "summary_source": "writes-fallback",
+    "writes": "authorized entity events through `scripts/registry-events.py`; a Markdown view under `memory/entities/` may then be regenerated from accepted projection state."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for page-level AI-citation readiness - use geo-content-optimizer; not for human-facing brand canon - use narrative-registry. 实体注册/知识图谱",
+    "description": "Use when the user asks to \"optimize entity presence\", reconcile an entity identity, or update canonical Knowledge Graph facts; audits and maintains machine-facing identity, sameAs, schema, disambiguation, and AI-recognition evidence through the entities registry. Not for page-level AI-citation readiness - use geo-content-optimizer; not for human-facing brand canon - use narrative-registry. 实体注册/知识图谱",
+    "source": {
+      "path": "protocol/entity-registry/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "b5352d8bc93458ea6e6d8e8899438a4f44aba5dcd873b3c38e7a96268572cb70"
+    },
+    "trigger_phrases": [
+      "optimize entity presence"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when auditing, reconciling, or updating canonical entity identity for Knowledge Graph, Wikidata, schema.org, sameAs, or AI-system disambiguation."
+  },
+  "schema_version": "1.0"
+}

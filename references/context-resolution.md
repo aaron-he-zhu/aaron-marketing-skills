@@ -2,14 +2,40 @@
 
 `scripts/context-resolver.py` turns an explicit context request into a bounded,
 metadata-only manifest. It does not infer intent, search for files, estimate
-tokens, or copy source bodies. The host/router owns candidate discovery; the
-resolver owns reproducible selection and fail-closed evidence.
+tokens, or copy source bodies. `scripts/context-plan.py` can perform closed,
+machine-contract-backed candidate discovery; the resolver owns reproducible
+selection and fail-closed evidence.
 
 Schemas (the manifest schema embeds the request shape, so it has no external
 `$ref` and can be resolved offline as one document):
 
 - `references/context-request.schema.json` — caller input
 - `references/context-manifest.schema.json` — immutable result
+
+## Profile boundary
+
+Context planning and creation of a verified run manifest are Governed
+capabilities. Before planning or resolving output, the host must run the
+read-only profile diagnostic in
+[`runtime-invocation.md`](runtime-invocation.md) and require
+`policy.new_run_allowed: true`. Lite and Pro may validate a supplied document
+for diagnostics when the relevant validator is physically present, but they
+must not create run evidence or claim a resolver-verified active run.
+
+A nonterminal pre-v19 stream is `LEGACY_RUN_BLOCKED`. The v19 planner,
+resolver, and controller must not resolve a replacement manifest against v19
+catalog/skill bytes, resume the old run, or append a checkpoint/envelope. Lite
+inline/read-only work can continue outside that stream until the old run is
+drained before upgrade. Close it with the pinned pre-v19 runtime's valid
+finish/abort path and verify the terminal event before invoking v19 again. If
+that runtime cannot be verified, retain the stream read-only or restore a
+verified backup; never hand-edit the event file or use a v19 manifest to
+retrofit the old run.
+
+Profile resolution and profile switching never rewrite a context manifest,
+registry stream, projection, save point, or envelope. A v19 run binds its
+runtime identity in the root `run_started` event; the catalog and target-skill
+identities below remain independent content bindings.
 
 ## Request contract
 
@@ -45,7 +71,9 @@ cross-cutting exception: their selected primary shard records the topical entry 
 (including the existing SEO/GEO shard for the memory-management lifecycle cases).
 The target skill must exist in `references/system-catalog.json`; a discipline command can target
 only a skill in that discipline. The resolver also checks the target
-`SKILL.md` name/version and records both its byte hash and the catalog version/hash.
+`SKILL.md` name plus independent semver and records its byte hash alongside the
+separate catalog version/hash. A skill version is not required to equal the
+architecture version.
 
 ## Selection algorithm
 
@@ -104,6 +132,8 @@ byte counts, selection provenance, omissions, conflicts, and offsets—never sou
 bodies. This makes deterministic replay part of the artifact rather than a
 caller-side assertion. `token_estimate` and
 `estimator` are deliberately `null`; bytes are the host-independent budget.
+The route records `skill_version` separately from `catalog_version`; the former
+is the target SKILL.md contract version and the latter is architecture identity.
 
 ## Context identity
 
@@ -126,7 +156,9 @@ snapshots, save points, and run envelopes.
 
 ## CLI
 
-Resolve `AARON_SKILLS_ROOT` with the [root runtime invocation contract](runtime-invocation.md), then keep the project root explicit:
+Resolve `AARON_SKILLS_ROOT` and a Governed effective profile with the
+[root runtime invocation contract](runtime-invocation.md), then keep the
+project root explicit:
 
 ```bash
 python3 "$AARON_SKILLS_ROOT/scripts/context-resolver.py" validate-request \
@@ -155,5 +187,6 @@ automatically; any drift requires a newly resolved manifest. Envelopes preserve 
 historical snapshot evidence and do not relabel changed current inputs as unchanged.
 
 The CLI exits `2` on contract, catalog, filesystem, budget, or immutable-output
-failure. Candidate enumeration and creation of output parent directories remain
-host responsibilities; the resolver never broadens its own context scope.
+failure. A caller may enumerate candidates itself or use the closed planner in
+`references/context-planning.md`; creation of resolver output parent directories
+remains a host responsibility. The resolver never broadens its own context scope.

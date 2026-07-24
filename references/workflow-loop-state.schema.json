@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workflow-loop-state.schema.json",
+  "title": "Rebuildable non-authoritative workflow loop state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "authoritative", "authority", "run_id",
+    "loop_id", "workflow_id", "objective", "hypothesis", "success_criteria",
+    "graph_sha256", "run_event_anchor", "evidence_cutoff", "approval_trust",
+    "deadline", "limits", "status",
+    "stage", "cycle", "frontier", "completed_nodes", "failed_actions",
+    "action_evidence", "cycle_summaries", "latest_verification",
+    "last_verification_signature", "stall_count", "accepted_decision",
+    "memory_proposal", "consumed_approval_nonces", "forced_outcome", "terminal", "counts",
+    "last_event_id", "last_event_hash", "last_occurred_at", "last_recorded_at"
+  ],
+  "properties": {
+    "$schema": { "const": "references/workflow-loop-state.schema.json" },
+    "schema_version": { "const": "1.0" },
+    "authoritative": { "const": false },
+    "authority": { "const": "non-authoritative-operational-planning" },
+    "run_id": { "$ref": "#/$defs/uuid" },
+    "loop_id": { "$ref": "#/$defs/safe_id" },
+    "workflow_id": { "$ref": "#/$defs/slug" },
+    "objective": { "type": "string", "minLength": 1 },
+    "hypothesis": { "type": "string", "minLength": 1 },
+    "success_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": { "$ref": "workflow-loop-request.schema.json#/$defs/success_criterion" }
+    },
+    "graph_sha256": { "$ref": "#/$defs/digest" },
+    "run_event_anchor": { "$ref": "#/$defs/reference" },
+    "evidence_cutoff": {
+      "$ref": "workflow-loop-plan.schema.json#/$defs/evidence_cutoff"
+    },
+    "approval_trust": {
+      "oneOf": [
+        { "$ref": "workflow-loop-plan.schema.json#/$defs/approval_trust" },
+        { "type": "null" }
+      ]
+    },
+    "deadline": { "$ref": "#/$defs/timestamp" },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_cycles", "max_events", "max_actions", "max_retries",
+        "max_verifications", "max_memory_proposals", "stall_limit"
+      ],
+      "properties": {
+        "max_cycles": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "max_events": { "type": "integer", "minimum": 8, "maximum": 512 },
+        "max_actions": { "type": "integer", "minimum": 1, "maximum": 256 },
+        "max_retries": { "type": "integer", "minimum": 0, "maximum": 32 },
+        "max_verifications": { "type": "integer", "minimum": 1, "maximum": 64 },
+        "max_memory_proposals": { "type": "integer", "minimum": 0, "maximum": 16 },
+        "stall_limit": { "type": "integer", "minimum": 2, "maximum": 8 }
+      }
+    },
+    "status": { "enum": ["absent", "active", "terminal"] },
+    "stage": {
+      "enum": [
+        "planned", "action", "verification", "decision", "memory-proposal",
+        "escalation-required", "terminal-ready", "terminal"
+      ]
+    },
+    "cycle": { "type": "integer", "minimum": 1, "maximum": 3 },
+    "frontier": { "$ref": "#/$defs/node_array" },
+    "completed_nodes": { "$ref": "#/$defs/node_array" },
+    "failed_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["node", "failure_code", "retryable", "evidence", "cycle"],
+        "properties": {
+          "node": { "$ref": "#/$defs/slug" },
+          "failure_code": { "$ref": "#/$defs/safe_id" },
+          "retryable": { "type": "boolean" },
+          "evidence": { "$ref": "#/$defs/reference_array" },
+          "cycle": { "type": "integer", "minimum": 1, "maximum": 3 }
+        }
+      }
+    },
+    "action_evidence": {
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/slug" },
+      "additionalProperties": { "$ref": "#/$defs/reference_array" }
+    },
+    "cycle_summaries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cycle", "verification_result", "verification_signature",
+          "completed_nodes", "decision_reason_codes"
+        ],
+        "properties": {
+          "cycle": { "type": "integer", "minimum": 1, "maximum": 3 },
+          "verification_result": { "enum": ["fail", "inconclusive"] },
+          "verification_signature": { "$ref": "#/$defs/digest" },
+          "completed_nodes": { "$ref": "#/$defs/node_array" },
+          "decision_reason_codes": { "$ref": "#/$defs/code_array" }
+        }
+      }
+    },
+    "latest_verification": {
+      "oneOf": [
+        { "$ref": "#/$defs/verification_state" },
+        { "type": "null" }
+      ]
+    },
+    "last_verification_signature": {
+      "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }]
+    },
+    "stall_count": { "type": "integer", "minimum": 0 },
+    "accepted_decision": { "type": "boolean" },
+    "memory_proposal": {
+      "oneOf": [
+        { "$ref": "workflow-loop-request.schema.json#/$defs/memory_proposal_payload" },
+        { "type": "null" }
+      ]
+    },
+    "consumed_approval_nonces": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/uuid" }
+    },
+    "forced_outcome": {
+      "enum": [null, "converged", "waiting", "exhausted", "escalated", "failed", "aborted"]
+    },
+    "terminal": {
+      "oneOf": [
+        { "$ref": "#/$defs/terminal_state" },
+        { "type": "null" }
+      ]
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "events", "actions", "retries", "verifications", "decisions",
+        "memory_proposals"
+      ],
+      "properties": {
+        "events": { "type": "integer", "minimum": 0 },
+        "actions": { "type": "integer", "minimum": 0 },
+        "retries": { "type": "integer", "minimum": 0 },
+        "verifications": { "type": "integer", "minimum": 0 },
+        "decisions": { "type": "integer", "minimum": 0 },
+        "memory_proposals": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "last_event_id": {
+      "oneOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }]
+    },
+    "last_event_hash": { "$ref": "#/$defs/digest" },
+    "last_occurred_at": {
+      "oneOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }]
+    },
+    "last_recorded_at": {
+      "oneOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }]
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "safe_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,127}$"
+    },
+    "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref", "sha256"],
+      "properties": {
+        "kind": { "enum": ["run-event", "artifact", "evaluation", "registry-projection"] },
+        "ref": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "reference_array": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/reference" }
+    },
+    "node_array": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/slug" }
+    },
+    "code_array": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/safe_id" }
+    },
+    "verification_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result", "finding_codes", "signature", "criterion_results"],
+      "properties": {
+        "result": { "enum": ["pass", "fail", "inconclusive"] },
+        "finding_codes": { "$ref": "#/$defs/code_array" },
+        "signature": { "$ref": "#/$defs/digest" },
+        "criterion_results": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "workflow-loop-request.schema.json#/$defs/criterion_result" }
+        }
+      }
+    },
+    "terminal_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome", "reason_codes", "evidence", "bounds"],
+      "properties": {
+        "outcome": {
+          "enum": ["converged", "waiting", "exhausted", "escalated", "failed", "aborted"]
+        },
+        "reason_codes": { "$ref": "#/$defs/code_array" },
+        "evidence": { "$ref": "#/$defs/reference_array" },
+        "bounds": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "deadline", "event-budget", "action-budget",
+              "verification-budget", "memory-proposal-budget"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

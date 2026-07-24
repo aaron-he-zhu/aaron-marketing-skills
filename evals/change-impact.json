@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "unmatched_policy": "smoke-only",
   "rules": [
     {
@@ -10,7 +10,8 @@
         "scripts/check-architecture.py",
         "scripts/generate-system-docs.py"
       ],
-      "selector": "all"
+      "selector": "all",
+      "severity": "S2"
     },
     {
       "id": "behavior-harness",
@@ -24,14 +25,16 @@
         "evals/change-impact.json",
         "evals/codex-behavior-*-output.schema.json"
       ],
-      "selector": "all"
+      "selector": "all",
+      "severity": "S3"
     },
     {
       "id": "authored-case-source",
       "patterns": [
         "evals/*/cases.md"
       ],
-      "selector": "source-ref"
+      "selector": "source-ref",
+      "severity": "S1"
     },
     {
       "id": "routing-library",
@@ -41,7 +44,8 @@
         "references/auto-routing/*.md",
         "scripts/generate-auto-routing-shards.py"
       ],
-      "selector": "auto-routing"
+      "selector": "auto-routing",
+      "severity": "S2"
     },
     {
       "id": "skill-contract",
@@ -49,14 +53,16 @@
         "*/*/*/SKILL.md",
         "protocol/*/SKILL.md"
       ],
-      "selector": "skill-contract"
+      "selector": "skill-contract",
+      "severity": "S1"
     },
     {
       "id": "command-contract",
       "patterns": [
         "commands/*.md"
       ],
-      "selector": "command-contract"
+      "selector": "command-contract",
+      "severity": "S2"
     },
     {
       "id": "auditor-methodology",
@@ -71,7 +77,8 @@
         "scripts/rubric-score.py",
         "scripts/validate-audit-artifact.py"
       ],
-      "selector": "auditors"
+      "selector": "auditors",
+      "severity": "S3"
     },
     {
       "id": "prompt-contract",
@@ -80,7 +87,8 @@
         "references/prompt-contracts/*.json",
         "scripts/generate-auditor-prompt-contracts.py"
       ],
-      "selector": "prompt-contract"
+      "selector": "prompt-contract",
+      "severity": "S3"
     },
     {
       "id": "shared-reference",
@@ -88,7 +96,8 @@
         "references/*.md",
         "references/platforms/*.md"
       ],
-      "selector": "reference-consumers"
+      "selector": "reference-consumers",
+      "severity": "S2"
     }
   ]
 }

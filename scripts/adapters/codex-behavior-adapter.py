@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """Optional, fail-closed Codex CLI adapter for behavior-eval protocol v2.
 
-Each request is evaluated in two isolated model calls.  The system under test
-(SUT) receives only the scenario, input summary, and hash-bound source bytes.
-An independent judge receives the bounded candidate response plus the expected
-and forbidden assertions.  Both calls use a private temporary CODEX_HOME, a
-named read-only permission profile, no tool/network features, and isolated
-project roots.  Raw prompts and responses are never persisted outside that
-private lifetime; only cryptographic digests are returned as provenance.
+Each request is evaluated in one isolated system-under-test (SUT) call followed
+by one, or at most two, isolated judge calls.  The SUT receives only the
+scenario, input summary, and hash-bound source bytes.  An independent judge
+receives the bounded candidate response plus the expected and forbidden
+assertions.  Every call uses a private temporary CODEX_HOME, a named read-only
+permission profile, no tool/network features, and an isolated project root.
+Raw prompts and responses are never persisted outside that private lifetime;
+only cryptographic digests are returned as provenance.
 """
 from __future__ import annotations
 
 import argparse
 import base64
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import contextmanager
 from dataclasses import dataclass
 import datetime as dt
@@ -33,8 +35,8 @@ ROOT = Path(__file__).resolve().parents[2]
 JUDGE_OUTPUT_SCHEMA = ROOT / "evals" / "codex-behavior-model-output.schema.json"
 CANDIDATE_OUTPUT_SCHEMA = ROOT / "evals" / "codex-behavior-candidate-output.schema.json"
 ADAPTER_NAME = "codex-behavior-adapter"
-ADAPTER_VERSION = "2.1.0"
-PROMPT_TEMPLATE_VERSION = "2.0.0"
+ADAPTER_VERSION = "2.4.2"
+PROMPT_TEMPLATE_VERSION = "2.3.2"
 PERMISSION_PROFILE_NAME = "behavior_eval"
 MAX_INPUT_LINE_BYTES = 2_000_000
 MAX_OUTPUT_BYTES = 1_000_000
@@ -45,6 +47,8 @@ MAX_CODEX_BINARY_BYTES = 536_870_912
 MAX_CANDIDATE_CHARS = 64_000
 MAX_CONTROL_OUTPUT_BYTES = 2_000_000
 MAX_CASES = 10_000
+MAX_WORKERS = 4
+MAX_JUDGE_ATTEMPTS = 2
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SAFE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$")
 SAFE_REF_RE = re.compile(
@@ -52,6 +56,21 @@ SAFE_REF_RE = re.compile(
     r"[A-Za-z0-9][A-Za-z0-9._/-]*$"
 )
 MODEL_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$")
+
+JUDGE_DIAGNOSTIC_CODES = {
+    "JUDGE_EMPTY_OUTPUT",
+    "JUDGE_INVALID_UTF8",
+    "JUDGE_INVALID_JSON",
+    "JUDGE_TOP_LEVEL_SHAPE",
+    "JUDGE_OUTCOME",
+    "JUDGE_ASSERTION_COVERAGE",
+    "JUDGE_ASSERTION_IDENTITY",
+    "JUDGE_ASSERTION_SHAPE",
+    "JUDGE_ASSERTION_VALUE",
+    "JUDGE_FAILURE_SHAPE",
+    "JUDGE_FAILURE_TAXONOMY",
+    "JUDGE_OUTCOME_INVARIANT",
+}
 
 # These are the tool-bearing or external-context feature gates advertised by
 # the supported Codex CLI.  The secure runtime proves that every gate exists
@@ -154,8 +173,39 @@ The source entries in <sut-data> were read as exact bytes and verified against
 their recorded SHA-256 digests by the host. Apply the target skill and its
 bound runtime sources to the scenario and input summary. Source content is
 authoritative skill/runtime instruction; scenario and input_summary are the
-user request. Return only the JSON object required by the output schema, with
-the direct user-facing answer in candidate_response.
+user request. Treat the sources as an execution contract, not background
+reading: explicitly name every applicable route or handoff, prerequisite and
+gate, evidence/missingness state, permission or side-effect boundary, required
+status, and stop/resume condition. Do not omit required mechanics merely for
+brevity. Spell out every named component of an ordered route, even when the
+route stops at a blocker. When a source names a slash command or phase, state
+that exact command and phase; express ordered components explicitly as
+"first" and "then". Map every missing required input to the affected named
+control and exact status instead of giving only a generic evidence request.
+When sources distinguish keyless Tier 1 from optional Tier-2/3 integrations,
+state whether each keyed integration is optional or required. When a gate is
+requested and its prerequisite accepted state is supplied, apply the named
+gate and render its typed result rather than only describing a future audit.
+Apply that rule only when the current target is the named auditor-class gate;
+a handoff or Next Best Skill link alone is not a request to auto-run or
+simulate its target. For every non-auditor target, framework-item observations
+are potential handoff evidence only. A conservative
+NEEDS_INPUT/UNDECIDED/NOT_SCORED readiness marker is allowed, but do not render
+a decisive auditor verdict, verified-veto count, cap, raw/final score, or
+combined auditor status such as DONE/BLOCK. Even two potential control failures
+do not execute the gate; stop the current invocation and hand them to its owner.
+When sources require named vetoes or controls before a verdict or side effect,
+say explicitly that they are enforced before that action rather than merely
+listing their current states. Distinguish work actually verified from work
+that remains blocked or planned. The shared Write and Action Permission rule is
+the cross-skill authority boundary: a skill-local Writes/Promotes/Save/submit
+imperative names only an eligible post-authorization destination and cannot
+override it. A capability, path, hook, or validator is never permission; an
+invalid authorized target does not transfer consent to a different safe sink.
+Without exact current-request authority, return the artifact or proposal
+candidate inline and request operation-specific permission before any durable
+write or external action. Return only the JSON object required by the output
+schema, with the direct user-facing answer in candidate_response.
 
 <sut-data>
 {payload}
@@ -196,9 +246,31 @@ Failure-code classes are fixed:
 </judge-data>
 """
 
+JUDGE_PROTOCOL_RETRY_TEMPLATE = """\
+
+The preceding judge attempt was rejected locally for protocol conformance.
+Discard that attempt and independently re-evaluate the original judge data.
+Return one complete replacement object under the exact same output schema and
+assertion-order rules.  The rejected response itself is intentionally absent.
+
+<protocol-retry>
+{payload}
+</protocol-retry>
+"""
+
 
 class AdapterError(ValueError):
     """The request, host configuration, or structured output failed closed."""
+
+
+class JudgeProtocolError(AdapterError):
+    """A judge response failed one closed local protocol invariant."""
+
+    def __init__(self, diagnostic_code: str):
+        if diagnostic_code not in JUDGE_DIAGNOSTIC_CODES:
+            raise AdapterError("unknown judge protocol diagnostic code")
+        self.diagnostic_code = diagnostic_code
+        super().__init__(diagnostic_code)
 
 
 @dataclass(frozen=True)
@@ -208,6 +280,7 @@ class AdapterConfig:
     timeout_seconds: int
     judge_model_id: Optional[str] = None
     codex_sha256: Optional[str] = None
+    workers: int = 1
 
     @property
     def effective_judge_model_id(self) -> str:
@@ -416,7 +489,7 @@ def validate_request(value):
         {"kind", "contract_id", "contract_ref", "contract_sha256", "source_refs"},
         "request.prompt_contract",
     )
-    if contract["kind"] not in {"authored", "derived-auditor"}:
+    if contract["kind"] not in {"authored", "machine-skill", "derived-auditor"}:
         raise AdapterError("request.prompt_contract.kind is invalid")
     safe_id(contract["contract_id"], "request.prompt_contract.contract_id")
     safe_ref(contract["contract_ref"], "request.prompt_contract.contract_ref")
@@ -710,6 +783,22 @@ def build_judge_prompt(request, candidate_response: str) -> str:
         ],
     }
     return JUDGE_PROMPT_TEMPLATE.format(payload=canonical_json(payload))
+
+
+def build_judge_retry_prompt(
+        original_prompt: str, diagnostic_code: str, rejected_response: bytes) -> str:
+    if diagnostic_code not in JUDGE_DIAGNOSTIC_CODES:
+        raise AdapterError("unknown judge protocol diagnostic code")
+    if len(rejected_response) > MAX_OUTPUT_BYTES:
+        raise AdapterError("rejected judge response exceeds its byte bound")
+    payload = {
+        "diagnostic_code": diagnostic_code,
+        "response_sha256": sha256_bytes(rejected_response),
+        "size_bytes": len(rejected_response),
+    }
+    return original_prompt + JUDGE_PROTOCOL_RETRY_TEMPLATE.format(
+        payload=canonical_json(payload),
+    )
 
 
 def _write_private_file(path: Path, value: bytes, mode: int = 0o600):
@@ -1025,9 +1114,10 @@ def validate_candidate_output(value):
 
 
 def validate_model_output(value, request):
-    exact_object(value, {"outcome", "assertions", "failures"}, "Codex judge output")
+    if not isinstance(value, dict) or set(value) != {"outcome", "assertions", "failures"}:
+        raise JudgeProtocolError("JUDGE_TOP_LEVEL_SHAPE")
     if value["outcome"] not in {"passed", "behavior-failed", "inconclusive"}:
-        raise AdapterError("Codex judge output outcome is invalid")
+        raise JudgeProtocolError("JUDGE_OUTCOME")
 
     case = request["case"]
     expected_ids = ["expected-%d" % index for index in range(1, len(case["expected_behavior"]) + 1)]
@@ -1035,35 +1125,47 @@ def validate_model_output(value, request):
     ordered_ids = expected_ids + forbidden_ids
     assertions = value["assertions"]
     if not isinstance(assertions, list) or len(assertions) != len(ordered_ids):
-        raise AdapterError("Codex judge output does not cover every assertion")
+        raise JudgeProtocolError("JUDGE_ASSERTION_COVERAGE")
     for index, assertion in enumerate(assertions):
-        exact_object(assertion, {"id", "kind", "verdict", "evidence"}, "assertion")
+        if not isinstance(assertion, dict) or set(assertion) != {
+                "id", "kind", "verdict", "evidence"}:
+            raise JudgeProtocolError("JUDGE_ASSERTION_SHAPE")
         assertion_id = ordered_ids[index]
         if assertion["id"] != assertion_id:
-            raise AdapterError("Codex judge output assertion order or ID is invalid")
+            raise JudgeProtocolError("JUDGE_ASSERTION_IDENTITY")
         expected_kind = "expected" if assertion_id.startswith("expected-") else "forbidden"
         if assertion["kind"] != expected_kind:
-            raise AdapterError("Codex judge output assertion kind is invalid")
+            raise JudgeProtocolError("JUDGE_ASSERTION_IDENTITY")
         if assertion["verdict"] not in {"met", "violated", "not-observed"}:
-            raise AdapterError("Codex judge output assertion verdict is invalid")
+            raise JudgeProtocolError("JUDGE_ASSERTION_VALUE")
         if expected_kind == "forbidden" and assertion["verdict"] == "met":
-            raise AdapterError("a forbidden assertion cannot have verdict met")
-        nonempty_string(assertion["evidence"], "assertion.evidence", 2000)
+            raise JudgeProtocolError("JUDGE_ASSERTION_VALUE")
+        if (
+                not isinstance(assertion["evidence"], str)
+                or not assertion["evidence"].strip()
+                or len(assertion["evidence"]) > 2000):
+            raise JudgeProtocolError("JUDGE_ASSERTION_VALUE")
 
     failures = value["failures"]
     if not isinstance(failures, list) or len(failures) > 64:
-        raise AdapterError("Codex judge output failures must be a bounded array")
+        raise JudgeProtocolError("JUDGE_FAILURE_SHAPE")
     failure_codes = []
     for item in failures:
-        exact_object(item, {"code", "class", "retryable", "summary"}, "failure")
+        if not isinstance(item, dict) or set(item) != {
+                "code", "class", "retryable", "summary"}:
+            raise JudgeProtocolError("JUDGE_FAILURE_SHAPE")
         code = item["code"]
         if code not in BEHAVIOR_CODE_CLASS or item["class"] != BEHAVIOR_CODE_CLASS[code]:
-            raise AdapterError("Codex judge output failure taxonomy is invalid")
+            raise JudgeProtocolError("JUDGE_FAILURE_TAXONOMY")
         if not isinstance(item["retryable"], bool):
-            raise AdapterError("Codex judge output failure retryable must be boolean")
+            raise JudgeProtocolError("JUDGE_FAILURE_TAXONOMY")
         if item["retryable"]:
-            raise AdapterError("behavior and inconclusive failures cannot be retryable")
-        nonempty_string(item["summary"], "failure.summary", 2000)
+            raise JudgeProtocolError("JUDGE_FAILURE_TAXONOMY")
+        if (
+                not isinstance(item["summary"], str)
+                or not item["summary"].strip()
+                or len(item["summary"]) > 2000):
+            raise JudgeProtocolError("JUDGE_FAILURE_TAXONOMY")
         failure_codes.append(code)
 
     expected_verdicts = [item["verdict"] for item in assertions[:len(expected_ids)]]
@@ -1079,23 +1181,35 @@ def validate_model_output(value, request):
     )
     inconclusive = "EVALUATOR_INCONCLUSIVE" in failure_codes
     if value["outcome"] == "passed" and (not passing_assertions or failures):
-        raise AdapterError("passed Codex judge output contradicts assertions or failures")
+        raise JudgeProtocolError("JUDGE_OUTCOME_INVARIANT")
     if value["outcome"] == "behavior-failed" and (
         inconclusive or not failures or not any(code != "EVALUATOR_INCONCLUSIVE" for code in failure_codes)
     ):
-        raise AdapterError("behavior-failed Codex judge output lacks a behavior taxonomy")
+        raise JudgeProtocolError("JUDGE_OUTCOME_INVARIANT")
     if value["outcome"] == "behavior-failed" and not behavior_failed:
-        raise AdapterError("behavior-failed Codex judge output has no failed assertion")
+        raise JudgeProtocolError("JUDGE_OUTCOME_INVARIANT")
     if value["outcome"] == "inconclusive" and (
             failure_codes != ["EVALUATOR_INCONCLUSIVE"]
             or behavior_failed
             or not unknown_evidence):
-        raise AdapterError(
-            "inconclusive Codex judge output requires unknown evidence without a deterministic failure"
-        )
+        raise JudgeProtocolError("JUDGE_OUTCOME_INVARIANT")
     if value["outcome"] != "inconclusive" and inconclusive:
-        raise AdapterError("inconclusive failure contradicts Codex judge output outcome")
+        raise JudgeProtocolError("JUDGE_OUTCOME_INVARIANT")
     return value
+
+
+def parse_and_validate_judge_output(raw: bytes, request):
+    if not raw:
+        raise JudgeProtocolError("JUDGE_EMPTY_OUTPUT")
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeError:
+        raise JudgeProtocolError("JUDGE_INVALID_UTF8") from None
+    try:
+        value = strict_json_loads(text, "Codex judge structured output")
+    except AdapterError:
+        raise JudgeProtocolError("JUDGE_INVALID_JSON") from None
+    return validate_model_output(value, request)
 
 
 def timestamp_now() -> dt.datetime:
@@ -1107,7 +1221,11 @@ def format_timestamp(value: dt.datetime) -> str:
 
 
 def prompt_template_sha256() -> str:
-    return sha256_json({"candidate": CANDIDATE_PROMPT_TEMPLATE, "judge": JUDGE_PROMPT_TEMPLATE})
+    return sha256_json({
+        "candidate": CANDIDATE_PROMPT_TEMPLATE,
+        "judge": JUDGE_PROMPT_TEMPLATE,
+        "judge_protocol_retry": JUDGE_PROTOCOL_RETRY_TEMPLATE,
+    })
 
 
 def parameters_sha256(config: AdapterConfig, runtime: Optional[SecureRuntime]) -> str:
@@ -1125,18 +1243,46 @@ def parameters_sha256(config: AdapterConfig, runtime: Optional[SecureRuntime]) -
             }
         ),
         "judge_model_id": config.effective_judge_model_id,
+        "judge_protocol_max_attempts": MAX_JUDGE_ATTEMPTS,
+        "judge_protocol_retry_policy": "full-regeneration-no-rejected-raw-v1",
         "judge_output_schema_sha256": runtime.judge_schema_sha256 if runtime else sha256_bytes(b""),
         "permission_config_sha256": runtime.config_sha256 if runtime else sha256_bytes(b""),
         "permission_profile": PERMISSION_PROFILE_NAME,
         "timeout_seconds_per_stage": config.timeout_seconds,
+        "result_order": "input-order",
+        "scheduler": "static-strided-v1",
+        "worker_limit": config.workers,
     })
 
 
-def combined_response_sha256(candidate_response: bytes, judge_response: bytes) -> str:
+def combined_response_sha256(candidate_response: bytes, judge_attempts) -> str:
     return sha256_json({
         "candidate_response_sha256": sha256_bytes(candidate_response),
-        "judge_response_sha256": sha256_bytes(judge_response),
+        "judge_attempts": judge_attempts,
     })
+
+
+def judge_attempt_record(
+        attempt: int, response: bytes, disposition: str,
+        diagnostic_code: Optional[str]):
+    if not 1 <= attempt <= MAX_JUDGE_ATTEMPTS:
+        raise AdapterError("judge attempt index exceeds its bound")
+    if len(response) > MAX_OUTPUT_BYTES:
+        raise AdapterError("judge response exceeds its byte bound")
+    if disposition not in {"accepted", "protocol-rejected"}:
+        raise AdapterError("judge attempt disposition is invalid")
+    if disposition == "accepted":
+        if diagnostic_code is not None:
+            raise AdapterError("accepted judge attempt cannot carry a diagnostic")
+    elif diagnostic_code not in JUDGE_DIAGNOSTIC_CODES:
+        raise AdapterError("rejected judge attempt requires a closed diagnostic")
+    return {
+        "attempt": attempt,
+        "response_sha256": sha256_bytes(response),
+        "size_bytes": len(response),
+        "disposition": disposition,
+        "diagnostic_code": diagnostic_code,
+    }
 
 
 def adapter_implementation_sha256() -> str:
@@ -1154,8 +1300,12 @@ def execution_provenance(
     ended_at: dt.datetime,
     elapsed_seconds: float,
     candidate_response: bytes,
-    judge_response: bytes,
+    judge_attempts,
 ):
+    attempts = [dict(item) for item in judge_attempts]
+    judge_response_sha256 = (
+        attempts[-1]["response_sha256"] if attempts else sha256_bytes(b"")
+    )
     return {
         "execution_mode": "real",
         "adapter_name": ADAPTER_NAME,
@@ -1171,8 +1321,9 @@ def execution_provenance(
         "prompt_template_sha256": prompt_template_sha256(),
         "parameters_sha256": parameters_sha256(config, runtime),
         "candidate_response_sha256": sha256_bytes(candidate_response),
-        "judge_response_sha256": sha256_bytes(judge_response),
-        "response_sha256": combined_response_sha256(candidate_response, judge_response),
+        "judge_response_sha256": judge_response_sha256,
+        "judge_attempts": attempts,
+        "response_sha256": combined_response_sha256(candidate_response, attempts),
         "started_at": format_timestamp(started_at),
         "ended_at": format_timestamp(ended_at),
         "latency_ms": min(86_400_000, max(0, round(elapsed_seconds * 1000))),
@@ -1218,6 +1369,11 @@ def not_observed_assertions(request):
 
 def _host_failure_code(completed) -> Tuple[str, bool, str]:
     diagnostic = ((completed.stdout or "") + "\n" + (completed.stderr or "")).lower()
+    if "invalid schema for response_format" in diagnostic or "invalid_json_schema" in diagnostic:
+        return (
+            "ADAPTER_PROTOCOL", False,
+            "Codex rejected the bundled structured-output schema before evaluation.",
+        )
     if any(marker in diagnostic for marker in ("unauthorized", "authentication", "not logged in", "api key", "401")):
         return "HOST_AUTH", False, "Codex CLI authentication failed before a two-stage result was produced."
     if any(marker in diagnostic for marker in ("rate limit", "rate-limit", "too many requests", "429", "quota")):
@@ -1239,12 +1395,13 @@ def _failure_result(
     ended_at: dt.datetime,
     elapsed_seconds: float,
     candidate_response: bytes = b"",
-    judge_response: bytes = b"",
+    judge_attempts=None,
 ):
     is_adapter = code.startswith("ADAPTER_")
+    attempts = [] if judge_attempts is None else judge_attempts
     provenance = execution_provenance(
         config, runtime, host_version, started_at, ended_at, elapsed_seconds,
-        candidate_response, judge_response,
+        candidate_response, attempts,
     )
     return result_envelope(
         request,
@@ -1334,7 +1491,7 @@ def evaluate_request(
     started_at = timestamp_now()
     started_monotonic = time.monotonic()
     candidate_raw = b""
-    judge_raw = b""
+    judge_attempts = []
     try:
         validate_request(request)
         if not root.is_absolute():
@@ -1344,16 +1501,12 @@ def evaluate_request(
             case_root = Path(case_temporary)
             os.chmod(case_root, 0o700)
             candidate_project = case_root / "candidate-project"
-            judge_project = case_root / "judge-project"
             outputs = case_root / "outputs"
-            for directory in (candidate_project, judge_project, outputs):
+            for directory in (candidate_project, outputs):
                 directory.mkdir(mode=0o700)
             staged = _stage_sources(candidate_project, sources)
-            os.chmod(judge_project, 0o500)
             candidate_output = outputs / "candidate.json"
-            judge_output = outputs / "judge.json"
             _write_private_file(candidate_output, b"", 0o600)
-            _write_private_file(judge_output, b"", 0o600)
 
             candidate_prompt = build_candidate_prompt(request, staged)
             try:
@@ -1368,7 +1521,7 @@ def evaluate_request(
                 return _failure_result(
                     request, config, runtime, host_version, "HOST_TIMEOUT", True,
                     "Codex CLI timed out during the SUT stage.", started_at, ended_at,
-                    time.monotonic() - started_monotonic, candidate_raw, judge_raw,
+                    time.monotonic() - started_monotonic, candidate_raw, judge_attempts,
                 )
             except OSError:
                 raise
@@ -1379,7 +1532,7 @@ def evaluate_request(
                 return _failure_result(
                     request, config, runtime, host_version, code, retryable, summary,
                     started_at, ended_at, time.monotonic() - started_monotonic,
-                    candidate_raw, judge_raw,
+                    candidate_raw, judge_attempts,
                 )
             try:
                 candidate_value = strict_json_loads(
@@ -1392,50 +1545,77 @@ def evaluate_request(
                     request, config, runtime, host_version, "ADAPTER_PROTOCOL", False,
                     "Codex returned a non-conforming bounded candidate response.",
                     started_at, ended_at, time.monotonic() - started_monotonic,
-                    candidate_raw, judge_raw,
+                    candidate_raw, judge_attempts,
                 )
 
-            judge_prompt = build_judge_prompt(request, candidate_value["candidate_response"])
-            try:
-                completed, judge_raw = _run_model_stage(
-                    runtime, config, judge_project, runtime.judge_schema,
-                    judge_output, config.effective_judge_model_id, judge_prompt,
+            original_judge_prompt = build_judge_prompt(
+                request, candidate_value["candidate_response"],
+            )
+            rejected_raw = b""
+            rejected_diagnostic = None
+            judge_value = None
+            for attempt in range(1, MAX_JUDGE_ATTEMPTS + 1):
+                judge_project = case_root / ("judge-project-%d" % attempt)
+                judge_project.mkdir(mode=0o700)
+                os.chmod(judge_project, 0o500)
+                judge_output = outputs / ("judge-%d.json" % attempt)
+                _write_private_file(judge_output, b"", 0o600)
+                judge_prompt = original_judge_prompt if attempt == 1 else (
+                    build_judge_retry_prompt(
+                        original_judge_prompt, rejected_diagnostic, rejected_raw,
+                    )
                 )
-            except subprocess.TimeoutExpired:
-                ended_at = timestamp_now()
-                return _failure_result(
-                    request, config, runtime, host_version, "HOST_TIMEOUT", True,
-                    "Codex CLI timed out during the independent judge stage.",
-                    started_at, ended_at, time.monotonic() - started_monotonic,
-                    candidate_raw, judge_raw,
-                )
-            if completed.returncode:
-                code, retryable, summary = _host_failure_code(completed)
-                ended_at = timestamp_now()
-                return _failure_result(
-                    request, config, runtime, host_version, code, retryable, summary,
-                    started_at, ended_at, time.monotonic() - started_monotonic,
-                    candidate_raw, judge_raw,
-                )
-            try:
-                judge_value = strict_json_loads(
-                    judge_raw.decode("utf-8"), "Codex judge structured output",
-                )
-                validate_model_output(judge_value, request)
-            except (UnicodeError, AdapterError):
-                ended_at = timestamp_now()
-                return _failure_result(
-                    request, config, runtime, host_version, "ADAPTER_PROTOCOL", False,
-                    "Codex returned output that does not conform to the judge protocol.",
-                    started_at, ended_at, time.monotonic() - started_monotonic,
-                    candidate_raw, judge_raw,
-                )
+                try:
+                    completed, judge_raw = _run_model_stage(
+                        runtime, config, judge_project, runtime.judge_schema,
+                        judge_output, config.effective_judge_model_id, judge_prompt,
+                    )
+                except subprocess.TimeoutExpired:
+                    ended_at = timestamp_now()
+                    return _failure_result(
+                        request, config, runtime, host_version, "HOST_TIMEOUT", True,
+                        "Codex CLI timed out during the independent judge stage.",
+                        started_at, ended_at, time.monotonic() - started_monotonic,
+                        candidate_raw, judge_attempts,
+                    )
+                if completed.returncode:
+                    code, retryable, summary = _host_failure_code(completed)
+                    ended_at = timestamp_now()
+                    return _failure_result(
+                        request, config, runtime, host_version, code, retryable, summary,
+                        started_at, ended_at, time.monotonic() - started_monotonic,
+                        candidate_raw, judge_attempts,
+                    )
+                try:
+                    judge_value = parse_and_validate_judge_output(judge_raw, request)
+                except JudgeProtocolError as exc:
+                    rejected_raw = judge_raw
+                    rejected_diagnostic = exc.diagnostic_code
+                    judge_attempts.append(judge_attempt_record(
+                        attempt, judge_raw, "protocol-rejected", rejected_diagnostic,
+                    ))
+                    if attempt < MAX_JUDGE_ATTEMPTS:
+                        continue
+                    ended_at = timestamp_now()
+                    return _failure_result(
+                        request, config, runtime, host_version, "ADAPTER_PROTOCOL", False,
+                        "Codex returned output that does not conform to the judge protocol.",
+                        started_at, ended_at, time.monotonic() - started_monotonic,
+                        candidate_raw, judge_attempts,
+                    )
+                judge_attempts.append(judge_attempt_record(
+                    attempt, judge_raw, "accepted", None,
+                ))
+                break
+
+            if judge_value is None:
+                raise AdapterError("bounded judge execution omitted a terminal result")
 
             ended_at = timestamp_now()
             elapsed = time.monotonic() - started_monotonic
             provenance = execution_provenance(
                 config, runtime, host_version, started_at, ended_at, elapsed,
-                candidate_raw, judge_raw,
+                candidate_raw, judge_attempts,
             )
             return result_envelope(
                 request, judge_value["outcome"], provenance,
@@ -1447,7 +1627,7 @@ def evaluate_request(
             request, config, runtime, host_version, "HOST_UNAVAILABLE", True,
             "Codex CLI could not be started for two-stage semantic execution.",
             started_at, ended_at, time.monotonic() - started_monotonic,
-            candidate_raw, judge_raw,
+            candidate_raw, judge_attempts,
         )
     except AdapterError:
         ended_at = timestamp_now()
@@ -1455,7 +1635,7 @@ def evaluate_request(
             request, config, runtime, host_version, "ADAPTER_PROTOCOL", False,
             "The request, secure runtime, or one of its bound references is invalid.",
             started_at, ended_at, time.monotonic() - started_monotonic,
-            candidate_raw, judge_raw,
+            candidate_raw, judge_attempts,
         )
 
 
@@ -1480,6 +1660,16 @@ def _adapter_runtime_failure_result(request, config: AdapterConfig, runtime, hos
     )
 
 
+def _adapter_worker_crash_result(request, config: AdapterConfig):
+    started_at = timestamp_now()
+    ended_at = timestamp_now()
+    return _failure_result(
+        request, config, None, "unavailable", "ADAPTER_CRASH", False,
+        "An isolated adapter worker stopped before producing a result.",
+        started_at, ended_at, 0,
+    )
+
+
 def load_requests(stream):
     requests = []
     seen = set()
@@ -1500,34 +1690,136 @@ def load_requests(stream):
     return requests
 
 
-def run_requests(requests, config: AdapterConfig, root: Path = ROOT):
-    if not requests:
-        return []
+def _run_request_batch(indexed_requests, config: AdapterConfig, root: Path):
+    """Evaluate one stable partition inside its own credential/runtime boundary."""
+    requests = [request for _index, request in indexed_requests]
     try:
         with secure_runtime(config) as runtime:
             probe = probe_host(config, runtime)
             if probe.failure_code:
-                return [_probe_failure_result(request, config, runtime, probe) for request in requests]
+                results = [
+                    _probe_failure_result(request, config, runtime, probe)
+                    for request in requests
+                ]
+                return [
+                    (indexed_requests[position][0], result)
+                    for position, result in enumerate(results)
+                ]
             try:
                 probe_secure_runtime(runtime, config)
             except AdapterError:
-                return [
+                results = [
                     _adapter_runtime_failure_result(request, config, runtime, probe.host_version)
                     for request in requests
                 ]
-            return [
+                return [
+                    (indexed_requests[position][0], result)
+                    for position, result in enumerate(results)
+                ]
+            results = [
                 evaluate_request(request, config, probe.host_version, runtime, root)
                 for request in requests
             ]
+            return [
+                (indexed_requests[position][0], result)
+                for position, result in enumerate(results)
+            ]
     except AdapterError:
-        return [
+        results = [
             _adapter_runtime_failure_result(request, config, None, "unavailable")
             for request in requests
         ]
+        return [
+            (indexed_requests[position][0], result)
+            for position, result in enumerate(results)
+        ]
+
+
+def _validated_partition_results(indexed_requests, results):
+    if not isinstance(results, list) or len(results) != len(indexed_requests):
+        raise AdapterError("adapter worker returned an invalid result count")
+    expected = {index: request for index, request in indexed_requests}
+    seen = set()
+    for item in results:
+        if not isinstance(item, tuple) or len(item) != 2:
+            raise AdapterError("adapter worker returned an invalid result slot")
+        index, result = item
+        if (
+                not isinstance(index, int) or isinstance(index, bool)
+                or index not in expected or index in seen):
+            raise AdapterError("adapter worker returned an invalid result index")
+        request = expected[index]
+        if (
+                not isinstance(result, dict)
+                or result.get("case_id") != request["case"]["id"]
+                or result.get("request_sha256") != request["request_sha256"]):
+            raise AdapterError("adapter worker result identity does not match its request")
+        seen.add(index)
+    if seen != set(expected):
+        raise AdapterError("adapter worker omitted a result index")
+    return results
+
+
+def _safe_run_partition(indexed_requests, config: AdapterConfig, root: Path):
+    try:
+        results = _run_request_batch(indexed_requests, config, root)
+        return _validated_partition_results(indexed_requests, results)
+    except Exception:
+        return [
+            (index, _adapter_worker_crash_result(request, config))
+            for index, request in indexed_requests
+        ]
+
+
+def run_requests(requests, config: AdapterConfig, root: Path = ROOT):
+    if not requests:
+        return []
+    if (
+            not isinstance(config.workers, int) or isinstance(config.workers, bool)
+            or not 1 <= config.workers <= MAX_WORKERS):
+        raise AdapterError("worker count must be 1..%d" % MAX_WORKERS)
+
+    worker_count = min(config.workers, len(requests))
+    indexed_requests = list(enumerate(requests))
+    partitions = [indexed_requests[offset::worker_count] for offset in range(worker_count)]
+    ordered_results = [None] * len(requests)
+
+    if worker_count == 1:
+        completed_partitions = [_safe_run_partition(partitions[0], config, root)]
+    else:
+        try:
+            completed_partitions = []
+            with ThreadPoolExecutor(
+                    max_workers=worker_count,
+                    thread_name_prefix="codex-behavior-worker",
+            ) as executor:
+                pending = [
+                    executor.submit(_safe_run_partition, partition, config, root)
+                    for partition in partitions
+                ]
+                for future in as_completed(pending):
+                    completed_partitions.append(future.result())
+        except Exception:
+            completed_partitions = [[
+                (index, _adapter_worker_crash_result(request, config))
+                for index, request in indexed_requests
+            ]]
+
+    for partition_results in completed_partitions:
+        for index, result in partition_results:
+            if ordered_results[index] is not None:
+                raise AdapterError("adapter worker produced a duplicate result slot")
+            ordered_results[index] = result
+    if any(result is None for result in ordered_results):
+        raise AdapterError("adapter worker omitted a result slot")
+    return ordered_results
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--project-root", default=str(ROOT), help=argparse.SUPPRESS,
+    )
     parser.add_argument("--codex-bin", required=True, help="Absolute path to the trusted Codex CLI executable.")
     parser.add_argument(
         "--codex-sha256", required=True,
@@ -1539,7 +1831,16 @@ def main(argv=None):
         help="Independent judge model ID (default: the SUT model ID).",
     )
     parser.add_argument("--timeout", type=int, default=300, help="Per-stage timeout in seconds (1..3600).")
+    parser.add_argument(
+        "--workers", type=int, default=1,
+        help="Independent parallel case workers (1..%d; default: 1)." % MAX_WORKERS,
+    )
     args = parser.parse_args(argv)
+    project_root = Path(args.project_root)
+    if (
+            not args.project_root or "\x00" in args.project_root
+            or not project_root.is_absolute()):
+        parser.error("--project-root must be an absolute project path")
     if not args.codex_bin or "\x00" in args.codex_bin or not Path(args.codex_bin).is_absolute():
         parser.error("--codex-bin must be an absolute executable path")
     if not SHA256_RE.fullmatch(args.codex_sha256):
@@ -1550,12 +1851,15 @@ def main(argv=None):
         parser.error("--judge-model must be a safe model ID up to 256 characters")
     if not 1 <= args.timeout <= 3600:
         parser.error("--timeout must be 1..3600 seconds")
+    if not 1 <= args.workers <= MAX_WORKERS:
+        parser.error("--workers must be 1..%d" % MAX_WORKERS)
     config = AdapterConfig(
         args.codex_bin, args.model, args.timeout, args.judge_model, args.codex_sha256,
+        args.workers,
     )
     try:
         requests = load_requests(sys.stdin)
-        results = run_requests(requests, config)
+        results = run_requests(requests, config, project_root)
     except AdapterError as exc:
         print("codex behavior adapter input error: %s" % exc, file=sys.stderr)
         return 2

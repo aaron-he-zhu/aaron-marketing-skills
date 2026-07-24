@@ -1,0 +1,372 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 112,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every applicable `S` item is Pass/Partial/Fail/Unknown/N/A with evidence or a gap reason (never pass-by-default)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 181,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 114
+        },
+        "text": "the `S1` evidence flag is pass, partial, veto-candidate, or unknown"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 219,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 183
+        },
+        "text": "the scan and hygiene read are stated"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 359,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 221
+        },
+        "text": "and the typed profile emits an `S` score only at complete applicable coverage, otherwise `NEEDS_INPUT/UNDECIDED/NOT_SCORED` with no score."
+      }
+    ],
+    "done_when": "every applicable `S` item is Pass/Partial/Fail/Unknown/N/A with evidence or a gap reason (never pass-by-default); the `S1` evidence flag is pass, partial, veto-candidate, or unknown; the scan and hygiene read are stated; and the typed profile emits an `S` score only at complete applicable coverage, otherwise `NEEDS_INPUT/UNDECIDED/NOT_SCORED` with no score.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/setup/deliverability-qa/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 36
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "source_line": 44
+      },
+      {
+        "path": "email/setup/deliverability-qa/references/deliverability-checklist.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "81b58b3212dd9d3009a7e6866b4a11e2c4ad68ae3e5dd5432f015af96191f407",
+        "source_line": 54
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 46
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 32
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 38
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:deliverability-qa",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before any send or scale-up.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 202,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "email-quality-auditor"
+        ],
+        "text": "- **Primary**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — once `S` is verified, the auditor scores the full EQS and enforces `S1`/`S2`/`N1`/`D1` before any send or scale-up."
+      },
+      {
+        "condition": "If the list itself needs segmenting/suppression next**: [list-segment-builder](../list-segment-builder/SKILL.md) — turn the verified list into behavioral + lifecycle segments and suppression rules (SEND-`E` targeting).",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 425,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 203
+        },
+        "target_skills": [
+          "list-segment-builder"
+        ],
+        "text": "- **If the list itself needs segmenting/suppression next**: [list-segment-builder](../list-segment-builder/SKILL.md) — turn the verified list into behavioral + lifecycle segments and suppression rules (SEND-`E` targeting)."
+      },
+      {
+        "condition": "If `S2` consent is missing or unrecorded**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record lawful basis + opt-in before the auditor can clear `S2`.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 603,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 426
+        },
+        "target_skills": [
+          "consent-registry"
+        ],
+        "text": "- **If `S2` consent is missing or unrecorded**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record lawful basis + opt-in before the auditor can clear `S2`."
+      },
+      {
+        "condition": "If the user wants the recurring hygiene / bounce-complaint trend, not this one-time snapshot**: [list-hygiene-monitor](../list-hygiene-monitor/SKILL.md) — the standing list-decay + suppression-drift watch over time",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 822,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 604
+        },
+        "target_skills": [
+          "list-hygiene-monitor"
+        ],
+        "text": "- **If the user wants the recurring hygiene / bounce-complaint trend, not this one-time snapshot**: [list-hygiene-monitor](../list-hygiene-monitor/SKILL.md) — the standing list-decay + suppression-drift watch over time"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 885,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 824
+        },
+        "target_skills": [],
+        "text": "this pre-flight owns the snapshot, that skill owns the trend."
+      },
+      {
+        "condition": "If the `S1` flag is **veto-candidate** or any applicable item is **Unknown**, stop",
+        "extraction_status": "classified",
+        "item_id": "handoff-06",
+        "kind": "termination",
+        "source": {
+          "end_char": 1148,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 887
+        },
+        "target_skills": [],
+        "text": "**Termination**: follow the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check, `max-depth: 3`, and ambiguity stop. If the `S1` flag is **veto-candidate** or any applicable item is **Unknown**, stop"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-07",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1273,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 1150
+        },
+        "target_skills": [],
+        "text": "request missing evidence as run status `NEEDS_INPUT` or hand verified evidence to the auditor rather than chaining further."
+      }
+    ],
+    "next_best": "- **Primary**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — once `S` is verified, the auditor scores the full EQS and enforces `S1`/`S2`/`N1`/`D1` before any send or scale-up.\n- **If the list itself needs segmenting/suppression next**: [list-segment-builder](../list-segment-builder/SKILL.md) — turn the verified list into behavioral + lifecycle segments and suppression rules (SEND-`E` targeting).\n- **If `S2` consent is missing or unrecorded**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record lawful basis + opt-in before the auditor can clear `S2`.\n- **If the user wants the recurring hygiene / bounce-complaint trend, not this one-time snapshot**: [list-hygiene-monitor](../list-hygiene-monitor/SKILL.md) — the standing list-decay + suppression-drift watch over time; this pre-flight owns the snapshot, that skill owns the trend.\n\n**Termination**: follow the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check, `max-depth: 3`, and ambiguity stop. If the `S1` flag is **veto-candidate** or any applicable item is **Unknown**, stop; request missing evidence as run status `NEEDS_INPUT` or hand verified evidence to the auditor rather than chaining further.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "email/setup/deliverability-qa/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "consent-registry",
+      "email-quality-auditor",
+      "list-hygiene-monitor",
+      "list-segment-builder"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "email",
+    "name": "deliverability-qa",
+    "path": "email/setup/deliverability-qa/SKILL.md",
+    "phase": "setup",
+    "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+    "version": "18.0.1"
+  },
+  "input_contract": {
+    "argument_hint": "<sending domain / program> [ESP + goal] [DMARC RUA report + inbox-placement test]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 80,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "sending domain + SEND profile (`promotional|retention|cold-outbound|newsletter`)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 83,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 82
+        },
+        "text": "a"
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "sending domain + SEND profile (`promotional|retention|cold-outbound|newsletter`); a",
+    "source": {
+      "path": "email/setup/deliverability-qa/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 102,
+          "path": "email/setup/deliverability-qa/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing pre-flight report plus a reusable SEND-`S` summary to `memory/email/deliverability-qa/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/setup/deliverability-qa/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a"
+    },
+    "summary": "a deliverability pre-flight (Pass/Partial/Fail/Unknown/N/A per qualified item), an `S1` authentication evidence flag (pass / partial / veto-candidate / unknown), a spam-content/link/render scan, a list-hygiene read, the typed profile, and either a complete-coverage SEND **S** score or `NEEDS_INPUT/UNDECIDED/NOT_SCORED` with exact gaps, plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing pre-flight report plus a reusable SEND-`S` summary to `memory/email/deliverability-qa/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+      "version": "18.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the recurring hygiene trend — use list-hygiene-monitor; not for final EQS or veto verdicts — use email-quality-auditor; not for segments/suppression lists — use list-segment-builder. 邮件送达率预检/SPF DKIM DMARC认证/发件域声誉",
+    "description": "Use when the user asks to \"run a deliverability pre-flight before I send\", \"check my SPF/DKIM/DMARC/BIMI\", \"why am I landing in spam / promotions\", or \"score my sender reputation and list hygiene\"; runs the ONE-TIME pre-send SEND S1 authentication pre-flight and builds the SEND S (Sender-integrity / Deliverability) evidence read — DNS + DMARC-RUA auth, domain/IP reputation, inbox placement, content/link/render, and point-in-time bounce/complaint hygiene — using Pass/Partial/Fail/Unknown/N/A states and scoring only at complete applicable coverage. Not for the recurring hygiene trend — use list-hygiene-monitor; not for final EQS or veto verdicts — use email-quality-auditor; not for segments/suppression lists — use list-segment-builder. 邮件送达率预检/SPF DKIM DMARC认证/发件域声誉",
+    "source": {
+      "path": "email/setup/deliverability-qa/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "1fc7c5012acc340935f96887154489baa9a918ad4c6caa38f36916732fadaf9a"
+    },
+    "trigger_phrases": [
+      "check my SPF/DKIM/DMARC/BIMI",
+      "run a deliverability pre-flight before I send",
+      "score my sender reputation and list hygiene",
+      "why am I landing in spam / promotions"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use as the ONE-TIME pre-flight snapshot before a send or scale-up, when the sending signal needs verifying or fixing: SPF/DKIM/DMARC/BIMI alignment, sending-domain/IP reputation, inbox placement vs spam/promotions, spam-content/link/render risk, and a point-in-time bounce/complaint list-hygiene read. Run it to BUILD and VERIFY the SEND S signal and flag S1; run email-quality-auditor to SCORE the full EQS and enforce S1/S2/N1/D1. For the standing, scheduled hygiene / bounce-complaint trend read over time, use list-hygiene-monitor instead — this skill owns the one-time snapshot, not the recurring watch."
+  },
+  "schema_version": "1.0"
+}
