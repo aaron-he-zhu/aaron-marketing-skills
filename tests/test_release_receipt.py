@@ -26,9 +26,15 @@ SPEC.loader.exec_module(release_receipt)
 
 
 class ReleaseReceiptTests(unittest.TestCase):
-    def receipt(self) -> dict:
-        evidence = test_profile_outcomes.valid_evidence()
-        summary = test_profile_outcomes.profile_outcomes.evaluate(evidence)
+    def receipt(self, stage: str = "governed-promotion") -> dict:
+        evidence = (
+            test_profile_outcomes.valid_pilot_evidence()
+            if stage == "release-pilot"
+            else test_profile_outcomes.valid_evidence()
+        )
+        summary = test_profile_outcomes.profile_outcomes.evaluate(
+            evidence, stage=stage
+        )
         return test_profile_outcomes.profile_outcomes.build_receipt(
             evidence,
             summary,
@@ -36,6 +42,7 @@ class ReleaseReceiptTests(unittest.TestCase):
             evidence_manifest_sha256=test_profile_outcomes.digest(
                 "private-manifest"
             ),
+            stage=stage,
         )
 
     def validate(self, receipt: dict) -> dict:
@@ -50,6 +57,21 @@ class ReleaseReceiptTests(unittest.TestCase):
         identity = self.validate(self.receipt())
         self.assertEqual("19.0.0-rc.1", identity["release_candidate"])
         self.assertEqual("a" * 40, identity["source_commit"])
+        self.assertEqual("profile-outcomes-v19", identity["gate"])
+
+    def test_exact_release_pilot_receipt_is_accepted(self):
+        identity = self.validate(self.receipt(stage="release-pilot"))
+        self.assertEqual("19.0.0-rc.1", identity["release_candidate"])
+        self.assertEqual("a" * 40, identity["source_commit"])
+        self.assertEqual("profile-pilots-v19", identity["gate"])
+
+    def test_release_pilot_receipt_rejects_cross_gate_summary(self):
+        receipt = self.receipt(stage="release-pilot")
+        receipt["gate"] = "profile-outcomes-v19"
+        with self.assertRaisesRegex(
+            release_receipt.ReceiptError, "invalid fields"
+        ):
+            self.validate(receipt)
 
     def test_receipt_rejects_other_commit_version_or_verifier(self):
         receipt = self.receipt()

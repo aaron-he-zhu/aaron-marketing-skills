@@ -134,19 +134,33 @@ bindings and leaves historical/schema/protocol versions intact.
 
 **Adding or renaming a skill?** Also add its slug to a grouping in the repo-root `skills.sh.json` — the [skills.sh registry page](https://skills.sh/aaron-he-zhu/aaron-marketing-skills) renders those sections, and CI fails when the groupings don't cover exactly the plugin.json skill set (an ungrouped skill would render below the legacy names at the bottom of the page).
 
-**Cutting a release?** The profile release gate additionally requires private,
-pseudonymous real-project evidence bound to the exact RC commit: at least 14
-pilot, 70 randomized paired Lite/Governed, and 28 shadow projects, distributed
-2/10/4 per discipline. Two blind reviewers assess every project; simulated
-evals are not eligible. Keep all evidence outside Git and run
+**Cutting a release?** The staged profile gate additionally requires private,
+pseudonymous real-project evidence bound to the exact RC commit. Before v19
+can be tagged, collect at least 14 release pilots, with at least two per
+discipline; simulated evals are not eligible. Keep all evidence outside Git and
+run
 `python3 scripts/verify-profile-outcomes.py /private/path/evidence.json
---source-commit "$RC_COMMIT" --release-candidate 19.0.0-rc.N
+--stage release-pilot --source-commit "$RC_COMMIT"
+--release-candidate 19.0.0-rc.N
 --evidence-manifest /private/path/manifest.json --receipt
 /private/path/receipt.json --json`. The verifier refuses duplicated project,
-brief, or evidence identities, requires balanced randomized order, and checks
-the attested private-manifest digest. Keep the project-data-free receipt private
-and pass its path as `AARON_RELEASE_RECEIPT` to live publishers.
-No evidence or a failed threshold means no tag and no live publisher. Then (a)
+brief, or evidence identities and checks the attested private-manifest digest.
+Keep the project-data-free release-pilot receipt private and pass its path as
+`AARON_RELEASE_RECEIPT` to live publishers. Current-source real-provider
+engineering maturity remains a separate pre-release gate. No pilot evidence or
+a failed release-pilot threshold means no tag and no live publisher.
+
+The 70 randomized paired Lite/Governed projects and 28 shadow projects are a
+post-release Governed promotion cohort, distributed 10/4 per discipline and
+assessed by two distinct blind reviewers. The `--stage governed-promotion`
+input is the full cohort: the 14 exact-source pilots plus those 70 paired and
+28 shadow projects. Its pilot subset must still pass every release-pilot rule;
+the full receipt is stronger, not an alternate path around the release gate.
+Until it passes, keep Lite as the fresh-project default and do not describe
+Governed outcome claims or Governed-as-default as validated. Never synthesize
+private evidence or a receipt to meet either stage.
+
+After the release-pilot gate passes, (a)
 run `python3 scripts/create-github-release.py` as a network-free preview and its
 `--live --receipt <private-receipt> --asset-dir <verified-assets>` form to create
 or read-only verify the immutable tag/release; (b) sync the downstream

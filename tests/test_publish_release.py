@@ -4,12 +4,84 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
 COMMON = ROOT / "scripts" / "publish-common.sh"
+DISCIPLINES = (
+    "narrative",
+    "seo-geo",
+    "social",
+    "email",
+    "ad",
+    "influencer",
+    "launch",
+)
+
+
+def pilot_release_receipt(commit="a" * 40, version="19.0.0"):
+    return {
+        "schema_version": "1.0",
+        "gate": "profile-pilots-v19",
+        "passed": True,
+        "release_version": version,
+        "release_candidate": version + "-rc.1",
+        "source_commit": commit,
+        "evidence_sha256": "c" * 64,
+        "evidence_manifest_sha256": "d" * 64,
+        "verifier_sha256": hashlib.sha256(
+            (ROOT / "scripts/verify-profile-outcomes.py").read_bytes()
+        ).hexdigest(),
+        "model_identity": {
+            "provider": "fixture",
+            "model": "fixture-model",
+            "version": "1",
+            "toolset_sha256": "e" * 64,
+        },
+        "attestation": {
+            "method": "owner-attested-private-evidence",
+            "collector_id_hash": "f" * 64,
+            "signed_at": "2026-07-24T00:00:00Z",
+        },
+        "outcome_summary": {
+            "schema_version": "1.0",
+            "release_candidate": version + "-rc.1",
+            "source_commit": commit,
+            "counts": {"pilot": 14},
+            "discipline_counts": {
+                discipline: 2 for discipline in DISCIPLINES
+            },
+            "randomized_order_counts": {
+                discipline: {
+                    "lite-first": 1,
+                    "governed-first": 1,
+                }
+                for discipline in DISCIPLINES
+            },
+            "lite_completion_rate": 1.0,
+            "governed_completion_rate": 1.0,
+            "governed_required_counts": {
+                discipline: 1 for discipline in DISCIPLINES
+            },
+            "safety_observation_counts": {
+                key: 1
+                for key in (
+                    "mandatory_approval_hit",
+                    "consent_hit",
+                    "claims_hit",
+                    "external_action_hit",
+                )
+            },
+            "governed_median_time_ratio": 1.5,
+            "governed_median_token_ratio": 1.5,
+            "safety_failure_count": 0,
+            "passed": True,
+            "errors": [],
+        },
+    }
 
 
 class PublishReleaseTests(unittest.TestCase):
@@ -45,6 +117,40 @@ class PublishReleaseTests(unittest.TestCase):
             ["bash", "-c", command, "publish-test", str(COMMON), *map(str, arguments)],
             cwd=repository, capture_output=True, text=True, env=environment,
         )
+
+    def run_receipt_verifier(
+        self,
+        receipt,
+        *,
+        expected_commit="a" * 40,
+        expected_version="19.0.0",
+        verifier=None,
+    ):
+        with tempfile.TemporaryDirectory() as temporary:
+            base = Path(temporary)
+            receipt_path = base / "private-receipt.json"
+            receipt_path.write_text(
+                json.dumps(receipt, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            receipt_path.chmod(0o600)
+            command = [
+                sys.executable,
+                str(ROOT / "scripts" / "verify-release-receipt.py"),
+                str(receipt_path),
+                "--source-commit",
+                expected_commit,
+                "--release-version",
+                expected_version,
+            ]
+            if verifier is not None:
+                command.extend(("--verifier", str(verifier)))
+            return subprocess.run(
+                command,
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
 
     def fake_release_environment(self, base, *, status="", fetch_failure=False,
                                  ancestor_failure=False):
@@ -187,52 +293,7 @@ else:
         )["version"]
         if int(release_version.split(".", 1)[0]) >= 19:
             receipt_path = base / "private-release-receipt.json"
-            receipt = {
-                "schema_version": "1.0",
-                "gate": "profile-outcomes-v19",
-                "passed": True,
-                "release_version": release_version,
-                "release_candidate": release_version + "-rc.1",
-                "source_commit": "a" * 40,
-                "evidence_sha256": "c" * 64,
-                "evidence_manifest_sha256": "d" * 64,
-                "verifier_sha256": hashlib.sha256(
-                    (ROOT / "scripts/verify-profile-outcomes.py").read_bytes()
-                ).hexdigest(),
-                "model_identity": {
-                    "provider": "fixture",
-                    "model": "fixture-model",
-                    "version": "1",
-                    "toolset_sha256": "e" * 64,
-                },
-                "attestation": {
-                    "method": "owner-attested-private-evidence",
-                    "collector_id_hash": "f" * 64,
-                    "signed_at": "2026-07-24T00:00:00Z",
-                },
-                "outcome_summary": {
-                    "schema_version": "1.0",
-                    "release_candidate": release_version + "-rc.1",
-                    "source_commit": "a" * 40,
-                    "counts": {"pilot": 14, "paired": 70, "shadow": 28},
-                    "lite_completion_rate": 1.0,
-                    "paired_quality_ci95_lower": 0.0,
-                    "efficiency_improvements": {
-                        key: {"median": 0.3, "ci95_lower": 0.3}
-                        for key in ("time", "tokens", "turns_confirmations")
-                    },
-                    "lite_escalation_rate": 0.1,
-                    "governed_trace_rate": 1.0,
-                    "lite_trace_rate": 0.0,
-                    "governed_recovery_rate": 1.0,
-                    "lite_recovery_rate": 0.0,
-                    "governed_median_time_ratio": 1.5,
-                    "governed_median_token_ratio": 1.5,
-                    "safety_failure_count": 0,
-                    "passed": True,
-                    "errors": [],
-                },
-            }
+            receipt = pilot_release_receipt(version=release_version)
             receipt_path.write_text(
                 json.dumps(receipt, indent=2, sort_keys=True) + "\n",
                 encoding="utf-8",
@@ -955,6 +1016,118 @@ print("fixture footer **T1** **S1**")
             invocation = mutation_log.read_text(encoding="utf-8")
             self.assertIn("clawhub package publish ", invocation)
             self.assertIn("--source-commit " + "a" * 40, invocation)
+
+    def test_release_pilot_receipt_is_accepted_with_exact_identity(self):
+        result = self.run_receipt_verifier(pilot_release_receipt())
+        self.assertEqual(0, result.returncode, result.stderr)
+        fields = result.stdout.strip().split("\t")
+        self.assertEqual(3, len(fields))
+        self.assertEqual("19.0.0-rc.1", fields[1])
+        self.assertEqual("a" * 40, fields[2])
+
+        wrong_commit = self.run_receipt_verifier(
+            pilot_release_receipt(),
+            expected_commit="b" * 40,
+        )
+        self.assertNotEqual(0, wrong_commit.returncode)
+        self.assertIn("source commit", wrong_commit.stderr)
+
+        wrong_version = self.run_receipt_verifier(
+            pilot_release_receipt(),
+            expected_version="19.0.1",
+        )
+        self.assertNotEqual(0, wrong_version.returncode)
+        self.assertIn("release version", wrong_version.stderr)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            other_verifier = Path(temporary) / "other-verifier.py"
+            other_verifier.write_text("# not the issuer\n", encoding="utf-8")
+            wrong_verifier = self.run_receipt_verifier(
+                pilot_release_receipt(),
+                verifier=other_verifier,
+            )
+        self.assertNotEqual(0, wrong_verifier.returncode)
+        self.assertIn("different outcome verifier", wrong_verifier.stderr)
+
+    def test_release_pilot_receipt_rejects_forged_shape_and_thresholds(self):
+        def mutation(callback):
+            receipt = json.loads(json.dumps(pilot_release_receipt()))
+            callback(receipt)
+            return receipt
+
+        def globally_unbalanced(receipt):
+            summary = receipt["outcome_summary"]
+            summary["counts"]["pilot"] = 21
+            summary["discipline_counts"] = {
+                discipline: 3 for discipline in DISCIPLINES
+            }
+            summary["randomized_order_counts"] = {
+                discipline: {
+                    "lite-first": 2,
+                    "governed-first": 1,
+                }
+                for discipline in DISCIPLINES
+            }
+
+        invalid_receipts = {
+            "unknown summary field": mutation(
+                lambda value: value["outcome_summary"].update({"paired": 70})
+            ),
+            "unknown gate": mutation(
+                lambda value: value.update({"gate": "profile-pilots-v20"})
+            ),
+            "full gate with pilot summary": mutation(
+                lambda value: value.update({"gate": "profile-outcomes-v19"})
+            ),
+            "lite completion": mutation(
+                lambda value: value["outcome_summary"].update(
+                    {"lite_completion_rate": 0.89}
+                )
+            ),
+            "governed completion": mutation(
+                lambda value: value["outcome_summary"].update(
+                    {"governed_completion_rate": 0.89}
+                )
+            ),
+            "discipline total": mutation(
+                lambda value: value["outcome_summary"]["discipline_counts"].update(
+                    {"narrative": 3}
+                )
+            ),
+            "randomized order": mutation(
+                lambda value: value["outcome_summary"][
+                    "randomized_order_counts"
+                ]["narrative"].update(
+                    {"lite-first": 2, "governed-first": 0}
+                )
+            ),
+            "global randomized order": mutation(globally_unbalanced),
+            "governed-required coverage": mutation(
+                lambda value: value["outcome_summary"][
+                    "governed_required_counts"
+                ].update({"narrative": 0})
+            ),
+            "safety observation coverage": mutation(
+                lambda value: value["outcome_summary"][
+                    "safety_observation_counts"
+                ].update({"consent_hit": 0})
+            ),
+            "cost ceiling": mutation(
+                lambda value: value["outcome_summary"].update(
+                    {"governed_median_token_ratio": 2.01}
+                )
+            ),
+            "boolean safety count": mutation(
+                lambda value: value["outcome_summary"].update(
+                    {"safety_failure_count": False}
+                )
+            ),
+        }
+        for name, receipt in invalid_receipts.items():
+            with self.subTest(name=name):
+                result = self.run_receipt_verifier(receipt)
+                self.assertNotEqual(0, result.returncode, result.stdout)
+                self.assertIn("release receipt invalid", result.stderr)
 
 
 if __name__ == "__main__":

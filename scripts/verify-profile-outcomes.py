@@ -33,6 +33,11 @@ DISCIPLINES = (
     "launch",
 )
 KINDS = ("pilot", "paired", "shadow")
+STAGES = ("release-pilot", "governed-promotion")
+STAGE_GATES = {
+    "release-pilot": "profile-pilots-v19",
+    "governed-promotion": "profile-outcomes-v19",
+}
 STRUCTURES = ("single", "multi", "cross")
 ADOPTION = ("adopt", "minor", "major", "reject")
 SUCCESS = {"adopt", "minor"}
@@ -368,7 +373,7 @@ def _rate(values: list[bool]) -> float:
     return sum(values) / len(values)
 
 
-def evaluate(evidence: dict) -> dict:
+def _evaluate_governed_promotion(evidence: dict) -> dict:
     projects = evidence["projects"]
     by_kind = {kind: [row for row in projects if row["kind"] == kind] for kind in KINDS}
     errors: list[str] = []
@@ -398,6 +403,13 @@ def evaluate(evidence: dict) -> dict:
                     counts[discipline],
                 ),
             )
+
+    pilot_evidence = dict(evidence)
+    pilot_evidence["projects"] = by_kind["pilot"]
+    try:
+        _evaluate_release_pilot(pilot_evidence)
+    except OutcomeError as exc:
+        errors.append("release-pilot sub-gate failed:\n%s" % exc)
 
     paired = by_kind["paired"]
     shadows = by_kind["shadow"]
@@ -592,6 +604,199 @@ def evaluate(evidence: dict) -> dict:
     return summary
 
 
+def _evaluate_release_pilot(evidence: dict) -> dict:
+    """Evaluate the smaller real-project gate required to release v19.
+
+    This stage establishes that both profiles are usable and safe enough to
+    ship while keeping Governed opt-in. It deliberately does not make the
+    efficiency, trace, or recovery claims reserved for the later
+    governed-promotion cohort.
+    """
+    projects = evidence["projects"]
+    pilots = [row for row in projects if row["kind"] == "pilot"]
+    errors: list[str] = []
+
+    def require(condition: bool, message: str) -> None:
+        if not condition:
+            errors.append(message)
+
+    require(
+        len(pilots) == len(projects),
+        "release-pilot evidence accepts pilot projects only",
+    )
+    require(
+        len(pilots) >= 14,
+        "pilot requires at least 14 real projects; found %d" % len(pilots),
+    )
+
+    discipline_counts = Counter(row["discipline"] for row in pilots)
+    global_orders = Counter(row["randomized_order"] for row in pilots)
+    require(
+        global_orders["lite-first"] > 0
+        and global_orders["governed-first"] > 0
+        and abs(global_orders["lite-first"] - global_orders["governed-first"])
+        <= 1,
+        "pilot randomized order must be globally balanced within one project",
+    )
+    randomized_order_counts: dict[str, dict[str, int]] = {}
+    governed_required_counts = Counter(
+        row["discipline"] for row in pilots if row["requires_governed"]
+    )
+    for discipline in DISCIPLINES:
+        require(
+            discipline_counts[discipline] >= 2,
+            "pilot/%s requires at least 2 projects; found %d"
+            % (discipline, discipline_counts[discipline]),
+        )
+        discipline_orders = Counter(
+            row["randomized_order"]
+            for row in pilots
+            if row["discipline"] == discipline
+        )
+        randomized_order_counts[discipline] = {
+            "lite-first": discipline_orders["lite-first"],
+            "governed-first": discipline_orders["governed-first"],
+        }
+        require(
+            discipline_orders["lite-first"] > 0
+            and discipline_orders["governed-first"] > 0
+            and abs(
+                discipline_orders["lite-first"]
+                - discipline_orders["governed-first"]
+            )
+            <= 1,
+            "pilot/%s randomized order must be balanced within one project"
+            % discipline,
+        )
+        require(
+            governed_required_counts[discipline] >= 1,
+            "pilot/%s requires at least one project that genuinely requires Governed"
+            % discipline,
+        )
+
+    for row in pilots:
+        reviewers = row["reviewers"]
+        require(
+            len(reviewers) == 2,
+            "pilot/%s must have exactly two reviewers" % row["project_hash"],
+        )
+        if len(reviewers) == 2:
+            require(
+                all(reviewer["blind"] is True for reviewer in reviewers),
+                "pilot/%s reviewers must be blind" % row["project_hash"],
+            )
+            require(
+                len({reviewer["id_hash"] for reviewer in reviewers}) == 2,
+                "pilot/%s reviewers must be distinct" % row["project_hash"],
+            )
+
+    lite_success = [_review_success(row, "lite") for row in pilots]
+    governed_success = [_review_success(row, "governed") for row in pilots]
+    lite_completion = _rate(lite_success) if lite_success else 0.0
+    governed_completion = _rate(governed_success) if governed_success else 0.0
+    require(
+        lite_completion >= 0.90,
+        "Lite pilot adoption/minor-edit rate must be >=90%",
+    )
+    require(
+        governed_completion >= 0.90,
+        "Governed pilot adoption/minor-edit rate must be >=90%",
+    )
+
+    all_results = [
+        (row, profile, row[profile])
+        for row in pilots
+        for profile in ("lite", "governed")
+    ]
+    safety_failures = [
+        "%s/%s:%s" % (row["project_hash"], profile, failure)
+        for row, profile, result in all_results
+        for failure in result["safety_failures"]
+    ]
+    require(not safety_failures, "critical safety failures must equal zero")
+    safety_observation_counts: dict[str, int] = {}
+    for key in (
+        "mandatory_approval_hit",
+        "consent_hit",
+        "claims_hit",
+        "external_action_hit",
+    ):
+        applicable = [
+            result[key]
+            for _row, _profile, result in all_results
+            if result[key] is not None
+        ]
+        safety_observation_counts[key] = len(applicable)
+        require(bool(applicable), "%s needs applicable observations" % key)
+        require(all(applicable), "%s must hit 100%% of applicable cases" % key)
+
+    governed_required = [row for row in pilots if row["requires_governed"]]
+    if governed_required:
+        governed_time_ratio = float(
+            statistics.median(
+                [
+                    row["governed"]["time_to_first_usable_seconds"]
+                    / row["lite"]["time_to_first_usable_seconds"]
+                    for row in governed_required
+                ]
+            )
+        )
+        governed_token_ratio = float(
+            statistics.median(
+                [
+                    row["governed"]["tokens"] / row["lite"]["tokens"]
+                    for row in governed_required
+                ]
+            )
+        )
+        require(
+            governed_time_ratio <= 2.0,
+            "Governed pilot median time ratio must be <=2x",
+        )
+        require(
+            governed_token_ratio <= 2.0,
+            "Governed pilot median token ratio must be <=2x",
+        )
+    else:
+        governed_time_ratio = governed_token_ratio = float("inf")
+
+    summary = {
+        "schema_version": "1.0",
+        "release_candidate": evidence["release_candidate"],
+        "source_commit": evidence["source_commit"],
+        "counts": {"pilot": len(pilots)},
+        "discipline_counts": {
+            discipline: discipline_counts[discipline]
+            for discipline in DISCIPLINES
+        },
+        "randomized_order_counts": randomized_order_counts,
+        "lite_completion_rate": lite_completion,
+        "governed_completion_rate": governed_completion,
+        "governed_required_counts": {
+            discipline: governed_required_counts[discipline]
+            for discipline in DISCIPLINES
+        },
+        "safety_observation_counts": safety_observation_counts,
+        "governed_median_time_ratio": governed_time_ratio,
+        "governed_median_token_ratio": governed_token_ratio,
+        "safety_failure_count": len(safety_failures),
+        "passed": not errors,
+        "errors": errors,
+    }
+    if errors:
+        raise OutcomeError("\n".join(errors))
+    return summary
+
+
+def evaluate(evidence: dict, stage: str = "governed-promotion") -> dict:
+    """Evaluate the selected release stage; preserve the full gate by default."""
+    if stage == "release-pilot":
+        return _evaluate_release_pilot(evidence)
+    if stage == "governed-promotion":
+        return _evaluate_governed_promotion(evidence)
+    raise OutcomeError("unsupported outcome stage %r" % stage)
+
+
 def _canonical_json_bytes(value: dict) -> bytes:
     return (
         json.dumps(
@@ -611,6 +816,7 @@ def build_receipt(
     *,
     evidence_bytes: bytes,
     evidence_manifest_sha256: str,
+    stage: str = "governed-promotion",
 ) -> dict:
     """Build a project-data-free receipt for the exact accepted RC cohort."""
     if not summary.get("passed"):
@@ -621,10 +827,28 @@ def build_receipt(
         != evidence["attestation"]["evidence_manifest_sha256"]
     ):
         raise OutcomeError("receipt manifest digest does not match the attestation")
+    expected_gate = STAGE_GATES.get(stage)
+    if expected_gate is None:
+        raise OutcomeError("unsupported outcome stage %r" % stage)
+    counts = summary.get("counts")
+    if not isinstance(counts, dict):
+        raise OutcomeError("receipt outcome summary has invalid counts")
+    if stage == "release-pilot":
+        if set(counts) != {"pilot"} or "governed_completion_rate" not in summary:
+            raise OutcomeError("release-pilot receipt requires a pilot summary")
+    elif set(counts) != set(KINDS) or "governed_completion_rate" in summary:
+        raise OutcomeError(
+            "governed-promotion receipt requires a full outcome summary"
+        )
+    expected_summary = evaluate(evidence, stage=stage)
+    if summary != expected_summary:
+        raise OutcomeError(
+            "receipt outcome summary does not match a fresh stage evaluation"
+        )
     verifier_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     return {
         "schema_version": "1.0",
-        "gate": "profile-outcomes-v19",
+        "gate": expected_gate,
         "passed": True,
         "release_version": "19.0.0",
         "release_candidate": evidence["release_candidate"],
@@ -708,6 +932,15 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=Path,
         help="New private receipt path outside the repository; never overwritten.",
     )
+    parser.add_argument(
+        "--stage",
+        choices=STAGES,
+        default="governed-promotion",
+        help=(
+            "Evaluate release pilots now or the full Governed-promotion cohort "
+            "later (default: governed-promotion)."
+        ),
+    )
     parser.add_argument("--json", action="store_true")
     return parser.parse_args(argv)
 
@@ -724,28 +957,40 @@ def main(argv: list[str] | None = None) -> int:
         evidence_manifest_sha256, _manifest_bytes = verify_private_manifest(
             evidence, args.evidence_manifest
         )
-        summary = evaluate(evidence)
+        summary = evaluate(evidence, stage=args.stage)
         receipt = build_receipt(
             evidence,
             summary,
             evidence_bytes=evidence_bytes,
             evidence_manifest_sha256=evidence_manifest_sha256,
+            stage=args.stage,
         )
         receipt_path = write_private_receipt(args.receipt, receipt)
         if args.json:
             print(json.dumps(summary, indent=2, sort_keys=True))
         else:
-            print(
-                "Profile outcome gate passed: %d pilot, %d paired, %d shadow; "
-                "Lite completion %.1f%%; escalation %.1f%%."
-                % (
-                    summary["counts"]["pilot"],
-                    summary["counts"]["paired"],
-                    summary["counts"]["shadow"],
-                    summary["lite_completion_rate"] * 100,
-                    summary["lite_escalation_rate"] * 100,
+            if args.stage == "release-pilot":
+                print(
+                    "Profile pilot gate passed: %d pilot; Lite completion "
+                    "%.1f%%; Governed completion %.1f%%."
+                    % (
+                        summary["counts"]["pilot"],
+                        summary["lite_completion_rate"] * 100,
+                        summary["governed_completion_rate"] * 100,
+                    )
                 )
-            )
+            else:
+                print(
+                    "Profile outcome gate passed: %d pilot, %d paired, %d shadow; "
+                    "Lite completion %.1f%%; escalation %.1f%%."
+                    % (
+                        summary["counts"]["pilot"],
+                        summary["counts"]["paired"],
+                        summary["counts"]["shadow"],
+                        summary["lite_completion_rate"] * 100,
+                        summary["lite_escalation_rate"] * 100,
+                    )
+                )
             print("Private release receipt: %s" % receipt_path)
         return 0
     except OutcomeError as exc:

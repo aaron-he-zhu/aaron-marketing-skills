@@ -38,7 +38,7 @@
         "provider": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 80
+          "maxLength": 120
         },
         "model": {
           "type": "string",
@@ -85,7 +85,7 @@
     },
     "projects": {
       "type": "array",
-      "minItems": 112,
+      "minItems": 14,
       "items": {
         "$ref": "#/$defs/project"
       }

@@ -209,7 +209,9 @@ jobs:
             echo "### Required owner-local gate"
             echo
             echo 'This workflow deliberately does **not** receive or upload private real-project outcome evidence.'
-            echo 'Before tagging, the owner must run `python3 scripts/verify-profile-outcomes.py <private-evidence> --source-commit "${{ steps.provenance.outputs.source_commit }}" --release-candidate 19.0.0-rc.N --evidence-manifest <private-manifest> --receipt <private-receipt> --json`.'
+            echo 'Current-source real-provider engineering maturity remains a separate owner-local prerequisite and must bind this same RC commit.'
+            echo 'Before tagging, the owner must run `python3 scripts/verify-profile-outcomes.py <private-pilot-evidence> --stage release-pilot --source-commit "${{ steps.provenance.outputs.source_commit }}" --release-candidate 19.0.0-rc.N --evidence-manifest <private-manifest> --receipt <private-receipt> --json`.'
+            echo 'The 70 paired + 28 shadow cohort is post-release and uses `--stage governed-promotion`; it gates Governed outcome claims/default promotion, not this Lite-default release.'
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Root references/ blob-main guard
