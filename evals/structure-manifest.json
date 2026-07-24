@@ -125,6 +125,7 @@
   "required_case_keys": [
     "id",
     "type",
+    "status",
     "target_skill",
     "scenario",
     "input_summary",

@@ -1,0 +1,361 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 134,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every SOV% names its numerator, denominator, platform, and period with a per-cell label (Measured / User-provided / Estimated / proxy)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 214,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 136
+        },
+        "text": "the panel is locked and dated — or the break is logged and the trend restarted"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 268,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 216
+        },
+        "text": "and no proxy-sourced count is presented as Measured."
+      }
+    ],
+    "done_when": "every SOV% names its numerator, denominator, platform, and period with a per-cell label (Measured / User-provided / Estimated / proxy); the panel is locked and dated — or the break is logged and the trend restarted; and no proxy-sourced count is presented as Measured.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/observe/share-of-voice-tracker/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 55
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/channels",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/social/share-of-voice-tracker",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/social/social-pulse-monitor",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:share-of-voice-tracker",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 171,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "social-measurement-loop"
+        ],
+        "text": "- **Primary**: [social-measurement-loop](../social-measurement-loop/SKILL.md) — fold the SOV read into the weekly read under the metric dictionary's declared denominators."
+      },
+      {
+        "condition": "If the SOV shift traces to a mention spike**: [social-pulse-monitor](../social-pulse-monitor/SKILL.md) — pull the sweep and baseline behind the move.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 325,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 172
+        },
+        "target_skills": [
+          "social-pulse-monitor"
+        ],
+        "text": "- **If the SOV shift traces to a mention spike**: [social-pulse-monitor](../social-pulse-monitor/SKILL.md) — pull the sweep and baseline behind the move."
+      },
+      {
+        "condition": "If the user asks what competitors are doing**: [competitor-tracker](../../../influencer/target/competitor-tracker/SKILL.md) — content and strategy watching lives there.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 498,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 326
+        },
+        "target_skills": [
+          "competitor-tracker"
+        ],
+        "text": "- **If the user asks what competitors are doing**: [competitor-tracker](../../../influencer/target/competitor-tracker/SKILL.md) — content and strategy watching lives there."
+      },
+      {
+        "condition": "when the SOV read is delivered on a locked, dated panel.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 834,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 500
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the SOV read is delivered on a locked, dated panel."
+      }
+    ],
+    "next_best": "- **Primary**: [social-measurement-loop](../social-measurement-loop/SKILL.md) — fold the SOV read into the weekly read under the metric dictionary's declared denominators.\n- **If the SOV shift traces to a mention spike**: [social-pulse-monitor](../social-pulse-monitor/SKILL.md) — pull the sweep and baseline behind the move.\n- **If the user asks what competitors are doing**: [competitor-tracker](../../../influencer/target/competitor-tracker/SKILL.md) — content and strategy watching lives there.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the SOV read is delivered on a locked, dated panel.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/observe/share-of-voice-tracker/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "competitor-tracker",
+      "social-measurement-loop",
+      "social-pulse-monitor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "share-of-voice-tracker",
+    "path": "social/observe/share-of-voice-tracker/SKILL.md",
+    "phase": "observe",
+    "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<brand + locked competitor panel> [platforms] [period]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 120,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the brand and the competitor panel (User-provided, or the prior panel record in `memory/social/share-of-voice-tracker/`)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 263,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 122
+        },
+        "text": "the listening-query architecture from `memory/social/social-pulse-monitor/` (brand variants incl. 中文 names and misspellings, exclusion terms)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 329,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 265
+        },
+        "text": "the own-handle list from `memory/channels/` dossiers (read-only)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 499,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 331
+        },
+        "text": "keyless counts via `scripts/connectors/` — `hn.py`, `bluesky.py`, `fediverse.py`, `discourse.py`, `gdelt.py` (news echo, ≥5s between calls), `tavily.py`, `pageviews.py`"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 555,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 501
+        },
+        "text": "closed-platform counts from user exports (as-of date)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the brand and the competitor panel (User-provided, or the prior panel record in `memory/social/share-of-voice-tracker/`); the listening-query architecture from `memory/social/social-pulse-monitor/` (brand variants incl. 中文 names and misspellings, exclusion terms); the own-handle list from `memory/channels/` dossiers (read-only); keyless counts via `scripts/connectors/` — `hn.py`, `bluesky.py`, `fediverse.py`, `discourse.py`, `gdelt.py` (news echo, ≥5s between calls), `tavily.py`, `pageviews.py`; closed-platform counts from user exports (as-of date).",
+    "source": {
+      "path": "social/observe/share-of-voice-tracker/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 111,
+          "path": "social/observe/share-of-voice-tracker/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the SOV read plus the panel record with its lock date and break log to `memory/social/share-of-voice-tracker/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/observe/share-of-voice-tracker/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
+    },
+    "summary": "a SOV read — the locked panel record (members, per-brand query terms, platforms, lock date), a per-platform per-period SOV table (brand count, panel count, SOV%, source + label per cell), the trend series with any panel-break markers, and where requested a sentiment-weighted variant and a pageviews attention-share read — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the SOV read plus the panel record with its lock date and break log to `memory/social/share-of-voice-tracker/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for backlink or offsite SEO signals — use offsite-signal-analyzer. 声量份额/竞品声量对比/提及份额/注意力份额",
+    "description": "Use when the user asks to \"track our share of voice\", \"what share of the conversation do we own vs competitors\", or \"trend our SOV this quarter\"; computes SOV% = brand mentions ÷ (brand + competitor panel mentions) per platform per period on a LOCKED competitor panel — a panel switch invalidates the trend (restart the series and log the break; the ECHO O3 rule) — plus a sentiment-weighted SOV variant (sentiment labeled Estimated unless human-coded) and a Wikipedia-pageviews attention-share alternative; built from keyless listening connectors, gdelt.py news echo, and user exports — public counts only, closed platforms are never scraped. Not for backlink or offsite SEO signals — use offsite-signal-analyzer. 声量份额/竞品声量对比/提及份额/注意力份额",
+    "source": {
+      "path": "social/observe/share-of-voice-tracker/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
+    },
+    "trigger_phrases": [
+      "track our share of voice",
+      "trend our SOV this quarter",
+      "what share of the conversation do we own vs competitors"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when producing or trending the share-of-voice number: brand mentions vs a locked competitor panel per platform per period, a sentiment-weighted SOV variant, or a Wikipedia-pageviews attention-share read. Also when a panel change is proposed — the trend restarts and the break is logged, never spliced. This skill owns the SOV number only; competitor content and strategy watching stays with competitor-tracker, the mention sweep and spike baseline with social-pulse-monitor."
+  },
+  "schema_version": "1.0"
+}

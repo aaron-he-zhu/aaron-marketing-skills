@@ -3,14 +3,14 @@ name: influencer-discovery
 slug: influencer-discovery
 displayName: "Influencer Discovery · 红人发现"
 summary: "多平台红人挖掘:候选池、画像与互动指标、真实性红旗筛查、分层短名单"
-description: 'Use when the user asks to "find influencers", "build an influencer list", or "discover creators in [niche]"; produces a multi-platform candidate pool, per-influencer profiles with audience and engagement metrics, authenticity red-flag screening, and a tiered shortlist with fit scores. Not for scoring or ranking a known shortlist — use fit-scorer.'
-version: "18.0.0"
+description: 'Use when the user asks to "find influencers", "build an influencer list", or "discover creators in [niche]"; produces a multi-platform candidate pool, per-influencer profiles, authenticity red-flag screening, and a tiered shortlist with preliminary triage signals. Not for STAR scoring or ranking a known shortlist — use fit-scorer. 达人挖掘/找达人/创作者名单'
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Activate when building an influencer roster from scratch, expanding into a new platform or niche, replacing churned partners, finding micro and nano creators at scale, identifying which influencers a competitor partners with, or standing up an always-on discovery pipeline. The user names a niche, platform, follower band, or brand and wants a list of candidate creators to evaluate."
 argument-hint: "<brand or niche> [platform] [follower-range]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Influencer Discovery
@@ -31,11 +31,12 @@ based in [location], engagement above 4%, who have worked with brands like [bran
 ## Skill Contract
 
 - **Reads**: brand/product, niche or category, target platforms, follower range, engagement floor, location/language, audience demographics, exclusions; prior `entity-registry` brand profile and any `audience-mapper` output if present in memory; existing roster records under `memory/creators/` (dedupe the candidate pool against creators already rostered by [creator-registry](../../../protocol/creator-registry/SKILL.md)).
-- **Writes**: discovery results to `memory/influencer/influencer-discovery/YYYY-MM-DD-<topic>.md` — search criteria, candidate pool stats, per-influencer profiles, tiered shortlist with fit scores. Roster-worthy shortlisted creators (verified handles, contact path, audience stats) go as one-line updates to `memory/events/creators.ndjson` via an authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical records under `memory/creators/`.
-- **Promotes**: durable facts (top-tier handles, confirmed niche/platform mix, competitor-saturated creators) to `memory/hot-cache.md`.
+- **Writes**: only with separate exact authorization, discovery results to `memory/influencer/influencer-discovery/YYYY-MM-DD-<topic>.md` — search criteria, candidate pool stats, per-influencer profiles, tiered shortlist with preliminary triage signals. Roster-worthy shortlisted creators (verified handles, contact path, audience stats) go as one-line updates to `memory/events/creators.ndjson` only via a separately authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical records under `memory/creators/`.
+- **Promotes**: only with separate exact authorization, durable facts (top-tier handles, confirmed niche/platform mix, competitor-saturated creators) to `memory/hot-cache.md`.
 - **Done when**:
+  - The required search criteria are present; otherwise stop with `NEEDS_INPUT` and name the missing criteria without fabricating candidates.
   - A candidate pool exists with at least the requested count screened past follower, engagement, and brand-safety filters.
-  - Each shortlisted influencer has a profile with metrics, audience read, and a preliminary fit score.
+  - Each shortlisted influencer has a profile with metrics, audience read, and a preliminary discovery-triage signal that is not a STAR Suitability score.
   - A tiered shortlist (must-reach / strong / consider) is compiled with next-step pointers.
 - **Primary next skill**: [fit-scorer](../fit-scorer/SKILL.md) — score and rank the discovered candidates with weighted criteria.
 
@@ -62,22 +63,22 @@ See [CONNECTORS.md](../../../CONNECTORS.md) for the free/keyless recipe per cate
 
 ## Instructions
 
-Each step has a fill-in block in [references/templates.md](references/templates.md) — copy the matching block. This skill does *not* compute final fit scores; the per-influencer score in step 4 is a triage signal that [fit-scorer](../fit-scorer/SKILL.md) refines downstream.
+Each step has a fill-in block in [references/templates.md](references/templates.md) — copy the matching block. This skill does *not* compute a STAR Suitability score; any per-influencer score in step 4 is only a discovery-triage signal that [fit-scorer](../fit-scorer/SKILL.md) replaces with a typed evidence read downstream.
 
-1. **Define search criteria.** Capture brand, goal, budget tier, and the required/preferred parameter table plus nice-to-haves and exclusions. Step 1 template.
+1. **Define search criteria.** Capture brand, goal, audience definition, budget/follower tier, platforms, engagement floor, location/language, exclusions, and the required/preferred parameter table. If any required criterion is missing, stop with `NEEDS_INPUT`; offer [audience-mapper](../audience-mapper/SKILL.md) only when the user wants help defining the audience. Step 1 template.
 2. **Conduct the search.** Work hashtags, similar-accounts, competitor mentions, and platform-native discovery; log any tool queries used. Step 2 template.
-3. **Initial screening.** Filter the pool on follower range, engagement, recency, relevance, and brand safety; tally red flags (fake followers, controversy, competitor exclusivity, inactivity). Per-platform reading cues: [references/platform-vetting.md](references/platform-vetting.md). Step 3 template.
-4. **Build influencer profiles.** For each qualified creator, fill the profile (basics, metrics, audience, content, partnership history, contact, preliminary fit score). For a deep single-creator read with a contact waterfall, use [references/creator-dossier.md](references/creator-dossier.md). Step 4 template.
+3. **Initial screening.** Filter the pool on follower range, engagement, recency, relevance, and brand safety; tally red flags (suspected fake followers, controversy, competitor exclusivity, inactivity). These are discovery signals, not verified STAR failures or vetoes; unsupported applicable evidence remains Unknown for downstream scoring. Per-platform reading cues: [references/platform-vetting.md](references/platform-vetting.md). Step 3 template.
+4. **Build influencer profiles.** For each qualified creator, fill the profile (basics, metrics, audience, content, partnership history, contact, preliminary discovery-triage signal). Do not emit a STAR Suitability score from partial coverage. For a deep single-creator read with a contact waterfall, use [references/creator-dossier.md](references/creator-dossier.md). Step 4 template.
 5. **Compile the discovery report.** Roll profiles into summary stats, by-platform and by-tier breakdowns, the three-tier shortlist, mix recommendation, and next steps. Step 5 template.
 6. **Add insights.** Note niche content trends, the competitive picture, and recommendations for future searches. Step 6 template.
 
-Save the report to `memory/influencer/influencer-discovery/YYYY-MM-DD-<topic>.md` and, with permission, cache the active shortlist in working memory. Submit each roster-worthy creator as an authorized `operation: propose` request through `registry-events.py` to `memory/events/creators.ndjson`, then recommend [creator-registry](../../../protocol/creator-registry/SKILL.md) for resolution; proposal count never changes authority.
+Return the discovery report inline. Saving the report, caching the shortlist, and submitting each roster-worthy creator as `operation: propose` are three separate operations and each requires exact authorization; without it, offer the eligible path and write nothing. After a vetted shortlist exists, hand it with dated evidence to [fit-scorer](../fit-scorer/SKILL.md). `fit-scorer` records the S1-S10 evidence read; [creator-content-auditor](../../activate/creator-content-auditor/SKILL.md) alone determines verified STAR vetoes and renders the gate verdict.
 
 ## Compact Example
 
 **User**: "Find 15 micro-influencers (10K-100K followers) in sustainable fashion for a new eco clothing brand."
 
-**Output**: 43 candidates surfaced, 15 pass all filters with fit scores above 18/25. Top pick @sustainablestyle_sarah (47K IG + 23K TikTok, 5.2% ER, prior eco-brand partners) scores 24/25; shortlist tiered into 5 high-engagement leads, 7 mid-tier, 3 rising stars; report saved and top handles promoted. Full walkthrough in [references/templates.md](references/templates.md#worked-example--sustainable-fashion-micro-influencers).
+**Output**: 43 candidates surfaced, 15 pass the declared discovery filters with preliminary triage signals above 18/25. Top candidate @sustainablestyle_sarah (47K IG + 23K TikTok, 5.2% ER, prior eco-brand partners) has a 24/25 discovery signal; shortlist tiered into 5 high-engagement leads, 7 mid-tier, 3 rising stars. The report is returned inline, then save, promotion, and registry-proposal permissions are offered separately. Full walkthrough in [references/templates.md](references/templates.md#worked-example--sustainable-fashion-micro-influencers).
 
 ## Reference Materials
 

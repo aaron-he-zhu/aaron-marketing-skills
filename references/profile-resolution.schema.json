@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/profile-resolution.schema.json",
+  "title": "Aaron capability profile resolution",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "reason_code",
+    "origin",
+    "requested_profile",
+    "effective_profile",
+    "package_ceiling",
+    "runtime_identity",
+    "capabilities",
+    "safety_overlays",
+    "state",
+    "policy",
+    "required_action"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "status": {"enum": ["ready", "read-only", "blocked"]},
+    "reason_code": {
+      "enum": [
+        "PROFILE_RESOLVED",
+        "FRESH_DEFAULT_LITE",
+        "LEGACY_STATE_READ_ONLY",
+        "LEGACY_RUN_BLOCKED",
+        "PROFILE_CONFIG_INVALID",
+        "PROFILE_ENV_INVALID",
+        "PROFILE_CLI_INVALID",
+        "PROFILE_CEILING_EXCEEDED",
+        "PHYSICAL_CEILING_UNKNOWN",
+        "PROJECT_STATE_UNVERIFIABLE"
+      ]
+    },
+    "origin": {
+      "enum": [
+        "cli",
+        "environment",
+        "project-config",
+        "fresh-default",
+        "legacy-state",
+        "invalid-config",
+        "invalid-environment",
+        "invalid-cli",
+        "unknown-ceiling"
+      ]
+    },
+    "requested_profile": {
+      "oneOf": [
+        {"type": "null"},
+        {"enum": ["lite", "pro", "governed"]}
+      ]
+    },
+    "effective_profile": {
+      "oneOf": [
+        {"type": "null"},
+        {"enum": ["lite", "pro", "governed", "legacy-read-only"]}
+      ]
+    },
+    "package_ceiling": {
+      "oneOf": [
+        {"type": "null"},
+        {"enum": ["lite", "pro", "governed"]}
+      ]
+    },
+    "runtime_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["major", "ref", "sha256"],
+      "properties": {
+        "major": {"const": 19},
+        "ref": {"const": "aaron-marketing-runtime:19.0.0"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": {"type": "boolean"}
+    },
+    "safety_overlays": {
+      "type": "object",
+      "additionalProperties": {"const": true}
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "live_state_present",
+        "canonical_state_present",
+        "pre_v19_nonterminal_runs",
+        "v19_nonterminal_runs",
+        "unverifiable_runs",
+        "unverifiable_state_paths"
+      ],
+      "properties": {
+        "live_state_present": {"type": "boolean"},
+        "canonical_state_present": {"type": "boolean"},
+        "pre_v19_nonterminal_runs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "format": "uuid"}
+        },
+        "v19_nonterminal_runs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "format": "uuid"}
+        },
+        "unverifiable_runs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "format": "uuid"}
+        },
+        "unverifiable_state_paths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1, "maxLength": 512}
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inline_read_allowed",
+        "canonical_read_allowed",
+        "canonical_write_allowed",
+        "new_run_allowed",
+        "registry_write_allowed",
+        "external_mutation_authorized"
+      ],
+      "properties": {
+        "inline_read_allowed": {"type": "boolean"},
+        "canonical_read_allowed": {"type": "boolean"},
+        "canonical_write_allowed": {"type": "boolean"},
+        "new_run_allowed": {"type": "boolean"},
+        "registry_write_allowed": {"type": "boolean"},
+        "external_mutation_authorized": {"const": false}
+      }
+    },
+    "required_action": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "enum": [
+            "select-profile",
+            "repair-profile-config",
+            "repair-profile-environment",
+            "choose-supported-profile",
+            "install-verifiable-package",
+            "drain-pre-v19-runs",
+            "repair-project-state"
+          ]
+        }
+      ]
+    }
+  }
+}

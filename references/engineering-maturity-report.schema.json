@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "engineering-maturity-report.schema.json",
+  "title": "Five-dimension engineering maturity evidence report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "evaluated_at", "repository", "checker",
+    "rubric_sha256", "target_score", "achieved", "semantic_evidence_run_id",
+    "semantic_evidence", "dimensions"
+  ],
+  "properties": {
+    "$schema": { "const": "references/engineering-maturity-report.schema.json" },
+    "schema_version": { "const": "1.0" },
+    "evaluated_at": { "$ref": "#/$defs/timestamp" },
+    "repository": { "$ref": "#/$defs/repository" },
+    "checker": { "$ref": "#/$defs/source" },
+    "rubric_sha256": { "$ref": "#/$defs/digest" },
+    "target_score": { "const": 95 },
+    "achieved": { "type": "boolean" },
+    "semantic_evidence_run_id": {
+      "oneOf": [{ "$ref": "#/$defs/uuid" }, { "type": "null" }]
+    },
+    "semantic_evidence": {
+      "oneOf": [{ "$ref": "#/$defs/semantic_evidence" }, { "type": "null" }]
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prompt", "context", "harness", "loop", "graph"],
+      "properties": {
+        "prompt": { "$ref": "#/$defs/dimension" },
+        "context": { "$ref": "#/$defs/dimension" },
+        "harness": { "$ref": "#/$defs/dimension" },
+        "loop": { "$ref": "#/$defs/dimension" },
+        "graph": { "$ref": "#/$defs/dimension" }
+      }
+    }
+  },
+  "$defs": {
+    "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256"],
+      "properties": {
+        "ref": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["git_available", "commit", "branch", "worktree_clean"],
+      "properties": {
+        "git_available": { "type": "boolean" },
+        "commit": {
+          "oneOf": [
+            { "type": "string", "pattern": "^[0-9a-f]{40,64}$" },
+            { "type": "null" }
+          ]
+        },
+        "branch": {
+          "oneOf": [{ "type": "string", "minLength": 1 }, { "type": "null" }]
+        },
+        "worktree_clean": {
+          "oneOf": [{ "type": "boolean" }, { "type": "null" }]
+        }
+      }
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "control", "evidence_class", "hard_gate", "passed", "points", "evidence"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[PCHLG][0-9]{2}$" },
+        "control": { "type": "string", "minLength": 8 },
+        "evidence_class": { "enum": ["S", "D", "E", "R", "O"] },
+        "hard_gate": { "type": "boolean" },
+        "passed": { "type": "boolean" },
+        "points": { "enum": [0, 5] },
+        "evidence": { "type": "string", "minLength": 1 }
+      }
+    },
+    "dimension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_score", "final_score", "score_10", "target_met",
+        "failed_hard_gates", "failed_controls", "controls"
+      ],
+      "properties": {
+        "raw_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "final_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "score_10": { "type": "number", "minimum": 0, "maximum": 10 },
+        "target_met": { "type": "boolean" },
+        "failed_hard_gates": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[PCHLG][0-9]{2}$" }
+        },
+        "failed_controls": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[PCHLG][0-9]{2}$" }
+        },
+        "controls": {
+          "type": "array",
+          "minItems": 20,
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/control" }
+        }
+      }
+    },
+    "semantic_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version", "valid", "run_id", "profile", "case_count",
+        "case_provenance", "execution_mode", "model_provider", "model_id",
+        "judge_model_id", "distinct_judge_model", "host_name", "host_version",
+        "adapter_name", "adapter_implementation_sha256", "runner_sha256",
+        "selection_sha256", "protocol_schema_sha256", "request_stream_sha256",
+        "result_stream_sha256", "head_record_hash", "completion_sha256",
+        "total_judge_attempts", "retried_cases", "judge_protocol_retries",
+        "oldest_result_at", "newest_evidence_at", "age_seconds"
+      ],
+      "properties": {
+        "schema_version": { "const": "1.0" },
+        "valid": { "const": true },
+        "run_id": { "$ref": "#/$defs/uuid" },
+        "profile": { "enum": ["smoke", "nightly"] },
+        "case_count": { "type": "integer", "minimum": 1 },
+        "case_provenance": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 1 }
+        },
+        "execution_mode": { "const": "real" },
+        "model_provider": { "type": "string", "minLength": 1 },
+        "model_id": { "type": "string", "minLength": 1 },
+        "judge_model_id": { "type": "string", "minLength": 1 },
+        "distinct_judge_model": { "const": true },
+        "host_name": { "type": "string", "minLength": 1 },
+        "host_version": { "type": "string", "minLength": 1 },
+        "adapter_name": { "type": "string", "minLength": 1 },
+        "adapter_implementation_sha256": { "$ref": "#/$defs/digest" },
+        "runner_sha256": { "$ref": "#/$defs/digest" },
+        "selection_sha256": { "$ref": "#/$defs/digest" },
+        "protocol_schema_sha256": { "$ref": "#/$defs/digest" },
+        "request_stream_sha256": { "$ref": "#/$defs/digest" },
+        "result_stream_sha256": { "$ref": "#/$defs/digest" },
+        "head_record_hash": { "$ref": "#/$defs/digest" },
+        "completion_sha256": { "$ref": "#/$defs/digest" },
+        "total_judge_attempts": { "type": "integer", "minimum": 1 },
+        "retried_cases": { "type": "integer", "minimum": 0 },
+        "judge_protocol_retries": { "type": "integer", "minimum": 0 },
+        "oldest_result_at": { "$ref": "#/$defs/timestamp" },
+        "newest_evidence_at": { "$ref": "#/$defs/timestamp" },
+        "age_seconds": { "type": "number", "minimum": 0 }
+      }
+    }
+  }
+}

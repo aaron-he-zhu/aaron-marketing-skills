@@ -1,0 +1,400 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 100,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every script carries all four beats timestamped with spoken line, on-screen text, and asset keywords"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 271,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 102
+        },
+        "text": "every param row cites a dated norm card or is labeled Estimated with a named source and routed to [platform-norm-profiler](../../explore/platform-norm-profiler/SKILL.md)"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 374,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 273
+        },
+        "text": "and the disclosure decision is explicit — line included, or dropped with the stated carve-out reason."
+      }
+    ],
+    "done_when": "every script carries all four beats timestamped with spoken line, on-screen text, and asset keywords; every param row cites a dated norm card or is labeled Estimated with a named source and routed to [platform-norm-profiler](../../explore/platform-norm-profiler/SKILL.md); and the disclosure decision is explicit — line included, or dropped with the stated carve-out reason.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/craft/short-video-scripter/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 50
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 38
+      },
+      {
+        "path": "references/humanizer-slop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
+        "source_line": 58
+      },
+      {
+        "path": "references/platforms/tiktok.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "b4cad87f7a84f28c29e41c50124ca9e8525d5e55709ecf3a31dbaebdf81853fa",
+        "source_line": 26
+      },
+      {
+        "path": "references/platforms/youtube.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "5fc2d9404b36912bba1d4dcae6072bd01d6a5162b95f767ce1058336297563c4",
+        "source_line": 26
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/channels",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/claims/claims-ledger.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:short-video-scripter",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before anything ships.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 157,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "social-quality-auditor"
+        ],
+        "text": "- **Primary**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — run the pre-publish gate on the finished package before anything ships."
+      },
+      {
+        "condition": "If the script is approved and needs a slot**: [social-calendar-builder](../social-calendar-builder/SKILL.md) — slot it against the committed cadence.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 311,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 158
+        },
+        "target_skills": [
+          "social-calendar-builder"
+        ],
+        "text": "- **If the script is approved and needs a slot**: [social-calendar-builder](../social-calendar-builder/SKILL.md) — slot it against the committed cadence."
+      },
+      {
+        "condition": "If the concept should also ship as non-video posts**: [social-creative-builder](../social-creative-builder/SKILL.md) — build the platform-native text/image packages from the same idea.",
+        "extraction_status": "classified",
+        "item_id": "handoff-03",
+        "kind": "outcome",
+        "source": {
+          "end_char": 500,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 312
+        },
+        "target_skills": [
+          "social-creative-builder"
+        ],
+        "text": "- **If the concept should also ship as non-video posts**: [social-creative-builder](../social-creative-builder/SKILL.md) — build the platform-native text/image packages from the same idea."
+      },
+      {
+        "condition": "when the package is delivered and the disclosure and claims passes are recorded.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 860,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 502
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the package is delivered and the disclosure and claims passes are recorded."
+      }
+    ],
+    "next_best": "- **Primary**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — run the pre-publish gate on the finished package before anything ships.\n- **If the script is approved and needs a slot**: [social-calendar-builder](../social-calendar-builder/SKILL.md) — slot it against the committed cadence.\n- **If the concept should also ship as non-video posts**: [social-creative-builder](../social-creative-builder/SKILL.md) — build the platform-native text/image packages from the same idea.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the package is delivered and the disclosure and claims passes are recorded.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/craft/short-video-scripter/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "social-calendar-builder",
+      "social-creative-builder",
+      "social-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "short-video-scripter",
+    "path": "social/craft/short-video-scripter/SKILL.md",
+    "phase": "craft",
+    "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<video idea / draft script> [platforms] [goal: follow|save|click]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 59,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the video idea, draft script, or transcript (User-provided)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 143,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 61
+        },
+        "text": "the voice-card pointer and active-handle facts from `memory/channels/` (read-only)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 302,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 145
+        },
+        "text": "dated norm cards under `references/platforms/` ([tiktok.md](../../../references/platforms/tiktok.md), [youtube.md](../../../references/platforms/youtube.md))"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 362,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 304
+        },
+        "text": "approved claim wording in `memory/claims/claims-ledger.md`"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 431,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 364
+        },
+        "text": "the user's own retention/completion exports (Measured, as-of date)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the video idea, draft script, or transcript (User-provided); the voice-card pointer and active-handle facts from `memory/channels/` (read-only); dated norm cards under `references/platforms/` ([tiktok.md](../../../references/platforms/tiktok.md), [youtube.md](../../../references/platforms/youtube.md)); approved claim wording in `memory/claims/claims-ledger.md`; the user's own retention/completion exports (Measured, as-of date).",
+    "source": {
+      "path": "social/craft/short-video-scripter/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 59,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the script package to `memory/social/short-video-scripter/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 232,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 61
+        },
+        "text": "product/offer claims absent from the ledger marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 540,
+          "path": "social/craft/short-video-scripter/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+          "span_basis": "field-text",
+          "start_char": 234
+        },
+        "text": "any channel-grade fact it surfaces (a cadence commitment, a per-handle format decision) to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [channel-registry](../../../protocol/channel-registry/SKILL.md) is the sole writer of `memory/channels/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/craft/short-video-scripter/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
+    },
+    "summary": "one beat-sheet package per platform — timestamped rows (time window / spoken line / on-screen text / asset keywords) across the four retention gates, 2-3 hook options from named hook families, a 9:16 format-param row citing the dated norm card (or labeled Estimated where no card exists), caption and first-comment placement notes, and the disclosure line where required — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the script package to `memory/social/short-video-scripter/`; product/offer claims absent from the ledger marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`; any channel-grade fact it surfaces (a cadence commitment, a per-handle format decision) to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [channel-registry](../../../protocol/channel-registry/SKILL.md) is the sole writer of `memory/channels/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for creator video briefs — use brief-generator; long-form video SEO belongs to content-writer. 短视频脚本/抖音分镜/开头钩子/竖屏9:16",
+    "description": "Use when the user asks to \"script this short video\", \"write a TikTok / Reels / Shorts script\", \"给这条抖音或视频号视频写脚本\", or \"fix the hook — viewers drop off in the first seconds\"; produces timestamped beat-sheet scripts on the retention-gate model (0-2s hook / 2-5s confirmation / 5-15s payoff / loop-or-CTA) with per-scene script lines, on-screen text for muted viewing, asset keywords, and 9:16 format-param rows per platform norm card for TikTok, Reels, Shorts, 抖音, and 视频号 — plus 2-3 hook options from named hook families and an AI-content disclosure line by default on realistic synthetic media. Spec-only: rendering, TTS, and publishing stay with the user's own tools — no pipelines, no upload automation. Not for creator video briefs — use brief-generator; long-form video SEO belongs to content-writer. 短视频脚本/抖音分镜/开头钩子/竖屏9:16",
+    "source": {
+      "path": "social/craft/short-video-scripter/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
+    },
+    "trigger_phrases": [
+      "fix the hook — viewers drop off in the first seconds",
+      "script this short video",
+      "write a TikTok / Reels / Shorts script",
+      "给这条抖音或视频号视频写脚本"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when a short vertical video needs a shootable script: turning an idea into a timestamped beat sheet (0-2s hook / 2-5s confirmation / 5-15s payoff / loop-or-CTA), fixing early-seconds drop-off, adapting one concept across TikTok / Reels / Shorts / 抖音 / 视频号 with per-platform 9:16 params, or adding the AI-content disclosure line to a realistic synthetic-media video. Spec-only — no rendering, TTS, or upload automation. Creator video briefs go to brief-generator; long-form video SEO to content-writer."
+  },
+  "schema_version": "1.0"
+}

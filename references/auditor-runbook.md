@@ -96,16 +96,40 @@ Always qualify IDs outside a single-framework table. Item definitions remain in 
 
 `status: BLOCKED` must never mean “the business gate said no.” Conversely, `status: DONE` does not imply `SHIP`.
 
+### Conversation Result Header
+
+Every user-facing audit result must begin with these exact typed fields; prose
+translations may follow but never replace them:
+
+```markdown
+**Status:** `DONE` | `DONE_WITH_CONCERNS` | `NEEDS_INPUT` | `BLOCKED`
+**Verdict:** `SHIP` | `FIX` | `BLOCK` | `UNDECIDED`
+**Score state:** `SCORED` | `NOT_SCORED`
+**Raw score:** <number> | omitted
+**Final score:** <number> | omitted
+```
+
+When applicable evidence is unobserved, add an **Unknown items** list before
+findings. Map every explicitly identified missing item with its qualified ID and
+the literal state `unknown` (for example, ``- `CORE-EEAT-T04`: `unknown` —
+required disclosure evidence was not observed``). Do not substitute phrases
+such as “evidence gap,” “not scored,” or “needs evidence” for the typed status,
+verdict, score state, or item state. With any applicable `unknown`, use
+`NEEDS_INPUT` / `UNDECIDED` / `NOT_SCORED` and omit both scores unless two other
+verified vetoes already determine `BLOCK` under the table above.
+
 ## 5. Artifact Contract
 
 The durable Markdown artifact uses scalar YAML frontmatter plus a deterministic body subset:
+
+> **Trend review.** Saved artifacts are a per-gate time series. `python3 scripts/audit-trends.py [--root DIR]` accepts only bounded, exact-byte, validator-clean v3 artifacts, deduplicates identical artifact SHA-256 values, and renders each (framework, profile, target) series — audit count, latest verdict/current score, comparable first→latest-scored delta, catalog/context identity, evidence/confidence change, relapse, and verdict/score oscillation. An intervention is linked only when a fully validated immutable loop and one exact historical event ancestry bind the before/after audit identities and current intervention bytes; graph-wide links are retained even when their two artifacts are not adjacent in date/path display order, and display order alone never implies causality. Candidate audit, loop-step, and intervention reads are charged against aggregate scan limits (files/steps, bytes, and deadline), including bytes inspected during invalid attempts. Human-readable cells escape terminal/control characters before length bounding. If the latest audit is `NOT_SCORED`, its current score is blank and JSON retains the earlier value separately as `latest_scored_score` / `latest_scored_at`. Invalid audits, exact duplicates, and invalid loop evidence have separate counters. A **stalled** series (3+ audits without SHIP) is not converging: escalate the underlying finding instead of re-auditing the same state. The tool is read-only and ships with the plugin runtime.
 
 ```yaml
 ---
 class: auditor-output
 schema_version: 3.0
 runbook_version: 3.0.0
-catalog_version: 18.0.0
+catalog_version: 19.0.0
 framework: ROAS
 profile: direct-response
 ---

@@ -8,6 +8,7 @@ import contextlib
 import datetime as dt
 import hashlib
 import hmac
+import importlib.util
 import json
 import math
 import os
@@ -26,6 +27,7 @@ except ImportError:  # pragma: no cover - exercised only on non-POSIX hosts
     fcntl = None
 
 
+ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_VERSION = "1.0"
 REGISTRIES = {"entities", "creators", "claims", "consent", "launches", "channels", "narrative"}
 OWNERS = {
@@ -111,6 +113,47 @@ CONSENT_REASON_CODES = {
 
 class RegistryError(ValueError):
     pass
+
+
+def _load_profile_runtime():
+    path = ROOT / "scripts" / "profile-resolver.py"
+    spec = importlib.util.spec_from_file_location(
+        "aaron_profile_resolver_registry", path
+    )
+    if spec is None or spec.loader is None:
+        raise RegistryError("profile runtime cannot be loaded: %s" % path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+profile_runtime = _load_profile_runtime()
+
+
+def require_registry_mutation(
+        root, registry=None, request=None, *, bundle_root=ROOT, profile=None,
+        environ=None):
+    """Enforce the profile write boundary before creating any registry path."""
+    if (
+            registry == "consent" and isinstance(request, dict)
+            and request.get("operation") == "suppress"):
+        return {
+            "safety_exception": "consent-deny-only-suppress",
+            "registry_write_allowed": True,
+        }
+    try:
+        resolution = profile_runtime.resolve_profile(
+            root, bundle_root=bundle_root, cli_profile=profile, environ=environ,
+        )
+    except profile_runtime.ProfileError as exc:
+        raise RegistryError(str(exc)) from exc
+    if not resolution["policy"]["registry_write_allowed"]:
+        raise RegistryError(
+            "%s: canonical registry mutation requires an effective Governed "
+            "profile; consent deny-only suppress is the only profile exception"
+            % resolution["reason_code"]
+        )
+    return resolution
 
 
 def strict_json_loads(value, label="JSON"):
@@ -1100,6 +1143,80 @@ def _validate_stream_fd(fd, parent_fd, parent_path, name, parent_identity=None):
         raise RegistryError("event stream changed while it was opened")
 
 
+def _read_bounded_runtime_file(path, label, max_bytes):
+    """Read one stable regular single-link runtime file without following links."""
+    parent_status = _lstat(path.parent, "%s parent" % label, missing_ok=True)
+    if parent_status is None:
+        return None
+    if statmod.S_ISLNK(parent_status.st_mode) or not statmod.S_ISDIR(parent_status.st_mode):
+        raise RegistryError("%s parent must be a real directory" % label)
+
+    parent_fd, parent_identity = _open_directory_anchor(path.parent)
+    fd = None
+    try:
+        entry = _anchored_lstat(
+            parent_fd, path.parent, path.name, missing_ok=True,
+            parent_identity=parent_identity,
+        )
+        if entry is None:
+            return None
+        if (statmod.S_ISLNK(entry.st_mode) or not statmod.S_ISREG(entry.st_mode)
+                or entry.st_nlink != 1):
+            raise RegistryError("%s must be a regular single-link file" % label)
+
+        flags = (
+            os.O_RDONLY
+            | getattr(os, "O_NOFOLLOW", 0)
+            | getattr(os, "O_NONBLOCK", 0)
+        )
+        fd = _open_anchored(
+            parent_fd, path.parent, path.name, flags,
+            parent_identity=parent_identity,
+        )
+        opened = os.fstat(fd)
+        current = _anchored_lstat(
+            parent_fd, path.parent, path.name,
+            parent_identity=parent_identity,
+        )
+        if (not statmod.S_ISREG(opened.st_mode) or opened.st_nlink != 1
+                or statmod.S_ISLNK(current.st_mode)
+                or not statmod.S_ISREG(current.st_mode) or current.st_nlink != 1
+                or (opened.st_dev, opened.st_ino) != (current.st_dev, current.st_ino)):
+            raise RegistryError("%s changed while it was opened" % label)
+        if opened.st_size > max_bytes:
+            raise RegistryError("%s exceeds size limit" % label)
+
+        before = (opened.st_size, opened.st_mtime_ns, opened.st_ctime_ns)
+        data = bytearray()
+        while len(data) <= max_bytes:
+            chunk = os.read(fd, min(65_536, max_bytes + 1 - len(data)))
+            if not chunk:
+                break
+            data.extend(chunk)
+        if len(data) > max_bytes:
+            raise RegistryError("%s exceeds size limit" % label)
+
+        after = os.fstat(fd)
+        _revalidate_directory_anchor(path.parent, parent_identity)
+        current = _anchored_lstat(
+            parent_fd, path.parent, path.name,
+            parent_identity=parent_identity,
+        )
+        if (statmod.S_ISLNK(current.st_mode) or not statmod.S_ISREG(current.st_mode)
+                or current.st_nlink != 1
+                or (after.st_dev, after.st_ino) != (current.st_dev, current.st_ino)
+                or before != (after.st_size, after.st_mtime_ns, after.st_ctime_ns)):
+            raise RegistryError("%s changed while it was read" % label)
+        return bytes(data)
+    except OSError as exc:
+        raise RegistryError("cannot read %s: %s" % (label, exc)) from exc
+    finally:
+        if fd is not None:
+            os.close(fd)
+        if parent_fd is not None:
+            os.close(parent_fd)
+
+
 @contextlib.contextmanager
 def locked_stream(path, exclusive=True):
     if exclusive and not _safe_mutation_dirfd_available():
@@ -1206,7 +1323,7 @@ def locked_stream(path, exclusive=True):
             os.close(parent_fd)
 
 
-def read_stream(handle, registry, root_hash):
+def read_stream(handle, registry, root_hash, verify_authority=True):
     handle.seek(0)
     events = []
     previous_hash = "0" * 64
@@ -1256,7 +1373,19 @@ def read_stream(handle, registry, root_hash):
         principal = event["principal"]
         signed = principal.get("type") in {"host-capability", "safety-capability"}
         supplied_signature = event.get("authority_signature")
-        if signed:
+        if signed and not verify_authority:
+            # Advisory read mode (pending_report only): the public hash chain,
+            # offsets, request hashes, and principal bindings above have all
+            # been checked; only the HMAC authority signature needs the host
+            # key. A capability ID is still tracked so reuse stays visible.
+            if (not isinstance(supplied_signature, str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", supplied_signature)):
+                raise RegistryError("event authority signature is malformed at line %d" % line_number)
+            capability_id = principal["capability_id"]
+            if capability_id in seen_capabilities:
+                raise RegistryError("host capability was reused at line %d" % line_number)
+            seen_capabilities.add(capability_id)
+        elif signed:
             if (not isinstance(supplied_signature, str)
                     or not re.fullmatch(r"[0-9a-f]{64}", supplied_signature)
                     or not hmac.compare_digest(supplied_signature, authority_signature(event))):
@@ -1594,10 +1723,31 @@ def write_projections(registry, state, projection_path, suppressions_path):
         })
 
 
-def append_event(root, registry, request, capability_token=None):
+def _preflight_registry_target(root, registry):
+    """Preserve the registry runtime's stricter path diagnostics before policy."""
+    stream_path, _projection_path, _suppressions_path = memory_paths(
+        root, registry, create=False
+    )
+    stream_status = _lstat(stream_path, "event stream", missing_ok=True)
+    if stream_status is None:
+        return
+    if not statmod.S_ISREG(stream_status.st_mode):
+        raise RegistryError("event stream must be a regular file")
+    if stream_status.st_nlink != 1:
+        raise RegistryError("event stream must have exactly one hard link")
+
+
+def append_event(
+        root, registry, request, capability_token=None, *, bundle_root=ROOT,
+        profile=None, environ=None):
     normalized = validate_request(registry, request)
     request_hash = sha256_json(normalized)
     root_hash = project_root_hash(root)
+    _preflight_registry_target(root, registry)
+    require_registry_mutation(
+        root, registry, normalized, bundle_root=bundle_root, profile=profile,
+        environ=environ,
+    )
     # Reject invalid authority before creating runtime paths, then repeat the
     # complete verification while holding the exclusive append lock.
     authorize_request(registry, normalized, root_hash, capability_token)
@@ -1665,7 +1815,7 @@ def append_event(root, registry, request, capability_token=None):
                 "record": state["records"].get(event["aggregate_id"])}
 
 
-def load_state(root, registry, create=False):
+def load_state(root, registry, create=False, verify_authority=True):
     if registry not in REGISTRIES:
         raise RegistryError("unknown registry: %s" % registry)
     stream_path, projection_path, suppressions_path = memory_paths(root, registry, create=create)
@@ -1674,12 +1824,19 @@ def load_state(root, registry, create=False):
         return new_projection(registry)
     root_hash = project_root_hash(root)
     with locked_stream(stream_path, exclusive=False) as handle:
-        events = read_stream(handle, registry, root_hash)
+        events = read_stream(handle, registry, root_hash, verify_authority=verify_authority)
         state = project_events(registry, events)
     return state
 
 
-def rebuild_projection(root, registry):
+def rebuild_projection(
+        root, registry, *, bundle_root=ROOT, profile=None, environ=None):
+    project_root_hash(root)
+    _preflight_registry_target(root, registry)
+    require_registry_mutation(
+        root, registry, None, bundle_root=bundle_root, profile=profile,
+        environ=environ,
+    )
     stream_path, projection_path, suppressions_path = memory_paths(root, registry, create=True)
     root_hash = project_root_hash(root)
     # Use the writer lock on every platform. On hosts without shared locks this
@@ -1702,6 +1859,113 @@ def is_suppressed(root, aggregate_id):
     return bool(record and record.get("suppressed"))
 
 
+def _observed_age_days(value, now):
+    """Whole days between a timezone-aware occurred_at and now."""
+    try:
+        parsed = parse_datetime(value, "occurred_at")
+    except RegistryError:
+        return None
+    return max(0, (now - parsed).days)
+
+
+def pending_report(root, now=None):
+    """Read-only cross-registry intake/lag report. Never creates runtime paths.
+
+    Per registry: pending proposal count, the oldest pending proposal's
+    occurred_at and age in days, plus an explicit projection status. A valid
+    projection is current, behind, or ahead; an absent projection is either
+    not-required for an empty stream or missing for a non-empty stream; malformed
+    or unreadable projections are invalid. ``projection_lag`` remains a
+    backward-compatible non-negative value only for current/behind projections.
+    When the host authority key is
+    available the stream is fully verified (authority_verified: true); without
+    it the report falls back to the publicly verifiable structure — canonical
+    JSON, offsets, hash chain, request hashes, principal bindings — and labels
+    the entry authority_verified: false. The pending signal is advisory (a
+    user-facing nudge), never an authorization input, so a signature-skipped
+    read cannot widen authority. A stream that cannot be parsed at all is
+    reported as unverifiable rather than as zero-pending.
+    """
+    now = now or dt.datetime.now(dt.timezone.utc)
+    authority_verified = bool(os.environ.get(HOST_KEY_ENV))
+    registries = {}
+    total = 0
+    for registry in sorted(REGISTRIES):
+        entry = {"verifiable": True, "authority_verified": authority_verified,
+                 "pending": 0,
+                 "oldest_pending_occurred_at": None, "oldest_pending_age_days": None,
+                 "stream_offset": 0, "projection_offset": None,
+                 "projection_lag": None, "projection_status": "unknown"}
+        try:
+            state = load_state(root, registry, create=False,
+                               verify_authority=authority_verified)
+        except RegistryError as exc:
+            entry["verifiable"] = False
+            entry["error"] = str(exc)
+            registries[registry] = entry
+            continue
+        pending = list(state["pending"].values())
+        entry["pending"] = len(pending)
+        entry["stream_offset"] = state["last_offset"]
+        if pending:
+            oldest = min(
+                pending,
+                key=lambda item: parse_datetime(item["occurred_at"], "occurred_at"),
+            )
+            entry["oldest_pending_occurred_at"] = oldest["occurred_at"]
+            entry["oldest_pending_age_days"] = _observed_age_days(oldest["occurred_at"], now)
+        try:
+            _, projection_path, _ = memory_paths(root, registry, create=False)
+            projection_bytes = _read_bounded_runtime_file(
+                projection_path, "projection", MAX_EVENT_BYTES,
+            )
+            if projection_bytes is None:
+                entry["projection_status"] = (
+                    "not-required" if state["last_offset"] == 0 else "missing"
+                )
+                total += len(pending)
+                registries[registry] = entry
+                continue
+            try:
+                raw_projection = projection_bytes.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise RegistryError("projection must be UTF-8 JSON") from exc
+        except RegistryError as exc:
+            entry["projection_status"] = "invalid"
+            entry["projection_error"] = "cannot read projection: %s" % exc
+        else:
+            try:
+                stored = strict_json_loads(raw_projection, "projection")
+                if not isinstance(stored, dict):
+                    raise RegistryError("projection must be a JSON object")
+                if stored.get("schema_version") != SCHEMA_VERSION:
+                    raise RegistryError("projection has an unsupported schema_version")
+                if stored.get("registry") != registry:
+                    raise RegistryError("projection has the wrong registry")
+                stored_offset = stored.get("last_offset")
+                if (not isinstance(stored_offset, int)
+                        or isinstance(stored_offset, bool) or stored_offset < 0):
+                    raise RegistryError("projection last_offset must be a non-negative integer")
+            except RegistryError as exc:
+                entry["projection_status"] = "invalid"
+                entry["projection_error"] = str(exc)
+            else:
+                entry["projection_offset"] = stored_offset
+                delta = state["last_offset"] - stored_offset
+                if delta > 0:
+                    entry["projection_status"] = "behind"
+                    entry["projection_lag"] = delta
+                elif delta < 0:
+                    entry["projection_status"] = "ahead"
+                else:
+                    entry["projection_status"] = "current"
+                    entry["projection_lag"] = 0
+        total += len(pending)
+        registries[registry] = entry
+    return {"registries": registries, "total_pending": total,
+            "authority_verified": authority_verified}
+
+
 def load_request(path):
     try:
         raw = Path(path).read_bytes()
@@ -1718,6 +1982,10 @@ def load_request(path):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", default=os.getcwd(), help="Project root containing memory/.")
+    parser.add_argument(
+        "--profile", choices=profile_runtime.PROFILE_NAMES,
+        help="One-invocation capability profile; does not persist project config.",
+    )
     sub = parser.add_subparsers(dest="command", required=True)
     sub.add_parser("init")
     append = sub.add_parser("append")
@@ -1744,14 +2012,24 @@ def main(argv=None):
     get.add_argument("aggregate_id")
     suppressed = sub.add_parser("is-suppressed")
     suppressed.add_argument("aggregate_id")
+    sub.add_parser(
+        "pending",
+        help="Read-only cross-registry pending-proposal and projection-lag report.",
+    )
     args = parser.parse_args(argv)
     try:
         if args.command == "init":
+            require_registry_mutation(
+                args.root, bundle_root=ROOT, profile=args.profile,
+            )
             for registry in sorted(REGISTRIES):
                 memory_paths(args.root, registry, create=True)
             result = {"initialized": True, "registries": sorted(REGISTRIES)}
         elif args.command == "append":
-            result = append_event(args.root, args.registry, load_request(args.event_json))
+            result = append_event(
+                args.root, args.registry, load_request(args.event_json),
+                profile=args.profile,
+            )
         elif args.command in {"owner-append", "safety-append"}:
             capability = os.environ.get(HOST_CAPABILITY_ENV)
             if not capability:
@@ -1777,7 +2055,7 @@ def main(argv=None):
                 )
             result = append_event(
                 args.root, args.registry, normalized,
-                capability_token=capability,
+                capability_token=capability, profile=args.profile,
             )
         elif args.command == "verify":
             state = load_state(args.root, args.registry, create=False)
@@ -1785,12 +2063,16 @@ def main(argv=None):
                       "last_offset": state["last_offset"], "records": len(state["records"]),
                       "pending": len(state["pending"])}
         elif args.command == "project":
-            state = rebuild_projection(args.root, args.registry)
+            state = rebuild_projection(
+                args.root, args.registry, profile=args.profile,
+            )
             result = {"projected": True, "registry": args.registry,
                       "last_offset": state["last_offset"]}
         elif args.command == "get":
             result = {"registry": args.registry, "aggregate_id": args.aggregate_id,
                       "record": get_record(args.root, args.registry, args.aggregate_id)}
+        elif args.command == "pending":
+            result = pending_report(args.root)
         else:
             result = {"aggregate_id": args.aggregate_id,
                       "suppressed": is_suppressed(args.root, args.aggregate_id)}

@@ -1,0 +1,372 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/run-event.schema.json",
+  "title": "Aaron operational run event",
+  "description": "Structural shape for a non-authoritative, metadata-only event in a private per-run append stream. Cross-field identity equality, selected parent ancestry, typed route/loop transitions, hash-chain continuity, and typed-artifact binding are semantic constraints enforced by scripts/run-events.py. Untyped legacy route_selected events fail closed because this local runtime contract has not been published.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "idempotency_key",
+    "event_type",
+    "occurred_at",
+    "actor",
+    "parent_event_id",
+    "turn_id",
+    "status",
+    "subject",
+    "references",
+    "metrics",
+    "dimensions",
+    "event_id",
+    "offset",
+    "recorded_at",
+    "request_hash",
+    "previous_hash",
+    "event_hash"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "run_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "idempotency_key": {"$ref": "#/$defs/safeId"},
+    "event_type": {
+      "enum": [
+        "run_started",
+        "route_selected",
+        "context_resolved",
+        "turn_started",
+        "turn_snapshot_created",
+        "hook_observed",
+        "tool_requested",
+        "tool_allowed",
+        "tool_blocked",
+        "tool_finished",
+        "artifact_validated",
+        "branch_created",
+        "turn_finished",
+        "save_point_created",
+        "loop_state_changed",
+        "run_waiting",
+        "run_finished",
+        "run_failed",
+        "run_aborted"
+      ]
+    },
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "actor": {"$ref": "#/$defs/actor"},
+    "parent_event_id": {
+      "oneOf": [
+        {"type": "null"},
+        {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}
+      ]
+    },
+    "turn_id": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/safeId"}
+      ]
+    },
+    "status": {
+      "enum": ["started", "succeeded", "failed", "blocked", "waiting", "skipped", "cancelled"]
+    },
+    "subject": {"$ref": "#/$defs/subject"},
+    "reason_code": {"$ref": "#/$defs/safeId"},
+    "references": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {"$ref": "#/$defs/reference"}
+    },
+    "metrics": {
+      "type": "object",
+      "maxProperties": 32,
+      "propertyNames": {"pattern": "^[A-Za-z_][A-Za-z0-9_.-]{0,63}$"},
+      "additionalProperties": {"type": "number"}
+    },
+    "dimensions": {
+      "type": "object",
+      "maxProperties": 16,
+      "propertyNames": {"enum": ["hook_name", "tool_name", "validator", "evidence_mode", "adapter_name", "model_id", "route_reason", "route_transition", "route_command", "failure_class", "loop_state", "branch_reason"]},
+      "additionalProperties": {"$ref": "#/$defs/safeId"}
+    },
+    "event_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"},
+    "offset": {"type": "integer", "minimum": 1},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "request_hash": {"$ref": "#/$defs/sha256"},
+    "previous_hash": {"$ref": "#/$defs/sha256"},
+    "event_hash": {"$ref": "#/$defs/sha256"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"event_type": {"const": "run_started"}}},
+      "then": {
+        "properties": {
+          "status": {"const": "started"},
+          "parent_event_id": {"type": "null"},
+          "turn_id": {"type": "null"},
+          "subject": {"properties": {"kind": {"const": "run"}}}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"not": {"const": "run_started"}}}},
+      "then": {"properties": {"parent_event_id": {"type": "string", "format": "uuid", "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "route_selected"}}},
+      "then": {
+        "required": ["reason_code"],
+        "properties": {
+          "status": {"const": "succeeded"},
+          "subject": {"properties": {"kind": {"const": "route"}}},
+          "dimensions": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["route_transition", "route_command"],
+            "properties": {
+              "route_transition": {"enum": ["initial", "automatic-handoff", "user-reroute"]},
+              "route_command": {"$ref": "#/$defs/safeId"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "loop_state_changed"}}},
+      "then": {
+        "required": ["reason_code"],
+        "properties": {
+          "status": {"const": "succeeded"},
+          "turn_id": {"type": "null"},
+          "subject": {
+            "properties": {
+              "kind": {"const": "loop"},
+              "ref": {"type": "string", "format": "uuid"}
+            }
+          },
+          "dimensions": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["loop_state"],
+            "properties": {
+              "loop_state": {"enum": [
+                "awaiting-proposal", "awaiting-owner", "awaiting-intervention",
+                "awaiting-reaudit", "next", "converged", "exhausted",
+                "gate-blocked", "needs-input"
+              ]}
+            }
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sequence", "cycle", "total_retries"],
+            "properties": {
+              "sequence": {"type": "integer", "minimum": 1, "maximum": 128},
+              "cycle": {"type": "integer", "minimum": 1, "maximum": 3},
+              "total_retries": {"type": "integer", "minimum": 0, "maximum": 128}
+            }
+          },
+          "references": {
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/reference"},
+                {
+                  "required": ["kind", "ref", "sha256"],
+                  "properties": {
+                    "kind": {"const": "loop"},
+                    "ref": {"pattern": "^memory/runs/[0-9a-f-]+/loops/[0-9a-f-]+/[0-9]{3}-[a-z][a-z-]*\\.json$"}
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"enum": ["run_waiting", "run_finished", "run_failed", "run_aborted"]}}},
+      "then": {
+        "properties": {
+          "turn_id": {"type": "null"},
+          "subject": {"properties": {"kind": {"const": "run"}}},
+          "references": {
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/reference"},
+                {
+                  "required": ["kind", "ref", "sha256"],
+                  "properties": {
+                    "kind": {"const": "run-envelope"},
+                    "ref": {"pattern": "/envelopes/"}
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "run_waiting"}}},
+      "then": {"properties": {"status": {"const": "waiting"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "run_finished"}}},
+      "then": {"properties": {"status": {"const": "succeeded"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "run_failed"}}},
+      "then": {"properties": {"status": {"const": "failed"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "run_aborted"}}},
+      "then": {"properties": {"status": {"const": "cancelled"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"enum": ["turn_started", "turn_snapshot_created", "turn_finished"]}}},
+      "then": {
+        "properties": {
+          "turn_id": {"$ref": "#/$defs/safeId"},
+          "subject": {"properties": {"kind": {"const": "turn"}}}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"enum": ["tool_requested", "tool_allowed", "tool_blocked", "tool_finished"]}}},
+      "then": {
+        "properties": {
+          "turn_id": {"$ref": "#/$defs/safeId"},
+          "subject": {"properties": {"kind": {"const": "tool"}}}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"enum": ["tool_requested", "tool_allowed"]}}},
+      "then": {"properties": {"status": {"const": "started"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "tool_blocked"}}},
+      "then": {"properties": {"status": {"const": "blocked"}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "tool_finished"}}},
+      "then": {"properties": {"status": {"enum": ["succeeded", "failed"]}}}
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "turn_snapshot_created"}}},
+      "then": {
+        "properties": {
+          "status": {"const": "succeeded"},
+          "references": {
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/reference"},
+                {"required": ["kind", "ref", "sha256"], "properties": {"kind": {"const": "turn-snapshot"}}}
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "save_point_created"}}},
+      "then": {
+        "properties": {
+          "status": {"const": "succeeded"},
+          "subject": {"properties": {"kind": {"const": "save-point"}}},
+          "references": {
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/reference"},
+                {"required": ["kind", "ref", "sha256"], "properties": {"kind": {"const": "save-point"}}}
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event_type": {"const": "artifact_validated"}}},
+      "then": {
+        "properties": {
+          "status": {"const": "succeeded"},
+          "subject": {"properties": {"kind": {"const": "artifact"}}},
+          "dimensions": {"required": ["validator"]},
+          "references": {
+            "minItems": 1,
+            "maxItems": 1,
+            "items": {
+              "allOf": [
+                {"$ref": "#/$defs/reference"},
+                {"required": ["kind", "ref", "sha256"], "properties": {"kind": {"const": "artifact"}}}
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": {"enum": ["user", "host", "skill", "system", "tool", "adapter"]},
+        "id": {"$ref": "#/$defs/safeId"}
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref"],
+      "properties": {
+        "kind": {
+          "enum": ["run", "route", "context", "turn", "hook", "tool", "artifact", "save-point", "loop", "adapter"]
+        },
+        "ref": {"$ref": "#/$defs/safeId"}
+      }
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "artifact",
+            "schema",
+            "context-manifest",
+            "turn-snapshot",
+            "save-point",
+            "run-envelope",
+            "run",
+            "registry-projection",
+            "evaluation",
+            "loop",
+            "source"
+          ]
+        },
+        "ref": {"type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!.*//)(?!.*(?:/\\.\\.?)(?:/|$))(?!.*\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "revision": {"type": "integer", "minimum": 0},
+        "offset": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

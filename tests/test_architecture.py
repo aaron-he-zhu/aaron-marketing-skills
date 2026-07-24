@@ -3,10 +3,15 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
+import stat
+import tempfile
 import unittest
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +23,48 @@ def load_module():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def load_generator_module():
+    path = ROOT / "scripts" / "generate-system-docs.py"
+    spec = importlib.util.spec_from_file_location("generate_system_docs", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+class GeneratorAtomicWriteTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.module = load_generator_module()
+
+    def test_atomic_write_preserves_existing_permissions(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "generated.md"
+            target.write_bytes(b"old")
+            target.chmod(0o640)
+            self.module.atomic_write(target, b"new")
+            self.assertEqual(target.read_bytes(), b"new")
+            self.assertEqual(stat.S_IMODE(target.stat().st_mode), 0o640)
+
+    def test_atomic_write_does_not_require_os_fchmod(self):
+        with tempfile.TemporaryDirectory() as tmp, mock.patch.object(
+                self.module.os, "fchmod", None):
+            target = Path(tmp) / "generated.md"
+            self.module.atomic_write(target, b"portable")
+            self.assertEqual(target.read_bytes(), b"portable")
+
+    def test_atomic_write_closes_fd_and_cleans_temp_when_fdopen_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "generated.md"
+            real_close = os.close
+            with mock.patch.object(
+                    self.module.os, "fdopen", side_effect=OSError("fixture failure")), \
+                    mock.patch.object(self.module.os, "close", wraps=real_close) as close:
+                with self.assertRaisesRegex(OSError, "fixture failure"):
+                    self.module.atomic_write(target, b"new")
+            close.assert_called_once()
+            self.assertEqual(list(Path(tmp).iterdir()), [])
 
 
 class CatalogLayerTests(unittest.TestCase):
@@ -65,6 +112,89 @@ class CatalogLayerTests(unittest.TestCase):
                 'python3 "$AARON_SKILLS_ROOT/scripts/rubric-score.py" score run.json'
             )
         )
+        self.assertIsNotNone(
+            self.module.BARE_ROOT_RUNTIME_COMMAND.search(
+                "Run python3 scripts/run-events.py verify run-id"
+            )
+        )
+        self.assertIsNotNone(
+            self.module.BARE_ROOT_RUNTIME_COMMAND.search(
+                "Run python3 scripts/context-resolver.py resolve request.json"
+            )
+        )
+
+
+class CapabilityProfileReferenceTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.module = load_module()
+        cls.generator = load_generator_module()
+        with (ROOT / "references" / "system-catalog.json").open(encoding="utf-8") as handle:
+            cls.catalog = json.load(handle)
+        with (ROOT / "references" / "capability-profiles.json").open(encoding="utf-8") as handle:
+            cls.profiles = json.load(handle)
+
+    def failures_for(self, catalog):
+        failures = []
+        self.module.check_capability_profiles(catalog, failures)
+        return failures
+
+    def test_current_reference_and_lattice_are_valid(self):
+        self.assertEqual([], self.failures_for(copy.deepcopy(self.catalog)))
+
+    def test_digest_drift_fails_closed(self):
+        catalog = copy.deepcopy(self.catalog)
+        catalog["capability_profiles"]["sha256"] = "0" * 64
+        failures = self.failures_for(catalog)
+        self.assertTrue(
+            any("capability profile SSOT digest drift" in item for item in failures),
+            failures,
+        )
+
+    def test_non_monotonic_lattice_fails(self):
+        profiles = copy.deepcopy(self.profiles)
+        profiles["profiles"]["pro"]["capabilities"].remove(
+            profiles["profiles"]["lite"]["capabilities"][0]
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_root = Path(tmp)
+            source = tmp_root / "references" / "capability-profiles.json"
+            source.parent.mkdir(parents=True)
+            content = (json.dumps(profiles, indent=2, sort_keys=True) + "\n").encode()
+            source.write_bytes(content)
+            catalog = copy.deepcopy(self.catalog)
+            catalog["capability_profiles"]["sha256"] = hashlib.sha256(content).hexdigest()
+            with mock.patch.object(self.module, "ROOT", tmp_root):
+                failures = self.failures_for(catalog)
+        self.assertTrue(
+            any("Lite ⊂ Pro ⊂ Governed" in item for item in failures),
+            failures,
+        )
+
+    def test_universal_overlay_removal_fails(self):
+        profiles = copy.deepcopy(self.profiles)
+        profiles["always_on_overlays"].remove("consent")
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_root = Path(tmp)
+            source = tmp_root / "references" / "capability-profiles.json"
+            source.parent.mkdir(parents=True)
+            content = (json.dumps(profiles, indent=2, sort_keys=True) + "\n").encode()
+            source.write_bytes(content)
+            catalog = copy.deepcopy(self.catalog)
+            catalog["capability_profiles"]["sha256"] = hashlib.sha256(content).hexdigest()
+            with mock.patch.object(self.module, "ROOT", tmp_root):
+                failures = self.failures_for(catalog)
+        self.assertTrue(
+            any("always_on_overlays" in item for item in failures),
+            failures,
+        )
+
+    def test_generated_view_names_reference_profiles_and_overlays(self):
+        rendered = self.generator.render(self.catalog, self.profiles).decode("utf-8")
+        self.assertIn("## Runtime Capability Profiles", rendered)
+        self.assertIn("Lite ⊂ Pro ⊂ Governed", rendered)
+        self.assertIn("`release-provenance`", rendered)
+        self.assertIn(self.catalog["capability_profiles"]["sha256"], rendered)
 
 
 class SymmetryTests(unittest.TestCase):
@@ -162,6 +292,71 @@ class SymmetryTests(unittest.TestCase):
         failures = self.symmetry_failures(catalog)
         self.assertTrue(
             any("unknown rule or scope" in item for item in failures),
+            failures,
+        )
+
+
+class DistributionTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.module = load_module()
+        with (ROOT / "references" / "system-catalog.json").open(encoding="utf-8") as handle:
+            cls.catalog = json.load(handle)
+
+    def distribution_failures(self):
+        failures = []
+        paths = self.module.expected_skill_paths(self.catalog, failures)
+        self.module.check_distribution(self.catalog, paths, failures)
+        return failures
+
+    def test_pristine_distribution_surfaces_have_no_failures(self):
+        self.assertEqual([], self.distribution_failures())
+
+    def test_hook_event_cannot_route_to_the_wrong_runner_mode(self):
+        hooks = json.loads((ROOT / "hooks" / "hooks.json").read_text(encoding="utf-8"))
+        hooks["hooks"]["PostToolUseFailure"][0]["hooks"][0]["args"][1] = "post-tool-use"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "hooks.json"
+            path.write_text(json.dumps(hooks), encoding="utf-8")
+            with mock.patch.object(self.module, "HOOKS_PATH", path):
+                failures = self.distribution_failures()
+        self.assertTrue(
+            any("PostToolUseFailure must invoke claude-hook.sh with mode post-tool-failure" in item
+                for item in failures),
+            failures,
+        )
+
+    def test_openclaw_version_drift_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            drifted = Path(tmp) / "openclaw.plugin.json"
+            payload = json.loads((ROOT / "openclaw.plugin.json").read_text(encoding="utf-8"))
+            payload["version"] = "0.0.0"
+            drifted.write_text(json.dumps(payload), encoding="utf-8")
+            original = self.module.OPENCLAW_PATH
+            self.module.OPENCLAW_PATH = drifted
+            try:
+                failures = self.distribution_failures()
+            finally:
+                self.module.OPENCLAW_PATH = original
+        self.assertTrue(
+            any("openclaw.plugin.json version" in item for item in failures),
+            failures,
+        )
+
+    def test_openclaw_description_drift_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            drifted = Path(tmp) / "openclaw.plugin.json"
+            payload = json.loads((ROOT / "openclaw.plugin.json").read_text(encoding="utf-8"))
+            payload["description"] = "stale"
+            drifted.write_text(json.dumps(payload), encoding="utf-8")
+            original = self.module.OPENCLAW_PATH
+            self.module.OPENCLAW_PATH = drifted
+            try:
+                failures = self.distribution_failures()
+            finally:
+                self.module.OPENCLAW_PATH = original
+        self.assertTrue(
+            any("openclaw.plugin.json description" in item for item in failures),
             failures,
         )
 

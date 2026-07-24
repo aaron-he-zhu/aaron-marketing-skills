@@ -4,13 +4,13 @@ slug: aaron-landing-experience-checker
 displayName: "Landing Experience Checker · 落地页体验预检"
 summary: "落地页体验预检/广告落地页一致性检查"
 description: 'Use when the user asks to "pre-launch check the landing page", "run a Quality-Score preflight", or "verify ad-to-page message match before launch"; produces an ad↔page continuity report — message-match gaps, above-the-fold check, page-speed read, form-friction count, mobile-render flags — as a pass/fix punch list. Not for redesigning or rewriting the page — use landing-optimizer; not for scoring the account or the RQS — use ad-account-auditor. 落地页体验预检/广告落地页一致性检查'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use before a paid campaign goes live to preflight the destination page against the ads: message-match continuity, above-the-fold offer/CTA presence, page-load speed, form-field friction, and mobile rendering. Also when the user asks why an ad's Quality Score or landing-page-experience rating is likely to be low."
 argument-hint: "<destination URL> [ad copy/headlines] [goal: dr|prospecting]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "orchestrate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "orchestrate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "orchestrate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "orchestrate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Landing Experience Checker

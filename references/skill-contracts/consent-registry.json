@@ -1,0 +1,309 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 135,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every mutation has authorization/source/date, immediate safety events are visible to `is-suppressed`, and no raw contact PII is stored."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 490,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 137
+        },
+        "text": "Opt-in/upsert/restore approval requires a request-bound host-capability `consent-registry` principal. `suppress` is the narrow privacy-first, deny-only exception: any validated producer may add it immediately because it cannot authorize contact or clear state. `erase` also bypasses proposal delay, but a self-reported matching actor ID is not authority"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 581,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 492
+        },
+        "text": "a verified data subject needs a host-issued safety capability bound to the exact request."
+      }
+    ],
+    "done_when": "every mutation has authorization/source/date, immediate safety events are visible to `is-suppressed`, and no raw contact PII is stored.\n\nOpt-in/upsert/restore approval requires a request-bound host-capability `consent-registry` principal. `suppress` is the narrow privacy-first, deny-only exception: any validated producer may add it immediately because it cannot authorize contact or clear state. `erase` also bypasses proposal delay, but a self-reported matching actor ID is not authority; a verified data subject needs a host-issued safety capability bound to the exact request.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "protocol/consent-registry/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "PRIVACY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b54865ad9bcd7bd31602708b9ea33be6d25ead55a2bbd300afa384e57521a541",
+        "source_line": 57
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 58
+      },
+      {
+        "path": "references/registry-event-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
+        "source_line": 36
+      },
+      {
+        "path": "references/runtime-invocation.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "source_line": 36
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 56
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/events/consent.ndjson",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "restricted"
+      }
+    ]
+  },
+  "contract_id": "skill:consent-registry",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 95,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "list-segment-builder"
+        ],
+        "text": "- **Apply exclusions:** [list-segment-builder](../../email/setup/list-segment-builder/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 189,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 96
+        },
+        "target_skills": [
+          "email-quality-auditor"
+        ],
+        "text": "- **Audit SEND:** [email-quality-auditor](../../email/deliver/email-quality-auditor/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 286,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 190
+        },
+        "target_skills": [
+          "deliverability-qa"
+        ],
+        "text": "- **Deliverability incident:** [deliverability-qa](../../email/setup/deliverability-qa/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 358,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 287
+        },
+        "target_skills": [
+          "memory-management"
+        ],
+        "text": "- **Erase/archive:** [memory-management](../memory-management/SKILL.md)"
+      }
+    ],
+    "next_best": "- **Apply exclusions:** [list-segment-builder](../../email/setup/list-segment-builder/SKILL.md)\n- **Audit SEND:** [email-quality-auditor](../../email/deliver/email-quality-auditor/SKILL.md)\n- **Deliverability incident:** [deliverability-qa](../../email/setup/deliverability-qa/SKILL.md)\n- **Erase/archive:** [memory-management](../memory-management/SKILL.md)",
+    "summary": "Use the shared handoff. Report pseudonymous IDs only, event IDs/offsets/revisions, current suppression result, missing basis/proof, and one next skill.",
+    "summary_ref": {
+      "path": "protocol/consent-registry/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "deliverability-qa",
+      "email-quality-auditor",
+      "list-segment-builder",
+      "memory-management"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "protocol",
+    "name": "consent-registry",
+    "path": "protocol/consent-registry/SKILL.md",
+    "phase": "protocol",
+    "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<pseudonymous subject-id and consent/suppression event>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 87,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "`memory/events/consent.ndjson` by replay, its projection, and minimum proof references."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "`memory/events/consent.ndjson` by replay, its projection, and minimum proof references.",
+    "source": {
+      "path": "protocol/consent-registry/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 48,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "consent events only through `registry-events.py`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 80,
+          "path": "protocol/consent-registry/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "span_basis": "field-text",
+          "start_char": 50
+        },
+        "text": "human records are projections."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "protocol/consent-registry/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+    },
+    "summary": "consent events only through `registry-events.py`; human records are projections.",
+    "summary_source": "writes-fallback",
+    "writes": "consent events only through `registry-events.py`; human records are projections."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for SEND scoring — use email-quality-auditor; not for building segments — use list-segment-builder. 订阅同意台账/实时退订抑制/合法性依据登记",
+    "description": "Use when the user asks to \"log this subscriber's opt-in\", record unsubscribes/complaints, or query lawful basis; curates pseudonymous consent facts through the append-only consent stream and applies suppression/erasure tombstones immediately. Not for SEND scoring — use email-quality-auditor; not for building segments — use list-segment-builder. 订阅同意台账/实时退订抑制/合法性依据登记",
+    "source": {
+      "path": "protocol/consent-registry/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+    },
+    "trigger_phrases": [
+      "log this subscriber's opt-in"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when recording or querying opt-in/lawful-basis evidence, immediately suppressing an unsubscribe, hard bounce, or complaint, restoring after a fresh authorized opt-in, processing erasure, or reviewing pending consent proposals."
+  },
+  "schema_version": "1.0"
+}

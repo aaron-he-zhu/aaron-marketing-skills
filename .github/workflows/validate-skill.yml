@@ -8,82 +8,287 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 jobs:
-  validate:
+  classify:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      tier: ${{ steps.impact.outputs.tier }}
+      changed_count: ${{ steps.impact.outputs.changed_count }}
+      changed_skills: ${{ steps.impact.outputs.changed_skills }}
+      base_ref: ${{ steps.refs.outputs.base_ref }}
+      head_ref: ${{ steps.refs.outputs.head_ref }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # The classifier compares immutable commit IDs and fails closed when
+          # either side of the change range is unavailable.
+          fetch-depth: 0
 
-      - name: Validate all skills
+      - name: Resolve immutable change range
+        id: refs
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          PUSH_BASE: ${{ github.event.before }}
+          PUSH_HEAD: ${{ github.sha }}
         run: |
           set -euo pipefail
-          python3 -c 'import json; print("\n".join(p.removeprefix("./") for p in json.load(open(".claude-plugin/plugin.json"))["skills"]))' |
-          while read -r skill; do
-            bash scripts/validate-skill.sh "$skill"
-          done
-          bash scripts/validate-skill.sh --status
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            base_ref="$PR_BASE"
+            head_ref="$PR_HEAD"
+          else
+            base_ref="$PUSH_BASE"
+            head_ref="$PUSH_HEAD"
+          fi
+          if [[ "$base_ref" =~ ^0+$ ]]; then
+            base_ref="$(git rev-list --max-parents=0 "$head_ref" | tail -1)"
+          fi
+          git rev-parse --verify --end-of-options "${base_ref}^{commit}" >/dev/null
+          git rev-parse --verify --end-of-options "${head_ref}^{commit}" >/dev/null
+          {
+            echo "base_ref=$base_ref"
+            echo "head_ref=$head_ref"
+          } >> "$GITHUB_OUTPUT"
 
-      - name: Architecture and distribution contracts
+      - name: Classify S0-S3 change impact
+        id: impact
+        env:
+          BASE_REF: ${{ steps.refs.outputs.base_ref }}
+          HEAD_REF: ${{ steps.refs.outputs.head_ref }}
         run: |
           set -euo pipefail
-          python3 scripts/check-architecture.py
-          python3 scripts/generate-system-docs.py --check
-          python3 scripts/generate-auditor-runtime.py --check
-          python3 -m unittest tests.test_architecture tests.test_distribution_builder
-          bash tests/test_runtime_distribution.sh
+          python3 scripts/classify-change-impact.py \
+            --base-ref "$BASE_REF" \
+            --head-ref "$HEAD_REF" \
+            --github-output "$GITHUB_OUTPUT" \
+            --json | tee "$RUNNER_TEMP/change-impact.json"
 
-      - name: Root references/ blob-main guard
-        run: |
-          # Repo-level half of the documented blob/main ban: the per-skill validator
-          # scans each skill's SKILL.md + references/, but cannot see root references/.
-          # `!` must stay the last command — under bash -e an inverted failure does not
-          # abort the script, so a trailing echo would mask a hit.
-          ! grep -rn "blob/main" references/ --include="*.md"
+  # Keep this job ID stable: it is the protected branch check.
+  validate:
+    needs: classify
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      CLASSIFY_RESULT: ${{ needs.classify.result }}
+      IMPACT_TIER: ${{ needs.classify.outputs.tier }}
+      BASE_REF: ${{ needs.classify.outputs.base_ref }}
+      HEAD_REF: ${{ needs.classify.outputs.head_ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Lint connector code (py_compile)
+      - name: Validation tier
         run: |
           set -euo pipefail
-          python3 -m py_compile scripts/*.py scripts/connectors/*.py
-          echo "all Python helpers compile clean"
+          [ "$CLASSIFY_RESULT" = "success" ] || {
+            echo "change-impact classification did not complete successfully" >&2
+            exit 1
+          }
+          case "$IMPACT_TIER" in
+            S0|S1|S2|S3) ;;
+            *)
+              echo "change-impact classifier returned an invalid tier" >&2
+              exit 1
+              ;;
+          esac
+          echo "impact=$IMPACT_TIER changed=${{ needs.classify.outputs.changed_count }}"
 
-      - name: Deterministic behavior conformance
-        run: python3 scripts/run-behavior-evals.py
-
-      - name: Eval-fixture and routing structural lint
-        run: python3 scripts/check-evals.py
-
+      # Fixed safety baseline. These checks run for every tier, including docs-
+      # only S0 changes; none can be bypassed by the impact classifier.
       - name: PII / secret scan
-        # Read every tracked blob from the index so hidden directories, symlinks,
-        # and filesystem-walk exclusions cannot bypass the release gate.
         run: python3 scripts/check-pii.py --tracked
 
       - name: Dependency-creep guard (stdlib-only)
         run: bash scripts/check-stdlib-only.sh
 
-      - name: Version-sync guard (10 tracking surfaces)
-        run: bash scripts/check-versions.sh
-
-      - name: Cross-agent discovery guard (npx skills)
-        run: |
-          set -euo pipefail
-          # End-to-end guard for the 70+ SKILL.md hosts served by `npx skills`
-          # (see docs/agent-compatibility.md): the installer must discover every
-          # skill declared in plugin.json. Catches invalid frontmatter YAML and
-          # manifest drift in one shot — a skill the installer cannot see is a
-          # skill no non-Claude host can install.
-          declared=$(python3 -c "import json; print(len(json.load(open('.claude-plugin/plugin.json'))['skills']))")
-          found=$(npx -y skills add . --list 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep -oE 'Found [0-9]+ skill' | grep -oE '[0-9]+' | head -1 || true)
-          echo "declared=$declared found=${found:-none}"
-          [ "${found:-0}" = "$declared" ]
-
-      - name: Local Markdown link targets
-        run: python3 scripts/check-local-links.py
-
-      - name: Validate JSON and shell syntax
+      - name: Validate JSON, Python, and shell syntax
         run: |
           set -euo pipefail
           find . -path ./.git -prune -o -path ./.planning -prune -o -name '*.json' -type f -print0 |
             xargs -0 -n1 python3 -m json.tool >/dev/null
-          # runtime and Git hook scripts must parse
-          bash -n hooks/claude-hook.sh .githooks/pre-commit && echo "hook scripts parse"
-          python3 -c "import json; json.load(open('hooks/hooks.json')); print('ok: hooks/hooks.json')"
+          python3 -m py_compile scripts/*.py scripts/connectors/*.py scripts/adapters/*.py
+          bash -n hooks/claude-hook.sh .githooks/pre-commit \
+            scripts/publish-common.sh scripts/publish-clawhub.sh \
+            scripts/publish-skillhub.sh scripts/publish-package.sh \
+            scripts/publish-registries.sh scripts/sync-about.sh scripts/sync-family.sh
+          python3 -c "import json; json.load(open('hooks/hooks.json'))"
+
+      - name: Universal safety contracts
+        run: |
+          set -euo pipefail
+          python3 -m unittest \
+            tests.test_change_impact \
+            tests.test_check_pii \
+            tests.test_create_github_release \
+            tests.test_final_release_gate \
+            tests.test_memory_privacy \
+            tests.test_profile_outcomes \
+            tests.test_release_receipt \
+            tests.test_publish_release \
+            tests.test_publish_state \
+            tests.test_runtime_controller
+          bash tests/test_hook_artifact_gate.sh
+          python3 scripts/run-behavior-evals.py \
+            --adapter-only \
+            --adapter-protocol 2 \
+            --profile smoke \
+            --plan-json "$RUNNER_TEMP/smoke-plan.json"
+          python3 - "$RUNNER_TEMP/smoke-plan.json" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              plan = json.load(handle)
+          if plan.get("selected_count") != 24 or len(plan.get("cases", [])) != 24:
+              raise SystemExit("smoke semantic plan must contain exactly 24 cases")
+          PY
+
+      - name: Version and publication surfaces
+        run: |
+          set -euo pipefail
+          bash scripts/check-versions.sh
+          python3 scripts/generate-release-surfaces.py --check
+          # These three generated Markdown projections otherwise resemble S0
+          # docs. Keep their cheap drift checks in the baseline.
+          python3 scripts/generate-system-docs.py --check
+          python3 scripts/generate-auditor-runtime.py --check
+          python3 scripts/workflow-graph.py --check
+
+      - name: Local Markdown link targets
+        run: python3 scripts/check-local-links.py
+
+      # S1 validates only directly changed skills, then plans the semantically
+      # affected cases. S2/S3 also run these checks before full validation.
+      - name: Validate changed skills
+        if: needs.classify.outputs.tier != 'S0'
+        run: |
+          set -euo pipefail
+          # Derive the paths again from the immutable range so a newly added,
+          # not-yet-catalogued skill cannot disappear from changed_skills.
+          git diff --name-only -z --diff-filter=ACMR "$BASE_REF" "$HEAD_REF" -- |
+            while IFS= read -r -d '' path; do
+              case "$path" in
+                */SKILL.md)
+                  [ -f "$path" ] || continue
+                  bash scripts/validate-skill.sh "$(dirname "$path")"
+                  ;;
+              esac
+            done
+
+      - name: Changed-surface contracts and semantic plan
+        if: needs.classify.outputs.tier != 'S0'
+        run: |
+          set -euo pipefail
+          # The symmetry/topology contract is mandatory even for a one-skill S1
+          # change, so additions/deletions cannot evade the exact 4x4 catalog.
+          python3 scripts/check-architecture.py
+          python3 scripts/generate-skill-contracts.py --check
+          python3 scripts/check-context-budget.py
+          python3 scripts/check-routing.py
+          python3 scripts/check-evals.py
+          python3 scripts/run-behavior-evals.py
+          python3 scripts/run-behavior-evals.py \
+            --adapter-only \
+            --adapter-protocol 2 \
+            --profile change-aware \
+            --changed-from "$BASE_REF" \
+            --list-cases > "$RUNNER_TEMP/change-aware-plan.json"
+
+      # S2/S3 are fail-closed full-repository tiers. The scheduled and release
+      # workflows repeat this exhaustive surface so no coverage depends on a PR.
+      - name: Validate all 120 skills
+        if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
+        run: |
+          set -uo pipefail
+          fail=0
+          while read -r skill; do
+            bash scripts/validate-skill.sh "$skill" || fail=1
+          done < <(python3 -c 'import json; print("\n".join(p.removeprefix("./") for p in json.load(open(".claude-plugin/plugin.json"))["skills"]))')
+          bash scripts/validate-skill.sh --status || fail=1
+          exit $fail
+
+      - name: Generated architecture and contract drift
+        if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
+        run: |
+          set -euo pipefail
+          python3 scripts/check-architecture.py
+          python3 scripts/generate-release-surfaces.py --check
+          python3 scripts/generate-system-docs.py --check
+          python3 scripts/generate-auditor-runtime.py --check
+          python3 scripts/generate-auditor-prompt-contracts.py --check
+          python3 scripts/generate-auto-routing-shards.py --check
+          python3 scripts/generate-skill-contracts.py --check
+          python3 scripts/workflow-graph.py --check
+
+      - name: Full unit and runtime suites
+        if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
+        run: |
+          set -euo pipefail
+          # The discovery command makes every module mandatory, including the
+          # maturity contract's statically audited wiring markers:
+          # tests.test_semantic_evidence_verifier tests.test_skill_contracts
+          # tests.test_context_plan tests.test_context_resolver
+          # tests.test_runtime_controller tests.test_distribution_builder
+          # tests.test_publish_release tests.test_workflow_loop
+          # tests.test_workflow_graph
+          python3 -m unittest discover -s tests -p 'test_*.py'
+          bash tests/test_runtime_distribution.sh
+          bash tests/test_hook_artifact_gate.sh
+
+      - name: Full behavior and 700-case credential-free plan
+        if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
+        run: |
+          set -euo pipefail
+          python3 scripts/run-behavior-evals.py
+          python3 scripts/check-evals.py
+          python3 scripts/run-behavior-evals.py \
+            --adapter-only \
+            --adapter-protocol 2 \
+            --profile nightly \
+            --plan-json "$RUNNER_TEMP/nightly-plan.json"
+          python3 - "$RUNNER_TEMP/nightly-plan.json" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              plan = json.load(handle)
+          if plan.get("selected_count") != 700 or len(plan.get("cases", [])) != 700:
+              raise SystemExit("nightly semantic plan must contain exactly 700 cases")
+          PY
+
+      - name: Reproducible Lite, Pro, and Governed builds
+        if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
+        run: |
+          set -euo pipefail
+          build_root="$(mktemp -d "$RUNNER_TEMP/profile-builds.XXXXXX")"
+          for profile in lite pro governed; do
+            first="$build_root/$profile-first"
+            second="$build_root/$profile-second"
+            python3 scripts/build-distribution.py --output "$first" --plugin --profile "$profile"
+            python3 scripts/build-distribution.py --output "$second" --plugin --profile "$profile"
+            python3 scripts/build-distribution.py --verify-manifest "$first"
+            python3 scripts/build-distribution.py --verify-manifest "$second"
+            cmp "$first/distribution-manifest.json" "$second/distribution-manifest.json"
+          done
+
+      - name: Root references/ blob-main guard
+        if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
+        run: |
+          # `!` must stay the last command: a trailing command could mask a hit.
+          ! grep -rn "blob/main" references/ --include="*.md"
+
+      - name: Cross-agent discovery guard (npx skills)
+        if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
+        run: |
+          set -euo pipefail
+          declared=$(python3 -c "import json; print(len(json.load(open('.claude-plugin/plugin.json'))['skills']))")
+          found=$(npx -y skills add . --list 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep -oE 'Found [0-9]+ skill' | grep -oE '[0-9]+' | head -1 || true)
+          echo "declared=$declared found=${found:-none}"
+          [ "${found:-0}" = "$declared" ]

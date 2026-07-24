@@ -1,0 +1,408 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 200,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every selected community has a dated rule digest, an account-history expectation labeled Estimated with a named source, a give-before-ask ledger spec, and graduation criteria a third party could check"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 269,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 202
+        },
+        "text": "the owned-space variant exists where an owned community is in scope"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 427,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 271
+        },
+        "text": "and the criteria are submitted as proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+      }
+    ],
+    "done_when": "every selected community has a dated rule digest, an account-history expectation labeled Estimated with a named source, a give-before-ask ledger spec, and graduation criteria a third party could check; the owned-space variant exists where an owned community is in scope; and the criteria are submitted as proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py`.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/explore/participation-warmup-planner/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/social/owned-community-loop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a107683884a667eb513e230e212005e2077640e08e5cd9ec291ba0ffcaf04d19",
+        "source_line": 50
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/channels",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/social/channel-portfolio-planner",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:participation-warmup-planner",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 181,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "channel-registry"
+        ],
+        "text": "- **Primary**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — record the warming plan pointer, cadence commitment, and graduation criteria on each channel dossier"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 239,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 183
+        },
+        "target_skills": [],
+        "text": "the state stays `warming` until the evidence is on file."
+      },
+      {
+        "condition": "If the channel set itself is undecided**: [channel-portfolio-planner](../channel-portfolio-planner/SKILL.md) — pick the channels first",
+        "extraction_status": "classified",
+        "item_id": "handoff-03",
+        "kind": "outcome",
+        "source": {
+          "end_char": 378,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 240
+        },
+        "target_skills": [
+          "channel-portfolio-planner"
+        ],
+        "text": "- **If the channel set itself is undecided**: [channel-portfolio-planner](../channel-portfolio-planner/SKILL.md) — pick the channels first"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 429,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 380
+        },
+        "target_skills": [],
+        "text": "this skill plans ramps only for decided channels."
+      },
+      {
+        "condition": "If graduation criteria are met and a launch moment is scheduled**: [community-launch-runner](../../../launch/mobilize/community-launch-runner/SKILL.md) — plan the T-0 submissions the warmed accounts can now credibly make.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 655,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 430
+        },
+        "target_skills": [
+          "community-launch-runner"
+        ],
+        "text": "- **If graduation criteria are met and a launch moment is scheduled**: [community-launch-runner](../../../launch/mobilize/community-launch-runner/SKILL.md) — plan the T-0 submissions the warmed accounts can now credibly make."
+      },
+      {
+        "condition": "when the plan is saved and the graduation criteria are dropped to candidates.",
+        "extraction_status": "classified",
+        "item_id": "handoff-06",
+        "kind": "termination",
+        "source": {
+          "end_char": 1012,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 657
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the plan is saved and the graduation criteria are dropped to candidates."
+      }
+    ],
+    "next_best": "- **Primary**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — record the warming plan pointer, cadence commitment, and graduation criteria on each channel dossier; the state stays `warming` until the evidence is on file.\n- **If the channel set itself is undecided**: [channel-portfolio-planner](../channel-portfolio-planner/SKILL.md) — pick the channels first; this skill plans ramps only for decided channels.\n- **If graduation criteria are met and a launch moment is scheduled**: [community-launch-runner](../../../launch/mobilize/community-launch-runner/SKILL.md) — plan the T-0 submissions the warmed accounts can now credibly make.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the plan is saved and the graduation criteria are dropped to candidates.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/explore/participation-warmup-planner/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "channel-portfolio-planner",
+      "channel-registry",
+      "community-launch-runner"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "participation-warmup-planner",
+    "path": "social/explore/participation-warmup-planner/SKILL.md",
+    "phase": "explore",
+    "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<community list or owned space> [target promotion window] [existing account history]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 154,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the selected channel set from [channel-portfolio-planner](../channel-portfolio-planner/SKILL.md) (`memory/social/channel-portfolio-planner/` when present)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 266,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 156
+        },
+        "text": "the phased-entry handoff from [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) niche mode"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 329,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 268
+        },
+        "text": "`warming`-state dossiers under `memory/channels/` (read-only)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 455,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 331
+        },
+        "text": "public community rules and own-account standing via `scripts/connectors/discourse.py`, `hn.py`, `bluesky.py`, `fediverse.py`"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 578,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 457
+        },
+        "text": "closed platforms (X/IG/TikTok/LinkedIn/小红书/微信公众号/视频号/抖音) as user exports or pasted rules (manual-package, User-provided)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the selected channel set from [channel-portfolio-planner](../channel-portfolio-planner/SKILL.md) (`memory/social/channel-portfolio-planner/` when present); the phased-entry handoff from [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) niche mode; `warming`-state dossiers under `memory/channels/` (read-only); public community rules and own-account standing via `scripts/connectors/discourse.py`, `hn.py`, `bluesky.py`, `fediverse.py`; closed platforms (X/IG/TikTok/LinkedIn/小红书/微信公众号/视频号/抖音) as user exports or pasted rules (manual-package, User-provided).",
+    "source": {
+      "path": "social/explore/participation-warmup-planner/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 65,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the warming plan to `memory/social/participation-warmup-planner/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 354,
+          "path": "social/explore/participation-warmup-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "span_basis": "field-text",
+          "start_char": 67
+        },
+        "text": "graduation criteria, cadence commitments, and channel-state evidence to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [channel-registry](../../../protocol/channel-registry/SKILL.md) is the sole writer of `memory/channels/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/explore/participation-warmup-planner/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+    },
+    "summary": "a per-community warming plan — account-history/tenure expectations (every threshold Estimated with a named source), a give-before-ask ledger spec, an etiquette + rule digest with last-verified dates, a human-executed weekly participation cadence, and testable warming → active graduation criteria — plus the owned-community variant (entry paths, incentives, lifecycle stages, exit hygiene) where the user runs their own space, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the warming plan to `memory/social/participation-warmup-planner/`; graduation criteria, cadence commitments, and channel-state evidence to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [channel-registry](../../../protocol/channel-registry/SKILL.md) is the sole writer of `memory/channels/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for launch-day submissions or T-0 threads — use community-launch-runner. 社区预热/先给后取/账号养成/毕业标准",
+    "description": "Use when the user asks to \"plan the participation ramp before we promote\", \"how much account history or karma do we need in this community\", or \"design entry incentives and member lifecycle for our own Discord\"; produces the per-community pre-promotion warming plan — account-history/tenure expectations (Estimated, named sources), a give-before-ask ledger spec, a per-community etiquette + rule digest with last-verified dates, and the warming → active graduation criteria that channel-registry requires as state-transition evidence — plus the owned-community variant (entry paths + member lifecycle for your own Discord/Slack/forum/企业微信私域). Not for launch-day submissions or T-0 threads — use community-launch-runner. 社区预热/先给后取/账号养成/毕业标准",
+    "source": {
+      "path": "social/explore/participation-warmup-planner/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+    },
+    "trigger_phrases": [
+      "design entry incentives and member lifecycle for our own Discord",
+      "how much account history or karma do we need in this community",
+      "plan the participation ramp before we promote"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when channels are chosen but not yet promoted in: designing the authentic-participation ramp per community (account-history expectations, give-before-ask ledger spec, etiquette and rule digest with last-verified dates), setting the warming → active graduation criteria the channel registry records as transition evidence, or designing entry incentives and member lifecycle for an owned Discord/Slack/forum/企业微信 space. Picks up the phased-entry handoff from audience-mapper niche mode and builds the account standing community-launch-runner presumes at T-0. Not the launch-day submission plan itself."
+  },
+  "schema_version": "1.0"
+}

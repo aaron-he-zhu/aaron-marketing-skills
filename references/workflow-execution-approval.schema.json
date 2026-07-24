@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workflow-execution-approval.schema.json",
+  "title": "Host-signed workflow execution approval",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "approval_id", "key_id", "algorithm",
+    "run_id", "loop_id", "action", "audit", "issued_at", "expires_at",
+    "nonce", "signature"
+  ],
+  "properties": {
+    "$schema": { "const": "references/workflow-execution-approval.schema.json" },
+    "schema_version": { "const": "1.0" },
+    "approval_id": { "$ref": "#/$defs/uuid" },
+    "key_id": { "$ref": "#/$defs/safe_id" },
+    "algorithm": { "const": "RS256" },
+    "run_id": { "$ref": "#/$defs/uuid" },
+    "loop_id": { "$ref": "#/$defs/safe_id" },
+    "action": { "$ref": "#/$defs/slug" },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256"],
+      "properties": {
+        "ref": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "issued_at": { "$ref": "#/$defs/timestamp" },
+    "expires_at": { "$ref": "#/$defs/timestamp" },
+    "nonce": { "$ref": "#/$defs/uuid" },
+    "signature": {
+      "type": "string",
+      "minLength": 342,
+      "maxLength": 683,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "safe_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,127}$"
+    },
+    "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    }
+  }
+}

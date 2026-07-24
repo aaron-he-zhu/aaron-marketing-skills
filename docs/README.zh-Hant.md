@@ -6,7 +6,9 @@
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-18.0.0-orange" alt="Version"></a>
+<!-- GENERATED:BEGIN release-surface:version-badge -->
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.0.0-orange" alt="Version"></a>
+<!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
 </p>
@@ -541,7 +543,7 @@ Artifact Gate 是**框架無關**的——同一個 hook 驗證 TALE、CORE-EEAT
 
 | 層 | 你得到什麼 |
 |----|------------|
-| **21 個內建零依賴連接器** | 純 Python 標準庫——無 `pip`、無建置。keyless 即時 SERP + JS 渲染抓取（Firecrawl、Tavily）、AI 答案引用探針、DNS-over-HTTPS 郵件認證拉取、維基百科關注度序列、GDELT 新聞提及、真實 YouTube 創作者指標、IndexNow + 百度收錄推送、Resend ESP 自動化，以及能把上述任一變成前後對比時間序列的 git 可差分測量台帳。 |
+| **28 個內建零依賴連接器** | 純 Python 標準庫——無 `pip`、無建置。keyless 即時 SERP + JS 渲染抓取（Firecrawl、Tavily）、AI 答案引用探針、DNS-over-HTTPS 郵件認證拉取、維基百科關注度序列、GDELT 新聞提及、真實 YouTube 創作者指標、IndexNow + 百度收錄推送、Resend ESP 自動化，以及能把上述任一變成前後對比時間序列的 git 可差分測量台帳。 |
 | **60+ 個記錄在案的官方/免費 API** | 每一行都連結廠商**官方文件**、帶核驗日期，且每條連結入庫前都經過 HTTP 實測。包含多數工具清單遺漏的路徑：GSC URL Inspection、CrUX History（40 週真實使用者 CWV）、Gmail Postmaster Tools API、Meta 廣告庫、微軟 Clarity 資料匯出 API。 |
 | **廠商 MCP 伺服器** | 18 個遠端端點入目錄（絕不自動註冊——你的 `/mcp` 清單保持乾淨），外加 Google Analytics、Search Console、**Google Ads**、**微軟 Clarity** 的官方自架伺服器。其中兩個遠端 MCP 完全免鑑權（Firecrawl、Tavily）。 |
 
@@ -677,7 +679,9 @@ docs/            # 在地化 README（zh）
 ## 貢獻與文檔
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— 撰寫規則、貢獻清單、權威的 10 個追蹤面列表。
-- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 變更日誌（目前套件：`18.0.0`）。
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
+- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 變更日誌（目前套件：`19.0.0`）。
+<!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— 安全、隱私、社群政策。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— 面向 Agent 的本倉庫上下文。
 

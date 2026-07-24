@@ -1,0 +1,307 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 65,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every sequence step has timing, a goal, and an explicit exit rule"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 138,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 67
+        },
+        "text": "reply-triage routes positive / objection / referral / not-now / opt-out"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 203,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 140
+        },
+        "text": "a per-mailbox warmup ramp and daily send throttle are specified"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 329,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 205
+        },
+        "text": "the CAN-SPAM required elements and any opt-in-jurisdiction flags are stated as guidance with a \"confirm with counsel\" caveat"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 409,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 331
+        },
+        "text": "and the SEND **S** read is emitted with the Cold-outbound typed profile named."
+      }
+    ],
+    "done_when": "every sequence step has timing, a goal, and an explicit exit rule; reply-triage routes positive / objection / referral / not-now / opt-out; a per-mailbox warmup ramp and daily send throttle are specified; the CAN-SPAM required elements and any opt-in-jurisdiction flags are stated as guidance with a \"confirm with counsel\" caveat; and the SEND **S** read is emitted with the Cold-outbound typed profile named.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 36
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 40
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 24
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 59
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:cold-outbound-sequencer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before send, so the S2 consent sub-item has a real answer at the gate.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 196,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "consent-registry"
+        ],
+        "text": "- **Primary**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record the lawful basis for each list source before send, so the S2 consent sub-item has a real answer at the gate."
+      },
+      {
+        "condition": "If the sequence is ready for the gate**: [email-quality-auditor](../email-quality-auditor/SKILL.md) — score the profile-weighted EQS and enforce S1 (authentication), S2 (consent), N1 (unsubscribe), and D1 (claims).",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 415,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 197
+        },
+        "target_skills": [
+          "email-quality-auditor"
+        ],
+        "text": "- **If the sequence is ready for the gate**: [email-quality-auditor](../email-quality-auditor/SKILL.md) — score the profile-weighted EQS and enforce S1 (authentication), S2 (consent), N1 (unsubscribe), and D1 (claims)."
+      },
+      {
+        "condition": "If each step now needs copy**: [email-creative-builder](../../engage/email-creative-builder/SKILL.md) — write the subject/body/CTA and the live CAN-SPAM footer for each designed step.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 603,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 416
+        },
+        "target_skills": [
+          "email-creative-builder"
+        ],
+        "text": "- **If each step now needs copy**: [email-creative-builder](../../engage/email-creative-builder/SKILL.md) — write the subject/body/CTA and the live CAN-SPAM footer for each designed step."
+      },
+      {
+        "condition": "If a recommended next skill has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between consent-registry and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on S1 or S2, route back here (or to consent-registry) to fix authentication or lawful basis rather than chaining onward.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1170,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 605
+        },
+        "target_skills": [],
+        "text": "Termination note: keep a visited-set of skills invoked this session. If a recommended next skill has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between consent-registry and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on S1 or S2, route back here (or to consent-registry) to fix authentication or lawful basis rather than chaining onward."
+      }
+    ],
+    "next_best": "- **Primary**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record the lawful basis for each list source before send, so the S2 consent sub-item has a real answer at the gate.\n- **If the sequence is ready for the gate**: [email-quality-auditor](../email-quality-auditor/SKILL.md) — score the profile-weighted EQS and enforce S1 (authentication), S2 (consent), N1 (unsubscribe), and D1 (claims).\n- **If each step now needs copy**: [email-creative-builder](../../engage/email-creative-builder/SKILL.md) — write the subject/body/CTA and the live CAN-SPAM footer for each designed step.\n\nTermination note: keep a visited-set of skills invoked this session. If a recommended next skill has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between consent-registry and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on S1 or S2, route back here (or to consent-registry) to fix authentication or lawful basis rather than chaining onward.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "consent-registry",
+      "email-creative-builder",
+      "email-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "email",
+    "name": "cold-outbound-sequencer",
+    "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+    "phase": "deliver",
+    "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<sequence goal or ICP> [sending domain/mailbox setup] [target jurisdiction(s)] [list source]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "classified",
+        "kind": "evidence-input",
+        "requirement": "optional",
+        "source": {
+          "end_char": 388,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the sequence goal or ICP, the sending-domain/mailbox setup (how many mailboxes, domain age, current warmup state), the target list source and its jurisdiction mix, current bounce/spam-complaint signals from a `~~email platform` sending report when available, and the SEND `cold-outbound` profile (`S=.35 E=.25 N=.15 D=.25`) from [send-benchmark.md](../../../references/send-benchmark.md)."
+      }
+    ],
+    "extraction_status": "classified",
+    "reads": "the sequence goal or ICP, the sending-domain/mailbox setup (how many mailboxes, domain age, current warmup state), the target list source and its jurisdiction mix, current bounce/spam-complaint signals from a `~~email platform` sending report when available, and the SEND `cold-outbound` profile (`S=.35 E=.25 N=.15 D=.25`) from [send-benchmark.md](../../../references/send-benchmark.md).",
+    "source": {
+      "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 178,
+          "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing sequence map + warmup/throttle schedule + guardrail block, and a reusable handoff summary to `memory/email/cold-outbound-sequencer/YYYY-MM-DD-<sequence-or-icp>.md`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+    },
+    "summary": "a cold-outbound sequence map (per-step timing, goal, exit conditions), a reply-triage branch table routing every reply type, a warmup + send-throttle ramp schedule (per-mailbox daily volume by week), a jurisdiction guardrail block (CAN-SPAM required elements, opt-in-jurisdiction flags — labeled guidance, not legal advice), a SEND **S**-dimension read with sub-item notes and the Cold-outbound typed profile named, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing sequence map + warmup/throttle schedule + guardrail block, and a reusable handoff summary to `memory/email/cold-outbound-sequencer/YYYY-MM-DD-<sequence-or-icp>.md`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for B2C lifecycle flows — use email-sequence-designer; not for the consent record — use consent-registry; not for computing EQS — use email-quality-auditor. B2B冷启动外联序列/回复分流/域名预热",
+    "description": "Use when the user asks to \"build a B2B cold-outbound sequence\", \"design reply-triage branching\", \"plan a domain warmup / sending throttle\", or \"make my outbound CAN-SPAM / opt-in compliant\"; produces a multi-step outbound sequence with reply-triage branches (positive / objection / referral / not-now / opt-out), a warmup + send-throttle ramp schedule, jurisdiction opt-in/CAN-SPAM guardrails (guidance, not legal advice), and a SEND S-dimension read. Not for B2C lifecycle flows — use email-sequence-designer; not for the consent record — use consent-registry; not for computing EQS — use email-quality-auditor. B2B冷启动外联序列/回复分流/域名预热",
+    "source": {
+      "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+    },
+    "trigger_phrases": [
+      "build a B2B cold-outbound sequence",
+      "design reply-triage branching",
+      "make my outbound CAN-SPAM / opt-in compliant",
+      "plan a domain warmup / sending throttle"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when designing a B2B cold-outbound email program before writing the individual emails: a multi-step prospecting sequence with per-step timing and exit rules, the reply-triage branching that routes each reply type, a domain/mailbox warmup ramp and per-mailbox sending throttle to protect deliverability, and the CAN-SPAM / opt-in jurisdiction guardrails the sequence must respect. Activate when the user has a target list or ICP and wants the sequence map, the warmup/throttle schedule, and the compliance guardrails before creative or send-testing begins. Not for consented B2C lifecycle automation and not for adjudicating the consent record itself."
+  },
+  "schema_version": "1.0"
+}

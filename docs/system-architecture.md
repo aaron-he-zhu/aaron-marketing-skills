@@ -4,10 +4,22 @@
 
 This is the generated human view of [`references/system-catalog.json`](../references/system-catalog.json). The JSON catalog is authoritative.
 
-- Architecture contract: `18.0.0`
-- Bundle version: `18.0.0`
-- Catalog digest: `sha256:0b16d9cf1493b6bf46b5cabd9e50a848404fee649c37cf485f80ca40963fe882`
+- Architecture contract: `19.0.0`
+- Bundle version: `19.0.0`
+- Catalog digest: `sha256:eb27d06079bb4f785ba9716e19badef33d0f40386f134bcf0ba337ef835cbfc3`
 - Shape: **112 discipline skills across 7 disciplines + 8 protocol skills = 120 skills; 8 commands**
+
+## Runtime Capability Profiles
+
+The capability matrix is delegated to [`references/capability-profiles.json`](../references/capability-profiles.json) (`sha256:a1bb5825bc677a4a5a452254f5d0b87a5fc21efb8ddc1dcecf31107f1318bc40`), preserving **Lite ⊂ Pro ⊂ Governed** without duplicating it in the system catalog.
+
+Universal overlays applied to every profile: `consent` · `claims` · `pii-secrets` · `external-mutation` · `audit-verdict` · `release-provenance`.
+
+| Profile | Rank | Capability count | Adds at this tier |
+|---|---:|---:|---|
+| **Lite** | 0 | 5 | `authored-workflows` · `auto-routing` · `deterministic-scoring` · `inline-delivery` · `canonical-state-read` |
+| **Pro** | 1 | 7 | `connectors` · `audit-persistence` |
+| **Governed** | 2 | 16 | `working-memory-write` · `registry-write` · `run-evidence` · `context-planning` · `runtime-controller` · `workflow-execution` · `workflow-loop` · `audit-loop` · `owner-capability` |
 
 ## Four Layers
 

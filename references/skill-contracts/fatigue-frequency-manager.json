@@ -1,0 +1,385 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 18,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "decay is read as a"
+      }
+    ],
+    "done_when": "decay is read as a",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 30
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 40
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 48
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 49
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 26
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 67
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:fatigue-frequency-manager",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 20,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [],
+        "text": "Verdict-conditional:"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 206,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 22
+        },
+        "target_skills": [
+          "ad-creative-builder"
+        ],
+        "text": "- **Rotate-creative fired** → [ad-creative-builder](../../orchestrate/ad-creative-builder/SKILL.md) to produce the fresh ad unit (ad↔LP message-match + claim/policy checks live there)."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 372,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 207
+        },
+        "target_skills": [
+          "audience-segment-builder"
+        ],
+        "text": "- **Widen-audience fired** → [audience-segment-builder](../../research/audience-segment-builder/SKILL.md) to expand seed/lookalike segments from the user's own data."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 560,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 373
+        },
+        "target_skills": [
+          "ad-account-auditor"
+        ],
+        "text": "- **A measurement-signal risk was flagged (ROAS-R1/R2)** → stop and route to [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — the gate scores the RQS and runs the vetoes"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 626,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 562
+        },
+        "target_skills": [],
+        "text": "do not act on a fatigue read built on untrusted conversion data."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 648,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 627
+        },
+        "target_skills": [],
+        "text": "- **Hold** → terminal"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-07",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 672,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 650
+        },
+        "target_skills": [],
+        "text": "report chain-complete."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-08",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 788,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 674
+        },
+        "target_skills": [],
+        "text": "Visited-set and `max-depth: 3` termination rules apply per [Skill Contract](../../../references/skill-contract.md)"
+      },
+      {
+        "condition": "if the recommended target was already run this chain, STOP and report chain-complete.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-09",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 875,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 790
+        },
+        "target_skills": [],
+        "text": "if the recommended target was already run this chain, STOP and report chain-complete."
+      }
+    ],
+    "next_best": "Verdict-conditional:\n\n- **Rotate-creative fired** → [ad-creative-builder](../../orchestrate/ad-creative-builder/SKILL.md) to produce the fresh ad unit (ad↔LP message-match + claim/policy checks live there).\n- **Widen-audience fired** → [audience-segment-builder](../../research/audience-segment-builder/SKILL.md) to expand seed/lookalike segments from the user's own data.\n- **A measurement-signal risk was flagged (ROAS-R1/R2)** → stop and route to [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) — the gate scores the RQS and runs the vetoes; do not act on a fatigue read built on untrusted conversion data.\n- **Hold** → terminal; report chain-complete.\n\nVisited-set and `max-depth: 3` termination rules apply per [Skill Contract](../../../references/skill-contract.md); if the recommended target was already run this chain, STOP and report chain-complete.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "ad-creative-builder",
+      "audience-segment-builder"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "fatigue-frequency-manager",
+    "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+    "phase": "scale",
+    "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<campaign/ad-set> [flight window]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 148,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the ad set / campaign under review, a daily (or weekly) time-series export with impressions, reach, frequency, clicks/CTR, conversions/CVR and spend"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 228,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 150
+        },
+        "text": "the early-flight baseline window (first stable days after learning-phase exit)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 245,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 230
+        },
+        "text": "target CPA/ROAS"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 302,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 247
+        },
+        "text": "audience size / saturation estimate if the user has it."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the ad set / campaign under review, a daily (or weekly) time-series export with impressions, reach, frequency, clicks/CTR, conversions/CVR and spend; the early-flight baseline window (first stable days after learning-phase exit); target CPA/ROAS; audience size / saturation estimate if the user has it.",
+    "source": {
+      "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 106,
+          "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing fatigue table plus a reusable summary storable under `memory/ad/fatigue-frequency-manager/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e"
+    },
+    "summary": "a per-ad-set fatigue read — frequency now vs baseline, CTR and CVR decay slope against the early-flight baseline, the diagnosis (creative fatigue vs audience saturation vs neither), and one trigger (**Rotate-creative** /",
+    "summary_source": "expected-output",
+    "writes": "a user-facing fatigue table plus a reusable summary storable under `memory/ad/fatigue-frequency-manager/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for building the replacement creative — use ad-creative-builder; not for the RQS score or vetoes — use ad-account-auditor. 广告疲劳检测/频次管理/换素材还是扩人群",
+    "description": "Use when the user asks to \"is my ad fatiguing\", \"why is CTR dropping at scale\", or \"should I rotate creative / widen the audience\"; reads frequency, CTR and CVR decay against an early-flight baseline and returns Rotate-creative / Widen-audience / Hold triggers with a per-ad-set fatigue read. Not for building the replacement creative — use ad-creative-builder; not for the RQS score or vetoes — use ad-account-auditor. 广告疲劳检测/频次管理/换素材还是扩人群",
+    "source": {
+      "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "ee2ac43b790049683d2fbe03246f26358924aef7f4b2e6c1dcb7b62a2bbbaa8e"
+    },
+    "trigger_phrases": [
+      "is my ad fatiguing",
+      "should I rotate creative / widen the audience",
+      "why is CTR dropping at scale"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when a scaled paid campaign shows rising frequency or falling CTR/CVR and the user needs a rotate-creative vs widen-audience vs hold decision, when diagnosing creative fatigue or audience saturation from a frequency + CTR/CVR trend export, or when setting frequency/decay thresholds for a scaling ad set. Not for producing the new creative (use ad-creative-builder) or the RQS gate score and vetoes (use ad-account-auditor)."
+  },
+  "schema_version": "1.0"
+}

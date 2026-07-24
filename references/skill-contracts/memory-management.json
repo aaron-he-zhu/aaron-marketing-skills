@@ -1,0 +1,276 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 182,
+          "path": "protocol/memory-management/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the requested operation is complete, writes have explicit authorization, affected paths/events are reported, HOT is within 80 lines and 25 KB, and registry verification still passes."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 270,
+          "path": "protocol/memory-management/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5",
+          "span_basis": "field-text",
+          "start_char": 184
+        },
+        "text": "Operational `memory/**` is Git-ignored by default. Initialize from `memory/templates/`"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 445,
+          "path": "protocol/memory-management/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5",
+          "span_basis": "field-text",
+          "start_char": 272
+        },
+        "text": "never commit runtime data, event streams, projections, audits, exports, or subject records unless the user deliberately creates a separate protected data-governance process."
+      }
+    ],
+    "done_when": "the requested operation is complete, writes have explicit authorization, affected paths/events are reported, HOT is within 80 lines and 25 KB, and registry verification still passes.\n\nOperational `memory/**` is Git-ignored by default. Initialize from `memory/templates/`; never commit runtime data, event streams, projections, audits, exports, or subject records unless the user deliberately creates a separate protected data-governance process.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "protocol/memory-management/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "protocol/memory-management/references/consolidation-pass.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ba007b0ffb1a85ece783f3caf2d99192b48b5f5c2d8df77faf8cca4b37abffdf",
+        "source_line": 129
+      },
+      {
+        "path": "protocol/memory-management/references/examples.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f9d2addf70792f93aca92e731f4b64ea006646e2e0b77c88bf24f961fa5026c1",
+        "source_line": 131
+      },
+      {
+        "path": "protocol/memory-management/references/promotion-demotion-rules.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "29caab3e2ef9046268c5399f3b40a308aeaf0b643ddf156c7fe3dbad7e2101a3",
+        "source_line": 128
+      },
+      {
+        "path": "protocol/memory-management/references/update-triggers-integration.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "d89fe474ed59fee59f9b4f200472b8b47a03bffb4788d01d0a17cea9bd4d8b3d",
+        "source_line": 130
+      },
+      {
+        "path": "references/registry-event-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
+        "source_line": 127
+      },
+      {
+        "path": "references/runtime-invocation.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "source_line": 54
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 37
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 18
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:memory-management",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "after the needed projection and authorization state are clear.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 278,
+          "path": "protocol/memory-management/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "channel-registry",
+          "consent-registry",
+          "creator-registry",
+          "entity-registry",
+          "launch-registry",
+          "narrative-registry",
+          "offer-claims-registry"
+        ],
+        "text": "Route a canonical conflict to its owner: `entity-registry`, `creator-registry`, `offer-claims-registry`, `consent-registry`, `launch-registry`, `channel-registry`, or `narrative-registry`. Resume execution work only after the needed projection and authorization state are clear."
+      }
+    ],
+    "next_best": "Route a canonical conflict to its owner: `entity-registry`, `creator-registry`, `offer-claims-registry`, `consent-registry`, `launch-registry`, `channel-registry`, or `narrative-registry`. Resume execution work only after the needed projection and authorization state are clear.",
+    "summary": "Use [skill-contract.md](../../references/skill-contract.md). Include authorization status, changed paths/event IDs, registry offsets read, conflicts preserved, privacy actions, and one next skill.",
+    "summary_ref": {
+      "path": "protocol/memory-management/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "channel-registry",
+      "consent-registry",
+      "creator-registry",
+      "entity-registry",
+      "launch-registry",
+      "narrative-registry",
+      "offer-claims-registry"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "protocol",
+    "name": "memory-management",
+    "path": "protocol/memory-management/SKILL.md",
+    "phase": "protocol",
+    "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "[init|review|archive|consolidate|purge] [scope]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 130,
+          "path": "protocol/memory-management/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "authorized runtime memory, registry projections/events, approved decisions, and [state-model.md](../../references/state-model.md)."
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "authorized runtime memory, registry projections/events, approved decisions, and [state-model.md](../../references/state-model.md).",
+    "source": {
+      "path": "protocol/memory-management/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "external-action",
+        "permission_posture": "permission-required",
+        "side_effect": "external-mutation",
+        "source": {
+          "end_char": 77,
+          "path": "protocol/memory-management/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "HOT/WARM/COLD notes, archives, indexes, and authorized tombstone/erase events"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "registry-event",
+        "permission_posture": "permission-required",
+        "side_effect": "registry-proposal",
+        "source": {
+          "end_char": 163,
+          "path": "protocol/memory-management/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5",
+          "span_basis": "field-text",
+          "start_char": 79
+        },
+        "text": "it never accepts registry proposals or writes canonical facts on behalf of an owner."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "protocol/memory-management/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5"
+    },
+    "summary": "HOT/WARM/COLD notes, archives, indexes, and authorized tombstone/erase events; it never accepts registry proposals or writes canonical facts on behalf of an owner.",
+    "summary_source": "writes-fallback",
+    "writes": "HOT/WARM/COLD notes, archives, indexes, and authorized tombstone/erase events; it never accepts registry proposals or writes canonical facts on behalf of an owner."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for changing canonical registry facts - route those through the owning registry. 项目记忆/跨会话",
+    "description": "Use when the user asks to \"remember project context\", review saved findings, initialize runtime memory, archive stale work, reconcile notes, or erase a subject; manages authorized HOT/WARM/COLD working memory across all disciplines while preserving registry event ownership and privacy controls. Not for changing canonical registry facts - route those through the owning registry. 项目记忆/跨会话",
+    "source": {
+      "path": "protocol/memory-management/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "fdcb3fd6cbdbc40a48054ce2f496ca5f6c680c0b95c2d7184146a07000ff8bc5"
+    },
+    "trigger_phrases": [
+      "remember project context"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when initializing, querying, consolidating, archiving, exporting, or erasing project memory; also when repairing broken references or reconciling conflicting non-canonical notes."
+  },
+  "schema_version": "1.0"
+}

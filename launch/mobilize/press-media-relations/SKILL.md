@@ -4,13 +4,13 @@ slug: aaron-press-media-relations
 displayName: "Press Media Relations · 媒体分析师关系"
 summary: "媒体名单/禁运期pitch/新闻稿/分析师简报"
 description: 'Use when the user asks to "build a media list for my launch", "write a launch press release", or "pitch press under embargo"; produces a three-tier media and analyst list (Tier 1 exclusive candidates, Tier 2 vertical press, Tier 3 communities and newsletters), an embargo pitch timing skeleton keyed to the launch-registry date, a press-release draft in standard structure with no fabricated quotes or numbers, and an analyst briefing outline. Not for press-kit assets — use launch-asset-packager; not for follow-up sequence mechanics — use outreach-manager; not for post-launch news-echo monitoring — use launch-monitor. 媒体名单/禁运期pitch/新闻稿/分析师简报'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a launch needs a media and analyst motion: building a tiered press list, choosing an exclusive-vs-broad embargo strategy, drafting the press release and analyst briefing, and sequencing embargoed pitches against the authoritative launch date. The list / embargo / angle / release layer above pitch execution (outreach-manager) and press-kit assets (launch-asset-packager)."
 argument-hint: "<product / launch moment> [target verticals] [launch tier] [launch date]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "mobilize", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "mobilize"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "mobilize", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "mobilize"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Press Media Relations

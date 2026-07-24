@@ -3,10 +3,10 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 18.0.0
+- **Catalog version:** 19.0.0
 - **Framework:** RAMP
 - **Auditor:** launch-readiness-auditor
-- **Source digest:** `sha256:f436e15abd65cda3f6c2bb5ff90120d01e6f79ffd83c0d5f9c2f604d9c84ee96`
+- **Source digest:** `sha256:4981618e960d50e82af95895afb074c3b9d1177c49d5ba04747202aab3611c78`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -14,7 +14,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "18.0.0",
+  "catalog_version": "19.0.0",
   "frameworks": {
     "RAMP": {
       "composite_score": false,

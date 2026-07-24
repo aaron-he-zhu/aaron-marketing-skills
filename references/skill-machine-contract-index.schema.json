@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/skill-machine-contract-index.schema.json",
+  "title": "Aaron skill machine-contract index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "contract_count", "contract_schema",
+    "source_catalog", "shared_contract", "contracts"
+  ],
+  "properties": {
+    "$schema": {"const": "../skill-machine-contract-index.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "contract_count": {"const": 120},
+    "contract_schema": {"$ref": "#/$defs/fileRef"},
+    "source_catalog": {"$ref": "#/$defs/catalogRef"},
+    "shared_contract": {"$ref": "#/$defs/fileRef"},
+    "contracts": {
+      "type": "array", "minItems": 120, "maxItems": 120,
+      "items": {"$ref": "#/$defs/entry"}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "fileRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "catalogRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "version"],
+      "properties": {
+        "path": {"const": "references/system-catalog.json"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skill", "contract_ref", "contract_sha256"],
+      "properties": {
+        "skill": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "contract_ref": {"type": "string", "pattern": "^references/skill-contracts/[a-z0-9][a-z0-9-]*\\.json$"},
+        "contract_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

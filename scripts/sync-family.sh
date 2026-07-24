@@ -21,15 +21,28 @@
 
 set -euo pipefail
 cd "$(dirname "$0")/.."
+source scripts/publish-common.sh
 
 OWNER="aaron-he-zhu"
 UMBRELLA="aaron-marketing-skills"
 REF_URL="https://github.com/$OWNER/$UMBRELLA/blob/main/references"
 LIVE=0
 [ "${1:-}" = "--live" ] && LIVE=1
-VERSION=$(/usr/bin/python3 -c "import json;print(json.load(open('.claude-plugin/plugin.json'))['version'])")
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
+SOURCE_ROOT="."
+if [ "$LIVE" -eq 1 ]; then
+  SOURCE_ROOT="$TMP/source"
+  RELEASE_IDENTITY="$(publish_prepare_release_source "$SOURCE_ROOT")"
+  SOURCE_REPO="${RELEASE_IDENTITY%%$'\t'*}"
+  SOURCE_COMMIT="${RELEASE_IDENTITY#*$'\t'}"
+  [ "$SOURCE_REPO" = "$OWNER/$UMBRELLA" ] || {
+    echo "FAIL: family live source $SOURCE_REPO is not $OWNER/$UMBRELLA" >&2
+    exit 1
+  }
+  echo "family provenance: $SOURCE_REPO@$SOURCE_COMMIT (pinned commit export)"
+fi
+VERSION=$(/usr/bin/python3 -c "import json,sys;print(json.load(open(sys.argv[1]))['version'])" "$SOURCE_ROOT/.claude-plugin/plugin.json")
 DRIFT=0
 
 fetch_raw() { # $1 repo, $2 file → stdout (fails silently; caller checks)
@@ -65,11 +78,11 @@ gen_body() { # $1 references/<file>.md → stdout, relative md links → absolut
   sed -E "s,\]\(([A-Za-z0-9._-]+\.md)(#[^)]*)?\),](${REF_URL}/\1\2),g" "$1"
 }
 
-gen_list() { # $1 plugin.json path prefix (ad|email) → stdout markdown skill list
-  /usr/bin/python3 - "$1" <<'PY'
+gen_list() { # $1 plugin.json path prefix (ad|email), $2 pinned/dry-run plugin.json → stdout
+  /usr/bin/python3 - "$1" "$2" <<'PY'
 import json, sys
 pre = sys.argv[1] + "/"
-plugin = json.load(open(".claude-plugin/plugin.json"))
+plugin = json.load(open(sys.argv[2]))
 url = "https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/main/"
 phases = {}
 for s in plugin["skills"]:
@@ -191,49 +204,49 @@ check_ids_target() { # $1 repo, $2 colon-separated references source file(s), $3
 echo "sync-family — umbrella v$VERSION $([ $LIVE -eq 1 ] && echo '(LIVE)' || echo '(dry-run)')"
 echo
 
-gen_body references/roas-benchmark.md > "$TMP/gen-roas.md"
+gen_body "$SOURCE_ROOT/references/roas-benchmark.md" > "$TMP/gen-roas.md"
 check_marker_target paid-ads-roas-benchmark references/roas-benchmark.md "$TMP/gen-roas.md"
 
-gen_body references/send-benchmark.md > "$TMP/gen-send.md"
+gen_body "$SOURCE_ROOT/references/send-benchmark.md" > "$TMP/gen-send.md"
 check_marker_target email-marketing-send-benchmark references/send-benchmark.md "$TMP/gen-send.md"
 
-gen_body references/ramp-benchmark.md > "$TMP/gen-ramp.md"
+gen_body "$SOURCE_ROOT/references/ramp-benchmark.md" > "$TMP/gen-ramp.md"
 check_marker_target launch-marketing-ramp-benchmark references/ramp-benchmark.md "$TMP/gen-ramp.md"
 
-gen_body references/echo-benchmark.md > "$TMP/gen-echo.md"
+gen_body "$SOURCE_ROOT/references/echo-benchmark.md" > "$TMP/gen-echo.md"
 check_marker_target social-marketing-echo-benchmark references/echo-benchmark.md "$TMP/gen-echo.md"
 
-gen_body references/tale-benchmark.md > "$TMP/gen-tale.md"
+gen_body "$SOURCE_ROOT/references/tale-benchmark.md" > "$TMP/gen-tale.md"
 check_marker_target narrative-marketing-tale-benchmark references/tale-benchmark.md "$TMP/gen-tale.md"
 
-gen_list ad > "$TMP/gen-ad.md"
+gen_list ad "$SOURCE_ROOT/.claude-plugin/plugin.json" > "$TMP/gen-ad.md"
 check_marker_target paid-ads-agent-skills 'plugin.json#ad' "$TMP/gen-ad.md"
 
-gen_list email > "$TMP/gen-email.md"
+gen_list email "$SOURCE_ROOT/.claude-plugin/plugin.json" > "$TMP/gen-email.md"
 check_marker_target email-marketing-agent-skills 'plugin.json#email' "$TMP/gen-email.md"
 
-gen_list seo-geo > "$TMP/gen-seo-geo.md"
+gen_list seo-geo "$SOURCE_ROOT/.claude-plugin/plugin.json" > "$TMP/gen-seo-geo.md"
 check_marker_target seo-geo-claude-skills 'plugin.json#seo-geo' "$TMP/gen-seo-geo.md"
 
-gen_list influencer > "$TMP/gen-influencer.md"
+gen_list influencer "$SOURCE_ROOT/.claude-plugin/plugin.json" > "$TMP/gen-influencer.md"
 check_marker_target influencer-marketing-agent-skills 'plugin.json#influencer' "$TMP/gen-influencer.md"
 
-gen_list launch > "$TMP/gen-launch.md"
+gen_list launch "$SOURCE_ROOT/.claude-plugin/plugin.json" > "$TMP/gen-launch.md"
 check_marker_target product-launch-agent-skills 'plugin.json#launch' "$TMP/gen-launch.md"
 
-gen_list social > "$TMP/gen-social.md"
+gen_list social "$SOURCE_ROOT/.claude-plugin/plugin.json" > "$TMP/gen-social.md"
 check_marker_target social-media-agent-skills 'plugin.json#social' "$TMP/gen-social.md"
 
-gen_list narrative > "$TMP/gen-narrative.md"
+gen_list narrative "$SOURCE_ROOT/.claude-plugin/plugin.json" > "$TMP/gen-narrative.md"
 check_marker_target brand-narrative-agent-skills 'plugin.json#narrative' "$TMP/gen-narrative.md"
 
-check_ids_target core-eeat-content-benchmark references/core-eeat-benchmark.md README.md
-check_ids_target cite-domain-rating references/cite-domain-rating.md README.md
+check_ids_target core-eeat-content-benchmark "$SOURCE_ROOT/references/core-eeat-benchmark.md" README.md
+check_ids_target cite-domain-rating "$SOURCE_ROOT/references/cite-domain-rating.md" README.md
 # v18 replaced the C3 split with the single references/star-benchmark.md (STAR framework).
 # OWNER ACTION: rename the GitHub mirror influencer-marketing-c3-benchmark ->
 # influencer-marketing-star-benchmark before the next sync, or this target will 404.
 check_ids_target influencer-marketing-star-benchmark \
-  references/star-benchmark.md \
+  "$SOURCE_ROOT/references/star-benchmark.md" \
   README.md star-benchmark.md
 
 echo

@@ -3,10 +3,10 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 18.0.0
+- **Catalog version:** 19.0.0
 - **Framework:** CITE
 - **Auditor:** domain-authority-auditor
-- **Source digest:** `sha256:36f4108c9ac2d6057fecdc8dde4817c6545f4dd2e9d4dae0a8246503559b887e`
+- **Source digest:** `sha256:e3144a09cc182c9f687be7e8c58e93694fac7316b7c86936091760330590e9be`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -14,7 +14,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "18.0.0",
+  "catalog_version": "19.0.0",
   "frameworks": {
     "CITE": {
       "benchmark_mode": "peer-relative; absolute thresholds are diagnostic starting points only",

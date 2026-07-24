@@ -1,0 +1,277 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 124,
+          "path": "email/deliver/email-quality-auditor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "all expected SEND states are explicit and the scorer result is reported without sending email or changing provider settings."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 326,
+          "path": "email/deliver/email-quality-auditor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+          "span_basis": "field-text",
+          "start_char": 126
+        },
+        "text": "Use `deliverability-qa` to repair authentication, `consent-registry` for lawful-basis/suppression facts, `email-sequence-designer` for journeys, and `send-experiment-designer` for preregistered tests."
+      }
+    ],
+    "done_when": "all expected SEND states are explicit and the scorer result is reported without sending email or changing provider settings.\n\nUse `deliverability-qa` to repair authentication, `consent-registry` for lawful-basis/suppression facts, `email-sequence-designer` for journeys, and `send-experiment-designer` for preregistered tests.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/deliver/email-quality-auditor/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "email/deliver/email-quality-auditor/references/auditor-runtime.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "3bf01acec1ce9e067efe4306490b8b65d068c342c6ba074dc363d68245317945",
+        "source_line": 41
+      },
+      {
+        "path": "references/auditor-runbook.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "c5736873999d3d858df910525afe293311ce76df926f3319fe6132766b6e8135",
+        "source_line": 41
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 99
+      },
+      {
+        "path": "references/runtime-invocation.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "source_line": 41
+      },
+      {
+        "path": "references/scoring-semantics.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "c4e3eb8c5dc6d3e5dd2d30594a85b2610df2addce829e305c365ce9311b6b59b",
+        "source_line": 41
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 41
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:email-quality-auditor",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 91,
+          "path": "email/deliver/email-quality-auditor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "deliverability-qa"
+        ],
+        "text": "- **Authentication/placement:** [deliverability-qa](../../setup/deliverability-qa/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 182,
+          "path": "email/deliver/email-quality-auditor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+          "span_basis": "field-text",
+          "start_char": 92
+        },
+        "target_skills": [
+          "consent-registry"
+        ],
+        "text": "- **Consent/suppression:** [consent-registry](../../../protocol/consent-registry/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 273,
+          "path": "email/deliver/email-quality-auditor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+          "span_basis": "field-text",
+          "start_char": 183
+        },
+        "target_skills": [
+          "email-sequence-designer"
+        ],
+        "text": "- **Lifecycle:** [email-sequence-designer](../../nurture/email-sequence-designer/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 356,
+          "path": "email/deliver/email-quality-auditor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+          "span_basis": "field-text",
+          "start_char": 274
+        },
+        "target_skills": [
+          "send-experiment-designer"
+        ],
+        "text": "- **Experiment:** [send-experiment-designer](../send-experiment-designer/SKILL.md)"
+      }
+    ],
+    "next_best": "- **Authentication/placement:** [deliverability-qa](../../setup/deliverability-qa/SKILL.md)\n- **Consent/suppression:** [consent-registry](../../../protocol/consent-registry/SKILL.md)\n- **Lifecycle:** [email-sequence-designer](../../nurture/email-sequence-designer/SKILL.md)\n- **Experiment:** [send-experiment-designer](../send-experiment-designer/SKILL.md)",
+    "summary": null,
+    "summary_ref": {
+      "path": "references/skill-contract.md",
+      "section": "Handoff Summary Format",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "summary_source": "shared-skill-contract",
+    "target_skills": [
+      "consent-registry",
+      "deliverability-qa",
+      "email-sequence-designer",
+      "send-experiment-designer"
+    ]
+  },
+  "identity": {
+    "class": "auditor",
+    "discipline": "email",
+    "name": "email-quality-auditor",
+    "path": "email/deliver/email-quality-auditor/SKILL.md",
+    "phase": "deliver",
+    "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<ESP/DMARC/outcome evidence> [promotional|retention|cold-outbound|newsletter]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 128,
+          "path": "email/deliver/email-quality-auditor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "one program/profile, normalized window, provider evidence, live consent/suppression state, rendered messages, and outcome truth."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "one program/profile, normalized window, provider evidence, live consent/suppression state, rendered messages, and outcome truth.",
+    "source": {
+      "path": "email/deliver/email-quality-auditor/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "partially-classified",
+        "kind": "unclassified",
+        "permission_posture": "permission-required",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 32,
+          "path": "email/deliver/email-quality-auditor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "only a permissioned v3 artifact."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "email/deliver/email-quality-auditor/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d"
+    },
+    "summary": "only a permissioned v3 artifact.",
+    "summary_source": "writes-fallback",
+    "writes": "only a permissioned v3 artifact."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for building deliverability setup — use deliverability-qa; not for designing lifecycle flows — use email-sequence-designer. 邮件质量审计/EQS评分/发送前放行",
+    "description": "Use when the user asks to \"audit an email program\" or \"is this campaign safe to send\"; runs a typed 20-item SEND profile with authentication, consent, opt-out, and claim veto checks on own evidence. Not for building deliverability setup — use deliverability-qa; not for designing lifecycle flows — use email-sequence-designer. 邮件质量审计/EQS评分/发送前放行",
+    "source": {
+      "path": "email/deliver/email-quality-auditor/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "568baed61875730d5fe235163ed43864e103b94d63030211b9112363ad8a1f2d"
+    },
+    "trigger_phrases": [
+      "audit an email program",
+      "is this campaign safe to send"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when checking an email program or send before release, or when authentication, consent, suppression, engagement quality, lifecycle fit, claims, or outcome attribution are in doubt."
+  },
+  "schema_version": "1.0"
+}

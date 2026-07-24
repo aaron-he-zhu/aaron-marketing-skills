@@ -18,7 +18,7 @@
     }],
     "PostToolUseFailure": [{
       "matcher": "Write|Edit|NotebookEdit|Bash|PowerShell|Monitor|mcp__.*",
-      "hooks": [{ "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh", "post-tool-use"], "timeout": 60 }]
+      "hooks": [{ "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh", "post-tool-failure"], "timeout": 60 }]
     }],
     "PostToolBatch": [{
       "hooks": [{ "type": "command", "command": "bash", "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh", "post-tool-batch"], "timeout": 60 }]

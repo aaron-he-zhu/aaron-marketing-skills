@@ -4,13 +4,13 @@ slug: aaron-inbox-placement-monitor
 displayName: "Inbox Placement Monitor · 邮件收件箱落点监测"
 summary: "邮件收件箱落点监测/收件箱vs垃圾邮件/Postmaster声誉趋势"
 description: 'Use when the user asks to "track where my emails are actually landing after I send", "read my seed-list inbox vs spam vs promotions results", "trend my Gmail Postmaster / Microsoft SNDS reputation", or "did placement drop after my last send"; produces a per-provider inbox/spam/promotions placement read, a domain/IP reputation trend from Postmaster + SNDS, a send-over-send delta with named regressions, and a reusable SEND-S placement snapshot on your own exported telemetry. Not for the pre-send SPF/DKIM/DMARC auth pre-flight — use deliverability-qa; not for computing the EQS or running the vetoes — use email-quality-auditor. 邮件收件箱落点监测/收件箱vs垃圾邮件/Postmaster声誉趋势'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use AFTER a send, to track where mail actually landed and how reputation is trending over time: seed-list inbox vs spam vs promotions placement per mailbox provider (Gmail, Outlook/Microsoft, Yahoo, Apple), Gmail Postmaster Tools + Microsoft SNDS domain/IP reputation trend, and the send-over-send placement delta with named regressions. Run it to BUILD and TREND the post-send SEND S placement signal; run deliverability-qa for the pre-send auth/reputation pre-flight and email-quality-auditor to SCORE the full EQS and enforce S1/S2/N1/D1."
 argument-hint: "<sending domain / program> [seed-list placement test + Postmaster/SNDS export] [prior send baseline] [goal: promo|retention|cold]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Inbox Placement Monitor

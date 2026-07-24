@@ -1,0 +1,302 @@
+{
+  "schema_version": "1.0",
+  "plugin": {
+    "id": "aaron-marketing",
+    "name": "aaron-marketing",
+    "display_name": "Aaron Marketing Skills",
+    "description": "120 marketing skills and 8 commands as a four-layer operating system: Narrative strategy; SEO/GEO, Organic Social, Email, Paid Ads, and Influencer channels; Product Launch orchestration; and a Protocol layer with seven append-only truth registries plus non-canonical working memory. Eight typed advisory frameworks (TALE, CORE-EEAT, CITE, STAR, ECHO, SEND, ROAS, RAMP) use machine-checkable auditor artifacts and immutable standalone runtime contracts. Keyless-first and zero-dependency.",
+    "author": {
+      "name": "Aaron He Zhu",
+      "email": "hello@zhuhe.io",
+      "url": "https://github.com/aaron-he-zhu"
+    },
+    "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills",
+    "repository": "https://github.com/aaron-he-zhu/aaron-marketing-skills",
+    "license": "Apache-2.0",
+    "keywords": [
+      "seo",
+      "geo",
+      "content-optimization",
+      "search-engine-optimization",
+      "generative-engine-optimization",
+      "ai-citation",
+      "core-eeat",
+      "cite-framework",
+      "star-benchmark",
+      "keyword-research",
+      "technical-seo",
+      "content-writing",
+      "schema-markup",
+      "rank-tracking",
+      "backlink-analysis",
+      "influencer-marketing",
+      "creator-marketing",
+      "impact-framework",
+      "campaign-roi",
+      "ugc",
+      "email-marketing",
+      "email-deliverability",
+      "lifecycle-marketing",
+      "marketing-automation",
+      "send-framework",
+      "product-launch",
+      "go-to-market",
+      "launch-marketing",
+      "product-hunt",
+      "ramp-framework",
+      "social-media-marketing",
+      "organic-social",
+      "community-management",
+      "social-selling",
+      "employee-advocacy",
+      "dark-social",
+      "echo-framework",
+      "brand-narrative",
+      "brand-messaging",
+      "brand-positioning",
+      "brand-voice",
+      "messaging-framework",
+      "tale-framework"
+    ],
+    "marketplace": {
+      "name": "aaron",
+      "category": "marketing",
+      "source": "./",
+      "commands": "./commands/",
+      "tags": [
+        "seo",
+        "geo",
+        "content-optimization",
+        "search-engine-optimization",
+        "generative-engine-optimization",
+        "ai-citation",
+        "core-eeat",
+        "cite-framework",
+        "star-benchmark",
+        "keyword-research",
+        "content-writing",
+        "technical-seo",
+        "schema-markup",
+        "rank-tracking",
+        "backlink-analysis",
+        "influencer-marketing",
+        "creator-marketing",
+        "impact-framework",
+        "campaign-roi",
+        "ugc",
+        "email-marketing",
+        "email-deliverability",
+        "lifecycle-marketing",
+        "marketing-automation",
+        "send-framework",
+        "product-launch",
+        "go-to-market",
+        "launch-marketing",
+        "product-hunt",
+        "ramp-framework",
+        "social-media-marketing",
+        "organic-social",
+        "community-management",
+        "social-selling",
+        "employee-advocacy",
+        "dark-social",
+        "echo-framework",
+        "brand-narrative",
+        "brand-messaging",
+        "brand-positioning",
+        "brand-voice",
+        "messaging-framework",
+        "tale-framework"
+      ]
+    }
+  },
+  "github_about": {
+    "comment": "SSOT for the GitHub repo About (sidebar description + topics). NOT read by GitHub directly — projected onto the repo by scripts/sync-about.sh (owner-run, --live), verified weekly by .github/workflows/about-drift.yml, and its leading skill count is checked against the tree by scripts/check-versions.sh. Edit here when the skill/discipline/gate counts change; the description MUST start with the current skill count so check-versions can parse it.",
+    "description": "120 marketing skills + 8 commands for Claude Code & AI agents across 7 disciplines — SEO/GEO, influencer, paid ads, email, product launch, organic social & brand narrative — on one shared contract, with 8 auditor gates: CORE-EEAT · CITE · STAR · ROAS · SEND · RAMP · ECHO · TALE.",
+    "topics": [
+      "agent-skills",
+      "claude-code",
+      "claude-skills",
+      "marketing",
+      "seo",
+      "geo",
+      "generative-engine-optimization",
+      "content-optimization",
+      "influencer-marketing",
+      "creator-marketing",
+      "paid-advertising",
+      "roas",
+      "email-marketing",
+      "marketing-automation",
+      "product-launch",
+      "product-hunt",
+      "social-media-marketing",
+      "organic-social",
+      "brand-messaging",
+      "brand-narrative"
+    ]
+  },
+  "skills_sh": {
+    "schema": "https://skills.sh/schemas/skills.sh.schema.json",
+    "not_grouped": "bottom",
+    "groupings": [
+      {
+        "catalog_key": "narrative",
+        "title": "Brand Narrative · TALE (16) — trace → architect → land → evaluate",
+        "description": "L1 strategy: trace positioning truth, architect the message/voice/story canon, land it across surfaces, then evaluate separate truth, system, and effectiveness profiles. narrative-quality-auditor never averages those unlike constructs."
+      },
+      {
+        "catalog_key": "seo-geo",
+        "title": "SEO/GEO · SITE · CORE-EEAT+CITE (16) — survey → implement → tune → evaluate",
+        "description": "Search and generative-engine optimization: keyword/SERP/gap research, content and citation readiness, markup/page plays, CORE-EEAT and CITE auditor gates, then rank, performance, and off-site monitoring."
+      },
+      {
+        "catalog_key": "social",
+        "title": "Social · ECHO (16) — explore → craft → host → observe",
+        "description": "Organic social: channel/voice discovery, platform-native planning and creative, inbox/crisis operations, then listening and measurement. social-quality-auditor runs one asset-gate or program-maturity profile per unit, never a mixed composite."
+      },
+      {
+        "catalog_key": "email",
+        "title": "Email · SEND (16) — setup → engage → nurture → deliver",
+        "description": "Email across promotional, retention, cold-outbound, and newsletter profiles: sender/list setup, creative/rendering, lifecycle journeys, the email-quality-auditor gate, experiments, and provider-level placement monitoring."
+      },
+      {
+        "catalog_key": "ad",
+        "title": "Paid ads · ROAS (16) — research → orchestrate → activate → scale",
+        "description": "Paid media across direct-response, prospecting, and incremental-profit profiles: structure/audiences/queries/feed, creative/tests/bids/landing, the ad-account-auditor gate, then attribution, pacing, fatigue, and causal readback."
+      },
+      {
+        "catalog_key": "influencer",
+        "title": "Influencer marketing · STAR (16) — scout → target → activate → report",
+        "description": "Creator campaigns end to end: audience and creator discovery, planning/briefs/budgets, outreach and the STAR content gate, contracts/amplification, then post-click, ROI, and reporting evidence."
+      },
+      {
+        "catalog_key": "launch",
+        "title": "Launch · RAMP (16) — research → assemble → mobilize → prove",
+        "description": "Product launch orchestration: positioning/tier/window/access, assets/pricing/enablement, then separate preflight, execution, and outcome profiles around launch operations, monitoring, feedback, retro, and momentum."
+      },
+      {
+        "catalog_key": "protocol",
+        "title": "Protocol layer (8) — shared truth registries & memory",
+        "description": "Seven sole-writer registries backed by append-only event streams and rebuildable projections, plus non-canonical HOT/WARM/COLD working memory. Other skills propose; registry owners authorize canonical mutations."
+      }
+    ]
+  },
+  "markdown_surfaces": [
+    {
+      "path": "README.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.de.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.es.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.fr.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.it.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.ja.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.ko.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.pt.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.zh.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "docs/README.zh-Hant.md",
+      "marker": "version-badge",
+      "template": "  <a href=\"https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md\"><img src=\"https://img.shields.io/badge/version-{bundle_version}-orange\" alt=\"Version\"></a>"
+    },
+    {
+      "path": "README.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](VERSIONS.md)** — per-skill versions + changelog (current bundle: `{bundle_version}`)."
+    },
+    {
+      "path": "docs/README.de.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** — Versionen pro Skill + Changelog (aktuelles Bundle: `{bundle_version}`)."
+    },
+    {
+      "path": "docs/README.es.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** — versiones por skill + changelog (bundle actual: `{bundle_version}`)."
+    },
+    {
+      "path": "docs/README.fr.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** — versions par skill + changelog (bundle actuel : `{bundle_version}`)."
+    },
+    {
+      "path": "docs/README.it.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** — versioni per skill + changelog (bundle attuale: `{bundle_version}`)."
+    },
+    {
+      "path": "docs/README.ja.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** —— スキルごとのバージョン + changelog（現在のバンドル：`{bundle_version}`）。"
+    },
+    {
+      "path": "docs/README.ko.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** — 스킬별 버전 + changelog(현재 번들: `{bundle_version}`)."
+    },
+    {
+      "path": "docs/README.pt.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** — versões por skill + changelog (bundle atual: `{bundle_version}`)."
+    },
+    {
+      "path": "docs/README.zh.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`{bundle_version}`）。"
+    },
+    {
+      "path": "docs/README.zh-Hant.md",
+      "marker": "current-bundle",
+      "template": "- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 變更日誌（目前套件：`{bundle_version}`）。"
+    },
+    {
+      "path": "CLAUDE.md",
+      "marker": "current-bundle",
+      "template": "Current bundle version: `{bundle_version}` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md))."
+    },
+    {
+      "path": "AGENTS.md",
+      "marker": "current-bundle",
+      "template": "- **Current bundle**: {bundle_version}"
+    },
+    {
+      "path": "SECURITY.md",
+      "marker": "supported-major",
+      "template": "| Version | Supported |\n|---------|-----------|\n| {bundle_major}.x    | Yes (current line) |\n| < {bundle_major}    | No        |"
+    }
+  ]
+}

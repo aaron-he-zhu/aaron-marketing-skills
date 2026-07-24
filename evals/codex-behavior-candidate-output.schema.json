@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codex semantic behavior SUT candidate output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["candidate_response"],
+  "properties": {
+    "candidate_response": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64000
+    }
+  }
+}

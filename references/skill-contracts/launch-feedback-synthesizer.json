@@ -1,0 +1,368 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 111,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "themes are clustered with frequency (Measured from the exports), severity, and at least one verbatim quote each"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 237,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 113
+        },
+        "text": "the status loop states its transitions, the duplicate-merge rule, and the notification rule (all subscribers minus the actor"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 264,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 239
+        },
+        "text": "unchanged status = no-op)"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 374,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 266
+        },
+        "text": "and the harvest protocol includes a platform compliance matrix with store reviews marked never-incentivized."
+      }
+    ],
+    "done_when": "themes are clustered with frequency (Measured from the exports), severity, and at least one verbatim quote each; the status loop states its transitions, the duplicate-merge rule, and the notification rule (all subscribers minus the actor; unchanged status = no-op); and the harvest protocol includes a platform compliance matrix with store reviews marked never-incentivized.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:launch-feedback-synthesizer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 139,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "launch-retro-analyzer"
+        ],
+        "text": "- **Primary**: [launch-retro-analyzer](../launch-retro-analyzer/SKILL.md) — feed the theme digest and loop metrics into the D1/W1/M1 retro."
+      },
+      {
+        "condition": "If the harvested proof should be reused across channels**: [content-amplifier](../../../influencer/activate/content-amplifier/SKILL.md) — repurpose testimonials and shipped-loop material.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 331,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 140
+        },
+        "target_skills": [
+          "content-amplifier"
+        ],
+        "text": "- **If the harvested proof should be reused across channels**: [content-amplifier](../../../influencer/activate/content-amplifier/SKILL.md) — repurpose testimonials and shipped-loop material."
+      },
+      {
+        "condition": "If a shipped theme is big enough to be its own moment**: [momentum-planner](../momentum-planner/SKILL.md) — book the \"you asked, we shipped\" beat into the T+1→T+30 plan.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 505,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 332
+        },
+        "target_skills": [
+          "momentum-planner"
+        ],
+        "text": "- **If a shipped theme is big enough to be its own moment**: [momentum-planner](../momentum-planner/SKILL.md) — book the \"you asked, we shipped\" beat into the T+1→T+30 plan."
+      },
+      {
+        "condition": "when the theme digest, status-loop spec, and harvest protocol are delivered and the snapshot is submitted.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 891,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 507
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the theme digest, status-loop spec, and harvest protocol are delivered and the snapshot is submitted."
+      }
+    ],
+    "next_best": "- **Primary**: [launch-retro-analyzer](../launch-retro-analyzer/SKILL.md) — feed the theme digest and loop metrics into the D1/W1/M1 retro.\n- **If the harvested proof should be reused across channels**: [content-amplifier](../../../influencer/activate/content-amplifier/SKILL.md) — repurpose testimonials and shipped-loop material.\n- **If a shipped theme is big enough to be its own moment**: [momentum-planner](../momentum-planner/SKILL.md) — book the \"you asked, we shipped\" beat into the T+1→T+30 plan.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the theme digest, status-loop spec, and harvest protocol are delivered and the snapshot is submitted.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-amplifier",
+      "launch-retro-analyzer",
+      "momentum-planner"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "launch-feedback-synthesizer",
+    "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+    "phase": "prove",
+    "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<launch slug / feedback exports> [channels] [review platforms]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 129,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the launch slug + feedback exports — channel comment threads, store reviews, board posts, support tickets (own exports = Measured"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 154,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 131
+        },
+        "text": "pasted = User-provided)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 256,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 156
+        },
+        "text": "the stage/date record from [launch-registry](../../../protocol/launch-registry/SKILL.md) for context"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "classified",
+        "kind": "evidence-input",
+        "requirement": "optional",
+        "source": {
+          "end_char": 341,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 258
+        },
+        "text": "`~~launch platform` / `~~app store data` / `~~brand monitor` pulls where available."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the launch slug + feedback exports — channel comment threads, store reviews, board posts, support tickets (own exports = Measured; pasted = User-provided); the stage/date record from [launch-registry](../../../protocol/launch-registry/SKILL.md) for context; `~~launch platform` / `~~app store data` / `~~brand monitor` pulls where available.",
+    "source": {
+      "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 89,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing digest + a reusable summary to `memory/launch/launch-feedback-synthesizer/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 376,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 91
+        },
+        "text": "the theme snapshot is submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for [launch-registry](../../../protocol/launch-registry/SKILL.md) to formalize — this skill never writes `memory/launch-registry/` records directly"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 544,
+          "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3",
+          "span_basis": "field-text",
+          "start_char": 378
+        },
+        "text": "unadjudicated product/comparative claims found in feedback go to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3"
+    },
+    "summary": "a feedback theme digest (per theme: frequency, severity, representative quotes), a status-loop spec (transitions, duplicate-merge rule, notification rules), \"you asked, we shipped\" announcement material for completed themes, a social-proof harvest protocol with a platform compliance matrix, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing digest + a reusable summary to `memory/launch/launch-feedback-synthesizer/`; the theme snapshot is submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for [launch-registry](../../../protocol/launch-registry/SKILL.md) to formalize — this skill never writes `memory/launch-registry/` records directly; unadjudicated product/comparative claims found in feedback go to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for repurposing or amplifying the harvested proof — use content-amplifier; not for executing testimonial outreach threads — use outreach-manager. 反馈分诊/状态环/社证收割/评测合规",
+    "description": "Use when the user asks to \"triage launch feedback\", \"cluster reviews, comments, and board posts into themes\", or \"set up a you asked, we shipped loop\"; produces a feedback theme digest (frequency, severity, representative quotes per theme), an open→planned→started→completed/declined status loop with duplicate-merge and notification rules, shipped-change announcement material, and a compliant social-proof harvest protocol (never incentivized store reviews). Not for repurposing or amplifying the harvested proof — use content-amplifier; not for executing testimonial outreach threads — use outreach-manager. 反馈分诊/状态环/社证收割/评测合规",
+    "source": {
+      "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "5a6c85e6135d0dd6e34fd899dcb27cc1308cbeaf75d5bfc5f995e8aee1dd74c3"
+    },
+    "trigger_phrases": [
+      "cluster reviews, comments, and board posts into themes",
+      "set up a you asked, we shipped loop",
+      "triage launch feedback"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when triaging the feedback a launch generates: clustering channel comments, store reviews, feedback-board posts, and support tickets into themes with frequency and severity; running an open→planned→started→completed/declined status loop with subscriber notifications; turning completed requests into you-asked-we-shipped announcement material; or speccing a compliant review/testimonial harvest. The feedback lever of RAMP Proof — not UGC amplification, not outreach execution, not roadmap decisions."
+  },
+  "schema_version": "1.0"
+}

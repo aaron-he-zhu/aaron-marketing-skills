@@ -1,0 +1,350 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 60,
+          "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "each target AI query has a standalone, quotable answer block"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 121,
+          "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+          "span_basis": "field-text",
+          "start_char": 62
+        },
+        "text": "a before/after GEO score and AI Query Coverage are reported"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 201,
+          "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+          "span_basis": "field-text",
+          "start_char": 123
+        },
+        "text": "and the CORE-EEAT GEO self-check (C02, O03, O05, E01) has no unaddressed Fail."
+      }
+    ],
+    "done_when": "each target AI query has a standalone, quotable answer block; a before/after GEO score and AI Query Coverage are reported; and the CORE-EEAT GEO self-check (C02, O03, O05, E01) has no unaddressed Fail.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "references/entity-geo-handoff-schema.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "25cc6dc95c6a9c9eed0f9ac3c601a536da6fe3c5186678caed2b8c0a762b5e7a",
+        "source_line": 26
+      },
+      {
+        "path": "references/humanizer-slop.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
+        "source_line": 52
+      },
+      {
+        "path": "references/llms-txt-okf.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6f630b9b3a22c663aa62f1faaa2c05476de1459e13952a533b054f39a1be19c2",
+        "source_line": 80
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 40
+      },
+      {
+        "path": "references/platforms/grokipedia.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "eca3767d8eca9ec52aa356430655fc5ec6bb1dd357fe162e2b51cae572d04b63",
+        "source_line": 81
+      },
+      {
+        "path": "references/platforms/linkedin.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "72d7fcb4396cce801b0945a9623197b5d7f84fa5a190d8d86e55f9f2053a00e7",
+        "source_line": 82
+      },
+      {
+        "path": "references/platforms/reddit.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "0bb2789a358432c2c08ff8d1b1145d80e31d93b5f369d7776db1142dce9a2b45",
+        "source_line": 82
+      },
+      {
+        "path": "references/platforms/x.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "764dc4123fc18b42f9a2f4c76c3f5181af656cae298eae9ab436b8b46d758115",
+        "source_line": 82
+      },
+      {
+        "path": "references/platforms/youtube.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "5fc2d9404b36912bba1d4dcae6072bd01d6a5162b95f767ce1058336297563c4",
+        "source_line": 82
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 42
+      },
+      {
+        "path": "seo-geo/implement/geo-content-optimizer/references/ai-citation-patterns.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73e2db65d51761f21d810934c54285c1f685f0c0399944ce554afe93b0bfb5fc",
+        "source_line": 76
+      },
+      {
+        "path": "seo-geo/implement/geo-content-optimizer/references/ai-overview-recovery.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ad778226ad40da9099ee4cedd8cf776b012d3794f0839c335b57f0ab9072cf32",
+        "source_line": 20
+      },
+      {
+        "path": "seo-geo/implement/geo-content-optimizer/references/geo-optimization-techniques.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "a4e34d667cb801e9327512502a20ca7eebe5a4e25ae8b4d7d3e137f66fcbca93",
+        "source_line": 66
+      },
+      {
+        "path": "seo-geo/implement/geo-content-optimizer/references/instructions-detail.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "721c2e93ca425c177f12c19703e4e973160460f9f939fc4cf103e34a9f8fe32a",
+        "source_line": 56
+      },
+      {
+        "path": "seo-geo/implement/geo-content-optimizer/references/medium-github-surfaces.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "8b3b0e08ba06cb78e4f25feeec0762da02006a407935628ba158bf46fd6ffd18",
+        "source_line": 78
+      },
+      {
+        "path": "seo-geo/implement/geo-content-optimizer/references/quotable-content-examples.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "0423bc158bd2b9480315f668c3c5afe40d9a677137122f7e2f31cad44b7aeb0c",
+        "source_line": 77
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:geo-content-optimizer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 151,
+          "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "content-quality-auditor"
+        ],
+        "text": "- **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — verify the optimized content is strong enough to ship and cite."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 206,
+          "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+          "span_basis": "field-text",
+          "start_char": 153
+        },
+        "target_skills": [],
+        "text": "**Termination note**: keep a visited-set this session"
+      },
+      {
+        "condition": "if the recommended skill was already invoked, stop and report the chain complete rather than re-running it. Honor a max handoff depth of 3 to avoid loops (per [skill-contract.md §Termination rules](../../../references/skill-contract.md)).",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 446,
+          "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+          "span_basis": "field-text",
+          "start_char": 208
+        },
+        "target_skills": [],
+        "text": "if the recommended skill was already invoked, stop and report the chain complete rather than re-running it. Honor a max handoff depth of 3 to avoid loops (per [skill-contract.md §Termination rules](../../../references/skill-contract.md))."
+      }
+    ],
+    "next_best": "- **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — verify the optimized content is strong enough to ship and cite.\n\n**Termination note**: keep a visited-set this session; if the recommended skill was already invoked, stop and report the chain complete rather than re-running it. Honor a max handoff depth of 3 to avoid loops (per [skill-contract.md §Termination rules](../../../references/skill-contract.md)).",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "geo-content-optimizer",
+    "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+    "phase": "implement",
+    "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<content URL or text> [target AI engine]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 67,
+          "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the brief, target keywords, entity inputs, and quality constraints."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the brief, target keywords, entity inputs, and quality constraints.",
+    "source": {
+      "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 122,
+          "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing content, metadata, or schema deliverable plus a reusable summary that can be stored under `memory/content/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
+    },
+    "summary": "a ready-to-use asset or implementation-ready transformation plus a short handoff summary ready for `memory/content/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing content, metadata, or schema deliverable plus a reusable summary that can be stored under `memory/content/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for structural on-page SEO — use on-page-seo-checker; not for net-new drafting — use content-writer. AI引用优化/GEO优化/AI搜索",
+    "description": "Use when the user asks to \"optimize for AI citations\"; improves citation readiness for ChatGPT, Perplexity, AI Overviews, Gemini, and Claude. Not for structural on-page SEO — use on-page-seo-checker; not for net-new drafting — use content-writer. AI引用优化/GEO优化/AI搜索",
+    "source": {
+      "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
+    },
+    "trigger_phrases": [
+      "optimize for AI citations"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when optimizing content for AI engines like ChatGPT, Perplexity, AI Overviews, Gemini, Claude, or Copilot. Also for AI citation optimization, generative engine visibility, AI引用优化, AI搜索优化, GEO优化, or 让AI引用我."
+  },
+  "schema_version": "1.0"
+}

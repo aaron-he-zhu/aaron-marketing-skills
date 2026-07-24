@@ -18,7 +18,7 @@
 #   bash scripts/publish-skillhub.sh                          # dry-run (default): local pre-check, all manifest skills
 #   bash scripts/publish-skillhub.sh --skill keyword-research # dry-run one skill
 #   bash scripts/publish-skillhub.sh --live                   # publish all (changelog 首次发布)
-#   bash scripts/publish-skillhub.sh --live --changelog "v18.0.0 更新说明"
+#   bash scripts/publish-skillhub.sh --live --changelog "v19.0.0 更新说明"
 #   bash scripts/publish-skillhub.sh --live --skill x --attempts 1 --throttle 0
 #                          # orchestrated mode: publish-registries.sh owns retry/pacing
 #
@@ -26,6 +26,7 @@
 
 set -u
 cd "$(cd "$(dirname "$0")/.." && pwd)"
+source scripts/publish-common.sh
 
 HOST="https://api.skillhub.cn"
 DRY_RUN=1         # dry-run by default, like every other publisher; --live to upload
@@ -57,11 +58,28 @@ if ! command -v "$SKILLHUB_BIN" >/dev/null 2>&1; then
   exit 1
 fi
 
-SKILL_DIRS=$(python3 -c "
-import json
-for p in json.load(open('.claude-plugin/plugin.json'))['skills']:
-    print(p[2:] if p.startswith('./') else p)
-")
+PUBLISH_COMMIT=""; PUBLISH_REPO=""; BUILD_ROOT=""; SOURCE_ROOT="."
+if [ "$DRY_RUN" -eq 0 ]; then
+  BUILD_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/aaron-skillhub-skills.XXXXXX")" || {
+    echo "FAIL: cannot create a private publish build directory" >&2; exit 1;
+  }
+  trap '[ -n "${BUILD_ROOT:-}" ] && rm -rf -- "$BUILD_ROOT"' EXIT
+  SOURCE_ROOT="$BUILD_ROOT/source"
+  RELEASE_IDENTITY="$(publish_prepare_release_source "$SOURCE_ROOT")" || exit 1
+  PUBLISH_REPO="${RELEASE_IDENTITY%%$'\t'*}"
+  PUBLISH_COMMIT="${RELEASE_IDENTITY#*$'\t'}"
+  echo "Live provenance: $PUBLISH_REPO@$PUBLISH_COMMIT (clean, reachable from origin/main)"
+fi
+
+SKILL_DIRS=$(python3 -c '
+import json, sys
+for p in json.load(open(sys.argv[1]))["skills"]:
+    print(p[2:] if p.startswith("./") else p)
+' "$SOURCE_ROOT/.claude-plugin/plugin.json") || {
+  echo "FAIL: cannot read the pinned plugin skill manifest" >&2
+  exit 1
+}
+[ -n "$SKILL_DIRS" ] || { echo "FAIL: pinned plugin skill manifest is empty" >&2; exit 1; }
 
 fail=0 count=0 skipping=0 published=0
 [ -n "$RESUME_FROM" ] && skipping=1
@@ -71,16 +89,27 @@ for dir in $SKILL_DIRS; do
     if [ "$name" = "$RESUME_FROM" ]; then skipping=0; else continue; fi
   fi
   if [ -n "$ONLY_SKILL" ] && [ "$name" != "$ONLY_SKILL" ]; then continue; fi
-  if [ ! -f "$dir/SKILL.md" ]; then
+  if [ ! -f "$SOURCE_ROOT/$dir/SKILL.md" ]; then
     echo "FAIL: $dir/SKILL.md missing" >&2; fail=1; continue
   fi
-  slug=$(sed -n 's/^slug: *//p' "$dir/SKILL.md" | head -1)
+  slug=$(sed -n 's/^slug: *//p' "$SOURCE_ROOT/$dir/SKILL.md" | head -1)
   if [ -z "$slug" ]; then
     echo "FAIL: no slug in $dir/SKILL.md (SkillHub requires slug/displayName/summary frontmatter)" >&2
     fail=1; continue
   fi
 
-  cmd=("$SKILLHUB_BIN" publish "$dir" --host "$HOST")
+  publish_dir="$SOURCE_ROOT/$dir"
+  if [ "$DRY_RUN" -eq 0 ]; then
+    publish_dir="$BUILD_ROOT/$name"
+    publish_build_verified_skill \
+      "$dir" "$publish_dir" "$PUBLISH_REPO" "$PUBLISH_COMMIT" "$SOURCE_ROOT" || {
+        echo "FAIL: cannot build verified publish payload for $name" >&2
+        fail=1
+        continue
+      }
+  fi
+
+  cmd=("$SKILLHUB_BIN" publish "$publish_dir" --host "$HOST")
   if [ "$DRY_RUN" -eq 1 ]; then
     cmd+=(--dry-run)
     echo "==> $slug (dry-run)"

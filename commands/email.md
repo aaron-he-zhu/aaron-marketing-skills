@@ -16,6 +16,13 @@ Infer the SEND-loop phase from the goal (or honor `--phase`) and route to the ma
 - **Nurture** — email-sequence-designer (welcome / cart / post-purchase / win-back flows + frequency governance), newsletter-monetization-planner (paid-sub / sponsorship / referral economics), preference-frequency-manager (preference center + frequency opt-down ladder), reactivation-specialist (win-back + re-permission + list sunset); reuse landing-optimizer for the post-click page
 - **Deliver** — send-experiment-designer (A/B / send-time / hold-out design + significance read), inbox-placement-monitor (post-send seed-list inbox-vs-spam trend), cold-outbound-sequencer (B2B cold sequence + reply-triage branching + domain warmup), then email-quality-auditor (the EQS gate + pre-send go/no-go; S2/N1 judged against consent-registry, D1 against offer-claims-registry); reuse roi-calculator / report-generator / performance-analyzer
 
+For a pre-send safety question, use the explicit ordered route
+`/aaron-marketing:email --phase deliver`: run `deliverability-qa` first so S1
+authentication evidence is trustworthy, then run `email-quality-auditor` for
+the EQS gate and pre-send verdict. Missing ESP/GA4 exports, DMARC/auth records,
+consent evidence, or claims evidence maps to the affected control's
+`NEEDS_INPUT`; it never shortens or reorders this gate.
+
 ## Rules
 
 - `email-quality-auditor` is the pre-send gate: score EQS and enforce the four vetoes (S1/S2/N1/D1) before any send or scale; run deliverability-qa first so S1 can be trusted, and resolve unregistered claims via offer-claims-registry before the D1 check.

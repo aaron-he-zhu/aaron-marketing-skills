@@ -4,13 +4,13 @@ slug: aaron-preference-frequency-manager
 displayName: "Preference Frequency Manager · 邮件偏好中心"
 summary: "邮件偏好中心/降频阶梯设计/退订替代降档"
 description: 'Use when the user asks to "build a preference center", "set up a frequency opt-down ladder", "give people a step-down instead of unsubscribe", or "design a topic/cadence preference page"; produces a preference-center field spec, a frequency/topic opt-down ladder (down-tier paths that substitute for a hard unsubscribe), a preference-to-suppression mapping, and a SEND N-dimension sub-item note on preference-center / frequency options offered. Not for the lifecycle flow map or cadence governance — use email-sequence-designer; not for the consent/suppression record itself — use consent-registry; not for computing EQS or ruling the N1 unsubscribe veto — use email-quality-auditor. 邮件偏好中心/降频阶梯设计/退订替代降档'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when designing the subscriber-facing preference center and the frequency/topic opt-down ladder that gives a subject a step-down path instead of a hard unsubscribe: the preference-page field set (topics, cadence tiers, channel toggles), the down-tier ladder (weekly to monthly to pause to sunset), the mapping from each preference choice to the suppression/frequency rule the ESP and consent-registry must honor, and the SEND N sub-item on preference-center / frequency options offered. Activate when unsubscribe pressure, list fatigue, or a rising opt-out rate means people need a lighter-touch exit before they leave the list entirely — this is the N1-veto mitigation, not the N1 verdict."
 argument-hint: "<preference-center or opt-down goal> [platform/ESP] [topic set] [audience/segment]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "nurture", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "nurture"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "nurture", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "nurture"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Preference & Frequency Manager

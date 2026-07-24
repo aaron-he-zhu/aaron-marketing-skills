@@ -4,7 +4,7 @@ slug: aaron-email-quality-auditor
 displayName: "Email Quality Auditor · 邮件质量审计"
 summary: "邮件质量审计/EQS评分/发送前放行"
 description: 'Use when the user asks to "audit an email program" or "is this campaign safe to send"; runs a typed 20-item SEND profile with authentication, consent, opt-out, and claim veto checks on own evidence. Not for building deliverability setup — use deliverability-qa; not for designing lifecycle flows — use email-sequence-designer. 邮件质量审计/EQS评分/发送前放行'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -12,7 +12,7 @@ when_to_use: "Use when checking an email program or send before release, or when
 argument-hint: "<ESP/DMARC/outcome evidence> [promotional|retention|cold-outbound|newsletter]"
 allowed-tools: WebFetch
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Email Quality Auditor
@@ -92,6 +92,8 @@ For a send-only review without enough program evidence, report the verified red-
 Explain channel and recipient risk in plain language. On trace request, qualify `SEND-S1/S2/N1/D1` and show the underlying DNS/event/rendered evidence.
 
 ## Report and Verdict
+
+Begin with the auditor-runbook's exact typed conversation header. Never replace `status`, `verdict`, or `score_state` with prose; list each explicitly missing qualified item as ``ID: `unknown``` before findings.
 
 Show verdict, profile/context, score or coverage/interval, confidence, S/E/N/D detail, outcome truth set, verified critical controls, Unknown inputs, and fix owners. Do not claim deliverability/inbox placement from DNS alone and do not execute a send.
 

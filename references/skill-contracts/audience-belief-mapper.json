@@ -1,0 +1,356 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 147,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every belief, objection, and force is traced to a specific User-provided evidence line (or explicitly labeled Estimated with its assumption stated)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 212,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 149
+        },
+        "text": "each recurring objection carries at least one reframe candidate"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 389,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 214
+        },
+        "text": "and every unverified quote or comparative claim is in `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` as `[needs source]`."
+      }
+    ],
+    "done_when": "every belief, objection, and force is traced to a specific User-provided evidence line (or explicitly labeled Estimated with its assumption stated); each recurring objection carries at least one reframe candidate; and every unverified quote or comparative claim is in `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` as `[needs source]`.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/tale-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "source_line": 4
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/claims/claims-ledger.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/influencer/audience-mapper",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:audience-belief-mapper",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 174,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "strategic-narrative-designer"
+        ],
+        "text": "- **Primary**: [strategic-narrative-designer](../../architect/strategic-narrative-designer/SKILL.md) — build the old-world→promised-land arc from the beliefs and four forces."
+      },
+      {
+        "condition": "If the persona base is missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to map beliefs against it.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 357,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 175
+        },
+        "target_skills": [
+          "audience-mapper"
+        ],
+        "text": "- **If the persona base is missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to map beliefs against it."
+      },
+      {
+        "condition": "If the positioning canvas still needs reconciling**: [positioning-truth-tracer](../positioning-truth-tracer/SKILL.md) — reconcile the canvas against shippable reality before the arc is built.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 553,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 358
+        },
+        "target_skills": [
+          "positioning-truth-tracer"
+        ],
+        "text": "- **If the positioning canvas still needs reconciling**: [positioning-truth-tracer](../positioning-truth-tracer/SKILL.md) — reconcile the canvas against shippable reality before the arc is built."
+      },
+      {
+        "condition": "when the belief map is saved and every objection has a reframe candidate.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 906,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 555
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the belief map is saved and every objection has a reframe candidate."
+      }
+    ],
+    "next_best": "- **Primary**: [strategic-narrative-designer](../../architect/strategic-narrative-designer/SKILL.md) — build the old-world→promised-land arc from the beliefs and four forces.\n- **If the persona base is missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to map beliefs against it.\n- **If the positioning canvas still needs reconciling**: [positioning-truth-tracer](../positioning-truth-tracer/SKILL.md) — reconcile the canvas against shippable reality before the arc is built.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the belief map is saved and every objection has a reframe candidate.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "audience-mapper",
+      "positioning-truth-tracer",
+      "strategic-narrative-designer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "narrative",
+    "name": "audience-belief-mapper",
+    "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+    "phase": "trace",
+    "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / beachhead> [interview / win-loss notes] [known objections]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 100,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "interview transcripts, win-loss notes, sales-call summaries, and support tickets (all User-provided)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 253,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 102
+        },
+        "text": "the persona base from [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) output in `memory/influencer/audience-mapper/` when present"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 376,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 255
+        },
+        "text": "the claims ledger `memory/claims/claims-ledger.md` (read-only) to know which comparative statements are already approved."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "interview transcripts, win-loss notes, sales-call summaries, and support tickets (all User-provided); the persona base from [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) output in `memory/influencer/audience-mapper/` when present; the claims ledger `memory/claims/claims-ledger.md` (read-only) to know which comparative statements are already approved.",
+    "source": {
+      "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 77,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the belief/objection/forces map to `memory/narrative/audience-belief-mapper/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 281,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 79
+        },
+        "text": "every unverified quote or comparative claim marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` (this skill never adjudicates)"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 578,
+          "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674",
+          "span_basis": "field-text",
+          "start_char": 283
+        },
+        "text": "a durable, canon-grade belief or reframe surfaces only to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) is the sole writer of `memory/narrative-registry/` canon files."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674"
+    },
+    "summary": "a belief map for the beachhead — held beliefs / mental models, a recurring-objections table (objection · frequency-source · reframe candidate), and the JTBD four-forces map (push / pull / anxiety / habit, each with the evidence line it came from) — every item labeled Measured / User-provided / Estimated, plus a `[needs source]` list for any unverified quote or comparative claim, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the belief/objection/forces map to `memory/narrative/audience-belief-mapper/`; every unverified quote or comparative claim marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` (this skill never adjudicates); a durable, canon-grade belief or reframe surfaces only to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) is the sole writer of `memory/narrative-registry/` canon files."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for demographic or persona profiling — use audience-mapper; not for the positioning canvas — use positioning-truth-tracer. 受众信念/异议地图/切换四力/流失语言",
+    "description": "Use when the user asks to \"map what our buyers believe\", \"capture the objections we keep hearing\", or \"find the switching forces that move the beachhead\"; produces a belief map of the beachhead — held beliefs and mental models, the recurring objections and their reframes, and the JTBD four forces (push of the problem, pull of the new, anxiety of switching, habit of the present) — each item sourced from interviews or win-loss notes (User-provided) and labeled Measured / User-provided / Estimated, with any unverified quote or comparative claim marked \"[needs source]\" and routed to the claims candidates, never adjudicated here. Not for demographic or persona profiling — use audience-mapper; not for the positioning canvas — use positioning-truth-tracer. 受众信念/异议地图/切换四力/流失语言",
+    "source": {
+      "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "e2445e45fd91183a746391cc9b5934a13cbdca4a4da7cb4f3a63dacdb0b5e674"
+    },
+    "trigger_phrases": [
+      "[needs source]",
+      "capture the objections we keep hearing",
+      "find the switching forces that move the beachhead",
+      "map what our buyers believe"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when gathering the beachhead's narrative raw material before any brand narrative is authored: the beliefs and mental models buyers already hold, the objections they raise and how to reframe each, and the JTBD four forces (push / pull / anxiety / habit) that govern switching. The third move of the TALE Trace phase; feeds beachhead truth (T), objection reframes (A), and win-loss language (E). Not demographic persona profiling and not the positioning canvas."
+  },
+  "schema_version": "1.0"
+}

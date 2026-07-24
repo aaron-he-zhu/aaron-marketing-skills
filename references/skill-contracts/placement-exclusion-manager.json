@@ -1,0 +1,305 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 63,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "placement/network exclusions are specified against a named goal"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 120,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 65
+        },
+        "text": "content-suitability + sensitive-topic blocks are listed"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 187,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 122
+        },
+        "text": "the audience exclusion set is referenced or noted as a dependency"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 320,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 189
+        },
+        "text": "and the A1 evidence file is packaged, or absent placements evidence leaves qualified A1 evidence Unknown and the run `NEEDS_INPUT`."
+      }
+    ],
+    "done_when": "placement/network exclusions are specified against a named goal; content-suitability + sensitive-topic blocks are listed; the audience exclusion set is referenced or noted as a dependency; and the A1 evidence file is packaged, or absent placements evidence leaves qualified A1 evidence Unknown and the run `NEEDS_INPUT`.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 36
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 40
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 58
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 32
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:placement-exclusion-manager",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 157,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [],
+        "text": "Global termination applies (visited-set, `max-depth: 3`, ambiguity-stop) — see [skill-contract.md §Termination rules](../../../references/skill-contract.md)."
+      },
+      {
+        "condition": "If the auditor has already run in this session's chain, STOP and report chain-complete.",
+        "extraction_status": "classified",
+        "item_id": "handoff-02",
+        "kind": "primary",
+        "source": {
+          "end_char": 401,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 159
+        },
+        "target_skills": [
+          "ad-account-auditor"
+        ],
+        "text": "- **Primary**: [ad-account-auditor](../ad-account-auditor/SKILL.md) — score the full RQS and issue the A1 brand/placement-safety verdict on this evidence. If the auditor has already run in this session's chain, STOP and report chain-complete."
+      },
+      {
+        "condition": "If the placements report is missing**: mark qualified A1 evidence Unknown, stop the run with `NEEDS_INPUT`, and request the export",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 536,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 402
+        },
+        "target_skills": [],
+        "text": "- **If the placements report is missing**: mark qualified A1 evidence Unknown, stop the run with `NEEDS_INPUT`, and request the export"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 579,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 538
+        },
+        "target_skills": [],
+        "text": "do not hand off an unbuilt evidence file."
+      },
+      {
+        "condition": "If targeted audiences are not yet defined**: [audience-segment-builder](../../research/audience-segment-builder/SKILL.md) — build the inclusion side first, then return to package exclusions against it.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 785,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 580
+        },
+        "target_skills": [
+          "audience-segment-builder"
+        ],
+        "text": "- **If targeted audiences are not yet defined**: [audience-segment-builder](../../research/audience-segment-builder/SKILL.md) — build the inclusion side first, then return to package exclusions against it."
+      }
+    ],
+    "next_best": "Global termination applies (visited-set, `max-depth: 3`, ambiguity-stop) — see [skill-contract.md §Termination rules](../../../references/skill-contract.md).\n\n- **Primary**: [ad-account-auditor](../ad-account-auditor/SKILL.md) — score the full RQS and issue the A1 brand/placement-safety verdict on this evidence. If the auditor has already run in this session's chain, STOP and report chain-complete.\n- **If the placements report is missing**: mark qualified A1 evidence Unknown, stop the run with `NEEDS_INPUT`, and request the export; do not hand off an unbuilt evidence file.\n- **If targeted audiences are not yet defined**: [audience-segment-builder](../../research/audience-segment-builder/SKILL.md) — build the inclusion side first, then return to package exclusions against it.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "audience-segment-builder"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "placement-exclusion-manager",
+    "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+    "phase": "activate",
+    "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<account/campaign goal> [platforms] [placements report path] [brand-safety constraints]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 60,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "account/campaign goal and brand-safety constraints, exported"
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "account/campaign goal and brand-safety constraints, exported",
+    "source": {
+      "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 119,
+          "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing exclusion plan, the A1 evidence file, and a reusable summary to `memory/ad/placement-exclusion-manager/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+    },
+    "summary": "a placement/network exclusion list (sites, apps, channels, network opt-outs), a content-suitability & sensitive-topic block list, a reference to the audience exclusion set consumed from [audience-segment-builder](../../research/audience-segment-builder/SKILL.md) (not re-derived here), a packaged **A1 evidence file** (placements report + exclusion decisions with rationale), and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing exclusion plan, the A1 evidence file, and a reusable summary to `memory/ad/placement-exclusion-manager/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for building the audiences you target — use audience-segment-builder; not for computing the RQS or issuing the A1 verdict — use ad-account-auditor. 品牌安全/排除位置/否定受众列表",
+    "description": "Use when the user asks to \"build my brand-safety exclusion lists\", \"set placement / topic / content exclusions before launch\", \"add network and audience exclusions\", or \"prep the A1 brand-safety evidence for the auditor\"; produces a placement/network exclusion list, a content-suitability & sensitive-topic block list, an audience/negative-audience exclusion set, and a packaged A1 brand/placement-safety evidence file for the gate. Not for building the audiences you target — use audience-segment-builder; not for computing the RQS or issuing the A1 verdict — use ad-account-auditor. 品牌安全/排除位置/否定受众列表",
+    "source": {
+      "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+    },
+    "trigger_phrases": [
+      "add network and audience exclusions",
+      "build my brand-safety exclusion lists",
+      "prep the A1 brand-safety evidence for the auditor",
+      "set placement / topic / content exclusions before launch"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use before spend goes live to build brand-safety and exclusion lists: placement/site/app/channel exclusions, network opt-outs (Display/Search-partner/Audience-network), content-suitability and sensitive-topic blocks, and negative-audience/audience exclusions — then package the placements evidence the auditor needs to judge ROAS A1 (brand/placement safety)."
+  },
+  "schema_version": "1.0"
+}

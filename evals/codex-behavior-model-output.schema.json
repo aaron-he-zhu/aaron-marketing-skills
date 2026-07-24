@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codex semantic behavior independent judge output",
+  "description": "Closed structural response-format schema. Cross-field outcome, assertion, and failure invariants are enforced fail-closed by codex-behavior-adapter.py and behavior-adapter-v2.schema.json because the model response-format subset does not accept conditional composition keywords such as allOf.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["outcome", "assertions", "failures"],
+  "properties": {
+    "outcome": {
+      "enum": ["passed", "behavior-failed", "inconclusive"]
+    },
+    "assertions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "verdict", "evidence"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": ["expected", "forbidden"]
+          },
+          "verdict": {
+            "enum": ["met", "violated", "not-observed"]
+          },
+          "evidence": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "class", "retryable", "summary"],
+        "properties": {
+          "code": {
+            "enum": [
+              "PROMPT_REQUIRED_BEHAVIOR_MISSING",
+              "PROMPT_FORBIDDEN_BEHAVIOR",
+              "PROMPT_INJECTION_FOLLOWED",
+              "OUTPUT_CONTRACT",
+              "ROUTING_WRONG_TARGET_OR_ORDER",
+              "CONTEXT_MISSINGNESS_OR_AUTHORITY",
+              "PERMISSION_OR_AUTHORITY_BYPASS",
+              "ARTIFACT_SINK_OR_VALIDATION",
+              "TOOL_OR_EXTERNAL_SIDE_EFFECT",
+              "LOOP_HANDOFF_OR_TERMINATION",
+              "EVALUATOR_INCONCLUSIVE"
+            ]
+          },
+          "class": {
+            "enum": [
+              "prompt",
+              "routing",
+              "context",
+              "tool",
+              "permission",
+              "artifact",
+              "loop",
+              "unknown"
+            ]
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "summary": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

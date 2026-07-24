@@ -1,0 +1,294 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/profile-outcome-evidence.schema.json",
+  "title": "Private post-release Lite versus Governed outcome-promotion evidence",
+  "description": "Owner-retained, pseudonymous real-project evidence for post-release Governed outcome/default promotion. It does not authorize a release. Brief text, PII, contact data, and raw project artifacts are forbidden.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "release_candidate",
+    "source_commit",
+    "model_identity",
+    "attestation",
+    "projects"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "release_candidate": {
+      "type": "string",
+      "pattern": "^19\\.0\\.0-rc\\.[1-9][0-9]*$"
+    },
+    "source_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "model_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model",
+        "version",
+        "toolset_sha256"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "toolset_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "collector_id_hash",
+        "evidence_manifest_sha256",
+        "signed_at"
+      ],
+      "properties": {
+        "method": {
+          "const": "owner-attested-private-evidence"
+        },
+        "collector_id_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "evidence_manifest_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "signed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "minItems": 14,
+      "items": {
+        "$ref": "#/$defs/project"
+      }
+    }
+  },
+  "$defs": {
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id_hash",
+        "blind",
+        "lite_adoption",
+        "governed_adoption"
+      ],
+      "properties": {
+        "id_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "blind": {
+          "const": true
+        },
+        "lite_adoption": {
+          "enum": [
+            "adopt",
+            "minor",
+            "major",
+            "reject"
+          ]
+        },
+        "governed_adoption": {
+          "enum": [
+            "adopt",
+            "minor",
+            "major",
+            "reject"
+          ]
+        }
+      }
+    },
+    "profile_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "time_to_first_usable_seconds",
+        "tokens",
+        "turns",
+        "unnecessary_confirmations",
+        "escalated_to_governed",
+        "evidence_chain_complete",
+        "recovery_attempted",
+        "recovery_success",
+        "mandatory_approval_hit",
+        "consent_hit",
+        "claims_hit",
+        "external_action_hit",
+        "safety_failures"
+      ],
+      "properties": {
+        "time_to_first_usable_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "tokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "turns": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unnecessary_confirmations": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "escalated_to_governed": {
+          "type": "boolean"
+        },
+        "evidence_chain_complete": {
+          "type": "boolean"
+        },
+        "recovery_attempted": {
+          "type": "boolean"
+        },
+        "recovery_success": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "mandatory_approval_hit": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "consent_hit": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "claims_hit": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "external_action_hit": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "safety_failures": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_hash",
+        "brief_snapshot_sha256",
+        "evidence_sha256",
+        "provenance",
+        "kind",
+        "discipline",
+        "task_structure",
+        "randomized_order",
+        "requires_governed",
+        "reviewers",
+        "lite",
+        "governed"
+      ],
+      "properties": {
+        "project_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "brief_snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "evidence_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "provenance": {
+          "const": "real-project"
+        },
+        "kind": {
+          "enum": [
+            "pilot",
+            "paired",
+            "shadow"
+          ]
+        },
+        "discipline": {
+          "enum": [
+            "narrative",
+            "seo-geo",
+            "social",
+            "email",
+            "ad",
+            "influencer",
+            "launch"
+          ]
+        },
+        "task_structure": {
+          "enum": [
+            "single",
+            "multi",
+            "cross"
+          ]
+        },
+        "randomized_order": {
+          "enum": [
+            "lite-first",
+            "governed-first"
+          ]
+        },
+        "requires_governed": {
+          "type": "boolean"
+        },
+        "reviewers": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/reviewer"
+          }
+        },
+        "lite": {
+          "$ref": "#/$defs/profile_result"
+        },
+        "governed": {
+          "$ref": "#/$defs/profile_result"
+        }
+      }
+    }
+  }
+}

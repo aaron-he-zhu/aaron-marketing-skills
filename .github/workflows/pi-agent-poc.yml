@@ -1,0 +1,38 @@
+name: Pi agent PoC (isolated)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "evals/pi-agent-poc/**"
+      - ".github/workflows/pi-agent-poc.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "evals/pi-agent-poc/**"
+      - ".github/workflows/pi-agent-poc.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: evals/pi-agent-poc
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.19.0
+          cache: npm
+          cache-dependency-path: evals/pi-agent-poc/package-lock.json
+      - name: Install the locked probe without lifecycle scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Exercise the isolated session-tree probe
+        run: npm test
+      - name: Audit the locked runtime dependency graph
+        run: npm audit --omit=dev --audit-level=low

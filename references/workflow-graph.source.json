@@ -1,0 +1,1289 @@
+{
+  "$schema": "./workflow-graph-source.schema.json",
+  "automatic_handoff_policy": {
+    "ambiguity_stop": true,
+    "max_automatic_handoffs": 3,
+    "visited_set_required": true
+  },
+  "bootstrap_provenance": {
+    "authority_after_import": "references/workflow-graph.source.json",
+    "curation_overrides": [
+      {
+        "edges": [
+          "launch-asset-packager--community-launch-runner",
+          "launch-asset-packager--launch-readiness-auditor",
+          "launch-asset-packager--press-media-relations"
+        ],
+        "field": "type",
+        "id": "product-launch-fan-out",
+        "reason": "The named Product Launch execution workflow starts three independent gated, community, and media lanes from the completed asset package.",
+        "value": "fan-out"
+      },
+      {
+        "edges": [
+          "launch-readiness-auditor--launch-day-conductor"
+        ],
+        "field": "type",
+        "id": "product-launch-ship-release-gate",
+        "reason": "Launch-day execution opens only after a validator-clean RAMP SHIP verdict and a separate external-action approval; FIX, BLOCK, and UNDECIDED remain closed.",
+        "value": "gate"
+      },
+      {
+        "edges": [
+          "community-launch-runner--launch-monitor",
+          "launch-day-conductor--launch-monitor",
+          "press-media-relations--launch-monitor"
+        ],
+        "field": "type",
+        "id": "product-launch-evidence-join",
+        "reason": "Launch monitoring must wait for evidence from the launch-day, community, and media lanes before the shared outcome window begins.",
+        "value": "join"
+      }
+    ],
+    "inference_rules": [
+      "Only explicit SKILL.md links and exact backticked catalog skill IDs were imported.",
+      "Each condition_text and condition_source is the normalized authored Next Best Skill line; a closed classifier assigns primary, conditional, alternate, quality-gate, governance, remediation, or explicit unclassified.",
+      "Required-input and precondition codes are deterministically derived from the classified condition, edge type, permissions, and gate metadata.",
+      "Auditor targets are gates; protocol targets are memory edges; cross-discipline targets are cross-discipline edges; same-discipline phase order supplies sequential or reentry types, subject to recorded curation overrides.",
+      "Strongly connected edges use one-traversal visited-set policies under the graph-level three-handoff cap; cycles receive no blanket exceptions and earlier-phase reentries alone require an exception.",
+      "Every node has an explicit natural-stop, terminal, or human-decision stopping policy."
+    ],
+    "method": "one-time-explicit-import",
+    "note": "Markdown was used only to create the initial explicit edge inventory; normal generation never treats prose as authoritative.",
+    "source_surface": "Markdown Next Best Skill declarations"
+  },
+  "catalog_version": "19.0.0",
+  "edge_shards": [
+    {
+      "edge_count": 40,
+      "first_edge_id": "ad-account-auditor--attribution-reconciler",
+      "id": "edges-00",
+      "last_edge_id": "campaign-architect--ad-creative-builder",
+      "ref": "references/workflow-graph/edges-00.json",
+      "sha256": "7c9111907280212ad3bae839684fa275f4a423a124520f3a5693527c29fbdf87"
+    },
+    {
+      "edge_count": 40,
+      "first_edge_id": "campaign-architect--ad-test-designer",
+      "id": "edges-01",
+      "last_edge_id": "content-quality-auditor--technical-seo-checker",
+      "ref": "references/workflow-graph/edges-01.json",
+      "sha256": "30cb56296fe58ba4f9cc0c8b5e8a549c6299e2a4199d9834030152b00a44ef5c"
+    },
+    {
+      "edge_count": 40,
+      "first_edge_id": "content-writer--content-quality-auditor",
+      "id": "edges-02",
+      "last_edge_id": "email-creative-builder--landing-optimizer",
+      "ref": "references/workflow-graph/edges-02.json",
+      "sha256": "df130290298051b40f3cbf327df3bec688b6d2e2605e7e9af97459ed2e1728d0"
+    },
+    {
+      "edge_count": 40,
+      "first_edge_id": "email-creative-builder--offer-claims-registry",
+      "id": "edges-03",
+      "last_edge_id": "keyword-research--serp-analysis",
+      "ref": "references/workflow-graph/edges-03.json",
+      "sha256": "ebf93c75221d9cf958e6286977e065377b8dae950c3887ad1c42b9e10928dbdd"
+    },
+    {
+      "edge_count": 40,
+      "first_edge_id": "landing-experience-checker--ad-account-auditor",
+      "id": "edges-04",
+      "last_edge_id": "list-hygiene-monitor--email-quality-auditor",
+      "ref": "references/workflow-graph/edges-04.json",
+      "sha256": "a547e8e8d59f80e7c0dad92d7fe8b1a7c213cd7871a33b2adfb940fecb7998c5"
+    },
+    {
+      "edge_count": 40,
+      "first_edge_id": "list-hygiene-monitor--reactivation-specialist",
+      "id": "edges-05",
+      "last_edge_id": "narrative-quality-auditor--narrative-cascade-planner",
+      "ref": "references/workflow-graph/edges-05.json",
+      "sha256": "11d8405bffa7c05c041bdba245401697ad51983151e0c616dd294bb44106d556"
+    },
+    {
+      "edge_count": 40,
+      "first_edge_id": "narrative-quality-auditor--positioning-truth-tracer",
+      "id": "edges-06",
+      "last_edge_id": "pitch-narrative-builder--narrative-enablement-kit",
+      "ref": "references/workflow-graph/edges-06.json",
+      "sha256": "1d8e0fae0bdd730a1c4ad69aa1e15b34b781b5e0ab93c230fefdad8a22970810"
+    },
+    {
+      "edge_count": 40,
+      "first_edge_id": "pitch-narrative-builder--narrative-quality-auditor",
+      "id": "edges-07",
+      "last_edge_id": "sales-enablement-kit--cold-outbound-sequencer",
+      "ref": "references/workflow-graph/edges-07.json",
+      "sha256": "fa3109c1da79a448304e7ea33280e04a09149290fef481c004e0549c55cd023c"
+    },
+    {
+      "edge_count": 40,
+      "first_edge_id": "sales-enablement-kit--launch-readiness-auditor",
+      "id": "edges-08",
+      "last_edge_id": "story-bank-builder--narrative-cascade-planner",
+      "ref": "references/workflow-graph/edges-08.json",
+      "sha256": "49dd5dc886f315088b7403f236eed5371ccb67f86f79adf289d930e177b44c5a"
+    },
+    {
+      "edge_count": 16,
+      "first_edge_id": "story-bank-builder--offer-claims-registry",
+      "id": "edges-09",
+      "last_edge_id": "voice-dossier-builder--social-calendar-builder",
+      "ref": "references/workflow-graph/edges-09.json",
+      "sha256": "2ab40d1ab59f1c161a205992e922cd05460a4dc91f3a6b47ea62ff4a961faf48"
+    }
+  ],
+  "entrypoint_policy": "all-catalog-skills-directly-routable",
+  "node_exceptions": [],
+  "node_source": "references/system-catalog.json",
+  "node_stopping_policies": [
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "ad-account-auditor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "ad-creative-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "ad-test-designer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "advocacy-program-designer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "attribution-reconciler"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "audience-belief-mapper"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "audience-mapper"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "audience-segment-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "bid-strategy-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "brand-language-codifier"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "brief-generator"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "budget-optimizer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "budget-pacing-monitor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "campaign-architect"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "campaign-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "category-narrative-mapper"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "channel-portfolio-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "channel-registry"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "cold-outbound-sequencer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "community-launch-runner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "competitor-analysis"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "competitor-tracker"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "consent-registry"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "content-amplifier"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "content-gap-analysis"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "content-quality-auditor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "content-writer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "contract-helper"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "conversion-signal-qa"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "conversion-value-mapper"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "creator-content-auditor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "creator-registry"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "crisis-response-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "dark-social-attributor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "deliverability-qa"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "domain-authority-auditor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "dynamic-content-personalizer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "early-access-designer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "email-creative-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "email-quality-auditor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "email-render-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "email-sequence-designer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "engagement-inbox-manager"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "entity-registry"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "fatigue-frequency-manager"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "fit-scorer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "geo-content-optimizer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "inbox-placement-monitor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "influencer-discovery"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "keyword-research"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "landing-experience-checker"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "landing-optimizer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "launch-asset-packager"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "launch-day-conductor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "launch-feedback-synthesizer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "launch-monitor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "launch-readiness-auditor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "launch-registry"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "launch-retro-analyzer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "launch-tier-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "launch-window-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "list-growth-designer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "list-hygiene-monitor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "list-segment-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "memory-management"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "message-house-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "message-system-architect"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "message-test-designer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "momentum-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "narrative-baseline-mapper"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "narrative-cascade-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "narrative-drift-monitor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "narrative-enablement-kit"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "narrative-quality-auditor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "narrative-registry"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "narrative-resonance-monitor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "newsletter-monetization-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "offer-claims-registry"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "offsite-signal-analyzer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "on-page-seo-checker"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "outreach-manager"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "page-play-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "paid-measurement-loop"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "participation-warmup-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "performance-analyzer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "performance-monitor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "pitch-narrative-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "placement-exclusion-manager"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "platform-norm-profiler"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "positioning-mapper"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "positioning-truth-tracer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "preference-frequency-manager"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "press-media-relations"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "pricing-packaging-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "product-feed-optimizer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "proof-point-packager"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "rank-tracker"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "reactivation-specialist"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "report-generator"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "roi-calculator"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "sales-enablement-kit"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "search-term-miner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "send-experiment-designer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "serp-analysis"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "serp-markup-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "share-of-voice-tracker"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "short-video-scripter"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "site-structure-optimizer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "social-calendar-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "social-creative-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "social-measurement-loop"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "social-pulse-monitor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "owner-decision-required",
+        "permission-required"
+      ],
+      "mode": "human-decision",
+      "node": "social-quality-auditor"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "social-selling-planner"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "story-bank-builder"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "strategic-narrative-designer"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "subject-line-lab"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "technical-seo-checker"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "trend-spotter"
+    },
+    {
+      "condition_codes": [
+        "automatic-handoff-cap-reached",
+        "handoff-ambiguous",
+        "objective-complete"
+      ],
+      "mode": "natural-stop",
+      "node": "voice-dossier-builder"
+    }
+  ],
+  "schema_version": "1.0",
+  "terminal_nodes": [],
+  "workflows": [
+    {
+      "budgets": {
+        "max_actions": 24,
+        "max_events": 96,
+        "max_memory_proposals": 3,
+        "max_retries": 2,
+        "max_verifications": 6,
+        "stall_limit": 2
+      },
+      "deadline_seconds": 604800,
+      "edge_ids": [
+        "launch-asset-packager--community-launch-runner",
+        "launch-asset-packager--launch-readiness-auditor",
+        "launch-asset-packager--press-media-relations",
+        "launch-readiness-auditor--launch-day-conductor",
+        "community-launch-runner--launch-monitor",
+        "launch-day-conductor--launch-monitor",
+        "press-media-relations--launch-monitor",
+        "launch-monitor--launch-retro-analyzer"
+      ],
+      "entry_node": "launch-asset-packager",
+      "fan_outs": [
+        {
+          "branches": {
+            "community": "community-launch-runner",
+            "execution-gate": "launch-readiness-auditor",
+            "media": "press-media-relations"
+          },
+          "from": "launch-asset-packager"
+        }
+      ],
+      "id": "product-launch-execution",
+      "joins": [
+        {
+          "at": "launch-monitor",
+          "branch_failure_policy": "fail-closed-escalate",
+          "id": "launch-lanes-complete",
+          "partial_evidence_policy": "reject-partial",
+          "policy": "all-required",
+          "requires": [
+            "community-launch-runner",
+            "launch-day-conductor",
+            "press-media-relations"
+          ],
+          "timeout_policy": "workflow-deadline-escalate"
+        }
+      ],
+      "max_cycles": 3,
+      "nodes": [
+        "launch-asset-packager",
+        "launch-readiness-auditor",
+        "launch-day-conductor",
+        "community-launch-runner",
+        "press-media-relations",
+        "launch-monitor",
+        "launch-retro-analyzer"
+      ],
+      "objective": "Package the approved launch, fan out gated execution across launch-day, community, and media lanes, join their evidence in launch monitoring, and close with an outcome retro.",
+      "terminal_nodes": [
+        "launch-retro-analyzer"
+      ]
+    }
+  ]
+}

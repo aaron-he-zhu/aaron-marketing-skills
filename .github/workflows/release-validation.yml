@@ -1,0 +1,233 @@
+name: Release validation
+
+on:
+  # Owner-run validation only. This workflow never tags, publishes, uploads
+  # private engineering release evidence, or mutates an external registry.
+  workflow_dispatch:
+    inputs:
+      rc_ref:
+        description: Exact pushed RC ref (full refs/heads/... or refs/tags/...)
+        required: true
+        type: string
+      source_commit:
+        description: Exact 40-hex commit currently named by rc_ref
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-validation
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    outputs:
+      source_repository: ${{ steps.provenance.outputs.source_repository }}
+      source_commit: ${{ steps.provenance.outputs.source_commit }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ inputs.source_commit }}
+
+      - name: Require exact pushed RC provenance
+        id: provenance
+        env:
+          RC_REF: ${{ inputs.rc_ref }}
+          SOURCE_COMMIT: ${{ inputs.source_commit }}
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]] || {
+            echo "source_commit must be an exact lowercase 40-hex commit" >&2
+            exit 1
+          }
+          [[ "$RC_REF" =~ ^refs/(heads|tags)/.+$ ]] || {
+            echo "rc_ref must be a full refs/heads/... or refs/tags/... ref" >&2
+            exit 1
+          }
+          git check-ref-format "$RC_REF"
+          [ "$(git rev-parse HEAD)" = "$SOURCE_COMMIT" ] || {
+            echo "checkout HEAD does not match source_commit" >&2
+            exit 1
+          }
+          [ -z "$(git status --porcelain)" ] || {
+            echo "release validation checkout is dirty" >&2
+            exit 1
+          }
+          remote_url="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git"
+          remote_record="$(git ls-remote --refs "$remote_url" "$RC_REF")"
+          [ "$remote_record" = "$SOURCE_COMMIT"$'\t'"$RC_REF" ] || {
+            echo "rc_ref does not resolve exactly to source_commit" >&2
+            exit 1
+          }
+          {
+            echo "source_repository=$GITHUB_REPOSITORY"
+            echo "source_commit=$SOURCE_COMMIT"
+          } >> "$GITHUB_OUTPUT"
+          echo "validated pinned RC $GITHUB_REPOSITORY@$SOURCE_COMMIT ($RC_REF)"
+
+      - name: Exact coordinated release cohort
+        run: |
+          set -euo pipefail
+          bash scripts/check-versions.sh --release-all-current
+          python3 scripts/generate-release-surfaces.py --check
+
+      - name: Fixed security and repository guards
+        run: |
+          set -euo pipefail
+          python3 scripts/check-pii.py --tracked
+          bash scripts/check-stdlib-only.sh
+          python3 scripts/check-local-links.py
+          find . -path ./.git -prune -o -path ./.planning -prune -o -name '*.json' -type f -print0 |
+            xargs -0 -n1 python3 -m json.tool >/dev/null
+          python3 -m py_compile scripts/*.py scripts/connectors/*.py scripts/adapters/*.py
+          bash -n hooks/claude-hook.sh .githooks/pre-commit \
+            scripts/publish-common.sh scripts/publish-clawhub.sh \
+            scripts/publish-skillhub.sh scripts/publish-package.sh \
+            scripts/publish-registries.sh scripts/sync-about.sh scripts/sync-family.sh
+          python3 -c "import json; json.load(open('hooks/hooks.json'))"
+
+      - name: Validate all 120 skills
+        run: |
+          set -uo pipefail
+          fail=0
+          while read -r skill; do
+            bash scripts/validate-skill.sh "$skill" || fail=1
+          done < <(python3 -c 'import json; print("\n".join(p.removeprefix("./") for p in json.load(open(".claude-plugin/plugin.json"))["skills"]))')
+          bash scripts/validate-skill.sh --status || fail=1
+          exit $fail
+
+      - name: Generated architecture and contract drift
+        run: |
+          set -euo pipefail
+          python3 scripts/check-architecture.py
+          python3 scripts/generate-release-surfaces.py --check
+          python3 scripts/generate-system-docs.py --check
+          python3 scripts/generate-auditor-runtime.py --check
+          python3 scripts/generate-auditor-prompt-contracts.py --check
+          python3 scripts/generate-auto-routing-shards.py --check
+          python3 scripts/generate-skill-contracts.py --check
+          python3 scripts/workflow-graph.py --check
+          python3 scripts/check-context-budget.py
+          python3 scripts/check-routing.py
+
+      - name: All unit and runtime suites
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_*.py'
+          bash tests/test_runtime_distribution.sh
+          bash tests/test_hook_artifact_gate.sh
+
+      - name: Deterministic behavior and exact nightly plan
+        run: |
+          set -euo pipefail
+          python3 scripts/run-behavior-evals.py
+          python3 scripts/check-evals.py
+          python3 scripts/run-behavior-evals.py \
+            --adapter-only \
+            --adapter-protocol 2 \
+            --profile smoke \
+            --plan-json "$RUNNER_TEMP/smoke-plan.json"
+          python3 scripts/run-behavior-evals.py \
+            --adapter-only \
+            --adapter-protocol 2 \
+            --profile nightly \
+            --plan-json "$RUNNER_TEMP/nightly-plan.json"
+          python3 - "$RUNNER_TEMP/nightly-plan.json" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              plan = json.load(handle)
+          if plan.get("selected_count") != 700 or len(plan.get("cases", [])) != 700:
+              raise SystemExit("nightly semantic plan must contain exactly 700 cases")
+          PY
+          python3 - "$RUNNER_TEMP/smoke-plan.json" <<'PY'
+          import json
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              plan = json.load(handle)
+          if plan.get("selected_count") != 24 or len(plan.get("cases", [])) != 24:
+              raise SystemExit("smoke semantic plan must contain exactly 24 cases")
+          PY
+
+      - name: Reproducible provenance-bound release assets
+        id: release_assets
+        env:
+          SOURCE_REPOSITORY: ${{ steps.provenance.outputs.source_repository }}
+          SOURCE_COMMIT: ${{ steps.provenance.outputs.source_commit }}
+        run: |
+          set -euo pipefail
+          version="$(python3 -c 'import json; print(json.load(open("references/system-catalog.json"))["bundle_version"])')"
+          first="$RUNNER_TEMP/release-assets-first"
+          second="$RUNNER_TEMP/release-assets-second"
+          for output in "$first" "$second"; do
+            python3 scripts/build-release-assets.py \
+              --output "$output" \
+              --source-repo . \
+              --source-repository "$SOURCE_REPOSITORY" \
+              --source-commit "$SOURCE_COMMIT" \
+              --version "$version"
+            python3 scripts/build-release-assets.py \
+              --verify "$output" \
+              --source-repo . \
+              --source-repository "$SOURCE_REPOSITORY" \
+              --source-commit "$SOURCE_COMMIT" \
+              --version "$version"
+          done
+          for name in \
+            "aaron-marketing-skills-$version-lite.tar.gz" \
+            "aaron-marketing-skills-$version-pro.tar.gz" \
+            "aaron-marketing-skills-$version-governed.tar.gz" \
+            SHA256SUMS \
+            release-assets.json
+          do
+            cmp "$first/$name" "$second/$name"
+          done
+          {
+            echo "assets_dir=$first"
+            echo "artifact_name=release-assets-$version-${SOURCE_COMMIT:0:12}"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Upload verified release-candidate assets
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.release_assets.outputs.artifact_name }}
+          path: ${{ steps.release_assets.outputs.assets_dir }}/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14
+
+      - name: Private engineering gate reminder
+        run: |
+          {
+            echo "### Required owner-local gate"
+            echo
+            echo 'This workflow deliberately does **not** receive or upload the private engineering-maturity report, release receipt, or raw semantic-evidence chain.'
+            echo 'Before tagging, the owner must run `python3 scripts/issue-engineering-release-receipt.py --semantic-evidence-run-id <fresh-current-source-run-uuid> --evidence-root <private-project-root> --release-candidate 19.0.0-rc.N --owner-authorization release-v19-without-real-project-outcomes --maturity-report-output <private-new-report-path> --output <private-new-receipt-path>` against this exact clean RC commit to issue the private `engineering-validation-v19` receipt.'
+            echo 'The issuer directly runs the five-dimension maturity audit and, in the same invocation, writes the private mode-0600 report plus a receipt that hashes those exact report bytes.'
+            echo 'Owner-local preflight must then run `python3 scripts/verify-release-receipt.py <private-receipt> --source-commit "${{ steps.provenance.outputs.source_commit }}" --release-version 19.0.0 --required-gate engineering-validation-v19 --maturity-report <private-report> --evidence-root <absolute-evidence-root>`; this rapidly reruns the current verifier over the original semantic chain.'
+            echo 'The evidence root may be outside the repository, or the absolute repository root only when the bound `memory/runs/<run-id>` directory is Git-ignored and wholly untracked.'
+            echo 'Final creation requires `python3 scripts/create-github-release.py --live --receipt <private-receipt> --maturity-report <private-report> --evidence-root <absolute-evidence-root> --asset-dir <verified-five-asset-directory>`. Live publishers require `AARON_RELEASE_RECEIPT`, `AARON_RELEASE_MATURITY_REPORT`, and `AARON_RELEASE_EVIDENCE_ROOT`; none of these private inputs is uploaded.'
+            echo 'Issuance and final Release creation keep the strict 24-hour freshness gate. Only after that immutable final Release exists may publisher entrypoints internally use post-release continuation, still bounded by the committed semantic policy (currently 30 days) and still revalidating every private proof/source hash.'
+            echo 'The provider run invokes real models over simulated semantic fixtures: it is engineering evidence, not real-project outcome evidence.'
+            echo 'Real-project outcomes remain unvalidated until the post-release 14 pilot + 70 paired + 28 shadow `governed-promotion` cohort passes. Lite remains the default; Governed capability availability does not validate Governed outcomes or Governed-by-default.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Root references/ blob-main guard
+        run: |
+          # `!` must stay the last command: a trailing command could mask a hit.
+          ! grep -rn "blob/main" references/ --include="*.md"
+
+      - name: Cross-agent discovery guard (npx skills)
+        run: |
+          set -euo pipefail
+          declared=$(python3 -c "import json; print(len(json.load(open('.claude-plugin/plugin.json'))['skills']))")
+          found=$(npx -y skills add . --list 2>&1 | sed 's/\x1b\[[0-9;]*m//g' | grep -oE 'Found [0-9]+ skill' | grep -oE '[0-9]+' | head -1 || true)
+          echo "declared=$declared found=${found:-none}"
+          [ "${found:-0}" = "$declared" ]

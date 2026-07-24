@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workflow-loop-event.schema.json",
+  "title": "Non-authoritative workflow loop event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "run_id", "loop_id", "workflow_id",
+    "idempotency_key", "event_type", "occurred_at", "expected_head_sha256",
+    "payload", "authoritative", "authority", "event_id", "offset",
+    "recorded_at", "request_hash", "previous_hash", "event_hash"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "run_id": { "$ref": "#/$defs/uuid" },
+    "loop_id": { "$ref": "#/$defs/safe_id" },
+    "workflow_id": { "$ref": "#/$defs/slug" },
+    "idempotency_key": { "$ref": "#/$defs/safe_id" },
+    "event_type": {
+      "enum": [
+        "planned", "action-completed", "action-failed", "verification-recorded",
+        "decision-recorded", "memory-proposal-recorded", "terminal-recorded"
+      ]
+    },
+    "occurred_at": { "$ref": "#/$defs/timestamp" },
+    "expected_head_sha256": { "$ref": "#/$defs/digest" },
+    "payload": { "type": "object" },
+    "authoritative": { "const": false },
+    "authority": { "const": "non-authoritative-operational-planning" },
+    "event_id": { "$ref": "#/$defs/uuid" },
+    "offset": { "type": "integer", "minimum": 1 },
+    "recorded_at": { "$ref": "#/$defs/timestamp" },
+    "request_hash": { "$ref": "#/$defs/digest" },
+    "previous_hash": { "$ref": "#/$defs/digest" },
+    "event_hash": { "$ref": "#/$defs/digest" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "event_type": { "const": "planned" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/planned_payload" } } }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "action-completed" } } },
+      "then": { "properties": { "payload": { "$ref": "workflow-loop-request.schema.json#/$defs/action_completed_payload" } } }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "action-failed" } } },
+      "then": { "properties": { "payload": { "$ref": "workflow-loop-request.schema.json#/$defs/action_failed_payload" } } }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "verification-recorded" } } },
+      "then": { "properties": { "payload": { "$ref": "workflow-loop-request.schema.json#/$defs/verification_payload" } } }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "decision-recorded" } } },
+      "then": { "properties": { "payload": { "$ref": "workflow-loop-request.schema.json#/$defs/decision_payload" } } }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "memory-proposal-recorded" } } },
+      "then": { "properties": { "payload": { "$ref": "workflow-loop-request.schema.json#/$defs/memory_proposal_payload" } } }
+    },
+    {
+      "if": { "properties": { "event_type": { "const": "terminal-recorded" } } },
+      "then": { "properties": { "payload": { "$ref": "workflow-loop-request.schema.json#/$defs/terminal_payload" } } }
+    }
+  ],
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "safe_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,127}$"
+    },
+    "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "planned_payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["plan_ref", "plan_sha256"],
+      "properties": {
+        "plan_ref": {
+          "type": "string",
+          "pattern": "^memory/runs/.+/workflow-plans/.+/plan\\.json$"
+        },
+        "plan_sha256": { "$ref": "#/$defs/digest" }
+      }
+    }
+  }
+}

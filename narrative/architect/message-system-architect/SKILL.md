@@ -4,13 +4,13 @@ slug: aaron-message-system-architect
 displayName: "Message System Architect · 品牌消息体系"
 summary: "品牌消息屋/主叙事/三支柱/标语·一句话的持久 canon"
 description: 'Use when the user asks to "author our durable brand message hierarchy", "build the brand message house that seeds the canon", or "define the main narrative, three pillars, and tagline for the whole brand"; produces the DURABLE brand message system — main narrative, three value pillars, per-persona proof points (each labeled Measured / User-provided / ''[needs source]''), and the tagline/one-liner — that seeds the narrative-registry canon and from which every per-launch house derives. Not for a single launch''s message house or PR-FAQ — use message-house-builder; not for claim adjudication — use offer-claims-registry; not for the change-narrative arc itself — use strategic-narrative-designer. 品牌消息屋/主叙事/三支柱/标语/持久叙事 canon'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when authoring the durable, brand-level message hierarchy that outlives any single launch: the main narrative, three value pillars each traceable to a positioning value theme, per-persona proof points, and the tagline/one-liner. The core of the TALE Architect phase and the seed of the narrative-registry canon — the per-launch message-house-builder is reused and derives from this durable house. Not the per-launch house itself and not claim substantiation."
 argument-hint: "<product / brand> [personas] [positioning truth set path] [narrative arc path]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "narrative", "phase": "architect", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "architect"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "architect", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "architect"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Message System Architect

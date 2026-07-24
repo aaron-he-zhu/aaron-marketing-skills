@@ -1,0 +1,376 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 83,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every candidate platform has all four capability columns and an access class filled"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 177,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 85
+        },
+        "text": "the selected portfolio fits inside the stated staffing budget with every hour figure labeled"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 247,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 179
+        },
+        "text": "and each selected channel proposal is submitted through the runtime."
+      }
+    ],
+    "done_when": "every candidate platform has all four capability columns and an access class filled; the selected portfolio fits inside the stated staffing budget with every hour figure labeled; and each selected channel proposal is submitted through the runtime.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/explore/channel-portfolio-planner/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 37
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 41
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 58
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 33
+      },
+      {
+        "path": "references/social-platform-access.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e632e1d254e0f8928e40c5b5b944b7fb99e6b709e52a7bcae31122e0069ebd69",
+        "source_line": 37
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/channels",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/influencer/audience-mapper",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:channel-portfolio-planner",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before anything is drafted.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 176,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "voice-dossier-builder"
+        ],
+        "text": "- **Primary**: [voice-dossier-builder](../voice-dossier-builder/SKILL.md) — codify brand/founder voice and content pillars for the selected channels before anything is drafted."
+      },
+      {
+        "condition": "If 3+ proposal events were queued**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — promote the proposed channels into dossiers so the E1 fact base exists before warming starts.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 377,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 177
+        },
+        "target_skills": [
+          "channel-registry"
+        ],
+        "text": "- **If 3+ proposal events were queued**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — promote the proposed channels into dossiers so the E1 fact base exists before warming starts."
+      },
+      {
+        "condition": "If audience evidence was missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to score the matrix against it.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 567,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 378
+        },
+        "target_skills": [
+          "audience-mapper"
+        ],
+        "text": "- **If audience evidence was missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to score the matrix against it."
+      },
+      {
+        "condition": "when the portfolio fits the staffing budget and the proposal events are queued.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 926,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 569
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the portfolio fits the staffing budget and the proposal events are queued."
+      }
+    ],
+    "next_best": "- **Primary**: [voice-dossier-builder](../voice-dossier-builder/SKILL.md) — codify brand/founder voice and content pillars for the selected channels before anything is drafted.\n- **If 3+ proposal events were queued**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — promote the proposed channels into dossiers so the E1 fact base exists before warming starts.\n- **If audience evidence was missing**: [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) — build the segment evidence first, then return to score the matrix against it.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the portfolio fits the staffing budget and the proposal events are queued.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/explore/channel-portfolio-planner/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "audience-mapper",
+      "channel-registry",
+      "voice-dossier-builder"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "channel-portfolio-planner",
+    "path": "social/explore/channel-portfolio-planner/SKILL.md",
+    "phase": "explore",
+    "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<objective + audience evidence> [candidate platforms] [staffing hours/week]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 47,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "objective and staffing capacity (User-provided)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 240,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 49
+        },
+        "text": "audience evidence from [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) output in `memory/influencer/audience-mapper/` or pasted persona/analytics exports (User-provided)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 335,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 242
+        },
+        "text": "existing dossiers in `memory/channels/` read-only, so re-planning starts from recorded states"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 401,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 337
+        },
+        "text": "platform capability and policy facts from official platform docs"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 507,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 403
+        },
+        "text": "public attention signals via `scripts/connectors/pageviews.py` and `scripts/connectors/hn.py` (keyless)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "objective and staffing capacity (User-provided); audience evidence from [audience-mapper](../../../influencer/scout/audience-mapper/SKILL.md) output in `memory/influencer/audience-mapper/` or pasted persona/analytics exports (User-provided); existing dossiers in `memory/channels/` read-only, so re-planning starts from recorded states; platform capability and policy facts from official platform docs; public attention signals via `scripts/connectors/pageviews.py` and `scripts/connectors/hn.py` (keyless).",
+    "source": {
+      "path": "social/explore/channel-portfolio-planner/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 47,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the portfolio to its WARM path after permission"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "partially-classified",
+        "kind": "unclassified",
+        "permission_posture": "prohibited",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 155,
+          "path": "social/explore/channel-portfolio-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a",
+          "span_basis": "field-text",
+          "start_char": 49
+        },
+        "text": "selected channel facts become authorized `operation: propose` events. It does not write HOT automatically."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "source": {
+      "path": "social/explore/channel-portfolio-planner/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a"
+    },
+    "summary": "a capability/access matrix, cadence-budget reality check, declared ECHO program-maturity profile, primary/secondary/watch tiers, boundary triage, authorized proposed-state events, and the standard handoff.",
+    "summary_source": "expected-output",
+    "writes": "the portfolio to its WARM path after permission; selected channel facts become authorized `operation: propose` events. It does not write HOT automatically."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for recording canonical channel facts — use channel-registry. 社媒渠道选择/渠道组合规划/平台能力矩阵/自然社媒",
+    "description": "Use when the user asks to \"pick which social channels to run\", \"should we be on X platform or 小红书\", or \"plan our organic social channel portfolio\"; produces an audience/objective-first portfolio with capability/access matrix, cadence-budget reality check, declared ECHO operating profile, boundary routing, and proposed-state registry events. Not for recording canonical channel facts — use channel-registry. 社媒渠道选择/渠道组合规划/平台能力矩阵/自然社媒",
+    "source": {
+      "path": "social/explore/channel-portfolio-planner/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "c22d39b765afd4715329fd6a964796b9c4a40e50f2eb3c3693cfe0e38cae729a"
+    },
+    "trigger_phrases": [
+      "pick which social channels to run",
+      "plan our organic social channel portfolio",
+      "should we be on X platform or 小红书"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when choosing organic social channels before posting exists: match platform capabilities/access to audience and objective, declare the relevant ECHO program-maturity profile, size cadence against staffing, and route paid/creator/launch/email work to its owner. Not the channel fact record or voice dossier."
+  },
+  "schema_version": "1.0"
+}

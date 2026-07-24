@@ -10,6 +10,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import uuid
 from unittest import mock
 
 
@@ -50,7 +51,13 @@ class RegistryEventTests(unittest.TestCase):
         self.root = Path(self.temp.name)
         self.host_key = "registry-test-host-key-material-32-bytes-minimum"
         self.previous_host_key = os.environ.get(registry.HOST_KEY_ENV)
+        self.previous_profile = os.environ.get(
+            registry.profile_runtime.ENVIRONMENT_VARIABLE
+        )
         os.environ[registry.HOST_KEY_ENV] = self.host_key
+        os.environ[
+            registry.profile_runtime.ENVIRONMENT_VARIABLE
+        ] = "governed"
         self.raw_append_event = registry.append_event
         registry.append_event = self.authorized_append_event
 
@@ -60,6 +67,14 @@ class RegistryEventTests(unittest.TestCase):
             os.environ.pop(registry.HOST_KEY_ENV, None)
         else:
             os.environ[registry.HOST_KEY_ENV] = self.previous_host_key
+        if self.previous_profile is None:
+            os.environ.pop(
+                registry.profile_runtime.ENVIRONMENT_VARIABLE, None
+            )
+        else:
+            os.environ[
+                registry.profile_runtime.ENVIRONMENT_VARIABLE
+            ] = self.previous_profile
         self.temp.cleanup()
 
     def capability(self, registry_name, request, *, root=None, expires_at=None,
@@ -121,6 +136,176 @@ class RegistryEventTests(unittest.TestCase):
             check=False,
             env=environment,
         )
+
+    @staticmethod
+    def create_legacy_run(root):
+        run_id = str(uuid.uuid4())
+        run_dir = root / "memory" / "runs" / run_id
+        run_dir.mkdir(parents=True)
+        value = {
+            "run_id": run_id,
+            "offset": 1,
+            "event_type": "run_started",
+            "previous_hash": "0" * 64,
+            "references": [],
+        }
+        value["event_hash"] = registry.profile_runtime._canonical_hash(value)
+        stream = run_dir / "events.ndjson"
+        stream.write_text(
+            registry.profile_runtime._canonical_json(value) + "\n",
+            encoding="utf-8",
+        )
+        return run_id, stream
+
+    def test_lite_and_pro_block_ordinary_mutations_before_creating_memory(self):
+        proposal = event(
+            "entities", "profile-blocked-proposal", operation="propose",
+            proposed_operation="upsert",
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        for profile in ("lite", "pro"):
+            with self.subTest(profile=profile), self.assertRaisesRegex(
+                    registry.RegistryError, "canonical registry mutation requires"):
+                self.raw_append_event(
+                    self.root, "entities", proposal, profile=profile, environ={},
+                )
+            self.assertFalse((self.root / "memory").exists())
+
+    def test_governed_profile_allows_ordinary_mutation_but_never_grants_authority(self):
+        proposal = event(
+            "entities", "profile-governed-proposal", operation="propose",
+            proposed_operation="upsert",
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        appended = self.raw_append_event(
+            self.root, "entities", proposal, profile="governed", environ={},
+        )
+        self.assertFalse(appended["deduplicated"])
+        canonical = event("entities", "profile-governed-owner")
+        with self.assertRaisesRegex(registry.RegistryError, "host capability"):
+            self.raw_append_event(
+                self.root, "entities", canonical,
+                profile="governed", environ={},
+            )
+
+    def test_consent_suppress_is_the_only_profile_write_exception(self):
+        subject = "sha256-profile-suppression"
+        suppress = event(
+            "consent", "profile-suppress", aggregate_id=subject,
+            operation="suppress",
+            actor={"type": "data-subject", "id": subject},
+            authorized_by="data-subject",
+            authorization_ref="unsubscribe-profile-fixture",
+            source={
+                "type": "measured",
+                "ref": "unsubscribe-profile-fixture",
+                "observed_at": "2026-07-10",
+            },
+            payload={"reason": "unsubscribe"},
+        )
+        result = self.raw_append_event(
+            self.root, "consent", suppress, profile="lite", environ={},
+        )
+        self.assertFalse(result["deduplicated"])
+        self.assertTrue(registry.is_suppressed(self.root, subject))
+        erase = event(
+            "consent", "profile-erase", aggregate_id=subject, operation="erase",
+            actor={"type": "data-subject", "id": subject},
+            authorized_by="data-subject",
+            authorization_ref="erase-profile-fixture",
+            payload={"reason": "data-subject-erasure"},
+        )
+        with self.assertRaisesRegex(
+                registry.RegistryError, "canonical registry mutation requires"):
+            self.raw_append_event(
+                self.root, "consent", erase, profile="lite", environ={},
+            )
+
+    def test_invalid_profile_config_cannot_block_deny_only_suppress(self):
+        config = self.root / ".aaron-marketing" / "profile.json"
+        config.parent.mkdir()
+        config.write_text('{"schema_version":"1.0","profile":"unknown"}\n')
+        subject = "sha256-invalid-config-suppression"
+        suppress = event(
+            "consent", "invalid-config-suppress", aggregate_id=subject,
+            operation="suppress",
+            actor={"type": "data-subject", "id": subject},
+            authorized_by="data-subject",
+            authorization_ref="invalid-config-unsubscribe",
+            source={
+                "type": "measured", "ref": "invalid-config-unsubscribe",
+                "observed_at": "2026-07-10",
+            },
+            payload={"reason": "unsubscribe"},
+        )
+        self.raw_append_event(
+            self.root, "consent", suppress, profile="lite", environ={},
+        )
+        self.assertTrue(registry.is_suppressed(self.root, subject))
+        proposal = event(
+            "entities", "invalid-config-proposal", operation="propose",
+            proposed_operation="upsert",
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        with self.assertRaisesRegex(
+                registry.RegistryError, "PROFILE_CONFIG_INVALID"):
+            self.raw_append_event(
+                self.root, "entities", proposal,
+                profile="governed", environ={},
+            )
+
+    def test_pre_v19_run_blocks_governed_registry_write_without_drift(self):
+        _run_id, legacy_stream = self.create_legacy_run(self.root)
+        before = legacy_stream.read_bytes()
+        proposal = event(
+            "entities", "legacy-run-proposal", operation="propose",
+            proposed_operation="upsert",
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        with self.assertRaisesRegex(
+                registry.RegistryError, "LEGACY_RUN_BLOCKED"):
+            self.raw_append_event(
+                self.root, "entities", proposal,
+                profile="governed", environ={},
+            )
+        self.assertEqual(before, legacy_stream.read_bytes())
+        self.assertFalse(
+            (self.root / "memory" / "events" / "entities.ndjson").exists()
+        )
+
+    def test_projection_rebuild_and_init_obey_profile_write_gate(self):
+        proposal = event(
+            "entities", "projection-profile-proposal", operation="propose",
+            proposed_operation="upsert",
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        registry.append_event(self.root, "entities", proposal)
+        projection = self.root / "memory" / "projections" / "entities.json"
+        before = projection.read_bytes()
+        with self.assertRaisesRegex(
+                registry.RegistryError, "canonical registry mutation requires"):
+            registry.rebuild_projection(
+                self.root, "entities", profile="lite", environ={},
+            )
+        self.assertEqual(before, projection.read_bytes())
+
+        with tempfile.TemporaryDirectory() as directory:
+            fresh = Path(directory)
+            environment = os.environ.copy()
+            environment[
+                registry.profile_runtime.ENVIRONMENT_VARIABLE
+            ] = "lite"
+            checked = subprocess.run(
+                [
+                    sys.executable, str(ROOT / "scripts/registry-events.py"),
+                    "--root", str(fresh), "init",
+                ],
+                text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                check=False, env=environment,
+            )
+            self.assertEqual(checked.returncode, 1)
+            self.assertIn("canonical registry mutation requires", checked.stderr)
+            self.assertFalse((fresh / "memory").exists())
 
     def test_stale_projection_temp_is_reclaimed_under_the_stream_lock(self):
         proposal = event(
@@ -1300,6 +1485,216 @@ class RegistryEventTests(unittest.TestCase):
         state = registry.rebuild_projection(self.root, "creators")
         self.assertEqual(state["last_offset"], 1)
         self.assertTrue(projection.exists())
+
+    def test_pending_report_empty_root_is_quiet_and_creates_nothing(self):
+        report = registry.pending_report(self.root)
+        self.assertEqual(report["total_pending"], 0)
+        self.assertEqual(set(report["registries"]), registry.REGISTRIES)
+        self.assertTrue(all(e["verifiable"] for e in report["registries"].values()))
+        self.assertTrue(all(
+            e["projection_status"] == "not-required"
+            for e in report["registries"].values()
+        ))
+        self.assertFalse((self.root / "memory").exists())
+
+    def test_pending_report_counts_and_ages_proposals(self):
+        old = event(
+            "entities", "pending-old", operation="propose",
+            proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+            occurred_at="2026-07-01T00:00:00Z",
+        )
+        registry.append_event(self.root, "entities", old)
+        recent = event(
+            "claims", "pending-recent", operation="propose",
+            proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+            occurred_at="2026-07-09T00:00:00Z",
+        )
+        registry.append_event(self.root, "claims", recent)
+        now = dt.datetime(2026, 7, 18, tzinfo=dt.timezone.utc)
+        report = registry.pending_report(self.root, now=now)
+        self.assertEqual(report["total_pending"], 2)
+        entities = report["registries"]["entities"]
+        self.assertEqual(entities["pending"], 1)
+        self.assertEqual(entities["oldest_pending_age_days"], 17)
+        self.assertEqual(entities["projection_lag"], 0)
+        self.assertEqual(entities["projection_status"], "current")
+        self.assertEqual(report["registries"]["claims"]["oldest_pending_age_days"], 9)
+
+    def test_pending_report_orders_timezone_offsets_chronologically(self):
+        first_instant = event(
+            "entities", "pending-offset-first", aggregate_id="record-first",
+            operation="propose", proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+            occurred_at="2026-07-10T00:30:00+14:00",
+        )
+        later_instant = event(
+            "entities", "pending-offset-later", aggregate_id="record-later",
+            operation="propose", proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+            occurred_at="2026-07-09T23:45:00-12:00",
+        )
+        registry.append_event(self.root, "entities", first_instant)
+        registry.append_event(self.root, "entities", later_instant)
+        report = registry.pending_report(
+            self.root, now=dt.datetime(2026, 7, 12, tzinfo=dt.timezone.utc),
+        )
+        entities = report["registries"]["entities"]
+        self.assertEqual(
+            entities["oldest_pending_occurred_at"],
+            "2026-07-10T00:30:00+14:00",
+        )
+        self.assertEqual(entities["oldest_pending_age_days"], 2)
+
+    def test_pending_report_resolved_proposal_drops_out(self):
+        proposal = event(
+            "entities", "pending-resolved", operation="propose",
+            proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        first = registry.append_event(self.root, "entities", proposal)
+        accept = event(
+            "entities", "accept-resolved", operation="accept", payload={},
+            proposal_event_id=first["event"]["event_id"],
+        )
+        registry.append_event(self.root, "entities", accept)
+        report = registry.pending_report(self.root)
+        self.assertEqual(report["registries"]["entities"]["pending"], 0)
+        self.assertEqual(report["total_pending"], 0)
+
+    def test_pending_report_detects_projection_lag(self):
+        registry.append_event(self.root, "creators", event("creators", "lag-1", aggregate_id="record-1"))
+        registry.append_event(self.root, "creators", event("creators", "lag-2", aggregate_id="record-2"))
+        projection_path = self.root / "memory/projections/creators.json"
+        stored = json.loads(projection_path.read_text(encoding="utf-8"))
+        stored["last_offset"] = 1
+        projection_path.write_text(json.dumps(stored), encoding="utf-8")
+        report = registry.pending_report(self.root)
+        creators = report["registries"]["creators"]
+        self.assertEqual(creators["stream_offset"], 2)
+        self.assertEqual(creators["projection_offset"], 1)
+        self.assertEqual(creators["projection_lag"], 1)
+        self.assertEqual(creators["projection_status"], "behind")
+
+    def test_pending_report_marks_missing_projection_for_nonempty_stream(self):
+        registry.append_event(self.root, "creators", event("creators", "missing-projection"))
+        projection_path = self.root / "memory/projections/creators.json"
+        projection_path.unlink()
+        creators = registry.pending_report(self.root)["registries"]["creators"]
+        self.assertEqual(creators["projection_status"], "missing")
+        self.assertIsNone(creators["projection_offset"])
+        self.assertIsNone(creators["projection_lag"])
+
+    def test_pending_report_marks_invalid_projection(self):
+        registry.append_event(self.root, "creators", event("creators", "invalid-projection"))
+        projection_path = self.root / "memory/projections/creators.json"
+        projection_path.write_text("{not-json", encoding="utf-8")
+        creators = registry.pending_report(self.root)["registries"]["creators"]
+        self.assertEqual(creators["projection_status"], "invalid")
+        self.assertIn("projection_error", creators)
+        self.assertIsNone(creators["projection_lag"])
+
+    def test_pending_report_marks_non_utf8_projection_invalid(self):
+        registry.append_event(self.root, "creators", event("creators", "binary-projection"))
+        projection_path = self.root / "memory/projections/creators.json"
+        projection_path.write_bytes(b"\xff")
+        creators = registry.pending_report(self.root)["registries"]["creators"]
+        self.assertEqual(creators["projection_status"], "invalid")
+        self.assertIn("projection_error", creators)
+
+    @unittest.skipUnless(hasattr(os, "symlink"), "symlinks are unavailable")
+    def test_pending_report_rejects_symlinked_projection_without_reading_target(self):
+        projections = self.root / "memory/projections"
+        projections.mkdir(parents=True)
+        outside = self.root / "outside-projection.json"
+        outside.write_text(json.dumps({
+            "schema_version": registry.SCHEMA_VERSION,
+            "registry": "entities",
+            "last_offset": 0,
+        }), encoding="utf-8")
+        (projections / "entities.json").symlink_to(outside)
+
+        entities = registry.pending_report(self.root)["registries"]["entities"]
+        self.assertTrue(entities["verifiable"])
+        self.assertEqual(entities["projection_status"], "invalid")
+        self.assertIn("regular single-link file", entities["projection_error"])
+        self.assertIsNone(entities["projection_offset"])
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "FIFO creation is unavailable")
+    def test_pending_report_rejects_fifo_projection_without_blocking(self):
+        projections = self.root / "memory/projections"
+        projections.mkdir(parents=True)
+        os.mkfifo(projections / "entities.json", 0o600)
+
+        entities = registry.pending_report(self.root)["registries"]["entities"]
+        self.assertTrue(entities["verifiable"])
+        self.assertEqual(entities["projection_status"], "invalid")
+        self.assertIn("regular single-link file", entities["projection_error"])
+
+    def test_pending_report_rejects_oversized_projection(self):
+        projections = self.root / "memory/projections"
+        projections.mkdir(parents=True)
+        (projections / "entities.json").write_bytes(
+            b"x" * (registry.MAX_EVENT_BYTES + 1)
+        )
+
+        entities = registry.pending_report(self.root)["registries"]["entities"]
+        self.assertTrue(entities["verifiable"])
+        self.assertEqual(entities["projection_status"], "invalid")
+        self.assertIn("exceeds size limit", entities["projection_error"])
+
+    def test_pending_report_marks_projection_ahead_without_negative_lag(self):
+        registry.append_event(self.root, "creators", event("creators", "ahead-projection"))
+        projection_path = self.root / "memory/projections/creators.json"
+        stored = json.loads(projection_path.read_text(encoding="utf-8"))
+        stored["last_offset"] = 2
+        projection_path.write_text(json.dumps(stored), encoding="utf-8")
+        creators = registry.pending_report(self.root)["registries"]["creators"]
+        self.assertEqual(creators["projection_status"], "ahead")
+        self.assertEqual(creators["projection_offset"], 2)
+        self.assertIsNone(creators["projection_lag"])
+
+    def test_pending_report_marks_unverifiable_stream(self):
+        registry.append_event(self.root, "creators", event("creators", "signed-1"))
+        stream_path, _, _ = registry.memory_paths(self.root, "creators")
+        with stream_path.open("a", encoding="utf-8") as handle:
+            handle.write("not-json\n")
+        report = registry.pending_report(self.root)
+        creators = report["registries"]["creators"]
+        self.assertFalse(creators["verifiable"])
+        self.assertEqual(creators["projection_status"], "unknown")
+        self.assertIn("error", creators)
+        self.assertEqual(report["registries"]["entities"]["pending"], 0)
+
+    def test_pending_report_without_host_key_uses_labeled_advisory_read(self):
+        proposal = event(
+            "entities", "pending-advisory", operation="propose",
+            proposed_operation="upsert", expected_revision=0,
+            actor={"type": "skill", "id": "content-writer"},
+        )
+        first = registry.append_event(self.root, "entities", proposal)
+        accept = event(
+            "entities", "accept-advisory", operation="accept", payload={},
+            proposal_event_id=first["event"]["event_id"],
+        )
+        registry.append_event(self.root, "entities", accept)
+        registry.append_event(
+            self.root, "entities",
+            event("entities", "pending-advisory-2", operation="propose",
+                  proposed_operation="upsert", expected_revision=0,
+                  aggregate_id="record-2",
+                  actor={"type": "skill", "id": "content-writer"}))
+        os.environ.pop(registry.HOST_KEY_ENV, None)
+        report = registry.pending_report(self.root)
+        entities = report["registries"]["entities"]
+        self.assertTrue(entities["verifiable"])
+        self.assertFalse(entities["authority_verified"])
+        self.assertEqual(entities["pending"], 1)
+        os.environ[registry.HOST_KEY_ENV] = self.host_key
+        strict = registry.pending_report(self.root)
+        self.assertTrue(strict["registries"]["entities"]["authority_verified"])
+        self.assertEqual(strict["registries"]["entities"]["pending"], 1)
 
 
 if __name__ == "__main__":

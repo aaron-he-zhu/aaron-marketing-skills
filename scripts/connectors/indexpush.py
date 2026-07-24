@@ -18,6 +18,11 @@ them within minutes. Two backends:
             one URL per line) — Baidu 搜索资源平台 普通收录 API 推送. The
             site-bound token comes from ziyuan.baidu.com → 普通收录 → API提交.
             Response reports `success` and today's remaining quota (`remain`).
+            WARNING: Baidu documents this endpoint over plain HTTP only, so a
+            --live push sends the token in cleartext (readable on-path). Prefer
+            the env var BAIDU_PUSH_TOKEN over --token (CLI args are visible in
+            `ps` and shell history), and rotate the token if a live push may
+            have crossed an untrusted network.
 
 MUTATION CLASS (see SECURITY.md §Connector network behavior) — this helper
 changes external state (engines schedule crawls of what you submit), so

@@ -1,0 +1,276 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 62,
+          "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "each audited area carries evidence, issues, fixes, and a score"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 112,
+          "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "span_basis": "field-text",
+          "start_char": 64
+        },
+        "text": "blocking indexation/revenue risks are flagged P0"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 176,
+          "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "span_basis": "field-text",
+          "start_char": 114
+        },
+        "text": "a scorecard, priority queue, and handoff summary are produced."
+      }
+    ],
+    "done_when": "each audited area carries evidence, issues, fixes, and a score; blocking indexation/revenue risks are flagged P0; a scorecard, priority queue, and handoff summary are produced.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 81
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 81
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 13
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 83
+      },
+      {
+        "path": "seo-geo/tune/technical-seo-checker/references/bulk-audit-playbook.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "94e1080daf4bb3110a9d8753fe5f3b3dd9117b88dc1123d50c44cd3156b948f5",
+        "source_line": 63
+      },
+      {
+        "path": "seo-geo/tune/technical-seo-checker/references/ecommerce-platform-patterns.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e544bd27385af746032f4d4c566326633844e4a20000908eb10a3befcf6265d8",
+        "source_line": 63
+      },
+      {
+        "path": "seo-geo/tune/technical-seo-checker/references/http-status-codes.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "04c2e9d0b4feba325e48d581cceb7e46093732f9d4c1ce2f8a329ef8b18b1bfb",
+        "source_line": 141
+      },
+      {
+        "path": "seo-geo/tune/technical-seo-checker/references/llm-crawler-handling.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "d831179bfab06d8a1d73cff9e9fc39a28dab1eab8cf3c69e2bcd4fe8be1dd68f",
+        "source_line": 49
+      },
+      {
+        "path": "seo-geo/tune/technical-seo-checker/references/pre-migration-playbook.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b41a708de38ddf822bf37c24d7f8e60f9788b27715dc69725b75dcf756be1202",
+        "source_line": 41
+      },
+      {
+        "path": "seo-geo/tune/technical-seo-checker/references/robots-txt-reference.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "cb2eba170826f244c6cf653017b4f69379dbd7486aef37a493b975a409d0695d",
+        "source_line": 140
+      },
+      {
+        "path": "seo-geo/tune/technical-seo-checker/references/technical-audit-example.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f92ca242d80b70c0e4e6c3cfac497964cf40e304fbacd1253f622646ebdb8680",
+        "source_line": 130
+      },
+      {
+        "path": "seo-geo/tune/technical-seo-checker/references/technical-audit-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "0db1ed35641046727255d1b22bed57dd7b4feb6e755c9d405b2d494541e37215",
+        "source_line": 97
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:technical-seo-checker",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 130,
+          "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "on-page-seo-checker"
+        ],
+        "text": "Primary: [on-page-seo-checker](../on-page-seo-checker/SKILL.md) — continue from infrastructure issues into page-level remediation."
+      }
+    ],
+    "next_best": "Primary: [on-page-seo-checker](../on-page-seo-checker/SKILL.md) — continue from infrastructure issues into page-level remediation.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "on-page-seo-checker"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "technical-seo-checker",
+    "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+    "phase": "tune",
+    "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<URL or domain>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 90,
+          "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "target URLs or domain, PageSpeed/CrUX reports, robots.txt, sitemap, and reported symptoms."
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "target URLs or domain, PageSpeed/CrUX reports, robots.txt, sitemap, and reported symptoms.",
+    "source": {
+      "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 135,
+          "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing audit or optimization plan plus a reusable summary that can be stored under `memory/seo-geo/tune/technical-seo-checker/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+    },
+    "summary": "a scored diagnosis, prioritized repair plan, and a short handoff summary ready for `memory/seo-geo/tune/technical-seo-checker/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing audit or optimization plan plus a reusable summary that can be stored under `memory/seo-geo/tune/technical-seo-checker/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for on-page tags or content — use on-page-seo-checker. 技术SEO/网站速度",
+    "description": "Use when the user asks to \"check technical SEO\"; audits crawlability, indexing, Core Web Vitals, robots.txt, sitemaps, canonicals, redirects, and migrations. Not for on-page tags or content — use on-page-seo-checker. 技术SEO/网站速度",
+    "source": {
+      "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+    },
+    "trigger_phrases": [
+      "check technical SEO"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when checking technical SEO health: site speed, Core Web Vitals, indexing, crawlability, robots.txt, sitemaps, canonical tags, 技术SEO, 网站速度, 核心网页指标, 索引问题, or Google找不到页面."
+  },
+  "schema_version": "1.0"
+}

@@ -12,13 +12,26 @@ ROOT = Path(__file__).resolve().parents[1]
 LINK = re.compile(r"!?\[[^\]]*\]\(([^)]+)\)")
 FENCE = re.compile(r"^\s*(```|~~~)")
 SCHEME = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
-EXCLUDED_PARTS = {".git", ".planning", ".agents", ".codex", "reference-oss"}
+EXCLUDED_PARTS = {
+    ".git", ".planning", ".agents", ".codex", "reference-oss",
+}
+ISOLATED_DEPENDENCY_TREES = (("evals", "pi-agent-poc"),)
+
+
+def in_dependency_tree(parts):
+    for tree in ISOLATED_DEPENDENCY_TREES:
+        if (len(parts) > len(tree) and parts[:len(tree)] == tuple(tree)
+                and parts[len(tree)] == "node_modules"):
+            return True
+    return False
 
 
 def markdown_files():
     for path in ROOT.rglob("*.md"):
         relative = path.relative_to(ROOT)
         if any(part in EXCLUDED_PARTS for part in relative.parts):
+            continue
+        if in_dependency_tree(relative.parts):
             continue
         if " 2" in path.name or re.search(r"(?:^| )\d+\.md$", path.name):
             continue

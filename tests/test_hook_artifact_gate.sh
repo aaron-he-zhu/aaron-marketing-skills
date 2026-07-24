@@ -12,11 +12,15 @@
 set -u
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 HOOK="$REPO/hooks/claude-hook.sh"
+CURRENT_CATALOG_VERSION="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1], encoding="utf-8"))["properties"]["catalog_version"]["const"])' "$REPO/references/audit-artifact.schema.json")" || exit 1
 PASS=0
 FAIL=0
 
 PROJ="$(mktemp -d)"
-trap 'rm -rf "$PROJ"' EXIT
+FAST_PROJ=""
+FAST_BIN=""
+FAST_TRACE=""
+trap 'rm -rf "$PROJ"; [ -z "${FAST_PROJ:-}" ] || rm -rf "$FAST_PROJ"; [ -z "${FAST_BIN:-}" ] || rm -rf "$FAST_BIN"; [ -z "${FAST_TRACE:-}" ] || rm -f "$FAST_TRACE"' EXIT
 mkdir -p "$PROJ/memory/audits/content"
 
 # Run the post-tool-use gate against memory/audits/<file>; echoes hook stdout.
@@ -55,16 +59,19 @@ raise SystemExit(0 if value.get("decision") == "block" else 1)'; then
 }
 assert_contains()    { case "$2" in *"$3"*) ok "$1";; *) bad "$1 (missing: $3)";; esac; }
 assert_notcontains() { case "$2" in *"$3"*) bad "$1 (should not contain: $3)";; *) ok "$1";; esac; }
+current_catalog_artifact() {
+  sed "s/__CURRENT_CATALOG_VERSION__/$CURRENT_CATALOG_VERSION/g"
+}
 
 echo "Artifact Gate — auditor-output validation"
 
 # 1. Compliant artifact (cap group after a blank line, the documented §1 format) -> PASS
-cat > "$PROJ/memory/audits/content/good.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/content/good.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: CORE-EEAT
 profile: product-review
 ---
@@ -101,12 +108,12 @@ sed '/^final_overall_score:/d' "$PROJ/memory/audits/content/good.md" > "$PROJ/me
 assert_block "missing final_overall_score (non-BLOCKED) blocks" "$(gate content/missing_final.md)"
 
 # 3. A completed multi-veto audit has status DONE + verdict BLOCK, with no final score.
-cat > "$PROJ/memory/audits/content/blocked_ok.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/content/blocked_ok.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: CORE-EEAT
 profile: product-review
 ---
@@ -150,12 +157,12 @@ sed 's/score_confidence: not_scored/score_confidence: high/' \
 assert_block "every NOT_SCORED artifact requires not_scored confidence" "$(gate content/blocked_with_gap_bad_confidence.md)"
 
 # 4. An execution failure is unscored/undecided and still requires typed control fields.
-cat > "$PROJ/memory/audits/content/blocked_nocap.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/content/blocked_nocap.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: CORE-EEAT
 profile: product-review
 ---
@@ -200,12 +207,12 @@ echo "Artifact Gate — STAR influencer (creator-content-auditor) artifacts"
 mkdir -p "$PROJ/memory/audits/influencer" "$PROJ/memory/audits/ad" "$PROJ/memory/influencer/creator-content-auditor"
 
 # STAR-1. Compliant creator-content-auditor ART artifact (Approved->DONE) under memory/audits/influencer/ -> PASS
-cat > "$PROJ/memory/audits/influencer/cr_good.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/influencer/cr_good.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: STAR
 profile: awareness
 ---
@@ -234,12 +241,12 @@ EOF
 assert_pass "STAR creator-content-auditor artifact (DONE) passes the gate" "$(gate influencer/cr_good.md)"
 
 # STAR-2. One verified veto is a completed FIX with the universal Low-band ceiling.
-cat > "$PROJ/memory/audits/influencer/cr_veto.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/influencer/cr_veto.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: STAR
 profile: awareness
 ---
@@ -283,12 +290,12 @@ draft_out="$(printf '{"tool_input":{"file_path":"memory/influencer/creator-conte
 assert_pass "creator-content-auditor draft outside memory/audits/ is not gated (fail-open)" "$draft_out"
 
 # STAR-5. ROAS ad-account-auditor artifact under memory/audits/ad/ -> PASS (explicit paid-consumer coverage)
-cat > "$PROJ/memory/audits/ad/aa_good.md" <<'EOF'
+current_catalog_artifact > "$PROJ/memory/audits/ad/aa_good.md" <<'EOF'
 ---
 class: auditor-output
 schema_version: "3.0"
 runbook_version: "3.0.0"
-catalog_version: "18.0.0"
+catalog_version: "__CURRENT_CATALOG_VERSION__"
 framework: ROAS
 profile: direct-response
 ---
@@ -467,6 +474,262 @@ out11="$(session)"
 assert_contains "current cache still injects the excerpt" "$out11" "Project records excerpt"
 assert_notcontains "current cache raises no limit warning" "$out11" "limit warning"
 assert_notcontains "current cache raises no staleness signal" "$out11" "Staleness signal"
+
+echo "SessionStart — registry intake & projection-lag signals"
+HOOK_HOST_KEY="hook-test-host-key-material-32-bytes-minimum"
+mkdir -p "$PROJ/.aaron-marketing"
+printf '{"schema_version":"1.0","profile":"governed"}\n' > "$PROJ/.aaron-marketing/profile.json"
+
+# 12. An old pending proposal surfaces the owner-ritual nudge
+mkdir -p "$PROJ/memory/events"
+cat > "$PROJ/proposal-old.json" <<EOF
+{"schema_version":"1.0","idempotency_key":"hook-pending-old","aggregate_id":"rec-1","operation":"propose","proposed_operation":"upsert","occurred_at":"2020-01-01T10:00:00Z","actor":{"type":"skill","id":"content-writer"},"authorized_by":"user","authorization_ref":"fixture","source":{"type":"user-provided","ref":"fixture","observed_at":"2020-01-01"},"expected_revision":0,"payload":{"set":{"title":"Old"}}}
+EOF
+python3 "$REPO/scripts/registry-events.py" --root "$PROJ" append entities "$PROJ/proposal-old.json" >/dev/null
+out12="$(session)"
+assert_contains "old pending proposal surfaces owner-ritual nudge" "$out12" "pending owner review"
+assert_contains "nudge marks the >14d threshold" "$out12" ">14d"
+assert_contains "keyless non-empty registry surfaces authority warning" "$out12" "Registry authority"
+assert_contains "authority warning labels signature verification gap" "$out12" "not authority-signature verified"
+out12_verified="$(AARON_REGISTRY_HOST_KEY="$HOOK_HOST_KEY" session)"
+assert_notcontains "host-verified registry raises no authority warning" "$out12_verified" "Registry authority"
+
+# 13. A fresh pending proposal reports intake without the staleness threshold
+rm -rf "$PROJ/memory/events" "$PROJ/memory/projections"
+TODAY="$(date +%Y-%m-%d)"
+sed "s/2020-01-01/$TODAY/g; s/hook-pending-old/hook-pending-new/" "$PROJ/proposal-old.json" > "$PROJ/proposal-new.json"
+python3 "$REPO/scripts/registry-events.py" --root "$PROJ" append entities "$PROJ/proposal-new.json" >/dev/null
+out13="$(session)"
+assert_contains "fresh pending proposal reports intake" "$out13" "pending owner review"
+assert_notcontains "fresh proposal raises no staleness threshold" "$out13" ">14d"
+
+# A signed owner decision can reduce advisory pending to zero, but a keyless
+# SessionStart must still surface that its authority signature was not checked.
+python3 - "$REPO" "$PROJ" "$HOOK_HOST_KEY" <<'PY'
+import importlib.util
+import json
+import os
+from pathlib import Path
+import sys
+
+repo, root, host_key = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3]
+spec = importlib.util.spec_from_file_location(
+    "registry_events_hook_fixture", repo / "scripts/registry-events.py",
+)
+registry = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(registry)
+os.environ[registry.HOST_KEY_ENV] = host_key
+proposal = json.loads(
+    (root / "memory/events/entities.ndjson").read_text(encoding="utf-8").splitlines()[0]
+)
+request = {
+    "schema_version": "1.0",
+    "idempotency_key": "hook-accept-new",
+    "aggregate_id": proposal["aggregate_id"],
+    "operation": "accept",
+    "occurred_at": "2026-07-19T10:00:00Z",
+    "actor": {"type": "skill", "id": registry.OWNERS["entities"]},
+    "authorized_by": "user",
+    "authorization_ref": "fixture",
+    "source": {"type": "user-provided", "ref": "fixture", "observed_at": "2026-07-19"},
+    "payload": {},
+    "proposal_event_id": proposal["event_id"],
+}
+capability = registry.issue_host_capability(
+    host_key, "entities", request["actor"]["id"], ["accept"],
+    "2999-01-01T00:00:00Z", request=request, project_root=root,
+)
+registry.append_event(root, "entities", request, capability_token=capability)
+PY
+out13_resolved="$(session)"
+assert_notcontains "resolved advisory stream reports no pending proposal" "$out13_resolved" "pending owner review"
+assert_contains "resolved advisory stream still surfaces authority warning" "$out13_resolved" "Registry authority"
+out13_resolved_verified="$(AARON_REGISTRY_HOST_KEY="$HOOK_HOST_KEY" session)"
+assert_notcontains "verified resolved stream raises no authority warning" "$out13_resolved_verified" "Registry authority"
+
+# 14. A stored projection behind the stream head surfaces the lag note
+python3 - "$PROJ" <<'PY'
+import json, pathlib, sys
+path = pathlib.Path(sys.argv[1]) / "memory/projections/entities.json"
+stored = json.loads(path.read_text(encoding="utf-8"))
+stored["last_offset"] = 0
+path.write_text(json.dumps(stored), encoding="utf-8")
+PY
+out14="$(session)"
+assert_contains "stale projection surfaces the lag note" "$out14" "Projection lag"
+
+# 15. A missing projection for a non-empty stream surfaces an integrity warning
+rm -f "$PROJ/memory/projections/entities.json"
+out15="$(session)"
+assert_contains "missing projection surfaces integrity warning" "$out15" "Projection integrity"
+assert_contains "missing projection is identified" "$out15" "1 missing"
+
+# 16. A malformed projection is surfaced rather than treated as unknown lag
+printf '{not-json\n' > "$PROJ/memory/projections/entities.json"
+out16="$(session)"
+assert_contains "invalid projection surfaces integrity warning" "$out16" "Projection integrity"
+assert_contains "invalid projection is identified" "$out16" "1 invalid"
+
+# 17. A projection ahead of the stream is surfaced rather than reported as negative lag
+AARON_REGISTRY_HOST_KEY="$HOOK_HOST_KEY" python3 "$REPO/scripts/registry-events.py" --root "$PROJ" project entities >/dev/null
+python3 - "$PROJ" <<'PY'
+import json, pathlib, sys
+path = pathlib.Path(sys.argv[1]) / "memory/projections/entities.json"
+stored = json.loads(path.read_text(encoding="utf-8"))
+stored["last_offset"] += 1
+path.write_text(json.dumps(stored), encoding="utf-8")
+PY
+out17="$(session)"
+assert_contains "ahead projection surfaces integrity warning" "$out17" "Projection integrity"
+assert_contains "ahead projection is identified" "$out17" "1 ahead-of-stream"
+
+# 18. An unverifiable event stream surfaces a verification warning
+printf 'not-json\n' >> "$PROJ/memory/events/entities.ndjson"
+out18="$(session)"
+assert_contains "unverifiable stream surfaces verification warning" "$out18" "Registry verification"
+assert_contains "unverifiable stream count is identified" "$out18" "1 registry event stream"
+
+# 19. No registry events means no intake or projection signals at all
+rm -rf "$PROJ/memory/events" "$PROJ/memory/projections"
+out19="$(session)"
+assert_notcontains "empty project raises no intake signal" "$out19" "pending owner review"
+assert_notcontains "empty project raises no lag signal" "$out19" "Projection lag"
+assert_notcontains "empty project raises no integrity signal" "$out19" "Projection integrity"
+assert_notcontains "empty project raises no verification signal" "$out19" "Registry verification"
+assert_notcontains "empty project raises no authority signal" "$out19" "Registry authority"
+
+echo "SessionStart — resume checkpoint"
+
+# 20. A session checkpoint is injected as untrusted resume context
+cat > "$PROJ/memory/session-checkpoint.md" <<'EOF'
+updated_at: 2026-07-18
+active_skill: keyword-research
+pending_handoff: content-gap-analysis
+resume_instruction: ask for the SERP export first
+EOF
+out16="$(session)"
+assert_contains "checkpoint is injected at load" "$out16" "Resume checkpoint"
+assert_contains "checkpoint carries the resume action" "$out16" "SERP export"
+assert_contains "checkpoint is labeled untrusted" "$out16" "re-verify offsets"
+
+# 17. An over-limit checkpoint warns at load and truncates
+{ for i in $(seq 1 50); do echo "checkpoint filler line $i"; done; } > "$PROJ/memory/session-checkpoint.md"
+out17="$(session)"
+assert_contains "over-limit checkpoint warns at load" "$out17" "Checkpoint limit warning"
+
+# 18. A symlinked checkpoint is not read
+rm -f "$PROJ/memory/session-checkpoint.md"
+printf 'CHECKPOINT_SECRET_MARKER\n' > "$PROJ/outside-checkpoint.txt"
+ln -s "$PROJ/outside-checkpoint.txt" "$PROJ/memory/session-checkpoint.md"
+assert_notcontains "symlinked checkpoint is rejected" "$(session)" "CHECKPOINT_SECRET_MARKER"
+rm -f "$PROJ/memory/session-checkpoint.md" "$PROJ/outside-checkpoint.txt"
+
+echo "SessionStart — active run resume and metadata-only lifecycle trace"
+
+RUN_ID="11111111-1111-4111-8111-111111111111"
+cat > "$PROJ/run-start.json" <<EOF
+{"schema_version":"1.0","run_id":"$RUN_ID","idempotency_key":"hook-start","event_type":"run_started","occurred_at":"2026-07-19T10:00:00Z","actor":{"type":"host","id":"claude-code"},"parent_event_id":null,"turn_id":null,"status":"started","subject":{"kind":"run","ref":"$RUN_ID"},"references":[],"metrics":{},"dimensions":{}}
+EOF
+python3 "$REPO/scripts/run-events.py" --root "$PROJ" start "$PROJ/run-start.json" >/dev/null
+run_out="$(printf '{"cwd":"%s","session_id":"raw-session-id"}' "$PROJ" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" bash "$HOOK" session-start)"
+assert_contains "active run summary is injected" "$run_out" "Active run resume summary"
+assert_contains "active run summary names the run" "$run_out" "$RUN_ID"
+assert_contains "active run summary denies authority" "$run_out" "grants no registry authority"
+assert_notcontains "raw host session identity is not injected" "$run_out" "raw-session-id"
+assert_notcontains "raw host session identity is not persisted" "$(cat "$PROJ/memory/runs/$RUN_ID/events.ndjson")" "raw-session-id"
+
+trace_payload='{"cwd":"'$PROJ'","tool_name":"Write","tool_use_id":"raw-tool-id","tool_input":{"file_path":"README.md","content":"customer@example.com secret-value"}}'
+printf '%s' "$trace_payload" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" AARON_ACTIVE_TURN_ID="turn-1" bash "$HOOK" pre-tool-use >/dev/null
+printf '%s' "$trace_payload" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" AARON_ACTIVE_TURN_ID="turn-1" bash "$HOOK" post-tool-failure >/dev/null
+trace_stream="$(cat "$PROJ/memory/runs/$RUN_ID/events.ndjson")"
+assert_notcontains "trace omits raw tool identity" "$trace_stream" "raw-tool-id"
+assert_notcontains "trace omits tool payload PII" "$trace_stream" "customer@example.com"
+assert_notcontains "trace omits tool payload secrets" "$trace_stream" "secret-value"
+if python3 - "$PROJ/memory/runs/$RUN_ID/events.ndjson" <<'PY'
+import json, pathlib, sys
+events = [json.loads(line) for line in pathlib.Path(sys.argv[1]).read_text().splitlines()]
+failed = [event for event in events if event["event_type"] == "tool_finished"]
+assert len(failed) == 1
+assert failed[0]["status"] == "failed"
+assert failed[0]["reason_code"] == "tool-failure"
+PY
+then ok "PostToolUseFailure records a typed failed lifecycle event"; else bad "PostToolUseFailure lifecycle event is missing or malformed"; fi
+
+# A combined session must retain higher-value resume/checkpoint signals even
+# when HOT consumes its per-source excerpt budget.
+{ for i in $(seq 1 80); do printf 'hot-%02d %0400d\n' "$i" 0; done; } > "$PROJ/memory/hot-cache.md"
+printf 'resume_instruction: COMBINED_CHECKPOINT_MARKER\n' > "$PROJ/memory/session-checkpoint.md"
+combined_out="$(printf '{"cwd":"%s","session_id":"raw-session-id"}' "$PROJ" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" bash "$HOOK" session-start)"
+assert_contains "combined budget keeps active run summary" "$combined_out" "Active run resume summary"
+assert_contains "combined budget keeps checkpoint after large HOT" "$combined_out" "COMBINED_CHECKPOINT_MARKER"
+
+{ for i in $(seq 1 40); do printf 'legal-hot-%02d %0400d\n' "$i" 0; done; } > "$PROJ/memory/hot-cache.md"
+{ for i in $(seq 1 20); do printf 'legal-checkpoint-%02d %0200d\n' "$i" 0; done; } > "$PROJ/memory/session-checkpoint.md"
+legal_combined_out="$(printf '{"cwd":"%s","session_id":"raw-session-id"}' "$PROJ" | CLAUDE_PROJECT_DIR="$PROJ" CLAUDE_PLUGIN_ROOT="$REPO" AARON_ACTIVE_RUN_ID="$RUN_ID" bash "$HOOK" session-start)"
+assert_contains "legal stored HOT truncation is explicit" "$legal_combined_out" "Combined-context truncation: memory/hot-cache.md"
+assert_contains "legal stored checkpoint truncation is explicit" "$legal_combined_out" "Combined-context truncation: memory/session-checkpoint.md"
+assert_notcontains "legal stored HOT does not claim a storage-limit violation" "$legal_combined_out" "Hot cache limit warning"
+assert_notcontains "legal stored checkpoint does not claim a storage-limit violation" "$legal_combined_out" "Checkpoint limit warning"
+rm -f "$PROJ/memory/hot-cache.md" "$PROJ/memory/session-checkpoint.md" "$PROJ/run-start.json"
+
+echo "Profile fast path — Lite ordinary tools stay stateless"
+
+FAST_PROJ="$(mktemp -d)"
+FAST_BIN="$(mktemp -d)"
+FAST_TRACE="$(mktemp)"
+REAL_PYTHON="$(command -v python3)"
+cat > "$FAST_BIN/python3" <<'EOF'
+#!/usr/bin/env bash
+printf '%s\n' "$*" >> "$AARON_TEST_PYTHON_TRACE"
+exec "$AARON_TEST_REAL_PYTHON" "$@"
+EOF
+chmod +x "$FAST_BIN/python3"
+fast_payload='{"tool_name":"Write","tool_input":{"file_path":"README.md","content":"ordinary fixture"},"cwd":"'"$FAST_PROJ"'"}'
+for _task in $(seq 1 20); do
+  printf '%s' "$fast_payload" |
+    PATH="$FAST_BIN:$PATH" \
+    AARON_TEST_PYTHON_TRACE="$FAST_TRACE" \
+    AARON_TEST_REAL_PYTHON="$REAL_PYTHON" \
+    CLAUDE_PROJECT_DIR="$FAST_PROJ" \
+    CLAUDE_PLUGIN_ROOT="$REPO" \
+    bash "$HOOK" pre-tool-use >/dev/null
+done
+if [ -z "$(find "$FAST_PROJ" -mindepth 1 -print -quit)" ]; then
+  ok "20 ordinary Lite hook calls create zero project files"
+else
+  bad "20 ordinary Lite hook calls created project state"
+fi
+assert_contains "ordinary Lite calls resolve the profile" "$(cat "$FAST_TRACE")" "profile-resolver.py"
+assert_notcontains "ordinary Lite calls do not invoke registry runtime" "$(cat "$FAST_TRACE")" "registry-events.py"
+assert_notcontains "ordinary Lite calls do not invoke run runtime" "$(cat "$FAST_TRACE")" "run-events.py"
+assert_notcontains "ordinary Lite calls do not invoke controller" "$(cat "$FAST_TRACE")" "runtime-controller.py"
+assert_notcontains "ordinary Lite calls do not invoke graph runtime" "$(cat "$FAST_TRACE")" "workflow-graph.py"
+assert_notcontains "ordinary Lite calls do not invoke loop runtime" "$(cat "$FAST_TRACE")" "workflow-loop.py"
+
+git -C "$FAST_PROJ" init --quiet
+mkdir -p "$FAST_PROJ/memory"
+printf '# private project state\n' > "$FAST_PROJ/memory/hot-cache.md"
+memory_payload='{"tool_name":"Write","tool_input":{"file_path":"memory/hot-cache.md","content":"customer@example.com"},"cwd":"'"$FAST_PROJ"'"}'
+memory_out="$(
+  printf '%s' "$memory_payload" |
+    CLAUDE_PROJECT_DIR="$FAST_PROJ" CLAUDE_PLUGIN_ROOT="$REPO" \
+    bash "$HOOK" pre-tool-use
+)"
+assert_deny "memory writes do not bypass the privacy preflight" "$memory_out"
+rm -rf "$FAST_PROJ/memory"
+
+opaque_payload='{"tool_name":"mcp__publisher__send","tool_input":{"path":"README.md"},"cwd":"'"$FAST_PROJ"'"}'
+opaque_trace="$(mktemp)"
+printf '%s' "$opaque_payload" |
+  PATH="$FAST_BIN:$PATH" \
+  AARON_TEST_PYTHON_TRACE="$opaque_trace" \
+  AARON_TEST_REAL_PYTHON="$REAL_PYTHON" \
+  CLAUDE_PROJECT_DIR="$FAST_PROJ" \
+  CLAUDE_PLUGIN_ROOT="$REPO" \
+  bash "$HOOK" pre-tool-use >/dev/null
+assert_contains "opaque external tools retain the memory privacy preflight" "$(cat "$opaque_trace")" "check-memory-private.py"
+assert_contains "opaque external tools retain the artifact preflight" "$(cat "$opaque_trace")" "validate-audit-artifact.py"
+rm -f "$opaque_trace"
 
 echo ""
 echo "Results: $PASS passed, $FAIL failed"

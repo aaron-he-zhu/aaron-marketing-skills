@@ -23,17 +23,37 @@
 
 set -u
 cd "$(cd "$(dirname "$0")/.." && pwd)"
+source scripts/publish-common.sh
 
 REPO="${GITHUB_REPOSITORY:-aaron-he-zhu/aaron-marketing-skills}"
-SSOT=".github/repo-about.json"
+SOURCE_ROOT="."
+SSOT=""
 LIVE=0
 [ "${1:-}" = "--live" ] && LIVE=1
+
+if [ "$LIVE" -eq 1 ]; then
+  BUILD_ROOT="$(mktemp -d "${TMPDIR:-/tmp}/aaron-about-sync.XXXXXX")" || {
+    echo "sync-about: cannot create a private release source directory" >&2
+    exit 1
+  }
+  trap '[ -n "${BUILD_ROOT:-}" ] && rm -rf -- "$BUILD_ROOT"' EXIT
+  SOURCE_ROOT="$BUILD_ROOT/source"
+  RELEASE_IDENTITY="$(publish_prepare_release_source "$SOURCE_ROOT")" || exit 1
+  SOURCE_REPO="${RELEASE_IDENTITY%%$'\t'*}"
+  SOURCE_COMMIT="${RELEASE_IDENTITY#*$'\t'}"
+  [ "$SOURCE_REPO" = "$REPO" ] || {
+    echo "sync-about: live target $REPO does not match origin source $SOURCE_REPO" >&2
+    exit 1
+  }
+  echo "sync-about provenance: $SOURCE_REPO@$SOURCE_COMMIT (pinned commit export)"
+fi
+SSOT="$SOURCE_ROOT/.github/repo-about.json"
 
 command -v gh >/dev/null 2>&1 || { echo "sync-about: 'gh' CLI not found — install it or run in CI" >&2; exit 2; }
 [ -f "$SSOT" ] || { echo "sync-about: missing $SSOT" >&2; exit 2; }
 
-want_desc=$(python3 -c "import json;print(json.load(open('$SSOT'))['description'])")
-want_topics=$(python3 -c "import json;print('\n'.join(sorted(json.load(open('$SSOT'))['topics'])))")
+want_desc=$(/usr/bin/python3 -c 'import json,sys;print(json.load(open(sys.argv[1]))["description"])' "$SSOT")
+want_topics=$(/usr/bin/python3 -c 'import json,sys;print("\n".join(sorted(json.load(open(sys.argv[1]))["topics"])))' "$SSOT")
 
 have_desc=$(gh api "repos/$REPO" --jq .description 2>/dev/null || true)
 have_topics=$(gh api "repos/$REPO" --jq '.topics[]' 2>/dev/null | sort || true)
@@ -71,7 +91,7 @@ else
   echo "  · description already current"
 fi
 if [ "$topics_drift" -eq 1 ]; then
-  python3 -c "import json;print(json.dumps({'names':json.load(open('$SSOT'))['topics']}))" \
+  /usr/bin/python3 -c 'import json,sys;print(json.dumps({"names":json.load(open(sys.argv[1]))["topics"]}))' "$SSOT" \
     | gh api -X PUT "repos/$REPO/topics" --input - >/dev/null \
     && echo "  ✓ topics updated" \
     || { echo "  ✗ topics PUT failed (needs admin auth on the repo)" >&2; exit 1; }

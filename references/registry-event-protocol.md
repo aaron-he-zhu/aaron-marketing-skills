@@ -2,6 +2,29 @@
 
 This protocol is the executable write boundary for the seven truth registries. [`registry-event.schema.json`](registry-event.schema.json) documents request shape; [`scripts/registry-events.py`](../scripts/registry-events.py) validates, appends, verifies, and projects it.
 
+## Capability-profile boundary
+
+Canonical registry mutation, including ordinary proposals, is a Governed
+capability. The runtime resolves the project profile before creating any
+registry path; a fresh project is Lite even when the installed archive has a
+Governed physical ceiling. Select Governed through the installer/admin surface,
+project config, host environment, or one-invocation `--profile governed` as
+documented in [`capability-profiles.md`](capability-profiles.md). The profile
+only enables the mechanism: owner operations still require their request-bound
+host capability, and no profile authorizes an external action.
+
+The sole profile exception is a validated consent `suppress`: it is deny-only,
+cannot authorize delivery or clear state, and remains available as a universal
+safety overlay. It is not a general registry-write capability. Read-only
+`verify`, `get`, `pending`, and `is-suppressed` retain their existing
+verification-key requirements.
+
+Profile switching never deletes or rewrites events or projections. A
+nonterminal pre-v19 operational run yields `LEGACY_RUN_BLOCKED` before an
+ordinary registry write. Finish/abort that run with its pinned pre-v19 runtime,
+verify the terminal event, and then retry under v19; never synthesize its
+terminal event or edit the stream by hand.
+
 ## Invariants
 
 - Event streams under `memory/events/<registry>.ndjson` are append-only and canonical.
@@ -58,17 +81,36 @@ test -n "$AARON_SKILLS_ROOT" \
   && test -f "$AARON_SKILLS_ROOT/scripts/registry-events.py" \
   && test -f "$AARON_SKILLS_ROOT/references/registry-event.schema.json" \
   && test -f "$AARON_SKILLS_ROOT/references/system-catalog.json" \
-  || { echo "full registry runtime unavailable; prepare a proposal only" >&2; exit 1; }
+  || { echo "full registry runtime unavailable; return the operation-appropriate runtime handoff and do not claim mutation" >&2; exit 1; }
 
-python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" init
-python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" append consent safety-event.json
-python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" owner-append claims owner-event.json
-python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" safety-append consent erasure-event.json
+python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" --profile governed init
+python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" --profile governed append claims proposal.json
+python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" append consent suppress-event.json
+python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" --profile governed owner-append claims owner-event.json
+python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" --profile governed safety-append consent erasure-event.json
 python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" verify consent
 python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" project consent
 python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" get consent subject-sha256-prefix
 python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" is-suppressed subject-sha256-prefix
+python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" pending
 ```
+
+`pending` is the read-only intake/projection report: per registry it returns the
+pending proposal count, the chronologically oldest pending proposal's occurred_at
+and age in days, and an explicit `projection_status`: `not-required` for an empty
+stream with no projection, or `current`, `behind`, `ahead`, `missing`, `invalid`,
+or `unknown` when the event stream itself is unverifiable. `projection_lag` is
+retained as a non-negative compatibility value only for `current`/`behind`. With
+the host key it fully verifies the stream; without it the report uses only the
+publicly verifiable structure (canonical JSON, offsets, hash chain, request hashes,
+principal bindings) and labels itself `authority_verified: false` — the pending
+signal is an advisory nudge, never an authorization input. It creates no runtime
+paths. The SessionStart hook surfaces stale intake (oldest verifiable pending
+proposal > 14 days), behind/missing/invalid/ahead projections, and unverifiable
+streams. For every non-empty stream read without the host key, it also labels the
+pending/projection counts advisory and warns that resolved owner decisions were
+not authority-signature verified, so neither authority loss, the owner ritual
+queue, nor projection repair can stall silently.
 
 `owner-append` and `safety-append` succeed only when a trusted host injects `AARON_REGISTRY_HOST_KEY` and a valid `AARON_REGISTRY_CAPABILITY` for that one request. The signing key must remain in a host boundary where the agent cannot run arbitrary code or inspect the launched process environment; exposing the key to an agent-controlled shell defeats this authority model. Inject the token directly when launching the registry subprocess, and never place key/token values in a request file, prompt, shell argument, artifact, or log. The stdlib issuance function is for that trusted integration and tests, not an agent tool.
 
@@ -87,7 +129,7 @@ No supported install form ships a hosted authority service, and an agent session
 
 **Reject-and-repropose for stale revisions.** A pending proposal that carries an `expected_revision` the aggregate has since moved past can never be accepted, and events are never cleared — the owner rejects it with a reason code during the ritual, and the producing skill re-proposes against the current revision. Skills listing pending proposals must surface revision-stale ones as reject-and-repropose candidates rather than eternally actionable work.
 
-Standalone one-folder skill installs do not contain this root runtime/schema/catalog. They may prepare a schema-shaped proposal or erasure handoff, but cannot append/project it, mint a capability, or claim canonical truth. `verify`, `get`, and `is-suppressed` also require the host verification key once a stream contains signed canonical events.
+Standalone one-folder skill installs do not contain this root runtime/schema/catalog. They may prepare a schema-shaped proposal, erasure handoff, or exact immediate consent-suppress handoff, but cannot append/project it, mint a capability, or claim canonical truth. A deny-only `suppress` never degrades into a proposal: its handoff stays immediate and preserves the supplied typed request plus the append → verified live-projection → replay-safe `is-suppressed` sequence. `verify`, `get`, and `is-suppressed` also require the host verification key once a stream contains signed canonical events.
 
 Use a stable hash/token generated by the user's system as a consent `aggregate_id`; do not put direct contact data in request strings or fields. Use only the runtime's typed/minimized consent fields and subject-free reason codes. A data-subject erasure request uses the same aggregate ID as `actor.id`, but that equality is attribution; the host safety capability supplies authority.
 

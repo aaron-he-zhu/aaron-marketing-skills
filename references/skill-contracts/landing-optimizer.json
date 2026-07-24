@@ -1,0 +1,299 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 64,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "- Message-match score and named fixes are produced for the page."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 174,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 67
+        },
+        "text": "- A prioritized conversion plan (CTA, promo-code experience, friction, mobile) exists with expected impact."
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 258,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 177
+        },
+        "text": "- An A/B test roadmap with at least one hypothesis and success metric is written."
+      }
+    ],
+    "done_when": "- Message-match score and named fixes are produced for the page.\n  - A prioritized conversion plan (CTA, promo-code experience, friction, mobile) exists with expected impact.\n  - An A/B test roadmap with at least one hypothesis and success metric is written.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/report/landing-optimizer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 48
+      },
+      {
+        "path": "influencer/report/landing-optimizer/references/templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bfa322fd265b7002858f45290bcd75e4fc5310d22eaef6196e22bacf85edbb97",
+        "source_line": 52
+      },
+      {
+        "path": "references/scoring-rubrics/conversion-quality.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "55e45215a5032894458e095a4a9a4a9a5f06ff1cf16b8aac982637d8eee716f0",
+        "source_line": 83
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 35
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 81
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:landing-optimizer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 154,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "performance-analyzer"
+        ],
+        "text": "**Primary**: [performance-analyzer](../performance-analyzer/SKILL.md) — measure whether the optimizations actually moved conversion, AOV, and attribution."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 192,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 156
+        },
+        "target_skills": [],
+        "text": "**Alternates** (same Report family):"
+      },
+      {
+        "condition": "when the audit shows the page needs more creator content to feature.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 329,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 194
+        },
+        "target_skills": [
+          "content-amplifier"
+        ],
+        "text": "- [content-amplifier](../../activate/content-amplifier/SKILL.md) — when the audit shows the page needs more creator content to feature."
+      },
+      {
+        "condition": "when the page's conversion is validated and you want to translate it into ROI and payback math.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 474,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 330
+        },
+        "target_skills": [
+          "roi-calculator"
+        ],
+        "text": "- [roi-calculator](../roi-calculator/SKILL.md) — when the page's conversion is validated and you want to translate it into ROI and payback math."
+      },
+      {
+        "condition": "If a recommended skill has already been invoked, stop and report the chain as complete rather than re-running it. Hard stop at chain depth 3 to avoid loops.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 691,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 476
+        },
+        "target_skills": [],
+        "text": "**Termination note**: Maintain a visited-set this session. If a recommended skill has already been invoked, stop and report the chain as complete rather than re-running it. Hard stop at chain depth 3 to avoid loops."
+      }
+    ],
+    "next_best": "**Primary**: [performance-analyzer](../performance-analyzer/SKILL.md) — measure whether the optimizations actually moved conversion, AOV, and attribution.\n\n**Alternates** (same Report family):\n\n- [content-amplifier](../../activate/content-amplifier/SKILL.md) — when the audit shows the page needs more creator content to feature.\n- [roi-calculator](../roi-calculator/SKILL.md) — when the page's conversion is validated and you want to translate it into ROI and payback math.\n\n**Termination note**: Maintain a visited-set this session. If a recommended skill has already been invoked, stop and report the chain as complete rather than re-running it. Hard stop at chain depth 3 to avoid loops.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "influencer/report/landing-optimizer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-amplifier",
+      "performance-analyzer",
+      "roi-calculator"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "influencer",
+    "name": "landing-optimizer",
+    "path": "influencer/report/landing-optimizer/SKILL.md",
+    "phase": "report",
+    "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<landing page URL or campaign> [influencer handle] [promo code]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 247,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "landing page URL and current state, conversion rate and goal, traffic source (influencer handles, platforms, content type), the influencer's key message/quote, promo code, audience demographics. Inputs come from the user when no tool is connected."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "landing page URL and current state, conversion rate and goal, traffic source (influencer handles, platforms, content type), the influencer's key message/quote, promo code, audience demographics. Inputs come from the user when no tool is connected.",
+    "source": {
+      "path": "influencer/report/landing-optimizer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 192,
+          "path": "influencer/report/landing-optimizer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "optimization plan saved to `memory/influencer/landing-optimizer/YYYY-MM-DD-<topic>.md` (message-match audit, structure and social-proof recommendations, conversion/CTA plan, A/B test roadmap)."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/report/landing-optimizer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e"
+    },
+    "summary": "optimization plan saved to `memory/influencer/landing-optimizer/YYYY-MM-DD-<topic>.md` (message-match audit, structure and social-proof recommendations, conversion/CTA plan, A/B test roadmap).",
+    "summary_source": "writes-fallback",
+    "writes": "optimization plan saved to `memory/influencer/landing-optimizer/YYYY-MM-DD-<topic>.md` (message-match audit, structure and social-proof recommendations, conversion/CTA plan, A/B test roadmap)."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for measuring campaign results after launch — use performance-analyzer. 落地页优化/达人流量转化提升",
+    "description": "Use when the user asks to \"optimize our landing page for influencer traffic\", \"fix our promo-code landing page\", or \"improve conversion from a creator campaign\"; produces a message-match audit, page-structure and social-proof recommendations, a promo-code/CTA conversion plan, and an A/B test roadmap. Not for measuring campaign results after launch — use performance-analyzer. 落地页优化/达人流量转化提升",
+    "source": {
+      "path": "influencer/report/landing-optimizer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "166fce31cd747e0e276833958c8abf9e7d8597ab13e7efc9fe725af7eb7f1f2e"
+    },
+    "trigger_phrases": [
+      "fix our promo-code landing page",
+      "improve conversion from a creator campaign",
+      "optimize our landing page for influencer traffic"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Activate when the user wants to build or improve a landing page that receives influencer-driven traffic: message match between creator content and the page, dedicated creator pages, promo-code auto-apply, social-proof placement, mobile conversion fixes, friction reduction, or A/B test planning for influencer campaigns."
+  },
+  "schema_version": "1.0"
+}

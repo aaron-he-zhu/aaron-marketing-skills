@@ -1,0 +1,520 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/engineering-release-receipt.schema.json",
+  "title": "Private v19 engineering-only release receipt",
+  "description": "Project-data-free proof that an exact clean v19 release-candidate commit passed the current dynamic engineering-maturity audit and a fresh 24-case real-provider semantic run. The semantic cases are simulated and this receipt does not validate real-project outcomes or authorize Governed outcome/default claims.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "gate",
+    "passed",
+    "release_version",
+    "release_candidate",
+    "source_commit",
+    "issued_at",
+    "repository",
+    "tools",
+    "maturity",
+    "semantic_evidence",
+    "claims",
+    "attestation"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "references/engineering-release-receipt.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "gate": {
+      "const": "engineering-validation-v19"
+    },
+    "passed": {
+      "const": true
+    },
+    "release_version": {
+      "const": "19.0.0"
+    },
+    "release_candidate": {
+      "type": "string",
+      "pattern": "^19\\.0\\.0-rc\\.[1-9][0-9]*$"
+    },
+    "source_commit": {
+      "$ref": "#/$defs/sha1"
+    },
+    "issued_at": {
+      "$ref": "#/$defs/timestamp"
+    },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "branch",
+        "worktree_clean",
+        "source_tree_sha256"
+      ],
+      "properties": {
+        "branch": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "worktree_clean": {
+          "const": true
+        },
+        "source_tree_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "tools": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issuer",
+        "maturity_checker",
+        "semantic_verifier",
+        "release_verifier",
+        "maturity_rubric",
+        "semantic_policy",
+        "receipt_schema"
+      ],
+      "properties": {
+        "issuer": {
+          "$ref": "#/$defs/issuer_source"
+        },
+        "maturity_checker": {
+          "$ref": "#/$defs/maturity_checker_source"
+        },
+        "semantic_verifier": {
+          "$ref": "#/$defs/semantic_verifier_source"
+        },
+        "release_verifier": {
+          "$ref": "#/$defs/release_verifier_source"
+        },
+        "maturity_rubric": {
+          "$ref": "#/$defs/maturity_rubric_source"
+        },
+        "semantic_policy": {
+          "$ref": "#/$defs/semantic_policy_source"
+        },
+        "receipt_schema": {
+          "$ref": "#/$defs/receipt_schema_source"
+        }
+      }
+    },
+    "maturity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evaluated_at",
+        "report_sha256",
+        "target_score",
+        "achieved",
+        "dimension_scores",
+        "required_hard_gates"
+      ],
+      "properties": {
+        "evaluated_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "report_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "target_score": {
+          "const": 95
+        },
+        "achieved": {
+          "const": true
+        },
+        "dimension_scores": {
+          "$ref": "#/$defs/dimension_scores"
+        },
+        "required_hard_gates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "P19",
+            "P20",
+            "H20"
+          ],
+          "properties": {
+            "P19": {
+              "const": true
+            },
+            "P20": {
+              "const": true
+            },
+            "H20": {
+              "const": true
+            }
+          }
+        }
+      }
+    },
+    "semantic_evidence": {
+      "$ref": "#/$defs/semantic_evidence"
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "validation_scope",
+        "evidence_provenance",
+        "real_project_outcomes_validated",
+        "default_profile",
+        "governed_outcome_claims_allowed",
+        "governed_default_promotion_allowed"
+      ],
+      "properties": {
+        "validation_scope": {
+          "const": "engineering-only"
+        },
+        "evidence_provenance": {
+          "const": "simulated-semantic-cases"
+        },
+        "real_project_outcomes_validated": {
+          "const": false
+        },
+        "default_profile": {
+          "const": "lite"
+        },
+        "governed_outcome_claims_allowed": {
+          "const": false
+        },
+        "governed_default_promotion_allowed": {
+          "const": false
+        }
+      }
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "statement",
+        "accepted_at"
+      ],
+      "properties": {
+        "method": {
+          "const": "explicit-owner-engineering-only-authorization"
+        },
+        "statement": {
+          "const": "release-v19-without-real-project-outcomes"
+        },
+        "accepted_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "sha256"
+      ],
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "issuer_source": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source"
+        },
+        {
+          "properties": {
+            "ref": {
+              "const": "scripts/issue-engineering-release-receipt.py"
+            }
+          }
+        }
+      ]
+    },
+    "maturity_checker_source": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source"
+        },
+        {
+          "properties": {
+            "ref": {
+              "const": "scripts/check-engineering-maturity.py"
+            }
+          }
+        }
+      ]
+    },
+    "semantic_verifier_source": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source"
+        },
+        {
+          "properties": {
+            "ref": {
+              "const": "scripts/verify-semantic-evidence.py"
+            }
+          }
+        }
+      ]
+    },
+    "maturity_rubric_source": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source"
+        },
+        {
+          "properties": {
+            "ref": {
+              "const": "references/engineering-maturity-rubric.json"
+            }
+          }
+        }
+      ]
+    },
+    "release_verifier_source": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source"
+        },
+        {
+          "properties": {
+            "ref": {
+              "const": "scripts/verify-release-receipt.py"
+            }
+          }
+        }
+      ]
+    },
+    "semantic_policy_source": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source"
+        },
+        {
+          "properties": {
+            "ref": {
+              "const": "evals/semantic-evidence-policy.json"
+            }
+          }
+        }
+      ]
+    },
+    "receipt_schema_source": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/source"
+        },
+        {
+          "properties": {
+            "ref": {
+              "const": "references/engineering-release-receipt.schema.json"
+            }
+          }
+        }
+      ]
+    },
+    "dimension_scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prompt",
+        "context",
+        "harness",
+        "loop",
+        "graph"
+      ],
+      "properties": {
+        "prompt": {
+          "const": 100
+        },
+        "context": {
+          "const": 100
+        },
+        "harness": {
+          "const": 100
+        },
+        "loop": {
+          "const": 100
+        },
+        "graph": {
+          "const": 100
+        }
+      }
+    },
+    "semantic_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "valid",
+        "run_id",
+        "profile",
+        "case_count",
+        "case_provenance",
+        "execution_mode",
+        "model_provider",
+        "model_id",
+        "judge_model_id",
+        "distinct_judge_model",
+        "total_judge_attempts",
+        "retried_cases",
+        "judge_protocol_retries",
+        "host_name",
+        "host_version",
+        "adapter_name",
+        "adapter_implementation_sha256",
+        "runner_sha256",
+        "selection_sha256",
+        "protocol_schema_sha256",
+        "request_stream_sha256",
+        "result_stream_sha256",
+        "head_record_hash",
+        "completion_sha256",
+        "oldest_result_at",
+        "newest_evidence_at",
+        "age_seconds"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "valid": {
+          "const": true
+        },
+        "run_id": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+        },
+        "profile": {
+          "const": "smoke"
+        },
+        "case_count": {
+          "const": 24
+        },
+        "case_provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "simulated"
+          ],
+          "properties": {
+            "simulated": {
+              "const": 24
+            }
+          }
+        },
+        "execution_mode": {
+          "const": "real"
+        },
+        "model_provider": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "model_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "judge_model_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "distinct_judge_model": {
+          "const": true
+        },
+        "total_judge_attempts": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 48
+        },
+        "retried_cases": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24
+        },
+        "judge_protocol_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 24
+        },
+        "host_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "host_version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "adapter_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "adapter_implementation_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "runner_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "selection_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "protocol_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "request_stream_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "result_stream_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "head_record_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "completion_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "oldest_result_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "newest_evidence_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "age_seconds": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 86400
+        }
+      }
+    }
+  }
+}

@@ -4,14 +4,14 @@ slug: aaron-community-launch-runner
 displayName: "Community Launch Runner · 社区发布执行"
 summary: "社区发布/PH-HN提交包/目录波次/平台红线"
 description: 'Use when the user asks to "launch on Product Hunt / Hacker News", "prepare community or directory launch submissions", or "plan the launch submission waves"; produces per-platform submission packages — a Product Hunt tagline / gallery / first-comment skeleton, a factual Show HN title and text, per-subreddit posts with a self-promotion rules table, tiered directory waves, and a regional channel matrix including Chinese communities — plus a platform red-line check (never solicit votes or organize voting rings) and T-0 submission-status lines for the launch registry. Not for paid amplification — use content-amplifier; not for creator channels — use campaign-planner; not for launch telemetry readouts — use launch-monitor; not for ongoing community presence or pre-launch karma-building outside the launch window — use participation-warmup-planner. 社区发布/PH提交包/Show HN/目录波次/平台红线/中文渠道'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when executing the community and directory lane of a product launch: preparing a Product Hunt submission package, a Show HN post, subreddit posts under each community self-promotion rule, or tiered directory submission waves. Also when selecting regional channels by audience fit (including Chinese communities such as Jike, V2EX, sspai, Juejin) or checking a submission plan against platform red lines like vote solicitation. The execution layer for community channels — the go/no-go gate is launch-readiness-auditor, the telemetry read is launch-monitor."
 argument-hint: "<product / launch slug> [platforms] [region] [launch date]"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "mobilize", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "mobilize"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "mobilize", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "mobilize"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Community Launch Runner

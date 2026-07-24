@@ -1,0 +1,258 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 42,
+          "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "spend is read against a target curve fixed"
+      }
+    ],
+    "done_when": "spend is read against a target curve fixed",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 30
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 39
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 57
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 56
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 26
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 60
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:budget-pacing-monitor",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "if a reallocation trigger **fired**, hand off to [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — it computes the new allocation (this skill only decides the move is warranted and by roughly how much pace is off).",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 252,
+          "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "budget-optimizer"
+        ],
+        "text": "**Primary**: if a reallocation trigger **fired**, hand off to [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — it computes the new allocation (this skill only decides the move is warranted and by roughly how much pace is off)."
+      },
+      {
+        "condition": "if the pace gap looks like a structural problem (broken tracking, systemic over-delivery, delivery halted) rather than a spend-shape issue, route to [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) for the gate. If the verdict is **On-track** or **Hold** (inside the band, or still in learning), STOP — there is nothing to reallocate",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 615,
+          "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+          "span_basis": "field-text",
+          "start_char": 254
+        },
+        "target_skills": [
+          "ad-account-auditor"
+        ],
+        "text": "Alternates: if the pace gap looks like a structural problem (broken tracking, systemic over-delivery, delivery halted) rather than a spend-shape issue, route to [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) for the gate. If the verdict is **On-track** or **Hold** (inside the band, or still in learning), STOP — there is nothing to reallocate"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 754,
+          "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+          "span_basis": "field-text",
+          "start_char": 617
+        },
+        "target_skills": [],
+        "text": "report chain-complete. Visited-set and `max-depth: 3` termination rules apply per [Skill Contract](../../../references/skill-contract.md)"
+      },
+      {
+        "condition": "if the next target was already run this chain, STOP and report chain-complete.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 834,
+          "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+          "span_basis": "field-text",
+          "start_char": 756
+        },
+        "target_skills": [],
+        "text": "if the next target was already run this chain, STOP and report chain-complete."
+      }
+    ],
+    "next_best": "**Primary**: if a reallocation trigger **fired**, hand off to [budget-optimizer](../../../influencer/target/budget-optimizer/SKILL.md) — it computes the new allocation (this skill only decides the move is warranted and by roughly how much pace is off).\n\nAlternates: if the pace gap looks like a structural problem (broken tracking, systemic over-delivery, delivery halted) rather than a spend-shape issue, route to [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md) for the gate. If the verdict is **On-track** or **Hold** (inside the band, or still in learning), STOP — there is nothing to reallocate; report chain-complete. Visited-set and `max-depth: 3` termination rules apply per [Skill Contract](../../../references/skill-contract.md); if the next target was already run this chain, STOP and report chain-complete.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "budget-optimizer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "budget-pacing-monitor",
+    "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+    "phase": "scale",
+    "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<campaign/flight> [budget + flight window] [target curve: even|front|back-loaded]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 95,
+          "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the campaign/flight under watch, its budget (daily or lifetime) and flight window, the intended"
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "the campaign/flight under watch, its budget (daily or lifetime) and flight window, the intended",
+    "source": {
+      "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 108,
+          "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing pacing table plus a reusable pacing summary storable under `memory/ad/budget-pacing-monitor/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
+    },
+    "summary": "a pacing read for one campaign or flight — cumulative spend vs the target curve (percent-to-pace), a verdict (On-track / Ahead / Behind / Stalled), the learning-phase status, an over/under-delivery call with the driver (cap-limited, bid-throttled, low-volume, dayparting), and a reallocation trigger (fire / hold) with the band that decided it. Plus a handoff summary storable under `memory/ad/budget-pacing-monitor/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing pacing table plus a reusable pacing summary storable under `memory/ad/budget-pacing-monitor/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for initial budget allocation — use budget-optimizer; not for choosing the bid strategy — use bid-strategy-planner; not for the RQS gate — use ad-account-auditor. 付费广告预算节奏监控/跑量过快过慢/在途配速",
+    "description": "Use when the user asks to \"check pacing\", \"am I over/under-spending\", \"is this campaign on track to hit budget\", or \"why did spend spike/stall mid-flight\"; returns a spend-vs-target-curve read, learning-phase status, an over/under-delivery call, and a reallocation trigger. Not for initial budget allocation — use budget-optimizer; not for choosing the bid strategy — use bid-strategy-planner; not for the RQS gate — use ad-account-auditor. 付费广告预算节奏监控/跑量过快过慢/在途配速",
+    "source": {
+      "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
+    },
+    "trigger_phrases": [
+      "am I over/under-spending",
+      "check pacing",
+      "is this campaign on track to hit budget",
+      "why did spend spike/stall mid-flight"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when monitoring an in-flight campaign's spend against its intended target curve: reading pacing (ahead/behind/on-track), confirming learning-phase status before reacting, calling over- or under-delivery, and firing a reallocation trigger when the gap crosses a stated band. Activate when the user has a live campaign export and a budget/flight window and asks whether spend is tracking. Not for setting the initial allocation (budget-optimizer) or the bid strategy (bid-strategy-planner)."
+  },
+  "schema_version": "1.0"
+}

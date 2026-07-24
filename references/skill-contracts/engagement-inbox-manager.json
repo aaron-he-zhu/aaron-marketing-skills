@@ -1,0 +1,387 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 62,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every batch item has register + class + tier (or monitor-only)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 131,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 64
+        },
+        "text": "every draft has a channel, an SLA deadline, and voice-card register"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 187,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 133
+        },
+        "text": "every tripped escalation row names its owner and route"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 287,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 189
+        },
+        "text": "and every permission entry carries all eight fields with an evidence link, appended to candidates."
+      }
+    ],
+    "done_when": "every batch item has register + class + tier (or monitor-only); every draft has a channel, an SLA deadline, and voice-card register; every tripped escalation row names its owner and route; and every permission entry carries all eight fields with an evidence link, appended to candidates.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/host/engagement-inbox-manager/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/channels",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/social/engagement-inbox-manager",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:engagement-inbox-manager",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "before the next publish batch.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 198,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "social-quality-auditor"
+        ],
+        "text": "- **Primary**: [social-quality-auditor](../social-quality-auditor/SKILL.md) — score the presence against the refreshed SLA, escalation, moderation, and permission logs before the next publish batch."
+      },
+      {
+        "condition": "If an escalation row tripped**: [crisis-response-planner](../crisis-response-planner/SKILL.md) — run the severity ladder and the pause-the-queue rule now",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 356,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 199
+        },
+        "target_skills": [
+          "crisis-response-planner"
+        ],
+        "text": "- **If an escalation row tripped**: [crisis-response-planner](../crisis-response-planner/SKILL.md) — run the severity ladder and the pause-the-queue rule now"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 397,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 358
+        },
+        "target_skills": [],
+        "text": "do not keep drafting into the incident."
+      },
+      {
+        "condition": "If 3+ permission or activity candidates accumulated**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — resolve each proposal in offset order into the dossiers and `ugc-permissions.md`.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 604,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 398
+        },
+        "target_skills": [
+          "channel-registry"
+        ],
+        "text": "- **If 3+ permission or activity candidates accumulated**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — resolve each proposal in offset order into the dossiers and `ugc-permissions.md`."
+      },
+      {
+        "condition": "when the batch is triaged, drafts are ranked, and candidates are appended.",
+        "extraction_status": "classified",
+        "item_id": "handoff-05",
+        "kind": "termination",
+        "source": {
+          "end_char": 958,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 606
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the batch is triaged, drafts are ranked, and candidates are appended."
+      }
+    ],
+    "next_best": "- **Primary**: [social-quality-auditor](../social-quality-auditor/SKILL.md) — score the presence against the refreshed SLA, escalation, moderation, and permission logs before the next publish batch.\n- **If an escalation row tripped**: [crisis-response-planner](../crisis-response-planner/SKILL.md) — run the severity ladder and the pause-the-queue rule now; do not keep drafting into the incident.\n- **If 3+ permission or activity candidates accumulated**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — resolve each proposal in offset order into the dossiers and `ugc-permissions.md`.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the batch is triaged, drafts are ranked, and candidates are appended.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/host/engagement-inbox-manager/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "channel-registry",
+      "crisis-response-planner",
+      "social-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "engagement-inbox-manager",
+    "path": "social/host/engagement-inbox-manager/SKILL.md",
+    "phase": "host",
+    "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<channel + exported comment/DM/mention batch> [--slas | --house-rules | --ugc-rights]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 117,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "exported or pasted comment/DM/mention batches (User-provided — closed platforms have no compliant keyless inbox read)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 255,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 119
+        },
+        "text": "per-channel SLA tiers, cadence commitments, voice-card pointer, and `ugc-permissions.md` status from `memory/channels/` (registry-owned)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 393,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 257
+        },
+        "text": "public-surface replies/mentions via keyless connectors (`bluesky.py`, `fediverse.py`, `discourse.py`, `hn.py`) where a public API exists"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 458,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 395
+        },
+        "text": "prior triage logs in `memory/social/engagement-inbox-manager/`."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "exported or pasted comment/DM/mention batches (User-provided — closed platforms have no compliant keyless inbox read); per-channel SLA tiers, cadence commitments, voice-card pointer, and `ugc-permissions.md` status from `memory/channels/` (registry-owned); public-surface replies/mentions via keyless connectors (`bluesky.py`, `fediverse.py`, `discourse.py`, `hn.py`) where a public API exists; prior triage logs in `memory/social/engagement-inbox-manager/`.",
+    "source": {
+      "path": "social/host/engagement-inbox-manager/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 84,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the triage report and draft-reply queue to `memory/social/engagement-inbox-manager/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 312,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921",
+          "span_basis": "field-text",
+          "start_char": 86
+        },
+        "text": "dated permission entries and intra-day activity lines submitted as proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` (never to registry records directly)."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/host/engagement-inbox-manager/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921"
+    },
+    "summary": "a triage report — every item tagged with register + commenter class + response tier (or monitor-only), ranked DRAFT replies with SLA deadlines, tripped escalation rows with named owners, moderation/house-rules updates where an owned space is in scope, UGC permission entries appended to candidates — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the triage report and draft-reply queue to `memory/social/engagement-inbox-manager/`; dated permission entries and intra-day activity lines submitted as proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` (never to registry records directly)."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for launch-window feedback triage — use launch-feedback-synthesizer. 评论私信提及分诊/语域识别/回复草稿/UGC授权",
+    "description": "Use when the user asks to \"triage our comments, DMs, and mentions\", \"draft replies to this thread\", \"can we repost this fan post\", or \"set up inbox SLAs and an escalation path\"; produces a ranked triage queue with register detection (sincere / ironic / performative / parasocial, sentiment-inversion table included — \"this is so bad\" under a comedy register is praise), a commenter taxonomy (troll monitor-only / rager / misguided / unhappy-customer / advocate) with a response-tier ladder and per-channel SLAs, an escalation matrix ending at the crisis path, a moderation ladder plus house rules for owned spaces, and a UGC curation-and-rights mode whose dated permission entries route to the channel registry — every reply is a ranked DRAFT a human posts; nothing is ever auto-sent. Not for launch-window feedback triage — use launch-feedback-synthesizer. 评论私信提及分诊/语域识别/回复草稿/UGC授权",
+    "source": {
+      "path": "social/host/engagement-inbox-manager/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "da26b1a9161cfb72b1966f57288c9e450bb5c43f77474aa38fc240a458232921"
+    },
+    "trigger_phrases": [
+      "can we repost this fan post",
+      "draft replies to this thread",
+      "set up inbox SLAs and an escalation path",
+      "this is so bad",
+      "triage our comments, DMs, and mentions"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when running the always-on social inbox: triaging an exported comment/DM/mention batch, reading the register (sincere/ironic/performative/parasocial) before any sentiment call, classifying commenters (troll/rager/misguided/unhappy-customer/advocate) into response tiers with per-channel SLAs, drafting ranked replies for a human to post, maintaining the escalation matrix and owned-space house rules, or collecting UGC repost permissions with evidence links. Not launch-window feedback triage (launch-feedback-synthesizer), not the crisis severity ladder itself (crisis-response-planner), and never an auto-reply or DM automation tool."
+  },
+  "schema_version": "1.0"
+}

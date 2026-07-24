@@ -1,0 +1,283 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 108,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "1. Each tracked competitor has a partnership roster and campaign breakdown with sources or stated estimates."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 186,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 111
+        },
+        "text": "2. A side-by-side comparison table covers your brand plus every competitor."
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 289,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 189
+        },
+        "text": "3. At least 3 ranked opportunities (untapped creators, strategy gaps, or open platforms) are listed."
+      }
+    ],
+    "done_when": "1. Each tracked competitor has a partnership roster and campaign breakdown with sources or stated estimates.\n  2. A side-by-side comparison table covers your brand plus every competitor.\n  3. At least 3 ranked opportunities (untapped creators, strategy gaps, or open platforms) are listed.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/target/competitor-tracker/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 49
+      },
+      {
+        "path": "influencer/target/competitor-tracker/references/templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e30f1a8fab2d7b4653de38bba15d49d97edaf6d8d4d929cfe3bf8dcd72e11488",
+        "source_line": 53
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 33
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 74
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 45
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:competitor-tracker",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 119,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "campaign-planner"
+        ],
+        "text": "- **Primary**: [campaign-planner](../campaign-planner/SKILL.md) — turn competitive gaps into a differentiated campaign."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 287,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 120
+        },
+        "target_skills": [
+          "influencer-discovery"
+        ],
+        "text": "- **Alternate (Scout)**: [influencer-discovery](../../scout/influencer-discovery/SKILL.md) — pursue the untapped and former-competitor creators this analysis surfaced."
+      },
+      {
+        "condition": "before you poach.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 425,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 288
+        },
+        "target_skills": [
+          "fit-scorer"
+        ],
+        "text": "- **Alternate (Scout)**: [fit-scorer](../../scout/fit-scorer/SKILL.md) — score a competitor's roster against your brand before you poach."
+      },
+      {
+        "condition": "If the next skill has already run this session, stop and report the chain complete instead of re-invoking. Max chain depth is 3 hops.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 629,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 427
+        },
+        "target_skills": [],
+        "text": "Termination note: keep a visited-set of skills invoked this session. If the next skill has already run this session, stop and report the chain complete instead of re-invoking. Max chain depth is 3 hops."
+      }
+    ],
+    "next_best": "- **Primary**: [campaign-planner](../campaign-planner/SKILL.md) — turn competitive gaps into a differentiated campaign.\n- **Alternate (Scout)**: [influencer-discovery](../../scout/influencer-discovery/SKILL.md) — pursue the untapped and former-competitor creators this analysis surfaced.\n- **Alternate (Scout)**: [fit-scorer](../../scout/fit-scorer/SKILL.md) — score a competitor's roster against your brand before you poach.\n\nTermination note: keep a visited-set of skills invoked this session. If the next skill has already run this session, stop and report the chain complete instead of re-invoking. Max chain depth is 3 hops.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "influencer/target/competitor-tracker/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "campaign-planner",
+      "fit-scorer",
+      "influencer-discovery"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "influencer",
+    "name": "competitor-tracker",
+    "path": "influencer/target/competitor-tracker/SKILL.md",
+    "phase": "target",
+    "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<your brand> [competitor names] [platform]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 221,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "your brand name, the competitor set, platforms to monitor, time period, focus areas (partnerships/campaigns/content/all). Public creator handles and post data the user supplies or that ~~social platform analytics returns."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "your brand name, the competitor set, platforms to monitor, time period, focus areas (partnerships/campaigns/content/all). Public creator handles and post data the user supplies or that ~~social platform analytics returns.",
+    "source": {
+      "path": "influencer/target/competitor-tracker/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 235,
+          "path": "influencer/target/competitor-tracker/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a competitive intelligence report saved to `memory/influencer/competitor-tracker/YYYY-MM-DD-<topic>.md` (partnership roster, campaign analysis, content-strategy review, performance estimates, side-by-side comparison, opportunity list)."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/target/competitor-tracker/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5"
+    },
+    "summary": "a competitive intelligence report saved to `memory/influencer/competitor-tracker/YYYY-MM-DD-<topic>.md` (partnership roster, campaign analysis, content-strategy review, performance estimates, side-by-side comparison, opportunity list).",
+    "summary_source": "writes-fallback",
+    "writes": "a competitive intelligence report saved to `memory/influencer/competitor-tracker/YYYY-MM-DD-<topic>.md` (partnership roster, campaign analysis, content-strategy review, performance estimates, side-by-side comparison, opportunity list)."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for finding your own new creators — use influencer-discovery. 竞品达人合作追踪/竞品营销分析",
+    "description": "Use when the user asks to \"track competitor influencer marketing\", \"see who my rivals partner with\", or \"benchmark my influencer program\"; produces a competitor partnership roster, campaign and content-strategy breakdown, performance estimates, and a gap/opportunity list. Not for finding your own new creators — use influencer-discovery. 竞品达人合作追踪/竞品营销分析",
+    "source": {
+      "path": "influencer/target/competitor-tracker/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "e63d4c643e997bc91bcd1f8b7a9fe5226bf33b7f1ae665d7d64916f93e4dc7d5"
+    },
+    "trigger_phrases": [
+      "benchmark my influencer program",
+      "see who my rivals partner with",
+      "track competitor influencer marketing"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when the user wants to understand a competitor's influencer marketing: which creators they partner with, what campaigns and content formats they run, estimated reach and spend, and where they leave gaps. Activate for competitive benchmarking, finding untapped or former-competitor creators, and spotting strategy shifts over time."
+  },
+  "schema_version": "1.0"
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/capability-profiles.schema.json",
+  "title": "Aaron capability profile catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "runtime_identity",
+    "project_config",
+    "environment_variable",
+    "precedence",
+    "profile_order",
+    "capability_order",
+    "always_on_overlays",
+    "profiles"
+  ],
+  "properties": {
+    "$schema": {"const": "./capability-profiles.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "runtime_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["major", "ref"],
+      "properties": {
+        "major": {"const": 19},
+        "ref": {"const": "aaron-marketing-runtime:19.0.0"}
+      }
+    },
+    "project_config": {"const": ".aaron-marketing/profile.json"},
+    "environment_variable": {"const": "AARON_MARKETING_PROFILE"},
+    "precedence": {
+      "const": ["cli", "environment", "project-config", "state-default"]
+    },
+    "profile_order": {"const": ["lite", "pro", "governed"]},
+    "capability_order": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/safeId"}
+    },
+    "always_on_overlays": {
+      "const": [
+        "consent",
+        "claims",
+        "pii-secrets",
+        "external-mutation",
+        "audit-verdict",
+        "release-provenance"
+      ]
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lite", "pro", "governed"],
+      "properties": {
+        "lite": {"$ref": "#/$defs/profile"},
+        "pro": {"$ref": "#/$defs/profile"},
+        "governed": {"$ref": "#/$defs/profile"}
+      }
+    }
+  },
+  "$defs": {
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rank", "capabilities"],
+      "properties": {
+        "rank": {"type": "integer", "minimum": 0, "maximum": 2},
+        "capabilities": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safeId"}
+        }
+      }
+    }
+  }
+}

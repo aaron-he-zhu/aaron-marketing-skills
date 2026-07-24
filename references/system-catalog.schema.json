@@ -6,14 +6,23 @@
   "additionalProperties": false,
   "required": [
     "$schema", "schema_version", "architecture_version", "bundle_version",
-    "counts", "logical_order", "layers", "commands", "disciplines",
+    "capability_profiles", "counts", "logical_order", "layers", "commands", "disciplines",
     "protocol", "registries", "auditors", "l1_dependency", "symmetry", "distribution_profiles"
   ],
   "properties": {
     "$schema": {"const": "./system-catalog.schema.json"},
-    "schema_version": {"const": "1.1"},
+    "schema_version": {"const": "1.2"},
     "architecture_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
     "bundle_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "capability_profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "sha256"],
+      "properties": {
+        "source": {"const": "references/capability-profiles.json"},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
     "counts": {
       "type": "object",
       "additionalProperties": false,

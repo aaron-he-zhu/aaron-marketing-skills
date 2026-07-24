@@ -1,0 +1,321 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 78,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "1. At least one ROI methodology is computed with the inputs and formula shown."
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 165,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 81
+        },
+        "text": "2. Each headline metric is stated against a declared, source-dated comparison target"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 202,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 167
+        },
+        "text": "no universal benchmark is invented."
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 302,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 205
+        },
+        "text": "3. A bottom-line assessment (profitable / break-even / loss) and 1-3 recommendations are written."
+      }
+    ],
+    "done_when": "1. At least one ROI methodology is computed with the inputs and formula shown.\n  2. Each headline metric is stated against a declared, source-dated comparison target; no universal benchmark is invented.\n  3. A bottom-line assessment (profitable / break-even / loss) and 1-3 recommendations are written.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/report/roi-calculator/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 46
+      },
+      {
+        "path": "influencer/report/roi-calculator/references/roi-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "2f58cf3247a96e888243d286f153a1d854a29d6916c27e047d171da97562cf14",
+        "source_line": 50
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 122
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 35
+      },
+      {
+        "path": "references/star-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "d5e6cec23805026c8371cac0336026fb88ca4262c6ad48f52164b00925768e91",
+        "source_line": 126
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 124
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:roi-calculator",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 117,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "report-generator"
+        ],
+        "text": "**Primary**: [report-generator](../report-generator/SKILL.md) — turn the ROI numbers into a stakeholder-ready report."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 155,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 119
+        },
+        "target_skills": [],
+        "text": "**Alternates** (same Report family):"
+      },
+      {
+        "condition": "if the ROI math exposed gaps.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 289,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 157
+        },
+        "target_skills": [
+          "performance-analyzer"
+        ],
+        "text": "- [performance-analyzer](../performance-analyzer/SKILL.md) — go back for deeper performance breakdowns if the ROI math exposed gaps."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 420,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 290
+        },
+        "target_skills": [
+          "budget-optimizer"
+        ],
+        "text": "- [budget-optimizer](../../target/budget-optimizer/SKILL.md) — feed by-influencer and by-tier ROI into the next budget allocation."
+      },
+      {
+        "condition": "If the primary next skill was already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops in a single chain.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 641,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 422
+        },
+        "target_skills": [],
+        "text": "Termination note: keep a visited-set of skills invoked this session. If the primary next skill was already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops in a single chain."
+      }
+    ],
+    "next_best": "**Primary**: [report-generator](../report-generator/SKILL.md) — turn the ROI numbers into a stakeholder-ready report.\n\n**Alternates** (same Report family):\n\n- [performance-analyzer](../performance-analyzer/SKILL.md) — go back for deeper performance breakdowns if the ROI math exposed gaps.\n- [budget-optimizer](../../target/budget-optimizer/SKILL.md) — feed by-influencer and by-tier ROI into the next budget allocation.\n\nTermination note: keep a visited-set of skills invoked this session. If the primary next skill was already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops in a single chain.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "influencer/report/roi-calculator/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "budget-optimizer",
+      "performance-analyzer",
+      "report-generator"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "influencer",
+    "name": "roi-calculator",
+    "path": "influencer/report/roi-calculator/SKILL.md",
+    "phase": "report",
+    "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<campaign name or spend> [revenue] [results data]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 221,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "campaign spend breakdown, results data (reach, impressions, engagements, clicks, conversions, revenue, new customers), AOV and repeat-rate data if LTV is in scope, any prior performance output from `performance-analyzer`."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "campaign spend breakdown, results data (reach, impressions, engagements, clicks, conversions, revenue, new customers), AOV and repeat-rate data if LTV is in scope, any prior performance output from `performance-analyzer`.",
+    "source": {
+      "path": "influencer/report/roi-calculator/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 229,
+          "path": "influencer/report/roi-calculator/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "ROI calculation file at `memory/influencer/roi-calculator/YYYY-MM-DD-<topic>.md` containing direct ROI/ROAS, EMV, cost-efficiency metrics, attribution-modeled revenue, LTV-based ROI, by-influencer ROI, and a summary report block."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "influencer/report/roi-calculator/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+    },
+    "summary": "ROI calculation file at `memory/influencer/roi-calculator/YYYY-MM-DD-<topic>.md` containing direct ROI/ROAS, EMV, cost-efficiency metrics, attribution-modeled revenue, LTV-based ROI, by-influencer ROI, and a summary report block.",
+    "summary_source": "writes-fallback",
+    "writes": "ROI calculation file at `memory/influencer/roi-calculator/YYYY-MM-DD-<topic>.md` containing direct ROI/ROAS, EMV, cost-efficiency metrics, attribution-modeled revenue, LTV-based ROI, by-influencer ROI, and a summary report block."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for building the full slide/written report — use report-generator. 达人营销ROI计算/投资回报测算",
+    "description": "Use when the user asks to \"calculate influencer ROI\", \"prove campaign value\", or \"what was our ROAS\"; produces direct ROI/ROAS, earned media value, attribution-modeled revenue, LTV-based ROI, and a stakeholder-ready summary. Not for building the full slide/written report — use report-generator. 达人营销ROI计算/投资回报测算",
+    "source": {
+      "path": "influencer/report/roi-calculator/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+    },
+    "trigger_phrases": [
+      "calculate influencer ROI",
+      "prove campaign value",
+      "what was our ROAS"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when measuring or projecting influencer campaign ROI, justifying or defending budgets, comparing ROI across campaigns or channels, evaluating individual influencer or tier value, or preparing executive-level ROI numbers. Activate when the user supplies spend and results data and wants ROI, ROAS, EMV, CPA/CAC, attribution, or LTV impact computed."
+  },
+  "schema_version": "1.0"
+}

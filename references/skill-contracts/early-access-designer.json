@@ -1,0 +1,346 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 136,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every stage in the ladder has a named purpose, entry action, and opt-in semantics — including the explicit GA opt-out-inclusion decision"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 314,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 138
+        },
+        "text": "every graduation criterion is quantified and labeled Measured / User-provided / Estimated (framed against the product's own trailing data, never an invented industry benchmark)"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 468,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 316
+        },
+        "text": "and the feedback-loop + referral-mechanics specs are stated (or marked out-of-scope) with stage definitions submitted to the registry proposal protocol."
+      }
+    ],
+    "done_when": "every stage in the ladder has a named purpose, entry action, and opt-in semantics — including the explicit GA opt-out-inclusion decision; every graduation criterion is quantified and labeled Measured / User-provided / Estimated (framed against the product's own trailing data, never an invented industry benchmark); and the feedback-loop + referral-mechanics specs are stated (or marked out-of-scope) with stage definitions submitted to the registry proposal protocol.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/research/early-access-designer/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 40
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 44
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 36
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/launch-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:early-access-designer",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 240,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "launch-registry"
+        ],
+        "text": "- **Primary**: [launch-registry](../../../protocol/launch-registry/SKILL.md) — formalize the stage definitions, target dates, and the GA opt-out-inclusion decision as the canonical record other launch skills (and the `RAMP-R1` check) trust."
+      },
+      {
+        "condition": "If the waitlist itself still needs filling**: [list-growth-designer](../../../email/setup/list-growth-designer/SKILL.md) — the acquisition strategy + capture-flow spec that feeds this ladder.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 436,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 241
+        },
+        "target_skills": [
+          "list-growth-designer"
+        ],
+        "text": "- **If the waitlist itself still needs filling**: [list-growth-designer](../../../email/setup/list-growth-designer/SKILL.md) — the acquisition strategy + capture-flow spec that feeds this ladder."
+      },
+      {
+        "condition": "If tester feedback is already flowing**: [launch-feedback-synthesizer](../../prove/launch-feedback-synthesizer/SKILL.md) — triage the feedback and run the notify-on-status-change loop specced here.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 638,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 437
+        },
+        "target_skills": [
+          "launch-feedback-synthesizer"
+        ],
+        "text": "- **If tester feedback is already flowing**: [launch-feedback-synthesizer](../../prove/launch-feedback-synthesizer/SKILL.md) — triage the feedback and run the notify-on-status-change loop specced here."
+      },
+      {
+        "condition": "when the stage ladder + graduation criteria are submitted to the registry proposal protocol.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 1010,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 640
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the stage ladder + graduation criteria are submitted to the registry proposal protocol."
+      }
+    ],
+    "next_best": "- **Primary**: [launch-registry](../../../protocol/launch-registry/SKILL.md) — formalize the stage definitions, target dates, and the GA opt-out-inclusion decision as the canonical record other launch skills (and the `RAMP-R1` check) trust.\n- **If the waitlist itself still needs filling**: [list-growth-designer](../../../email/setup/list-growth-designer/SKILL.md) — the acquisition strategy + capture-flow spec that feeds this ladder.\n- **If tester feedback is already flowing**: [launch-feedback-synthesizer](../../prove/launch-feedback-synthesizer/SKILL.md) — triage the feedback and run the notify-on-status-change loop specced here.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the stage ladder + graduation criteria are submitted to the registry proposal protocol.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "launch/research/early-access-designer/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "launch-feedback-synthesizer",
+      "launch-registry",
+      "list-growth-designer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "early-access-designer",
+    "path": "launch/research/early-access-designer/SKILL.md",
+    "phase": "research",
+    "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / current stage / launch goal> [audience] [platform]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 53,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the product, current stage, audience, and launch goal"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 187,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 55
+        },
+        "text": "waitlist size, tester counts, and activation data (own `~~launch platform` / `~~web analytics` exports — Measured, or User-provided)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "classified",
+        "kind": "project-resource",
+        "requirement": "required",
+        "source": {
+          "end_char": 295,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 189
+        },
+        "text": "the existing stage record in `memory/launch-registry/` when one exists (the design must not contradict it)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 443,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 297
+        },
+        "text": "store beta-track constraints (TestFlight / Play testing tracks) from the official App Store Connect / Play Console docs when the launch is mobile."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the product, current stage, audience, and launch goal; waitlist size, tester counts, and activation data (own `~~launch platform` / `~~web analytics` exports — Measured, or User-provided); the existing stage record in `memory/launch-registry/` when one exists (the design must not contradict it); store beta-track constraints (TestFlight / Play testing tracks) from the official App Store Connect / Play Console docs when the launch is mobile.",
+    "source": {
+      "path": "launch/research/early-access-designer/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 91,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing program design + a reusable summary to `memory/launch/early-access-designer/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 449,
+          "path": "launch/research/early-access-designer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "span_basis": "field-text",
+          "start_char": 93
+        },
+        "text": "stage definitions (names, entry/exit criteria, target dates, the GA opt-out-inclusion decision) are submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for [launch-registry](../../../protocol/launch-registry/SKILL.md) to formalize — this skill never writes `memory/launch-registry/` directly."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/research/early-access-designer/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+    },
+    "summary": "an early-access program design — the waitlist→concept→alpha→beta→GA stage ladder with per-stage purpose and opt-in semantics, quantified graduation criteria per stage, a cohort-gating / invite-throttling plan, tester recruitment + launch-day social-proof prep, a feedback-loop spec, and a referral-mechanics spec — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing program design + a reusable summary to `memory/launch/early-access-designer/`; stage definitions (names, entry/exit criteria, target dates, the GA opt-out-inclusion decision) are submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for [launch-registry](../../../protocol/launch-registry/SKILL.md) to formalize — this skill never writes `memory/launch-registry/` directly."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for waitlist acquisition strategy or the capture-flow spec — use list-growth-designer; not for the canonical stage record — use launch-registry. waitlist/内测阶梯/抢先体验/毕业标准/反馈闭环",
+    "description": "Use when the user asks to \"design an early access program\", \"set up a waitlist and beta stages\", or \"define beta graduation criteria\"; produces a waitlist→concept→alpha→beta→GA stage ladder with per-stage purpose and opt-in semantics, quantified graduation criteria per stage (labeled Estimated), a cohort-gating and invite-throttling plan, tester recruitment with launch-day social-proof prep, a feedback-loop spec where every status change notifies its subscribers, and a referral-loop mechanism spec (invite codes, anti-abuse). Not for waitlist acquisition strategy or the capture-flow spec — use list-growth-designer; not for the canonical stage record — use launch-registry. waitlist/内测阶梯/抢先体验/毕业标准/反馈闭环",
+    "source": {
+      "path": "launch/research/early-access-designer/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+    },
+    "trigger_phrases": [
+      "define beta graduation criteria",
+      "design an early access program",
+      "set up a waitlist and beta stages"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when designing how a product moves from waitlist to GA: the stage ladder (waitlist / concept / alpha / beta / GA), per-stage graduation criteria, cohort gating and invite throttling, tester recruitment and launch-day social-proof prep, the tester feedback loop, and referral invite mechanics. The upstream of the RAMP R1 stage-truth veto — stage definitions are submitted to launch-registry as candidates."
+  },
+  "schema_version": "1.0"
+}

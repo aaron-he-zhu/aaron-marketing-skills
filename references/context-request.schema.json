@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/context-request.schema.json",
+  "title": "Aaron deterministic context request",
+  "description": "A closed, explicit request for resolving bounded bundle/project context. It contains references and policy metadata, never copied source bodies.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "run_id", "turn_id", "as_of", "route", "budget",
+    "registry_offsets", "candidates"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "run_id": {"$ref": "#/$defs/uuid"},
+    "turn_id": {"$ref": "#/$defs/safeId"},
+    "as_of": {"type": "string", "format": "date-time"},
+    "route": {"$ref": "#/$defs/route"},
+    "budget": {"$ref": "#/$defs/budget"},
+    "planner": {"$ref": "#/$defs/planner"},
+    "registry_offsets": {"$ref": "#/$defs/offsets"},
+    "candidates": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {"$ref": "#/$defs/candidate"}
+    }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "scenarioShard": {
+      "enum": [
+        "references/auto-routing/narrative.md",
+        "references/auto-routing/seo-geo.md",
+        "references/auto-routing/social.md",
+        "references/auto-routing/email.md",
+        "references/auto-routing/ad.md",
+        "references/auto-routing/influencer.md",
+        "references/auto-routing/launch.md",
+        "references/auto-routing/cross-discipline.md"
+      ]
+    },
+    "primaryScenarioShard": {
+      "enum": [
+        "references/auto-routing/narrative.md",
+        "references/auto-routing/seo-geo.md",
+        "references/auto-routing/social.md",
+        "references/auto-routing/email.md",
+        "references/auto-routing/ad.md",
+        "references/auto-routing/influencer.md",
+        "references/auto-routing/launch.md"
+      ]
+    },
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "target_skill", "reason_code", "scenario_shards"],
+      "properties": {
+        "command": {"enum": ["auto", "narrative", "seo-geo", "social", "email", "ad", "influencer", "launch"]},
+        "target_skill": {"$ref": "#/$defs/safeId"},
+        "reason_code": {"$ref": "#/$defs/safeId"},
+        "scenario_shards": {
+          "type": "array",
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/scenarioShard"}
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"command": {"const": "auto"}}, "required": ["command"]},
+          "then": {
+            "properties": {
+              "scenario_shards": {
+                "minItems": 1,
+                "maxItems": 3,
+                "contains": {"$ref": "#/$defs/primaryScenarioShard"},
+                "minContains": 1,
+                "maxContains": 2
+              }
+            }
+          },
+          "else": {"properties": {"scenario_shards": {"maxItems": 0}}}
+        },
+        {
+          "if": {
+            "properties": {
+              "command": {"const": "auto"},
+              "scenario_shards": {
+                "contains": {"$ref": "#/$defs/primaryScenarioShard"},
+                "minContains": 2
+              }
+            },
+            "required": ["command", "scenario_shards"]
+          },
+          "then": {
+            "properties": {
+              "scenario_shards": {
+                "contains": {"const": "references/auto-routing/cross-discipline.md"},
+                "minContains": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_bytes", "max_resources", "max_sensitivity", "max_inspection_bytes"],
+      "properties": {
+        "max_bytes": {"type": "integer", "minimum": 1, "maximum": 10000000},
+        "max_resources": {"type": "integer", "minimum": 1, "maximum": 256},
+        "max_inspection_bytes": {"type": "integer", "minimum": 1, "maximum": 64000000},
+        "max_sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]}
+      }
+    },
+    "plannerFileRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "planner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "planner_version", "generator", "skill_contract", "contract_index",
+        "system_catalog", "candidate_discovery", "freshness", "token_budget"
+      ],
+      "properties": {
+        "planner_version": {"const": "1.0"},
+        "generator": {"const": "context-plan-v1"},
+        "skill_contract": {"$ref": "#/$defs/plannerFileRef"},
+        "contract_index": {"$ref": "#/$defs/plannerFileRef"},
+        "system_catalog": {"$ref": "#/$defs/plannerFileRef"},
+        "candidate_discovery": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "hints_sha256", "candidate_set_sha256", "prefix_file_limit", "prefix_outcomes"],
+          "properties": {
+            "mode": {"const": "closed-machine-contract"},
+            "hints_sha256": {"$ref": "#/$defs/sha256"},
+            "candidate_set_sha256": {"$ref": "#/$defs/sha256"},
+            "prefix_file_limit": {"type": "integer", "minimum": 1, "maximum": 256},
+            "prefix_outcomes": {
+              "type": "array", "maxItems": 256,
+              "items": {"$ref": "#/$defs/prefixOutcome"}
+            }
+          }
+        },
+        "freshness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["observed_at_basis", "default_max_age_seconds"],
+          "properties": {
+            "observed_at_basis": {"const": "planner-as-of-inspection"},
+            "default_max_age_seconds": {"type": "null"}
+          }
+        },
+        "token_budget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max_tokens", "bytes_per_token", "derived_max_bytes", "estimator", "enforcement"],
+          "properties": {
+            "max_tokens": {"type": "integer", "minimum": 1, "maximum": 10000000},
+            "bytes_per_token": {"type": "integer", "minimum": 1, "maximum": 16},
+            "derived_max_bytes": {"type": "integer", "minimum": 1, "maximum": 10000000},
+            "estimator": {"const": "utf8-bytes-per-token-proxy-v1"},
+            "enforcement": {"const": "derived-byte-ceiling"}
+          }
+        }
+      }
+    },
+    "prefixOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "status", "file_count", "reason_code"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "status": {"enum": ["enumerated", "unresolved"]},
+        "file_count": {"type": "integer", "minimum": 0, "maximum": 256},
+        "reason_code": {"oneOf": [{"type": "null"}, {"const": "missing-prefix"}]}
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resource_id", "scope", "path", "role", "requirement", "authority",
+        "observed_at", "max_age_seconds", "priority", "reason_code",
+        "sensitivity", "expected_sha256", "conflict_group", "supersedes"
+      ],
+      "properties": {
+        "resource_id": {"$ref": "#/$defs/safeId"},
+        "scope": {"enum": ["bundle", "project"]},
+        "path": {"$ref": "#/$defs/safePath"},
+        "role": {"$ref": "#/$defs/safeId"},
+        "requirement": {"enum": ["required", "optional", "forbidden"]},
+        "authority": {"enum": ["canonical", "approved", "working", "untrusted"]},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "max_age_seconds": {
+          "oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0, "maximum": 315576000}]
+        },
+        "priority": {"type": "integer", "minimum": 0, "maximum": 100},
+        "reason_code": {"$ref": "#/$defs/safeId"},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+        "expected_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "conflict_group": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]},
+        "supersedes": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safeId"}
+        }
+      }
+    },
+    "offsets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entities", "creators", "claims", "consent", "launches", "channels", "narrative"],
+      "properties": {
+        "entities": {"$ref": "#/$defs/offset"},
+        "creators": {"$ref": "#/$defs/offset"},
+        "claims": {"$ref": "#/$defs/offset"},
+        "consent": {"$ref": "#/$defs/offset"},
+        "launches": {"$ref": "#/$defs/offset"},
+        "channels": {"$ref": "#/$defs/offset"},
+        "narrative": {"$ref": "#/$defs/offset"}
+      }
+    },
+    "offset": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]}
+  }
+}

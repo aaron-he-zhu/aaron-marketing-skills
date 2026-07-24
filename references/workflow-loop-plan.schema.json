@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workflow-loop-plan.schema.json",
+  "title": "Non-authoritative workflow loop plan snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "authoritative",
+    "authority",
+    "run_id",
+    "loop_id",
+    "workflow_id",
+    "objective",
+    "hypothesis",
+    "success_criteria",
+    "created_at",
+    "deadline",
+    "run_event_anchor",
+    "evidence_cutoff",
+    "approval_trust",
+    "request_sha256",
+    "graph",
+    "workflow",
+    "state_ref",
+    "events_ref"
+  ],
+  "properties": {
+    "$schema": { "const": "references/workflow-loop-plan.schema.json" },
+    "schema_version": { "const": "1.0" },
+    "authoritative": { "const": false },
+    "authority": { "const": "non-authoritative-operational-planning" },
+    "run_id": { "$ref": "#/$defs/uuid" },
+    "loop_id": { "$ref": "#/$defs/safe_id" },
+    "workflow_id": { "$ref": "#/$defs/slug" },
+    "objective": { "type": "string", "minLength": 1, "maxLength": 16000 },
+    "hypothesis": { "type": "string", "minLength": 1, "maxLength": 16000 },
+    "success_criteria": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": { "$ref": "#/$defs/success_criterion" }
+    },
+    "created_at": { "$ref": "#/$defs/timestamp" },
+    "deadline": { "$ref": "#/$defs/timestamp" },
+    "run_event_anchor": { "$ref": "#/$defs/run_event_reference" },
+    "evidence_cutoff": { "$ref": "#/$defs/evidence_cutoff" },
+    "approval_trust": {
+      "oneOf": [
+        { "$ref": "#/$defs/approval_trust" },
+        { "type": "null" }
+      ]
+    },
+    "request_sha256": { "$ref": "#/$defs/digest" },
+    "graph": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256", "source_ref", "source_sha256"],
+      "properties": {
+        "ref": { "const": "references/workflow-graph.json" },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "source_ref": { "const": "references/workflow-graph.source.json" },
+        "source_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "workflow": { "$ref": "#/$defs/workflow_snapshot" },
+    "state_ref": { "type": "string", "pattern": "^memory/runs/.+/workflow-plans/.+/state\\.json$" },
+    "events_ref": { "type": "string", "pattern": "^memory/runs/.+/workflow-plans/.+/events\\.ndjson$" }
+  },
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    },
+    "safe_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,127}$" },
+    "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref", "sha256"],
+      "properties": {
+        "kind": { "enum": ["run-event", "artifact", "evaluation", "registry-projection"] },
+        "ref": { "type": "string", "minLength": 1 },
+        "sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "run_event_reference": {
+      "allOf": [
+        { "$ref": "#/$defs/reference" },
+        { "properties": { "kind": { "const": "run-event" }, "ref": { "$ref": "#/$defs/uuid" } } }
+      ]
+    },
+    "evidence_cutoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref", "sha256", "offset", "occurred_at", "recorded_at"],
+      "properties": {
+        "kind": { "const": "run-event" },
+        "ref": { "$ref": "#/$defs/uuid" },
+        "sha256": { "$ref": "#/$defs/digest" },
+        "offset": { "type": "integer", "minimum": 1 },
+        "occurred_at": { "$ref": "#/$defs/timestamp" },
+        "recorded_at": { "$ref": "#/$defs/timestamp" }
+      }
+    },
+    "approval_trust": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "algorithm", "anchor_sha256"],
+      "properties": {
+        "key_id": { "$ref": "#/$defs/safe_id" },
+        "algorithm": { "const": "RS256" },
+        "anchor_sha256": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "success_criterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "description", "evidence_kind", "validator"],
+      "properties": {
+        "id": { "$ref": "#/$defs/safe_id" },
+        "description": { "type": "string", "minLength": 1, "maxLength": 4000 },
+        "evidence_kind": { "const": "artifact-validation" },
+        "validator": { "$ref": "#/$defs/safe_id" }
+      }
+    },
+    "workflow_snapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "objective",
+        "entry_node",
+        "nodes",
+        "edge_ids",
+        "edge_snapshot",
+        "fan_outs",
+        "joins",
+        "terminal_nodes",
+        "max_cycles",
+        "deadline_seconds",
+        "budgets"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "objective": { "type": "string", "minLength": 1 },
+        "entry_node": { "$ref": "#/$defs/slug" },
+        "nodes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/slug" } },
+        "edge_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/slug" } },
+        "edge_snapshot": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "workflow-graph-source.schema.json#/$defs/edge" }
+        },
+        "fan_outs": { "$ref": "workflow-graph-source.schema.json#/$defs/workflow/properties/fan_outs" },
+        "joins": { "$ref": "workflow-graph-source.schema.json#/$defs/workflow/properties/joins" },
+        "terminal_nodes": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/slug" } },
+        "max_cycles": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "deadline_seconds": { "type": "integer", "minimum": 60, "maximum": 2592000 },
+        "budgets": { "$ref": "workflow-graph-source.schema.json#/$defs/budgets" }
+      }
+    }
+  }
+}

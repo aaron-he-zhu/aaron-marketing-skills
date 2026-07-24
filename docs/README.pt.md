@@ -6,7 +6,9 @@
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-18.0.0-orange" alt="Version"></a>
+<!-- GENERATED:BEGIN release-surface:version-badge -->
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.0.0-orange" alt="Version"></a>
+<!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
 </p>
@@ -541,7 +543,7 @@ As skills nomeiam ferramentas com marcadores `~~category` (`~~SEO tool`, `~~web 
 
 | Camada | O que você obtém |
 |-------|--------------|
-| **21 conectores empacotados sem dependências** | Python biblioteca padrão puro — sem `pip`, sem passo de build. SERP live keyless + scraping renderizado em JS (Firecrawl, Tavily), uma sonda de citação de respostas de IA, extrações de email-auth via DNS-over-HTTPS, séries de atenção da Wikipedia, menções de notícias GDELT, métricas reais de criadores do YouTube, push IndexNow + Baidu, automação de ESP Resend, e um livro de medição diffável por git que transforma qualquer um deles numa série temporal antes/depois. |
+| **28 conectores empacotados sem dependências** | Python biblioteca padrão puro — sem `pip`, sem passo de build. SERP live keyless + scraping renderizado em JS (Firecrawl, Tavily), uma sonda de citação de respostas de IA, extrações de email-auth via DNS-over-HTTPS, séries de atenção da Wikipedia, menções de notícias GDELT, métricas reais de criadores do YouTube, push IndexNow + Baidu, automação de ESP Resend, e um livro de medição diffável por git que transforma qualquer um deles numa série temporal antes/depois. |
 | **Mais de 60 APIs oficiais/gratuitas documentadas** | Cada linha liga a **documentação oficial** do fornecedor, carrega uma data de verificação, e cada link é checado por HTTP antes de publicar. Inclui os caminhos que a maioria das listas de ferramentas ignora: GSC URL Inspection, CrUX History (40 semanas de CWV de campo), a Gmail Postmaster Tools API, a Ad Library da Meta, a Data Export API do Microsoft Clarity. |
 | **Servidores MCP de fornecedores** | 18 endpoints remotos catalogados (nunca auto-registrados — sua lista `/mcp` fica limpa) mais os servidores oficiais self-hosted para Google Analytics, Search Console, **Google Ads** e **Microsoft Clarity**. Dois MCPs remotos funcionam sem chave alguma (Firecrawl, Tavily). |
 
@@ -677,7 +679,9 @@ A deriva de endpoints ao vivo é amostrada separadamente pelo **manual** [`scrip
 ## Contribuir & documentos do projeto
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — regras de authoring, o checklist de contribuição e a lista autoritativa das 10 superfícies de tracking.
-- **[VERSIONS.md](../VERSIONS.md)** — versões por skill + changelog (bundle atual: `18.0.0`).
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
+- **[VERSIONS.md](../VERSIONS.md)** — versões por skill + changelog (bundle atual: `19.0.0`).
+<!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — política de segurança, privacidade e comunidade.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — contexto voltado ao agente para este repo.
 

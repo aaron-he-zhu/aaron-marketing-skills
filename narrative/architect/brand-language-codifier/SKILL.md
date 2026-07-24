@@ -4,13 +4,13 @@ slug: aaron-brand-language-codifier
 displayName: "Brand Language Codifier · 品牌语言与命名规范"
 summary: "品牌语气/词汇/命名税/禁用词规范"
 description: 'Use when the user asks to "codify our brand voice", "define naming rules for our products and tiers", or "write the tone-of-voice guide with banned phrases"; produces the brand-level voice canon (register, tone spectrum, banned-phrase list, few-shot examples drawn only from the brand''s own published material) and the naming tax (product / feature / tier naming rules plus approved and banned terms) that seeds the narrative-registry canon and that every channel''s voice adaptation points up to. Not for per-platform voice adaptation — use channel-registry''s voice-dossier; not for finished copy or blog posts — use content-writer; not for the message hierarchy itself — use message-system-architect; not for claim adjudication — use offer-claims-registry. 品牌语气/词汇表/命名税/禁用词/品牌语言规范'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a durable message house exists and the brand needs its voice and naming rules codified before any surface copy scales: register and tone spectrum, a banned-phrase list, few-shot voice examples pulled only from the brand's own published material, and the naming tax (product / feature / tier naming rules, approved and banned terms). The dual-mode voice+naming step of the TALE Architect phase, seeding the narrative-registry canon that channel-registry voice adaptations point up to. Not per-platform voice adaptation and not finished copy."
 argument-hint: "<brand / product> [own published samples] [existing naming or tier list]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "narrative", "phase": "architect", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "architect"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "architect", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "architect"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Brand Language Codifier

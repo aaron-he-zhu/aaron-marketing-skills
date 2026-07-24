@@ -1,0 +1,92 @@
+{
+  "$schema": "./capability-profiles.schema.json",
+  "always_on_overlays": [
+    "consent",
+    "claims",
+    "pii-secrets",
+    "external-mutation",
+    "audit-verdict",
+    "release-provenance"
+  ],
+  "capability_order": [
+    "authored-workflows",
+    "auto-routing",
+    "deterministic-scoring",
+    "inline-delivery",
+    "canonical-state-read",
+    "connectors",
+    "audit-persistence",
+    "working-memory-write",
+    "registry-write",
+    "run-evidence",
+    "context-planning",
+    "runtime-controller",
+    "workflow-execution",
+    "workflow-loop",
+    "audit-loop",
+    "owner-capability"
+  ],
+  "environment_variable": "AARON_MARKETING_PROFILE",
+  "precedence": [
+    "cli",
+    "environment",
+    "project-config",
+    "state-default"
+  ],
+  "profile_order": [
+    "lite",
+    "pro",
+    "governed"
+  ],
+  "profiles": {
+    "governed": {
+      "capabilities": [
+        "authored-workflows",
+        "auto-routing",
+        "deterministic-scoring",
+        "inline-delivery",
+        "canonical-state-read",
+        "connectors",
+        "audit-persistence",
+        "working-memory-write",
+        "registry-write",
+        "run-evidence",
+        "context-planning",
+        "runtime-controller",
+        "workflow-execution",
+        "workflow-loop",
+        "audit-loop",
+        "owner-capability"
+      ],
+      "rank": 2
+    },
+    "lite": {
+      "capabilities": [
+        "authored-workflows",
+        "auto-routing",
+        "deterministic-scoring",
+        "inline-delivery",
+        "canonical-state-read"
+      ],
+      "rank": 0
+    },
+    "pro": {
+      "capabilities": [
+        "authored-workflows",
+        "auto-routing",
+        "deterministic-scoring",
+        "inline-delivery",
+        "canonical-state-read",
+        "connectors",
+        "audit-persistence"
+      ],
+      "rank": 1
+    }
+  },
+  "project_config": ".aaron-marketing/profile.json",
+  "runtime_identity": {
+    "major": 19,
+    "ref": "aaron-marketing-runtime:19.0.0"
+  },
+  "schema_version": "1.0"
+}

@@ -4,14 +4,14 @@ slug: aaron-social-quality-auditor
 displayName: "Social Quality Auditor · 社媒质量门"
 summary: "社媒资产门/运营成熟度/六条红线"
 description: 'Use when the user asks to "audit our social presence" or "is this batch safe to publish"; runs either the typed ECHO asset gate or a separate program-maturity profile, with channel-truth, claim, disclosure, manipulation, UGC-rights, and denominator checks. Not for creator deliverables — use creator-content-auditor; not for launch readiness — use launch-readiness-auditor. 社媒资产门/运营成熟度/发布前放行'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use for a pre-publish social asset/batch gate or a separate channel-program maturity audit. Never combine the asset and operating profiles into one score."
 argument-hint: "<asset batch or channel portfolio> [asset-gate|community|b2c|founder]"
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Social Quality Auditor
@@ -87,6 +87,8 @@ Verify profile-relevant vetoes: `ECHO-E1` governed channel contradiction, `ECHO-
 State `asset-gate` or exact maturity profile in every result. On trace request, qualify all ECHO IDs, especially `ECHO-O1` versus `ROAS-O1` and `ECHO-E1` versus `TALE-E1`.
 
 ## Report and Verdict
+
+Begin with the auditor-runbook's exact typed conversation header. Never replace `status`, `verdict`, or `score_state` with prose; list each explicitly missing qualified item as ``ID: `unknown``` before findings.
 
 Show verdict, unit/profile/context/date, score or coverage/interval, confidence, included-item detail, verified critical controls, Unknown inputs, and fixes. For asset batches, identify the exact asset/location. Never publish or unpause a queue based only on the audit; separate explicit approval is required.
 

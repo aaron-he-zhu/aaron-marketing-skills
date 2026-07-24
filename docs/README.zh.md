@@ -6,7 +6,9 @@
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-18.0.0-orange" alt="Version"></a>
+<!-- GENERATED:BEGIN release-surface:version-badge -->
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.0.0-orange" alt="Version"></a>
+<!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
 </p>
@@ -541,7 +543,7 @@ Artifact Gate 是**框架无关**的——同一个 hook 校验 CORE-EEAT、CITE
 
 | 层 | 你得到什么 |
 |----|------------|
-| **21 个内置零依赖连接器** | 纯 Python 标准库——无 `pip`、无构建。keyless 实时 SERP + JS 渲染抓取（Firecrawl、Tavily）、AI 答案引用探针、DNS-over-HTTPS 邮件认证拉取、维基百科关注度序列、GDELT 新闻提及、真实 YouTube 创作者指标、IndexNow + 百度收录推送、Resend ESP 自动化，以及能把任何数据源变成前后对比时间序列的 git 可差分测量台账。 |
+| **28 个内置零依赖连接器** | 纯 Python 标准库——无 `pip`、无构建。keyless 实时 SERP + JS 渲染抓取（Firecrawl、Tavily）、AI 答案引用探针、DNS-over-HTTPS 邮件认证拉取、维基百科关注度序列、GDELT 新闻提及、真实 YouTube 创作者指标、IndexNow + 百度收录推送、Resend ESP 自动化，以及能把任何数据源变成前后对比时间序列的 git 可差分测量台账。 |
 | **60+ 个记录在案的官方/免费 API** | 每一行都链接厂商**官方文档**、带核验日期，且每条链接入库前都经过 HTTP 实测。包含多数工具清单遗漏的路径：GSC URL Inspection、CrUX History（40 周真实用户 CWV）、Gmail Postmaster Tools API、Meta 广告库、微软 Clarity 数据导出 API。 |
 | **厂商 MCP 服务器** | 18 个远程端点入目录（绝不自动注册——你的 `/mcp` 列表保持干净），外加 Google Analytics、Search Console、**Google Ads**、**微软 Clarity** 的官方自托管服务器。其中两个远程 MCP 完全免鉴权（Firecrawl、Tavily）。 |
 
@@ -677,7 +679,9 @@ docs/            # 本地化 README(zh)
 ## 贡献与文档
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— 撰写规则、贡献清单，以及权威的 10 个追踪面清单。
-- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`18.0.0`）。
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
+- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`19.0.0`）。
+<!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— 安全、隐私、社区政策。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— 面向 Agent 的本仓库上下文。
 

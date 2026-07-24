@@ -1,0 +1,386 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 130,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "- `report`: each in-scope section (traffic, rankings, GEO, authority, backlinks, content) is present or marked \"Not yet evaluated\""
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 194,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 132
+        },
+        "text": "every metric is source-tagged and compared to the prior period"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 255,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 196
+        },
+        "text": "recommendations carry owner, priority, and expected impact."
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 340,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 258
+        },
+        "text": "- `alert`: each chosen alert category has a named trigger, threshold, and priority"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 415,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 342
+        },
+        "text": "a Critical/High/Medium/Low response plan and delivery routing are defined"
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 479,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 417
+        },
+        "text": "thresholds are tuned to the metric's stated normal volatility."
+      }
+    ],
+    "done_when": "- `report`: each in-scope section (traffic, rankings, GEO, authority, backlinks, content) is present or marked \"Not yet evaluated\"; every metric is source-tagged and compared to the prior period; recommendations carry owner, priority, and expected impact.\n  - `alert`: each chosen alert category has a named trigger, threshold, and priority; a Critical/High/Medium/Low response plan and delivery routing are defined; thresholds are tuned to the metric's stated normal volatility.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 44
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 49
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 40
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 49
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/alert-configuration-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "850131d944128ab040204f5fb5554ac8b8f16f16aa345569c7b48a903ee62bdf",
+        "source_line": 86
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/alert-threshold-guide.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "2f5f240e3f7537111df434fc3142377e6fdc67c2cadfa6e065239a8d99babc44",
+        "source_line": 136
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/kpi-definitions.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "74d71ac579c3112f211b86d8b831f568eddd6b2d11ffbd81db6442e682fdf1b6",
+        "source_line": 133
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/report-output-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "fc1e28a722c99c43f9142541551789234170bf8ccaf1499d2fdea1eb5e731151",
+        "source_line": 70
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/report-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "cb515fc2ed257b62bb5d348f126638abdea754c4b8050e0ce42297c5ae78efad",
+        "source_line": 134
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:performance-monitor",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 32,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [],
+        "text": "Mode-conditional, then terminal:"
+      },
+      {
+        "condition": "After **report** — a change needs ongoing monitoring → run this skill in `alert` mode. A section marked \"Not yet evaluated\" for authority → [domain-authority-auditor](../domain-authority-auditor/SKILL.md)",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 240,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 34
+        },
+        "target_skills": [
+          "domain-authority-auditor"
+        ],
+        "text": "- After **report** — a change needs ongoing monitoring → run this skill in `alert` mode. A section marked \"Not yet evaluated\" for authority → [domain-authority-auditor](../domain-authority-auditor/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 377,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 242
+        },
+        "target_skills": [
+          "content-quality-auditor"
+        ],
+        "text": "for content quality → [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md). One-off report with no action → Terminal."
+      },
+      {
+        "condition": "After **alert** — a reporting cadence is requested → run this skill in `report` mode. Standalone alert setup → Terminal.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 500,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 378
+        },
+        "target_skills": [],
+        "text": "- After **alert** — a reporting cadence is requested → run this skill in `report` mode. Standalone alert setup → Terminal."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 738,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 502
+        },
+        "target_skills": [],
+        "text": "Termination: the visited-set and `max-depth: 3` rules from [skill-contract.md §Termination rules](../../../references/skill-contract.md) apply. Do not re-enter a mode already run in this chain (report→alert→report is a visited-set stop)"
+      },
+      {
+        "condition": "if routing is ambiguous, present the options and stop instead of auto-following.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 820,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 740
+        },
+        "target_skills": [],
+        "text": "if routing is ambiguous, present the options and stop instead of auto-following."
+      }
+    ],
+    "next_best": "Mode-conditional, then terminal:\n\n- After **report** — a change needs ongoing monitoring → run this skill in `alert` mode. A section marked \"Not yet evaluated\" for authority → [domain-authority-auditor](../domain-authority-auditor/SKILL.md); for content quality → [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md). One-off report with no action → Terminal.\n- After **alert** — a reporting cadence is requested → run this skill in `report` mode. Standalone alert setup → Terminal.\n\nTermination: the visited-set and `max-depth: 3` rules from [skill-contract.md §Termination rules](../../../references/skill-contract.md) apply. Do not re-enter a mode already run in this chain (report→alert→report is a visited-set stop); if routing is ambiguous, present the options and stop instead of auto-following.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md). Name the active mode (`report` / `alert`) in the Objective line.",
+    "summary_ref": {
+      "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-quality-auditor",
+      "domain-authority-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "performance-monitor",
+    "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+    "phase": "evaluate",
+    "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<domain> [--mode report|alert] [date range | metric]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 310,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "prior baselines and current performance data. `report` reads current + prior-period metrics across traffic/rankings/authority/content, report audience, and date range. `alert` reads baselines, critical keywords/metrics to watch, normal volatility, and delivery preferences. Plus any user-provided or tool data."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "prior baselines and current performance data. `report` reads current + prior-period metrics across traffic/rankings/authority/content, report audience, and date range. `alert` reads baselines, critical keywords/metrics to watch, normal volatility, and delivery preferences. Plus any user-provided or tool data.",
+    "source": {
+      "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 97,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing monitoring deliverable plus a reusable summary storable under `memory/monitoring/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978"
+    },
+    "summary": "mode `report` → a delta-based multi-metric report/dashboard; mode `alert` → an alert configuration summary. Both include the standard handoff summary for `memory/monitoring/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing monitoring deliverable plus a reusable summary storable under `memory/monitoring/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for raw position-by-position deltas — use rank-tracker. SEO报告/绩效仪表盘/SEO预警/排名监控",
+    "description": "Use when the user asks to \"generate an SEO report\", \"出月报\", \"set SEO alerts\", or \"排名掉了提醒我\"; two modes — report builds multi-metric traffic/ranking/authority/content dashboards, and alert configures threshold notifications for future ranking, traffic, technical, backlink, competitor, and AI-visibility changes. Not for raw position-by-position deltas — use rank-tracker. SEO报告/绩效仪表盘/SEO预警/排名监控",
+    "source": {
+      "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "6d7ebfc9b3e9ab19ee6c3fd406fa5af651aa7d3a20d5ae427c39b367a5550978"
+    },
+    "trigger_phrases": [
+      "generate an SEO report",
+      "set SEO alerts",
+      "出月报",
+      "排名掉了提醒我"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when generating multi-metric SEO/GEO performance reports, traffic summaries, stakeholder dashboards, SEO报告, 流量报告, 月报, 周报, 汇报给老板 (mode: report), OR when setting up monitoring alerts for rankings, traffic, backlinks, technical issues, competitor moves, or AI visibility changes, SEO预警, 排名监控 (mode: alert). Not for raw position-by-position ranking deltas — use rank-tracker."
+  },
+  "schema_version": "1.0"
+}

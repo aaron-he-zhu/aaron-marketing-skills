@@ -1,0 +1,318 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 57,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the change exited learning phase before the window opened"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 161,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 59
+        },
+        "text": "primary metric is read delta-vs-control over a window fixed before the change (not a raw before/after)"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 244,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 163
+        },
+        "text": "attribution window + currency are normalized before any cross-platform comparison"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 323,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 246
+        },
+        "text": "and `readback_decision` is one of the four with its required fields recorded."
+      }
+    ],
+    "done_when": "the change exited learning phase before the window opened; primary metric is read delta-vs-control over a window fixed before the change (not a raw before/after); attribution window + currency are normalized before any cross-platform comparison; and `readback_decision` is one of the four with its required fields recorded.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/scale/paid-measurement-loop/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 30
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/measurement-protocol.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "source_line": 45
+      },
+      {
+        "path": "references/roas-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "source_line": 62
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 26
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 64
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:paid-measurement-loop",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "after the `Unproven` readback and evidence handoff. The auditor is a separate invocation",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 213,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "ad-account-auditor"
+        ],
+        "text": "- **Potential ROAS-R1/R2 evidence** → [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md). Stop this invocation after the `Unproven` readback and evidence handoff. The auditor is a separate invocation"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 259,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 215
+        },
+        "target_skills": [],
+        "text": "do not auto-run or simulate its gate result."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 455,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 260
+        },
+        "target_skills": [
+          "report-generator"
+        ],
+        "text": "- **Trustworthy readback decision** → [report-generator](../../../influencer/report/report-generator/SKILL.md) — fold the decision into a stakeholder report. Do not roll a dirty readback forward."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 571,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 457
+        },
+        "target_skills": [],
+        "text": "Visited-set and `max-depth: 3` termination rules apply per [Skill Contract](../../../references/skill-contract.md)"
+      },
+      {
+        "condition": "if the next target was already run this chain, STOP and report chain-complete.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 651,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 573
+        },
+        "target_skills": [],
+        "text": "if the next target was already run this chain, STOP and report chain-complete."
+      }
+    ],
+    "next_best": "- **Potential ROAS-R1/R2 evidence** → [ad-account-auditor](../../activate/ad-account-auditor/SKILL.md). Stop this invocation after the `Unproven` readback and evidence handoff. The auditor is a separate invocation; do not auto-run or simulate its gate result.\n- **Trustworthy readback decision** → [report-generator](../../../influencer/report/report-generator/SKILL.md) — fold the decision into a stakeholder report. Do not roll a dirty readback forward.\n\nVisited-set and `max-depth: 3` termination rules apply per [Skill Contract](../../../references/skill-contract.md); if the next target was already run this chain, STOP and report chain-complete.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "ad/scale/paid-measurement-loop/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "ad-account-auditor",
+      "report-generator"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "ad",
+    "name": "paid-measurement-loop",
+    "path": "ad/scale/paid-measurement-loop/SKILL.md",
+    "phase": "scale",
+    "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<campaign/change> [readback window]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 249,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the change under test (what/when/owner), baseline vs candidate window exports (campaign report, GA4/ecommerce conversions), the control (unchanged campaign, sibling ad set, or holdout), target ROAS/CPA, attribution window per platform, and currency."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the change under test (what/when/owner), baseline vs candidate window exports (campaign report, GA4/ecommerce conversions), the control (unchanged campaign, sibling ad set, or holdout), target ROAS/CPA, attribution window per platform, and currency.",
+    "source": {
+      "path": "ad/scale/paid-measurement-loop/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 112,
+          "path": "ad/scale/paid-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing readback table plus a reusable readback summary storable under `memory/ad/paid-measurement-loop/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "ad/scale/paid-measurement-loop/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+    },
+    "summary": "a per-change `readback_decision` (Promote / Keep-testing / Rollback / Unproven) with delta-vs-control on a primary metric (ROAS or CPA), the readback window used, normalization notes (attribution window + currency), and a handoff summary ready for `memory/ad/paid-measurement-loop/`. `readback_decision` is not an RQS auditor verdict.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing readback table plus a reusable readback summary storable under `memory/ad/paid-measurement-loop/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for RQS scoring or veto adjudication — use ad-account-auditor; not for the ROI ratio math — use roi-calculator; not for cross-channel rollups — use performance-analyzer. 付费广告复盘/ROAS回看/投放效果归因",
+    "description": "Use when the user asks to \"read back\" a paid campaign change, \"did this ad change work\", or \"compare ROAS/CPA before and after\"; reads ROAS/CPA against a control over a fixed readback window and returns a Promote / Keep-testing / Rollback / Unproven readback decision with the math delegated to roi-calculator. Not for RQS scoring or veto adjudication — use ad-account-auditor; not for the ROI ratio math — use roi-calculator; not for cross-channel rollups — use performance-analyzer. 付费广告复盘/ROAS回看/投放效果归因",
+    "source": {
+      "path": "ad/scale/paid-measurement-loop/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+    },
+    "trigger_phrases": [
+      "compare ROAS/CPA before and after",
+      "did this ad change work",
+      "read back"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when reading back a paid-ads change (budget shift, new creative, bid/target edit) against a control over a fixed readback window, deciding 复盘 Promote/Keep-testing/Rollback/Unproven on ROAS/CPA, or normalizing a cross-platform ROAS comparison. Not for RQS/veto adjudication (use ad-account-auditor), ROI ratio math (use roi-calculator), or cross-channel reporting (use performance-analyzer)."
+  },
+  "schema_version": "1.0"
+}

@@ -1,4 +1,5 @@
 import importlib.util
+import io
 import json
 import os
 import pathlib
@@ -9,6 +10,10 @@ from unittest import mock
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
+AUDIT_SCHEMA = json.loads(
+    (ROOT / "references" / "audit-artifact.schema.json").read_text(encoding="utf-8")
+)
+CURRENT_CATALOG_VERSION = AUDIT_SCHEMA["properties"]["catalog_version"]["const"]
 SPEC = importlib.util.spec_from_file_location(
     "audit_validator", ROOT / "scripts" / "validate-audit-artifact.py"
 )
@@ -20,7 +25,7 @@ def artifact(**overrides):
     values = {
         "framework": "ROAS",
         "profile": "direct-response",
-        "catalog_version": "18.0.0",
+        "catalog_version": CURRENT_CATALOG_VERSION,
         "status": "DONE",
         "verdict": "SHIP",
         "score_state": "SCORED",
@@ -78,15 +83,22 @@ class AuditArtifactValidatorTests(unittest.TestCase):
         record, errors = self.validate(artifact())
         self.assertEqual(errors, [])
         self.assertEqual(record["final_overall_score"], 80)
-        self.assertEqual(record["catalog_version"], "18.0.0")
+        self.assertEqual(record["catalog_version"], CURRENT_CATALOG_VERSION)
         self.assertEqual(record["context"]["currency"], "USD")
 
+    def test_stdin_validation_uses_the_supplied_bytes(self):
+        stdin = type("BinaryStdin", (), {"buffer": io.BytesIO(artifact().encode("utf-8"))})()
+        with mock.patch.object(validator.sys, "stdin", stdin):
+            record, errors = validator.validate("-", "memory/audits/ad/test.md")
+        self.assertEqual([], errors)
+        self.assertEqual("ROAS", record["framework"])
+
     def test_companion_schema_declares_current_catalog_and_state_machine(self):
-        schema = json.loads(
-            (ROOT / "references" / "audit-artifact.schema.json").read_text()
+        self.assertEqual(
+            AUDIT_SCHEMA["properties"]["catalog_version"],
+            {"const": CURRENT_CATALOG_VERSION},
         )
-        self.assertEqual(schema["properties"]["catalog_version"], {"const": "18.0.0"})
-        branches = json.dumps(schema["allOf"], sort_keys=True)
+        branches = json.dumps(AUDIT_SCHEMA["allOf"], sort_keys=True)
         for required_fragment in (
             '"score_state": {"const": "SCORED"}',
             '"required": ["raw_overall_score", "final_overall_score"]',
@@ -304,7 +316,9 @@ class AuditArtifactValidatorTests(unittest.TestCase):
                             for error in self.validate(undecided)[1]))
 
     def test_catalog_version_and_typed_material_context_are_required(self):
-        missing_version = artifact().replace('catalog_version: "18.0.0"\n', "")
+        missing_version = artifact().replace(
+            'catalog_version: "%s"\n' % CURRENT_CATALOG_VERSION, ""
+        )
         self.assertTrue(any("catalog_version" in error
                             for error in self.validate(missing_version)[1]))
         invalid_version = artifact(catalog_version="v17")

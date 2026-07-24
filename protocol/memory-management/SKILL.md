@@ -4,13 +4,13 @@ slug: memory-management
 displayName: "Memory Management · 项目记忆"
 summary: "项目记忆/跨会话"
 description: 'Use when the user asks to "remember project context", review saved findings, initialize runtime memory, archive stale work, reconcile notes, or erase a subject; manages authorized HOT/WARM/COLD working memory across all disciplines while preserving registry event ownership and privacy controls. Not for changing canonical registry facts - route those through the owning registry. 项目记忆/跨会话'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when initializing, querying, consolidating, archiving, exporting, or erasing project memory; also when repairing broken references or reconciling conflicting non-canonical notes."
 argument-hint: "[init|review|archive|consolidate|purge] [scope]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Memory Management
@@ -83,6 +83,7 @@ Absence is Unknown. A missing note, profile, tool result, or projection field is
 
 - Save a dated WARM artifact only after permission. Include source refs, observation dates, assumptions, open loops, and the registry offsets read.
 - Promote at most three lines to HOT when the user explicitly pins the conclusion. HOT contains a pointer and current summary, not raw evidence.
+- Refresh `memory/session-checkpoint.md` after each completed skill handoff (template: `memory/templates/session-checkpoint.md`; cap 40 lines / 8 KB): chain visited set and depth, pending handoff, registry offsets read, pending proposal count, last gate verdict, and the one-line resume action. Clear it when no work is in flight. It is a resume hint for the SessionStart hook — never canonical truth, and offsets must be re-read from live projections before acting.
 - Non-owner skills submit durable truth as `operation: propose` to the relevant event stream. They do not append free-form lines or edit projections.
 - Only a host-capability registry-owner principal may accept/reject a proposal or issue an owner `upsert`/`transition`.
 - `memory/decisions.md` entries require `approved_by: user`, an approval reference, and date. Inferred options belong in open loops, not approved decisions.

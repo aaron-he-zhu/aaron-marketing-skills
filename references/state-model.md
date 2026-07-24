@@ -9,13 +9,22 @@ This document defines the v18 project-state architecture. Runtime state is priva
 | Registry event | Canonical truth history | `memory/events/<registry>.ndjson` | Append-only; never hand-edited or temperature-managed |
 | Registry projection | Current accepted state | `memory/projections/<registry>.json` | Rebuilt atomically from events |
 | Human registry view | Presentation only | Registry-owned paths under `memory/` | Regenerated from projection; never authoritative |
+| Run event | Non-authoritative operational evidence | `memory/runs/<run-id>/events.ndjson` | Append-only within one retained run; deletable under operational retention |
+| Run projection | Disposable session-tree view | `memory/runs/<run-id>/session.json` | Rebuilt atomically from verified run events |
+| Context manifest | Deterministic invocation provenance | `memory/runs/<run-id>/turns/<turn-id>/context-manifest.json` | Immutable metadata/hash selection; no source bodies or authority |
+| Turn snapshot | Invocation provenance | `memory/runs/<run-id>/turns/<turn-id>/snapshot.json` | Immutable metadata/hash freeze for one turn |
+| Save point | Verified runtime resume pointer | `memory/runs/<run-id>/save-points/<id>.json` | Immutable; re-verify stream, artifacts, permissions, and registries before use |
+| Run envelope | Portable run summary | `memory/runs/<run-id>/envelopes/<head-id>.json` | Immutable summary; not canonical truth or approval |
 | HOT index | Retrieval pointer | `memory/hot-cache.md` | 80 lines and 25 KB maximum |
+| Session checkpoint | Resume pointer | `memory/session-checkpoint.md` | 40 lines and 8 KB maximum; refreshed after each handoff; untrusted hint, re-verified against live projections |
 | WARM artifact | Dated working evidence | Discipline/skill path under `memory/` | On-demand; archive review after 90 days |
 | COLD artifact | Historical evidence | `memory/archive/` | Read only when requested; no automatic deletion |
 | Approved decision | User governance input | `memory/decisions.md` | Requires approval provenance; cannot override a live safety control |
 | Open loop | Unresolved work | `memory/open-loops.md` | Never treated as an approved decision or canonical fact |
 
 The repository tracks only safe templates and guidance under `memory/`. A full clone ignores runtime `memory/**`. In plugin host projects, exact-path direct writes pass a PreToolUse Git-ignore preflight; opaque shell/MCP memory mutations are unsupported and denied when identified. Registry writes repeat final/temp/lock checks at their atomic boundary, while post-use/failure/batch and first-Stop hooks audit the resulting namespace. Hooks do not edit ignore rules or provide an OS sandbox. Projects that deliberately version operational data must disable this operated path and provide their own access, retention, secret-scanning, and erasure controls.
+
+[`context-resolution.md`](context-resolution.md) defines deterministic context selection and stable signatures; [`runtime-protocol.md`](runtime-protocol.md) binds those manifests into run events, turn snapshots, save points, and envelopes. These records borrow append-only/hash-chain mechanics from the registry runtime but never borrow registry authority: they contain no owner capability or authority signature, cannot mutate a registry projection, and may be deleted under run-evidence retention.
 
 ## Registry Event Model
 
@@ -31,7 +40,7 @@ The repository tracks only safe templates and guidance under `memory/`. A full c
 6. JSON projections are installed atomically and can be rebuilt from verified history. Human Markdown is a rendering of the projection.
 7. Stale expected revisions fail. A caller must re-read and reconcile; force-overwrite is not a recovery path.
 8. Proposals resolve individually in offset order — the owner adjudicates each `propose` on its own merits, in stream order, never as a batch. This is the clause launch-window (T-0) writers rely on: competing same-window proposals resolve deterministically, one offset at a time.
-8. Event streams are never cleared, consumed, rotated, archived, or edited by a skill.
+9. Event streams are never cleared, consumed, rotated, archived, or edited by a skill.
 
 ### Registry Ownership
 
@@ -68,7 +77,7 @@ Logical erasure removes current projected payload and working views. Append-only
 - Promote only with explicit user authorization.
 - Keep each item at three lines or fewer and cite its WARM artifact or accepted registry record.
 - Review entries older than 30 days for demotion.
-- SessionStart may inject a sanitized bounded excerpt; hook loading never grants write permission.
+- SessionStart may inject a sanitized bounded excerpt; the combined hook context has smaller per-source allowances than the 25KB storage ceiling and explicitly signals injection-time truncation. Hook loading never grants write permission.
 
 ### WARM
 
@@ -145,6 +154,17 @@ The eight gate sinks are `memory/audits/{content,domain,influencer,ad,email,laun
 
 Audit artifacts retain framework, profile, version, target, observation date, evidence coverage/confidence, status, and verdict. Monthly pointer indexes live under `memory/indexes/audits/`; they may link artifacts but may not invent a cross-framework aggregate or strip profile/version context.
 
+Validated FIX audits may enter the non-authoritative proposal-only outer loop defined by [`audit-loop-protocol.md`](audit-loop-protocol.md). Its immutable steps record proposals, owner review, non-empty intervention evidence, and re-audits; they are operational evidence, not accepted registry truth or external-action capabilities. `external_mutation_authorized` is always false. A loop converges only on a distinct medium/high-confidence SHIP re-audit with the same framework/profile/target identity and an observation date later than the baseline and no earlier than the intervention's UTC date.
+
+Audit-loop v2 state is event-first: the runtime reserves the selected-ancestry
+`loop_state_changed` event for exact derived step bytes, then materializes that
+step. The step binds its run parent ID/hash, one loop identity cannot fork across
+branches, and sibling-only loops do not enter the selected branch's runtime-derived
+`loop_closure`. Success requires exact terminal loop coverage;
+waiting/needs-input/blocked require exact coverage but may stay active; only
+failed/aborted may preserve a bounded unresolved closure, which is failure
+evidence rather than valid loop state or convergence.
+
 ## Ownership Rules
 
 - Ordinary skills write only their authorized WARM path and proposal events.
@@ -159,3 +179,7 @@ Audit artifacts retain framework, profile, version, target, observation date, ev
 ## Recovery
 
 On projection loss, run `project <registry>`. On suspected corruption, run `verify <registry>` and stop on any offset/hash/idempotency failure. Restore a verified backup or append a compensating event; never patch NDJSON manually. A failed projection install does not justify deleting the fsynced event.
+
+For a runtime session, use `run-events.py verify <run-id>` and then `project <run-id>`. A run save point is an untrusted operational pointer: re-check its event head, artifact hashes, registry offsets, permission profile, and external state before resuming. Never translate a run event or envelope into an accepted registry fact.
+
+For an audit loop, use `audit-loop.py show --run-id <run-id> --loop-id <loop-id>` before advancing it. Respect its returned `retry_not_before`, deadline, lease generation, and optimistic head hash; never edit a step or infer authorization from an owner-review transition. If an event anchor is durable but its step is missing, recover only by replaying the same original loop request with the same idempotency key, explicit occurrence time, expected head, and exact inputs, allowing the controller to re-derive the anchored bytes. That exact file-only recovery may finish an anchor on a historical sibling branch or after a later terminal event without moving the selected head; it does not rewrite the sealed envelope or its recorded unresolved closure. An existing materialized duplicate or new transition requires its ancestry to be selected, and terminal state forbids every new transition/event. `run-events.py loop-step` verifies only an already event-bound head; it cannot create an anchor, materialize a missing step, or turn an edited file into committed state.

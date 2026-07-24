@@ -1,0 +1,353 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workflow-graph-source.schema.json",
+  "title": "Authoritative inter-skill workflow graph source",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "catalog_version",
+    "node_source",
+    "entrypoint_policy",
+    "automatic_handoff_policy",
+    "terminal_nodes",
+    "node_exceptions",
+    "node_stopping_policies",
+    "edge_shards",
+    "workflows",
+    "bootstrap_provenance"
+  ],
+  "properties": {
+    "$schema": { "const": "./workflow-graph-source.schema.json" },
+    "schema_version": { "const": "1.0" },
+    "catalog_version": { "type": "string", "minLength": 1 },
+    "node_source": { "const": "references/system-catalog.json" },
+    "entrypoint_policy": { "const": "all-catalog-skills-directly-routable" },
+    "automatic_handoff_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_automatic_handoffs", "visited_set_required", "ambiguity_stop"],
+      "properties": {
+        "max_automatic_handoffs": { "const": 3 },
+        "visited_set_required": { "const": true },
+        "ambiguity_stop": { "const": true }
+      }
+    },
+    "terminal_nodes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "node_exceptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["node", "code", "reason"],
+        "properties": {
+          "node": { "$ref": "#/$defs/id" },
+          "code": { "$ref": "#/$defs/id" },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "node_stopping_policies": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/stopping_policy" }
+    },
+    "edge_shards": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/shard_descriptor" }
+    },
+    "workflows": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/workflow" }
+    },
+    "bootstrap_provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "source_surface", "authority_after_import", "inference_rules", "curation_overrides", "note"],
+      "properties": {
+        "method": { "const": "one-time-explicit-import" },
+        "source_surface": { "type": "string", "minLength": 1 },
+        "authority_after_import": { "const": "references/workflow-graph.source.json" },
+        "inference_rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "curation_overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "edges", "field", "value", "reason"],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "edges": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": { "$ref": "#/$defs/id" }
+              },
+              "field": { "const": "type" },
+              "value": {
+                "enum": ["sequential", "conditional", "gate", "memory", "cross-discipline", "reentry", "fan-out", "join"]
+              },
+              "reason": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "note": { "type": "string", "minLength": 1 }
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,127}$"
+    },
+    "shard_descriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "ref", "sha256", "edge_count", "first_edge_id", "last_edge_id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "ref": { "type": "string", "pattern": "^references/workflow-graph/edges-[0-9]{2}\\.json$" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "edge_count": { "type": "integer", "minimum": 1, "maximum": 40 },
+        "first_edge_id": { "$ref": "#/$defs/id" },
+        "last_edge_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "exception": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["code", "reason"],
+      "properties": {
+        "code": { "$ref": "#/$defs/id" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    },
+    "stopping_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["node", "mode", "condition_codes"],
+      "properties": {
+        "node": { "$ref": "#/$defs/id" },
+        "mode": { "enum": ["natural-stop", "terminal", "human-decision"] },
+        "condition_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "objective-complete",
+              "handoff-ambiguous",
+              "automatic-handoff-cap-reached",
+              "declared-terminal",
+              "owner-decision-required",
+              "permission-required"
+            ]
+          }
+        }
+      }
+    },
+    "loop_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "max_traversals"],
+      "properties": {
+        "mode": { "enum": ["acyclic", "visited-set", "bounded-cycle"] },
+        "max_traversals": { "type": "integer", "minimum": 1, "maximum": 3 }
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "from",
+        "to",
+        "type",
+        "condition_code",
+        "condition_text",
+        "condition_source",
+        "required_inputs",
+        "precondition_codes",
+        "permissions",
+        "gate",
+        "loop_policy",
+        "documentation_required",
+        "exception"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "from": { "$ref": "#/$defs/id" },
+        "to": { "$ref": "#/$defs/id" },
+        "type": {
+          "enum": [
+            "sequential",
+            "conditional",
+            "gate",
+            "memory",
+            "cross-discipline",
+            "reentry",
+            "fan-out",
+            "join"
+          ]
+        },
+        "condition_code": {
+          "enum": ["primary", "conditional", "alternate", "quality-gate", "governance", "remediation", "unclassified"]
+        },
+        "condition_text": { "type": "string", "minLength": 1 },
+        "condition_source": { "type": "string", "pattern": "^[A-Za-z0-9_./-]+/SKILL\\.md:[1-9][0-9]*$" },
+        "required_inputs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["handoff-summary", "condition-evidence", "audit-evidence", "registry-proposal", "failure-evidence", "cross-discipline-context", "execution-approval"]
+          }
+        },
+        "precondition_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["handoff-unambiguous", "required-inputs-present", "target-not-visited", "automatic-handoff-cap-available", "permission-approved", "gate-evidence-ready"]
+          }
+        },
+        "permissions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "none",
+              "persistent-write-approval",
+              "external-action-approval",
+              "owner-capability",
+              "safety-capability"
+            ]
+          }
+        },
+        "gate": {
+          "oneOf": [
+            { "$ref": "#/$defs/id" },
+            { "type": "null" }
+          ]
+        },
+        "loop_policy": { "$ref": "#/$defs/loop_policy" },
+        "documentation_required": { "type": "boolean" },
+        "exception": { "$ref": "#/$defs/exception" }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_events",
+        "max_actions",
+        "max_retries",
+        "max_verifications",
+        "max_memory_proposals",
+        "stall_limit"
+      ],
+      "properties": {
+        "max_events": { "type": "integer", "minimum": 8, "maximum": 512 },
+        "max_actions": { "type": "integer", "minimum": 1, "maximum": 256 },
+        "max_retries": { "type": "integer", "minimum": 0, "maximum": 32 },
+        "max_verifications": { "type": "integer", "minimum": 1, "maximum": 64 },
+        "max_memory_proposals": { "type": "integer", "minimum": 0, "maximum": 16 },
+        "stall_limit": { "type": "integer", "minimum": 2, "maximum": 8 }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "objective",
+        "entry_node",
+        "nodes",
+        "edge_ids",
+        "fan_outs",
+        "joins",
+        "terminal_nodes",
+        "max_cycles",
+        "deadline_seconds",
+        "budgets"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "objective": { "type": "string", "minLength": 1 },
+        "entry_node": { "$ref": "#/$defs/id" },
+        "nodes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "edge_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "fan_outs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["from", "branches"],
+            "properties": {
+              "from": { "$ref": "#/$defs/id" },
+              "branches": {
+                "type": "object",
+                "minProperties": 2,
+                "propertyNames": { "$ref": "#/$defs/id" },
+                "additionalProperties": { "$ref": "#/$defs/id" }
+              }
+            }
+          }
+        },
+        "joins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "at", "requires", "policy", "branch_failure_policy", "timeout_policy", "partial_evidence_policy"],
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "at": { "$ref": "#/$defs/id" },
+              "requires": {
+                "type": "array",
+                "minItems": 2,
+                "uniqueItems": true,
+                "items": { "$ref": "#/$defs/id" }
+              },
+              "policy": { "const": "all-required" },
+              "branch_failure_policy": { "const": "fail-closed-escalate" },
+              "timeout_policy": { "const": "workflow-deadline-escalate" },
+              "partial_evidence_policy": { "const": "reject-partial" }
+            }
+          }
+        },
+        "terminal_nodes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "max_cycles": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "deadline_seconds": { "type": "integer", "minimum": 60, "maximum": 2592000 },
+        "budgets": { "$ref": "#/$defs/budgets" }
+      }
+    }
+  }
+}

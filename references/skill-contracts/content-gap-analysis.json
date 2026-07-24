@@ -1,0 +1,250 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 72,
+          "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "each prioritized gap names the competitor(s) that cover it and you don't"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 138,
+          "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0",
+          "span_basis": "field-text",
+          "start_char": 74
+        },
+        "text": "gaps are bucketed into Quick Wins / Strategic Builds / Long-term"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 214,
+          "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0",
+          "span_basis": "field-text",
+          "start_char": 140
+        },
+        "text": "and the deliverable includes a dated content calendar entry per Quick Win."
+      }
+    ],
+    "done_when": "each prioritized gap names the competitor(s) that cover it and you don't; gaps are bucketed into Quick Wins / Strategic Builds / Long-term; and the deliverable includes a dated content calendar entry per Quick Win.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 32
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 36
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 28
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 36
+      },
+      {
+        "path": "scripts/connectors/rss_monitor.py",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e66174317fafbc36fd0eea06cfe01ccd63fe03f9a52078143e6a78dde1f01974",
+        "source_line": 34
+      },
+      {
+        "path": "seo-geo/survey/content-gap-analysis/references/analysis-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e7154a6852f383492dbb0e76464970e1a46e62c9bdd849fe23a5411754163122",
+        "source_line": 65
+      },
+      {
+        "path": "seo-geo/survey/content-gap-analysis/references/example-report.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f6fb9fe7095de8dc53339e986b611001caf21b4f1572d1bf795afe765b0f69cb",
+        "source_line": 69
+      },
+      {
+        "path": "seo-geo/survey/content-gap-analysis/references/gap-analysis-frameworks.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "2a80775b6e34d52badec400f58fdb1847f51ddd064e31baf6279a972c2828281",
+        "source_line": 98
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:content-gap-analysis",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 67,
+          "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "content-writer"
+        ],
+        "text": "Primary: [content-writer](../../implement/content-writer/SKILL.md)."
+      }
+    ],
+    "next_best": "Primary: [content-writer](../../implement/content-writer/SKILL.md).",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-writer"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "content-gap-analysis",
+    "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+    "phase": "survey",
+    "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<your domain> <competitor domain>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 133,
+          "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "your domain, competitor domains, topic/content-type focus, audience, business goals, and any user-provided or tool content inventory."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "your domain, competitor domains, topic/content-type focus, audience, business goals, and any user-provided or tool content inventory.",
+    "source": {
+      "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 44,
+          "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing analysis and reusable summary."
+      }
+    ],
+    "extraction_status": "unclassified",
+    "source": {
+      "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0"
+    },
+    "summary": "a prioritized gap brief plus the standard handoff summary for `memory/research/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing analysis and reusable summary."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for raw keyword demand discovery — use keyword-research. 内容缺口/选题规划",
+    "description": "Use when the user asks to \"find content gaps\", \"竞品写了什么\", or \"还应该写什么\"; builds a competitor-relative coverage map of missing topics, keyword gaps, and editorial-calendar opportunities. Not for raw keyword demand discovery — use keyword-research. 内容缺口/选题规划",
+    "source": {
+      "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "b7f27a4bad4eef4fbe72ea881bc4b28c592e9c31f35b68f90c983292f5de5cc0"
+    },
+    "trigger_phrases": [
+      "find content gaps",
+      "竞品写了什么",
+      "还应该写什么"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when finding content gaps between two domains, discovering missing topics, or identifying coverage holes versus competitors."
+  },
+  "schema_version": "1.0"
+}

@@ -4,13 +4,13 @@ slug: aaron-launch-retro-analyzer
 displayName: "Launch Retro Analyzer · 发布复盘"
 summary: "发布复盘/渠道归因/5-Whys/keep-kill"
 description: 'Use when the user asks to "run a launch retro / post-mortem", "compare launch results vs targets by channel", or "decide what to keep or kill for the next launch"; produces a structured D1/W1/M1 retrospective — a per-channel actual-vs-target table (UTM-attributed own analytics as the truth column, platform self-reported numbers as reference, every figure labeled Measured / User-provided / Estimated), a 5-Whys chain on the single largest miss, keep / kill / change decisions per channel, 3-5 actionable learnings for the next launch, and an outcome snapshot submitted to the launch registry. Not for return math (CPA / ROI) — use roi-calculator; not for the stakeholder-facing report writeup — use report-generator; not for a metric deep-dive — use performance-analyzer. 发布复盘/渠道归因/5-Whys/keep-kill'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a launch has shipped and needs a structured D1/W1/M1 retrospective: comparing per-channel actuals against pre-declared targets with UTM-attributed own analytics as the truth set, running a 5-Whys on the single largest miss, making keep/kill/change calls per channel, drafting 3-5 learnings for the next launch, and submitting the outcome snapshot to the launch registry. The retro layer downstream of launch-monitor tracking; return math stays with roi-calculator and the stakeholder writeup with report-generator."
 argument-hint: "<launch / product> [window: D1|W1|M1] [targets] [analytics export]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "prove", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "prove"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "prove", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "prove"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Launch Retro Analyzer

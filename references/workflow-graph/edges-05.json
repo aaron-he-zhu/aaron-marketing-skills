@@ -1,0 +1,1211 @@
+{
+  "$schema": "../workflow-graph-edge-shard.schema.json",
+  "authority": "authoritative-workflow-graph-source-shard",
+  "edges": [
+    {
+      "condition_code": "primary",
+      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:84",
+      "condition_text": "Primary: reactivation-specialist — run the win-back / re-permission campaign against the re-permission cohort this worklist sizes (SEND-N lifecycle).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-hygiene-monitor",
+      "gate": null,
+      "id": "list-hygiene-monitor--reactivation-specialist",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "reactivation-specialist",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "email/setup/list-segment-builder/SKILL.md:86",
+      "condition_text": "If consent records are missing or stale for a cohort: consent-registry — record lawful basis and opt-in facts before that cohort is mailable (registry is the sole writer of memory/consent/).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-segment-builder",
+      "gate": null,
+      "id": "list-segment-builder--consent-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability",
+        "safety-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "consent-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "email/setup/list-segment-builder/SKILL.md:85",
+      "condition_text": "Primary: email-creative-builder — compose a message-matched unit for the top segment; or email-sequence-designer when the next gap is a lifecycle flow per stage.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-segment-builder",
+      "gate": null,
+      "id": "list-segment-builder--email-creative-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "email-creative-builder",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "email/setup/list-segment-builder/SKILL.md:87",
+      "condition_text": "Termination: apply the global rule from skill-contract.md §Termination rules — visited-set check (do not re-invoke a skill already run in this chain), max-depth: 3, and stop-and-report when routing is ambiguous (e.g. both creative and sequence are equally the next gap). Segmentation is upstream of the EQS gate: hand off to a compose/flow skill, then stop; do not self-invoke email-quality-auditor — the gate is triggered separately.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-segment-builder",
+      "gate": "email-quality-auditor",
+      "id": "list-segment-builder--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "email/setup/list-segment-builder/SKILL.md:85",
+      "condition_text": "Primary: email-creative-builder — compose a message-matched unit for the top segment; or email-sequence-designer when the next gap is a lifecycle flow per stage.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-segment-builder",
+      "gate": null,
+      "id": "list-segment-builder--email-sequence-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "email-sequence-designer",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "memory-management",
+      "gate": null,
+      "id": "memory-management--channel-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "channel-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "memory-management",
+      "gate": null,
+      "id": "memory-management--consent-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability",
+        "safety-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "consent-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "memory-management",
+      "gate": null,
+      "id": "memory-management--creator-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "creator-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "memory-management",
+      "gate": null,
+      "id": "memory-management--entity-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "entity-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "memory-management",
+      "gate": null,
+      "id": "memory-management--launch-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "launch-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "memory-management",
+      "gate": null,
+      "id": "memory-management--narrative-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "narrative-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "memory-management",
+      "gate": null,
+      "id": "memory-management--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "launch/assemble/message-house-builder/SKILL.md:83",
+      "condition_text": "Primary: launch-asset-packager — expand the message house into the tier-scoped launch asset manifest.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-house-builder",
+      "gate": null,
+      "id": "message-house-builder--launch-asset-packager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "launch-asset-packager",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "launch/assemble/message-house-builder/SKILL.md:84",
+      "condition_text": "If claim proposals are pending: offer-claims-registry — accept/reject them before any asset ships the wording.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-house-builder",
+      "gate": null,
+      "id": "message-house-builder--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/assemble/message-house-builder/SKILL.md:85",
+      "condition_text": "If the pricing pillar has no packaging behind it: pricing-packaging-planner — define tiers and launch-offer terms the messaging can state honestly.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-house-builder",
+      "gate": null,
+      "id": "message-house-builder--pricing-packaging-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "pricing-packaging-planner",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/architect/message-system-architect/SKILL.md:86",
+      "condition_text": "Primary: brand-language-codifier — codify the voice, tone, banned phrases, and naming tax the message house is written in.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-system-architect",
+      "gate": null,
+      "id": "message-system-architect--brand-language-codifier",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "brand-language-codifier",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "narrative/architect/message-system-architect/SKILL.md:88",
+      "condition_text": "If the canon-grade block is ready to become the record: narrative-registry — promote the candidate into canon.md and record the version.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-system-architect",
+      "gate": null,
+      "id": "message-system-architect--narrative-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "narrative-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "narrative/architect/message-system-architect/SKILL.md:87",
+      "condition_text": "If 3+ claims are pending as proposals: offer-claims-registry — substantiate or reject them before the house seeds the canon.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-system-architect",
+      "gate": null,
+      "id": "message-system-architect--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:88",
+      "condition_text": "If the test is ready to run now: send-experiment-designer or ad-test-designer — execute the panel/experiment this spec designed.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-test-designer",
+      "gate": null,
+      "id": "message-test-designer--ad-test-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "ad-test-designer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:87",
+      "condition_text": "Primary: narrative-resonance-monitor — after the tested message ships, measure echo rate and AI-answer perception in-market.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-test-designer",
+      "gate": null,
+      "id": "message-test-designer--narrative-resonance-monitor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "narrative-resonance-monitor",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:89",
+      "condition_text": "If 3+ claims are pending as proposals: offer-claims-registry — substantiate or reject the stimulus claims before any test ships the wording.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-test-designer",
+      "gate": null,
+      "id": "message-test-designer--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:88",
+      "condition_text": "If the test is ready to run now: send-experiment-designer or ad-test-designer — execute the panel/experiment this spec designed.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "message-test-designer",
+      "gate": null,
+      "id": "message-test-designer--send-experiment-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "send-experiment-designer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "launch/prove/momentum-planner/SKILL.md:85",
+      "condition_text": "If distribution of the moments is the next gap: content-amplifier — build the reuse map and amplification calendar for the moments this plan scheduled.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "momentum-planner",
+      "gate": null,
+      "id": "momentum-planner--content-amplifier",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "content-amplifier",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "launch/prove/momentum-planner/SKILL.md:84",
+      "condition_text": "Primary: launch-registry — write the booked next moment and its dates into the launch calendar (via the submitted proposals).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "momentum-planner",
+      "gate": null,
+      "id": "momentum-planner--launch-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "launch-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/prove/momentum-planner/SKILL.md:86",
+      "condition_text": "If the next moment is a full launch: launch-tier-planner — declare its tier, type, and risk register from scratch.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "momentum-planner",
+      "gate": null,
+      "id": "momentum-planner--launch-tier-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "launch-tier-planner",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/trace/narrative-baseline-mapper/SKILL.md:83",
+      "condition_text": "Primary: category-narrative-mapper — map the category's dominant stories and the competitive narratives the baseline sits inside.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-baseline-mapper",
+      "gate": null,
+      "id": "narrative-baseline-mapper--category-narrative-mapper",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "category-narrative-mapper",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "narrative/trace/narrative-baseline-mapper/SKILL.md:85",
+      "condition_text": "If 3+ surface claims are pending as proposals: offer-claims-registry — substantiate or reject them before any downstream ships the wording.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-baseline-mapper",
+      "gate": null,
+      "id": "narrative-baseline-mapper--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "narrative/trace/narrative-baseline-mapper/SKILL.md:84",
+      "condition_text": "If the positioning canvas needs reconciling against shippable reality: positioning-truth-tracer — build the differentiation truth set the T1 veto is judged against.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-baseline-mapper",
+      "gate": null,
+      "id": "narrative-baseline-mapper--positioning-truth-tracer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "positioning-truth-tracer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/land/narrative-cascade-planner/SKILL.md:84",
+      "condition_text": "Primary: narrative-enablement-kit — make everyone tell the same landed story with the elevator ladder, Q&A, and boilerplate pack.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-cascade-planner",
+      "gate": null,
+      "id": "narrative-cascade-planner--narrative-enablement-kit",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "narrative-enablement-kit",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "narrative/land/narrative-cascade-planner/SKILL.md:85",
+      "condition_text": "If the drift list has flagship surfaces contradicting the canon: narrative-quality-auditor — run the pre-publish consistency check (single surface vs canon) before the surface ships.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-cascade-planner",
+      "gate": "narrative-quality-auditor",
+      "id": "narrative-cascade-planner--narrative-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "narrative-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "narrative/land/narrative-cascade-planner/SKILL.md:86",
+      "condition_text": "If a pillar has no proof module to place: proof-point-packager — build the ledger-approved proof module so the spec can place proof where the claim is made.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-cascade-planner",
+      "gate": null,
+      "id": "narrative-cascade-planner--proof-point-packager",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "proof-point-packager",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:84",
+      "condition_text": "If a repositioning trigger genuinely fired: message-system-architect — re-author the durable message hierarchy, which the registry then re-versions atomically.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "narrative-drift-monitor",
+      "gate": null,
+      "id": "narrative-drift-monitor--message-system-architect",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "message-system-architect",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:85",
+      "condition_text": "If drifted surfaces need re-cascading to their creative builders: narrative-cascade-planner — refresh the per-surface message-match specs before the copy is rewritten.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "narrative-drift-monitor",
+      "gate": null,
+      "id": "narrative-drift-monitor--narrative-cascade-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "narrative-cascade-planner",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:83",
+      "condition_text": "Primary: narrative-quality-auditor — re-audit the drifted surfaces against the canon and compute the TALE profile result with the current vetoes.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-drift-monitor",
+      "gate": "narrative-quality-auditor",
+      "id": "narrative-drift-monitor--narrative-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "narrative-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "narrative/land/narrative-enablement-kit/SKILL.md:83",
+      "condition_text": "Primary: narrative-quality-auditor — run the pre-publish consistency check on the kit against the canon before it ships to spokespeople.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-enablement-kit",
+      "gate": "narrative-quality-auditor",
+      "id": "narrative-enablement-kit--narrative-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "narrative-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "governance",
+      "condition_source": "narrative/land/narrative-enablement-kit/SKILL.md:85",
+      "condition_text": "If 3+ claims are pending as proposals: offer-claims-registry — substantiate or reject the [needs source] claims before the kit ships their wording.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-enablement-kit",
+      "gate": null,
+      "id": "narrative-enablement-kit--offer-claims-registry",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "persistent-write-approval",
+        "owner-capability"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "permission-approved",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary",
+        "registry-proposal"
+      ],
+      "to": "offer-claims-registry",
+      "type": "memory"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "narrative/land/narrative-enablement-kit/SKILL.md:84",
+      "condition_text": "If the deck story is also needed: pitch-narrative-builder — build the sales/fundraising pitch narrative the same audiences use.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-enablement-kit",
+      "gate": null,
+      "id": "narrative-enablement-kit--pitch-narrative-builder",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "pitch-narrative-builder",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:120",
+      "condition_text": "Architecture repair: message-system-architect",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "narrative-quality-auditor",
+      "gate": null,
+      "id": "narrative-quality-auditor--message-system-architect",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "message-system-architect",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "unclassified",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:122",
+      "condition_text": "Effectiveness evidence: message-test-designer",
+      "documentation_required": true,
+      "exception": null,
+      "from": "narrative-quality-auditor",
+      "gate": null,
+      "id": "narrative-quality-auditor--message-test-designer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "message-test-designer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "remediation",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:121",
+      "condition_text": "Landing repair: narrative-cascade-planner",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "narrative-quality-auditor",
+      "gate": null,
+      "id": "narrative-quality-auditor--narrative-cascade-planner",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "narrative-cascade-planner",
+      "type": "reentry"
+    }
+  ],
+  "schema_version": "1.0",
+  "shard_id": "edges-05"
+}

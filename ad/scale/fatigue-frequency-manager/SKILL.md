@@ -4,13 +4,13 @@ slug: aaron-fatigue-frequency-manager
 displayName: "Fatigue Frequency Manager · 广告疲劳检测"
 summary: "广告疲劳检测/频次管理/换素材还是扩人群"
 description: 'Use when the user asks to "is my ad fatiguing", "why is CTR dropping at scale", or "should I rotate creative / widen the audience"; reads frequency, CTR and CVR decay against an early-flight baseline and returns Rotate-creative / Widen-audience / Hold triggers with a per-ad-set fatigue read. Not for building the replacement creative — use ad-creative-builder; not for the RQS score or vetoes — use ad-account-auditor. 广告疲劳检测/频次管理/换素材还是扩人群'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a scaled paid campaign shows rising frequency or falling CTR/CVR and the user needs a rotate-creative vs widen-audience vs hold decision, when diagnosing creative fatigue or audience saturation from a frequency + CTR/CVR trend export, or when setting frequency/decay thresholds for a scaling ad set. Not for producing the new creative (use ad-creative-builder) or the RQS gate score and vetoes (use ad-account-auditor)."
 argument-hint: "<campaign/ad-set> [flight window]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "scale", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "scale"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "scale", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "scale"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Fatigue & Frequency Manager

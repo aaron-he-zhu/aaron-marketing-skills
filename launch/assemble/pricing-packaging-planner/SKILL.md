@@ -4,13 +4,13 @@ slug: aaron-pricing-packaging-planner
 displayName: "Pricing Packaging Planner · 发布定价打包"
 summary: "发布定价/梯度打包/早鸟优惠/保证设计"
 description: 'Use when the user asks to "plan launch pricing", "design pricing tiers / packaging", or "set up a launch discount / early-bird offer"; produces a launch pricing and packaging plan — tier structure and naming, a value-to-price map aligned to the message house, a launch-offer ladder with a true deadline reason, beta / early-adopter pricing with a post-launch graduation path, and guarantee / refund terms — with every price claim and offer term submitted to memory/events/claims.ndjson. Not for the canonical offer / claim record — use offer-claims-registry; not for paid-newsletter subscription economics — use newsletter-monetization-planner; not for ad bidding — use bid-strategy-planner. 发布定价/梯度打包/早鸟优惠/保证设计'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when deciding what a launch will charge and how it is packaged: tier structure and tier naming, mapping tiers to the message-house value pillars, launch discounts with a real deadline reason, beta or early-adopter pricing and its graduation path to the GA price, and guarantee / refund design. The pricing lever of the RAMP Assemble phase — feeds the RAMP A pricing / packaging sub-item. The live offer record stays with offer-claims-registry; subscription-newsletter economics stay with newsletter-monetization-planner."
 argument-hint: "<product / offer> [launch goal: b2b / devtool / mobile] [current pricing if any] [launch date]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "assemble", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "assemble"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "assemble", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "assemble"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Pricing Packaging Planner

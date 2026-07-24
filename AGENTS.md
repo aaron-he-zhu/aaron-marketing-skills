@@ -5,12 +5,14 @@ Guidelines for AI agents working in this repository. For full runtime context, s
 ## Repository Overview
 
 - **Name**: aaron-marketing-skills — 120 skills (16 × 7 disciplines + 8 protocol), 7 disciplines + a protocol layer, 8 commands, shared references
-- **Current bundle**: 18.0.0
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
+- **Current bundle**: 19.0.0
+<!-- GENERATED:END release-surface:current-bundle -->
 - **Repository**: https://github.com/aaron-he-zhu/aaron-marketing-skills
 - **Author**: Aaron He Zhu | **License**: Apache 2.0
 - **Specs**: [Agent Skills](https://agentskills.io/specification.md)
 - **Cross-agent compatibility**: all 120 skills install on the 70+ SKILL.md hosts served by `npx skills` (which reads the skill declarations from `.claude-plugin/plugin.json` — no mirror directory needed, never add one). Per-agent matrix + degradation rules: [docs/agent-compatibility.md](docs/agent-compatibility.md); CI enforces the discovery count. New/renamed skills must also be added to a grouping in the repo-root `skills.sh.json` (lays out the [skills.sh page](https://skills.sh/aaron-he-zhu/aaron-marketing-skills); CI-enforced coverage).
-Content-first repository: skills and commands are Markdown; Claude Code hooks use a small Bash runner; zero-dependency Python-stdlib code provides connectors, typed scoring, registry events, artifact validation, and CI guards (no pip dependencies). Network mutations are limited to dry-run-by-default `resend.py` and `indexpush.py`, both requiring `--live`. The authoritative topology is [`references/system-catalog.json`](references/system-catalog.json); its generated human view is [`docs/system-architecture.md`](docs/system-architecture.md).
+Content-first repository: skills and commands are Markdown; Claude Code hooks use a small Bash runner; zero-dependency Python-stdlib code provides connectors, typed scoring, deterministic context manifests, canonical registry events, non-authoritative operational run events, artifact validation, and CI guards (no pip dependencies). Network mutations are limited to dry-run-by-default `resend.py` and `indexpush.py`, both requiring `--live`. The authoritative topology is [`references/system-catalog.json`](references/system-catalog.json); its generated human view is [`docs/system-architecture.md`](docs/system-architecture.md).
 
 Install instructions live in [README.md](README.md). Keep this file focused on authoring and maintenance rules.
 
@@ -90,7 +92,7 @@ Auditor-class gates: `content-quality-auditor` (CORE-EEAT publish gate), `domain
 - **After skill changes**: update the authoritative **10 tracking surfaces** in [CONTRIBUTING.md §6](CONTRIBUTING.md). For release bumps, also sync localized README badges. `scripts/check-versions.sh` (CI) fails on any drift — run it locally after syncing.
 - **Adding a connector**: follow [docs/connector-playbook.md](docs/connector-playbook.md) end to end — qualify (category / connector-vs-recipe / safety class), verify against primary docs + a live call, implement to house style, offline-test the pure builders, wire skills by the differentiation rule, hit the six doc touchpoints, track, regress, record.
 - **Use `references/` for detail** — keep `SKILL.md` focused. Auditor-class skills `Read references/auditor-runbook.md` at activation (the framework-agnostic SSOT) and keep only their framework-specific §2 worked examples, §3 guardrails, and §5 translation inline.
-- **Validate**: `./scripts/validate-skill.sh <category>/<skill-name>` before release PRs. CI guards: `golden-math` (8 frameworks), `check-evals`, `check-local-links`, `check-pii`, `check-stdlib-only` (incl. the Paid-Ads keyed-API red line), plus the `check-architecture.py` symmetry contract (conform-or-declared; stale deviations fail).
+- **Validate**: `./scripts/validate-skill.sh <category>/<skill-name>` before release PRs. CI guards: `golden-math` (8 frameworks), strict 700-case `check-evals` plus credential-free smoke/change-aware/nightly profile planning, generated auditor prompt-contract drift, typed route/run/audit-loop tests for event-first recovery, selected-ancestry closure, bounded convergence, and terminal-slot preservation, `check-local-links`, `check-pii`, `check-stdlib-only` (incl. the Paid-Ads keyed-API red line), `check-context-budget` (SKILL.md/auditor-activation/recursive-reference and assembled `/auto` byte budgets), `check-routing` (trigger uniqueness, boundary clauses, bare-name handoff resolution), plus the `check-architecture.py` symmetry contract (conform-or-declared; stale deviations fail).
 
 ## Writing Style
 

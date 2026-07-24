@@ -4,13 +4,13 @@ slug: aaron-social-calendar-builder
 displayName: "Social Calendar Builder · 社媒排期日历"
 summary: "常青内容日历/栏目配比/批量生产/循环复用/发布节奏"
 description: 'Use when the user asks to "build our social posting calendar", "set weekly slots and queue depth per channel", or "plan the evergreen recycle rotation"; produces the always-on brand calendar — pillar allocation with hero/hub/help balance and give:ask targets (all labeled Estimated starting heuristics to calibrate against own analytics, never scored rules), per-channel recurring slots with queue depth, a batching workflow, an evergreen recycle cycle with freshness re-checks, deliberate open slots for realtime/trend moments fed by trend-spotter go/skip verdicts, and first-comment/publish-order ops — cadence commitments filed to the channel registry, and no batch ships to the queue without a SHIP verdict from social-quality-auditor pre-publish mode. Not for repurposing an existing asset or the paid-amplification calendar — use content-amplifier. 社媒排期/内容日历/栏目配比/常青循环复用'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when standing up or rebalancing the always-on social posting calendar: pillar allocation, hero/hub/help mix, give:ask ratio targets, per-channel recurring slots and queue depth, batching days, evergreen recycle rotation with freshness re-checks, deliberate realtime/trend gaps, and first-comment/publish-order ops. Not the per-post copy (social-creative-builder) and not repurposing or paid amplification (content-amplifier); no batch ships to the queue without the SHIP verdict from social-quality-auditor pre-publish mode."
 argument-hint: "<channels + committed cadence> [content pillars] [planning horizon]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "social", "phase": "craft", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "craft"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "social", "phase": "craft", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "craft"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Social Calendar Builder

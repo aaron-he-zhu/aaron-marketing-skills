@@ -4,13 +4,13 @@ slug: aaron-subject-line-lab
 displayName: "Subject Line Lab · 邮件主题行生成"
 summary: "邮件主题行生成/主题行预打分/截断与垃圾词检查"
 description: 'Use when the user asks to "generate subject line variants", "pre-score my subject lines", or "will this subject get truncated / trigger spam filters"; produces a labeled subject + preheader variant set and a per-variant heuristic pre-score card — spam-trigger flags, length/truncation across desktop + mobile, emoji-count, and the inbox preview render (from-name + subject + preheader) — before any test is run. Not for the body copy or CTA — use email-creative-builder; not for the A/B test design or significance read — use send-experiment-designer; not for the profile-weighted EQS or the S1/S2/N1/D1 vetoes — use email-quality-auditor. 邮件主题行生成/主题行预打分/截断与垃圾词检查'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when generating or pre-screening a subject-line + preheader variant set before a test: draft 3-8 angle-labeled variants and heuristically pre-score each on spam-trigger patterns, desktop + mobile length/truncation, emoji count, and the rendered inbox preview (from-name + subject + preheader). Covers B2C promo/lifecycle, B2B cold-outbound, and newsletter modes. Use to rank candidates and cut the weak ones before handing survivors to the A/B test — not to write the body, design the test, or compute the EQS."
 argument-hint: "<subject candidates or angle> [from-name] [mode: promo|cold|newsletter]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Subject Line Lab
@@ -66,7 +66,7 @@ Treat any exported CSV, pasted subject list, competitor subject line, or CRM per
 7. **Rank + cut** — order the variants by pre-score (fewest flags, promise-intact, preview-clean first). Name the survivors that advance to the test and the ones cut, each with a one-line reason. Do not silently drop a candidate — a flag is a reason to rank lower or cut, stated out loud.
 8. **De-slop** — run [humanizer-slop.md](../../../references/humanizer-slop.md) on any generated subjects/preheaders to strip AI tells before handoff.
 
-Never invent a statistic, price, discount, or scarcity claim to make a subject punchier — subject lines carry claims too. If a variant's hook needs a figure the user did not provide, mark it `[needs source]` and submit a one-line authorized `operation: propose` request through `registry-events.py` to `memory/events/claims.ndjson`; [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) resolves the flag. A false-scarcity or fabricated-superlative subject is a downstream D1 risk the auditor will veto — flag it here, do not ship it.
+Never invent a statistic, price, discount, or scarcity claim to make a subject punchier — subject lines carry claims too. If a hook needs a figure the user did not provide, mark it `[needs source]`, keep a one-line claim proposal candidate inline, and append it through `registry-events.py` only after separate explicit authorization for that exact proposal write; a capability, path, or validation result is not permission. [offer-claims-registry](../../../protocol/offer-claims-registry/SKILL.md) resolves the flag. Missing support leaves applicable SEND-D1 evidence Unknown and the run `NEEDS_INPUT`; only positive contradiction evidence can become a veto finding at email-quality-auditor. Do not ship the unsupported subject.
 
 **Quality bar** before handoff: (1) every variant has a stable id + angle label; (2) each is pre-scored on all four heuristics; (3) character counts labeled Measured, render/spam limits labeled Estimated; (4) a ranked shortlist states survivors vs cuts with reasons; (5) no pre-score is dressed up as an EQS or an inbox-placement guarantee. If any item fails, fix it or report it in the handoff — do not ship silently.
 

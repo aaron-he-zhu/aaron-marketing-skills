@@ -6,7 +6,9 @@
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-18.0.0-orange" alt="Version"></a>
+<!-- GENERATED:BEGIN release-surface:version-badge -->
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.0.0-orange" alt="Version"></a>
+<!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
 </p>
@@ -33,7 +35,7 @@ A library of Claude Skills and slash commands that turns a chat agent into a mar
 | **Launch** | 16 | research → assemble → mobilize → prove | [RAMP](references/ramp-benchmark.md) preflight / execution / outcome profiles | `/aaron-marketing:launch` |
 | **Protocol layer** | 8 | — (shared machinery, outside the phase flows) | 7 truth registries (entity · creator · offer/claims · consent · launch · channel · narrative) + HOT/WARM/COLD memory | — |
 
-`/aaron-marketing:auto` routes any natural-language goal across all of it. Skills and commands are **plain Markdown**; small Bash/Python-stdlib runtimes provide hooks, validation, scoring, registry events, connectors, and CI checks (no `pip`, no build step). **Every skill runs at Tier 1 with data you provide**; connectors only automate retrieval or an explicitly approved mutation.
+`/aaron-marketing:auto` routes any natural-language goal across all of it. Skills and commands are **plain Markdown**; small Bash/Python-stdlib runtimes provide hooks, validation, scoring, registry events, private operational run events, connectors, and CI checks (no `pip`, no build step). **Every skill runs at Tier 1 with data you provide**; connectors only automate retrieval or an explicitly approved mutation.
 
 The authoritative typed topology is [`references/system-catalog.json`](references/system-catalog.json); see the [generated system architecture](docs/system-architecture.md) for the readable four-layer map, all 120 paths, registry owners, auditor sinks, and distribution profiles.
 
@@ -46,6 +48,7 @@ The authoritative typed topology is [`references/system-catalog.json`](reference
 - [Why this library](#why-this-library)
 - [Install](#install)
 - [First run](#first-run)
+- [Capability profiles](#capability-profiles)
 - [Architecture](#architecture)
   - [The shared skill contract](#the-shared-skill-contract)
   - [The system: a four-layer marketing operating system](#the-system-a-four-layer-marketing-operating-system)
@@ -131,6 +134,45 @@ Or use the slash commands — `/auto` for routing, or a discipline entrypoint:
 
 ---
 
+## Capability profiles
+
+A fresh project runs **Lite**, including when you installed the full
+Governed-ceiling plugin. Choose a larger profile only when the job needs its
+mechanisms:
+
+| Profile | Adds | Typical use |
+|---|---|---|
+| **Lite** | The 120 authored skills, `/auto`, deterministic scoring, inline delivery, canonical-state reads | Briefs, plans, drafts, analysis, and most day-to-day work |
+| **Pro** | Connectors and explicitly requested saved audits | Tool-assisted research and persistent audit artifacts |
+| **Governed** | Memory/registry writes, verified run evidence, deterministic context, controller, workflow and audit loops | Stateful, recoverable, independently verifiable operations |
+
+**v19 validation status:** this is an engineering-validated release. The exact
+source passes CI, reproducible package checks, and real model/provider execution
+over simulated semantic fixtures. Those runs do not constitute real-project
+outcome evidence; real-project outcomes remain unvalidated. Lite remains the
+fresh-project default. Governed is available as an explicit
+capability choice, but availability does not validate Governed outcomes or
+Governed-by-default. That promotion requires the post-release cohort of 14
+pilots + 70 paired Lite/Governed projects + 28 shadow projects.
+
+The installed archive is a hard ceiling; the effective project profile may be
+lower. Select the archive in the installer/admin surface, or select the logical
+profile through a one-invocation `--profile`, `AARON_MARKETING_PROFILE`, or the
+closed `.aaron-marketing/profile.json` project config. These controls do not add
+a slash command: the public grammar remains exactly `/auto` plus the seven
+discipline commands, and every profile preserves the seven 4×4 loops and their
+TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP acronyms.
+
+Profiles never disable consent, claims, PII/secret handling, external-mutation
+approval, audit-verdict integrity, or release provenance. Switching profiles
+also never deletes existing state. Standalone one-folder installs have a Lite
+physical ceiling and degrade fail-closed when a root runtime is absent.
+Configuration, archive selection, legacy-project migration, and
+`LEGACY_RUN_BLOCKED` recovery are documented in
+[`references/capability-profiles.md`](references/capability-profiles.md).
+
+---
+
 ## Architecture
 
 ### The shared skill contract
@@ -207,7 +249,7 @@ The `protocol/` directory holds the **shared truth & memory machinery** that sit
 | [narrative-registry](protocol/narrative-registry/SKILL.md) | Owns complete versioned narrative canon records | narrative | `memory/events/narrative.ndjson` |
 | [memory-management](protocol/memory-management/SKILL.md) | Manages authorized HOT/WARM/COLD working notes without impersonating a registry | all disciplines | non-canonical `memory/` working state |
 
-The registries follow a **sole-writer rule** (other skills submit via `registry-events.py` proposal events), and they *curate* — the gates *judge*. The genuinely horizontal layer beneath everything is the `references/` protocols ([auditor-runbook](references/auditor-runbook.md), [state-model](references/state-model.md), [skill-contract](references/skill-contract.md), [humanizer-slop](references/humanizer-slop.md), [measurement-protocol](references/measurement-protocol.md)) — shared by design as documents, not skills.
+The registries follow a **sole-writer rule** (other skills submit via `registry-events.py` proposal events), and they *curate* — the gates *judge*. The genuinely horizontal layer beneath everything is the `references/` protocols ([auditor-runbook](references/auditor-runbook.md), [state-model](references/state-model.md), [skill-contract](references/skill-contract.md), [context-resolution](references/context-resolution.md), [runtime-protocol](references/runtime-protocol.md), [audit-loop](references/audit-loop-protocol.md), [humanizer-slop](references/humanizer-slop.md), [measurement-protocol](references/measurement-protocol.md)) — shared by design as documents, not skills.
 
 ### Memory & automation hooks
 
@@ -219,15 +261,23 @@ The registries follow a **sole-writer rule** (other skills submit via `registry-
 | **WARM** | `memory/<subdir>/` | Per-skill working state and permissioned audit artifacts; registry projections are separate rebuildable views. |
 | **COLD** | `memory/archive/` | Demoted/older records, kept for recall. |
 
+Opt-in **run evidence** lives separately under `memory/runs/<run-id>/`: append-only metadata events, a derived session tree, turn snapshots, save points, and run envelopes. It is Git-ignored, retention-bounded, and explicitly non-authoritative — it cannot accept a registry proposal or authorize an external action. The stdlib [`run-events.py`](scripts/run-events.py) runtime and [Runtime Protocol](references/runtime-protocol.md) enforce this boundary.
+
+Before a turn snapshot, the stdlib [`context-resolver.py`](scripts/context-resolver.py) can turn an explicit candidate request into a hash-bound [context manifest](references/context-resolution.md). It deterministically applies required/optional/forbidden policy, authority and freshness order, conflict/supersession rules, sensitivity and byte budgets, content dedupe, and typed omission reasons. It does not perform semantic retrieval or copy source content into the manifest. `/auto` likewise reads a generated index plus at most three discipline/cross-discipline [routing shards](references/auto-routing-scenarios.md), while one maintenance source preserves all 88 cases.
+
+The optional stdlib [`audit-loop.py`](scripts/audit-loop.py) adds a bounded **proposal-only outer loop** around validated FIX audits. It records immutable proposal, owner-review, non-empty intervention-evidence, and re-audit steps under the same ignored run namespace, with leases, idempotency, deadlines, deterministic retry timing, and 1–3 improvement cycles. Each v2 transition reserves its selected-ancestry event anchor before materializing the exact step; a missing step is recoverable only by replaying the same request, while the public `loop-step` command is verification-only. The final event slot stays reserved for terminal sealing. Runtime-derived `loop_closure` isolates sibling branches: success requires exact terminal loops; waiting/needs-input/blocked may retain exactly covered active loops; failed/aborted may preserve bounded unresolved evidence without claiming convergence. The loop never edits the audited target, performs an intervention, accepts registry truth, or authorizes an external mutation; only a distinct medium/high-confidence SHIP re-audit that passes the observation-time provenance floor can converge. [`audit-trends.py`](scripts/audit-trends.py) deduplicates exact artifact bytes, links all exact-hash edges through the verified loop graph (including non-adjacent series entries), enforces aggregate scan budgets, escapes terminal controls in human output, and reports relapse, oscillation, context/catalog drift, evidence growth, and confidence changes without guessing causality from display order.
+
+Semantic conformance is also layered. The strict corpus projects 572 authored cases, 88 generated routing cases, and 40 generated auditor prompt-contract variants into one 700-case runner model. A fixed 24-case smoke profile, change-aware impact selection, and full nightly profile are credential-free to plan in CI. Optional protocol-v2 host adapters add hash-bound real execution provenance and keep behavior failures distinct from host failures; a real adapter run over a simulated case remains simulated case evidence. The eight generated auditor prompt contracts bind their skill, catalogs, framework rules, and runtime sources without becoming a second topology inventory; see the [semantic evaluation docs](https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/main/evals#readme) for the source-only maintenance workflow.
+
 **Hooks** (`hooks/hooks.json`, runner `hooks/claude-hook.sh`) wire seven Claude Code events:
 
 | Event | Matcher | What it does |
 |-------|---------|--------------|
-| `SessionStart` | `startup\|resume\|clear\|compact` | Injects the **sanitized** hot-cache + load-time over-limit & oldest-dated-entry staleness signals + an open-loops pointer (prompt-injection lines are redacted; symlinked caches are rejected). |
-| `UserPromptSubmit` | (all) | Lightweight per-prompt context hook. |
-| `PreToolUse` | known write-capable tools | Exact-path direct `memory/**` writes must be Git-ignored; opaque shell/MCP memory mutations are unsupported and denied when identified. Registry writes repeat exact final/temp/lock checks inside their runtime. |
-| `PostToolUse` | known write-capable tools | After successful writes, audits the full operational-memory namespace and validates the exact audit target or bounded reserved-sink sweep. |
-| `PostToolUseFailure` | known write-capable tools | Runs the same post-state privacy and Artifact Gate checks after a tool reports failure, because a failed command may still have written files. |
+| `SessionStart` | `startup\|resume\|clear\|compact` | Injects a combined-budget **sanitized** hot-cache/checkpoint/integrity view and, only when `AARON_ACTIVE_RUN_ID` is explicit, a bounded untrusted run-resume summary. Per-source truncation is labeled; symlinked records are rejected. |
+| `UserPromptSubmit` | (all) | Lightweight per-prompt context hook; emits metadata-only turn lifecycle when an active run and stable turn ID are explicit. |
+| `PreToolUse` | known write-capable tools | Exact-path direct `memory/**` writes must be Git-ignored; opaque shell/MCP memory mutations are unsupported and denied when identified. Registry/run runtimes repeat exact atomic-path checks. An active run records only hashed IDs and typed metadata. |
+| `PostToolUse` | known write-capable tools | After successful writes, audits the full operational-memory namespace, validates the exact audit target or bounded reserved-sink sweep, and closes an opted-in tool lifecycle event. |
+| `PostToolUseFailure` | known write-capable tools | Runs the same post-state checks after a reported failure and records a typed failed lifecycle event when tracing is active, because a failed command may still have written files. |
 | `PostToolBatch` | (all) | Rechecks operational memory and the complete reserved sink after each parallel tool batch. |
 | `Stop` | (all) | Performs a final bounded sweep and can block once for repair. The required `stop_hook_active` loop guard permits the subsequent stop. Pre-commit/CI remain Git/PII backstops only; they do not validate ignored runtime artifacts. |
 
@@ -541,7 +591,7 @@ Skills name tools with `~~category` placeholders (`~~SEO tool`, `~~web analytics
 
 | Layer | What you get |
 |-------|--------------|
-| **21 bundled zero-dependency connectors** | Pure Python stdlib — no `pip`, no build step. Keyless live SERP + JS-rendered scraping (Firecrawl, Tavily), an AI-answer citation probe, DNS-over-HTTPS email-auth pulls, Wikipedia attention series, GDELT news mentions, real YouTube creator metrics, IndexNow + Baidu index push, Resend ESP automation, and a git-diffable measurement ledger that turns any of them into a before/after time series. |
+| **28 bundled zero-dependency connectors** | Pure Python stdlib — no `pip`, no build step. Keyless live SERP + JS-rendered scraping (Firecrawl, Tavily), an AI-answer citation probe, DNS-over-HTTPS email-auth pulls, Wikipedia attention series, GDELT news mentions, real YouTube creator metrics, IndexNow + Baidu index push, Resend ESP automation, Product Hunt / HN / App Store launch intel, Bluesky / Fediverse / Discourse community reads, an experiment-statistics decision helper, and a git-diffable measurement ledger that turns any of them into a before/after time series. |
 | **60+ documented official/free APIs** | Every row links the vendor's **official documentation**, carries a verified-on date, and every link is HTTP-checked before it ships. Includes the paths most tool lists miss: GSC URL Inspection, CrUX History (40 weeks of field CWV), the Gmail Postmaster Tools API, Meta's Ad Library, Microsoft Clarity's Data Export API. |
 | **Vendor MCP servers** | 18 remote endpoints catalogued (never auto-registered — your `/mcp` list stays clean) plus the official self-hosted servers for Google Analytics, Search Console, **Google Ads**, and **Microsoft Clarity**. Two remote MCPs work with no key at all (Firecrawl, Tavily). |
 
@@ -636,20 +686,20 @@ protocol/                                            # Protocol layer (8) — tr
 commands/        # 8 slash commands (auto, narrative, seo-geo, influencer, ad, email, launch, social)
 references/      # shared contract, state model, the 8 benchmarks, auditor runbook, platform packs
 evals/           # per-skill structural eval cases + structure-manifest.json
-hooks/           # hooks.json + claude-hook.sh (the only runtime logic)
-scripts/         # validate-skill.sh + connectors/ (stdlib) + CI guards
-memory/          # HOT/WARM/COLD scaffolding + registry stores (entities/creators/claims/consent/launch/channels/narrative-registry)
-docs/            # localized README (zh)
+hooks/           # Claude lifecycle wiring + bounded privacy/artifact/run-context runner
+scripts/         # stdlib deterministic runtimes, validators/generators, connectors, and CI guards
+memory/          # HOT/WARM/COLD scaffolding + registry stores + ignored non-authoritative run evidence
+docs/            # 9 localized READMEs + contributor docs (connector playbook, agent compatibility, …)
 .claude-plugin/  # plugin.json + marketplace.json mirror
 ```
 
-This source repository contains both runtime and maintenance assets. User distributions are allowlisted by [`references/distribution-files.json`](references/distribution-files.json) and built with `python3 scripts/build-distribution.py --output <dir> --plugin`; tests, evals, CI, generators, and contributor-only documentation are intentionally excluded. A standalone skill build uses `--skill <catalog-path>` and contains only that skill directory.
+This source repository contains both runtime and maintenance assets. User distributions are allowlisted by [`references/distribution-files.json`](references/distribution-files.json) and built with `python3 scripts/build-distribution.py --output <dir> --plugin --profile lite|pro|governed`; tests, evals, CI, generators, and contributor-only documentation are intentionally excluded. A standalone skill build uses `--skill <catalog-path>`, contains only that skill directory, and declares a Lite ceiling. Bare `--plugin` remains a deprecated Governed-ceiling alias through v20; release automation selects the profile explicitly. Every output carries a per-file SHA-256 `distribution-manifest.json`; the builder rejects symlinks, special files, and multiply linked files, and `--verify-manifest <dir>` revalidates the complete payload. Every live release publisher/projector enforces clean, freshly refreshed pushed provenance; per-skill and built-package registry payloads come from a private export of that commit and bind its repository/commit identity into the verified manifest.
 
 ---
 
 ## Design philosophy
 
-- **Skills are content.** The only code is the Bash validator, the Bash hook runner, and zero-dependency Python-stdlib connector/check helpers. No third-party / `pip` dependencies, ever — enforced by a dependency-creep guard.
+- **Skills are content.** Core plugin/distribution and repository-maintenance code stays in small Bash/Python-stdlib validators, deterministic runtimes, hooks, connectors, and maintenance guards. No third-party / `pip` dependencies are permitted on those shipped or guard-scanned Python surfaces — enforced by a dependency-creep guard. Isolated probes under `evals/` are excluded from distributions and may carry a locked, path-scoped development toolchain.
 - **Keyless first.** Every `~~category` has a free/own-data recipe; MCP and paid tools are pure convenience.
 - **Surgical & MECE.** Each skill owns one job with a crisp scope boundary; overlapping work ships as a *mode* of an existing skill rather than a new thin skill. Registries curate, gates judge, analyzers feed gates.
 - **No invented numbers.** Skills label every figure Measured / User-provided / Estimated and ship an AI-slop / banned-phrase detector.
@@ -665,12 +715,24 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 |-------|--------|
 | `validate-skill.sh` | Frontmatter, required sections, version consistency, plugin-relative links across all 120 skills. |
 | `golden-auditor-math.py` | Deterministic weight-sum + worked-example arithmetic for **all eight** frameworks. |
-| `check-evals.py` | Eval structural lint + `structure-manifest.json` (120/120 skills carry eval cases). |
+| `check-evals.py` | Strict 700-case parser, evidence provenance, routing lint, and `structure-manifest.json` (120/120 skills carry eval cases). |
 | `check-pii.py` | Blocks committed secrets / PII (token-level allowlist, fail-closed). |
 | `check-stdlib-only.sh` | Dependency-creep guard + the Paid-Ads keyed-API red line. |
 | `check-versions.sh` | Version-sync guard: system catalog, plugin/marketplace/OpenClaw manifests, root + localized README badges, AGENTS/CLAUDE/VERSIONS, GitHub About, and all 120 skill versions stay aligned. |
 | `tests/test_connectors_local.py` | Offline request-builder/parser tests spanning all 29 bundled connector modules (no network in CI). |
+| `tests/test_distribution_builder.py` | Distribution closure, per-file SHA-256 manifest, tamper detection, and adversarial symlink/hardlink/special-file rejection. |
+| `tests/test_release_assets.py` + `tests/test_create_github_release.py` + `tests/test_final_release_gate.py` | Exact-commit deterministic Lite/Pro/Governed archives, checksum/ledger integrity, private engineering release-receipt binding, immutable tag/Release orchestration, downloaded-asset verification, and live-publisher final-gate enforcement. |
+| `tests/test_publish_release.py` + `tests/test_publish_state.py` + `tests/test_registry_status.py` | Every live release entrypoint's clean/refreshed/pushed gate, commit-bound canonical registry snapshots/resume state, verified package payloads and remote source/content confirmation, plus dry-run independence. |
 | `tests/test_hook_artifact_gate.sh` | Behavior tests for the hook's Artifact Gate + SessionStart sanitization. |
+| `tests/test_run_events.py` | Operational event-tree/hash-chain, idempotency, concurrency, snapshot/save-point/envelope, privacy, recovery, and unsafe-path regressions. |
+| `tests/test_context_resolver.py` | Deterministic required/optional selection, freshness, conflict, dedupe, sensitivity/budget, signature, path, and immutable-output regressions. |
+| `generate-skill-contracts.py --check` | Proves all 120 skills have current hash-bound routing/input/output/completion/handoff machine contracts. |
+| `workflow-graph.py --check` + `tests/test_workflow_graph.py` | Proves the authoritative 120-node/374-edge graph, typed conditions, bounded re-entry, reachability, and Product Launch fan-out/join projection. |
+| `tests/test_workflow_loop.py` | Executes the real Product Launch graph through the generic bounded loop with route-matched evidence, independent validators, sibling isolation, retry/cycle/deadline/budget/stall/recovery, and explicit terminal outcomes. |
+| `check-engineering-maturity.py` | Scores 20 controls each for Prompt, Context, Harness, Loop, and Graph; each dimension must reach 95/100 and pass its hard gates, including current real-provider smoke evidence. |
+| `generate-auto-routing-shards.py --check` | Proves the runtime routing index and eight queryable shards are exact generated views of one 88-case source. |
+| `generate-auditor-prompt-contracts.py --check` | Proves the eight gate prompt contracts and 40 semantic variants match current catalogs, skills, runtime sources, and hashes. |
+| `check-context-budget.py` | Recursive per-reference caps plus the largest valid three-shard `/auto` assembled-context budget. |
 
 Live endpoint drift is sampled separately by the **manual** [`scripts/connectors/smoke-live.sh`](scripts/connectors/smoke-live.sh) — one minimal real call per hosted connector listed in that script, with shape assertions (rate-limit answers count as SKIP); run it before a release, never in CI.
 
@@ -679,7 +741,9 @@ Live endpoint drift is sampled separately by the **manual** [`scripts/connectors
 ## Contributing & project docs
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — authoring rules, the contribution checklist, and the authoritative 10-surface tracking list.
-- **[VERSIONS.md](VERSIONS.md)** — per-skill versions + changelog (current bundle: `18.0.0`).
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
+- **[VERSIONS.md](VERSIONS.md)** — per-skill versions + changelog (current bundle: `19.0.0`).
+<!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](SECURITY.md)** · **[PRIVACY.md](PRIVACY.md)** · **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** — security, privacy, and community policy.
 - **[CLAUDE.md](CLAUDE.md)** / **[AGENTS.md](AGENTS.md)** — agent-facing context for this repo.
 

@@ -6,7 +6,9 @@
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-18.0.0-orange" alt="Version"></a>
+<!-- GENERATED:BEGIN release-surface:version-badge -->
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.0.0-orange" alt="Version"></a>
+<!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
 </p>
@@ -541,7 +543,7 @@ Artifact Gate は**フレームワーク非依存**です —— 同じフック
 
 | 層 | 得られるもの |
 |-------|--------------|
-| **21 の同梱・依存関係ゼロのコネクタ** | 純粋な Python 標準ライブラリ —— `pip` 不要、ビルドステップ不要。keyless なライブ SERP + JS レンダースクレイピング（Firecrawl、Tavily）、AI 回答の引用プローブ、DNS-over-HTTPS のメール認証取得、Wikipedia 注目度シリーズ、GDELT ニュース言及、本物の YouTube クリエイター指標、IndexNow + Baidu インデックス送信、Resend ESP 自動化、そしてそれらのいずれをも前後比較の時系列に変える git 差分可能な測定台帳。 |
+| **28 の同梱・依存関係ゼロのコネクタ** | 純粋な Python 標準ライブラリ —— `pip` 不要、ビルドステップ不要。keyless なライブ SERP + JS レンダースクレイピング（Firecrawl、Tavily）、AI 回答の引用プローブ、DNS-over-HTTPS のメール認証取得、Wikipedia 注目度シリーズ、GDELT ニュース言及、本物の YouTube クリエイター指標、IndexNow + Baidu インデックス送信、Resend ESP 自動化、そしてそれらのいずれをも前後比較の時系列に変える git 差分可能な測定台帳。 |
 | **60 以上の文書化された公式/無料 API** | 各行がベンダーの**公式ドキュメント**をリンクし、検証日を持ち、各リンクは公開前に HTTP で確認されます。多くのツールリストが見落とすパスを含みます：GSC URL Inspection、CrUX History（40 週間のフィールド CWV）、Gmail Postmaster Tools API、Meta の Ad Library、Microsoft Clarity の Data Export API。 |
 | **ベンダー MCP サーバー** | 18 のリモートエンドポイントをカタログ化（決して自動登録されません —— あなたの `/mcp` リストはきれいなまま）、加えて Google Analytics、Search Console、**Google Ads**、**Microsoft Clarity** の公式セルフホストサーバー。2 つのリモート MCP はキー不要で動作します（Firecrawl、Tavily）。 |
 
@@ -677,7 +679,9 @@ docs/            # ローカライズ済み README（zh）
 ## コントリビュートとプロジェクトドキュメント
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— オーサリングルール、コントリビューションチェックリスト、権威ある 10 の追跡サーフェスのリスト。
-- **[VERSIONS.md](../VERSIONS.md)** —— スキルごとのバージョン + changelog（現在のバンドル：`18.0.0`）。
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
+- **[VERSIONS.md](../VERSIONS.md)** —— スキルごとのバージョン + changelog（現在のバンドル：`19.0.0`）。
+<!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— セキュリティ、プライバシー、コミュニティのポリシー。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— この repo のエージェント向けコンテキスト。
 

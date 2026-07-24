@@ -1,0 +1,393 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 138,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every watched flagship surface has a drift verdict backed by an as-of dated snapshot (Measured) or an explicit \"no history available\" note"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 277,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 140
+        },
+        "text": "the repositioning-trigger set names concrete signals and states the whiplash guardrail (reposition needs a triggering signal, not a mood)"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 409,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 279
+        },
+        "text": "and the D1/W1/M1 retro lines are each labeled Measured / User-provided / Estimated with proxy reads labeled proxy, never Measured."
+      }
+    ],
+    "done_when": "every watched flagship surface has a drift verdict backed by an as-of dated snapshot (Measured) or an explicit \"no history available\" note; the repositioning-trigger set names concrete signals and states the whiplash guardrail (reposition needs a triggering signal, not a mood); and the D1/W1/M1 retro lines are each labeled Measured / User-provided / Estimated with proxy reads labeled proxy, never Measured.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/tale-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "source_line": 4
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/narrative-registry/canon.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "file",
+        "path": "memory/narrative-registry/versions.md",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/narrative/category-narrative-mapper",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:narrative-drift-monitor",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 192,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "narrative-quality-auditor"
+        ],
+        "text": "- **Primary**: [narrative-quality-auditor](../narrative-quality-auditor/SKILL.md) — re-audit the drifted surfaces against the canon and compute the TALE profile result with the current vetoes."
+      },
+      {
+        "condition": "If a repositioning trigger genuinely fired**: [message-system-architect](../../architect/message-system-architect/SKILL.md) — re-author the durable message hierarchy, which the registry then re-versions atomically.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 411,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 193
+        },
+        "target_skills": [
+          "message-system-architect"
+        ],
+        "text": "- **If a repositioning trigger genuinely fired**: [message-system-architect](../../architect/message-system-architect/SKILL.md) — re-author the durable message hierarchy, which the registry then re-versions atomically."
+      },
+      {
+        "condition": "If drifted surfaces need re-cascading to their creative builders**: [narrative-cascade-planner](../../land/narrative-cascade-planner/SKILL.md) — refresh the per-surface message-match specs before the copy is rewritten.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 634,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 412
+        },
+        "target_skills": [
+          "narrative-cascade-planner"
+        ],
+        "text": "- **If drifted surfaces need re-cascading to their creative builders**: [narrative-cascade-planner](../../land/narrative-cascade-planner/SKILL.md) — refresh the per-surface message-match specs before the copy is rewritten."
+      },
+      {
+        "condition": "when the drift report is saved and the repositioning-trigger decision (re-audit vs reposition) is stated.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 1019,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 636
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the drift report is saved and the repositioning-trigger decision (re-audit vs reposition) is stated."
+      }
+    ],
+    "next_best": "- **Primary**: [narrative-quality-auditor](../narrative-quality-auditor/SKILL.md) — re-audit the drifted surfaces against the canon and compute the TALE profile result with the current vetoes.\n- **If a repositioning trigger genuinely fired**: [message-system-architect](../../architect/message-system-architect/SKILL.md) — re-author the durable message hierarchy, which the registry then re-versions atomically.\n- **If drifted surfaces need re-cascading to their creative builders**: [narrative-cascade-planner](../../land/narrative-cascade-planner/SKILL.md) — refresh the per-surface message-match specs before the copy is rewritten.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the drift report is saved and the repositioning-trigger decision (re-audit vs reposition) is stated.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "message-system-architect",
+      "narrative-cascade-planner",
+      "narrative-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "narrative",
+    "name": "narrative-drift-monitor",
+    "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+    "phase": "evaluate",
+    "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<brand / surfaces to watch> [competitor set] [canon path] [window: D1|W1|M1]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 120,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the canon and its history from `memory/narrative-registry/canon.md` + `memory/narrative-registry/versions.md` (read-only"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 206,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 122
+        },
+        "text": "[narrative-registry](../../../protocol/narrative-registry/SKILL.md) owns the record)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 345,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 208
+        },
+        "text": "the live brand surfaces (own pages/decks/listings, User-provided or scraped) and their change history via `scripts/connectors/wayback.py`"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 505,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 347
+        },
+        "text": "competitor narrative context from [category-narrative-mapper](../../trace/category-narrative-mapper/SKILL.md) in `memory/narrative/category-narrative-mapper/`"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 626,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 507
+        },
+        "text": "resonance signals from a prior [narrative-resonance-monitor](../narrative-resonance-monitor/SKILL.md) run when present."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the canon and its history from `memory/narrative-registry/canon.md` + `memory/narrative-registry/versions.md` (read-only; [narrative-registry](../../../protocol/narrative-registry/SKILL.md) owns the record); the live brand surfaces (own pages/decks/listings, User-provided or scraped) and their change history via `scripts/connectors/wayback.py`; competitor narrative context from [category-narrative-mapper](../../trace/category-narrative-mapper/SKILL.md) in `memory/narrative/category-narrative-mapper/`; resonance signals from a prior [narrative-resonance-monitor](../narrative-resonance-monitor/SKILL.md) run when present.",
+    "source": {
+      "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 91,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the drift report + repositioning-trigger set to `memory/narrative/narrative-drift-monitor/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 296,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 93
+        },
+        "text": "any unverifiable claim surfaced on a surface to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` marked `[needs source]` (this skill never adjudicates)"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 509,
+          "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+          "span_basis": "field-text",
+          "start_char": 298
+        },
+        "text": "a proposed canon re-version is never written here — it is submitted to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` only when a trigger genuinely fires."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
+    },
+    "summary": "a drift report — a per-surface self-drift table (surface, canon element, current wording, drift verdict, as-of dated wayback snapshots), competitor-repositioning alerts (who moved, from what to what, dated), an explicit repositioning-trigger condition set (the named signals that justify a reposition, and the whiplash guardrail that does not), and a D1/W1/M1 message-shift retro (intended vs actual pull-through, each line labeled Measured / User-provided / Estimated) — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the drift report + repositioning-trigger set to `memory/narrative/narrative-drift-monitor/`; any unverifiable claim surfaced on a surface to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` marked `[needs source]` (this skill never adjudicates); a proposed canon re-version is never written here — it is submitted to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` only when a trigger genuinely fires."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the first-time consistency check before a surface ships — use narrative-cascade-planner; not for computing the TALE profile result or running the vetoes — use narrative-quality-auditor; not for echo-rate / AI-answer resonance measurement — use narrative-resonance-monitor. 自漂移监测/竞品重定位告警/重定位触发/叙事漂移复盘",
+    "description": "Use when the user asks to \"check if our surfaces have drifted from the canon\", \"watch for competitor repositioning\", or \"define when we should reposition\"; produces a drift report — self-drift per flagship surface vs the narrative-registry canon over time (via wayback.py, change history Measured with as-of dates), competitor-repositioning alerts, an explicit repositioning-trigger condition set, and a D1/W1/M1 message-shift retro (intended vs actual pull-through, evidence-labeled) — feeding the TALE L drift-audit sub-items and the narrative-whiplash guardrail fact base. Not for the first-time consistency check before a surface ships — use narrative-cascade-planner; not for computing the TALE profile result or running the vetoes — use narrative-quality-auditor; not for echo-rate / AI-answer resonance measurement — use narrative-resonance-monitor. 自漂移监测/竞品重定位告警/重定位触发/叙事漂移复盘",
+    "source": {
+      "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
+    },
+    "trigger_phrases": [
+      "check if our surfaces have drifted from the canon",
+      "define when we should reposition",
+      "watch for competitor repositioning"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when watching a live narrative for drift over time: detecting flagship surfaces that have drifted from the narrative-registry canon (wayback change history), catching competitor repositioning, defining the explicit conditions that should trigger a repositioning, or running the D1/W1/M1 message-shift retro. The last move of the TALE Evaluate phase — it decides between a re-audit and a repositioning, and it is the fact base for the narrative-whiplash guardrail. Not the first-time consistency check and not the TALE profile result computation."
+  },
+  "schema_version": "1.0"
+}

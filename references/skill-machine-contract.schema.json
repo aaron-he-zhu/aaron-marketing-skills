@@ -1,0 +1,283 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/skill-machine-contract.schema.json",
+  "title": "Aaron machine-readable skill contract",
+  "description": "A closed projection of authored SKILL.md routing, input, output, authority-adjacent, completion, handoff, and context-hint fields. Text fields retain authored wording rather than inferred semantics.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "contract_id", "identity", "routing_contract",
+    "input_contract", "output_contract", "completion_contract", "handoff_contract",
+    "context_hints", "provenance"
+  ],
+  "properties": {
+    "$schema": {"const": "../skill-machine-contract.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "contract_id": {"type": "string", "pattern": "^skill:[a-z0-9][a-z0-9-]*$"},
+    "identity": {"$ref": "#/$defs/identity"},
+    "routing_contract": {"$ref": "#/$defs/routing"},
+    "input_contract": {"$ref": "#/$defs/input"},
+    "output_contract": {"$ref": "#/$defs/output"},
+    "completion_contract": {"$ref": "#/$defs/completion"},
+    "handoff_contract": {"$ref": "#/$defs/handoff"},
+    "context_hints": {"$ref": "#/$defs/contextHints"},
+    "provenance": {"$ref": "#/$defs/provenance"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "nonEmptyText": {"type": "string", "minLength": 1, "maxLength": 50000},
+    "extractionStatus": {
+      "enum": ["classified", "partially-classified", "unclassified"]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "section"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "section": {"type": "string", "minLength": 1, "maxLength": 160}
+      }
+    },
+    "clauseSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "section", "span_basis", "start_char", "end_char"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "section": {"type": "string", "minLength": 1, "maxLength": 160},
+        "span_basis": {"const": "field-text"},
+        "start_char": {"type": "integer", "minimum": 0, "maximum": 50000},
+        "end_char": {"type": "integer", "minimum": 1, "maximum": 50000}
+      }
+    },
+    "catalogSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "version"],
+      "properties": {
+        "path": {"const": "references/system-catalog.json"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"}
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "sha256", "version", "discipline", "phase", "class"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "path": {"type": "string", "pattern": "^[A-Za-z0-9._/-]+/SKILL\\.md$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
+        "discipline": {"enum": ["narrative", "seo-geo", "social", "email", "ad", "influencer", "launch", "protocol"]},
+        "phase": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+        "class": {"oneOf": [{"type": "null"}, {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"}]}
+      }
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description", "when_to_use", "trigger_phrases", "trigger_source", "boundary", "source"],
+      "properties": {
+        "description": {"$ref": "#/$defs/nonEmptyText"},
+        "when_to_use": {"$ref": "#/$defs/nonEmptyText"},
+        "trigger_phrases": {
+          "type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true,
+          "items": {"type": "string", "minLength": 3, "maxLength": 500}
+        },
+        "trigger_source": {"enum": ["description-quoted", "when-to-use-fallback"]},
+        "boundary": {"$ref": "#/$defs/nonEmptyText"},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["argument_hint", "reads", "clauses", "extraction_status", "source"],
+      "properties": {
+        "argument_hint": {"$ref": "#/$defs/nonEmptyText"},
+        "reads": {"$ref": "#/$defs/nonEmptyText"},
+        "clauses": {
+          "type": "array", "minItems": 1, "maxItems": 128,
+          "items": {"$ref": "#/$defs/inputClause"}
+        },
+        "extraction_status": {"$ref": "#/$defs/extractionStatus"},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    },
+    "inputClause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clause_id", "text", "kind", "requirement", "extraction_status", "source"],
+      "properties": {
+        "clause_id": {"type": "string", "pattern": "^read-[0-9]{2,3}$"},
+        "text": {"$ref": "#/$defs/nonEmptyText"},
+        "kind": {"enum": ["project-resource", "bundle-resource", "evidence-input", "unclassified"]},
+        "requirement": {"enum": ["required", "optional", "unclassified"]},
+        "extraction_status": {"$ref": "#/$defs/extractionStatus"},
+        "source": {"$ref": "#/$defs/clauseSource"}
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "summary_source", "writes", "clauses", "extraction_status", "source"],
+      "properties": {
+        "summary": {"$ref": "#/$defs/nonEmptyText"},
+        "summary_source": {"enum": ["expected-output", "writes-fallback"]},
+        "writes": {"$ref": "#/$defs/nonEmptyText"},
+        "clauses": {
+          "type": "array", "minItems": 1, "maxItems": 128,
+          "items": {"$ref": "#/$defs/outputClause"}
+        },
+        "extraction_status": {"$ref": "#/$defs/extractionStatus"},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    },
+    "outputClause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clause_id", "text", "kind", "side_effect", "permission_posture",
+        "extraction_status", "source"
+      ],
+      "properties": {
+        "clause_id": {"type": "string", "pattern": "^write-[0-9]{2,3}$"},
+        "text": {"$ref": "#/$defs/nonEmptyText"},
+        "kind": {"enum": ["project-artifact", "registry-event", "external-action", "mixed", "unclassified"]},
+        "side_effect": {"enum": ["project-write", "registry-proposal", "external-mutation", "mixed", "unclassified"]},
+        "permission_posture": {"enum": ["permission-required", "prohibited", "unclassified"]},
+        "extraction_status": {"$ref": "#/$defs/extractionStatus"},
+        "source": {"$ref": "#/$defs/clauseSource"}
+      }
+    },
+    "completion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["done_when", "clauses", "extraction_status", "source"],
+      "properties": {
+        "done_when": {"$ref": "#/$defs/nonEmptyText"},
+        "clauses": {
+          "type": "array", "minItems": 1, "maxItems": 128,
+          "items": {"$ref": "#/$defs/completionClause"}
+        },
+        "extraction_status": {"$ref": "#/$defs/extractionStatus"},
+        "source": {"$ref": "#/$defs/source"}
+      }
+    },
+    "completionClause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "clause_id", "text", "condition_kind", "requirement", "extraction_status", "source"
+      ],
+      "properties": {
+        "clause_id": {"type": "string", "pattern": "^done-[0-9]{2,3}$"},
+        "text": {"$ref": "#/$defs/nonEmptyText"},
+        "condition_kind": {"enum": ["success", "blocking"]},
+        "requirement": {"const": "required"},
+        "extraction_status": {"const": "classified"},
+        "source": {"$ref": "#/$defs/clauseSource"}
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "summary_source", "summary", "summary_ref", "next_best", "target_skills",
+        "items", "extraction_status"
+      ],
+      "properties": {
+        "summary_source": {"enum": ["skill-section", "shared-skill-contract"]},
+        "summary": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/nonEmptyText"}]},
+        "summary_ref": {"$ref": "#/$defs/source"},
+        "next_best": {"$ref": "#/$defs/nonEmptyText"},
+        "target_skills": {
+          "type": "array", "maxItems": 120, "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}
+        },
+        "items": {
+          "type": "array", "minItems": 1, "maxItems": 128,
+          "items": {"$ref": "#/$defs/handoffItem"}
+        },
+        "extraction_status": {"$ref": "#/$defs/extractionStatus"}
+      }
+    },
+    "handoffItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id", "text", "kind", "condition", "target_skills",
+        "extraction_status", "source"
+      ],
+      "properties": {
+        "item_id": {"type": "string", "pattern": "^handoff-[0-9]{2,3}$"},
+        "text": {"$ref": "#/$defs/nonEmptyText"},
+        "kind": {"enum": ["primary", "conditional", "outcome", "termination", "unclassified"]},
+        "condition": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/nonEmptyText"}]},
+        "target_skills": {
+          "type": "array", "maxItems": 120, "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}
+        },
+        "extraction_status": {"$ref": "#/$defs/extractionStatus"},
+        "source": {"$ref": "#/$defs/clauseSource"}
+      }
+    },
+    "bundleReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "requirement", "reason_code", "source_line"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "requirement": {"enum": ["required", "optional"]},
+        "reason_code": {"enum": ["explicit-runtime-read", "authored-reference"]},
+        "source_line": {"type": "integer", "minimum": 1, "maximum": 10000}
+      }
+    },
+    "projectPath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "kind", "access", "authority", "sensitivity", "reason_code"],
+      "properties": {
+        "path": {"type": "string", "pattern": "^memory/[A-Za-z0-9._/-]+$"},
+        "kind": {"enum": ["file", "prefix"]},
+        "access": {"const": "read"},
+        "authority": {"enum": ["canonical", "approved", "working", "untrusted"]},
+        "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
+        "reason_code": {"const": "explicit-skill-read"}
+      }
+    },
+    "contextHints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bundle_references", "project_paths"],
+      "properties": {
+        "bundle_references": {
+          "type": "array", "maxItems": 256, "items": {"$ref": "#/$defs/bundleReference"}
+        },
+        "project_paths": {
+          "type": "array", "maxItems": 64, "items": {"$ref": "#/$defs/projectPath"}
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generator", "system_catalog", "shared_contract"],
+      "properties": {
+        "generator": {"const": "generate-skill-contracts-v1"},
+        "system_catalog": {"$ref": "#/$defs/catalogSource"},
+        "shared_contract": {"$ref": "#/$defs/source"}
+      }
+    }
+  }
+}

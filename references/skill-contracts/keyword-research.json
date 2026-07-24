@@ -1,0 +1,253 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 81,
+          "path": "seo-geo/survey/keyword-research/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every shortlisted keyword carries volume + difficulty + intent (or a labeled N/A)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 130,
+          "path": "seo-geo/survey/keyword-research/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4",
+          "span_basis": "field-text",
+          "start_char": 83
+        },
+        "text": "keywords are grouped into pillar + cluster hubs"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 220,
+          "path": "seo-geo/survey/keyword-research/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4",
+          "span_basis": "field-text",
+          "start_char": 132
+        },
+        "text": "and the deliverable names at least 3 prioritized Quick Win / Growth / GEO opportunities."
+      }
+    ],
+    "done_when": "every shortlisted keyword carries volume + difficulty + intent (or a labeled N/A); keywords are grouped into pillar + cluster hubs; and the deliverable names at least 3 prioritized Quick Win / Growth / GEO opportunities.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/survey/keyword-research/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 32
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 28
+      },
+      {
+        "path": "scripts/connectors/README.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "source_line": 34
+      },
+      {
+        "path": "seo-geo/survey/keyword-research/references/example-report.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "40214f13ab403309a65c07b510f0335c808f9ece427587d327c106b13c65e7de",
+        "source_line": 79
+      },
+      {
+        "path": "seo-geo/survey/keyword-research/references/instructions-detail.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "fcbf70ef164650fec1d914408f0b6f62e9a66ffd565891a8857b88a0fcd7826f",
+        "source_line": 75
+      },
+      {
+        "path": "seo-geo/survey/keyword-research/references/keyword-intent-taxonomy.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "762f9919aba2e2837c4b860e931c14389486f19bedd539f4165a600e462549df",
+        "source_line": 88
+      },
+      {
+        "path": "seo-geo/survey/keyword-research/references/keyword-prioritization-framework.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e1cc7c3b8c1f8c32a0c8adc0a2870e20c622c8a8997f1b61fec8d66ac8a28d0e",
+        "source_line": 90
+      },
+      {
+        "path": "seo-geo/survey/keyword-research/references/topic-cluster-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "0da2b2baa789f0fd02e29299b16af3fa87a6160c12086944654883e3c1e836aa",
+        "source_line": 89
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:keyword-research",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 175,
+          "path": "seo-geo/survey/keyword-research/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "competitor-analysis",
+          "content-gap-analysis",
+          "serp-analysis"
+        ],
+        "text": "Primary: [competitor-analysis](../competitor-analysis/SKILL.md). Also: [content-gap-analysis](../content-gap-analysis/SKILL.md) and [serp-analysis](../serp-analysis/SKILL.md)."
+      }
+    ],
+    "next_best": "Primary: [competitor-analysis](../competitor-analysis/SKILL.md). Also: [content-gap-analysis](../content-gap-analysis/SKILL.md) and [serp-analysis](../serp-analysis/SKILL.md).",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "seo-geo/survey/keyword-research/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "competitor-analysis",
+      "content-gap-analysis",
+      "serp-analysis"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "keyword-research",
+    "path": "seo-geo/survey/keyword-research/SKILL.md",
+    "phase": "survey",
+    "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<topic or seed keyword> [market/language]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 109,
+          "path": "seo-geo/survey/keyword-research/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "topic or seed keyword, target market/language, business goal, site DR, and any user-provided or tool metrics."
+      }
+    ],
+    "extraction_status": "unclassified",
+    "reads": "topic or seed keyword, target market/language, business goal, site DR, and any user-provided or tool metrics.",
+    "source": {
+      "path": "seo-geo/survey/keyword-research/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 56,
+          "path": "seo-geo/survey/keyword-research/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing research deliverable and reusable summary."
+      }
+    ],
+    "extraction_status": "unclassified",
+    "source": {
+      "path": "seo-geo/survey/keyword-research/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4"
+    },
+    "summary": "a prioritized keyword brief plus the standard handoff summary for `memory/research/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing research deliverable and reusable summary."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for competitor-relative coverage gaps — use content-gap-analysis. 关键词研究/内容选题",
+    "description": "Use when the user asks to \"find keywords\", \"挖词\", or \"搜什么词\"; prioritizes search volume, keyword difficulty, intent, and topic clusters from provided or connected data. Not for competitor-relative coverage gaps — use content-gap-analysis. 关键词研究/内容选题",
+    "source": {
+      "path": "seo-geo/survey/keyword-research/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "2f5aa468ee15fa425758a9bc46aac2219f18cd056dfe9a448036d0eef72437d4"
+    },
+    "trigger_phrases": [
+      ", or",
+      "find keywords"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when starting keyword research for a new page, topic, or campaign. Also when the user asks about search volume, keyword difficulty, topic clusters, long-tail keywords, what to write about, 关键词研究, 挖词, 内容选题, or 搜什么词."
+  },
+  "schema_version": "1.0"
+}

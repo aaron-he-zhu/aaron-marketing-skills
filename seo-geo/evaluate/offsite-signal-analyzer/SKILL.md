@@ -4,14 +4,14 @@ slug: offsite-signal-analyzer
 displayName: "Offsite Signal Analyzer · 外链分析"
 summary: "外链分析/反向链接/AI流量/AI引荐/ChatGPT流量/AI转化"
 description: 'Use when the user asks to "analyze backlinks", "analyze my off-site signals", or "track AI traffic / ChatGPT / Perplexity referrals"; profiles referring domains, anchor-text mix, toxic links, and disavow candidates (backlinks mode) or isolates AI-assistant referral sessions in GA4/GSC/logs and reports their trend, landing pages, and AI-vs-organic conversion (ai-referrals mode). Not for internal links — use site-structure-optimizer; not for keyword positions — use rank-tracker; not for multi-metric stakeholder reports — use performance-monitor. 外链分析/反向链接/AI流量/AI引荐/ChatGPT流量/AI转化'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when analyzing off-site signals for a domain. Two modes: mode=backlinks for backlink profiles, referring-domain quality, anchor-text distribution, toxic-link and disavow review, and competitor link gaps; mode=ai-referrals for isolating AI-assistant referral sessions (ChatGPT, Perplexity, Gemini, Copilot, Claude) in the user's own GA4, Search Console, or server logs and reporting their trend, top landing pages, and AI-vs-organic conversion. Also triggers on 外链分析, 反向链接, AI流量, AI引荐流量, ChatGPT/Perplexity referral sessions. Not for internal links (site-structure-optimizer), keyword positions (rank-tracker), or full stakeholder reports (performance-monitor)."
 argument-hint: "<domain or URL> [--mode backlinks|ai-referrals] [date range]"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "seo-geo", "phase": "evaluate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "evaluate"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "seo-geo", "phase": "evaluate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "evaluate"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Off-Site Signal Analyzer

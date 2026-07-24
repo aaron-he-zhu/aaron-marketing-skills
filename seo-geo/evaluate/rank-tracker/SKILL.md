@@ -4,14 +4,14 @@ slug: rank-tracker
 displayName: "Rank Tracker · 排名追踪"
 summary: "排名追踪/SERP监控"
 description: 'Use when the user asks to "track rankings" or "查排名"; measures keyword and SERP-position deltas over time from provided exports or connected tools, including AI-response checks. Not for multi-metric stakeholder reports or setting alerts — use performance-monitor (report or alert mode). 排名追踪/SERP监控'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when tracking keyword rankings, monitoring position changes, comparing ranking snapshots, or detecting ranking drops."
 argument-hint: "<domain> [keyword list]"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "seo-geo", "phase": "evaluate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "evaluate"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "seo-geo", "phase": "evaluate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "evaluate"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Rank Tracker

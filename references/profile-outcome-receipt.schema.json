@@ -1,0 +1,552 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/profile-outcome-receipt.schema.json",
+  "title": "Private v19 profile-outcome promotion receipt",
+  "description": "Project-data-free proof that an exact source commit passed an owner-local real-project outcome checkpoint. It supports post-release Governed outcome/default promotion and does not authorize a release. This receipt remains private and is never committed.",
+  "oneOf": [
+    {
+      "properties": {
+        "gate": {
+          "const": "profile-outcomes-v19"
+        },
+        "outcome_summary": {
+          "required": [
+            "paired_quality_ci95_lower"
+          ]
+        }
+      }
+    },
+    {
+      "properties": {
+        "gate": {
+          "const": "profile-pilots-v19"
+        },
+        "outcome_summary": {
+          "required": [
+            "governed_completion_rate"
+          ]
+        }
+      }
+    }
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "gate",
+    "passed",
+    "release_version",
+    "release_candidate",
+    "source_commit",
+    "evidence_sha256",
+    "evidence_manifest_sha256",
+    "verifier_sha256",
+    "model_identity",
+    "attestation",
+    "outcome_summary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "gate": {
+      "enum": [
+        "profile-pilots-v19",
+        "profile-outcomes-v19"
+      ]
+    },
+    "passed": {
+      "const": true
+    },
+    "release_version": {
+      "const": "19.0.0"
+    },
+    "release_candidate": {
+      "type": "string",
+      "pattern": "^19\\.0\\.0-rc\\.[1-9][0-9]*$"
+    },
+    "source_commit": {
+      "$ref": "#/$defs/sha1"
+    },
+    "evidence_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "evidence_manifest_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "verifier_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "model_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "model",
+        "version",
+        "toolset_sha256"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "toolset_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "attestation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "collector_id_hash",
+        "signed_at"
+      ],
+      "properties": {
+        "method": {
+          "const": "owner-attested-private-evidence"
+        },
+        "collector_id_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "signed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "outcome_summary": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/governed_promotion_summary"
+        },
+        {
+          "$ref": "#/$defs/release_pilot_summary"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "sha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rate": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "improvement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "median",
+        "ci95_lower"
+      ],
+      "properties": {
+        "median": {
+          "type": "number"
+        },
+        "ci95_lower": {
+          "type": "number"
+        }
+      }
+    },
+    "governed_promotion_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "release_candidate",
+        "source_commit",
+        "counts",
+        "lite_completion_rate",
+        "paired_quality_ci95_lower",
+        "efficiency_improvements",
+        "lite_escalation_rate",
+        "governed_trace_rate",
+        "lite_trace_rate",
+        "governed_recovery_rate",
+        "lite_recovery_rate",
+        "governed_median_time_ratio",
+        "governed_median_token_ratio",
+        "safety_failure_count",
+        "passed",
+        "errors"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "release_candidate": {
+          "type": "string",
+          "pattern": "^19\\.0\\.0-rc\\.[1-9][0-9]*$"
+        },
+        "source_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pilot",
+            "paired",
+            "shadow"
+          ],
+          "properties": {
+            "pilot": {
+              "type": "integer",
+              "minimum": 14
+            },
+            "paired": {
+              "type": "integer",
+              "minimum": 70
+            },
+            "shadow": {
+              "type": "integer",
+              "minimum": 28
+            }
+          }
+        },
+        "lite_completion_rate": {
+          "$ref": "#/$defs/rate"
+        },
+        "paired_quality_ci95_lower": {
+          "type": "number"
+        },
+        "efficiency_improvements": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "time",
+            "tokens",
+            "turns_confirmations"
+          ],
+          "properties": {
+            "time": {
+              "$ref": "#/$defs/improvement"
+            },
+            "tokens": {
+              "$ref": "#/$defs/improvement"
+            },
+            "turns_confirmations": {
+              "$ref": "#/$defs/improvement"
+            }
+          }
+        },
+        "lite_escalation_rate": {
+          "$ref": "#/$defs/rate"
+        },
+        "governed_trace_rate": {
+          "$ref": "#/$defs/rate"
+        },
+        "lite_trace_rate": {
+          "$ref": "#/$defs/rate"
+        },
+        "governed_recovery_rate": {
+          "$ref": "#/$defs/rate"
+        },
+        "lite_recovery_rate": {
+          "$ref": "#/$defs/rate"
+        },
+        "governed_median_time_ratio": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "governed_median_token_ratio": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "safety_failure_count": {
+          "const": 0
+        },
+        "passed": {
+          "const": true
+        },
+        "errors": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "release_pilot_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "release_candidate",
+        "source_commit",
+        "counts",
+        "discipline_counts",
+        "randomized_order_counts",
+        "lite_completion_rate",
+        "governed_completion_rate",
+        "governed_required_counts",
+        "safety_observation_counts",
+        "governed_median_time_ratio",
+        "governed_median_token_ratio",
+        "safety_failure_count",
+        "passed",
+        "errors"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "release_candidate": {
+          "type": "string",
+          "pattern": "^19\\.0\\.0-rc\\.[1-9][0-9]*$"
+        },
+        "source_commit": {
+          "$ref": "#/$defs/sha1"
+        },
+        "counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pilot"
+          ],
+          "properties": {
+            "pilot": {
+              "type": "integer",
+              "minimum": 14
+            }
+          }
+        },
+        "discipline_counts": {
+          "$ref": "#/$defs/pilot_discipline_counts"
+        },
+        "randomized_order_counts": {
+          "$ref": "#/$defs/randomized_order_counts"
+        },
+        "lite_completion_rate": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 1
+        },
+        "governed_completion_rate": {
+          "type": "number",
+          "minimum": 0.9,
+          "maximum": 1
+        },
+        "governed_required_counts": {
+          "$ref": "#/$defs/governed_required_counts"
+        },
+        "safety_observation_counts": {
+          "$ref": "#/$defs/safety_observation_counts"
+        },
+        "governed_median_time_ratio": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 2
+        },
+        "governed_median_token_ratio": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 2
+        },
+        "safety_failure_count": {
+          "const": 0
+        },
+        "passed": {
+          "const": true
+        },
+        "errors": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "pilot_discipline_counts": {
+      "$ref": "#/$defs/discipline_map_min_2"
+    },
+    "governed_required_counts": {
+      "$ref": "#/$defs/discipline_map_min_1"
+    },
+    "discipline_map_min_2": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "narrative",
+        "seo-geo",
+        "social",
+        "email",
+        "ad",
+        "influencer",
+        "launch"
+      ],
+      "properties": {
+        "narrative": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "seo-geo": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "social": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "email": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "ad": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "influencer": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "launch": {
+          "type": "integer",
+          "minimum": 2
+        }
+      }
+    },
+    "discipline_map_min_1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "narrative",
+        "seo-geo",
+        "social",
+        "email",
+        "ad",
+        "influencer",
+        "launch"
+      ],
+      "properties": {
+        "narrative": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "seo-geo": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "social": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "email": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ad": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "influencer": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "launch": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "randomized_order_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "narrative",
+        "seo-geo",
+        "social",
+        "email",
+        "ad",
+        "influencer",
+        "launch"
+      ],
+      "properties": {
+        "narrative": {
+          "$ref": "#/$defs/order_count"
+        },
+        "seo-geo": {
+          "$ref": "#/$defs/order_count"
+        },
+        "social": {
+          "$ref": "#/$defs/order_count"
+        },
+        "email": {
+          "$ref": "#/$defs/order_count"
+        },
+        "ad": {
+          "$ref": "#/$defs/order_count"
+        },
+        "influencer": {
+          "$ref": "#/$defs/order_count"
+        },
+        "launch": {
+          "$ref": "#/$defs/order_count"
+        }
+      }
+    },
+    "order_count": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lite-first",
+        "governed-first"
+      ],
+      "properties": {
+        "lite-first": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "governed-first": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "safety_observation_counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mandatory_approval_hit",
+        "consent_hit",
+        "claims_hit",
+        "external_action_hit"
+      ],
+      "properties": {
+        "mandatory_approval_hit": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "consent_hit": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "claims_hit": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "external_action_hit": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  }
+}

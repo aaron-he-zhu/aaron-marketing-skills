@@ -4,13 +4,13 @@ slug: aaron-message-test-designer
 displayName: "Message Test Designer · 消息测试设计"
 summary: "消息理解度/五秒/消息-市场契合面板测试设计"
 description: 'Use when the user asks to "test our messaging before we scale it", "design a message-market-fit panel", or "run a 5-second comprehension test on our new tagline"; produces a message-test design spec — hypothesis, panel and recruit criteria, comprehension / 5-second / message-market-fit (Wynter-style) protocols, stimulus set drawn from the canon, success thresholds, and a stop/revise decision rule — for the TALE Evaluate phase so the message is validated before any paid scale. It designs the test; it never runs the experiment or adjudicates a claim. Not for running the panel or A/B experiment — use send-experiment-designer or ad-test-designer; not for analyzing the results — use performance-analyzer; not for authoring the message itself — use message-system-architect. 消息测试/理解度测试/面板设计/五秒测试/消息市场契合'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when you have a candidate message (tagline, one-liner, value pillars, or a per-surface message-match spec) and want to validate it with a target panel before spending on scale: designing the comprehension test, the 5-second recall test, or the Wynter-style message-market-fit panel — hypothesis, recruit criteria, stimulus set from the canon, success thresholds, and the stop/revise rule. The design layer of the TALE Evaluate phase; execution is handed to the experiment builders and analysis to performance-analyzer. Not for running the test and not for authoring the message."
 argument-hint: "<message / tagline / surface> [target panel] [candidate variants]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Message Test Designer

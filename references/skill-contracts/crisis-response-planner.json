@@ -1,0 +1,401 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 111,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "all 5 ladder levels have a trigger threshold (labeled Estimated until tuned), a named owner, and a first action"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 205,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 113
+        },
+        "text": "the pause rule covers both scheduled posts AND paid amplification with the marker path named"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 281,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 207
+        },
+        "text": "every holding statement carries an approver and a committed update cadence"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 345,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 283
+        },
+        "text": "and the when-NOT-to-post rules and retro template are on file."
+      }
+    ],
+    "done_when": "all 5 ladder levels have a trigger threshold (labeled Estimated until tuned), a named owner, and a first action; the pause rule covers both scheduled posts AND paid amplification with the marker path named; every holding statement carries an approver and a committed update cadence; and the when-NOT-to-post rules and retro template are on file.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/host/crisis-response-planner/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/channels",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/launch-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/social/social-pulse-monitor",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:crisis-response-planner",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": "after the all-clear, re-run pre-publish mode on the paused queue before anything ships again.",
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 171,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "social-quality-auditor"
+        ],
+        "text": "- **Primary**: [social-quality-auditor](../social-quality-auditor/SKILL.md) — after the all-clear, re-run pre-publish mode on the paused queue before anything ships again."
+      },
+      {
+        "condition": "If pause/un-pause markers are pending**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — reconcile the incident's state markers into the channel dossiers.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 348,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 172
+        },
+        "target_skills": [
+          "channel-registry"
+        ],
+        "text": "- **If pause/un-pause markers are pending**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — reconcile the incident's state markers into the channel dossiers."
+      },
+      {
+        "condition": "If the incident exposed a missing or stale baseline**: [social-pulse-monitor](../../observe/social-pulse-monitor/SKILL.md) — rebuild the 7-day baseline and spike thresholds the ladder depends on.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 548,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 349
+        },
+        "target_skills": [
+          "social-pulse-monitor"
+        ],
+        "text": "- **If the incident exposed a missing or stale baseline**: [social-pulse-monitor](../../observe/social-pulse-monitor/SKILL.md) — rebuild the 7-day baseline and spike thresholds the ladder depends on."
+      },
+      {
+        "condition": "when the protocol is saved, or — in a live incident — when the stand-down completes with markers reconciled and the gate re-run recorded.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 965,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 550
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the protocol is saved, or — in a live incident — when the stand-down completes with markers reconciled and the gate re-run recorded."
+      }
+    ],
+    "next_best": "- **Primary**: [social-quality-auditor](../social-quality-auditor/SKILL.md) — after the all-clear, re-run pre-publish mode on the paused queue before anything ships again.\n- **If pause/un-pause markers are pending**: [channel-registry](../../../protocol/channel-registry/SKILL.md) — reconcile the incident's state markers into the channel dossiers.\n- **If the incident exposed a missing or stale baseline**: [social-pulse-monitor](../../observe/social-pulse-monitor/SKILL.md) — rebuild the 7-day baseline and spike thresholds the ladder depends on.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the protocol is saved, or — in a live incident — when the stand-down completes with markers reconciled and the gate re-run recorded.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/host/crisis-response-planner/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "channel-registry",
+      "social-pulse-monitor",
+      "social-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "crisis-response-planner",
+    "path": "social/host/crisis-response-planner/SKILL.md",
+    "phase": "host",
+    "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<channel set / incident description> [severity if known] ['draft the protocol' | 'stand down']",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 125,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the 7-day baseline and spike thresholds from `memory/social/social-pulse-monitor/` (Measured or proxy-labeled per that skill)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 218,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 127
+        },
+        "text": "channel dossiers, states, and `calendar-commitments.md` from `memory/channels/` (read-only)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 434,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 220
+        },
+        "text": "the scheduled queue from [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) and any paid-amplification calendar from [content-amplifier](../../../influencer/activate/content-amplifier/SKILL.md)"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 515,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 436
+        },
+        "text": "launch-window dates from `memory/launch-registry/` (to know when to stand down)"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 602,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 517
+        },
+        "text": "the incident evidence itself (User-provided: exports, screenshots, forwarded emails)."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the 7-day baseline and spike thresholds from `memory/social/social-pulse-monitor/` (Measured or proxy-labeled per that skill); channel dossiers, states, and `calendar-commitments.md` from `memory/channels/` (read-only); the scheduled queue from [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) and any paid-amplification calendar from [content-amplifier](../../../influencer/activate/content-amplifier/SKILL.md); launch-window dates from `memory/launch-registry/` (to know when to stand down); the incident evidence itself (User-provided: exports, screenshots, forwarded emails).",
+    "source": {
+      "path": "social/host/crisis-response-planner/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 80,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the protocol and dated incident logs to `memory/social/crisis-response-planner/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 360,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 82
+        },
+        "text": "per-channel queue-pause and un-pause state markers submitted as proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` (reconciled post-incident by channel-registry — its offset-ordered proposal resolution path)"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 498,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6",
+          "span_basis": "field-text",
+          "start_char": 362
+        },
+        "text": "new or changed statement claims to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/host/crisis-response-planner/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6"
+    },
+    "summary": "the crisis protocol document — severity ladder 1-5 (trigger threshold, named owner, first action, statement class, update cadence per level), the first-mechanical-action rule with its marker path, the holding-statement library, when-NOT-to-post rules, the spokesperson/approval matrix, all-clear criteria, and the post-crisis retro template — plus the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the protocol and dated incident logs to `memory/social/crisis-response-planner/`; per-channel queue-pause and un-pause state markers submitted as proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` (reconciled post-incident by channel-registry — its offset-ordered proposal resolution path); new or changed statement claims to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for email deliverability incidents (blocklist, spam-rate spikes) — use deliverability-qa; inside a launch window launch-day-conductor owns incident handling. 社媒危机预案/暂停队列/声明库/发言人矩阵",
+    "description": "Use when the user asks to \"build our social crisis protocol\", \"mentions are exploding — what do we do first\", or \"when do we pause the posting queue\"; produces a 1-5 severity ladder with tunable Estimated trigger thresholds (mention-velocity multiples vs the 7-day listening baseline, sentiment flip, journalist/regulator contact, employee-conduct class), the first-mechanical-action rule — pause ALL scheduled posts AND paid amplification, with dated state markers dropped to the channels proposal protocol and reconciled post-incident — a pre-approved holding-statement library with committed update cadences, when-NOT-to-post rules, a spokesperson/approval matrix, and a post-crisis retro template; re-runs the social-quality-auditor pre-publish gate before un-pausing the queue. Not for email deliverability incidents (blocklist, spam-rate spikes) — use deliverability-qa; inside a launch window launch-day-conductor owns incident handling. 社媒危机预案/暂停队列/声明库/发言人矩阵",
+    "source": {
+      "path": "social/host/crisis-response-planner/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "ad432db9b3a176d72f120c0b208cec43b69f09eb18ce0563fe8ad566a1816af6"
+    },
+    "trigger_phrases": [
+      "build our social crisis protocol",
+      "mentions are exploding — what do we do first",
+      "when do we pause the posting queue"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when drafting or activating the social crisis protocol: setting the 1-5 severity ladder and its trigger thresholds against the pulse-monitor 7-day baseline, executing the queue-pause rule (all scheduled posts and paid amplification), preparing holding statements with committed update cadences, writing when-NOT-to-post rules, naming the spokesperson/approval matrix, or running the stand-down — pause-marker reconciliation, gate re-run, post-crisis retro. Stands down to launch-day-conductor inside launch windows; deliverability incidents go to deliverability-qa."
+  },
+  "schema_version": "1.0"
+}

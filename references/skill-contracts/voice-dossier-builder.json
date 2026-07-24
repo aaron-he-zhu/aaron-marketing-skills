@@ -1,0 +1,414 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 69,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "every register row and every few-shot cites an own post (ID/URL/date)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 141,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 71
+        },
+        "text": "disclosure lines cover founder/employee/advocate and AI-media contexts"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 193,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 143
+        },
+        "text": "pillars sum to 100% with every % labeled Estimated"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 331,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 195
+        },
+        "text": "and the versioned record sits in `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+      }
+    ],
+    "done_when": "every register row and every few-shot cites an own post (ID/URL/date); disclosure lines cover founder/employee/advocate and AI-media contexts; pillars sum to 100% with every % labeled Estimated; and the versioned record sits in `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py`.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/explore/voice-dossier-builder/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/echo-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:voice-dossier-builder",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 108,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "platform-norm-profiler"
+        ],
+        "text": "- **Primary**: [platform-norm-profiler](../platform-norm-profiler/SKILL.md) — the dossier says how you sound"
+      },
+      {
+        "condition": "before drafting.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 195,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 110
+        },
+        "target_skills": [],
+        "text": "the dated norm cards say what each platform allows. Craft needs both before drafting."
+      },
+      {
+        "condition": "If norm cards are already current**: [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) — apply the pillars and cadence to the always-on calendar.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 367,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 196
+        },
+        "target_skills": [
+          "social-calendar-builder"
+        ],
+        "text": "- **If norm cards are already current**: [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) — apply the pillars and cadence to the always-on calendar."
+      },
+      {
+        "condition": "If no channel set is decided yet**: [channel-portfolio-planner](../channel-portfolio-planner/SKILL.md) — pick the channels first, then map registers onto them.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 531,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 368
+        },
+        "target_skills": [
+          "channel-portfolio-planner"
+        ],
+        "text": "- **If no channel set is decided yet**: [channel-portfolio-planner](../channel-portfolio-planner/SKILL.md) — pick the channels first, then map registers onto them."
+      },
+      {
+        "condition": "when the versioned record is as pending proposals and the user knows what channel-registry will promote.",
+        "extraction_status": "classified",
+        "item_id": "handoff-05",
+        "kind": "termination",
+        "source": {
+          "end_char": 874,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 533
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check, `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the versioned record is as pending proposals and the user knows what channel-registry will promote."
+      }
+    ],
+    "next_best": "- **Primary**: [platform-norm-profiler](../platform-norm-profiler/SKILL.md) — the dossier says how you sound; the dated norm cards say what each platform allows. Craft needs both before drafting.\n- **If norm cards are already current**: [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) — apply the pillars and cadence to the always-on calendar.\n- **If no channel set is decided yet**: [channel-portfolio-planner](../channel-portfolio-planner/SKILL.md) — pick the channels first, then map registers onto them.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check, `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the versioned record is as pending proposals and the user knows what channel-registry will promote.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "social/explore/voice-dossier-builder/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "channel-portfolio-planner",
+      "platform-norm-profiler",
+      "social-calendar-builder"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "social",
+    "name": "voice-dossier-builder",
+    "path": "social/explore/voice-dossier-builder/SKILL.md",
+    "phase": "explore",
+    "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<brand / founder> [own posts, emails, decks to extract from]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 33,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the user's own posts/emails/decks"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "unclassified",
+        "requirement": "optional",
+        "source": {
+          "end_char": 88,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 35
+        },
+        "text": "open own-profiles via keyless sources where available"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 148,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 90
+        },
+        "text": "accepted channel projection and declared operating profile"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 166,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 150
+        },
+        "text": "persona evidence"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 199,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 168
+        },
+        "text": "current Narrative canon/version"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 245,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 201
+        },
+        "text": "and prior voice-view revision when revising."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the user's own posts/emails/decks; open own-profiles via keyless sources where available; accepted channel projection and declared operating profile; persona evidence; current Narrative canon/version; and prior voice-view revision when revising.",
+    "source": {
+      "path": "social/explore/voice-dossier-builder/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 61,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the working dossier to `memory/social/voice-dossier-builder/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 321,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 63
+        },
+        "text": "the registry-grade voice record to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` for promotion ([channel-registry](../../../protocol/channel-registry/SKILL.md) is the sole writer of `memory/channels/`)"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 494,
+          "path": "social/explore/voice-dossier-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5",
+          "span_basis": "field-text",
+          "start_char": 323
+        },
+        "text": "disclosure or boilerplate wording that makes a product/offer claim to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "social/explore/voice-dossier-builder/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5"
+    },
+    "summary": "a versioned voice dossier — brand + founder per-platform register map, banned phrases, per-context disclosure lines, a few-shot bank citing own posts only, and 3-5 content pillars with Estimated %-allocations — plus the candidates submission and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the working dossier to `memory/social/voice-dossier-builder/`; the registry-grade voice record to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` for promotion ([channel-registry](../../../protocol/channel-registry/SKILL.md) is the sole writer of `memory/channels/`); disclosure or boilerplate wording that makes a product/offer claim to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the brand-level voice canon — use brand-language-codifier; not for audience/persona research — use audience-mapper. 声音档案/品牌语气/创始人语气/内容支柱/披露声明",
+    "description": "Use when the user asks to \"codify how our founder sounds\", \"build a founder voice dossier\", or \"set our content pillars\"; runs an 80%-extraction interview over the user's OWN posts, emails, and decks (never competitor scraping, never an invented persona) and produces the versioned voice record — a per-platform register map (incl. 小红书/微信公众号), banned phrases, per-context disclosure lines (the ECHO C2 upstream), a few-shot bank built exclusively from own posts, and 3-5 content pillars with Estimated %-allocations — submitted via memory/events/channels.ndjson for channel-registry to store as voice-dossier.md, the record every Craft-phase skill reads first. Not for the brand-level voice canon — use brand-language-codifier; not for audience/persona research — use audience-mapper. 声音档案/品牌语气/创始人语气/内容支柱/披露声明",
+    "source": {
+      "path": "social/explore/voice-dossier-builder/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "af622df625f76d5c91347937ec6eded0bf22ec1561ac340079f2ae3decb824a5"
+    },
+    "trigger_phrases": [
+      "build a founder voice dossier",
+      "codify how our founder sounds",
+      "set our content pillars"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when codifying how the brand and its founder/execs actually sound before any social content is drafted: extracting register, diction, and taboo lines from the user's own posts/emails/decks, building the per-platform register map and own-posts few-shot bank, writing banned-phrase and disclosure lines, or setting the starting content-pillar %-allocation. Produces the voice record channel-registry stores and every Craft-phase skill reads first. Not persona/audience research and not platform norm cards."
+  },
+  "schema_version": "1.0"
+}

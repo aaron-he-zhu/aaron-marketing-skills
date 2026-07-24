@@ -11,7 +11,14 @@ resolve_root() {
   [ -f "$resolved/.claude-plugin/plugin.json" ] || return 1
   [ -f "$resolved/references/system-catalog.json" ] || return 1
   [ -f "$resolved/references/registry-event.schema.json" ] || return 1
+  [ -f "$resolved/references/run-event.schema.json" ] || return 1
+  [ -f "$resolved/references/context-request.schema.json" ] || return 1
+  [ -f "$resolved/references/context-manifest.schema.json" ] || return 1
+  [ -f "$resolved/references/audit-loop-state.schema.json" ] || return 1
   [ -f "$resolved/scripts/registry-events.py" ] || return 1
+  [ -f "$resolved/scripts/run-events.py" ] || return 1
+  [ -f "$resolved/scripts/context-resolver.py" ] || return 1
+  [ -f "$resolved/scripts/audit-loop.py" ] || return 1
   printf '%s\n' "$resolved"
 }
 
@@ -33,10 +40,13 @@ if (cd "$TMP/standalone" && unset CLAUDE_PLUGIN_ROOT && resolve_root >/dev/null 
   exit 1
 fi
 
-# All three root entry points are present and executable through the resolved root.
+# All root entry points are present and executable through the resolved root.
 python3 "$plugin_resolved/scripts/rubric-score.py" check-catalog >/dev/null
 python3 "$plugin_resolved/scripts/validate-audit-artifact.py" --help >/dev/null
 python3 "$plugin_resolved/scripts/registry-events.py" --help >/dev/null
+python3 "$plugin_resolved/scripts/run-events.py" --help >/dev/null
+python3 "$plugin_resolved/scripts/context-resolver.py" --help >/dev/null
+python3 "$plugin_resolved/scripts/audit-loop.py" --help >/dev/null
 
 # Registry instructions use the same host-root resolution and never leave a
 # runnable working-directory-relative registry command behind.

@@ -3,14 +3,14 @@ name: list-growth-designer
 slug: aaron-list-growth-designer
 displayName: "List Growth Designer · 邮件列表增长"
 summary: "邮件列表增长/lead magnet/双重确认/推荐环"
-version: "18.0.0"
+version: "19.0.0"
 description: 'Use when the user asks to "grow my email list", "design a lead magnet / signup incentive", "set up double opt-in", or "plan a referral / recommendation loop"; produces a list-growth plan — acquisition channels, lead-magnet / incentive concepts, a compliant double-opt-in capture-flow spec, referral-loop mechanics, and subscriber-growth / cost-per-opt-in targets (labeled Estimated) — that feeds SEND-S (consent quality captured at acquisition) and SEND-N (lifecycle entry). Not for the signup page/popup UX itself — use landing-optimizer; not for recording the opt-in — use consent-registry; not for the confirmation-email copy — use email-creative-builder. 邮件列表增长/lead magnet/双重确认/推荐环'
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when planning how to grow an owned email list: choosing acquisition channels, designing a lead magnet or signup incentive, speccing a compliant (double-)opt-in capture flow, or building a referral / recommendation loop. Also when the user wants subscriber-growth or cost-per-opt-in targets. The strategy layer above the signup page (landing-optimizer) and the opt-in record (consent-registry)."
 argument-hint: "<growth goal / audience / offer> [channels] [jurisdiction]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "setup", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "setup"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "setup", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "setup"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # List Growth Designer

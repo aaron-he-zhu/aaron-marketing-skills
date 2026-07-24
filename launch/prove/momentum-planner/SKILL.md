@@ -4,13 +4,13 @@ slug: aaron-momentum-planner
 displayName: "Momentum Planner · 发布势能延续"
 summary: "抗第二周断崖/changelog-as-GTM/relaunch/下一时刻"
 description: 'Use when the user asks to "keep the launch momentum going after launch week", "plan a changelog / release-notes cadence as GTM", or "is this update worth a relaunch"; produces a T+1→T+30 momentum plan — a launch-moment calendar (milestone / shipped-loop / badge moments only), announcement-tier routing (major = full-channel, medium = targeted, minor = changelog-only), a relaunch legitimacy call, spike-to-owned handoff briefs, and the next Tier-1 moment with launch-stacking spacing. Not for the 30-day content-reuse map or paid amplification execution — use content-amplifier; not for planning the next launch end to end — use launch-tier-planner. 抗第二周断崖/changelog-as-GTM/relaunch/下一发布时刻'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a launch spike is fading and the T+1 to T+30 window needs planned launch moments: milestone announcements, shipped-loop release moments, badge / award moments, a changelog or release-notes-as-GTM cadence, a relaunch legitimacy call, or picking and spacing the next Tier-1 moment against the launch calendar. The moment-scheduling layer above content repurposing (content-amplifier) and below the next full launch plan (launch-tier-planner)."
 argument-hint: "<launch slug / spike data> [window: T+1→T+30] [candidate next moments]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "prove", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "prove"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "prove", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "prove"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Momentum Planner

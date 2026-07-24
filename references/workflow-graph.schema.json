@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workflow-graph.schema.json",
+  "title": "Expanded inter-skill workflow graph projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "catalog_version",
+    "automatic_handoff_policy",
+    "authority",
+    "counts",
+    "nodes",
+    "edge_shards",
+    "workflows",
+    "graph_sha256"
+  ],
+  "properties": {
+    "$schema": { "const": "./workflow-graph.schema.json" },
+    "schema_version": { "const": "1.0" },
+    "catalog_version": { "type": "string", "minLength": 1 },
+    "automatic_handoff_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_automatic_handoffs", "visited_set_required", "ambiguity_stop"],
+      "properties": {
+        "max_automatic_handoffs": { "const": 3 },
+        "visited_set_required": { "const": true },
+        "ambiguity_stop": { "const": true }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "source_sha256",
+        "node_source",
+        "node_source_sha256",
+        "markdown_role"
+      ],
+      "properties": {
+        "source": { "const": "references/workflow-graph.source.json" },
+        "source_sha256": { "$ref": "#/$defs/digest" },
+        "node_source": { "const": "references/system-catalog.json" },
+        "node_source_sha256": { "$ref": "#/$defs/digest" },
+        "markdown_role": { "const": "bidirectionally-checked-documentation-only" }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodes", "edges", "workflows"],
+      "properties": {
+        "nodes": { "type": "integer", "minimum": 1 },
+        "edges": { "type": "integer", "minimum": 0 },
+        "workflows": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edge_shards": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "workflow-graph-source.schema.json#/$defs/shard_descriptor" }
+    },
+    "workflows": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "workflow-graph-source.schema.json#/$defs/workflow" }
+    },
+    "graph_sha256": { "$ref": "#/$defs/digest" }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{0,127}$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "layer",
+        "discipline",
+        "phase",
+        "phase_index",
+        "path",
+        "entrypoint",
+        "terminal",
+        "exception",
+        "stopping_mode"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "layer": { "enum": ["L1", "L2", "L3", "L4"] },
+        "discipline": { "$ref": "#/$defs/id" },
+        "phase": { "$ref": "#/$defs/id" },
+        "phase_index": {
+          "oneOf": [
+            { "type": "integer", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "path": { "type": "string", "pattern": "^.+/SKILL\\.md$" },
+        "entrypoint": { "type": "boolean" },
+        "terminal": { "type": "boolean" },
+        "stopping_mode": { "enum": ["natural-stop", "terminal", "human-decision"] },
+        "exception": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["node", "code", "reason"],
+              "properties": {
+                "node": { "$ref": "#/$defs/id" },
+                "code": { "$ref": "#/$defs/id" },
+                "reason": { "type": "string", "minLength": 1 }
+              }
+            },
+            { "type": "null" }
+          ]
+        }
+      }
+    }
+  }
+}

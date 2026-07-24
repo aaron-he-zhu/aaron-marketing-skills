@@ -6,7 +6,9 @@
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-18.0.0-orange" alt="Version"></a>
+<!-- GENERATED:BEGIN release-surface:version-badge -->
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.0.0-orange" alt="Version"></a>
+<!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
 </p>
@@ -541,7 +543,7 @@ Skills benennen Tools mit `~~category`-Platzhaltern (`~~SEO tool`, `~~web analyt
 
 | Schicht | Was du bekommst |
 |-------|--------------|
-| **21 gebündelte Zero-Dependency-Konnektoren** | Reine Python-Standardbibliothek — kein `pip`, kein Build-Schritt. Keyless Live-SERP + JS-gerendertes Scraping (Firecrawl, Tavily), eine AI-Answer-Citation-Probe, DNS-over-HTTPS-E-Mail-Auth-Pulls, Wikipedia-Aufmerksamkeitsserien, GDELT-News-Mentions, echte YouTube-Creator-Metriken, IndexNow + Baidu-Index-Push, Resend-ESP-Automatisierung und ein git-differenzierbares Messbuch, das jeden von ihnen in eine Vorher/Nachher-Zeitreihe verwandelt. |
+| **28 gebündelte Zero-Dependency-Konnektoren** | Reine Python-Standardbibliothek — kein `pip`, kein Build-Schritt. Keyless Live-SERP + JS-gerendertes Scraping (Firecrawl, Tavily), eine AI-Answer-Citation-Probe, DNS-over-HTTPS-E-Mail-Auth-Pulls, Wikipedia-Aufmerksamkeitsserien, GDELT-News-Mentions, echte YouTube-Creator-Metriken, IndexNow + Baidu-Index-Push, Resend-ESP-Automatisierung und ein git-differenzierbares Messbuch, das jeden von ihnen in eine Vorher/Nachher-Zeitreihe verwandelt. |
 | **60+ dokumentierte offizielle/kostenlose APIs** | Jede Zeile verlinkt die **offizielle Dokumentation** des Anbieters, trägt ein Verifiziert-am-Datum, und jeder Link wird vor Auslieferung HTTP-geprüft. Enthält die Pfade, die die meisten Tool-Listen übersehen: GSC URL Inspection, CrUX History (40 Wochen Field-CWV), die Gmail Postmaster Tools API, Metas Ad Library, Microsoft Claritys Data Export API. |
 | **Anbieter-MCP-Server** | 18 Remote-Endpunkte katalogisiert (nie automatisch registriert — deine `/mcp`-Liste bleibt sauber) plus die offiziellen selbst gehosteten Server für Google Analytics, Search Console, **Google Ads** und **Microsoft Clarity**. Zwei Remote-MCPs funktionieren ganz ohne Schlüssel (Firecrawl, Tavily). |
 
@@ -677,7 +679,9 @@ Live-Endpunkt-Drift wird separat mit dem **manuellen** [`scripts/connectors/smok
 ## Beitragen & Projektdokumente
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — Authoring-Regeln, die Beitrags-Checkliste und die maßgebliche Liste der 10 Tracking-Oberflächen.
-- **[VERSIONS.md](../VERSIONS.md)** — Versionen pro Skill + Changelog (aktuelles Bundle: `18.0.0`).
+<!-- GENERATED:BEGIN release-surface:current-bundle -->
+- **[VERSIONS.md](../VERSIONS.md)** — Versionen pro Skill + Changelog (aktuelles Bundle: `19.0.0`).
+<!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — Sicherheits-, Datenschutz- und Community-Richtlinie.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — Agent-seitiger Kontext für dieses Repo.
 

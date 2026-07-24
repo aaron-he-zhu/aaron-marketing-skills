@@ -79,18 +79,30 @@ Cross-cutting reference protocols apply across disciplines: the humanizer-slop p
 
 CI runs additional guards beyond the per-skill validator:
 - **golden behavior** — runs every typed profile through the real catalog/scorer, including Unknown, one-veto, multi-veto, cap, and STAR rollup boundaries; it never regex-scrapes Markdown formulas.
-- **behavior conformance** — orchestrates rubric, registry, HTTP, hook, permission, and routing suites offline; an optional NDJSON adapter can evaluate semantic cases without becoming a CI dependency.
+- **behavior conformance** — orchestrates rubric, registry, HTTP, hook, permission, and routing suites offline; strict smoke/change-aware/nightly profiles select 24 to 700 provenance-bound semantic cases, while optional protocol-v2 adapters remain outside credential-free CI.
+- **runtime protocol** — verifies operational run idempotency, event trees/hash chains, immutable snapshots/save points/envelopes, concurrency, bounded resume, Git-ignore/path defenses, and the non-authority boundary.
+- **audit outer loop** — verifies event-first v2 anchors and same-request step recovery, verification-only public binding, selected-ancestry/sibling-isolated closure, a reserved terminal event slot, strict success versus bounded failed/aborted escape, exact active-loop coverage for waiting/needs-input/blocked, lease fencing, monotonic time, optimistic concurrency, separate retry/cycle/byte/deadline budgets, audit identity and observation-time provenance, strict convergence, exact-byte deduplication, graph-wide exact-hash linkage, and control-escaped terminal output without executing interventions.
 - **architecture conformance** — checks `references/system-catalog.json` against all 120 paths/frontmatters, plugin order, framework/auditor/registry ownership, transition graphs, L1 dependencies, distribution contracts, and the **symmetry contract** (SYM-01..17: loop/acronym derivation, command selector, registry/gate naming and topology, score surfaces, grouping titles, Scope edges, metadata key set — every violation must be licensed by a `symmetry.deviations` entry, and stale deviations fail).
+- **five-engineering maturity** — validates the closed 100-control Prompt/Context/Harness/Loop/Graph rubric and report contract. Before release, run `python3 scripts/check-engineering-maturity.py --semantic-evidence-run-id <uuid>` against a complete current-source real-provider smoke run; every dimension must reach 95/100 and pass its hard gates.
 
-Build the same minimal payload users receive and run its boundary tests:
+Build the three physical plugin ceilings users receive and run their boundary
+tests. A fresh project resolves to Lite in every archive; the archive controls
+only the maximum available capability:
 
 ```bash
-python3 scripts/build-distribution.py --output /tmp/aaron-marketing-dist --plugin
-python3 -m unittest tests.test_distribution_builder
+python3 scripts/build-release-assets.py \
+  --source-repo /path/to/aaron-marketing-skills \
+  --source-repository aaron-he-zhu/aaron-marketing-skills \
+  --source-commit <exact-40-hex-release-commit> \
+  --version 19.0.0 \
+  --output /private/path/v19.0.0-release-assets
+python3 -m unittest tests.test_distribution_builder tests.test_release_assets tests.test_publish_release tests.test_publish_state
 ```
 
-The allowlist in `references/distribution-files.json` is authoritative. Runtime additions must be declared there; tests, evals, CI, generators, and repository-maintenance documentation must not leak into the plugin payload. Standalone one-folder auditor bundles stay compact and fail closed; regenerate them with `python3 scripts/generate-auditor-runtime.py --write` after changing any bound source.
-- **check-evals** — structural lint over all eval fixtures and auto-routing targets (phase directories and command selectors derive from the system catalog).
+The allowlist in `references/distribution-files.json` is authoritative. Runtime additions must be declared there; tests, evals, CI, generators, and repository-maintenance documentation must not leak into the plugin payload. The builder rejects symlinks, special files, and multiply linked files and emits a complete SHA-256 manifest with its physical profile ceiling. To meet the Governed hard budget, the builder deterministically replaces the expanded `references/skill-contracts/` tree with `references/skill-contracts.pack.json.gz`; the resolver accepts that derived pack only after bounded decompression and exact record/aggregate hash checks. Keep the expanded generated tree in source control for review and CI, and never hand-edit the pack. Bare `--plugin` is a deprecated Governed-ceiling alias through v20; contributor and release commands must name `--profile`. The release-asset builder privately exports one exact Git commit, builds Lite/Pro/Governed independently, emits canonical fixed-root tarballs plus `SHA256SUMS` and `release-assets.json`, safely unpacks them, and verifies each profile/provenance-bound manifest against a fresh build of that same commit. Run it twice into new directories and require all five outputs to be byte-identical before release. Every live release publisher/projector accepts only a clean commit reachable from successfully refreshed `origin/main`; per-skill and built-package publishers package a private Git export of that pinned commit and verify repository/commit-bound manifests before upload. Dry-runs do not apply the live clean-tree gate. Standalone one-folder auditor bundles stay compact and fail closed; regenerate them with `python3 scripts/generate-auditor-runtime.py --write` after changing any bound source. Auto-routing cases are maintained only in `evals/auto-routing-scenarios.source.md`; regenerate the runtime index/eight shards with `python3 scripts/generate-auto-routing-shards.py --write` and never hand-edit the generated views. Auditor prompt contracts are maintenance/evaluation artifacts derived from the system/framework catalogs and bound sources; regenerate them with `python3 scripts/generate-auditor-prompt-contracts.py --write` and never hand-edit `references/prompt-contracts/`.
+- **check-evals** — strict case parsing plus structural lint over all 700 authored/generated semantic fixtures and their real-evidence bindings (phase directories and command selectors derive from the system catalog).
+- **check-context-budget** — the progressive-disclosure budget as a hard gate: SKILL.md line caps, auditor activation-chain byte budgets, recursive per-reference byte budgets, the largest valid command + index + three-shard `/auto` assembly, and the HOT template's runtime 80-line/25 KB limit.
+- **check-routing** — description-routing health as a hard gate: quoted trigger phrases are uniquely owned across all 120 skills, every description carries a `Not for X — use Y` boundary clause, and bare-name handoffs in Next Best Skill blocks resolve to real skills.
 - **check-local-links** — every repo-local Markdown link target must resolve inside the repo.
 - **check-pii** — scans for committed PII. Enable the repository pre-commit hook once
   per clone with `git config core.hooksPath .githooks`; CI independently scans every
@@ -100,24 +112,119 @@ The allowlist in `references/distribution-files.json` is authoritative. Runtime 
 ### 6. Update tracking files
 
 After adding or updating a skill, keep these **10 tracking surfaces** in sync. **This list is authoritative** — `CLAUDE.md` and `AGENTS.md` point here instead of restating it, so update this list if the set changes.
-- `references/system-catalog.json` — canonical layer/order/phase/path/auditor/registry/distribution topology; regenerate `docs/system-architecture.md`
-- `VERSIONS.md` — version and date
-- `.claude-plugin/plugin.json` — skills array + version
-- `marketplace.json` (repo root) — must match plugin.json
-- `.claude-plugin/marketplace.json` — **byte-identical mirror** of the root `marketplace.json` (copy it after editing the root)
-- `README.md` — skills table + version badge
-- `CLAUDE.md` — category table + version
-- `AGENTS.md` — name/count line + framework item/dimension counts (CORE-EEAT / CITE / STAR / ROAS / SEND / RAMP / ECHO / TALE)
-- `docs/README.zh.md` — Chinese README: the 120 · 16 / 16 / 16 / 16 / 16 / 16 / 16 / 8 counts (skills / SEO-GEO / influencer / paid ads / email / launch / social / narrative / protocol) + 8 commands + version badge. The 8 additional localized READMEs (`docs/README.{de,es,fr,it,ja,ko,pt,zh-Hant}.md`) are now version-locked too — `check-versions.sh` asserts each carries the current `version-<bundle>-orange` badge (the bundle value is read from `plugin.json`, so this never goes stale on a bump).
-- `.github/repo-about.json` — the GitHub repo **About** SSOT (sidebar description + topics). The About is *not* read by GitHub directly and *not* editable by the CI token, so it silently drifted on the v13/v14 discipline bumps. Edit the count/disciplines/gates here, then project it onto GitHub with `bash scripts/sync-about.sh --live` (owner-run, needs admin auth). `check-versions.sh` asserts its skill count matches the tree; the weekly `about-drift.yml` sentinel fails red if GitHub drifts from it.
 
-For release bumps, also sync README badges and localized README badges.
+- `references/system-catalog.json` — canonical layer/order/phase/path/auditor/registry/distribution topology and release version; regenerate `docs/system-architecture.md`
+- `VERSIONS.md` — version and date
+- `references/publication-metadata.json` — editable public identity, marketplace, About, skills.sh grouping, locale, and marker-template metadata
+- `.claude-plugin/plugin.json` — generated skills array + version
+- `marketplace.json` and `.claude-plugin/marketplace.json` — generated byte-identical marketplace projections
+- `openclaw.plugin.json` — generated OpenClaw identity/version projection
+- `README.md` — authored content plus generated version/current-bundle marker regions
+- `CLAUDE.md`, `AGENTS.md`, and `SECURITY.md` — authored policy plus generated current-release marker regions
+- `docs/README.{zh,de,es,fr,it,ja,ko,pt,zh-Hant}.md` — authored localized content plus generated version/current-bundle marker regions
+- `.github/repo-about.json` and `skills.sh.json` — generated About and grouped-discovery projections; project About to GitHub with `bash scripts/sync-about.sh --live`
+
+Do not hand-edit a generated JSON projection or marker body. After changing the
+catalog/publication sources, run
+`python3 scripts/generate-release-surfaces.py --write`, then `--check`. For a
+coordinated release, use the dry-run-by-default
+`python3 scripts/bump-release.py --to X.Y.Z --date YYYY-MM-DD --align-all-skills`
+transaction before its `--write` form; this updates only current product
+bindings and leaves historical/schema/protocol versions intact.
 
 **Adding or renaming a skill?** Also add its slug to a grouping in the repo-root `skills.sh.json` — the [skills.sh registry page](https://skills.sh/aaron-he-zhu/aaron-marketing-skills) renders those sections, and CI fails when the groupings don't cover exactly the plugin.json skill set (an ungrouped skill would render below the legacy names at the bottom of the page).
 
-**Cutting a release?** Also (a) sync the downstream repo family: `bash scripts/sync-family.sh` (dry-run drift report), then `bash scripts/sync-family.sh --live` to push the live mirrors — registry, tiers, and banner templates in [docs/repo-family.md](docs/repo-family.md); (b) project the GitHub About: `bash scripts/sync-about.sh` (dry-run), then `bash scripts/sync-about.sh --live`; and (c) distribute to the registries — `bash scripts/registry-status.sh` to see per-skill drift across ClawHub + SkillHub, then `bash scripts/publish-registries.sh --live` (publishes only the behind-set) and `bash scripts/publish-package.sh --live` (the OpenClaw bundle-plugin). Full runbook: [docs/distribution.md](docs/distribution.md). All owner-run (editing external/GitHub/registry state needs auth the CI token lacks). Between releases, the weekly `family-drift.yml` and `about-drift.yml` sentinels fail red if either surface drifts.
+**Cutting a release?** v19 is released on an exact-source
+**engineering-validation** gate. Freeze the RC commit; pass repository CI,
+the complete current-source real-provider smoke run, the five-dimension
+engineering-maturity check, and two byte-identical profile-asset builds; then
+issue a private `engineering-validation-v19` receipt with
+`scripts/issue-engineering-release-receipt.py`:
 
-**CI enforces this list**: `scripts/check-versions.sh` fails when the bundle version drifts across the system catalog, plugin/marketplace/OpenClaw manifests, root/localized README badges, AGENTS.md, CLAUDE.md, or VERSIONS.md; when any SKILL.md version disagrees with its row; or when `.github/repo-about.json`'s skill count disagrees with the tree. Run it locally before pushing: `bash scripts/check-versions.sh`.
+```bash
+python3 scripts/issue-engineering-release-receipt.py \
+  --semantic-evidence-run-id "<fresh-current-source-run-uuid>" \
+  --evidence-root "/private/project-root" \
+  --release-candidate "19.0.0-rc.N" \
+  --owner-authorization "release-v19-without-real-project-outcomes" \
+  --maturity-report-output "/private/path/v19-engineering-maturity-report.json" \
+  --output "/private/path/v19-engineering-release-receipt.json"
+```
+
+The issuer directly runs the maturity
+audit and, in the same invocation, creates the exact private report and its
+hash-bound receipt outside Git with exclusive mode-0600 files. Treat the
+receipt, report, and raw semantic-evidence root as one private verification
+bundle:
+
+```bash
+export AARON_RELEASE_RECEIPT="/private/path/v19-engineering-release-receipt.json"
+export AARON_RELEASE_MATURITY_REPORT="/private/path/v19-engineering-maturity-report.json"
+export AARON_RELEASE_EVIDENCE_ROOT="/absolute/private/project-root"
+python3 scripts/verify-release-receipt.py "$AARON_RELEASE_RECEIPT" \
+  --source-commit "$(git rev-parse --verify 'HEAD^{commit}')" \
+  --release-version 19.0.0 \
+  --required-gate engineering-validation-v19 \
+  --maturity-report "$AARON_RELEASE_MATURITY_REPORT" \
+  --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT"
+```
+
+Every v19 live publisher requires all three variables and rapidly revalidates
+the receipt, the exact report bytes, and the original semantic event chain with
+the current verifier. Receipt issuance and `create-github-release.py --live`
+always enforce the strict 24-hour freshness gate for the receipt and semantic
+evidence.
+After the immutable final tag, non-draft Release, exact five assets, and owner
+workflow have all been verified, publisher entrypoints may internally use the
+explicit post-release-continuation verifier mode: it relaxes only the current
+wall-clock check, still proves issuance-time freshness and every
+receipt/report/raw-evidence/tool/source hash, and remains bounded by the
+committed semantic policy (currently 30 days). Do not invoke that mode to create
+or authorize a release. If the policy window expires, run fresh provider
+evidence against the same immutable release commit and issue a new private
+report/receipt before resuming distribution. The evidence root may be a real
+directory outside the repository, or the repository's absolute root only when
+the bound `memory/runs/<run-id>` directory is Git-ignored and wholly untracked.
+Never upload the receipt, report, or raw evidence. The real-provider smoke run
+executes real models, but its cases are simulated semantic fixtures. It proves
+engineering conformance, not customer or real-project outcomes; the public
+release status must say so.
+
+Real-project profile evidence is a **post-release promotion gate**. The legacy
+`release-pilot` stage and `profile-pilots-v19` receipt name remain supported for
+compatibility, but neither authorizes a release. Collect the full cohort against
+the exact released source: 14 pilots (at least two per discipline), 70
+randomized paired Lite/Governed projects (10 per discipline), and 28 shadow
+projects (four per discipline), with two distinct blind reviewers. Keep all
+evidence outside Git and run
+`python3 scripts/verify-profile-outcomes.py /private/path/evidence.json
+--stage governed-promotion --source-commit "$RELEASE_COMMIT"
+--release-candidate 19.0.0-rc.N
+--evidence-manifest /private/path/manifest.json --receipt
+/private/path/promotion-receipt.json --json`. The verifier refuses simulated,
+duplicated, or identity-mismatched evidence and checks the attested private
+manifest digest. Until the full 14 + 70 + 28 cohort passes, Lite remains the
+fresh-project default; Governed capability availability must not be described
+as validated Governed outcomes or as validation for Governed-by-default.
+Never synthesize private evidence or a receipt.
+
+After the engineering-validation gate passes, (a)
+run `python3 scripts/create-github-release.py` as a network-free preview and its
+`--live --receipt <private-receipt> --maturity-report <private-report>
+--evidence-root <absolute-private-root> --asset-dir <verified-assets>` form to
+create or read-only verify the immutable tag/release; (b) sync the downstream
+repo family with `sync-family.sh`; (c) project GitHub About with
+`sync-about.sh`; and (d) publish the Governed-ceiling/Lite-default bundle and
+per-skill registry records. Full gate, rollback, and distribution order:
+[docs/distribution.md](docs/distribution.md). All external mutations are
+owner-run. Between releases, the weekly `family-drift.yml` and
+`about-drift.yml` sentinels fail red if either surface drifts.
+
+**CI enforces this list**: the release-surface generator detects projection
+drift, and `scripts/check-versions.sh` validates product-version bindings and
+each skill row. A coordinated cut additionally runs
+`bash scripts/check-versions.sh --release-all-current`, which requires exactly
+120/120 skills on the same bundle version/date. Run both locally before pushing.
 
 **Adding a connector?** Follow [docs/connector-playbook.md](docs/connector-playbook.md) — the end-to-end pipeline (qualify → verify → implement → test → wire → document → track → regress → record) with the safety-class gate table and the connector-vs-recipe decision rule.
 

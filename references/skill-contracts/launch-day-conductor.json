@@ -1,0 +1,376 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 102,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "both pre-conditions are verified (or the skill has stopped with NEEDS_INPUT naming the missing record)"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 348,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 104
+        },
+        "text": "the runbook covers morning/daytime/evening blocks with a named owner per row and an observation window + CONTINUE/ROLLBACK point after every irreversible action, each threshold traced to a pre-declared kill criterion (never invented on the day)"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 516,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 350
+        },
+        "text": "and the end-of-day consolidation is delivered — D0 snapshot with Measured/User-provided/Estimated labels, candidates batch appended, handoff to launch-monitor stated."
+      }
+    ],
+    "done_when": "both pre-conditions are verified (or the skill has stopped with NEEDS_INPUT naming the missing record); the runbook covers morning/daytime/evening blocks with a named owner per row and an observation window + CONTINUE/ROLLBACK point after every irreversible action, each threshold traced to a pre-declared kill criterion (never invented on the day); and the end-of-day consolidation is delivered — D0 snapshot with Measured/User-provided/Estimated labels, candidates batch appended, handoff to launch-monitor stated.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 38
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 42
+      },
+      {
+        "path": "references/ramp-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "source_line": 4
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 34
+      },
+      {
+        "path": "references/state-model.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "source_line": 27
+      }
+    ],
+    "project_paths": [
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/audits/launch",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      },
+      {
+        "access": "read",
+        "authority": "working",
+        "kind": "prefix",
+        "path": "memory/launch-registry",
+        "reason_code": "explicit-skill-read",
+        "sensitivity": "confidential"
+      }
+    ]
+  },
+  "contract_id": "skill:launch-day-conductor",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 143,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "launch-monitor"
+        ],
+        "text": "- **Primary**: [launch-monitor](../../prove/launch-monitor/SKILL.md) — track the sustained T-0 to T+30 window with the D0 snapshot as baseline."
+      },
+      {
+        "condition": "If feedback and threads piled up during the day**: [launch-feedback-synthesizer](../../prove/launch-feedback-synthesizer/SKILL.md) — triage themes before they go stale.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 316,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 144
+        },
+        "target_skills": [
+          "launch-feedback-synthesizer"
+        ],
+        "text": "- **If feedback and threads piled up during the day**: [launch-feedback-synthesizer](../../prove/launch-feedback-synthesizer/SKILL.md) — triage themes before they go stale."
+      },
+      {
+        "condition": null,
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 504,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 317
+        },
+        "target_skills": [
+          "launch-registry"
+        ],
+        "text": "- **For each submitted proposal**: [launch-registry](../../../protocol/launch-registry/SKILL.md) — resolve by event ID and offset while preserving the original occurrence time and source."
+      },
+      {
+        "condition": "when the window is consolidated: verdicts logged, proposal IDs handed to launch-registry, and the monitoring baseline handed to launch-monitor.",
+        "extraction_status": "classified",
+        "item_id": "handoff-04",
+        "kind": "termination",
+        "source": {
+          "end_char": 927,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 506
+        },
+        "target_skills": [],
+        "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the window is consolidated: verdicts logged, proposal IDs handed to launch-registry, and the monitoring baseline handed to launch-monitor."
+      }
+    ],
+    "next_best": "- **Primary**: [launch-monitor](../../prove/launch-monitor/SKILL.md) — track the sustained T-0 to T+30 window with the D0 snapshot as baseline.\n- **If feedback and threads piled up during the day**: [launch-feedback-synthesizer](../../prove/launch-feedback-synthesizer/SKILL.md) — triage themes before they go stale.\n- **For each submitted proposal**: [launch-registry](../../../protocol/launch-registry/SKILL.md) — resolve by event ID and offset while preserving the original occurrence time and source.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the window is consolidated: verdicts logged, proposal IDs handed to launch-registry, and the monitoring baseline handed to launch-monitor.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "launch-feedback-synthesizer",
+      "launch-monitor",
+      "launch-registry"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "launch",
+    "name": "launch-day-conductor",
+    "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+    "phase": "mobilize",
+    "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<product / launch date> [tier] [channel plan + owners] [kill criteria source]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 112,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the SHIP verdict from [launch-readiness-auditor](../launch-readiness-auditor/SKILL.md) (`memory/audits/launch/`)"
+      },
+      {
+        "clause_id": "read-02",
+        "extraction_status": "partially-classified",
+        "kind": "project-resource",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 252,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 114
+        },
+        "text": "the authoritative date/stage/embargo record in `memory/launch-registry/` via [launch-registry](../../../protocol/launch-registry/SKILL.md)"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 381,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 254
+        },
+        "text": "kill criteria and rollback thresholds from the [launch-tier-planner](../../research/launch-tier-planner/SKILL.md) risk register"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 430,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 383
+        },
+        "text": "the channel plan + owner roster (User-provided)"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 622,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 432
+        },
+        "text": "live window reads from [launch-monitor](../../prove/launch-monitor/SKILL.md), `~~web analytics` (own data), and `~~launch platform` / `~~app store data` / `~~brand monitor` public telemetry."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the SHIP verdict from [launch-readiness-auditor](../launch-readiness-auditor/SKILL.md) (`memory/audits/launch/`); the authoritative date/stage/embargo record in `memory/launch-registry/` via [launch-registry](../../../protocol/launch-registry/SKILL.md); kill criteria and rollback thresholds from the [launch-tier-planner](../../research/launch-tier-planner/SKILL.md) risk register; the channel plan + owner roster (User-provided); live window reads from [launch-monitor](../../prove/launch-monitor/SKILL.md), `~~web analytics` (own data), and `~~launch platform` / `~~app store data` / `~~brand monitor` public telemetry.",
+    "source": {
+      "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 79,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the runbook + the verdict/incident log to `memory/launch/launch-day-conductor/`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "mixed",
+        "permission_posture": "permission-required",
+        "side_effect": "mixed",
+        "source": {
+          "end_char": 362,
+          "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99",
+          "span_basis": "field-text",
+          "start_char": 81
+        },
+        "text": "dated submission/status lines to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` under the T-0 offset-ordered proposal resolution clause of [state-model.md](../../../references/state-model.md) — never canonical registry files."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99"
+    },
+    "summary": "a pre-conditions verification (pass, or NEEDS_INPUT with the missing record named), a dated hour-blocked runbook with an owner column, an observation-window + binary-verdict schedule for every irreversible action, a P0-P3 incident ladder with rollback playbooks, an end-of-day consolidation (D0 snapshot, thank-you queue, next-day queue, registry proposals batch), and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "the runbook + the verdict/incident log to `memory/launch/launch-day-conductor/`; dated submission/status lines to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` under the T-0 offset-ordered proposal resolution clause of [state-model.md](../../../references/state-model.md) — never canonical registry files."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for channel submission content and platform rules — use community-launch-runner; not for media replies — use press-media-relations. 发布日runbook/作战室/观察窗/回滚裁决/发布日指挥",
+    "description": "Use when the user asks to \"run my launch day\", \"build a launch day runbook / war room\", or \"decide CONTINUE or ROLLBACK after the push\"; produces a pre-conditions gate check (launch-readiness-auditor SHIP verdict + the authoritative date in launch-registry — missing either stops the skill), a dated hour-blocked runbook with owners (morning irreversible pushes, daytime monitoring loop, evening consolidation), a forced observation-window verdict after every irreversible action against pre-declared kill criteria, a P0-P3 incident ladder with rollback playbooks, and T-0 status lines for the registry proposal protocol. Not for channel submission content and platform rules — use community-launch-runner; not for media replies — use press-media-relations. 发布日runbook/作战室/观察窗/回滚裁决/发布日指挥",
+    "source": {
+      "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "a6e244a49adfb5823f37fc9e8447136451cb076431275c6a56c5f34b84ffcc99"
+    },
+    "trigger_phrases": [
+      "build a launch day runbook / war room",
+      "decide CONTINUE or ROLLBACK after the push",
+      "run my launch day"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when conducting the launch day itself: verifying the two pre-conditions (SHIP verdict from launch-readiness-auditor + the authoritative date/stage in launch-registry), generating the dated hour-blocked runbook with an owner column, forcing a CONTINUE-or-ROLLBACK verdict after each irreversible push, classifying incidents P0-P3 and running rollback playbooks, or consolidating the day into a snapshot plus registry proposals. The war-room layer between the T-1 gate and the T-0 to T+30 monitoring window."
+  },
+  "schema_version": "1.0"
+}

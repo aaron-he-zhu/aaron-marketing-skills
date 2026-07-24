@@ -1,0 +1,281 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 227,
+          "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "(mode `meta`): three titles and three descriptions are within character limits with the keyword front-loaded, a complete OG/Twitter/canonical/robots block is included, and C01 (Intent Alignment) + C02 (Direct Answer) both pass."
+      }
+    ],
+    "done_when": "(mode `meta`): three titles and three descriptions are within character limits with the keyword front-loaded, a complete OG/Twitter/canonical/robots block is included, and C01 (Intent Alignment) + C02 (Direct Answer) both pass.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 48
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 48
+      },
+      {
+        "path": "references/llms-txt-okf.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6f630b9b3a22c663aa62f1faaa2c05476de1459e13952a533b054f39a1be19c2",
+        "source_line": 107
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 44
+      },
+      {
+        "path": "seo-geo/implement/serp-markup-builder/references/ctr-and-social-reference.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "065bb79bad6cdeed00c9c9b1dcfd66e3de9276356f457bc0c5662eeabf264f84",
+        "source_line": 63
+      },
+      {
+        "path": "seo-geo/implement/serp-markup-builder/references/meta-instructions-detail.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "4f05297e43dd032124cc829479632bdad7fad8efb39caf8f98c178f45f86b337",
+        "source_line": 63
+      },
+      {
+        "path": "seo-geo/implement/serp-markup-builder/references/meta-tag-code-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "98605bd84d85e75e9c6519c8d8d319417f9f2e5ae09e6d55ec4ae057dffea1a1",
+        "source_line": 63
+      },
+      {
+        "path": "seo-geo/implement/serp-markup-builder/references/meta-tag-formulas.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "00e9e11c81cf63d6798a17854a8a36a220683c4bf2b74ff038896569c759ee79",
+        "source_line": 63
+      },
+      {
+        "path": "seo-geo/implement/serp-markup-builder/references/schema-decision-tree.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "14d5d4ddfb4e21a79830c60a45bf694a57168667cad06ff2b2800c6f586c21c3",
+        "source_line": 81
+      },
+      {
+        "path": "seo-geo/implement/serp-markup-builder/references/schema-instructions-detail.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "472c544d0b33ae8ec1e9be7766eb0e31008eb76e3b0e2754029fa0143a9525f2",
+        "source_line": 81
+      },
+      {
+        "path": "seo-geo/implement/serp-markup-builder/references/schema-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "fb4e52696c26d3cbdfff92c34ec0fe1336e383374646a485fe07b2a75aabdcdd",
+        "source_line": 81
+      },
+      {
+        "path": "seo-geo/implement/serp-markup-builder/references/validation-guide.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "6492ded7abc083c996a5af19b40e231cbb247099007595003a7aa960d861dd63",
+        "source_line": 81
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:serp-markup-builder",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-01",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 112,
+          "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [],
+        "text": "Global termination applies (visited-set, `max-depth: 3`, ambiguity-stop). Recommend one primary move, then stop."
+      },
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-02",
+        "kind": "primary",
+        "source": {
+          "end_char": 261,
+          "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
+          "span_basis": "field-text",
+          "start_char": 114
+        },
+        "target_skills": [
+          "content-quality-auditor"
+        ],
+        "text": "- **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — run the publish-readiness gate on the finished head markup."
+      },
+      {
+        "condition": "if only one mode ran and the user wants the full SERP package, run the sibling mode (`meta`↔`schema`) in this same skill, then hand off to the auditor. If the auditor was already visited in this chain, STOP and report chain-complete rather than re-invoking it.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "conditional",
+        "source": {
+          "end_char": 541,
+          "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
+          "span_basis": "field-text",
+          "start_char": 262
+        },
+        "target_skills": [],
+        "text": "- **Conditional**: if only one mode ran and the user wants the full SERP package, run the sibling mode (`meta`↔`schema`) in this same skill, then hand off to the auditor. If the auditor was already visited in this chain, STOP and report chain-complete rather than re-invoking it."
+      }
+    ],
+    "next_best": "Global termination applies (visited-set, `max-depth: 3`, ambiguity-stop). Recommend one primary move, then stop.\n\n- **Primary**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) — run the publish-readiness gate on the finished head markup.\n- **Conditional**: if only one mode ran and the user wants the full SERP package, run the sibling mode (`meta`↔`schema`) in this same skill, then hand off to the auditor. If the auditor was already visited in this chain, STOP and report chain-complete rather than re-invoking it.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md). Name the mode(s) run in **Objective**.",
+    "summary_ref": {
+      "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "content-quality-auditor"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "seo-geo",
+    "name": "serp-markup-builder",
+    "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+    "phase": "implement",
+    "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "[meta|schema] <page URL or content>",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 106,
+          "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the brief, target keywords, page type/intent, entity inputs, current tags/markup, and quality constraints."
+      }
+    ],
+    "extraction_status": "partially-classified",
+    "reads": "the brief, target keywords, page type/intent, entity inputs, current tags/markup, and quality constraints.",
+    "source": {
+      "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 95,
+          "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing head-markup deliverable plus a reusable summary storable under `memory/content/`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
+    },
+    "summary": "a ready-to-paste document-head asset (metadata package and/or JSON-LD) plus the standard handoff summary ready for `memory/content/`.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing head-markup deliverable plus a reusable summary storable under `memory/content/`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for body copy — use content-writer; not for crawl/index technical issues — use technical-seo-checker. 标题优化/元描述/Schema标记/结构化数据",
+    "description": "Use when the user asks to \"optimize meta tags\", \"write title tags / meta descriptions\", \"add Open Graph or Twitter cards\", or \"generate schema / JSON-LD\" for FAQ, HowTo, Article, Product, or LocalBusiness rich-result candidates. Produces title/description options, an OG+Twitter block, and validated JSON-LD for the document head. Not for body copy — use content-writer; not for crawl/index technical issues — use technical-seo-checker. 标题优化/元描述/Schema标记/结构化数据",
+    "source": {
+      "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
+    },
+    "trigger_phrases": [
+      "add Open Graph or Twitter cards",
+      "generate schema / JSON-LD",
+      "optimize meta tags",
+      "write title tags / meta descriptions"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when building anything in the document head for a page — title tags, meta descriptions, Open Graph and Twitter Card tags, canonical/robots meta, and JSON-LD Schema.org structured data for rich-result and answer-engine eligibility."
+  },
+  "schema_version": "1.0"
+}

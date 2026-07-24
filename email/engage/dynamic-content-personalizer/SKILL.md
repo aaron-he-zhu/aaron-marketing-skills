@@ -4,13 +4,13 @@ slug: aaron-dynamic-content-personalizer
 displayName: "Dynamic Content Personalizer · 邮件个性化"
 summary: "邮件个性化/合并标签/条件内容块/兜底默认值"
 description: 'Use when the user asks to "personalize the email", "add merge tags / dynamic content", "set up conditional blocks per segment", or "make first-name and product-recommendation fields fall back safely"; produces a merge-tag map with per-tag fallbacks, conditional-block rules with per-segment variations, a fallback-safety audit, and a PII guard on what may render, informing the SEND E (Engagement/personalization) dimension. Not for building the segments — use list-segment-builder; not for writing the base copy — use email-creative-builder; not for scoring EQS or running vetoes — use email-quality-auditor. 邮件个性化/合并标签/条件内容块/兜底默认值'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when adding personalization to an already-written email creative: mapping merge/personalization tags to real export columns with a safe fallback for every tag, defining conditional-content blocks that vary by segment, auditing that no empty merge field or broken conditional renders (\"Hi ,\"), and guarding which PII fields are allowed to appear in the rendered body at all. Covers B2C lifecycle, B2B cold-outbound personalization, and newsletter dynamic modules."
 argument-hint: "<email creative + segment map or export columns> [mode: promo|cold|newsletter]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Dynamic Content Personalizer

@@ -41,7 +41,7 @@ Freshness is self-documenting: every `body`/`list` mirror carries its synced umb
 
 ## How sync runs
 
-1. **At release time** (CONTRIBUTING §6): run `bash scripts/sync-family.sh` — dry-run by default, reports per-repo drift with diffs and exits non-zero on any. Then `bash scripts/sync-family.sh --live` to clone, apply, and push the `body`/`list` targets. Owner-run, never CI-automated — same convention as `publish-clawhub.sh` (pushes to public repos get a human glance).
+1. **At release time** (CONTRIBUTING §6): run `bash scripts/sync-family.sh` — dry-run by default, reports per-repo drift with diffs and exits non-zero on any. Then `bash scripts/sync-family.sh --live` to clone, apply, and push the `body`/`list` targets. The live run validates the canonical GitHub origin and clean, pushed HEAD once, exports that commit privately, and generates every body/list/ID comparison from the export; it never reopens worktree `plugin.json` or `references/` inputs after the gate. Owner-run, never CI-automated — same convention as `publish-clawhub.sh` (pushes to public repos get a human glance).
 2. **Between releases**: [`.github/workflows/family-drift.yml`](../.github/workflows/family-drift.yml) runs the same script weekly (read-only, keyless — raw.githubusercontent fetches only) and fails red on drift. It deliberately does **not** run on PRs: drift while `references/` evolves on main ahead of a release is expected, not an error.
 
 ## Banner templates

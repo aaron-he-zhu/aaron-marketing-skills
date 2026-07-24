@@ -1,0 +1,357 @@
+{
+  "$schema": "../skill-machine-contract.schema.json",
+  "completion_contract": {
+    "clauses": [
+      {
+        "clause_id": "done-01",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 54,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the lapsed cohort has an explicit no-engagement window"
+      },
+      {
+        "clause_id": "done-02",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 129,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 56
+        },
+        "text": "the offer ladder has staged steps with timing and an escalation/stop rule"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 179,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 131
+        },
+        "text": "a re-consent / re-permission capture step exists"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 256,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 181
+        },
+        "text": "a sunset-confirm rule terminally re-permissions or suppresses every subject"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 395,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 258
+        },
+        "text": "and the sunset-confirm + re-consent facts are handed to the SEND **N** sub-item owners (engagement-decay/sunset → email-sequence-designer"
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 549,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 397
+        },
+        "text": "preference-center/frequency → preference-frequency-manager) to fold into their notes. Do not author those N sub-item notes here, and do not compute EQS."
+      }
+    ],
+    "done_when": "the lapsed cohort has an explicit no-engagement window; the offer ladder has staged steps with timing and an escalation/stop rule; a re-consent / re-permission capture step exists; a sunset-confirm rule terminally re-permissions or suppresses every subject; and the sunset-confirm + re-consent facts are handed to the SEND **N** sub-item owners (engagement-decay/sunset → email-sequence-designer; preference-center/frequency → preference-frequency-manager) to fold into their notes. Do not author those N sub-item notes here, and do not compute EQS.",
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/nurture/reactivation-specialist/SKILL.md",
+      "section": "Skill Contract/Done when",
+      "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2"
+    }
+  },
+  "context_hints": {
+    "bundle_references": [
+      {
+        "path": "CONNECTORS.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "source_line": 36
+      },
+      {
+        "path": "SECURITY.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "source_line": 40
+      },
+      {
+        "path": "references/send-benchmark.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "source_line": 42
+      },
+      {
+        "path": "references/skill-contract.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "source_line": 32
+      }
+    ],
+    "project_paths": []
+  },
+  "contract_id": "skill:reactivation-specialist",
+  "handoff_contract": {
+    "extraction_status": "partially-classified",
+    "items": [
+      {
+        "condition": null,
+        "extraction_status": "classified",
+        "item_id": "handoff-01",
+        "kind": "primary",
+        "source": {
+          "end_char": 189,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "target_skills": [
+          "consent-registry"
+        ],
+        "text": "- **Primary**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record the re-consent timestamps and confirmed-sunset suppressions as the SSOT so the next send honors them."
+      },
+      {
+        "condition": "If the program is ready for the gate**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — score the profile-weighted EQS and enforce N1 (unsubscribe / opt-out integrity) and the other vetoes.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 407,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 190
+        },
+        "target_skills": [
+          "email-quality-auditor"
+        ],
+        "text": "- **If the program is ready for the gate**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — score the profile-weighted EQS and enforce N1 (unsubscribe / opt-out integrity) and the other vetoes."
+      },
+      {
+        "condition": "If re-permissioned subjects need the everyday flow to return to**: [email-sequence-designer](../email-sequence-designer/SKILL.md) — design the active nurture the recovered cohort graduates back into",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 610,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 408
+        },
+        "target_skills": [
+          "email-sequence-designer"
+        ],
+        "text": "- **If re-permissioned subjects need the everyday flow to return to**: [email-sequence-designer](../email-sequence-designer/SKILL.md) — design the active nurture the recovered cohort graduates back into"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 718,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 612
+        },
+        "target_skills": [],
+        "text": "it also authors the engagement-decay / sunset **N** sub-item note from this program's sunset-confirm fact."
+      },
+      {
+        "condition": "If the re-consent step needs a preference-center / opt-down ladder behind it**: [preference-frequency-manager](../preference-frequency-manager/SKILL.md) — designs the preference-center / frequency-options sub-item and authors that **N** note.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 965,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 719
+        },
+        "target_skills": [
+          "preference-frequency-manager"
+        ],
+        "text": "- **If the re-consent step needs a preference-center / opt-down ladder behind it**: [preference-frequency-manager](../preference-frequency-manager/SKILL.md) — designs the preference-center / frequency-options sub-item and authors that **N** note."
+      },
+      {
+        "condition": "If the primary next skill (consent-registry) has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between consent-registry and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on N1, route back here to repair the opt-out / re-consent path rather than chaining onward.",
+        "extraction_status": "unclassified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1520,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 967
+        },
+        "target_skills": [],
+        "text": "Termination note: keep a visited-set of skills invoked this session. If the primary next skill (consent-registry) has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between consent-registry and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on N1, route back here to repair the opt-out / re-consent path rather than chaining onward."
+      }
+    ],
+    "next_best": "- **Primary**: [consent-registry](../../../protocol/consent-registry/SKILL.md) — record the re-consent timestamps and confirmed-sunset suppressions as the SSOT so the next send honors them.\n- **If the program is ready for the gate**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — score the profile-weighted EQS and enforce N1 (unsubscribe / opt-out integrity) and the other vetoes.\n- **If re-permissioned subjects need the everyday flow to return to**: [email-sequence-designer](../email-sequence-designer/SKILL.md) — design the active nurture the recovered cohort graduates back into; it also authors the engagement-decay / sunset **N** sub-item note from this program's sunset-confirm fact.\n- **If the re-consent step needs a preference-center / opt-down ladder behind it**: [preference-frequency-manager](../preference-frequency-manager/SKILL.md) — designs the preference-center / frequency-options sub-item and authors that **N** note.\n\nTermination note: keep a visited-set of skills invoked this session. If the primary next skill (consent-registry) has already run this session, stop and report the chain complete rather than re-invoking. Do not chain deeper than 3 hops from the originating request. When routing between consent-registry and the auditor is ambiguous, stop and present both options instead of auto-following. The auditor's verdict is terminal for this chain — if it returns BLOCK on N1, route back here to repair the opt-out / re-consent path rather than chaining onward.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
+    "summary_ref": {
+      "path": "email/nurture/reactivation-specialist/SKILL.md",
+      "section": "Skill Contract/Handoff Summary",
+      "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2"
+    },
+    "summary_source": "skill-section",
+    "target_skills": [
+      "consent-registry",
+      "email-quality-auditor",
+      "email-sequence-designer",
+      "preference-frequency-manager"
+    ]
+  },
+  "identity": {
+    "class": null,
+    "discipline": "email",
+    "name": "reactivation-specialist",
+    "path": "email/nurture/reactivation-specialist/SKILL.md",
+    "phase": "nurture",
+    "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+    "version": "19.0.0"
+  },
+  "input_contract": {
+    "argument_hint": "<lapsed cohort or no-engagement window> [platform/ESP] [offer/incentive available] [suppression policy]",
+    "clauses": [
+      {
+        "clause_id": "read-01",
+        "extraction_status": "classified",
+        "kind": "evidence-input",
+        "requirement": "optional",
+        "source": {
+          "end_char": 309,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "the lapsed-cohort criteria (no-open / no-click window), the available incentive or offer, the ESP engagement/flow export (own data) for last-open / last-click recency and complaint signals when available, the current suppression policy, and one SEND profile (`promotional|retention|cold-outbound|newsletter`)."
+      }
+    ],
+    "extraction_status": "classified",
+    "reads": "the lapsed-cohort criteria (no-open / no-click window), the available incentive or offer, the ESP engagement/flow export (own data) for last-open / last-click recency and complaint signals when available, the current suppression policy, and one SEND profile (`promotional|retention|cold-outbound|newsletter`).",
+    "source": {
+      "path": "email/nurture/reactivation-specialist/SKILL.md",
+      "section": "Skill Contract/Reads",
+      "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2"
+    }
+  },
+  "output_contract": {
+    "clauses": [
+      {
+        "clause_id": "write-01",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 179,
+          "path": "email/nurture/reactivation-specialist/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "a user-facing reactivation program (cohort + ladder + re-consent + sunset) and a reusable handoff summary to `memory/email/reactivation-specialist/YYYY-MM-DD-<cohort-or-goal>.md`."
+      }
+    ],
+    "extraction_status": "classified",
+    "source": {
+      "path": "email/nurture/reactivation-specialist/SKILL.md",
+      "section": "Skill Contract",
+      "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2"
+    },
+    "summary": "a lapsed-cohort definition (the no-engagement window + how the cohort is pulled), a staged offer ladder (each step's trigger, timing, message intent, and escalation/stop rule), a re-consent / re-permission capture step (what re-affirms opt-in and how it is recorded), a sunset-confirm / suppression rule (the terminal branch that either re-permissions or suppresses each subject), a handoff of the sunset-confirm and re-consent facts to the SEND **N** sub-item owners (engagement-decay / sunset → [email-sequence-designer](../email-sequence-designer/SKILL.md); preference-center / frequency options → [preference-frequency-manager](../preference-frequency-manager/SKILL.md)) rather than an own sub-item score, and the standard handoff summary.",
+    "summary_source": "expected-output",
+    "writes": "a user-facing reactivation program (cohort + ladder + re-consent + sunset) and a reusable handoff summary to `memory/email/reactivation-specialist/YYYY-MM-DD-<cohort-or-goal>.md`."
+  },
+  "provenance": {
+    "generator": "generate-skill-contracts-v1",
+    "shared_contract": {
+      "path": "references/skill-contract.md",
+      "section": "Skill Contract",
+      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    },
+    "system_catalog": {
+      "path": "references/system-catalog.json",
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
+    }
+  },
+  "routing_contract": {
+    "boundary": "Not for the general lifecycle flows (welcome/cart/post-purchase) — use email-sequence-designer; not for the preference-center / opt-down ladder — use preference-frequency-manager; not for the consent record itself — use consent-registry; not for computing EQS or the N1 veto — use email-quality-auditor. 流失召回/重新授权/沉默用户清理",
+    "description": "Use when the user asks to \"build a win-back campaign\", \"re-engage lapsed subscribers\", \"run a re-permission / re-consent sweep\", or \"sunset my dead list\"; produces a closed-loop reactivation program — a lapsed-cohort definition, a staged offer ladder, a re-consent (re-permission) capture step, and a sunset-confirm / suppression rule. Owns none of the SEND-N sub-item notes: engagement-decay / sunset is email-sequence-designer's and preference-center / frequency options is preference-frequency-manager's — this skill references those notes, it does not re-emit them. Not for the general lifecycle flows (welcome/cart/post-purchase) — use email-sequence-designer; not for the preference-center / opt-down ladder — use preference-frequency-manager; not for the consent record itself — use consent-registry; not for computing EQS or the N1 veto — use email-quality-auditor. 流失召回/重新授权/沉默用户清理",
+    "source": {
+      "path": "email/nurture/reactivation-specialist/SKILL.md",
+      "section": "frontmatter",
+      "sha256": "abf815e3f195bc5f0941a5fb2acb25379c0847827159af83e74dc0096b34cdf2"
+    },
+    "trigger_phrases": [
+      "build a win-back campaign",
+      "re-engage lapsed subscribers",
+      "run a re-permission / re-consent sweep",
+      "sunset my dead list"
+    ],
+    "trigger_source": "description-quoted",
+    "when_to_use": "Use when a defined cohort has stopped opening/clicking and the user wants a self-contained win-back and re-permission program before those subjects are suppressed: define the lapsed cohort by a no-engagement window, design a staged offer ladder (soft re-engagement → incentive → last-chance), add a re-consent / re-permission capture step so re-engaged subjects re-affirm opt-in, and set the sunset-confirm rule that either re-permissions or suppresses each subject. Activate when the problem is a decaying tail of the list and the goal is to recover or cleanly retire it — not to design the everyday lifecycle flows."
+  },
+  "schema_version": "1.0"
+}

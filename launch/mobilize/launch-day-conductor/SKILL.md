@@ -4,13 +4,13 @@ slug: aaron-launch-day-conductor
 displayName: "Launch Day Conductor · 发布日指挥"
 summary: "发布日runbook/作战室/观察窗/回滚裁决"
 description: 'Use when the user asks to "run my launch day", "build a launch day runbook / war room", or "decide CONTINUE or ROLLBACK after the push"; produces a pre-conditions gate check (launch-readiness-auditor SHIP verdict + the authoritative date in launch-registry — missing either stops the skill), a dated hour-blocked runbook with owners (morning irreversible pushes, daytime monitoring loop, evening consolidation), a forced observation-window verdict after every irreversible action against pre-declared kill criteria, a P0-P3 incident ladder with rollback playbooks, and T-0 status lines for the registry proposal protocol. Not for channel submission content and platform rules — use community-launch-runner; not for media replies — use press-media-relations. 发布日runbook/作战室/观察窗/回滚裁决/发布日指挥'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when conducting the launch day itself: verifying the two pre-conditions (SHIP verdict from launch-readiness-auditor + the authoritative date/stage in launch-registry), generating the dated hour-blocked runbook with an owner column, forcing a CONTINUE-or-ROLLBACK verdict after each irreversible push, classifying incidents P0-P3 and running rollback playbooks, or consolidating the day into a snapshot plus registry proposals. The war-room layer between the T-1 gate and the T-0 to T+30 monitoring window."
 argument-hint: "<product / launch date> [tier] [channel plan + owners] [kill criteria source]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "mobilize", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "mobilize"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "mobilize", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "mobilize"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Launch Day Conductor

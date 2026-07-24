@@ -3,14 +3,14 @@ name: fit-scorer
 slug: fit-scorer
 displayName: "Fit Scorer · 红人适配评分"
 summary: "用 typed STAR 适配度(S) 维度评估创作者，并将活动商业适配度作为独立矩阵排序"
-description: 'Use when the user asks to "score this influencer", "rank these creators for our campaign", or "tell me which influencer is the best fit"; produces the typed STAR Suitability (S) read plus a separately labeled campaign-fit ranking without mixing campaign-specific commercial fit into the Suitability read. Not for finding new influencers — use influencer-discovery; not for sending outreach — use outreach-manager.'
-version: "18.0.0"
+description: 'Use when the user asks to "score this influencer", "rank these creators for our campaign", or "tell me which influencer is the best fit"; produces the typed STAR Suitability (S) read plus a separately labeled campaign-fit ranking without mixing campaign-specific commercial fit into the Suitability read. Not for finding new influencers — use influencer-discovery; not for sending outreach — use outreach-manager. 达人适配度评分/创作者筛选排名'
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a user has a shortlist of influencers and needs an objective, weighted score to prioritize outreach, choose between candidates, justify a selection to stakeholders, set consistent evaluation standards, compare creators across niches or platforms, or build long-term partner tiers. Activates on requests like score @handle for our brand, compare and rank these creators, or which of these is the best fit."
 argument-hint: "<brand or campaign> <influencer handle(s)> [campaign goal: awareness|engagement|conversion]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Fit Scorer
@@ -63,10 +63,10 @@ With zero integrations, ask the user to supply each value the scoring tables req
 
 The commercial comparison layouts live in [references/scoring-templates.md](references/scoring-templates.md). They are optional decision support, not the STAR Suitability rubric.
 
-1. **Lock typed context.** Declare creator target/version, goal (`awareness|engagement|conversion|brand-building`), `assessment_time: forecast|actual`, shared campaign `rollup_id`, observation date, platform/tier/niche cohort, and evidence window — the typed context the gate will score the full STAR run under.
+1. **Lock typed context.** Require the creator `target` and target version, named STAR profile/goal (`awareness|engagement|conversion|brand-building`), `assessment_time: forecast|actual`, shared campaign `rollup_id`, observation date, platform/tier/niche cohort, evidence window, material context object, and current STAR `catalog_version` — the exact typed identity the gate will reuse. If any field is absent, do not invent it: return `NEEDS_INPUT`, name the missing fields, and preserve the supplied identity unchanged for resume.
 2. **Freeze evidence.** Use creator analytics, public observations, roster history, and cohort benchmarks with source/date/type/confidence. Missing or refused private access is Unknown, never Fail or Partial.
 3. **Score Suitability only.** Evaluate the Suitability items `S1`–`S10` (audience composition/realness, follower-growth integrity, reach reliability, engagement health and authenticity, credibility, and portable brand/category fit) from [star-benchmark.md](../../../references/star-benchmark.md). Campaign-specific commercial terms and availability stay in the separate matrix; cost and measured campaign conversion belong to Return (R), scored later by the gate.
-4. **Verify critical failures.** The Suitability vetoes are `STAR-S2` (verified follower fraud / real-follower rate below the tier × platform × niche benchmark) and `STAR-S6` (verified bought, coordinated, or pod-based engagement); brand-safety is now the gate's Trust veto `STAR-T3`, not a Suitability check. Flag any verified Suitability veto and operationally hold outreach while it stands; the SQS cap (`min(raw,59)` for one verified veto, `BLOCK` for two or more) is applied by the gate when it rolls up the full STAR run.
+4. **Qualify critical-control evidence for handoff.** `STAR-S2` covers demonstrated follower fraud / real-follower rate below the matching tier × platform × niche benchmark; `STAR-S6` covers demonstrated bought, coordinated, or pod-based engagement. Brand safety is the gate's Trust control `STAR-T3`, not a Suitability item. Mark an item Fail only from qualifying evidence, label it a potential gate finding, and operationally hold outreach while it stands. Do not call it a verified veto or apply the SQS cap/business verdict here; the auditor owns those decisions when it rolls up the full STAR run.
 5. **Record the Suitability read for the gate.** Capture the `S1`–`S10` states with source/date/type/confidence as the portable Suitability (S) read. The [creator-content-auditor](../../activate/creator-content-auditor/SKILL.md) gate folds this read into the full STAR run and runs the deterministic scorer for the profile-weighted SQS — this skill does not run the scorer or emit the SQS. Unknown means applicable evidence is missing and prevents a Suitability read; never soften Unknown to Partial or hand-calculate a composite.
 6. **Build the separate commercial matrix when requested.** Use audience-to-campaign fit, content style, campaign-specific brand/category fit, commercial terms, availability, and partnership potential. Label its 1-5 total `commercial_fit_score`; it is not a Suitability score, cannot clear a Suitability veto, and never enters the SQS.
 7. **Rank transparently.** Show the Suitability (S) read (or coverage/interval), critical controls, commercial fit separately, evidence confidence, and an outreach recommendation with owner/rerun condition. Do not rank an Unknown-heavy candidate as definitively superior.
@@ -76,7 +76,7 @@ The commercial comparison layouts live in [references/scoring-templates.md](refe
 
 **User**: "Compare @ecofashionista, @greenwardrobe, @sustainablesarah for our sustainable fashion brand (goal: conversion)."
 
-**Output**: Each creator receives a typed `conversion` Suitability (S) read using the same campaign `rollup_id`; the separate commercial matrix explains campaign-specific terms and availability. A verified real-follower rate below the tier benchmark fails `STAR-S2`; folded into the gate it caps a one-veto SQS at 59, while refused access stays Unknown and prevents a read. Persistence is offered, not assumed.
+**Output**: Each creator receives `S1`–`S10` item states under the same campaign `rollup_id`; a Suitability (S) read exists only at complete applicable coverage, while the separate commercial matrix explains campaign-specific terms and availability. A verified below-benchmark real-follower rate marks `STAR-S2` Fail and holds outreach; refused access stays Unknown and prevents the read. Only creator-content-auditor may apply the later STAR business verdict/cap. Persistence is offered, not assumed.
 
 ## Reference Materials
 
@@ -92,6 +92,7 @@ The commercial comparison layouts live in [references/scoring-templates.md](refe
 **Primary**: [competitor-tracker](../../target/competitor-tracker/SKILL.md) — benchmark your top-scored picks against the creators competitors already work with before you commit budget.
 
 **Alternates** (same scout phase):
+- [creator-content-auditor](../../activate/creator-content-auditor/SKILL.md) — when a complete Suitability read or potential `STAR-S2`/`STAR-S6`/`STAR-T3` control evidence is ready, stop and hand it to this sole STAR gate as a separate invocation; do not auto-run or simulate its verdict.
 - [influencer-discovery](../influencer-discovery/SKILL.md) — if the shortlist is too thin to rank, source more candidates.
 - [audience-mapper](../audience-mapper/SKILL.md) — if audience-match scores are uncertain, tighten the target-audience definition first.
 

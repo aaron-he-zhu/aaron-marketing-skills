@@ -1,9 +1,19 @@
 {
-  "catalog_version": "18.0.0",
+  "catalog_version": "19.0.0",
   "semantics": {
     "external_validity": "advisory-until-outcome-calibrated",
-    "score_states": ["pass", "partial", "fail", "unknown", "na"],
-    "item_points": {"pass": 10, "partial": 5, "fail": 0},
+    "score_states": [
+      "pass",
+      "partial",
+      "fail",
+      "unknown",
+      "na"
+    ],
+    "item_points": {
+      "pass": 10,
+      "partial": 5,
+      "fail": 0
+    },
     "evidence_types": {
       "measured": 1.0,
       "user-provided": 0.8,
@@ -11,7 +21,11 @@
       "estimated": 0.5,
       "proxy": 0.4
     },
-    "confidence_factors": {"high": 1.0, "medium": 0.75, "low": 0.5},
+    "confidence_factors": {
+      "high": 1.0,
+      "medium": 0.75,
+      "low": 0.5
+    },
     "required_coverage": 100,
     "missingness": {
       "unknown": "applicable but not observed; prevents a comparable total score",
@@ -20,13 +34,37 @@
     },
     "rounding": "floor",
     "veto_ceiling": 59,
-    "multi_veto": {"minimum": 2, "verdict": "BLOCK", "emit_final_score": false},
+    "multi_veto": {
+      "minimum": 2,
+      "verdict": "BLOCK",
+      "emit_final_score": false
+    },
     "bands": [
-      {"name": "Excellent", "minimum": 90, "maximum": 100},
-      {"name": "Good", "minimum": 75, "maximum": 89},
-      {"name": "Medium", "minimum": 60, "maximum": 74},
-      {"name": "Low", "minimum": 40, "maximum": 59},
-      {"name": "Poor", "minimum": 0, "maximum": 39}
+      {
+        "name": "Excellent",
+        "minimum": 90,
+        "maximum": 100
+      },
+      {
+        "name": "Good",
+        "minimum": 75,
+        "maximum": 89
+      },
+      {
+        "name": "Medium",
+        "minimum": 60,
+        "maximum": 74
+      },
+      {
+        "name": "Low",
+        "minimum": 40,
+        "maximum": 59
+      },
+      {
+        "name": "Poor",
+        "minimum": 0,
+        "maximum": 39
+      }
     ]
   },
   "frameworks": {
@@ -34,101 +72,524 @@
       "source": "references/core-eeat-benchmark.md",
       "construct": "content-quality controls for one declared content artifact",
       "unit_of_analysis": "one content artifact at one observation date",
-      "required_context": ["content_type", "market", "publication_state"],
+      "required_context": [
+        "content_type",
+        "market",
+        "publication_state"
+      ],
       "profiles": {
-        "product-review": {"context_equals": {"content_type": "product-review"}, "dimensions": {"C": 0.10, "O": 0.10, "R": 0.15, "E": 0.20, "Exp": 0.20, "Ept": 0.05, "A": 0.05, "T": 0.15}},
-        "how-to-guide": {"context_equals": {"content_type": "how-to-guide"}, "dimensions": {"C": 0.20, "O": 0.20, "R": 0.10, "E": 0.05, "Exp": 0.05, "Ept": 0.20, "A": 0.05, "T": 0.15}},
-        "comparison": {"context_equals": {"content_type": "comparison"}, "dimensions": {"C": 0.10, "O": 0.20, "R": 0.25, "E": 0.10, "Exp": 0.05, "Ept": 0.15, "A": 0.05, "T": 0.10}},
-        "landing-page": {"context_equals": {"content_type": "landing-page"}, "dimensions": {"C": 0.20, "O": 0.10, "R": 0.05, "E": 0.05, "Exp": 0.05, "Ept": 0.05, "A": 0.25, "T": 0.25}},
-        "blog-post": {"context_equals": {"content_type": "blog-post"}, "dimensions": {"C": 0.25, "O": 0.10, "R": 0.10, "E": 0.20, "Exp": 0.10, "Ept": 0.10, "A": 0.05, "T": 0.10}},
-        "faq-page": {"context_equals": {"content_type": "faq-page"}, "dimensions": {"C": 0.25, "O": 0.25, "R": 0.15, "E": 0.05, "Exp": 0.05, "Ept": 0.10, "A": 0.05, "T": 0.10}},
-        "alternative": {"context_equals": {"content_type": "alternative"}, "dimensions": {"C": 0.10, "O": 0.15, "R": 0.25, "E": 0.05, "Exp": 0.15, "Ept": 0.05, "A": 0.05, "T": 0.20}},
-        "best-of": {"context_equals": {"content_type": "best-of"}, "dimensions": {"C": 0.10, "O": 0.25, "R": 0.20, "E": 0.15, "Exp": 0.05, "Ept": 0.10, "A": 0.05, "T": 0.10}},
-        "testimonial": {"context_equals": {"content_type": "testimonial"}, "dimensions": {"C": 0.10, "O": 0.05, "R": 0.15, "E": 0.10, "Exp": 0.30, "Ept": 0.05, "A": 0.05, "T": 0.20}}
+        "product-review": {
+          "context_equals": {
+            "content_type": "product-review"
+          },
+          "dimensions": {
+            "C": 0.1,
+            "O": 0.1,
+            "R": 0.15,
+            "E": 0.2,
+            "Exp": 0.2,
+            "Ept": 0.05,
+            "A": 0.05,
+            "T": 0.15
+          }
+        },
+        "how-to-guide": {
+          "context_equals": {
+            "content_type": "how-to-guide"
+          },
+          "dimensions": {
+            "C": 0.2,
+            "O": 0.2,
+            "R": 0.1,
+            "E": 0.05,
+            "Exp": 0.05,
+            "Ept": 0.2,
+            "A": 0.05,
+            "T": 0.15
+          }
+        },
+        "comparison": {
+          "context_equals": {
+            "content_type": "comparison"
+          },
+          "dimensions": {
+            "C": 0.1,
+            "O": 0.2,
+            "R": 0.25,
+            "E": 0.1,
+            "Exp": 0.05,
+            "Ept": 0.15,
+            "A": 0.05,
+            "T": 0.1
+          }
+        },
+        "landing-page": {
+          "context_equals": {
+            "content_type": "landing-page"
+          },
+          "dimensions": {
+            "C": 0.2,
+            "O": 0.1,
+            "R": 0.05,
+            "E": 0.05,
+            "Exp": 0.05,
+            "Ept": 0.05,
+            "A": 0.25,
+            "T": 0.25
+          }
+        },
+        "blog-post": {
+          "context_equals": {
+            "content_type": "blog-post"
+          },
+          "dimensions": {
+            "C": 0.25,
+            "O": 0.1,
+            "R": 0.1,
+            "E": 0.2,
+            "Exp": 0.1,
+            "Ept": 0.1,
+            "A": 0.05,
+            "T": 0.1
+          }
+        },
+        "faq-page": {
+          "context_equals": {
+            "content_type": "faq-page"
+          },
+          "dimensions": {
+            "C": 0.25,
+            "O": 0.25,
+            "R": 0.15,
+            "E": 0.05,
+            "Exp": 0.05,
+            "Ept": 0.1,
+            "A": 0.05,
+            "T": 0.1
+          }
+        },
+        "alternative": {
+          "context_equals": {
+            "content_type": "alternative"
+          },
+          "dimensions": {
+            "C": 0.1,
+            "O": 0.15,
+            "R": 0.25,
+            "E": 0.05,
+            "Exp": 0.15,
+            "Ept": 0.05,
+            "A": 0.05,
+            "T": 0.2
+          }
+        },
+        "best-of": {
+          "context_equals": {
+            "content_type": "best-of"
+          },
+          "dimensions": {
+            "C": 0.1,
+            "O": 0.25,
+            "R": 0.2,
+            "E": 0.15,
+            "Exp": 0.05,
+            "Ept": 0.1,
+            "A": 0.05,
+            "T": 0.1
+          }
+        },
+        "testimonial": {
+          "context_equals": {
+            "content_type": "testimonial"
+          },
+          "dimensions": {
+            "C": 0.1,
+            "O": 0.05,
+            "R": 0.15,
+            "E": 0.1,
+            "Exp": 0.3,
+            "Ept": 0.05,
+            "A": 0.05,
+            "T": 0.2
+          }
+        }
       },
       "dimensions": {
-        "C": {"name": "Content", "item_prefix": "C", "item_count": 10, "id_width": 2},
-        "O": {"name": "Organization", "item_prefix": "O", "item_count": 10, "id_width": 2},
-        "R": {"name": "Research", "item_prefix": "R", "item_count": 10, "id_width": 2},
-        "E": {"name": "Exclusivity", "item_prefix": "E", "item_count": 10, "id_width": 2},
-        "Exp": {"name": "Experience", "item_prefix": "Exp", "item_count": 10, "id_width": 2},
-        "Ept": {"name": "Expertise", "item_prefix": "Ept", "item_count": 10, "id_width": 2},
-        "A": {"name": "Authority", "item_prefix": "A", "item_count": 10, "id_width": 2},
-        "T": {"name": "Trust", "item_prefix": "T", "item_count": 10, "id_width": 2}
+        "C": {
+          "name": "Content",
+          "item_prefix": "C",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "O": {
+          "name": "Organization",
+          "item_prefix": "O",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "R": {
+          "name": "Research",
+          "item_prefix": "R",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "E": {
+          "name": "Exclusivity",
+          "item_prefix": "E",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "Exp": {
+          "name": "Experience",
+          "item_prefix": "Exp",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "Ept": {
+          "name": "Expertise",
+          "item_prefix": "Ept",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "A": {
+          "name": "Authority",
+          "item_prefix": "A",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "T": {
+          "name": "Trust",
+          "item_prefix": "T",
+          "item_count": 10,
+          "id_width": 2
+        }
       },
       "item_policies": {
-        "O03": {"applicability": "conditional", "condition": "the artifact contains comparable structured data"},
-        "O05": {"applicability": "conditional", "condition": "the artifact is an indexable web page eligible for structured data"},
-        "O10": {"applicability": "conditional", "condition": "multimedia is part of the declared artifact"},
-        "E01": {"applicability": "conditional", "condition": "original data is part of the content promise"},
-        "E02": {"applicability": "conditional", "condition": "the content claims a novel framework"},
-        "E03": {"applicability": "conditional", "condition": "primary research is part of the content promise"},
-        "E04": {"applicability": "conditional", "condition": "the content takes a contrarian position"},
-        "E05": {"applicability": "conditional", "condition": "original visuals are needed to support the artifact"},
-        "E10": {"applicability": "conditional", "condition": "the content makes forward-looking claims"},
-        "Exp01": {"applicability": "conditional", "condition": "first-person experience is claimed or required by the profile"},
-        "Exp02": {"applicability": "conditional", "condition": "sensory observation is material to the subject"},
-        "Exp04": {"applicability": "conditional", "condition": "the artifact claims hands-on use"},
-        "Exp05": {"applicability": "conditional", "condition": "usage duration is material"},
-        "Exp07": {"applicability": "conditional", "condition": "a before/after claim is made"},
-        "Exp09": {"applicability": "conditional", "condition": "repeat testing is claimed"},
-        "A07": {"applicability": "conditional", "condition": "knowledge-graph presence is material to the audit objective"},
-        "T04": {"applicability": "conditional", "condition": "a material connection, paid placement, or affiliate relationship exists", "veto": true},
-        "T08": {"applicability": "conditional", "condition": "the artifact makes YMYL or other material-risk claims"}
+        "O03": {
+          "applicability": "conditional",
+          "condition": "the artifact contains comparable structured data"
+        },
+        "O05": {
+          "applicability": "conditional",
+          "condition": "the artifact is an indexable web page eligible for structured data"
+        },
+        "O10": {
+          "applicability": "conditional",
+          "condition": "multimedia is part of the declared artifact"
+        },
+        "E01": {
+          "applicability": "conditional",
+          "condition": "original data is part of the content promise"
+        },
+        "E02": {
+          "applicability": "conditional",
+          "condition": "the content claims a novel framework"
+        },
+        "E03": {
+          "applicability": "conditional",
+          "condition": "primary research is part of the content promise"
+        },
+        "E04": {
+          "applicability": "conditional",
+          "condition": "the content takes a contrarian position"
+        },
+        "E05": {
+          "applicability": "conditional",
+          "condition": "original visuals are needed to support the artifact"
+        },
+        "E10": {
+          "applicability": "conditional",
+          "condition": "the content makes forward-looking claims"
+        },
+        "Exp01": {
+          "applicability": "conditional",
+          "condition": "first-person experience is claimed or required by the profile"
+        },
+        "Exp02": {
+          "applicability": "conditional",
+          "condition": "sensory observation is material to the subject"
+        },
+        "Exp04": {
+          "applicability": "conditional",
+          "condition": "the artifact claims hands-on use"
+        },
+        "Exp05": {
+          "applicability": "conditional",
+          "condition": "usage duration is material"
+        },
+        "Exp07": {
+          "applicability": "conditional",
+          "condition": "a before/after claim is made"
+        },
+        "Exp09": {
+          "applicability": "conditional",
+          "condition": "repeat testing is claimed"
+        },
+        "A07": {
+          "applicability": "conditional",
+          "condition": "knowledge-graph presence is material to the audit objective"
+        },
+        "T04": {
+          "applicability": "conditional",
+          "condition": "a material connection, paid placement, or affiliate relationship exists",
+          "veto": true
+        },
+        "T08": {
+          "applicability": "conditional",
+          "condition": "the artifact makes YMYL or other material-risk claims"
+        }
       },
-      "veto_items": ["T04", "C01", "R10"]
+      "veto_items": [
+        "T04",
+        "C01",
+        "R10"
+      ]
     },
     "CITE": {
       "source": "references/cite-domain-rating.md",
       "construct": "domain citation-trust signals relative to a declared peer cohort",
       "unit_of_analysis": "one domain and market at one observation date",
-      "required_context": ["peer_cohort", "market", "entity_stage", "domain_type"],
+      "required_context": [
+        "peer_cohort",
+        "market",
+        "entity_stage",
+        "domain_type"
+      ],
       "benchmark_mode": "peer-relative; absolute thresholds are diagnostic starting points only",
       "profiles": {
-        "default": {"dimensions": {"C": 0.35, "I": 0.20, "T": 0.25, "E": 0.20}},
-        "content-publisher": {"context_equals": {"domain_type": "content-publisher"}, "dimensions": {"C": 0.40, "I": 0.15, "T": 0.20, "E": 0.25}},
-        "product-service": {"context_equals": {"domain_type": "product-service"}, "dimensions": {"C": 0.25, "I": 0.30, "T": 0.25, "E": 0.20}},
-        "ecommerce": {"context_equals": {"domain_type": "ecommerce"}, "dimensions": {"C": 0.20, "I": 0.20, "T": 0.35, "E": 0.25}},
-        "community-ugc": {"context_equals": {"domain_type": "community-ugc"}, "dimensions": {"C": 0.35, "I": 0.10, "T": 0.25, "E": 0.30}},
-        "tool-utility": {"context_equals": {"domain_type": "tool-utility"}, "dimensions": {"C": 0.25, "I": 0.30, "T": 0.25, "E": 0.20}},
-        "authority-institutional": {"context_equals": {"domain_type": "authority-institutional"}, "dimensions": {"C": 0.45, "I": 0.20, "T": 0.20, "E": 0.15}}
+        "default": {
+          "dimensions": {
+            "C": 0.35,
+            "I": 0.2,
+            "T": 0.25,
+            "E": 0.2
+          }
+        },
+        "content-publisher": {
+          "context_equals": {
+            "domain_type": "content-publisher"
+          },
+          "dimensions": {
+            "C": 0.4,
+            "I": 0.15,
+            "T": 0.2,
+            "E": 0.25
+          }
+        },
+        "product-service": {
+          "context_equals": {
+            "domain_type": "product-service"
+          },
+          "dimensions": {
+            "C": 0.25,
+            "I": 0.3,
+            "T": 0.25,
+            "E": 0.2
+          }
+        },
+        "ecommerce": {
+          "context_equals": {
+            "domain_type": "ecommerce"
+          },
+          "dimensions": {
+            "C": 0.2,
+            "I": 0.2,
+            "T": 0.35,
+            "E": 0.25
+          }
+        },
+        "community-ugc": {
+          "context_equals": {
+            "domain_type": "community-ugc"
+          },
+          "dimensions": {
+            "C": 0.35,
+            "I": 0.1,
+            "T": 0.25,
+            "E": 0.3
+          }
+        },
+        "tool-utility": {
+          "context_equals": {
+            "domain_type": "tool-utility"
+          },
+          "dimensions": {
+            "C": 0.25,
+            "I": 0.3,
+            "T": 0.25,
+            "E": 0.2
+          }
+        },
+        "authority-institutional": {
+          "context_equals": {
+            "domain_type": "authority-institutional"
+          },
+          "dimensions": {
+            "C": 0.45,
+            "I": 0.2,
+            "T": 0.2,
+            "E": 0.15
+          }
+        }
       },
       "dimensions": {
-        "C": {"name": "Citations", "item_prefix": "C", "item_count": 10, "id_width": 2},
-        "I": {"name": "Identity", "item_prefix": "I", "item_count": 10, "id_width": 2},
-        "T": {"name": "Trust", "item_prefix": "T", "item_count": 10, "id_width": 2},
-        "E": {"name": "Eminence", "item_prefix": "E", "item_count": 10, "id_width": 2}
+        "C": {
+          "name": "Citations",
+          "item_prefix": "C",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "I": {
+          "name": "Identity",
+          "item_prefix": "I",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "T": {
+          "name": "Trust",
+          "item_prefix": "T",
+          "item_count": 10,
+          "id_width": 2
+        },
+        "E": {
+          "name": "Eminence",
+          "item_prefix": "E",
+          "item_count": 10,
+          "id_width": 2
+        }
       },
       "item_policies": {
-        "C05": {"applicability": "conditional", "condition": "a locked AI-answer query panel is declared"},
-        "C06": {"applicability": "conditional", "condition": "AI citations were observed on the locked panel"},
-        "C07": {"applicability": "conditional", "condition": "multiple AI engines are in scope"},
-        "I06": {"benchmark": "peer-relative by entity stage; domain age alone cannot fail trust"},
-        "T03": {"veto": true, "unknown_policy": "needs-input", "benchmark": "declared peer distribution required"},
-        "T05": {"veto": true, "unknown_policy": "needs-input", "benchmark": "declared comparison universe required"},
-        "T06": {"benchmark": "privacy-protected WHOIS is neutral absent contradictory ownership evidence"},
-        "T09": {"veto": true, "unknown_policy": "needs-input", "condition": "verified manual-action or deindex evidence; lack of private console access is unknown"},
-        "E09": {"applicability": "conditional", "condition": "multi-region reach is part of the domain objective"}
+        "C05": {
+          "applicability": "conditional",
+          "condition": "a locked AI-answer query panel is declared"
+        },
+        "C06": {
+          "applicability": "conditional",
+          "condition": "AI citations were observed on the locked panel"
+        },
+        "C07": {
+          "applicability": "conditional",
+          "condition": "multiple AI engines are in scope"
+        },
+        "I06": {
+          "benchmark": "peer-relative by entity stage; domain age alone cannot fail trust"
+        },
+        "T03": {
+          "veto": true,
+          "unknown_policy": "needs-input",
+          "benchmark": "declared peer distribution required"
+        },
+        "T05": {
+          "veto": true,
+          "unknown_policy": "needs-input",
+          "benchmark": "declared comparison universe required"
+        },
+        "T06": {
+          "benchmark": "privacy-protected WHOIS is neutral absent contradictory ownership evidence"
+        },
+        "T09": {
+          "veto": true,
+          "unknown_policy": "needs-input",
+          "condition": "verified manual-action or deindex evidence; lack of private console access is unknown"
+        },
+        "E09": {
+          "applicability": "conditional",
+          "condition": "multi-region reach is part of the domain objective"
+        }
       },
-      "veto_items": ["T03", "T05", "T09"]
+      "veto_items": [
+        "T03",
+        "T05",
+        "T09"
+      ]
     },
     "STAR": {
       "source": "references/star-benchmark.md",
       "construct": "influencer partnership quality across creator suitability, trust and compliance, content appeal, and campaign return",
       "unit_of_analysis": "one creator partnership — creator, deliverable, and attributed outcome — at one observation time; forecast and actual reads are never merged",
-      "required_context": ["goal", "assessment_time", "platform", "market"],
-      "context_allowed": {"assessment_time": ["forecast", "actual"]},
+      "required_context": [
+        "goal",
+        "assessment_time",
+        "platform",
+        "market"
+      ],
+      "context_allowed": {
+        "assessment_time": [
+          "forecast",
+          "actual"
+        ]
+      },
       "profiles": {
-        "awareness": {"context_equals": {"goal": "awareness"}, "dimensions": {"S": 0.3, "T": 0.2, "A": 0.35, "R": 0.15}},
-        "engagement": {"context_equals": {"goal": "engagement"}, "dimensions": {"S": 0.25, "T": 0.2, "A": 0.4, "R": 0.15}},
-        "conversion": {"context_equals": {"goal": "conversion"}, "dimensions": {"S": 0.25, "T": 0.2, "A": 0.2, "R": 0.35}},
-        "brand-building": {"context_equals": {"goal": "brand-building"}, "dimensions": {"S": 0.3, "T": 0.35, "A": 0.2, "R": 0.15}}
+        "awareness": {
+          "context_equals": {
+            "goal": "awareness"
+          },
+          "dimensions": {
+            "S": 0.3,
+            "T": 0.2,
+            "A": 0.35,
+            "R": 0.15
+          }
+        },
+        "engagement": {
+          "context_equals": {
+            "goal": "engagement"
+          },
+          "dimensions": {
+            "S": 0.25,
+            "T": 0.2,
+            "A": 0.4,
+            "R": 0.15
+          }
+        },
+        "conversion": {
+          "context_equals": {
+            "goal": "conversion"
+          },
+          "dimensions": {
+            "S": 0.25,
+            "T": 0.2,
+            "A": 0.2,
+            "R": 0.35
+          }
+        },
+        "brand-building": {
+          "context_equals": {
+            "goal": "brand-building"
+          },
+          "dimensions": {
+            "S": 0.3,
+            "T": 0.35,
+            "A": 0.2,
+            "R": 0.15
+          }
+        }
       },
       "dimensions": {
-        "S": {"name": "Suitability", "item_prefix": "S", "item_count": 10, "id_width": 1},
-        "T": {"name": "Trust", "item_prefix": "T", "item_count": 10, "id_width": 1},
-        "A": {"name": "Appeal", "item_prefix": "A", "item_count": 10, "id_width": 1},
-        "R": {"name": "Return", "item_prefix": "R", "item_count": 10, "id_width": 1}
+        "S": {
+          "name": "Suitability",
+          "item_prefix": "S",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "T": {
+          "name": "Trust",
+          "item_prefix": "T",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "A": {
+          "name": "Appeal",
+          "item_prefix": "A",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "R": {
+          "name": "Return",
+          "item_prefix": "R",
+          "item_count": 10,
+          "id_width": 1
+        }
       },
       "item_definitions": {
         "S1": "audience composition, geography, and language match the target within a stated window",
@@ -173,37 +634,153 @@
         "R10": "the measurement plan (UTMs, codes, controls) is defined before launch"
       },
       "item_policies": {
-        "S2": {"veto": true, "unknown_policy": "needs-input"},
-        "S6": {"veto": true, "unknown_policy": "needs-input"},
-        "S7": {"definition": "durable repeat-audience influence; campaign conversion is scored in R"},
-        "S8": {"definition": "brand-independent fit; a specific brand conflict is scored in R7 orchestration"},
-        "T1": {"veto": true},
-        "T2": {"veto": true},
-        "T3": {"veto": true, "unknown_policy": "needs-input"},
-        "R1": {"applicability": "conditional", "applicable_when": {"assessment_time": "actual"}, "unknown_policy": "needs-input"},
-        "R2": {"applicability": "conditional", "applicable_when": {"assessment_time": "actual"}, "unknown_policy": "needs-input"},
-        "R3": {"applicability": "conditional", "applicable_when": {"assessment_time": "actual"}, "unknown_policy": "needs-input"},
-        "R4": {"applicability": "conditional", "applicable_when": {"assessment_time": "actual"}, "unknown_policy": "needs-input"},
-        "R5": {"applicability": "conditional", "applicable_when": {"assessment_time": "actual"}, "unknown_policy": "needs-input", "fail_flag": "results-unverified"},
-        "R6": {"applicability": "conditional", "applicable_when": {"assessment_time": "actual"}, "unknown_policy": "needs-input"}
+        "S2": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "S6": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "S7": {
+          "definition": "durable repeat-audience influence; campaign conversion is scored in R"
+        },
+        "S8": {
+          "definition": "brand-independent fit; a specific brand conflict is scored in R7 orchestration"
+        },
+        "T1": {
+          "veto": true
+        },
+        "T2": {
+          "veto": true
+        },
+        "T3": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "R1": {
+          "applicability": "conditional",
+          "applicable_when": {
+            "assessment_time": "actual"
+          },
+          "unknown_policy": "needs-input"
+        },
+        "R2": {
+          "applicability": "conditional",
+          "applicable_when": {
+            "assessment_time": "actual"
+          },
+          "unknown_policy": "needs-input"
+        },
+        "R3": {
+          "applicability": "conditional",
+          "applicable_when": {
+            "assessment_time": "actual"
+          },
+          "unknown_policy": "needs-input"
+        },
+        "R4": {
+          "applicability": "conditional",
+          "applicable_when": {
+            "assessment_time": "actual"
+          },
+          "unknown_policy": "needs-input"
+        },
+        "R5": {
+          "applicability": "conditional",
+          "applicable_when": {
+            "assessment_time": "actual"
+          },
+          "unknown_policy": "needs-input",
+          "fail_flag": "results-unverified"
+        },
+        "R6": {
+          "applicability": "conditional",
+          "applicable_when": {
+            "assessment_time": "actual"
+          },
+          "unknown_policy": "needs-input"
+        }
       },
-      "veto_items": ["S2", "S6", "T1", "T2", "T3"]
+      "veto_items": [
+        "S2",
+        "S6",
+        "T1",
+        "T2",
+        "T3"
+      ]
     },
     "ROAS": {
       "source": "references/roas-benchmark.md",
       "construct": "incremental paid-media contribution and operating quality under declared business constraints",
       "unit_of_analysis": "one account/campaign portfolio, currency, attribution window, and observation period",
-      "required_context": ["currency", "window", "conversion_lag", "business_constraint", "goal"],
+      "required_context": [
+        "currency",
+        "window",
+        "conversion_lag",
+        "business_constraint",
+        "goal"
+      ],
       "profiles": {
-        "direct-response": {"context_equals": {"goal": "direct-response"}, "dimensions": {"R": 0.40, "O": 0.20, "A": 0.15, "S": 0.25}},
-        "prospecting": {"context_equals": {"goal": "prospecting"}, "dimensions": {"R": 0.15, "O": 0.30, "A": 0.30, "S": 0.25}},
-        "incremental-profit": {"context_equals": {"goal": "incremental-profit"}, "dimensions": {"R": 0.50, "O": 0.15, "A": 0.10, "S": 0.25}}
+        "direct-response": {
+          "context_equals": {
+            "goal": "direct-response"
+          },
+          "dimensions": {
+            "R": 0.4,
+            "O": 0.2,
+            "A": 0.15,
+            "S": 0.25
+          }
+        },
+        "prospecting": {
+          "context_equals": {
+            "goal": "prospecting"
+          },
+          "dimensions": {
+            "R": 0.15,
+            "O": 0.3,
+            "A": 0.3,
+            "S": 0.25
+          }
+        },
+        "incremental-profit": {
+          "context_equals": {
+            "goal": "incremental-profit"
+          },
+          "dimensions": {
+            "R": 0.5,
+            "O": 0.15,
+            "A": 0.1,
+            "S": 0.25
+          }
+        }
       },
       "dimensions": {
-        "R": {"name": "Return", "item_prefix": "R", "item_count": 5, "id_width": 1},
-        "O": {"name": "Offer", "item_prefix": "O", "item_count": 5, "id_width": 1},
-        "A": {"name": "Audience", "item_prefix": "A", "item_count": 5, "id_width": 1},
-        "S": {"name": "Spend Efficiency", "item_prefix": "S", "item_count": 5, "id_width": 1}
+        "R": {
+          "name": "Return",
+          "item_prefix": "R",
+          "item_count": 5,
+          "id_width": 1
+        },
+        "O": {
+          "name": "Offer",
+          "item_prefix": "O",
+          "item_count": 5,
+          "id_width": 1
+        },
+        "A": {
+          "name": "Audience",
+          "item_prefix": "A",
+          "item_count": 5,
+          "id_width": 1
+        },
+        "S": {
+          "name": "Spend Efficiency",
+          "item_prefix": "S",
+          "item_count": 5,
+          "id_width": 1
+        }
       },
       "item_definitions": {
         "R1": "conversion instrumentation verified against an own-data truth set",
@@ -228,30 +805,116 @@
         "S5": "paid/organic and cross-campaign cannibalization are assessed"
       },
       "item_policies": {
-        "R1": {"veto": true, "unknown_policy": "needs-input"},
-        "R2": {"veto": true, "unknown_policy": "needs-input"},
-        "O1": {"veto": true},
-        "O2": {"veto": true},
-        "A1": {"veto": true, "unknown_policy": "needs-input"}
+        "R1": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "R2": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "O1": {
+          "veto": true
+        },
+        "O2": {
+          "veto": true
+        },
+        "A1": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        }
       },
-      "veto_items": ["R1", "R2", "O1", "O2", "A1"]
+      "veto_items": [
+        "R1",
+        "R2",
+        "O1",
+        "O2",
+        "A1"
+      ]
     },
     "SEND": {
       "source": "references/send-benchmark.md",
       "construct": "email program integrity, engagement, lifecycle fit, and declared business outcome",
       "unit_of_analysis": "one sending program/profile and normalized observation window",
-      "required_context": ["program_type", "provider", "window", "list_age", "market", "mpp_share"],
+      "required_context": [
+        "program_type",
+        "provider",
+        "window",
+        "list_age",
+        "market",
+        "mpp_share"
+      ],
       "profiles": {
-        "promotional": {"context_equals": {"program_type": "promotional"}, "dimensions": {"S": 0.30, "E": 0.20, "N": 0.15, "D": 0.35}},
-        "retention": {"context_equals": {"program_type": "retention"}, "dimensions": {"S": 0.20, "E": 0.35, "N": 0.30, "D": 0.15}},
-        "cold-outbound": {"context_equals": {"program_type": "cold-outbound"}, "dimensions": {"S": 0.35, "E": 0.25, "N": 0.15, "D": 0.25}},
-        "newsletter": {"context_equals": {"program_type": "newsletter"}, "dimensions": {"S": 0.25, "E": 0.35, "N": 0.20, "D": 0.20}}
+        "promotional": {
+          "context_equals": {
+            "program_type": "promotional"
+          },
+          "dimensions": {
+            "S": 0.3,
+            "E": 0.2,
+            "N": 0.15,
+            "D": 0.35
+          }
+        },
+        "retention": {
+          "context_equals": {
+            "program_type": "retention"
+          },
+          "dimensions": {
+            "S": 0.2,
+            "E": 0.35,
+            "N": 0.3,
+            "D": 0.15
+          }
+        },
+        "cold-outbound": {
+          "context_equals": {
+            "program_type": "cold-outbound"
+          },
+          "dimensions": {
+            "S": 0.35,
+            "E": 0.25,
+            "N": 0.15,
+            "D": 0.25
+          }
+        },
+        "newsletter": {
+          "context_equals": {
+            "program_type": "newsletter"
+          },
+          "dimensions": {
+            "S": 0.25,
+            "E": 0.35,
+            "N": 0.2,
+            "D": 0.2
+          }
+        }
       },
       "dimensions": {
-        "S": {"name": "Sender Integrity", "item_prefix": "S", "item_count": 5, "id_width": 1},
-        "E": {"name": "Engagement", "item_prefix": "E", "item_count": 5, "id_width": 1},
-        "N": {"name": "Nurture", "item_prefix": "N", "item_count": 5, "id_width": 1},
-        "D": {"name": "Direct Outcome", "item_prefix": "D", "item_count": 5, "id_width": 1}
+        "S": {
+          "name": "Sender Integrity",
+          "item_prefix": "S",
+          "item_count": 5,
+          "id_width": 1
+        },
+        "E": {
+          "name": "Engagement",
+          "item_prefix": "E",
+          "item_count": 5,
+          "id_width": 1
+        },
+        "N": {
+          "name": "Nurture",
+          "item_prefix": "N",
+          "item_count": 5,
+          "id_width": 1
+        },
+        "D": {
+          "name": "Direct Outcome",
+          "item_prefix": "D",
+          "item_count": 5,
+          "id_width": 1
+        }
       },
       "item_definitions": {
         "S1": "SPF/DKIM/DMARC alignment verified from DNS and aggregate evidence",
@@ -276,68 +939,280 @@
         "D5": "outcome attribution is reconciled outside provider self-reporting"
       },
       "item_policies": {
-        "S1": {"veto": true, "unknown_policy": "needs-input"},
-        "S2": {"veto": true, "unknown_policy": "needs-input"},
-        "E2": {"applicability": "conditional", "condition": "opens or CTOR are used in the assessment"},
-        "N1": {"veto": true, "unknown_policy": "needs-input"},
-        "N3": {"applicability": "conditional", "condition": "only journeys applicable to the declared program type are scored"},
-        "N5": {"applicability": "conditional", "condition": "the program offers recurring sends or configurable frequency"},
-        "D1": {"veto": true},
-        "D2": {"benchmark": "truth set follows the program: ecommerce, CRM pipeline, subscription, sponsorship, or declared equivalent"}
+        "S1": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "S2": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "E2": {
+          "applicability": "conditional",
+          "condition": "opens or CTOR are used in the assessment"
+        },
+        "N1": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "N3": {
+          "applicability": "conditional",
+          "condition": "only journeys applicable to the declared program type are scored"
+        },
+        "N5": {
+          "applicability": "conditional",
+          "condition": "the program offers recurring sends or configurable frequency"
+        },
+        "D1": {
+          "veto": true
+        },
+        "D2": {
+          "benchmark": "truth set follows the program: ecommerce, CRM pipeline, subscription, sponsorship, or declared equivalent"
+        }
       },
-      "veto_items": ["S1", "S2", "N1", "D1"]
+      "veto_items": [
+        "S1",
+        "S2",
+        "N1",
+        "D1"
+      ]
     },
     "RAMP": {
       "source": "references/ramp-benchmark.md",
       "construct": "three non-interchangeable launch reads: preflight readiness, execution quality, and observed outcomes",
       "unit_of_analysis": "one launch at one declared lifecycle read",
-      "required_context": ["launch_type", "lifecycle_read", "market", "access_model"],
+      "required_context": [
+        "launch_type",
+        "lifecycle_read",
+        "market",
+        "access_model"
+      ],
       "profiles": {
-        "preflight": {"context_equals": {"lifecycle_read": "preflight"}, "dimensions": {"R": 0.40, "A": 0.40, "M": 0.10, "P": 0.10}, "include_items": {"M": ["M1"], "P": ["P1"]}},
-        "execution": {"context_equals": {"lifecycle_read": "execution"}, "dimensions": {"M": 1.0}},
-        "outcome": {"context_equals": {"lifecycle_read": "outcome"}, "dimensions": {"P": 1.0}, "exclude_items": {"P": ["P1"]}}
+        "preflight": {
+          "context_equals": {
+            "lifecycle_read": "preflight"
+          },
+          "dimensions": {
+            "R": 0.4,
+            "A": 0.4,
+            "M": 0.1,
+            "P": 0.1
+          },
+          "include_items": {
+            "M": [
+              "M1"
+            ],
+            "P": [
+              "P1"
+            ]
+          }
+        },
+        "execution": {
+          "context_equals": {
+            "lifecycle_read": "execution"
+          },
+          "dimensions": {
+            "M": 1.0
+          }
+        },
+        "outcome": {
+          "context_equals": {
+            "lifecycle_read": "outcome"
+          },
+          "dimensions": {
+            "P": 1.0
+          },
+          "exclude_items": {
+            "P": [
+              "P1"
+            ]
+          }
+        }
       },
       "dimensions": {
-        "R": {"name": "Readiness", "item_prefix": "R", "item_count": 10, "id_width": 1},
-        "A": {"name": "Assets", "item_prefix": "A", "item_count": 10, "id_width": 1},
-        "M": {"name": "Momentum Execution", "item_prefix": "M", "item_count": 10, "id_width": 1},
-        "P": {"name": "Proof Outcomes", "item_prefix": "P", "item_count": 10, "id_width": 1}
+        "R": {
+          "name": "Readiness",
+          "item_prefix": "R",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "A": {
+          "name": "Assets",
+          "item_prefix": "A",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "M": {
+          "name": "Momentum Execution",
+          "item_prefix": "M",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "P": {
+          "name": "Proof Outcomes",
+          "item_prefix": "P",
+          "item_count": 10,
+          "id_width": 1
+        }
       },
       "item_policies": {
-        "R1": {"veto": true, "definition": "declared lifecycle stage contradicts verifiable access/eligibility; a public pricing page is not universally required"},
-        "A1": {"veto": true},
-        "M1": {"veto": true},
-        "P1": {"veto": true, "unknown_policy": "needs-input", "definition": "required launch surfaces have verified measurement, using N/A for genuinely non-participating surfaces"}
+        "R1": {
+          "veto": true,
+          "definition": "declared lifecycle stage contradicts verifiable access/eligibility; a public pricing page is not universally required"
+        },
+        "A1": {
+          "veto": true
+        },
+        "M1": {
+          "veto": true
+        },
+        "P1": {
+          "veto": true,
+          "unknown_policy": "needs-input",
+          "definition": "required launch surfaces have verified measurement, using N/A for genuinely non-participating surfaces"
+        }
       },
-      "veto_items": ["R1", "A1", "M1", "P1"],
+      "veto_items": [
+        "R1",
+        "A1",
+        "M1",
+        "P1"
+      ],
       "composite_score": false
     },
     "ECHO": {
       "source": "references/echo-benchmark.md",
       "construct": "separate social asset compliance and program operating maturity reads",
       "unit_of_analysis": "one asset gate or one channel portfolio/window, never both in one score",
-      "required_context": ["assessment_mode", "program_archetype", "channels", "window", "market"],
+      "required_context": [
+        "assessment_mode",
+        "program_archetype",
+        "channels",
+        "window",
+        "market"
+      ],
       "profiles": {
-        "asset-gate": {"context_equals": {"assessment_mode": "asset", "program_archetype": "not-applicable"}, "dimensions": {"E": 0.10, "C": 0.60, "H": 0.20, "O": 0.10}, "include_items": {"E": ["E1"], "H": ["H1", "H2"], "O": ["O1"]}},
-        "program-maturity-community": {"context_equals": {"assessment_mode": "program", "program_archetype": "community"}, "dimensions": {"E": 0.375, "H": 0.375, "O": 0.25}},
-        "program-maturity-b2c": {"context_equals": {"assessment_mode": "program", "program_archetype": "b2c"}, "dimensions": {"E": 0.20, "H": 0.40, "O": 0.40}},
-        "program-maturity-founder": {"context_equals": {"assessment_mode": "program", "program_archetype": "founder"}, "dimensions": {"E": 0.285, "H": 0.215, "O": 0.50}}
+        "asset-gate": {
+          "context_equals": {
+            "assessment_mode": "asset",
+            "program_archetype": "not-applicable"
+          },
+          "dimensions": {
+            "E": 0.1,
+            "C": 0.6,
+            "H": 0.2,
+            "O": 0.1
+          },
+          "include_items": {
+            "E": [
+              "E1"
+            ],
+            "H": [
+              "H1",
+              "H2"
+            ],
+            "O": [
+              "O1"
+            ]
+          }
+        },
+        "program-maturity-community": {
+          "context_equals": {
+            "assessment_mode": "program",
+            "program_archetype": "community"
+          },
+          "dimensions": {
+            "E": 0.375,
+            "H": 0.375,
+            "O": 0.25
+          }
+        },
+        "program-maturity-b2c": {
+          "context_equals": {
+            "assessment_mode": "program",
+            "program_archetype": "b2c"
+          },
+          "dimensions": {
+            "E": 0.2,
+            "H": 0.4,
+            "O": 0.4
+          }
+        },
+        "program-maturity-founder": {
+          "context_equals": {
+            "assessment_mode": "program",
+            "program_archetype": "founder"
+          },
+          "dimensions": {
+            "E": 0.285,
+            "H": 0.215,
+            "O": 0.5
+          }
+        }
       },
       "dimensions": {
-        "E": {"name": "Embeddedness", "item_prefix": "E", "item_count": 10, "id_width": 1},
-        "C": {"name": "Craft", "item_prefix": "C", "item_count": 10, "id_width": 1},
-        "H": {"name": "Hosting", "item_prefix": "H", "item_count": 10, "id_width": 1},
-        "O": {"name": "Observability", "item_prefix": "O", "item_count": 10, "id_width": 1}
+        "E": {
+          "name": "Embeddedness",
+          "item_prefix": "E",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "C": {
+          "name": "Craft",
+          "item_prefix": "C",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "H": {
+          "name": "Hosting",
+          "item_prefix": "H",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "O": {
+          "name": "Observability",
+          "item_prefix": "O",
+          "item_count": 10,
+          "id_width": 1
+        }
       },
       "item_policies": {
-        "E1": {"veto": true, "unknown_policy": "needs-input"},
-        "C1": {"veto": true, "applicability": "conditional", "condition": "the asset makes a product or offer claim"},
-        "C2": {"veto": true, "applicability": "conditional", "condition": "a material connection or realistic synthetic media exists"},
-        "H1": {"veto": true},
-        "H2": {"veto": true, "applicability": "conditional", "condition": "third-party UGC is republished outside a native share"},
-        "O1": {"veto": true, "unknown_policy": "needs-input", "asset_gate_note": "an observed asset with no performance rate or metric claim may pass this control; do not infer from missing asset access"}
+        "E1": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "C1": {
+          "veto": true,
+          "applicability": "conditional",
+          "condition": "the asset makes a product or offer claim"
+        },
+        "C2": {
+          "veto": true,
+          "applicability": "conditional",
+          "condition": "a material connection or realistic synthetic media exists"
+        },
+        "H1": {
+          "veto": true
+        },
+        "H2": {
+          "veto": true,
+          "applicability": "conditional",
+          "condition": "third-party UGC is republished outside a native share"
+        },
+        "O1": {
+          "veto": true,
+          "unknown_policy": "needs-input",
+          "asset_gate_note": "an observed asset with no performance rate or metric claim may pass this control; do not infer from missing asset access"
+        }
       },
-      "veto_items": ["E1", "C1", "C2", "H1", "H2", "O1"],
+      "veto_items": [
+        "E1",
+        "C1",
+        "C2",
+        "H1",
+        "H2",
+        "O1"
+      ],
       "outcomes": "reported as measured metrics with controls; no rubric score until outcome calibration exists",
       "composite_score": false
     },
@@ -345,28 +1220,100 @@
       "source": "references/tale-benchmark.md",
       "construct": "separate narrative truth, system coherence, and measured effectiveness reads",
       "unit_of_analysis": "one canon/surface set or one message experiment at one observation date",
-      "required_context": ["assessment_mode", "brand_scope", "market", "audience"],
+      "required_context": [
+        "assessment_mode",
+        "brand_scope",
+        "market",
+        "audience"
+      ],
       "profiles": {
-        "truth": {"context_equals": {"assessment_mode": "truth"}, "dimensions": {"T": 1.0}},
-        "system": {"context_equals": {"assessment_mode": "system"}, "dimensions": {"A": 0.50, "L": 0.50}},
-        "effectiveness": {"context_equals": {"assessment_mode": "effectiveness"}, "dimensions": {"E": 1.0}}
+        "truth": {
+          "context_equals": {
+            "assessment_mode": "truth"
+          },
+          "dimensions": {
+            "T": 1.0
+          }
+        },
+        "system": {
+          "context_equals": {
+            "assessment_mode": "system"
+          },
+          "dimensions": {
+            "A": 0.5,
+            "L": 0.5
+          }
+        },
+        "effectiveness": {
+          "context_equals": {
+            "assessment_mode": "effectiveness"
+          },
+          "dimensions": {
+            "E": 1.0
+          }
+        }
       },
       "dimensions": {
-        "T": {"name": "Truth", "item_prefix": "T", "item_count": 10, "id_width": 1},
-        "A": {"name": "Architecture", "item_prefix": "A", "item_count": 10, "id_width": 1},
-        "L": {"name": "Landing", "item_prefix": "L", "item_count": 10, "id_width": 1},
-        "E": {"name": "Evidence", "item_prefix": "E", "item_count": 10, "id_width": 1}
+        "T": {
+          "name": "Truth",
+          "item_prefix": "T",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "A": {
+          "name": "Architecture",
+          "item_prefix": "A",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "L": {
+          "name": "Landing",
+          "item_prefix": "L",
+          "item_count": 10,
+          "id_width": 1
+        },
+        "E": {
+          "name": "Evidence",
+          "item_prefix": "E",
+          "item_count": 10,
+          "id_width": 1
+        }
       },
       "item_policies": {
-        "T1": {"veto": true, "definition": "material differentiation is false, contradictory, or unsubstantiated; a literal onlyness claim is not required"},
-        "A1": {"veto": true, "unknown_policy": "needs-input"},
-        "A2": {"applicability": "conditional", "condition": "a message-house pattern is chosen; pillar count is user-justified rather than universally fixed"},
-        "A4": {"applicability": "conditional", "condition": "a change-narrative arc is appropriate to the strategy"},
-        "A8": {"applicability": "conditional", "condition": "fixed-length boilerplates are operationally required"},
-        "L1": {"veto": true},
-        "E1": {"veto": true, "unknown_policy": "needs-input"}
+        "T1": {
+          "veto": true,
+          "definition": "material differentiation is false, contradictory, or unsubstantiated; a literal onlyness claim is not required"
+        },
+        "A1": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        },
+        "A2": {
+          "applicability": "conditional",
+          "condition": "a message-house pattern is chosen; pillar count is user-justified rather than universally fixed"
+        },
+        "A4": {
+          "applicability": "conditional",
+          "condition": "a change-narrative arc is appropriate to the strategy"
+        },
+        "A8": {
+          "applicability": "conditional",
+          "condition": "fixed-length boilerplates are operationally required"
+        },
+        "L1": {
+          "veto": true
+        },
+        "E1": {
+          "veto": true,
+          "unknown_policy": "needs-input"
+        }
       },
-      "veto_items": ["T1", "A1", "L1", "E1"],
+      "veto_items": [
+        "T1",
+        "A1",
+        "L1",
+        "E1"
+      ],
       "composite_score": false
     }
   }

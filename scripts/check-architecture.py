@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Fail-closed architecture conformance checks for the v17 system catalog."""
+"""Fail-closed architecture conformance checks for the system catalog."""
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -15,8 +16,15 @@ FRAMEWORK_PATH = ROOT / "references" / "framework-catalog.json"
 PLUGIN_PATH = ROOT / ".claude-plugin" / "plugin.json"
 GROUPINGS_PATH = ROOT / "skills.sh.json"
 MARKETPLACE_PATHS = [ROOT / "marketplace.json", ROOT / ".claude-plugin" / "marketplace.json"]
+OPENCLAW_PATH = ROOT / "openclaw.plugin.json"
 HOOKS_PATH = ROOT / "hooks" / "hooks.json"
 REGISTRY_RUNTIME = ROOT / "scripts" / "registry-events.py"
+CAPABILITY_PROFILE_SOURCE = "references/capability-profiles.json"
+CAPABILITY_PROFILE_ORDER = ("lite", "pro", "governed")
+REQUIRED_ALWAYS_ON_OVERLAYS = (
+    "consent", "claims", "pii-secrets", "external-mutation",
+    "audit-verdict", "release-provenance",
+)
 LEGACY_COMPOSITE = re.compile(r"\b(?:LQS|NQS)\b|goal-weight(?:ed)? column", re.I)
 LEGACY_SCORING = re.compile(r"min\s*\(\s*raw\s*,\s*60\s*\)|\bgoal[- /]?weight(?:s|ed)?\b|\bgoal column\b", re.I)
 FAIL_OPEN_GATE = re.compile(r"unmarked.{0,80}(?:pass|allow|放行|通過|통과)", re.I)
@@ -25,13 +33,25 @@ MUTABLE_RUNTIME = re.compile(
     re.I,
 )
 BARE_ROOT_RUNTIME_COMMAND = re.compile(
-    r"\bpython3\s+(?:\./)?scripts/(?:rubric-score|validate-audit-artifact|registry-events)\.py\b"
+    r"\bpython3\s+(?:\./)?scripts/(?:rubric-score|validate-audit-artifact|registry-events|run-events|context-resolver)\.py\b"
 )
 AUDIT_WRITE_INTENT = re.compile(
     r"\b(?:write|writes|save|saves|persist|persists|store|stores|storable)\b|ready for",
     re.I,
 )
 AUDIT_WRITE_NEGATION = re.compile(r"\b(?:never|must not|does not|do not|reserved)\b", re.I)
+EXCLUDED_MARKDOWN_PARTS = {
+    ".git", ".planning", ".agents", ".codex", "reference-oss",
+}
+ISOLATED_DEPENDENCY_TREES = (("evals", "pi-agent-poc"),)
+
+
+def in_dependency_tree(parts):
+    for tree in ISOLATED_DEPENDENCY_TREES:
+        if (len(parts) > len(tree) and parts[:len(tree)] == tuple(tree)
+                and parts[len(tree)] == "node_modules"):
+            return True
+    return False
 
 
 class ArchitectureError(ValueError):
@@ -115,11 +135,11 @@ def check_catalog_shape(catalog, expected_paths, failures):
     required_top = {
         "$schema", "schema_version", "architecture_version", "bundle_version", "counts",
         "logical_order", "layers", "commands", "disciplines", "protocol", "registries",
-        "auditors", "l1_dependency", "symmetry", "distribution_profiles",
+        "auditors", "l1_dependency", "symmetry", "distribution_profiles", "capability_profiles",
     }
     if set(catalog) != required_top:
         failures.append("system catalog top-level keys differ from the strict contract")
-    if catalog.get("$schema") != "./system-catalog.schema.json" or catalog.get("schema_version") != "1.1":
+    if catalog.get("$schema") != "./system-catalog.schema.json" or catalog.get("schema_version") != "1.2":
         failures.append("system catalog schema identity/version is invalid")
     counts = catalog.get("counts", {})
     actual = {
@@ -164,6 +184,94 @@ def check_catalog_shape(catalog, expected_paths, failures):
                 "%s declares layer %r but layer membership is %r"
                 % (discipline, declared, membership)
             )
+
+
+def check_capability_profiles(catalog, failures):
+    reference = catalog.get("capability_profiles")
+    if not isinstance(reference, dict) or set(reference) != {"source", "sha256"}:
+        failures.append("capability_profiles must be an exact source/sha256 reference")
+        return
+    if reference.get("source") != CAPABILITY_PROFILE_SOURCE:
+        failures.append(
+            "capability_profiles source must be %s" % CAPABILITY_PROFILE_SOURCE
+        )
+        return
+    expected_digest = reference.get("sha256")
+    if not isinstance(expected_digest, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_digest):
+        failures.append("capability_profiles sha256 must be 64 lowercase hexadecimal characters")
+        return
+    source_path = ROOT / CAPABILITY_PROFILE_SOURCE
+    if not source_path.is_file():
+        failures.append("capability profile SSOT is missing: %s" % CAPABILITY_PROFILE_SOURCE)
+        return
+    actual_digest = hashlib.sha256(source_path.read_bytes()).hexdigest()
+    if actual_digest != expected_digest:
+        failures.append(
+            "capability profile SSOT digest drift: catalog=%s actual=%s"
+            % (expected_digest, actual_digest)
+        )
+        return
+    try:
+        profiles_catalog = load_json(source_path)
+    except ArchitectureError as exc:
+        failures.append(str(exc))
+        return
+    profile_order = profiles_catalog.get("profile_order")
+    profiles = profiles_catalog.get("profiles")
+    capability_order = profiles_catalog.get("capability_order")
+    overlays = profiles_catalog.get("always_on_overlays")
+    if profile_order != list(CAPABILITY_PROFILE_ORDER):
+        failures.append("capability profile order must be lite, pro, governed")
+    if not isinstance(profiles, dict) or set(profiles) != set(CAPABILITY_PROFILE_ORDER):
+        failures.append("capability profile SSOT must define exactly lite, pro, and governed")
+        return
+    if (
+        not isinstance(capability_order, list)
+        or not capability_order
+        or len(capability_order) != len(set(capability_order))
+        or not all(isinstance(item, str) and item for item in capability_order)
+    ):
+        failures.append("capability_order must contain unique non-empty capability identifiers")
+        return
+    if (
+        not isinstance(overlays, list)
+        or overlays != list(REQUIRED_ALWAYS_ON_OVERLAYS)
+    ):
+        failures.append(
+            "always_on_overlays must retain the six universal safety/provenance overlays"
+        )
+    capability_universe = set(capability_order)
+    capability_sets = {}
+    for rank, name in enumerate(CAPABILITY_PROFILE_ORDER):
+        profile = profiles.get(name)
+        capabilities = profile.get("capabilities") if isinstance(profile, dict) else None
+        if (
+            not isinstance(profile, dict)
+            or set(profile) != {"rank", "capabilities"}
+            or profile.get("rank") != rank
+            or not isinstance(capabilities, list)
+            or len(capabilities) != len(set(capabilities))
+            or any(item not in capability_universe for item in capabilities)
+        ):
+            failures.append(
+                "capability profile %s must have rank %d and unique declared capabilities"
+                % (name, rank)
+            )
+            continue
+        ordered = [item for item in capability_order if item in set(capabilities)]
+        if capabilities != ordered:
+            failures.append(
+                "capability profile %s capabilities must follow capability_order" % name
+            )
+        capability_sets[name] = set(capabilities)
+    if len(capability_sets) == len(CAPABILITY_PROFILE_ORDER):
+        if not (
+            capability_sets["lite"] < capability_sets["pro"]
+            and capability_sets["pro"] < capability_sets["governed"]
+        ):
+            failures.append("capability lattice must preserve Lite ⊂ Pro ⊂ Governed")
+        if capability_sets["governed"] != capability_universe:
+            failures.append("Governed must include every declared capability")
 
 
 def check_skills(catalog, expected_paths, failures):
@@ -231,6 +339,11 @@ def check_distribution(catalog, expected_paths, failures):
             failures.append("%s plugin description differs from plugin.json" % marketplace_path.relative_to(ROOT))
     if MARKETPLACE_PATHS[0].read_bytes() != MARKETPLACE_PATHS[1].read_bytes():
         failures.append("marketplace mirrors are not byte-identical")
+    openclaw = load_json(OPENCLAW_PATH)
+    if openclaw.get("version") != catalog.get("bundle_version"):
+        failures.append("openclaw.plugin.json version differs from catalog bundle_version")
+    if openclaw.get("description") != plugin.get("description"):
+        failures.append("openclaw.plugin.json description differs from plugin.json")
     hooks = load_json(HOOKS_PATH).get("hooks", {})
     expected_hook_events = {
         "SessionStart", "UserPromptSubmit", "PreToolUse", "PostToolUse",
@@ -238,6 +351,24 @@ def check_distribution(catalog, expected_paths, failures):
     }
     if set(hooks) != expected_hook_events:
         failures.append("plugin hooks must declare the seven operated events")
+    expected_hook_modes = {
+        "SessionStart": "session-start",
+        "UserPromptSubmit": "user-prompt-submit",
+        "PreToolUse": "pre-tool-use",
+        "PostToolUse": "post-tool-use",
+        "PostToolUseFailure": "post-tool-failure",
+        "PostToolBatch": "post-tool-batch",
+        "Stop": "stop",
+    }
+    for event, mode in expected_hook_modes.items():
+        entries = hooks.get(event, [])
+        commands = entries[0].get("hooks", []) if len(entries) == 1 else []
+        command = commands[0] if len(commands) == 1 else {}
+        expected_args = ["${CLAUDE_PLUGIN_ROOT}/hooks/claude-hook.sh", mode]
+        if (
+                command.get("type") != "command" or command.get("command") != "bash"
+                or command.get("args") != expected_args):
+            failures.append("%s must invoke claude-hook.sh with mode %s" % (event, mode))
     for event in ("PreToolUse", "PostToolUse", "PostToolUseFailure"):
         entries = hooks.get(event, [])
         matcher = entries[0].get("matcher", "") if len(entries) == 1 else ""
@@ -252,8 +383,9 @@ def check_distribution(catalog, expected_paths, failures):
             failures.append("%s operated guard must retain a timeout of at least 60 seconds" % event)
     hook_runner = (ROOT / "hooks" / "claude-hook.sh").read_text(encoding="utf-8")
     for token in (
-        "pre-tool-use", "check-memory-private.py", "--preflight-hook", "post-tool-use", "post-tool-batch",
-        "pma", "saa", "stop_hook_active",
+        "pre-tool-use", "check-memory-private.py", "--preflight-hook", "post-tool-use",
+        "post-tool-failure", "post-tool-batch", "run-events.py", "record-hook", "resume",
+        "AARON_ACTIVE_RUN_ID", "pma", "saa", "stop_hook_active",
     ):
         if token not in hook_runner:
             failures.append("hook runner is missing operated guard %r" % token)
@@ -355,7 +487,7 @@ def check_auditors(catalog, failures):
                 failures.append("%s contract is missing %r" % (skill, token))
         if not runtime.is_file() or "GENERATED FILE" not in runtime.read_text(encoding="utf-8")[:200]:
             failures.append("%s standalone runtime is missing or not generated" % skill)
-        sinks = {"memory/audits/%s/" % match for match in re.findall(r"memory/audits/([^/\s`]+)/", text)}
+        sinks = {"memory/audits/%s/" % match for match in re.findall(r"memory/audits/([^/\s`]+)/?", text)}
         if sinks - {auditor["sink"]}:
             failures.append("%s references another auditor's write sink: %s" % (skill, sorted(sinks)))
         if MUTABLE_RUNTIME.search(text):
@@ -367,9 +499,9 @@ def check_l1_dependency(catalog, failures):
     required = dependency.get("required_fields", [])
     statuses = dependency.get("dependency_status_values", [])
     if required != ["narrative_canon_id", "narrative_canon_version", "claims_projection_offset", "dependency_status"]:
-        failures.append("L1 dependency fields differ from the v17 contract")
+        failures.append("L1 dependency fields differ from the system-catalog contract")
     if statuses != ["verified", "approved-fallback", "blocked"]:
-        failures.append("L1 dependency statuses differ from the v17 contract")
+        failures.append("L1 dependency statuses differ from the system-catalog contract")
     builders = dependency.get("builders", [])
     if len(builders) != 7 or len(builders) != len(set(builders)):
         failures.append("L1 dependency must cover seven unique core builders")
@@ -584,17 +716,31 @@ def check_symmetry(catalog, expected_paths, failures):
 
 
 def markdown_files():
-    excluded_parts = {".git", ".planning", ".agents", ".codex", "reference-oss"}
     for path in ROOT.rglob("*.md"):
         relative = path.relative_to(ROOT)
-        if any(part in excluded_parts for part in relative.parts):
+        if any(part in EXCLUDED_MARKDOWN_PARTS for part in relative.parts):
+            continue
+        if in_dependency_tree(relative.parts):
             continue
         if re.search(r"(?:^| )\d+\.md$", path.name) or " 2" in path.name:
             continue
         yield path
 
 
-def check_legacy_and_producers(catalog, failures):
+def check_isolated_dependency_trees(failures):
+    for path in ROOT.rglob("package.json"):
+        relative = path.relative_to(ROOT)
+        parts = relative.parts
+        if any(part in EXCLUDED_MARKDOWN_PARTS for part in parts):
+            continue
+        if in_dependency_tree(parts):
+            continue
+        if tuple(parts[:-1]) in ISOLATED_DEPENDENCY_TREES:
+            continue
+        failures.append("undeclared dependency tree manifest: %s" % relative)
+
+
+def check_recursive_markdown(failures):
     for path in markdown_files():
         text = path.read_text(encoding="utf-8")
         relative = str(path.relative_to(ROOT))
@@ -607,6 +753,10 @@ def check_legacy_and_producers(catalog, failures):
         if relative != "VERSIONS.md" and re.search(
                 r"\bbatch-promote\b|\bday close\b|3\+ candidate", text, re.I):
             failures.append("legacy batch/threshold registry semantics remain in %s" % relative)
+
+
+def check_legacy_and_producers(catalog, failures):
+    check_recursive_markdown(failures)
     normative = [
         "README.md", "CLAUDE.md", "AGENTS.md", "CONTRIBUTING.md",
         "commands/ad.md", "commands/email.md", "commands/launch.md", "commands/social.md", "commands/narrative.md",
@@ -680,6 +830,7 @@ def main():
         catalog = load_json(CATALOG_PATH)
         expected_paths = expected_skill_paths(catalog, failures)
         check_catalog_shape(catalog, expected_paths, failures)
+        check_capability_profiles(catalog, failures)
         check_skills(catalog, expected_paths, failures)
         check_distribution(catalog, expected_paths, failures)
         check_frameworks(catalog, failures)
@@ -688,7 +839,8 @@ def main():
         check_l1_dependency(catalog, failures)
         check_symmetry(catalog, expected_paths, failures)
         check_legacy_and_producers(catalog, failures)
-    except (ArchitectureError, OSError, ValueError, KeyError) as exc:
+        check_isolated_dependency_trees(failures)
+    except (ArchitectureError, OSError, ValueError, KeyError, TypeError, AttributeError) as exc:
         failures.append("architecture check aborted safely: %s" % exc)
     if failures:
         print("ARCHITECTURE CONFORMANCE FAILED: %d issue(s)" % len(failures))

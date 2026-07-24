@@ -1,0 +1,386 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/evals/behavior-adapter-v2.schema.json",
+  "title": "Semantic behavior-eval host adapter protocol v2",
+  "description": "Closed request/result envelopes. Case provenance and real host/model execution provenance are separate; raw prompts and responses are not part of the result contract.",
+  "oneOf": [
+    {"$ref": "#/$defs/request"},
+    {"$ref": "#/$defs/result"}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "safeRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "sha256"],
+      "properties": {
+        "ref": {"$ref": "#/$defs/safeRef"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "type", "case_provenance", "evidence_binding", "target_skill", "scenario",
+        "input_summary", "expected_behavior", "failure_modes", "source_ref",
+        "source_line", "case_sha256", "source_group"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/safeId"},
+        "type": {"const": "eval-case"},
+        "case_provenance": {"enum": ["simulated", "real"]},
+        "evidence_binding": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/sourceRef"}
+          ]
+        },
+        "target_skill": {"$ref": "#/$defs/safeId"},
+        "scenario": {"type": "string", "minLength": 1, "maxLength": 16000},
+        "input_summary": {"type": "string", "minLength": 1, "maxLength": 16000},
+        "expected_behavior": {
+          "type": "array", "minItems": 1, "maxItems": 64,
+          "items": {"type": "string", "minLength": 1, "maxLength": 4000}
+        },
+        "failure_modes": {
+          "type": "array", "minItems": 1, "maxItems": 64,
+          "items": {"type": "string", "minLength": 1, "maxLength": 4000}
+        },
+        "source_ref": {"$ref": "#/$defs/safeRef"},
+        "source_line": {"type": "integer", "minimum": 1},
+        "case_sha256": {"$ref": "#/$defs/sha256"},
+        "source_group": {"enum": ["authored", "auto-routing", "derived-auditor"]}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"case_provenance": {"const": "real"}}},
+          "then": {"properties": {"evidence_binding": {"$ref": "#/$defs/sourceRef"}}},
+          "else": {"properties": {"evidence_binding": {"type": "null"}}}
+        }
+      ]
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind", "protocol_version", "request_sha256", "case", "selection",
+        "target", "prompt_contract"
+      ],
+      "properties": {
+        "kind": {"const": "behavior-eval-request"},
+        "protocol_version": {"const": "2.0"},
+        "request_sha256": {"$ref": "#/$defs/sha256"},
+        "case": {"$ref": "#/$defs/case"},
+        "selection": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["profile", "reasons"],
+          "properties": {
+            "profile": {"enum": ["smoke", "change-aware", "nightly", "filtered"]},
+            "reasons": {
+              "type": "array", "minItems": 1, "maxItems": 64, "uniqueItems": true,
+              "items": {"$ref": "#/$defs/safeId"}
+            }
+          }
+        },
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["skill", "path", "version", "skill_sha256"],
+          "properties": {
+            "skill": {"$ref": "#/$defs/safeId"},
+            "path": {"$ref": "#/$defs/safeRef"},
+            "version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
+            "skill_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "prompt_contract": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "contract_id", "contract_ref", "contract_sha256", "source_refs"],
+          "properties": {
+            "kind": {"enum": ["authored", "machine-skill", "derived-auditor"]},
+            "contract_id": {"$ref": "#/$defs/safeId"},
+            "contract_ref": {"$ref": "#/$defs/safeRef"},
+            "contract_sha256": {"$ref": "#/$defs/sha256"},
+            "source_refs": {
+              "type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true,
+              "items": {"$ref": "#/$defs/sourceRef"}
+            }
+          }
+        }
+      }
+    },
+    "judgeDiagnosticCode": {
+      "enum": [
+        "JUDGE_EMPTY_OUTPUT", "JUDGE_INVALID_UTF8", "JUDGE_INVALID_JSON",
+        "JUDGE_TOP_LEVEL_SHAPE", "JUDGE_OUTCOME", "JUDGE_ASSERTION_COVERAGE",
+        "JUDGE_ASSERTION_IDENTITY", "JUDGE_ASSERTION_SHAPE", "JUDGE_ASSERTION_VALUE",
+        "JUDGE_FAILURE_SHAPE", "JUDGE_FAILURE_TAXONOMY", "JUDGE_OUTCOME_INVARIANT"
+      ]
+    },
+    "judgeAttempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attempt", "response_sha256", "size_bytes", "disposition", "diagnostic_code"
+      ],
+      "properties": {
+        "attempt": {"type": "integer", "minimum": 1, "maximum": 2},
+        "response_sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 0, "maximum": 1000000},
+        "disposition": {"enum": ["accepted", "protocol-rejected"]},
+        "diagnostic_code": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/judgeDiagnosticCode"}]
+        }
+      },
+      "allOf": [{
+        "if": {
+          "properties": {"disposition": {"const": "accepted"}},
+          "required": ["disposition"]
+        },
+        "then": {"properties": {
+          "diagnostic_code": {"type": "null"},
+          "size_bytes": {"minimum": 1}
+        }},
+        "else": {"properties": {"diagnostic_code": {"$ref": "#/$defs/judgeDiagnosticCode"}}}
+      }]
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "execution_mode", "adapter_name", "adapter_version", "host_name", "host_version",
+        "model_provider", "model_id", "judge_model_id", "model_revision", "prompt_template_version",
+        "adapter_implementation_sha256", "prompt_template_sha256", "parameters_sha256",
+        "candidate_response_sha256",
+        "judge_response_sha256", "judge_attempts", "response_sha256",
+        "started_at", "ended_at", "latency_ms"
+      ],
+      "properties": {
+        "execution_mode": {"enum": ["real", "simulated"]},
+        "adapter_name": {"$ref": "#/$defs/safeId"},
+        "adapter_version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "host_name": {"$ref": "#/$defs/safeId"},
+        "host_version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "model_provider": {"$ref": "#/$defs/safeId"},
+        "model_id": {"type": "string", "minLength": 1, "maxLength": 256},
+        "judge_model_id": {"type": "string", "minLength": 1, "maxLength": 256},
+        "model_revision": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 256}]},
+        "adapter_implementation_sha256": {"$ref": "#/$defs/sha256"},
+        "prompt_template_version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "prompt_template_sha256": {"$ref": "#/$defs/sha256"},
+        "parameters_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_response_sha256": {"$ref": "#/$defs/sha256"},
+        "judge_response_sha256": {"$ref": "#/$defs/sha256"},
+        "judge_attempts": {
+          "type": "array", "minItems": 0, "maxItems": 2,
+          "items": {"$ref": "#/$defs/judgeAttempt"}
+        },
+        "response_sha256": {"$ref": "#/$defs/sha256"},
+        "started_at": {"type": "string", "format": "date-time"},
+        "ended_at": {"type": "string", "format": "date-time"},
+        "latency_ms": {"type": "integer", "minimum": 0, "maximum": 86400000}
+      }
+    },
+    "assertion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "verdict", "evidence"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^(?:expected|forbidden)-[1-9][0-9]*$"},
+        "kind": {"enum": ["expected", "forbidden"]},
+        "verdict": {"enum": ["met", "violated", "not-observed"]},
+        "evidence": {"type": "string", "minLength": 1, "maxLength": 2000}
+      },
+      "allOf": [{
+        "if": {"properties": {"kind": {"const": "forbidden"}}},
+        "then": {"properties": {"verdict": {"enum": ["violated", "not-observed"]}}}
+      }]
+    },
+    "failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "class", "retryable", "summary"],
+      "properties": {
+        "code": {"enum": [
+          "PROMPT_REQUIRED_BEHAVIOR_MISSING", "PROMPT_FORBIDDEN_BEHAVIOR",
+          "PROMPT_INJECTION_FOLLOWED", "OUTPUT_CONTRACT",
+          "ROUTING_WRONG_TARGET_OR_ORDER", "CONTEXT_MISSINGNESS_OR_AUTHORITY",
+          "PERMISSION_OR_AUTHORITY_BYPASS", "ARTIFACT_SINK_OR_VALIDATION",
+          "TOOL_OR_EXTERNAL_SIDE_EFFECT", "LOOP_HANDOFF_OR_TERMINATION",
+          "HOST_TIMEOUT", "HOST_RATE_LIMIT", "HOST_AUTH", "HOST_UNAVAILABLE",
+          "HOST_CONTEXT_LIMIT", "HOST_REFUSAL", "HOST_TOOL_ERROR",
+          "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE",
+          "ADAPTER_PROVENANCE", "EVALUATOR_INCONCLUSIVE"
+        ]},
+        "class": {"enum": ["prompt", "routing", "context", "tool", "permission", "artifact", "loop", "host", "adapter", "unknown"]},
+        "retryable": {"type": "boolean"},
+        "summary": {"type": "string", "minLength": 1, "maxLength": 2000}
+      },
+      "allOf": [{
+        "oneOf": [
+          {"properties": {
+            "code": {"enum": [
+              "PROMPT_REQUIRED_BEHAVIOR_MISSING", "PROMPT_FORBIDDEN_BEHAVIOR",
+              "PROMPT_INJECTION_FOLLOWED", "OUTPUT_CONTRACT"
+            ]},
+            "class": {"const": "prompt"},
+            "retryable": {"const": false}
+          }},
+          {"properties": {
+            "code": {"const": "ROUTING_WRONG_TARGET_OR_ORDER"},
+            "class": {"const": "routing"},
+            "retryable": {"const": false}
+          }},
+          {"properties": {
+            "code": {"const": "CONTEXT_MISSINGNESS_OR_AUTHORITY"},
+            "class": {"const": "context"},
+            "retryable": {"const": false}
+          }},
+          {"properties": {
+            "code": {"const": "PERMISSION_OR_AUTHORITY_BYPASS"},
+            "class": {"const": "permission"},
+            "retryable": {"const": false}
+          }},
+          {"properties": {
+            "code": {"const": "ARTIFACT_SINK_OR_VALIDATION"},
+            "class": {"const": "artifact"},
+            "retryable": {"const": false}
+          }},
+          {"properties": {
+            "code": {"const": "TOOL_OR_EXTERNAL_SIDE_EFFECT"},
+            "class": {"const": "tool"},
+            "retryable": {"const": false}
+          }},
+          {"properties": {
+            "code": {"const": "LOOP_HANDOFF_OR_TERMINATION"},
+            "class": {"const": "loop"},
+            "retryable": {"const": false}
+          }},
+          {"properties": {
+            "code": {"enum": [
+              "HOST_TIMEOUT", "HOST_RATE_LIMIT", "HOST_AUTH", "HOST_UNAVAILABLE",
+              "HOST_CONTEXT_LIMIT", "HOST_REFUSAL", "HOST_TOOL_ERROR"
+            ]},
+            "class": {"const": "host"}
+          }},
+          {"properties": {
+            "code": {"enum": [
+              "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE", "ADAPTER_PROVENANCE"
+            ]},
+            "class": {"const": "adapter"}
+          }},
+          {"properties": {
+            "code": {"const": "EVALUATOR_INCONCLUSIVE"},
+            "class": {"const": "unknown"},
+            "retryable": {"const": false}
+          }}
+        ]
+      }]
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind", "protocol_version", "case_id", "request_sha256", "outcome",
+        "execution_provenance", "assertions", "failures"
+      ],
+      "properties": {
+        "kind": {"const": "behavior-eval-result"},
+        "protocol_version": {"const": "2.0"},
+        "case_id": {"$ref": "#/$defs/safeId"},
+        "request_sha256": {"$ref": "#/$defs/sha256"},
+        "outcome": {"enum": ["passed", "behavior-failed", "inconclusive", "host-failed", "adapter-failed"]},
+        "execution_provenance": {"$ref": "#/$defs/execution"},
+        "assertions": {
+          "type": "array", "maxItems": 128, "uniqueItems": true,
+          "items": {"$ref": "#/$defs/assertion"}
+        },
+        "failures": {
+          "type": "array", "maxItems": 64,
+          "items": {"$ref": "#/$defs/failure"}
+        }
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"outcome": {"const": "passed"}}},
+          "then": {"properties": {
+            "failures": {"maxItems": 0},
+            "assertions": {"items": {"oneOf": [
+              {"properties": {"kind": {"const": "expected"}, "verdict": {"const": "met"}}},
+              {"properties": {"kind": {"const": "forbidden"}, "verdict": {"const": "not-observed"}}}
+            ]}}
+          }}
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "behavior-failed"}}},
+          "then": {"properties": {
+            "failures": {"minItems": 1, "items": {"properties": {"code": {"enum": [
+              "PROMPT_REQUIRED_BEHAVIOR_MISSING", "PROMPT_FORBIDDEN_BEHAVIOR",
+              "PROMPT_INJECTION_FOLLOWED", "OUTPUT_CONTRACT",
+              "ROUTING_WRONG_TARGET_OR_ORDER", "CONTEXT_MISSINGNESS_OR_AUTHORITY",
+              "PERMISSION_OR_AUTHORITY_BYPASS", "ARTIFACT_SINK_OR_VALIDATION",
+              "TOOL_OR_EXTERNAL_SIDE_EFFECT", "LOOP_HANDOFF_OR_TERMINATION"
+            ]}}}},
+            "assertions": {"contains": {"properties": {"verdict": {"const": "violated"}}}}
+          }}
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "inconclusive"}}},
+          "then": {"properties": {
+            "failures": {"minItems": 1, "maxItems": 1, "items": {"properties": {
+              "code": {"const": "EVALUATOR_INCONCLUSIVE"},
+              "class": {"const": "unknown"},
+              "retryable": {"const": false}
+            }}},
+            "assertions": {
+              "contains": {"properties": {
+                "kind": {"const": "expected"}, "verdict": {"const": "not-observed"}
+              }},
+              "not": {"contains": {"properties": {"verdict": {"const": "violated"}}}}
+            }
+          }}
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "host-failed"}}},
+          "then": {"properties": {
+            "failures": {"minItems": 1, "items": {"properties": {
+              "code": {"enum": [
+                "HOST_TIMEOUT", "HOST_RATE_LIMIT", "HOST_AUTH", "HOST_UNAVAILABLE",
+                "HOST_CONTEXT_LIMIT", "HOST_REFUSAL", "HOST_TOOL_ERROR"
+              ]},
+              "class": {"const": "host"}
+            }}},
+            "assertions": {"items": {"properties": {"verdict": {"const": "not-observed"}}}}
+          }}
+        },
+        {
+          "if": {"properties": {"outcome": {"const": "adapter-failed"}}},
+          "then": {"properties": {
+            "failures": {"minItems": 1, "items": {"properties": {
+              "code": {"enum": [
+                "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE", "ADAPTER_PROVENANCE"
+              ]},
+              "class": {"const": "adapter"}
+            }}},
+            "assertions": {"items": {"properties": {"verdict": {"const": "not-observed"}}}}
+          }}
+        }
+      ]
+    }
+  }
+}

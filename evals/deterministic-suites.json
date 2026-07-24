@@ -18,6 +18,11 @@
       "timeout_seconds": 60
     },
     {
+      "id": "run-events-adversarial",
+      "command": ["{python}", "tests/test_run_events.py"],
+      "timeout_seconds": 60
+    },
+    {
       "id": "shared-http-and-connectors",
       "command": ["{python}", "tests/test_connectors_local.py"],
       "timeout_seconds": 120
@@ -63,6 +68,36 @@
       "timeout_seconds": 120
     },
     {
+      "id": "distribution-supply-chain",
+      "command": ["{python}", "tests/test_distribution_builder.py"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "publisher-release-safety",
+      "command": ["{python}", "-m", "unittest", "tests.test_publish_release", "tests.test_publish_state"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "machine-contract-context-planning",
+      "command": ["{python}", "-m", "unittest", "tests.test_skill_contracts", "tests.test_context_plan"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "supported-runtime-controller",
+      "command": ["{python}", "-m", "unittest", "tests.test_runtime_controller"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "workflow-graph-loop",
+      "command": ["{python}", "-m", "unittest", "tests.test_workflow_graph", "tests.test_workflow_loop"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "five-engineering-maturity-contract",
+      "command": ["{python}", "-m", "unittest", "tests.test_engineering_maturity", "tests.test_semantic_evidence_verifier", "tests.test_behavior_evals_adapter"],
+      "timeout_seconds": 120
+    },
+    {
       "id": "standalone-auditor-runtime",
       "command": ["{python}", "scripts/generate-auditor-runtime.py", "--check"],
       "timeout_seconds": 60
@@ -75,6 +110,36 @@
     {
       "id": "local-links",
       "command": ["{python}", "scripts/check-local-links.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "context-budget",
+      "command": ["{python}", "scripts/check-context-budget.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "context-budget-regressions",
+      "command": ["{python}", "tests/test_context_budget.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "routing-lint",
+      "command": ["{python}", "scripts/check-routing.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "routing-lint-regressions",
+      "command": ["{python}", "tests/test_routing.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "audit-trends-regressions",
+      "command": ["{python}", "tests/test_audit_trends.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "audit-loop-regressions",
+      "command": ["{python}", "tests/test_audit_loop.py"],
       "timeout_seconds": 60
     }
   ]

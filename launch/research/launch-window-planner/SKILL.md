@@ -4,13 +4,13 @@ slug: aaron-launch-window-planner
 displayName: "Launch Window Planner · 发布窗口规划"
 summary: "发布择时/竞品日历/禁运期窗口/审核缓冲"
 description: 'Use when the user asks to "pick a launch date", "plan the launch window", or "set the embargo and lift time"; produces a candidate-window comparison table (conflict / tailwind / risk per window) built from industry-event cycles and the competitor launch calendar, a launch-week vs rolling-release format call, store-review buffer padding (labeled Estimated), and an embargo window definition (lift moment + timezone) submitted to the launch registry as a candidate. Not for judging the cultural moment itself — use trend-spotter; not for launch-day execution — use launch-day-conductor. 发布择时/发布窗口/竞品日历/禁运期窗口/审核缓冲'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when choosing a launch date or window: scanning industry events and conference cycles, mapping the competitor launch calendar, padding for store-review latency, choosing a launch-week vs rolling format, or defining the embargo window and lift moment. The timing layer of launch research — the chosen window becomes canonical only after launch-registry records it."
 argument-hint: "<product / launch stage> [candidate dates or quarter] [tier] [constraints]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "research"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "research"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Launch Window Planner

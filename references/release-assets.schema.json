@@ -1,0 +1,275 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/release-assets.schema.json",
+  "title": "Deterministic release asset ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "product",
+    "version",
+    "source",
+    "archive_policy",
+    "assets",
+    "checksums"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "product": {
+      "const": "aaron-marketing-skills"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repository",
+        "commit"
+      ],
+      "properties": {
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40}|[0-9a-f]{64})$"
+        }
+      }
+    },
+    "archive_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "format",
+        "tar_format",
+        "root",
+        "path_order",
+        "mtime",
+        "uid",
+        "gid",
+        "uname",
+        "gname",
+        "directory_mode",
+        "regular_mode",
+        "executable_mode",
+        "gzip_mtime",
+        "gzip_os"
+      ],
+      "properties": {
+        "format": {
+          "const": "tar+gzip"
+        },
+        "tar_format": {
+          "const": "ustar"
+        },
+        "root": {
+          "const": "filename-without-.tar.gz"
+        },
+        "path_order": {
+          "const": "bytewise-ascending"
+        },
+        "mtime": {
+          "const": 0
+        },
+        "uid": {
+          "const": 0
+        },
+        "gid": {
+          "const": 0
+        },
+        "uname": {
+          "const": ""
+        },
+        "gname": {
+          "const": ""
+        },
+        "directory_mode": {
+          "const": "0755"
+        },
+        "regular_mode": {
+          "const": "0644"
+        },
+        "executable_mode": {
+          "const": "0755"
+        },
+        "gzip_mtime": {
+          "const": 0
+        },
+        "gzip_os": {
+          "const": 255
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "$ref": "#/$defs/liteAsset"
+        },
+        {
+          "$ref": "#/$defs/proAsset"
+        },
+        {
+          "$ref": "#/$defs/governedAsset"
+        }
+      ],
+      "items": false
+    },
+    "checksums": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "filename",
+        "algorithm",
+        "covers",
+        "bytes",
+        "sha256"
+      ],
+      "properties": {
+        "filename": {
+          "const": "SHA256SUMS"
+        },
+        "algorithm": {
+          "const": "sha256"
+        },
+        "covers": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": {
+            "type": "string",
+            "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed)\\.tar\\.gz$"
+          },
+          "uniqueItems": true
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "filename",
+        "archive_root",
+        "bytes",
+        "sha256",
+        "distribution_manifest_sha256",
+        "distribution_files_sha256",
+        "profile_definition_sha256",
+        "capability_ceiling"
+      ],
+      "properties": {
+        "profile": {
+          "enum": [
+            "lite",
+            "pro",
+            "governed"
+          ]
+        },
+        "filename": {
+          "type": "string",
+          "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed)\\.tar\\.gz$"
+        },
+        "archive_root": {
+          "type": "string",
+          "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed)$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "distribution_manifest_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "distribution_files_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "profile_definition_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "capability_ceiling": {
+          "enum": [
+            "lite",
+            "pro",
+            "governed"
+          ]
+        }
+      }
+    },
+    "liteAsset": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/asset"
+        },
+        {
+          "properties": {
+            "profile": {
+              "const": "lite"
+            },
+            "capability_ceiling": {
+              "const": "lite"
+            }
+          }
+        }
+      ]
+    },
+    "proAsset": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/asset"
+        },
+        {
+          "properties": {
+            "profile": {
+              "const": "pro"
+            },
+            "capability_ceiling": {
+              "const": "pro"
+            }
+          }
+        }
+      ]
+    },
+    "governedAsset": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/asset"
+        },
+        {
+          "properties": {
+            "profile": {
+              "const": "governed"
+            },
+            "capability_ceiling": {
+              "const": "governed"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

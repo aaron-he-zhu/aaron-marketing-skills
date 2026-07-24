@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/profile-config.schema.json",
+  "title": "Aaron project capability profile",
+  "description": "A non-authoritative, secret-free project control file. It enables mechanisms but grants no registry, owner, or external-action authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "profile": {"enum": ["lite", "pro", "governed"]}
+  }
+}

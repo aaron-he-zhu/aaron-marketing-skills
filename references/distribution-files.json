@@ -1,42 +1,182 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.1",
   "plugin": {
-    "root_files": [
-      ".claude-plugin/plugin.json",
-      "CONNECTORS.md",
-      "LICENSE",
-      "PRIVACY.md",
-      "README.md",
-      "SECURITY.md",
-      "openclaw.plugin.json"
+    "profile_order": [
+      "lite",
+      "pro",
+      "governed"
     ],
-    "trees": [
-      "commands",
-      "hooks",
-      "memory/templates"
+    "shared": {
+      "root_files": [
+        ".claude-plugin/plugin.json",
+        "CONNECTORS.md",
+        "LICENSE",
+        "PRIVACY.md",
+        "README.md",
+        "SECURITY.md",
+        "openclaw.plugin.json"
+      ],
+      "trees": [
+        "commands"
+      ],
+      "runtime_references": [
+        "references/audit-run.schema.json",
+        "references/auditor-runbook.md",
+        "references/auto-routing-scenarios.md",
+        "references/capability-profiles.json",
+        "references/capability-profiles.md",
+        "references/capability-profiles.schema.json",
+        "references/framework-catalog.json",
+        "references/profile-config.schema.json",
+        "references/profile-resolution.schema.json",
+        "references/scoring-semantics.md",
+        "references/system-catalog.json",
+        "scripts/connectors/README.md"
+      ],
+      "runtime_scripts": [
+        "scripts/profile-resolver.py",
+        "scripts/rubric-score.py"
+      ],
+      "runtime_script_trees": []
+    },
+    "profiles": {
+      "lite": {
+        "capabilities": [
+          "authored-workflows",
+          "auto-routing",
+          "deterministic-scoring",
+          "inline-delivery",
+          "canonical-state-read"
+        ],
+        "package_ceiling": {
+          "max_files": 350,
+          "max_bytes": 3000000
+        },
+        "add": {
+          "root_files": [],
+          "trees": [],
+          "runtime_references": [],
+          "runtime_scripts": [],
+          "runtime_script_trees": []
+        },
+        "derived_outputs": []
+      },
+      "pro": {
+        "capabilities": [
+          "connectors",
+          "audit-persistence"
+        ],
+        "package_ceiling": {
+          "max_files": 400,
+          "max_bytes": 3700000
+        },
+        "add": {
+          "root_files": [],
+          "trees": [],
+          "runtime_references": [
+            "references/audit-artifact.schema.json",
+            "references/runtime-invocation.md"
+          ],
+          "runtime_scripts": [
+            "scripts/validate-audit-artifact.py"
+          ],
+          "runtime_script_trees": [
+            "scripts/connectors"
+          ]
+        },
+        "derived_outputs": []
+      },
+      "governed": {
+        "capabilities": [
+          "working-memory-write",
+          "registry-write",
+          "run-evidence",
+          "context-planning",
+          "runtime-controller",
+          "workflow-execution",
+          "workflow-loop",
+          "audit-loop",
+          "owner-capability"
+        ],
+        "package_ceiling": {
+          "max_files": 460,
+          "max_bytes": 5200000
+        },
+        "add": {
+          "root_files": [],
+          "trees": [
+            "hooks",
+            "memory/templates",
+            "references/workflow-graph"
+          ],
+          "runtime_references": [
+            "docs/workflow-graph.md",
+            "references/audit-loop-protocol.md",
+            "references/audit-loop-state.schema.json",
+            "references/context-manifest.schema.json",
+            "references/context-planning.md",
+            "references/context-request.schema.json",
+            "references/context-resolution.md",
+            "references/registry-event-protocol.md",
+            "references/registry-event.schema.json",
+            "references/run-envelope.schema.json",
+            "references/run-event.schema.json",
+            "references/runtime-controller-request.schema.json",
+            "references/runtime-controller.md",
+            "references/runtime-protocol.md",
+            "references/save-point.schema.json",
+            "references/skill-machine-contract-index.schema.json",
+            "references/skill-machine-contract.schema.json",
+            "references/turn-snapshot.schema.json",
+            "references/workflow-graph-edge-shard.schema.json",
+            "references/workflow-graph-protocol.md",
+            "references/workflow-graph-source.schema.json",
+            "references/workflow-graph.json",
+            "references/workflow-graph.schema.json",
+            "references/workflow-graph.source.json",
+            "references/workflow-loop-event.schema.json",
+            "references/workflow-loop-plan.schema.json",
+            "references/workflow-loop-protocol.md",
+            "references/workflow-loop-request.schema.json",
+            "references/workflow-loop-state.schema.json"
+          ],
+          "runtime_scripts": [
+            "scripts/audit-loop.py",
+            "scripts/audit-trends.py",
+            "scripts/check-memory-private.py",
+            "scripts/context-plan.py",
+            "scripts/context-resolver.py",
+            "scripts/registry-events.py",
+            "scripts/runtime-controller.py",
+            "scripts/run-events.py",
+            "scripts/workflow-graph.py",
+            "scripts/workflow-loop.py",
+            "scripts/workflow_loop.py"
+          ],
+          "runtime_script_trees": []
+        },
+        "derived_outputs": [
+          "skill-contract-pack-v1"
+        ]
+      }
+    }
+  },
+  "standalone-skill": {
+    "profile": "lite",
+    "capabilities": [
+      "inline-delivery",
+      "canonical-state-read"
     ],
-    "runtime_references": [
-      "references/audit-artifact.schema.json",
-      "references/audit-run.schema.json",
-      "references/framework-catalog.json",
-      "references/registry-event.schema.json",
-      "references/runtime-invocation.md",
-      "references/system-catalog.json"
-    ],
-    "runtime_scripts": [
-      "scripts/check-memory-private.py",
-      "scripts/registry-events.py",
-      "scripts/rubric-score.py",
-      "scripts/validate-audit-artifact.py"
-    ],
-    "runtime_script_trees": []
+    "package_ceiling": {
+      "max_files": 64,
+      "max_bytes": 1000000
+    }
   },
   "excluded_top_level": [
     ".github",
     ".githooks",
     ".planning",
     "badges",
-    "docs",
     "evals",
     "reference-oss",
     "tests"

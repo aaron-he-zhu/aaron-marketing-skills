@@ -4,13 +4,13 @@ slug: aaron-participation-warmup-planner
 displayName: "Participation Warmup Planner · 参与预热计划"
 summary: "社区参与预热/先给后取台账/规则摘要/warming毕业标准"
 description: 'Use when the user asks to "plan the participation ramp before we promote", "how much account history or karma do we need in this community", or "design entry incentives and member lifecycle for our own Discord"; produces the per-community pre-promotion warming plan — account-history/tenure expectations (Estimated, named sources), a give-before-ask ledger spec, a per-community etiquette + rule digest with last-verified dates, and the warming → active graduation criteria that channel-registry requires as state-transition evidence — plus the owned-community variant (entry paths + member lifecycle for your own Discord/Slack/forum/企业微信私域). Not for launch-day submissions or T-0 threads — use community-launch-runner. 社区预热/先给后取/账号养成/毕业标准'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when channels are chosen but not yet promoted in: designing the authentic-participation ramp per community (account-history expectations, give-before-ask ledger spec, etiquette and rule digest with last-verified dates), setting the warming → active graduation criteria the channel registry records as transition evidence, or designing entry incentives and member lifecycle for an owned Discord/Slack/forum/企业微信 space. Picks up the phased-entry handoff from audience-mapper niche mode and builds the account standing community-launch-runner presumes at T-0. Not the launch-day submission plan itself."
 argument-hint: "<community list or owned space> [target promotion window] [existing account history]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "social", "phase": "explore", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "explore"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "social", "phase": "explore", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "explore"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Participation Warmup Planner

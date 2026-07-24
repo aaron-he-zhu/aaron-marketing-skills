@@ -4,13 +4,13 @@ slug: aaron-social-pulse-monitor
 displayName: "Social Pulse Monitor · 社媒舆情监听"
 summary: "品牌舆情监听/提及分诊路由/7日基线突刺/B2B触发观察表"
 description: 'Use when the user asks to "monitor brand mentions", "set up social listening", "did anything spike about us this week", or "watch these accounts for buying triggers"; runs always-on keyless listening — a versioned listening-query architecture (brand variants incl. misspellings and 中文 names, exclusion terms, per-source syntax for HN Algolia / Bluesky / GDELT / Tavily), a mention sweep with six-class triage (crisis / bug / lead / praise / question / spam) each routed with an SLA, a 7-day rolling baseline with spike flags (the crisis trigger input), a B2B trigger watchlist (funding / hiring / launch signals), and an explicit coverage disclosure where X/IG/TikTok/LinkedIn/小红书 numbers are proxy-labeled, never Measured. Not for launch-window telemetry (T-0→T+30 rank and review polling) — use launch-monitor. 舆情监听/品牌提及监测/基线突刺/触发信号'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when standing up or running always-on brand/community listening: building the listening-query set (brand-term variants incl. 中文 names and misspellings, exclusion terms, per-source syntax), sweeping keyless public surfaces for new mentions, triaging mentions into crisis/bug/lead/praise/question/spam with routing targets and SLAs, maintaining the 7-day rolling baseline and flagging spikes, or watching B2B trigger accounts for funding/hiring/launch signals. Not the response step (engagement-inbox-manager), not the competitive trend read (share-of-voice-tracker), not launch-window telemetry (launch-monitor)."
 argument-hint: "<brand terms / handles> [--sweep | --baseline | --watchlist <accounts>]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "social", "phase": "observe", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "observe"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "social", "phase": "observe", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "observe"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Social Pulse Monitor

@@ -4,13 +4,13 @@ slug: aaron-audience-segment-builder
 displayName: "Audience Segment Builder · 付费广告受众分群"
 summary: "付费广告受众分群/种子人群/排除人群/相似人群种子"
 description: 'Use when the user asks to "build audience segments from my customer list", "make value-based / lookalike seed lists", "set up exclusion / suppression segments", or "map audiences to funnel stages across platforms"; turns the user''s OWN customer/CRM/GA4 export into seed audiences, value-based lookalike SEED lists, exclusion/suppression segments, and a cross-platform funnel-stage targeting map, informing the ROAS A (Audience) dimension. Not for building account structure or match types — use campaign-architect; not for organic SERP intent — use keyword-research. 付费广告受众分群/种子人群/排除人群/相似人群种子'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when preparing WHO to target before a paid account is built: segmenting an exported customer/CRM list into seed audiences, building value-based lookalike SEED lists from your own high-value customers, defining exclusion/suppression segments (existing customers, recent purchasers, bad-fit), and laying out a funnel-stage targeting map that is shared across ad platforms."
 argument-hint: "<customer/CRM CSV or GA4 export> [goal: DR|prospecting] [platforms]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "research"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "research"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Audience Segment Builder
