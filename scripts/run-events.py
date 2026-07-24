@@ -1007,11 +1007,53 @@ def locked_stream(path, exclusive, create=True):
         os.close(parent_fd)
 
 
+def ensure_coordinator_lock(path):
+    """Publish one empty coordinator inode without acquiring a narrower lock."""
+    parent_fd, identity = open_directory_anchor(path.parent)
+    descriptor = None
+    try:
+        entry = anchored_lstat(parent_fd, path.parent, path.name, missing_ok=True)
+        if entry is None:
+            flags = (
+                os.O_WRONLY | os.O_CREAT | os.O_EXCL
+                | getattr(os, "O_NOFOLLOW", 0)
+            )
+            try:
+                descriptor = os.open(
+                    path.name, flags, 0o600, dir_fd=parent_fd,
+                )
+            except FileExistsError:
+                pass
+            else:
+                os.fchmod(descriptor, 0o600)
+                os.fsync(descriptor)
+                os.close(descriptor)
+                descriptor = None
+                os.fsync(parent_fd)
+        entry = anchored_lstat(parent_fd, path.parent, path.name)
+        if (
+                statmod.S_ISLNK(entry.st_mode)
+                or not statmod.S_ISREG(entry.st_mode)
+                or entry.st_nlink != 1):
+            raise RunEventError(
+                "run coordinator lock must be a stable single-link regular file"
+            )
+        revalidate_anchor(parent_fd, path.parent, identity)
+    except OSError as exc:
+        raise RunEventError(
+            "cannot publish run coordinator lock %s: %s" % (path, exc)
+        ) from exc
+    finally:
+        if descriptor is not None:
+            os.close(descriptor)
+        os.close(parent_fd)
+
+
 @contextlib.contextmanager
-def locked_run_coordinator(root, run_id):
-    """Serialize every existing-run mutation before narrower runtime locks."""
+def locked_run_coordinator(root, run_id, create=False):
+    """Serialize a run mutation before any narrower stream or artifact lock."""
     root_path = normalized_root(root)
-    stream, _projection, run_dir = run_paths(root_path, run_id, create=False)
+    stream, _projection, run_dir = run_paths(root_path, run_id, create=create)
     status = _lstat(run_dir, "run directory", missing_ok=True)
     if status is None:
         raise RunEventError("run does not exist: %s" % run_id)
@@ -1019,17 +1061,16 @@ def locked_run_coordinator(root, run_id):
         raise RunEventError("run directory must be a real directory")
     lock_path = run_dir / ".coordinator.lock"
     ensure_ignored(root_path, [lock_path])
-    if _lstat(stream, "run event stream", missing_ok=True) is None:
+    if (
+            not create
+            and _lstat(stream, "run event stream", missing_ok=True) is None):
         raise RunEventError("run does not exist: %s" % run_id)
-    if _lstat(lock_path, "run coordinator lock", missing_ok=True) is None:
-        # Serialize first creation on the already durable stream. The stream is
-        # released before taking the coordinator, preserving the steady-state
-        # coordinator -> stream lock order.
-        with locked_stream(stream, exclusive=True, create=False):
-            if _lstat(lock_path, "run coordinator lock", missing_ok=True) is None:
-                with locked_stream(lock_path, exclusive=True):
-                    pass
-    with locked_stream(lock_path, exclusive=True) as handle:
+    ensure_coordinator_lock(lock_path)
+    with locked_stream(lock_path, exclusive=True, create=False) as handle:
+        if (
+                not create
+                and _lstat(stream, "run event stream", missing_ok=True) is None):
+            raise RunEventError("run does not exist: %s" % run_id)
         yield handle
 
 
@@ -1440,15 +1481,10 @@ def append_event(root, run_id, request, allow_hook_retry=False):
         raise RunEventError("idempotency key prefix is reserved for the runtime")
     root_path = normalized_root(root)
     stream, _projection, _run_dir = run_paths(root_path, run_id, create=False)
-    if _lstat(stream, "run event stream", missing_ok=True) is None:
-        if normalized["event_type"] != "run_started":
-            raise RunEventError("new run must start with run_started")
-        # The first event creates the run stream before a per-run coordinator
-        # can exist. Concurrent starts still serialize on the stream itself.
-        return _append_event_under_coordinator(
-            root_path, run_id, normalized, allow_hook_retry,
-        )
-    with locked_run_coordinator(root_path, run_id):
+    stream_missing = _lstat(stream, "run event stream", missing_ok=True) is None
+    if stream_missing and normalized["event_type"] != "run_started":
+        raise RunEventError("new run must start with run_started")
+    with locked_run_coordinator(root_path, run_id, create=stream_missing):
         return _append_event_under_coordinator(
             root_path, run_id, normalized, allow_hook_retry,
         )

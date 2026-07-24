@@ -1,3 +1,4 @@
+import contextlib
 import importlib.util
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 import hashlib
@@ -674,6 +675,26 @@ class RunEventTests(unittest.TestCase):
         events = runtime.load_events(self.root, self.run_id)
         self.assertEqual(list(range(1, 18)), [event["offset"] for event in events])
         self.assertEqual(17, len({event["event_hash"] for event in events}))
+
+    def test_concurrent_run_starts_serialize_to_one_root_event(self):
+        request = self.request(
+            "concurrent-start", event_type="run_started", parent=None,
+            subject={"kind": "run", "ref": self.run_id}, status="started",
+        )
+        barrier = threading.Barrier(6)
+
+        def start():
+            barrier.wait()
+            return runtime.append_event(self.root, self.run_id, request)
+
+        with mock.patch.object(runtime, "ensure_ignored", return_value=None):
+            with ThreadPoolExecutor(max_workers=6) as pool:
+                results = list(pool.map(lambda _index: start(), range(6)))
+        self.assertEqual(1, sum(not result["deduplicated"] for result in results))
+        self.assertEqual(5, sum(result["deduplicated"] for result in results))
+        events = runtime.load_events(self.root, self.run_id)
+        self.assertEqual(1, len(events))
+        self.assertEqual(runtime.ZERO_HASH, events[0]["previous_hash"])
 
     def test_event_limit_is_rejected_before_the_stream_becomes_unverifiable(self):
         with mock.patch.object(runtime, "MAX_EVENTS", 3):
@@ -1838,6 +1859,49 @@ class RunEventTests(unittest.TestCase):
         stream.chmod(0o644)
         with self.assertRaisesRegex(runtime.RunEventError, "private file mode 0600"):
             runtime.load_events(self.root, self.run_id)
+
+    def test_coordinator_precedes_stream_for_new_and_legacy_runs(self):
+        real_locked_stream = runtime.locked_stream
+        held = []
+        acquisitions = []
+
+        @contextlib.contextmanager
+        def tracked_lock(path, *args, **kwargs):
+            name = Path(path).name
+            if name == ".coordinator.lock":
+                self.assertNotIn("events.ndjson", held)
+            with real_locked_stream(path, *args, **kwargs) as handle:
+                acquisitions.append((name, tuple(held)))
+                held.append(name)
+                try:
+                    yield handle
+                finally:
+                    held.remove(name)
+
+        with (
+            mock.patch.object(runtime, "ensure_ignored", return_value=None),
+            mock.patch.object(runtime, "locked_stream", tracked_lock),
+        ):
+            root_event = self.start()["event"]
+        expected_order = [
+            (".coordinator.lock", ()),
+            ("events.ndjson", (".coordinator.lock",)),
+        ]
+        self.assertEqual(expected_order, acquisitions)
+
+        _stream, _projection, run_dir = runtime.run_paths(self.root, self.run_id)
+        (run_dir / ".coordinator.lock").unlink()
+        acquisitions.clear()
+        with (
+            mock.patch.object(runtime, "ensure_ignored", return_value=None),
+            mock.patch.object(runtime, "locked_stream", tracked_lock),
+        ):
+            result = runtime.append_event(
+                self.root, self.run_id,
+                self.request("legacy-lock", parent=root_event["event_id"]),
+            )
+        self.assertEqual(expected_order, acquisitions)
+        self.assertEqual(2, result["event"]["offset"])
 
     def test_multiprocess_appends_keep_one_hash_chain(self):
         root_event = self.start()["event"]
