@@ -24,8 +24,12 @@
 # skill, and (c) aborts the SkillHub pass after 2 consecutive deferrals
 # (account-level window). Deferred ≠ failed: exit 8 means "re-run this same
 # command after the window" — the state file + idempotent publishes make the
-# re-run cheap. ClawHub updates to existing skills are not hourly-capped (only
-# brand-new skills are ~5/hr). ClawHub relicenses published skills MIT-0.
+# re-run cheap. Once the immutable final GitHub release gates exist, the shared
+# publisher gate permits that continuation beyond the initial 24-hour issuance
+# window while the committed semantic evidence policy remains current (30 days
+# at v19); it still revalidates the complete private proof chain. ClawHub updates
+# to existing skills are not hourly-capped (only brand-new skills are ~5/hr).
+# ClawHub relicenses published skills MIT-0.
 # Owner-run, never CI. Exit: 0 clean · 1 hard failure · 8 quota-deferred.
 set -u
 cd "$(cd "$(dirname "$0")/.." && pwd)"

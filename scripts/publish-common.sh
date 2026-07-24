@@ -149,8 +149,27 @@ print(hashlib.sha256("\0".join(sys.argv[1:]).encode("utf-8")).hexdigest())
 PY
 }
 
+publish_verify_distribution_receipt() {
+  local receipt commit version maturity_report evidence_root
+  receipt="$1"
+  commit="$2"
+  version="$3"
+  maturity_report="$4"
+  evidence_root="$5"
+  /usr/bin/python3 scripts/verify-release-receipt.py \
+    "$receipt" \
+    --source-commit "$commit" \
+    --release-version "$version" \
+    --verifier scripts/verify-profile-outcomes.py \
+    --maturity-report "$maturity_report" \
+    --evidence-root "$evidence_root" \
+    --required-gate engineering-validation-v19 \
+    --post-release-continuation
+}
+
 publish_require_final_release() {
-  local repo commit version receipt receipt_identity receipt_sha release_candidate receipt_commit
+  local repo commit version receipt maturity_report evidence_root
+  local receipt_identity receipt_sha release_candidate receipt_commit
   local gate_token inherited_token tag tag_commit release_json runs_json asset_root
   repo="$1"
   commit="$2"
@@ -163,19 +182,29 @@ publish_require_final_release() {
     echo "FAIL: v19 live distribution requires AARON_RELEASE_RECEIPT" >&2
     return 1
   }
-  receipt_identity="$(/usr/bin/python3 scripts/verify-release-receipt.py \
-    "$receipt" \
-    --source-commit "$commit" \
-    --release-version "$version" \
-    --verifier scripts/verify-profile-outcomes.py)" || return 1
-  IFS=$'\t' read -r receipt_sha release_candidate receipt_commit <<< "$receipt_identity"
-  [ -n "$receipt_sha" ] && [ -n "$release_candidate" ] && [ "$receipt_commit" = "$commit" ] || {
-    echo "FAIL: private release receipt identity is malformed" >&2
+  maturity_report="${AARON_RELEASE_MATURITY_REPORT:-}"
+  [ -n "$maturity_report" ] || {
+    echo "FAIL: v19 live distribution requires AARON_RELEASE_MATURITY_REPORT" >&2
     return 1
   }
-  gate_token="$(publish_final_gate_token "$repo" "$commit" "$version" "$receipt_sha")" || return 1
+  evidence_root="${AARON_RELEASE_EVIDENCE_ROOT:-}"
+  [ -n "$evidence_root" ] || {
+    echo "FAIL: v19 live distribution requires AARON_RELEASE_EVIDENCE_ROOT" >&2
+    return 1
+  }
   inherited_token="${AARON_PUBLISH_PARENT_FINAL_GATE_TOKEN:-}"
   if [ -n "$inherited_token" ]; then
+    receipt_identity="$(publish_verify_distribution_receipt \
+      "$receipt" "$commit" "$version" "$maturity_report" "$evidence_root")" \
+      || return 1
+    IFS=$'\t' read -r receipt_sha release_candidate receipt_commit <<< "$receipt_identity"
+    [ -n "$receipt_sha" ] && [ -n "$release_candidate" ] \
+      && [ "$receipt_commit" = "$commit" ] || {
+      echo "FAIL: private release receipt identity is malformed" >&2
+      return 1
+    }
+    gate_token="$(publish_final_gate_token \
+      "$repo" "$commit" "$version" "$receipt_sha")" || return 1
     [ -n "${AARON_PUBLISH_EXPECTED_REPO:-}" ] \
       && [ -n "${AARON_PUBLISH_EXPECTED_COMMIT:-}" ] \
       && [ "$repo" = "$AARON_PUBLISH_EXPECTED_REPO" ] \
@@ -270,6 +299,23 @@ PY
     return 1
   fi
   rm -rf -- "$asset_root"
+
+  # Only an already-created immutable final release may relax the wall-clock
+  # freshness check for a resumed distribution pass.  Receipt/report/raw-chain
+  # hashes, source identity, issuance-time freshness, and the current semantic
+  # policy window are still revalidated.  create-github-release.py never uses
+  # this continuation mode and therefore keeps the strict 24-hour release gate.
+  receipt_identity="$(publish_verify_distribution_receipt \
+    "$receipt" "$commit" "$version" "$maturity_report" "$evidence_root")" \
+    || return 1
+  IFS=$'\t' read -r receipt_sha release_candidate receipt_commit <<< "$receipt_identity"
+  [ -n "$receipt_sha" ] && [ -n "$release_candidate" ] \
+    && [ "$receipt_commit" = "$commit" ] || {
+    echo "FAIL: private release receipt identity is malformed" >&2
+    return 1
+  }
+  gate_token="$(publish_final_gate_token \
+    "$repo" "$commit" "$version" "$receipt_sha")" || return 1
   PUBLISH_FINAL_GATE_TOKEN="$gate_token"
   echo "Final release gate: $repo@$commit ($tag, $release_candidate, assets and CI verified)" >&2
 }

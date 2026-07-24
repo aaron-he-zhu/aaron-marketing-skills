@@ -1,4 +1,4 @@
-"""Release-outcome gate tests using pseudonymous synthetic fixtures."""
+"""Post-release outcome-promotion tests using pseudonymous synthetic fixtures."""
 from __future__ import annotations
 
 import copy
@@ -318,13 +318,13 @@ class ProfileOutcomeTests(unittest.TestCase):
             with self.assertRaisesRegex(profile_outcomes.OutcomeError, "invalid fields"):
                 profile_outcomes.load_evidence(path)
 
-    def test_safety_failure_blocks_release(self):
+    def test_safety_failure_blocks_promotion(self):
         evidence = valid_evidence()
         evidence["projects"][0]["lite"]["safety_failures"] = ["unauthorized mutation"]
         with self.assertRaisesRegex(profile_outcomes.OutcomeError, "safety failures"):
             profile_outcomes.evaluate(evidence)
 
-    def test_missing_shadow_projects_blocks_release(self):
+    def test_missing_shadow_projects_blocks_promotion(self):
         evidence = valid_evidence()
         evidence["projects"] = [
             row for row in evidence["projects"] if row["kind"] != "shadow"
@@ -503,6 +503,23 @@ class ProfileOutcomeTests(unittest.TestCase):
                 ).read_text(encoding="utf-8")
             )["properties"]["projects"]["minItems"],
         )
+
+    def test_profile_artifacts_are_explicitly_post_release_and_non_authorizing(self):
+        receipt_schema = json.loads(
+            (
+                ROOT / "references" / "profile-outcome-receipt.schema.json"
+            ).read_text(encoding="utf-8")
+        )
+        evidence_schema = json.loads(
+            (
+                ROOT / "references" / "profile-outcome-evidence.schema.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertIn("post-release", evidence_schema["description"])
+        self.assertIn("does not authorize a release", evidence_schema["description"])
+        self.assertIn("does not authorize a release", receipt_schema["description"])
+        self.assertIn("post-release", profile_outcomes.__doc__)
+        self.assertIn("do not authorize a release", profile_outcomes.__doc__)
 
 
 if __name__ == "__main__":

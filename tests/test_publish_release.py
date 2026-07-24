@@ -1,3 +1,4 @@
+import datetime as dt
 import hashlib
 import json
 import os
@@ -20,6 +21,22 @@ DISCIPLINES = (
     "influencer",
     "launch",
 )
+ENGINEERING_TOOL_REFS = {
+    "issuer": "scripts/issue-engineering-release-receipt.py",
+    "release_verifier": "scripts/verify-release-receipt.py",
+    "maturity_checker": "scripts/check-engineering-maturity.py",
+    "semantic_verifier": "scripts/verify-semantic-evidence.py",
+    "maturity_rubric": "references/engineering-maturity-rubric.json",
+    "semantic_policy": "evals/semantic-evidence-policy.json",
+    "receipt_schema": "references/engineering-release-receipt.schema.json",
+}
+MOCK_SEMANTIC_VERIFIER = """#!/usr/bin/env python3
+from pathlib import Path
+import sys
+
+root = Path(sys.argv[sys.argv.index("--evidence-root") + 1])
+sys.stdout.buffer.write((root / "mock-revalidated-summary.json").read_bytes())
+"""
 
 
 def pilot_release_receipt(commit="a" * 40, version="19.0.0"):
@@ -80,6 +97,103 @@ def pilot_release_receipt(commit="a" * 40, version="19.0.0"):
             "safety_failure_count": 0,
             "passed": True,
             "errors": [],
+        },
+    }
+
+
+def engineering_release_receipt(
+    *,
+    source_tree_sha256,
+    release_root=ROOT,
+    commit="a" * 40,
+    version="19.0.0",
+):
+    stamp = (
+        dt.datetime.now(dt.timezone.utc)
+        .replace(microsecond=0)
+        .isoformat()
+        .replace("+00:00", "Z")
+    )
+    return {
+        "$schema": "references/engineering-release-receipt.schema.json",
+        "schema_version": "1.0",
+        "gate": "engineering-validation-v19",
+        "passed": True,
+        "release_version": version,
+        "release_candidate": version + "-rc.1",
+        "source_commit": commit,
+        "issued_at": stamp,
+        "repository": {
+            "branch": "fixture",
+            "worktree_clean": True,
+            "source_tree_sha256": source_tree_sha256,
+        },
+        "tools": {
+            name: {
+                "ref": reference,
+                "sha256": hashlib.sha256(
+                    (release_root / reference).read_bytes()
+                ).hexdigest(),
+            }
+            for name, reference in ENGINEERING_TOOL_REFS.items()
+        },
+        "maturity": {
+            "evaluated_at": stamp,
+            "report_sha256": "1" * 64,
+            "target_score": 95,
+            "achieved": True,
+            "dimension_scores": {
+                name: 100
+                for name in ("prompt", "context", "harness", "loop", "graph")
+            },
+            "required_hard_gates": {
+                "P19": True,
+                "P20": True,
+                "H20": True,
+            },
+        },
+        "semantic_evidence": {
+            "schema_version": "1.0",
+            "valid": True,
+            "run_id": "12345678-1234-1234-1234-123456789abc",
+            "profile": "smoke",
+            "case_count": 24,
+            "case_provenance": {"simulated": 24},
+            "execution_mode": "real",
+            "model_provider": "fixture-provider",
+            "model_id": "fixture-model",
+            "judge_model_id": "fixture-judge",
+            "distinct_judge_model": True,
+            "total_judge_attempts": 24,
+            "retried_cases": 0,
+            "judge_protocol_retries": 0,
+            "host_name": "fixture-host",
+            "host_version": "1",
+            "adapter_name": "fixture-adapter",
+            "adapter_implementation_sha256": "2" * 64,
+            "runner_sha256": "3" * 64,
+            "selection_sha256": "4" * 64,
+            "protocol_schema_sha256": "5" * 64,
+            "request_stream_sha256": "6" * 64,
+            "result_stream_sha256": "7" * 64,
+            "head_record_hash": "8" * 64,
+            "completion_sha256": "9" * 64,
+            "oldest_result_at": stamp,
+            "newest_evidence_at": stamp,
+            "age_seconds": 0,
+        },
+        "claims": {
+            "validation_scope": "engineering-only",
+            "evidence_provenance": "simulated-semantic-cases",
+            "real_project_outcomes_validated": False,
+            "default_profile": "lite",
+            "governed_outcome_claims_allowed": False,
+            "governed_default_promotion_allowed": False,
+        },
+        "attestation": {
+            "method": "explicit-owner-engineering-only-authorization",
+            "statement": "release-v19-without-real-project-outcomes",
+            "accepted_at": stamp,
         },
     }
 
@@ -154,6 +268,26 @@ class PublishReleaseTests(unittest.TestCase):
 
     def fake_release_environment(self, base, *, status="", fetch_failure=False,
                                  ancestor_failure=False):
+        release_root = base / "mock-release-root"
+        shutil.copytree(
+            ROOT,
+            release_root,
+            ignore=shutil.ignore_patterns(
+                ".git",
+                ".planning",
+                "__pycache__",
+            ),
+            copy_function=os.link,
+        )
+        mock_semantic_verifier = (
+            release_root / "scripts" / "verify-semantic-evidence.py"
+        )
+        mock_semantic_verifier.unlink()
+        mock_semantic_verifier.write_text(
+            MOCK_SEMANTIC_VERIFIER,
+            encoding="utf-8",
+        )
+        mock_semantic_verifier.chmod(0o755)
         fake_bin = base / "bin"
         fake_bin.mkdir(parents=True)
         fake_git = fake_bin / "git"
@@ -191,6 +325,8 @@ elif args == ["rev-parse", "--verify", "HEAD^{commit}"]:
     print(commit)
 elif args == ["rev-parse", "--verify", "refs/remotes/origin/main^{commit}"]:
     print(os.environ.get("FAKE_GIT_REMOTE_COMMIT", commit))
+elif args == ["ls-tree", "-r", "--full-tree", commit]:
+    print(os.environ["FAKE_GIT_LS_TREE"], end="")
 elif args[:3] == ["fetch", "-q", "--"]:
     raise SystemExit(1 if os.environ.get("FAKE_GIT_FETCH_FAILURE") == "1" else 0)
 elif args[:2] == ["merge-base", "--is-ancestor"]:
@@ -251,8 +387,24 @@ elif len(args) >= 4 and args[0] == "-C" and args[2] == "push":
         (clone / "README.md").read_bytes()
     )
 elif len(args) == 2 and args[0] == "show":
-    root = Path(os.environ.get("FAKE_GIT_SHOW_ROOT", os.environ["FAKE_REPOSITORY_ROOT"]))
     reference = args[1].split(":", 1)[1]
+    tool_refs = {
+        "scripts/issue-engineering-release-receipt.py",
+        "scripts/verify-release-receipt.py",
+        "scripts/check-engineering-maturity.py",
+        "scripts/verify-semantic-evidence.py",
+        "references/engineering-maturity-rubric.json",
+        "evals/semantic-evidence-policy.json",
+        "references/engineering-release-receipt.schema.json",
+    }
+    root = Path(
+        os.environ["FAKE_REPOSITORY_ROOT"]
+        if reference in tool_refs
+        else os.environ.get(
+            "FAKE_GIT_SHOW_ROOT",
+            os.environ["FAKE_REPOSITORY_ROOT"],
+        )
+    )
     sys.stdout.buffer.write((root / reference).read_bytes())
 else:
     print("unsupported fake git call: %r" % args, file=sys.stderr)
@@ -277,14 +429,18 @@ else:
             "FAKE_GIT_REMOTE_AFTER": "https://github.com/other-owner/other-repository.git",
             "FAKE_GIT_REMOTE_SWITCH_AFTER": "999999",
             "FAKE_GIT_REMOTE_COUNTER": str(base / "origin-read-count.txt"),
+            "FAKE_GIT_LS_TREE": (
+                "100644 blob %s\\tpayload.txt\\n" % ("1" * 40)
+            ),
             "FAKE_GIT_STATUS": status,
             "FAKE_GIT_FETCH_FAILURE": "1" if fetch_failure else "0",
             "FAKE_GIT_ANCESTOR_FAILURE": "1" if ancestor_failure else "0",
             "FAKE_GIT_ARCHIVE_FAILURE": "0",
             "FAKE_GATE_MUTATION_KIND": "",
             "FAKE_GIT_REWRITES": "",
-            "FAKE_REPOSITORY_ROOT": str(ROOT),
-            "FAKE_PINNED_ROOT": str(ROOT),
+            "FAKE_REPOSITORY_ROOT": str(release_root),
+            "FAKE_PINNED_ROOT": str(release_root),
+            "FAKE_RELEASE_CWD": str(release_root),
             "FAKE_PUSH_ROOT": str(base / "pushes"),
             "FAKE_MUTATION_LOG": str(base / "mutations.log"),
         })
@@ -293,7 +449,73 @@ else:
         )["version"]
         if int(release_version.split(".", 1)[0]) >= 19:
             receipt_path = base / "private-release-receipt.json"
-            receipt = pilot_release_receipt(version=release_version)
+            receipt = engineering_release_receipt(
+                version=release_version,
+                release_root=release_root,
+                source_tree_sha256=hashlib.sha256(
+                    environment["FAKE_GIT_LS_TREE"].encode("utf-8")
+                ).hexdigest(),
+            )
+            rubric = json.loads(
+                (
+                    release_root
+                    / "references"
+                    / "engineering-maturity-rubric.json"
+                ).read_text(encoding="utf-8")
+            )
+            report = {
+                "$schema": "references/engineering-maturity-report.schema.json",
+                "schema_version": "1.0",
+                "evaluated_at": receipt["maturity"]["evaluated_at"],
+                "repository": {
+                    "git_available": True,
+                    "commit": "a" * 40,
+                    "branch": "fixture",
+                    "worktree_clean": True,
+                },
+                "checker": receipt["tools"]["maturity_checker"],
+                "rubric_sha256": receipt["tools"]["maturity_rubric"]["sha256"],
+                "target_score": 95,
+                "achieved": True,
+                "semantic_evidence_run_id": receipt["semantic_evidence"]["run_id"],
+                "semantic_evidence": receipt["semantic_evidence"],
+                "dimensions": {
+                    name: {
+                        "raw_score": 100,
+                        "final_score": 100,
+                        "score_10": 10.0,
+                        "target_met": True,
+                        "failed_hard_gates": [],
+                        "failed_controls": [],
+                        "controls": [
+                            {
+                                **control,
+                                "passed": True,
+                                "points": 5,
+                                "evidence": "mocked publisher gate boundary",
+                            }
+                            for control in controls
+                        ],
+                    }
+                    for name, controls in rubric["dimensions"].items()
+                },
+            }
+            report_path = base / "private-maturity-report.json"
+            report_raw = (
+                json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False)
+                + "\n"
+            ).encode("utf-8")
+            report_path.write_bytes(report_raw)
+            report_path.chmod(0o600)
+            receipt["maturity"]["report_sha256"] = hashlib.sha256(
+                report_raw
+            ).hexdigest()
+            evidence_root = base / "mock-raw-evidence-boundary"
+            evidence_root.mkdir(mode=0o700)
+            (evidence_root / "mock-revalidated-summary.json").write_text(
+                json.dumps(receipt["semantic_evidence"], sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
             receipt_path.write_text(
                 json.dumps(receipt, indent=2, sort_keys=True) + "\n",
                 encoding="utf-8",
@@ -313,6 +535,8 @@ else:
             environment.update(
                 {
                     "AARON_RELEASE_RECEIPT": str(receipt_path),
+                    "AARON_RELEASE_MATURITY_REPORT": str(report_path),
+                    "AARON_RELEASE_EVIDENCE_ROOT": str(evidence_root),
                     "AARON_PUBLISH_EXPECTED_REPO": (
                         "aaron-he-zhu/aaron-marketing-skills"
                     ),
@@ -779,7 +1003,7 @@ print("fixture footer **T1** **S1**")
             for command in commands:
                 with self.subTest(script=command[1]):
                     result = subprocess.run(
-                        command, cwd=ROOT, capture_output=True, text=True, env=environment,
+                        command, cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
                     )
                     self.assertEqual(0, result.returncode, result.stderr)
                     self.assertIn("dry-run", result.stdout)
@@ -803,7 +1027,7 @@ print("fixture footer **T1** **S1**")
             for command in commands:
                 with self.subTest(script=command[1]):
                     result = subprocess.run(
-                        command, cwd=ROOT, capture_output=True, text=True, env=environment,
+                        command, cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
                     )
                     self.assertNotEqual(0, result.returncode)
                     self.assertIn("working tree is dirty", result.stderr)
@@ -829,7 +1053,7 @@ print("fixture footer **T1** **S1**")
                         "https://github.com.evil.invalid/aaron-he-zhu/aaron-marketing-skills.git"
                     )
                     result = subprocess.run(
-                        command, cwd=ROOT, capture_output=True, text=True, env=environment,
+                        command, cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
                     )
                     self.assertNotEqual(0, result.returncode)
                     self.assertIn("canonical github.com", result.stderr)
@@ -857,7 +1081,7 @@ print("fixture footer **T1** **S1**")
                     environment["FAKE_GIT_REMOTE_SWITCH_AFTER"] = "2"
                     environment["FAKE_GIT_ARCHIVE_FAILURE"] = "1"
                     result = subprocess.run(
-                        command, cwd=ROOT, capture_output=True, text=True, env=environment,
+                        command, cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
                     )
                     count = int(Path(environment["FAKE_GIT_REMOTE_COUNTER"]).read_text(
                         encoding="utf-8",
@@ -884,7 +1108,7 @@ print("fixture footer **T1** **S1**")
                     "bash", "scripts/publish-registries.sh", "--live", "clawhub",
                     "--from-json", str(status_snapshot),
                 ],
-                cwd=ROOT, capture_output=True, text=True, env=environment,
+                cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
             )
             self.assertNotEqual(0, result.returncode)
             self.assertIn("does not match parent", result.stdout + result.stderr)
@@ -913,7 +1137,7 @@ print("fixture footer **T1** **S1**")
                         "bash", "scripts/publish-registries.sh", "clawhub",
                         "--from-json", str(path),
                     ],
-                    cwd=ROOT, capture_output=True, text=True, env=environment,
+                    cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
                 )
 
             valid = run(snapshot)
@@ -945,7 +1169,7 @@ print("fixture footer **T1** **S1**")
             )
             result = subprocess.run(
                 ["bash", "scripts/publish-package.sh", "--dry-run"],
-                cwd=ROOT, capture_output=True, text=True, env=environment,
+                cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
             )
             self.assertEqual(0, result.returncode, result.stderr)
             self.assertIn("Mode    : dry-run", result.stdout)
@@ -956,7 +1180,7 @@ print("fixture footer **T1** **S1**")
             environment, mutation_log = self.fake_release_environment(Path(temporary))
             result = subprocess.run(
                 ["bash", "scripts/publish-package.sh", "--live"],
-                cwd=ROOT, capture_output=True, text=True, env=environment,
+                cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
             )
             self.assertNotEqual(0, result.returncode)
             self.assertIn("requires --from-build", result.stderr)
@@ -978,7 +1202,7 @@ print("fixture footer **T1** **S1**")
                     self.install_transport_error_clawhub(environment, mode=mode)
                     result = subprocess.run(
                         ["bash", "scripts/publish-package.sh", "--from-build", "--live"],
-                        cwd=ROOT, capture_output=True, text=True, env=environment,
+                        cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
                     )
                     if expected_success:
                         self.assertEqual(0, result.returncode, result.stderr)
@@ -1001,7 +1225,7 @@ print("fixture footer **T1** **S1**")
                 environment, mutation_log = self.fake_release_environment(base / expected.split()[0], **option)
                 result = subprocess.run(
                     ["bash", "scripts/publish-package.sh", "--live"],
-                    cwd=ROOT, capture_output=True, text=True, env=environment,
+                    cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
                 )
                 self.assertNotEqual(0, result.returncode)
                 self.assertIn(expected, result.stderr)
@@ -1010,7 +1234,7 @@ print("fixture footer **T1** **S1**")
             environment, mutation_log = self.fake_release_environment(base / "passing")
             result = subprocess.run(
                 ["bash", "scripts/publish-package.sh", "--from-build", "--live"],
-                cwd=ROOT, capture_output=True, text=True, env=environment,
+                cwd=Path(environment.get("FAKE_RELEASE_CWD", ROOT)), capture_output=True, text=True, env=environment,
             )
             self.assertEqual(0, result.returncode, result.stderr)
             invocation = mutation_log.read_text(encoding="utf-8")

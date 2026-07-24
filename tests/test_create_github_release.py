@@ -178,13 +178,31 @@ else:
 
 FAKE_RECEIPT_VERIFIER = r"""#!/usr/bin/env python3
 import hashlib
+import os
 from pathlib import Path
 import sys
 
 receipt = Path(sys.argv[1])
 commit = sys.argv[sys.argv.index("--source-commit") + 1]
 version = sys.argv[sys.argv.index("--release-version") + 1]
-if version != "19.0.0" or not receipt.is_file():
+required_gate = sys.argv[sys.argv.index("--required-gate") + 1]
+maturity_report = Path(sys.argv[sys.argv.index("--maturity-report") + 1])
+evidence_root = Path(sys.argv[sys.argv.index("--evidence-root") + 1])
+if "--post-release-continuation" in sys.argv:
+    print("release creation must not use post-release continuation", file=sys.stderr)
+    raise SystemExit(2)
+if os.environ.get("FAKE_STALE_RECEIPT") == "1":
+    print("engineering receipt is older than 24 hours", file=sys.stderr)
+    raise SystemExit(3)
+if (
+    version != "19.0.0"
+    or required_gate != "engineering-validation-v19"
+    or not receipt.is_file()
+    or not maturity_report.is_absolute()
+    or not maturity_report.is_file()
+    or not evidence_root.is_absolute()
+    or not evidence_root.is_dir()
+):
     raise SystemExit(1)
 print("%s\t19.0.0-rc.1\t%s" % (hashlib.sha256(receipt.read_bytes()).hexdigest(), commit))
 """
@@ -251,6 +269,11 @@ class CreateGitHubReleaseTests(unittest.TestCase):
         self.receipt = self.base / "private-receipt.json"
         self.receipt.write_text('{"private":true}\n', encoding="utf-8")
         self.receipt.chmod(0o600)
+        self.maturity_report = self.base / "private-maturity-report.json"
+        self.maturity_report.write_text('{"private":true}\n', encoding="utf-8")
+        self.maturity_report.chmod(0o600)
+        self.evidence_root = self.base / "private-evidence"
+        self.evidence_root.mkdir(mode=0o700)
         self.remote_assets = self.base / "remote-assets"
         self.state_path = self.base / "state.json"
         self.mutations = self.base / "mutations.log"
@@ -318,6 +341,10 @@ class CreateGitHubReleaseTests(unittest.TestCase):
             str(self.receipt),
             "--asset-dir",
             str(self.assets),
+            "--maturity-report",
+            str(self.maturity_report),
+            "--evidence-root",
+            str(self.evidence_root),
         )
 
     def install_existing_release(self):
@@ -348,8 +375,16 @@ class CreateGitHubReleaseTests(unittest.TestCase):
     def test_live_requires_receipt_and_asset_directory_before_mutation(self):
         result = self.run_release("--live")
         self.assertNotEqual(0, result.returncode)
-        self.assertIn("requires both --receipt and --asset-dir", result.stderr)
+        self.assertIn("requires --receipt, --asset-dir", result.stderr)
         self.assertEqual([], self.mutation_kinds())
+
+    def test_repository_root_evidence_path_is_accepted_and_forwarded(self):
+        arguments = list(self.live_arguments())
+        evidence_index = arguments.index("--evidence-root") + 1
+        arguments[evidence_index] = str(self.repository)
+        result = self.run_release(*arguments)
+        self.assertEqual(0, result.returncode, result.stderr)
+        self.assertIn("GitHub final release verified", result.stdout)
 
     def test_ci_failure_refuses_tag_and_release(self):
         self.state["ci_success"] = False
@@ -357,6 +392,13 @@ class CreateGitHubReleaseTests(unittest.TestCase):
         result = self.run_release(*self.live_arguments())
         self.assertNotEqual(0, result.returncode)
         self.assertIn("no successful owner-run", result.stderr)
+        self.assertEqual(["fetch"], self.mutation_kinds())
+
+    def test_stale_receipt_is_not_relaxed_for_release_creation(self):
+        self.environment["FAKE_STALE_RECEIPT"] = "1"
+        result = self.run_release(*self.live_arguments())
+        self.assertNotEqual(0, result.returncode)
+        self.assertIn("older than 24 hours", result.stderr)
         self.assertEqual(["fetch"], self.mutation_kinds())
 
     def test_existing_tag_on_another_commit_is_rejected(self):

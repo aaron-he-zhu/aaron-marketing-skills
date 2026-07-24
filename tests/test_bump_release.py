@@ -107,6 +107,12 @@ class BumpReleaseTests(unittest.TestCase):
             versions = (fixture / "VERSIONS.md").read_text(encoding="utf-8")
             self.assertIn("### v99.0.0 — Runtime and distribution", versions)
             self.assertIn("### v18.0.0 — Seven-discipline", versions)
+            self.assertIn("engineering-validated against the exact", versions)
+            self.assertIn("real-project outcomes remain unvalidated", versions)
+            self.assertIn(
+                "post-release 14 pilot + 70 paired + 28 shadow promotion",
+                versions,
+            )
             for relative in canonical_skill_paths():
                 text = (fixture / relative).read_text(encoding="utf-8")
                 self.assertIn('version: "99.0.0"', text)

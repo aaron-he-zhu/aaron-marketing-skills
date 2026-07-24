@@ -2,7 +2,7 @@
 """Create or read-only verify the immutable final v19 GitHub release.
 
 The default mode is a network-free dry run.  ``--live`` is an owner-only
-operation and requires both an out-of-repository private outcome receipt and
+operation and requires both an out-of-repository private release receipt and
 an out-of-repository directory containing the five deterministic release
 assets.
 """
@@ -238,6 +238,21 @@ def require_outside(root: Path, candidate: Path, label: str) -> Path:
     raise ReleaseError("%s must stay outside the source repository" % label)
 
 
+def require_evidence_root(candidate: Path) -> Path:
+    if not candidate.is_absolute():
+        raise ReleaseError("private semantic evidence root must be absolute")
+    try:
+        status = candidate.lstat()
+        resolved = candidate.resolve(strict=True)
+    except OSError as exc:
+        raise ReleaseError(
+            "private semantic evidence root is unavailable: %s" % exc
+        ) from exc
+    if stat.S_ISLNK(status.st_mode) or not stat.S_ISDIR(status.st_mode):
+        raise ReleaseError("private semantic evidence root must be a real directory")
+    return resolved
+
+
 def refresh_main(root: Path, remote: str, commit: str) -> str:
     git(
         root,
@@ -271,7 +286,14 @@ def refresh_main(root: Path, remote: str, commit: str) -> str:
     return remote_commit
 
 
-def verify_receipt(root: Path, receipt: Path, commit: str, version: str) -> str:
+def verify_receipt(
+    root: Path,
+    receipt: Path,
+    maturity_report: Path,
+    evidence_root: Path,
+    commit: str,
+    version: str,
+) -> str:
     result = run(
         [
             sys.executable,
@@ -283,6 +305,12 @@ def verify_receipt(root: Path, receipt: Path, commit: str, version: str) -> str:
             version,
             "--verifier",
             str(root / "scripts" / "verify-profile-outcomes.py"),
+            "--maturity-report",
+            str(maturity_report),
+            "--evidence-root",
+            str(evidence_root),
+            "--required-gate",
+            "engineering-validation-v19",
         ],
         cwd=root,
     )
@@ -293,7 +321,7 @@ def verify_receipt(root: Path, receipt: Path, commit: str, version: str) -> str:
         or re.fullmatch(r"19\.0\.0-rc\.[1-9][0-9]*", fields[1]) is None
         or fields[2] != commit
     ):
-        raise ReleaseError("private outcome receipt returned a malformed identity")
+        raise ReleaseError("private release receipt returned a malformed identity")
     return fields[0]
 
 
@@ -718,12 +746,22 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--receipt",
         type=Path,
-        help="Out-of-repository private outcome receipt (required with --live).",
+        help="Out-of-repository private release receipt (required with --live).",
     )
     parser.add_argument(
         "--asset-dir",
         type=Path,
         help="Out-of-repository five-asset directory (required with --live).",
+    )
+    parser.add_argument(
+        "--maturity-report",
+        type=Path,
+        help="Absolute private dynamic maturity report (required with --live).",
+    )
+    parser.add_argument(
+        "--evidence-root",
+        type=Path,
+        help="Absolute private raw semantic evidence root (required with --live).",
     )
     return parser.parse_args(argv)
 
@@ -738,8 +776,19 @@ def main(argv: list[str] | None = None) -> int:
         version = committed_version(root, commit)
         notes = release_notes(root, commit, version)
         if not args.live:
-            if args.receipt is not None or args.asset_dir is not None:
-                raise ReleaseError("--receipt/--asset-dir are accepted only with --live")
+            if any(
+                value is not None
+                for value in (
+                    args.receipt,
+                    args.asset_dir,
+                    args.maturity_report,
+                    args.evidence_root,
+                )
+            ):
+                raise ReleaseError(
+                    "--receipt/--asset-dir/--maturity-report/--evidence-root "
+                    "are accepted only with --live"
+                )
             print(
                 "DRY RUN: would gate and create-or-verify %s for %s@%s"
                 % (TAG, repository, commit)
@@ -748,12 +797,36 @@ def main(argv: list[str] | None = None) -> int:
                 "DRY RUN: no fetch, tag, push, GitHub mutation, or asset upload was performed"
             )
             return 0
-        if args.receipt is None or args.asset_dir is None:
-            raise ReleaseError("--live requires both --receipt and --asset-dir")
-        receipt = require_outside(root, args.receipt, "private outcome receipt")
+        if any(
+            value is None
+            for value in (
+                args.receipt,
+                args.asset_dir,
+                args.maturity_report,
+                args.evidence_root,
+            )
+        ):
+            raise ReleaseError(
+                "--live requires --receipt, --asset-dir, --maturity-report, "
+                "and --evidence-root"
+            )
+        receipt = require_outside(root, args.receipt, "private release receipt")
         asset_source = require_outside(root, args.asset_dir, "release asset directory")
+        maturity_report = require_outside(
+            root,
+            args.maturity_report,
+            "private maturity report",
+        )
+        evidence_root = require_evidence_root(args.evidence_root)
         remote_main = refresh_main(root, remote, commit)
-        receipt_sha = verify_receipt(root, receipt, commit, version)
+        receipt_sha = verify_receipt(
+            root,
+            receipt,
+            maturity_report,
+            evidence_root,
+            commit,
+            version,
+        )
         successful_owner_validation(root, repository, commit)
 
         with tempfile.TemporaryDirectory(prefix="aaron-github-release-") as temporary_name:

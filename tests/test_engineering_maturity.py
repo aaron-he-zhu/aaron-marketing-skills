@@ -102,6 +102,26 @@ class EngineeringMaturityTests(unittest.TestCase):
         self.assertIn("H20", result["dimensions"]["harness"]["failed_hard_gates"])
         self.assertRegex(result["checker"]["sha256"], r"^[0-9a-f]{64}$")
 
+    def test_semantic_report_schema_covers_the_complete_hash_bound_summary(self):
+        schema = json.loads(
+            (ROOT / "references/engineering-maturity-report.schema.json").read_text(
+                encoding="utf-8",
+            )
+        )
+        semantic = schema["$defs"]["semantic_evidence"]
+        required = set(semantic["required"])
+        properties = set(semantic["properties"])
+        self.assertEqual(required, properties)
+        self.assertTrue({
+            "total_judge_attempts",
+            "retried_cases",
+            "judge_protocol_retries",
+            "selection_sha256",
+            "protocol_schema_sha256",
+            "result_stream_sha256",
+            "head_record_hash",
+        }.issubset(required))
+
     def test_p18_requires_semantic_suite_and_every_named_regression(self):
         runner_text = (ROOT / "scripts/run-behavior-evals.py").read_text(encoding="utf-8")
         semantic_tests = (ROOT / "tests/test_behavior_evals_adapter.py").read_text(

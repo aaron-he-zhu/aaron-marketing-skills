@@ -44,9 +44,13 @@ CURRENT_SUMMARY = (
     "capability profiles with non-disableable consent, claims, PII, external-"
     "mutation, audit, and release-provenance safeguards. Three reproducible "
     "profile archives use manifest 1.1 capability ceilings, and the release "
-    "surfaces are generated from authoritative sources. This major release "
-    "absorbs every 18.0.x single-skill patch; no skill was added, removed, "
-    "merged, or renamed."
+    "surfaces are generated from authoritative sources. v19 is engineering-"
+    "validated against current-source real-provider model runs over simulated "
+    "semantic fixtures; "
+    "real-project outcomes remain unvalidated. Governed is available only as an "
+    "explicit capability choice, not as an outcome-validated or default profile. "
+    "This major release absorbs every 18.0.x single-skill patch; no skill was "
+    "added, removed, merged, or renamed."
 )
 CHANGELOG_BODY = """\
 ### v{version} — Runtime and distribution simplification ({date})
@@ -72,6 +76,13 @@ unchanged.
   projections come from authoritative inputs; S0-S3 pull-request validation,
   nightly full verification, and release-only provenance gates preserve the
   complete safety and compatibility contract with less routine overhead.
+- **Validation status.** This release is engineering-validated against the exact
+  source using real model/provider execution over simulated semantic fixtures;
+  that is not real-project outcome evidence. Real-project outcomes remain
+  unvalidated. Governed capability availability does not validate Governed
+  outcomes or authorize it as the fresh-project default. Lite remains the
+  default until the post-release 14 pilot + 70 paired + 28 shadow promotion
+  cohort passes.
 - **Patch absorption.** Every 18.0.x skill patch is included. No skill name,
   directory, route, phase selector, 4×4 position, or acronym changed.
 """

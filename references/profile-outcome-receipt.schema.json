@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/profile-outcome-receipt.schema.json",
-  "title": "Private v19 profile-outcome release receipt",
-  "description": "Project-data-free proof that an exact release-candidate commit passed the owner-local real-project gate. This receipt remains private and is never committed.",
+  "title": "Private v19 profile-outcome promotion receipt",
+  "description": "Project-data-free proof that an exact source commit passed an owner-local real-project outcome checkpoint. It supports post-release Governed outcome/default promotion and does not authorize a release. This receipt remains private and is never committed.",
   "oneOf": [
     {
       "properties": {

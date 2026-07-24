@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-"""Verify the private real-project Lite/Governed release evidence.
+"""Verify private real-project Lite/Governed post-release promotion evidence.
 
 This gate intentionally cannot consume the repository's simulated semantic
 cases. It accepts only a strict, pseudonymous owner-attested manifest and
 checks the v19 quality, efficiency, safety, trace, recovery, and cost
 thresholds. Raw briefs, contact data, and project artifacts do not belong in
-the manifest or repository.
+the manifest or repository. These outcome receipts do not authorize a release;
+the legacy ``release-pilot`` stage name remains only for compatibility and
+incremental checking of the pilot subset.
 """
 from __future__ import annotations
 
@@ -94,7 +96,7 @@ RESULT_KEYS = {
 
 
 class OutcomeError(ValueError):
-    """Evidence is malformed or fails one or more release thresholds."""
+    """Evidence is malformed or fails one or more outcome thresholds."""
 
 
 def _object(value: Any, keys: set[str], label: str) -> dict:
@@ -605,12 +607,12 @@ def _evaluate_governed_promotion(evidence: dict) -> dict:
 
 
 def _evaluate_release_pilot(evidence: dict) -> dict:
-    """Evaluate the smaller real-project gate required to release v19.
+    """Evaluate the smaller real-project pilot checkpoint.
 
-    This stage establishes that both profiles are usable and safe enough to
-    ship while keeping Governed opt-in. It deliberately does not make the
-    efficiency, trace, or recovery claims reserved for the later
-    governed-promotion cohort.
+    The legacy stage name remains compatible for incremental cohort checking,
+    but it does not authorize a release. It deliberately does not make the
+    efficiency, trace, recovery, or default-promotion claims reserved for the
+    full governed-promotion cohort.
     """
     projects = evidence["projects"]
     pilots = [row for row in projects if row["kind"] == "pilot"]
@@ -789,7 +791,7 @@ def _evaluate_release_pilot(evidence: dict) -> dict:
 
 
 def evaluate(evidence: dict, stage: str = "governed-promotion") -> dict:
-    """Evaluate the selected release stage; preserve the full gate by default."""
+    """Evaluate the selected post-release outcome stage."""
     if stage == "release-pilot":
         return _evaluate_release_pilot(evidence)
     if stage == "governed-promotion":
@@ -818,7 +820,7 @@ def build_receipt(
     evidence_manifest_sha256: str,
     stage: str = "governed-promotion",
 ) -> dict:
-    """Build a project-data-free receipt for the exact accepted RC cohort."""
+    """Build a project-data-free promotion receipt for the accepted RC cohort."""
     if not summary.get("passed"):
         raise OutcomeError("cannot issue a receipt for a failed outcome gate")
     _hash(evidence_manifest_sha256, "evidence_manifest_sha256")
@@ -937,8 +939,9 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         choices=STAGES,
         default="governed-promotion",
         help=(
-            "Evaluate release pilots now or the full Governed-promotion cohort "
-            "later (default: governed-promotion)."
+            "Evaluate the legacy-named pilot checkpoint or the full post-release "
+            "Governed-promotion cohort; neither authorizes a release "
+            "(default: governed-promotion)."
         ),
     )
     parser.add_argument("--json", action="store_true")
@@ -971,7 +974,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             if args.stage == "release-pilot":
                 print(
-                    "Profile pilot gate passed: %d pilot; Lite completion "
+                    "Post-release profile pilot checkpoint passed: %d pilot; Lite completion "
                     "%.1f%%; Governed completion %.1f%%."
                     % (
                         summary["counts"]["pilot"],
@@ -981,7 +984,7 @@ def main(argv: list[str] | None = None) -> int:
                 )
             else:
                 print(
-                    "Profile outcome gate passed: %d pilot, %d paired, %d shadow; "
+                    "Post-release profile outcome gate passed: %d pilot, %d paired, %d shadow; "
                     "Lite completion %.1f%%; escalation %.1f%%."
                     % (
                         summary["counts"]["pilot"],
@@ -991,10 +994,10 @@ def main(argv: list[str] | None = None) -> int:
                         summary["lite_escalation_rate"] * 100,
                     )
                 )
-            print("Private release receipt: %s" % receipt_path)
+            print("Private outcome-promotion receipt: %s" % receipt_path)
         return 0
     except OutcomeError as exc:
-        print("profile outcome gate failed: %s" % exc, file=sys.stderr)
+        print("profile outcome promotion gate failed: %s" % exc, file=sys.stderr)
         return 1
 
 

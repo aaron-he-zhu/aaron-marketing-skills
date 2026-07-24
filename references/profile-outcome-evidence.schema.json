@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/profile-outcome-evidence.schema.json",
-  "title": "Private Lite versus Governed outcome evidence",
-  "description": "Owner-retained, pseudonymous release-gate evidence. Brief text, PII, contact data, and raw project artifacts are forbidden.",
+  "title": "Private post-release Lite versus Governed outcome-promotion evidence",
+  "description": "Owner-retained, pseudonymous real-project evidence for post-release Governed outcome/default promotion. It does not authorize a release. Brief text, PII, contact data, and raw project artifacts are forbidden.",
   "type": "object",
   "additionalProperties": false,
   "required": [

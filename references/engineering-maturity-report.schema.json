@@ -130,8 +130,10 @@
         "case_provenance", "execution_mode", "model_provider", "model_id",
         "judge_model_id", "distinct_judge_model", "host_name", "host_version",
         "adapter_name", "adapter_implementation_sha256", "runner_sha256",
-        "request_stream_sha256", "completion_sha256", "oldest_result_at",
-        "newest_evidence_at", "age_seconds"
+        "selection_sha256", "protocol_schema_sha256", "request_stream_sha256",
+        "result_stream_sha256", "head_record_hash", "completion_sha256",
+        "total_judge_attempts", "retried_cases", "judge_protocol_retries",
+        "oldest_result_at", "newest_evidence_at", "age_seconds"
       ],
       "properties": {
         "schema_version": { "const": "1.0" },
@@ -153,8 +155,15 @@
         "adapter_name": { "type": "string", "minLength": 1 },
         "adapter_implementation_sha256": { "$ref": "#/$defs/digest" },
         "runner_sha256": { "$ref": "#/$defs/digest" },
+        "selection_sha256": { "$ref": "#/$defs/digest" },
+        "protocol_schema_sha256": { "$ref": "#/$defs/digest" },
         "request_stream_sha256": { "$ref": "#/$defs/digest" },
+        "result_stream_sha256": { "$ref": "#/$defs/digest" },
+        "head_record_hash": { "$ref": "#/$defs/digest" },
         "completion_sha256": { "$ref": "#/$defs/digest" },
+        "total_judge_attempts": { "type": "integer", "minimum": 1 },
+        "retried_cases": { "type": "integer", "minimum": 0 },
+        "judge_protocol_retries": { "type": "integer", "minimum": 0 },
         "oldest_result_at": { "$ref": "#/$defs/timestamp" },
         "newest_evidence_at": { "$ref": "#/$defs/timestamp" },
         "age_seconds": { "type": "number", "minimum": 0 }

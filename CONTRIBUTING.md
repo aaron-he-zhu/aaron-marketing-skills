@@ -134,36 +134,85 @@ bindings and leaves historical/schema/protocol versions intact.
 
 **Adding or renaming a skill?** Also add its slug to a grouping in the repo-root `skills.sh.json` — the [skills.sh registry page](https://skills.sh/aaron-he-zhu/aaron-marketing-skills) renders those sections, and CI fails when the groupings don't cover exactly the plugin.json skill set (an ungrouped skill would render below the legacy names at the bottom of the page).
 
-**Cutting a release?** The staged profile gate additionally requires private,
-pseudonymous real-project evidence bound to the exact RC commit. Before v19
-can be tagged, collect at least 14 release pilots, with at least two per
-discipline; simulated evals are not eligible. Keep all evidence outside Git and
-run
+**Cutting a release?** v19 is released on an exact-source
+**engineering-validation** gate. Freeze the RC commit; pass repository CI,
+the complete current-source real-provider smoke run, the five-dimension
+engineering-maturity check, and two byte-identical profile-asset builds; then
+issue a private `engineering-validation-v19` receipt with
+`scripts/issue-engineering-release-receipt.py`:
+
+```bash
+python3 scripts/issue-engineering-release-receipt.py \
+  --semantic-evidence-run-id "<fresh-current-source-run-uuid>" \
+  --evidence-root "/private/project-root" \
+  --release-candidate "19.0.0-rc.N" \
+  --owner-authorization "release-v19-without-real-project-outcomes" \
+  --maturity-report-output "/private/path/v19-engineering-maturity-report.json" \
+  --output "/private/path/v19-engineering-release-receipt.json"
+```
+
+The issuer directly runs the maturity
+audit and, in the same invocation, creates the exact private report and its
+hash-bound receipt outside Git with exclusive mode-0600 files. Treat the
+receipt, report, and raw semantic-evidence root as one private verification
+bundle:
+
+```bash
+export AARON_RELEASE_RECEIPT="/private/path/v19-engineering-release-receipt.json"
+export AARON_RELEASE_MATURITY_REPORT="/private/path/v19-engineering-maturity-report.json"
+export AARON_RELEASE_EVIDENCE_ROOT="/absolute/private/project-root"
+python3 scripts/verify-release-receipt.py "$AARON_RELEASE_RECEIPT" \
+  --source-commit "$(git rev-parse --verify 'HEAD^{commit}')" \
+  --release-version 19.0.0 \
+  --required-gate engineering-validation-v19 \
+  --maturity-report "$AARON_RELEASE_MATURITY_REPORT" \
+  --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT"
+```
+
+Every v19 live publisher requires all three variables and rapidly revalidates
+the receipt, the exact report bytes, and the original semantic event chain with
+the current verifier. Receipt issuance and `create-github-release.py --live`
+always enforce the strict 24-hour freshness gate for the receipt and semantic
+evidence.
+After the immutable final tag, non-draft Release, exact five assets, and owner
+workflow have all been verified, publisher entrypoints may internally use the
+explicit post-release-continuation verifier mode: it relaxes only the current
+wall-clock check, still proves issuance-time freshness and every
+receipt/report/raw-evidence/tool/source hash, and remains bounded by the
+committed semantic policy (currently 30 days). Do not invoke that mode to create
+or authorize a release. If the policy window expires, run fresh provider
+evidence against the same immutable release commit and issue a new private
+report/receipt before resuming distribution. The evidence root may be a real
+directory outside the repository, or the repository's absolute root only when
+the bound `memory/runs/<run-id>` directory is Git-ignored and wholly untracked.
+Never upload the receipt, report, or raw evidence. The real-provider smoke run
+executes real models, but its cases are simulated semantic fixtures. It proves
+engineering conformance, not customer or real-project outcomes; the public
+release status must say so.
+
+Real-project profile evidence is a **post-release promotion gate**. The legacy
+`release-pilot` stage and `profile-pilots-v19` receipt name remain supported for
+compatibility, but neither authorizes a release. Collect the full cohort against
+the exact released source: 14 pilots (at least two per discipline), 70
+randomized paired Lite/Governed projects (10 per discipline), and 28 shadow
+projects (four per discipline), with two distinct blind reviewers. Keep all
+evidence outside Git and run
 `python3 scripts/verify-profile-outcomes.py /private/path/evidence.json
---stage release-pilot --source-commit "$RC_COMMIT"
+--stage governed-promotion --source-commit "$RELEASE_COMMIT"
 --release-candidate 19.0.0-rc.N
 --evidence-manifest /private/path/manifest.json --receipt
-/private/path/receipt.json --json`. The verifier refuses duplicated project,
-brief, or evidence identities and checks the attested private-manifest digest.
-Keep the project-data-free release-pilot receipt private and pass its path as
-`AARON_RELEASE_RECEIPT` to live publishers. Current-source real-provider
-engineering maturity remains a separate pre-release gate. No pilot evidence or
-a failed release-pilot threshold means no tag and no live publisher.
+/private/path/promotion-receipt.json --json`. The verifier refuses simulated,
+duplicated, or identity-mismatched evidence and checks the attested private
+manifest digest. Until the full 14 + 70 + 28 cohort passes, Lite remains the
+fresh-project default; Governed capability availability must not be described
+as validated Governed outcomes or as validation for Governed-by-default.
+Never synthesize private evidence or a receipt.
 
-The 70 randomized paired Lite/Governed projects and 28 shadow projects are a
-post-release Governed promotion cohort, distributed 10/4 per discipline and
-assessed by two distinct blind reviewers. The `--stage governed-promotion`
-input is the full cohort: the 14 exact-source pilots plus those 70 paired and
-28 shadow projects. Its pilot subset must still pass every release-pilot rule;
-the full receipt is stronger, not an alternate path around the release gate.
-Until it passes, keep Lite as the fresh-project default and do not describe
-Governed outcome claims or Governed-as-default as validated. Never synthesize
-private evidence or a receipt to meet either stage.
-
-After the release-pilot gate passes, (a)
+After the engineering-validation gate passes, (a)
 run `python3 scripts/create-github-release.py` as a network-free preview and its
-`--live --receipt <private-receipt> --asset-dir <verified-assets>` form to create
-or read-only verify the immutable tag/release; (b) sync the downstream
+`--live --receipt <private-receipt> --maturity-report <private-report>
+--evidence-root <absolute-private-root> --asset-dir <verified-assets>` form to
+create or read-only verify the immutable tag/release; (b) sync the downstream
 repo family with `sync-family.sh`; (c) project GitHub About with
 `sync-about.sh`; and (d) publish the Governed-ceiling/Lite-default bundle and
 per-skill registry records. Full gate, rollback, and distribution order:

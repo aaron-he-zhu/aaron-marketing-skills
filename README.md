@@ -146,6 +146,15 @@ mechanisms:
 | **Pro** | Connectors and explicitly requested saved audits | Tool-assisted research and persistent audit artifacts |
 | **Governed** | Memory/registry writes, verified run evidence, deterministic context, controller, workflow and audit loops | Stateful, recoverable, independently verifiable operations |
 
+**v19 validation status:** this is an engineering-validated release. The exact
+source passes CI, reproducible package checks, and real model/provider execution
+over simulated semantic fixtures. Those runs do not constitute real-project
+outcome evidence; real-project outcomes remain unvalidated. Lite remains the
+fresh-project default. Governed is available as an explicit
+capability choice, but availability does not validate Governed outcomes or
+Governed-by-default. That promotion requires the post-release cohort of 14
+pilots + 70 paired Lite/Governed projects + 28 shadow projects.
+
 The installed archive is a hard ceiling; the effective project profile may be
 lower. Select the archive in the installer/admin surface, or select the logical
 profile through a one-invocation `--profile`, `AARON_MARKETING_PROFILE`, or the
@@ -712,7 +721,7 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 | `check-versions.sh` | Version-sync guard: system catalog, plugin/marketplace/OpenClaw manifests, root + localized README badges, AGENTS/CLAUDE/VERSIONS, GitHub About, and all 120 skill versions stay aligned. |
 | `tests/test_connectors_local.py` | Offline request-builder/parser tests spanning all 29 bundled connector modules (no network in CI). |
 | `tests/test_distribution_builder.py` | Distribution closure, per-file SHA-256 manifest, tamper detection, and adversarial symlink/hardlink/special-file rejection. |
-| `tests/test_release_assets.py` + `tests/test_create_github_release.py` + `tests/test_final_release_gate.py` | Exact-commit deterministic Lite/Pro/Governed archives, checksum/ledger integrity, private outcome receipt binding, immutable tag/Release orchestration, downloaded-asset verification, and live-publisher final-gate enforcement. |
+| `tests/test_release_assets.py` + `tests/test_create_github_release.py` + `tests/test_final_release_gate.py` | Exact-commit deterministic Lite/Pro/Governed archives, checksum/ledger integrity, private engineering release-receipt binding, immutable tag/Release orchestration, downloaded-asset verification, and live-publisher final-gate enforcement. |
 | `tests/test_publish_release.py` + `tests/test_publish_state.py` + `tests/test_registry_status.py` | Every live release entrypoint's clean/refreshed/pushed gate, commit-bound canonical registry snapshots/resume state, verified package payloads and remote source/content confirmation, plus dry-run independence. |
 | `tests/test_hook_artifact_gate.sh` | Behavior tests for the hook's Artifact Gate + SessionStart sanitization. |
 | `tests/test_run_events.py` | Operational event-tree/hash-chain, idempotency, concurrency, snapshot/save-point/envelope, privacy, recovery, and unsafe-path regressions. |

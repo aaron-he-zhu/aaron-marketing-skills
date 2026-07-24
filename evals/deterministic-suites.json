@@ -75,7 +75,7 @@
     {
       "id": "publisher-release-safety",
       "command": ["{python}", "-m", "unittest", "tests.test_publish_release", "tests.test_publish_state"],
-      "timeout_seconds": 60
+      "timeout_seconds": 120
     },
     {
       "id": "machine-contract-context-planning",

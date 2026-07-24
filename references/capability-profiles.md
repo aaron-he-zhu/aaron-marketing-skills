@@ -25,6 +25,22 @@ archives contain the same 120 skills, preserve every 4×4 discipline loop and
 TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP acronym, and expose exactly the same eight
 public slash commands. There is no profile command and no ninth command.
 
+## v19 validation status
+
+v19 is **engineering-validated** against its exact source: repository CI,
+reproducible profile archives, and current-source real model/provider execution
+over simulated semantic fixtures pass the release gate. A real provider does
+not turn a simulated fixture into real-project evidence, so real-project
+outcomes remain unvalidated.
+
+Lite remains the fresh-project default. Governed capability availability means
+only that its mechanisms are present and explicitly selectable; it does not
+validate Governed outcomes or Governed-by-default. Promotion requires a
+post-release real-project cohort of 14 pilots, 70 randomized paired
+Lite/Governed projects, and 28 shadow projects. Until that full cohort passes,
+do not publish empirical Governed outcome claims or describe Governed as the
+validated default.
+
 ## Physical package versus effective profile
 
 An installed archive sets a hard physical ceiling:
