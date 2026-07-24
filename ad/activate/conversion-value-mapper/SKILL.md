@@ -4,13 +4,13 @@ slug: aaron-conversion-value-mapper
 displayName: "Conversion Value Mapper · 付费广告转化价值建模"
 summary: "付费广告转化价值建模/利润出价/价值规则QA"
 description: 'Use when the user asks to "set up conversion values so tROAS optimizes profit not orders", "map margin onto my purchase value", "build value rules for lead / phone / signup conversions", or "stop bidding to revenue when I care about profit"; defines and QAs the conversion VALUE model — per-conversion values, margin/net-value adjustment, static-vs-dynamic value rules, proxy values for non-revenue actions, and a value-vs-count sanity check — as a value-model spec plus a pre-launch value QA sheet. Not for whether the tag fires or UTMs are clean — use conversion-signal-qa; not for cross-platform double-count de-dup — use attribution-reconciler; not for scoring R1/R2 — that is a scored veto in ad-account-auditor. 付费广告转化价值建模/利润出价/价值规则QA'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use before launching or scaling value-based (tROAS / max-conversion-value) bidding, when the conversion VALUE model needs defining or checking: per-conversion values, margin/net-value adjustment, static-vs-dynamic value rules, proxy values for non-revenue actions, and a value-vs-count reconciliation. Run it to BUILD the value model so tROAS chases profit; run conversion-signal-qa first to confirm the events even fire, and ad-account-auditor after to SCORE whether R1/R2 pass."
 argument-hint: "<account/offer topic> [bid goal: tROAS|max-value] [GA4 purchase-value + margin/COGS export]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "activate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "activate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Conversion Value Mapper

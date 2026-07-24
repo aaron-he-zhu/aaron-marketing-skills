@@ -4,13 +4,13 @@ slug: aaron-audience-belief-mapper
 displayName: "Audience Belief Mapper · 受众信念图"
 summary: "受众信念/异议/切换四力/流失语言"
 description: 'Use when the user asks to "map what our buyers believe", "capture the objections we keep hearing", or "find the switching forces that move the beachhead"; produces a belief map of the beachhead — held beliefs and mental models, the recurring objections and their reframes, and the JTBD four forces (push of the problem, pull of the new, anxiety of switching, habit of the present) — each item sourced from interviews or win-loss notes (User-provided) and labeled Measured / User-provided / Estimated, with any unverified quote or comparative claim marked "[needs source]" and routed to the claims candidates, never adjudicated here. Not for demographic or persona profiling — use audience-mapper; not for the positioning canvas — use positioning-truth-tracer. 受众信念/异议地图/切换四力/流失语言'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when gathering the beachhead's narrative raw material before any brand narrative is authored: the beliefs and mental models buyers already hold, the objections they raise and how to reframe each, and the JTBD four forces (push / pull / anxiety / habit) that govern switching. The third move of the TALE Trace phase; feeds beachhead truth (T), objection reframes (A), and win-loss language (E). Not demographic persona profiling and not the positioning canvas."
 argument-hint: "<product / beachhead> [interview / win-loss notes] [known objections]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "narrative", "phase": "trace", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "trace"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "trace", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "trace"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Audience Belief Mapper

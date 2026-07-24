@@ -4,13 +4,13 @@ slug: aaron-launch-asset-packager
 displayName: "Launch Asset Packager · 发布资产打包"
 summary: "资产清单/press kit/商店listing规格/上线检查"
 description: 'Use when the user asks to "package the launch assets", "build a press kit", or "prep the store listing and go-live checklist"; produces a tier-scoped launch asset manifest with production status — a press kit spec (factsheet, description, history, features, videos, images, logo and icon, awards, contact), demo script and screenshot specs, a launch FAQ, dual-store listing metadata drafts against the official character budgets (per App Store Connect / Play Console documentation), and a technical go-live checklist manifest (robots flip, sitemap, OG tags, analytics verification — execution stays with technical-seo-checker and serp-markup-builder). Not for the message copy itself — use message-house-builder or content-writer; not for landing page UX — use landing-optimizer; not for keyword research beyond the store surfaces — use keyword-research. 发布资产打包/press kit/商店listing规格/上线检查清单'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when assembling the asset kit for a declared launch tier: the manifest with owners and production status, press kit sections per the presskit() convention, demo script and screenshot specs, a launch FAQ, App Store / Play listing character budgets, and the technical go-live checklist. The manifest layer between message-house-builder (the copy) and launch-readiness-auditor (the gate)."
 argument-hint: "<product + launch tier> [channels] [target stores: ios/android/both] [existing assets]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "assemble", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "assemble"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "assemble", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "assemble"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Launch Asset Packager

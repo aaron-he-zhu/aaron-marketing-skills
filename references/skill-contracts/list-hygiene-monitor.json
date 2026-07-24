@@ -11,7 +11,7 @@
           "end_char": 54,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 191,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 56
         },
@@ -41,7 +41,7 @@
           "end_char": 229,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 193
         },
@@ -56,7 +56,7 @@
           "end_char": 297,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 231
         },
@@ -71,7 +71,7 @@
           "end_char": 431,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 299
         },
@@ -83,7 +83,7 @@
     "source": {
       "path": "email/setup/list-hygiene-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd"
+      "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83"
     }
   },
   "context_hints": {
@@ -99,7 +99,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 42
       },
       {
@@ -146,7 +146,7 @@
           "end_char": 211,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -164,7 +164,7 @@
           "end_char": 422,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 212
         },
@@ -182,7 +182,7 @@
           "end_char": 674,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 423
         },
@@ -200,7 +200,7 @@
           "end_char": 1158,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 676
         },
@@ -213,7 +213,7 @@
     "summary_ref": {
       "path": "email/setup/list-hygiene-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd"
+      "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -228,8 +228,8 @@
     "name": "list-hygiene-monitor",
     "path": "email/setup/list-hygiene-monitor/SKILL.md",
     "phase": "setup",
-    "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
-    "version": "18.0.0"
+    "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<program / list> [ESP engagement + bounce/complaint export] [prior baseline] [watch cadence]",
@@ -243,7 +243,7 @@
           "end_char": 82,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -258,7 +258,7 @@
           "end_char": 86,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 84
         },
@@ -270,7 +270,7 @@
     "source": {
       "path": "email/setup/list-hygiene-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd"
+      "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83"
     }
   },
   "output_contract": {
@@ -285,7 +285,7 @@
           "end_char": 170,
           "path": "email/setup/list-hygiene-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd",
+          "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -296,7 +296,7 @@
     "source": {
       "path": "email/setup/list-hygiene-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd"
+      "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83"
     },
     "summary": "engagement-recency cohorts (30/90/180/365-day active → dormant), a hard-bounce + spam-complaint",
     "summary_source": "expected-output",
@@ -311,8 +311,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -321,7 +321,7 @@
     "source": {
       "path": "email/setup/list-hygiene-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "112d1bf452bd6c814fdde05d090f7c719f7a52d91e739c29b1a0f4b0d24745cd"
+      "sha256": "a65e65651870519b1fc2181982c9e1d5702e448d6d1e83d86fa3bb98b6d74b83"
     },
     "trigger_phrases": [
       "build me a re-permission and prune worklist",

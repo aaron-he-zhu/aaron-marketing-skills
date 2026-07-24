@@ -4,13 +4,13 @@ slug: aaron-reactivation-specialist
 displayName: "Reactivation Specialist · 流失召回"
 summary: "流失召回/重新授权/沉默用户清理"
 description: 'Use when the user asks to "build a win-back campaign", "re-engage lapsed subscribers", "run a re-permission / re-consent sweep", or "sunset my dead list"; produces a closed-loop reactivation program — a lapsed-cohort definition, a staged offer ladder, a re-consent (re-permission) capture step, and a sunset-confirm / suppression rule. Owns none of the SEND-N sub-item notes: engagement-decay / sunset is email-sequence-designer''s and preference-center / frequency options is preference-frequency-manager''s — this skill references those notes, it does not re-emit them. Not for the general lifecycle flows (welcome/cart/post-purchase) — use email-sequence-designer; not for the preference-center / opt-down ladder — use preference-frequency-manager; not for the consent record itself — use consent-registry; not for computing EQS or the N1 veto — use email-quality-auditor. 流失召回/重新授权/沉默用户清理'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a defined cohort has stopped opening/clicking and the user wants a self-contained win-back and re-permission program before those subjects are suppressed: define the lapsed cohort by a no-engagement window, design a staged offer ladder (soft re-engagement → incentive → last-chance), add a re-consent / re-permission capture step so re-engaged subjects re-affirm opt-in, and set the sunset-confirm rule that either re-permissions or suppresses each subject. Activate when the problem is a decaying tail of the list and the goal is to recover or cleanly retire it — not to design the everyday lifecycle flows."
 argument-hint: "<lapsed cohort or no-engagement window> [platform/ESP] [offer/incentive available] [suppression policy]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "nurture", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "nurture"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "nurture", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "nurture"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Reactivation Specialist

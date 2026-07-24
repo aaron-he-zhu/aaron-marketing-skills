@@ -11,7 +11,7 @@
           "end_char": 147,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 301,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 149
         },
@@ -41,7 +41,7 @@
           "end_char": 446,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 303
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/land/narrative-enablement-kit/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1"
+      "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 42
       },
       {
@@ -127,7 +127,7 @@
           "end_char": 195,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -145,7 +145,7 @@
           "end_char": 368,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 196
         },
@@ -163,7 +163,7 @@
           "end_char": 576,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 369
         },
@@ -181,7 +181,7 @@
           "end_char": 926,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 578
         },
@@ -194,7 +194,7 @@
     "summary_ref": {
       "path": "narrative/land/narrative-enablement-kit/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1"
+      "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -209,8 +209,8 @@
     "name": "narrative-enablement-kit",
     "path": "narrative/land/narrative-enablement-kit/SKILL.md",
     "phase": "land",
-    "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
-    "version": "18.0.0"
+    "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<product / brand> [audiences: sales/support/founder/partner] [canon path]",
@@ -224,7 +224,7 @@
           "end_char": 225,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
           "end_char": 294,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 227
         },
@@ -254,7 +254,7 @@
           "end_char": 366,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 296
         },
@@ -269,7 +269,7 @@
           "end_char": 438,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 368
         },
@@ -281,7 +281,7 @@
     "source": {
       "path": "narrative/land/narrative-enablement-kit/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1"
+      "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339"
     }
   },
   "output_contract": {
@@ -296,7 +296,7 @@
           "end_char": 66,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -312,7 +312,7 @@
           "end_char": 315,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 68
         },
@@ -328,7 +328,7 @@
           "end_char": 468,
           "path": "narrative/land/narrative-enablement-kit/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1",
+          "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339",
           "span_basis": "field-text",
           "start_char": 317
         },
@@ -339,7 +339,7 @@
     "source": {
       "path": "narrative/land/narrative-enablement-kit/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1"
+      "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339"
     },
     "summary": "an enablement kit — an elevator ladder (10s / 30s / 2min), a spokesperson Q&A (hard questions + on-canon answers), an approved boilerplate/bio pack (25 / 50 / 100-word), a do/don't language sheet (approved phrasings vs banned/off-canon terms), every claim labeled Measured / User-provided / `[needs source]` — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -354,8 +354,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -364,7 +364,7 @@
     "source": {
       "path": "narrative/land/narrative-enablement-kit/SKILL.md",
       "section": "frontmatter",
-      "sha256": "12a7d1784cbfb25354b067a60c5e2f48fb19de13bd9786b51ea85da475fedae1"
+      "sha256": "8fe857def2e514268c1ea93b5b7af66932e84ea65f6be6d25923614bc4acc339"
     },
     "trigger_phrases": [
       "build a spokesperson Q&A and approved boilerplate pack",

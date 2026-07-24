@@ -52,7 +52,7 @@
     "note": "Markdown was used only to create the initial explicit edge inventory; normal generation never treats prose as authoritative.",
     "source_surface": "Markdown Next Best Skill declarations"
   },
-  "catalog_version": "18.0.0",
+  "catalog_version": "19.0.0",
   "edge_shards": [
     {
       "edge_count": 40,

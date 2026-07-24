@@ -4,13 +4,13 @@ slug: aaron-newsletter-monetization-planner
 displayName: "Newsletter Monetization Planner · 邮件newsletter变现"
 summary: "邮件newsletter变现/赞助刊例/付费订阅测算"
 description: 'Use when the user asks to "monetize my newsletter", "build a sponsorship rate card", or "model paid-subscription revenue"; produces a revenue model (paid tiers, ad/sponsorship inventory + CPM/flat rate card, referral/boost loops), a list-growth ↔ revenue projection, and honest-offer / disclosure checks for the SEND-D lever. Not for scoring the whole program or running D1 — use email-quality-auditor; not for the return math — use roi-calculator; not for the post-click page — use landing-optimizer. 邮件newsletter变现/赞助刊例/付费订阅测算'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when planning how an owned newsletter or creator list makes money: pricing paid-subscription tiers and conversion assumptions, sizing ad/sponsorship inventory and setting a CPM/flat rate card, designing referral / recommendation growth loops and boosts, and projecting how list growth maps to revenue. Also when the user wants the sponsorship = ad disclosure and honest-offer checks before selling inventory."
 argument-hint: "<newsletter/list size> [goal: paid-subs|sponsorship|both] [open/click rates]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "nurture", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "nurture"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "nurture", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "nurture"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Newsletter Monetization Planner

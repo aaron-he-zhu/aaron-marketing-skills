@@ -4,13 +4,13 @@ slug: aaron-ad-test-designer
 displayName: "Ad Test Designer · 广告AB测试设计"
 summary: "广告AB测试设计/实验设计/显著性判定/增效测试"
 description: 'Use when the user asks to "design an A/B test", "set up a creative/landing test", "run an incrementality test", or "is this result statistically and practically material?"; produces a hypothesis, variant matrix, sample-size/duration/power plan, and a documented effect/uncertainty read from own exported results. It applies only a precommitted owner-approved action rule; the statistical helper never chooses a business action. Not for producing variants — use ad-creative-builder; not for reading back one shipped change — use paid-measurement-loop. 广告AB测试设计/实验设计/显著性判定/增效测试'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when designing a creative/landing A/B/n or incrementality test, or when reading effect size, uncertainty, and guardrails from a finished own-data test. Apply a business action only when its owner and decision rule were precommitted; otherwise return decision UNDECIDED. Not for generating variants (use ad-creative-builder) or reading back one already-shipped change (use paid-measurement-loop)."
 argument-hint: "<what to test / results CSV> [profile: direct-response|prospecting|incremental-profit] [baseline] [alpha/power/MDE]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "orchestrate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "orchestrate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "orchestrate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "orchestrate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Ad Test Designer

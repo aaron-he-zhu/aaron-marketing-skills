@@ -3,16 +3,16 @@
   "authority": {
     "markdown_role": "bidirectionally-checked-documentation-only",
     "node_source": "references/system-catalog.json",
-    "node_source_sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
+    "node_source_sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
     "source": "references/workflow-graph.source.json",
-    "source_sha256": "fe1ee2e4280f0d266e180514cddb40ceb98f7a7692293477b46b99942847a7eb"
+    "source_sha256": "f4bd429c2a935ec0b61e65411ce9b055e22f376fdd502ff94900d2602462dab1"
   },
   "automatic_handoff_policy": {
     "ambiguity_stop": true,
     "max_automatic_handoffs": 3,
     "visited_set_required": true
   },
-  "catalog_version": "18.0.0",
+  "catalog_version": "19.0.0",
   "counts": {
     "edges": 376,
     "nodes": 120,
@@ -100,7 +100,7 @@
       "sha256": "2ab40d1ab59f1c161a205992e922cd05460a4dc91f3a6b47ea62ff4a961faf48"
     }
   ],
-  "graph_sha256": "0d24ee71422ebc20096757703715863f7efb92bbfe4131b221a44f0fbfcf7d08",
+  "graph_sha256": "0f3ea5462a73ca845ab2d500f651198ff2ffb99ec21861af1a35f72ec19d50f3",
   "nodes": [
     {
       "discipline": "narrative",

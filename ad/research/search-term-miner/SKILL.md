@@ -4,13 +4,13 @@ slug: aaron-search-term-miner
 displayName: "Search Term Miner · 付费广告搜索词挖掘"
 summary: "付费广告搜索词挖掘/否定关键词/浪费词清单"
 description: 'Use when the user asks to "mine my search terms", "find new keywords from converting queries", "build a negative-keyword list", or "cut wasted paid spend"; harvests converting queries into new keywords/ad-groups, builds a standing negative-keyword list and an n-gram waste report from the search-terms export, and delivers a maintenance diff (add / negate / move). Not for account structure — use campaign-architect; not for budget split — use budget-optimizer; not for computing the final RQS — use ad-account-auditor. 付费广告搜索词挖掘/否定关键词/浪费词清单'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use on a recurring cadence to mine a fresh search-terms report: promote converting queries into new keywords or ad groups, build and grow a standing negative-keyword list, and produce an n-gram waste report that names the tokens draining spend without converting."
 argument-hint: "<search-terms export path/paste> [goal] [conversion column]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "research"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "research"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Search Term Miner

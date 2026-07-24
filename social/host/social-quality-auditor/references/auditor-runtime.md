@@ -3,10 +3,10 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 18.0.0
+- **Catalog version:** 19.0.0
 - **Framework:** ECHO
 - **Auditor:** social-quality-auditor
-- **Source digest:** `sha256:cab713e36cb7b83d78c059efb01338bacc704a8c5a0f4883a9be10207862a5c4`
+- **Source digest:** `sha256:164f3e074a926f587d76a80f5b74df21cbdf2a6cf0d57c75423e4d3e089683ee`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -14,7 +14,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "18.0.0",
+  "catalog_version": "19.0.0",
   "frameworks": {
     "ECHO": {
       "composite_score": false,

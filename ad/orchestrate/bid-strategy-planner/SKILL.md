@@ -4,13 +4,13 @@ slug: aaron-bid-strategy-planner
 displayName: "Bid Strategy Planner · 出价策略"
 summary: "出价策略/tCPA目标/tROAS/学习期"
 description: 'Use when the user asks to "pick a bid strategy", "set a tCPA/tROAS target", or "plan the learning-phase entry"; produces a bid-strategy choice (tCPA / tROAS / max-conversions / manual CPC), the starting target math, a portfolio grouping map, and a learning-phase entry plan. Not for splitting the budget across campaigns — use budget-optimizer; not for in-flight pacing/scale moves — use budget-pacing-monitor; not for scoring the account — use ad-account-auditor. 出价策略/tCPA目标/tROAS/学习期'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when choosing a bid strategy for a new or restructured paid campaign, setting an initial tCPA or tROAS target from CPA/ROAS history, deciding between automated (tCPA/tROAS/max-conversions) and manual CPC bidding, grouping campaigns into a bid portfolio, or planning how a campaign enters and exits the learning phase without churn. Not in-flight pacing — that is budget-pacing-monitor."
 argument-hint: "<goal: DR|prospecting> [conversion history: CPA/ROAS + volume] [campaign set]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "orchestrate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "orchestrate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "orchestrate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "orchestrate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Bid Strategy Planner

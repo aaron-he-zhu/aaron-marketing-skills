@@ -11,7 +11,7 @@
           "end_char": 134,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 214,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 136
         },
@@ -41,7 +41,7 @@
           "end_char": 268,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 216
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "social/observe/share-of-voice-tracker/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34"
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 42
       },
       {
@@ -127,7 +127,7 @@
           "end_char": 171,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -145,7 +145,7 @@
           "end_char": 325,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 172
         },
@@ -163,7 +163,7 @@
           "end_char": 498,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 326
         },
@@ -181,7 +181,7 @@
           "end_char": 834,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 500
         },
@@ -194,7 +194,7 @@
     "summary_ref": {
       "path": "social/observe/share-of-voice-tracker/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34"
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -209,8 +209,8 @@
     "name": "share-of-voice-tracker",
     "path": "social/observe/share-of-voice-tracker/SKILL.md",
     "phase": "observe",
-    "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
-    "version": "18.0.0"
+    "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<brand + locked competitor panel> [platforms] [period]",
@@ -224,7 +224,7 @@
           "end_char": 120,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
           "end_char": 263,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 122
         },
@@ -254,7 +254,7 @@
           "end_char": 329,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 265
         },
@@ -269,7 +269,7 @@
           "end_char": 499,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 331
         },
@@ -284,7 +284,7 @@
           "end_char": 555,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 501
         },
@@ -296,7 +296,7 @@
     "source": {
       "path": "social/observe/share-of-voice-tracker/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34"
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
     }
   },
   "output_contract": {
@@ -311,7 +311,7 @@
           "end_char": 111,
           "path": "social/observe/share-of-voice-tracker/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34",
+          "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -322,7 +322,7 @@
     "source": {
       "path": "social/observe/share-of-voice-tracker/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34"
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
     },
     "summary": "a SOV read — the locked panel record (members, per-brand query terms, platforms, lock date), a per-platform per-period SOV table (brand count, panel count, SOV%, source + label per cell), the trend series with any panel-break markers, and where requested a sentiment-weighted variant and a pageviews attention-share read — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -337,8 +337,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -347,7 +347,7 @@
     "source": {
       "path": "social/observe/share-of-voice-tracker/SKILL.md",
       "section": "frontmatter",
-      "sha256": "4a6758437693849f1e5e757cb58228b943b90de74e67086656181b0548c07e34"
+      "sha256": "0b96509810d44736ac32bcf5ead3e7b9af4719e53e42aad6e8ae4234f2df8edb"
     },
     "trigger_phrases": [
       "track our share of voice",

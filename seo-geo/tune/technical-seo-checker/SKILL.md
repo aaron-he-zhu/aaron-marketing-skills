@@ -4,14 +4,14 @@ slug: technical-seo-checker
 displayName: "Technical SEO Checker · 技术SEO"
 summary: "技术SEO/网站速度"
 description: 'Use when the user asks to "check technical SEO"; audits crawlability, indexing, Core Web Vitals, robots.txt, sitemaps, canonicals, redirects, and migrations. Not for on-page tags or content — use on-page-seo-checker. 技术SEO/网站速度'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when checking technical SEO health: site speed, Core Web Vitals, indexing, crawlability, robots.txt, sitemaps, canonical tags, 技术SEO, 网站速度, 核心网页指标, 索引问题, or Google找不到页面."
 argument-hint: "<URL or domain>"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "low", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "low", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Technical SEO Checker

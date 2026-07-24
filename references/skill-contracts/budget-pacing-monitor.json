@@ -11,7 +11,7 @@
           "end_char": 42,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901"
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
     }
   },
   "context_hints": {
@@ -39,7 +39,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 39
       },
       {
@@ -86,7 +86,7 @@
           "end_char": 252,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -104,7 +104,7 @@
           "end_char": 615,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
           "span_basis": "field-text",
           "start_char": 254
         },
@@ -122,7 +122,7 @@
           "end_char": 754,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
           "span_basis": "field-text",
           "start_char": 617
         },
@@ -138,7 +138,7 @@
           "end_char": 834,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
           "span_basis": "field-text",
           "start_char": 756
         },
@@ -151,7 +151,7 @@
     "summary_ref": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901"
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -165,8 +165,8 @@
     "name": "budget-pacing-monitor",
     "path": "ad/scale/budget-pacing-monitor/SKILL.md",
     "phase": "scale",
-    "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901",
-    "version": "18.0.0"
+    "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<campaign/flight> [budget + flight window] [target curve: even|front|back-loaded]",
@@ -180,7 +180,7 @@
           "end_char": 95,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -192,7 +192,7 @@
     "source": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901"
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
     }
   },
   "output_contract": {
@@ -207,7 +207,7 @@
           "end_char": 108,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901",
+          "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -218,7 +218,7 @@
     "source": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901"
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
     },
     "summary": "a pacing read for one campaign or flight — cumulative spend vs the target curve (percent-to-pace), a verdict (On-track / Ahead / Behind / Stalled), the learning-phase status, an over/under-delivery call with the driver (cap-limited, bid-throttled, low-volume, dayparting), and a reallocation trigger (fire / hold) with the band that decided it. Plus a handoff summary storable under `memory/ad/budget-pacing-monitor/`.",
     "summary_source": "expected-output",
@@ -233,8 +233,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -243,7 +243,7 @@
     "source": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "29a5d5ab46f8f57759f528dabd975472959c9698c24b56c44dea482cec958901"
+      "sha256": "b9efdc0b81d3ef5fd260171f2550074b80d4b4e8b7c6992ce1982dc8cb44357e"
     },
     "trigger_phrases": [
       "am I over/under-spending",

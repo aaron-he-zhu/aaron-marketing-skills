@@ -4,13 +4,13 @@ slug: aaron-list-segment-builder
 displayName: "List Segment Builder · 邮件列表分群"
 summary: "邮件列表分群/生命周期分群/抑制名单/流失召回"
 description: 'Use when the user asks to "build email segments from my list", "make engaged / lapsed / RFM segments", "set up cart-abandoner or lifecycle-stage audiences", or "build a suppression list of unsubscribes and bounces"; turns the user''s OWN list/CRM/GA4/ecommerce export into behavioral, attribute, and lifecycle-stage segments plus a suppression list, with per-segment sizes labeled Measured/Estimated, informing the SEND E (Engagement/targeting) dimension. Not for scoring EQS or running vetoes — use email-quality-auditor; not for authentication or spam-content checks — use deliverability-qa. 邮件列表分群/生命周期分群/抑制名单/流失召回'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when preparing WHO to email before any send is designed: segmenting an exported list/CRM/GA4/ecommerce export into behavioral segments (engaged-90d, cart-abandoners), RFM tiers, and lifecycle stages (new, active, lapsed, win-back), and building the suppression list (unsubscribed, hard-bounced, spam-complained, consent-withdrawn) by reading the consent-registry as the source of truth for consent and suppression facts."
 argument-hint: "<list/CRM CSV or GA4/ecommerce export> [goal: promo|retention|cold] [ESP]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "setup", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "setup"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "setup", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "setup"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # List Segment Builder

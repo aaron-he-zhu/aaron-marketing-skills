@@ -4,13 +4,13 @@ slug: aaron-conversion-signal-qa
 displayName: "Conversion Signal QA · 付费广告转化追踪QA"
 summary: "付费广告转化追踪QA/UTM规范/跨平台去重"
 description: 'Use when the user asks to "QA my conversion tracking before launch", "check my UTMs / pixel / event firing", "set up a tracking pre-flight", or "set the dedup rule so Meta and Google stop double-counting"; builds and fixes the measurement plumbing — conversion-event firing, UTM hygiene, cross-platform dedup rules, attribution-window alignment, and offline/iOS-ATT modeled-gap flags — as a pre-flight checklist plus a UTM/event-spec builder. Not for scoring R1/R2 — that is a scored veto in ad-account-auditor; not for account structure — use campaign-architect. 付费广告转化追踪QA/UTM规范/跨平台去重'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use before launching or scaling paid campaigns, when the measurement plumbing needs verifying or fixing: conversion events firing, UTM consistency, cross-platform dedup, attribution-window alignment, and offline/iOS-ATT modeled-gap flags. Run it to BUILD the signal pre-flight; run ad-account-auditor to SCORE whether R1/R2 pass."
 argument-hint: "<site/account topic> [platforms] [GA4 conversions + traffic-acquisition export]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "activate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "activate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Conversion Signal QA

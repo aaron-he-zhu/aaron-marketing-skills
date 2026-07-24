@@ -5,8 +5,8 @@
 <!-- GENERATED:BEGIN release-surface:supported-major -->
 | Version | Supported |
 |---------|-----------|
-| 18.x    | Yes (current line) |
-| < 18    | No        |
+| 19.x    | Yes (current line) |
+| < 19    | No        |
 <!-- GENERATED:END release-surface:supported-major -->
 
 Policy: only the latest minor of the current major line receives fixes; older majors are unsupported — upgrade to the current release.

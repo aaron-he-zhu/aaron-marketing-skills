@@ -11,7 +11,7 @@
           "end_char": 60,
           "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 121,
           "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
           "span_basis": "field-text",
           "start_char": 62
         },
@@ -41,7 +41,7 @@
           "end_char": 201,
           "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
           "span_basis": "field-text",
           "start_char": 123
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8"
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
     }
   },
   "context_hints": {
@@ -200,7 +200,7 @@
           "end_char": 151,
           "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -218,7 +218,7 @@
           "end_char": 206,
           "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
           "span_basis": "field-text",
           "start_char": 153
         },
@@ -234,7 +234,7 @@
           "end_char": 446,
           "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
           "span_basis": "field-text",
           "start_char": 208
         },
@@ -247,7 +247,7 @@
     "summary_ref": {
       "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8"
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -260,8 +260,8 @@
     "name": "geo-content-optimizer",
     "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
     "phase": "implement",
-    "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
-    "version": "18.0.0"
+    "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<content URL or text> [target AI engine]",
@@ -275,7 +275,7 @@
           "end_char": 67,
           "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -287,7 +287,7 @@
     "source": {
       "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8"
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
     }
   },
   "output_contract": {
@@ -302,7 +302,7 @@
           "end_char": 122,
           "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8",
+          "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -313,7 +313,7 @@
     "source": {
       "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8"
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
     },
     "summary": "a ready-to-use asset or implementation-ready transformation plus a short handoff summary ready for `memory/content/`.",
     "summary_source": "expected-output",
@@ -328,8 +328,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -338,7 +338,7 @@
     "source": {
       "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "2c9d875f582a59d4bd24c609b7d33518fe0f327bad620298b11be09c89c260a8"
+      "sha256": "2d566864bed499b226d30866489a7346320044558fac0de8922f59ac1b086b8a"
     },
     "trigger_phrases": [
       "optimize for AI citations"

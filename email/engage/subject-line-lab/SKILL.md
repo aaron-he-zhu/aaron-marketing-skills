@@ -4,13 +4,13 @@ slug: aaron-subject-line-lab
 displayName: "Subject Line Lab · 邮件主题行生成"
 summary: "邮件主题行生成/主题行预打分/截断与垃圾词检查"
 description: 'Use when the user asks to "generate subject line variants", "pre-score my subject lines", or "will this subject get truncated / trigger spam filters"; produces a labeled subject + preheader variant set and a per-variant heuristic pre-score card — spam-trigger flags, length/truncation across desktop + mobile, emoji-count, and the inbox preview render (from-name + subject + preheader) — before any test is run. Not for the body copy or CTA — use email-creative-builder; not for the A/B test design or significance read — use send-experiment-designer; not for the profile-weighted EQS or the S1/S2/N1/D1 vetoes — use email-quality-auditor. 邮件主题行生成/主题行预打分/截断与垃圾词检查'
-version: "18.0.1"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when generating or pre-screening a subject-line + preheader variant set before a test: draft 3-8 angle-labeled variants and heuristically pre-score each on spam-trigger patterns, desktop + mobile length/truncation, emoji count, and the rendered inbox preview (from-name + subject + preheader). Covers B2C promo/lifecycle, B2B cold-outbound, and newsletter modes. Use to rank candidates and cut the weak ones before handing survivors to the A/B test — not to write the body, design the test, or compute the EQS."
 argument-hint: "<subject candidates or angle> [from-name] [mode: promo|cold|newsletter]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.1", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Subject Line Lab

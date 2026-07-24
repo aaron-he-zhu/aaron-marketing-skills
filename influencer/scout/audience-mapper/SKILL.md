@@ -4,13 +4,13 @@ slug: audience-mapper
 displayName: "Audience Mapper · 目标受众画像"
 summary: "目标受众画像/人群分析 · 细分社群/亚文化调研"
 description: 'Use when the user asks to "analyze my target audience", "build an audience profile for influencer targeting", "research a niche community", or "deep-dive a subculture before partnering with creators"; in audience mode produces demographic/psychographic profiles, a platform-priority matrix, named personas, and an influencer-selection criteria set, and in niche mode produces a community map, culture decode (language/norms/taboos), key-voice tiers, a Brand Fit Score, and a phased entry strategy. Not for finding specific creators to contract — use influencer-discovery; not for scoring a shortlist on Suitability — use fit-scorer. 目标受众画像/人群分析 · 细分社群/亚文化调研'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Run at the start of an influencer program, or when entering a new market/segment, before any creator selection — this is the who + what-community step. Use audience mode to understand who the customer is, where they spend time online, which creators they trust, and what selection criteria follow; use niche mode to decode a specific subculture's language, norms, taboos, key voices, and brand fit before outreach so the brand avoids cultural missteps. Works from a brand or product name alone, or from supplied customer/community data. Also use to diagnose why a prior campaign underperformed or to build personas for a creative brief."
 argument-hint: "<brand/product or niche> [mode: audience|niche] [category] [geo/platforms]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Audience Mapper

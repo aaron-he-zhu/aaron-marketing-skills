@@ -4,13 +4,13 @@ slug: aaron-list-hygiene-monitor
 displayName: "List Hygiene Monitor · 邮件列表健康度监控"
 summary: "邮件列表健康度监控/退订漂移/沉睡用户清理"
 description: 'Use when the user asks to "watch my list health over time", "flag decaying / unengaged subscribers on a schedule", "why is my open rate drifting down / bounces creeping up", or "build me a re-permission and prune worklist"; runs the scheduled SEND list-decay + suppression-drift watch — an engagement-recency cohort read (30/90/180/365-day), hard-bounce and spam-complaint trend vs benchmark, suppression-list growth/leakage check, and a segmented re-permission / sunset / prune worklist tied to SEND S (list hygiene) and E (engagement-decay) sub-items. Not for the one-time pre-send authentication pre-flight — use deliverability-qa; not for the consent/suppression record itself — use consent-registry; not for computing the EQS or enforcing vetoes — use email-quality-auditor. 邮件列表健康度监控/退订漂移/沉睡用户清理'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use as the recurring hygiene watch between sends — not the pre-flight — when the list is aging and the sending signal is drifting: engagement-recency cohorts sliding toward dormant, hard-bounce or spam-complaint trend creeping up, or the suppression list growing/leaking. Run it on a schedule to BUILD the re-permission / sunset / prune worklist that keeps SEND S (list hygiene) and E (engagement-decay) healthy; run deliverability-qa for the one-time auth pre-flight and email-quality-auditor to SCORE the full EQS and enforce S1/S2/N1/D1."
 argument-hint: "<program / list> [ESP engagement + bounce/complaint export] [prior baseline] [watch cadence]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "setup", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "setup"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "setup", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "setup"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # List Hygiene Monitor

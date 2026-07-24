@@ -11,7 +11,7 @@
           "end_char": 100,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 271,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 102
         },
@@ -41,7 +41,7 @@
           "end_char": 374,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 273
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "social/craft/short-video-scripter/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964"
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 50
       },
       {
@@ -133,7 +133,7 @@
           "end_char": 157,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -151,7 +151,7 @@
           "end_char": 311,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 158
         },
@@ -169,7 +169,7 @@
           "end_char": 500,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 312
         },
@@ -187,7 +187,7 @@
           "end_char": 860,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 502
         },
@@ -200,7 +200,7 @@
     "summary_ref": {
       "path": "social/craft/short-video-scripter/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964"
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -215,8 +215,8 @@
     "name": "short-video-scripter",
     "path": "social/craft/short-video-scripter/SKILL.md",
     "phase": "craft",
-    "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
-    "version": "18.0.0"
+    "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<video idea / draft script> [platforms] [goal: follow|save|click]",
@@ -230,7 +230,7 @@
           "end_char": 59,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -245,7 +245,7 @@
           "end_char": 143,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 61
         },
@@ -260,7 +260,7 @@
           "end_char": 302,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 145
         },
@@ -275,7 +275,7 @@
           "end_char": 362,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 304
         },
@@ -290,7 +290,7 @@
           "end_char": 431,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 364
         },
@@ -302,7 +302,7 @@
     "source": {
       "path": "social/craft/short-video-scripter/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964"
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
     }
   },
   "output_contract": {
@@ -317,7 +317,7 @@
           "end_char": 59,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -333,7 +333,7 @@
           "end_char": 232,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 61
         },
@@ -349,7 +349,7 @@
           "end_char": 540,
           "path": "social/craft/short-video-scripter/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964",
+          "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0",
           "span_basis": "field-text",
           "start_char": 234
         },
@@ -360,7 +360,7 @@
     "source": {
       "path": "social/craft/short-video-scripter/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964"
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
     },
     "summary": "one beat-sheet package per platform — timestamped rows (time window / spoken line / on-screen text / asset keywords) across the four retention gates, 2-3 hook options from named hook families, a 9:16 format-param row citing the dated norm card (or labeled Estimated where no card exists), caption and first-comment placement notes, and the disclosure line where required — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -375,8 +375,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -385,7 +385,7 @@
     "source": {
       "path": "social/craft/short-video-scripter/SKILL.md",
       "section": "frontmatter",
-      "sha256": "b0e990ebbe26b85f7da62d7c30199d6dc028c5b6a814cdd1a56dd42da3204964"
+      "sha256": "45bc1b618124087bb781547c638b2823decc69b86a524c7013aa48507561dcd0"
     },
     "trigger_phrases": [
       "fix the hook — viewers drop off in the first seconds",

@@ -4,13 +4,13 @@ slug: aaron-narrative-enablement-kit
 displayName: "Narrative Enablement Kit · 叙事赋能包"
 summary: "电梯梯度/发言人问答/审定样板/该说不该说清单"
 description: 'Use when the user asks to "make everyone tell the same story", "write our elevator pitch ladder", or "build a spokesperson Q&A and approved boilerplate pack"; derives from the narrative-registry canon, message house, and brand voice a repeatable enablement kit — an elevator ladder (10-second / 30-second / 2-minute), a spokesperson Q&A (tough questions with on-canon answers), an approved boilerplate/bio pack (25 / 50 / 100-word), and a do/don''t language sheet — so sales, support, founders, and partners repeat one consistent story. Not for the launch-day runbook — use launch-day-conductor; not for finished per-channel copy — use content-writer or each discipline creative builder; not for launch-window battle cards — use sales-enablement-kit; this kit never adjudicates a claim. 叙事赋能包/电梯梯度/发言人问答/审定样板/该说不该说'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a narrative-registry canon exists and the goal is to make every human who speaks for the brand tell the same story: an elevator ladder (10s / 30s / 2min), a spokesperson Q&A with on-canon answers to hard questions, an approved boilerplate and bio pack (25 / 50 / 100-word), and a do/don't language sheet. The Land-phase enablement layer between the canon and the people who repeat it. Not the launch-day runbook and not finished per-channel copy."
 argument-hint: "<product / brand> [audiences: sales/support/founder/partner] [canon path]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "narrative", "phase": "land", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "land"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "land", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "land"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Narrative Enablement Kit

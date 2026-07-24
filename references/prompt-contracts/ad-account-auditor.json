@@ -195,8 +195,8 @@
   ],
   "framework_contract": {
     "catalog_path": "references/framework-catalog.json",
-    "catalog_sha256": "a99e232d6d8d8dfe82135fbd1071a20b138aa22f074412871cbdd867fcadcd9e",
-    "catalog_version": "18.0.0",
+    "catalog_sha256": "63c5704eee6afc70ac3247c5ff4fb07d8e9ad6d45062531ab2a77a3d348db2db",
+    "catalog_version": "19.0.0",
     "profiles": [
       "direct-response",
       "prospecting",
@@ -228,7 +228,7 @@
     "runtime_sources": [
       {
         "path": "references/auditor-runbook.md",
-        "sha256": "9f51665d80078a1bcb4cbf5dacf4ea4de4c18be8b1d28ddf9678b34e936a83e5"
+        "sha256": "c5736873999d3d858df910525afe293311ce76df926f3319fe6132766b6e8135"
       },
       {
         "path": "references/scoring-semantics.md",
@@ -244,7 +244,7 @@
       },
       {
         "path": "references/audit-artifact.schema.json",
-        "sha256": "cd5dc0ed337d94bf74fe42b27ded5a8520122fddf9708bcf6d147a51e0dd4e72"
+        "sha256": "fa00f8e759193128c72841b90f9a04e6dfeb5b7779f3ff8ccf5a5602cca903f4"
       }
     ],
     "sink": "memory/audits/ad/"
@@ -327,12 +327,12 @@
   "skill": {
     "name": "ad-account-auditor",
     "path": "ad/activate/ad-account-auditor/SKILL.md",
-    "sha256": "e7719f834ca2afe95393e3ff1dc63ad8dcc91cc41485d8b3efd54cb0b4698e15",
-    "version": "18.0.1"
+    "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+    "version": "19.0.0"
   },
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-    "version": "18.0.0"
+    "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+    "version": "19.0.0"
   }
 }

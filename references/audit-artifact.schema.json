@@ -5,69 +5,216 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "class", "schema_version", "runbook_version", "catalog_version", "framework", "profile",
-    "status", "verdict", "score_state", "objective", "target", "observed_at",
-    "context", "key_findings", "evidence_summary", "evidence_coverage", "score_confidence",
-    "open_loops", "recommended_next_skill", "veto_count", "cap_applied"
+    "class",
+    "schema_version",
+    "runbook_version",
+    "catalog_version",
+    "framework",
+    "profile",
+    "status",
+    "verdict",
+    "score_state",
+    "objective",
+    "target",
+    "observed_at",
+    "context",
+    "key_findings",
+    "evidence_summary",
+    "evidence_coverage",
+    "score_confidence",
+    "open_loops",
+    "recommended_next_skill",
+    "veto_count",
+    "cap_applied"
   ],
   "properties": {
-    "class": {"const": "auditor-output"},
-    "schema_version": {"const": "3.0"},
-    "runbook_version": {"const": "3.0.0"},
-    "catalog_version": {"const": "18.0.0"},
-    "framework": {"enum": ["CORE-EEAT", "CITE", "STAR", "ROAS", "SEND", "RAMP", "ECHO", "TALE", "MULTI"]},
+    "class": {
+      "const": "auditor-output"
+    },
+    "schema_version": {
+      "const": "3.0"
+    },
+    "runbook_version": {
+      "const": "3.0.0"
+    },
+    "catalog_version": {
+      "const": "19.0.0"
+    },
+    "framework": {
+      "enum": [
+        "CORE-EEAT",
+        "CITE",
+        "STAR",
+        "ROAS",
+        "SEND",
+        "RAMP",
+        "ECHO",
+        "TALE",
+        "MULTI"
+      ]
+    },
     "profile": {
       "type": "string",
       "pattern": "^[a-z0-9][a-z0-9-]*$",
       "description": "Must also be declared for the selected framework in framework-catalog.json; MULTI uses cross-framework-summary."
     },
-    "status": {"enum": ["DONE", "DONE_WITH_CONCERNS", "BLOCKED", "NEEDS_INPUT"]},
-    "verdict": {"enum": ["SHIP", "FIX", "BLOCK", "UNDECIDED"]},
-    "score_state": {"enum": ["SCORED", "NOT_SCORED"]},
-    "objective": {"type": "string", "minLength": 1},
-    "target": {"type": "string", "minLength": 1},
-    "observed_at": {"type": "string", "format": "date"},
-    "context": {"type": "object", "minProperties": 1},
+    "status": {
+      "enum": [
+        "DONE",
+        "DONE_WITH_CONCERNS",
+        "BLOCKED",
+        "NEEDS_INPUT"
+      ]
+    },
+    "verdict": {
+      "enum": [
+        "SHIP",
+        "FIX",
+        "BLOCK",
+        "UNDECIDED"
+      ]
+    },
+    "score_state": {
+      "enum": [
+        "SCORED",
+        "NOT_SCORED"
+      ]
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "context": {
+      "type": "object",
+      "minProperties": 1
+    },
     "key_findings": {
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["title", "severity", "evidence"],
+        "required": [
+          "title",
+          "severity",
+          "evidence"
+        ],
         "properties": {
-          "title": {"type": "string", "minLength": 1},
-          "severity": {"enum": ["veto", "high", "medium", "low"]},
-          "evidence": {"type": "string", "minLength": 1}
+          "title": {
+            "type": "string",
+            "minLength": 1
+          },
+          "severity": {
+            "enum": [
+              "veto",
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "evidence": {
+            "type": "string",
+            "minLength": 1
+          }
         }
       }
     },
-    "evidence_summary": {"type": "string", "minLength": 1},
-    "evidence_coverage": {"type": "integer", "minimum": 0, "maximum": 100},
-    "score_confidence": {"enum": ["high", "medium", "low", "not_scored"]},
-    "open_loops": {"type": "string", "minLength": 1},
-    "recommended_next_skill": {"type": "string", "minLength": 1},
-    "veto_count": {"type": "integer", "minimum": 0},
-    "cap_applied": {"type": "boolean"},
-    "raw_overall_score": {"type": "integer", "minimum": 0, "maximum": 100},
-    "final_overall_score": {"type": "integer", "minimum": 0, "maximum": 100}
+    "evidence_summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence_coverage": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "score_confidence": {
+      "enum": [
+        "high",
+        "medium",
+        "low",
+        "not_scored"
+      ]
+    },
+    "open_loops": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recommended_next_skill": {
+      "type": "string",
+      "minLength": 1
+    },
+    "veto_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "cap_applied": {
+      "type": "boolean"
+    },
+    "raw_overall_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "final_overall_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    }
   },
   "allOf": [
     {
       "if": {
-        "properties": {"framework": {"const": "STAR"}},
-        "required": ["framework"]
+        "properties": {
+          "framework": {
+            "const": "STAR"
+          }
+        },
+        "required": [
+          "framework"
+        ]
       },
       "then": {
         "properties": {
           "context": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["goal", "assessment_time", "platform", "market"],
+            "required": [
+              "goal",
+              "assessment_time",
+              "platform",
+              "market"
+            ],
             "properties": {
-              "goal": {"enum": ["awareness", "engagement", "conversion", "brand-building"]},
-              "assessment_time": {"enum": ["forecast", "actual"]},
-              "platform": {"type": "string", "minLength": 1},
-              "market": {"type": "string", "minLength": 1}
+              "goal": {
+                "enum": [
+                  "awareness",
+                  "engagement",
+                  "conversion",
+                  "brand-building"
+                ]
+              },
+              "assessment_time": {
+                "enum": [
+                  "forecast",
+                  "actual"
+                ]
+              },
+              "platform": {
+                "type": "string",
+                "minLength": 1
+              },
+              "market": {
+                "type": "string",
+                "minLength": 1
+              }
             }
           }
         }
@@ -75,191 +222,443 @@
     },
     {
       "if": {
-        "properties": {"framework": {"const": "MULTI"}},
-        "required": ["framework"]
+        "properties": {
+          "framework": {
+            "const": "MULTI"
+          }
+        },
+        "required": [
+          "framework"
+        ]
       },
       "then": {
         "properties": {
-          "profile": {"const": "cross-framework-summary"},
-          "status": {"const": "DONE"},
-          "verdict": {"const": "UNDECIDED"},
-          "score_state": {"const": "NOT_SCORED"},
-          "score_confidence": {"const": "not_scored"},
-          "veto_count": {"const": 0},
-          "cap_applied": {"const": false}
+          "profile": {
+            "const": "cross-framework-summary"
+          },
+          "status": {
+            "const": "DONE"
+          },
+          "verdict": {
+            "const": "UNDECIDED"
+          },
+          "score_state": {
+            "const": "NOT_SCORED"
+          },
+          "score_confidence": {
+            "const": "not_scored"
+          },
+          "veto_count": {
+            "const": 0
+          },
+          "cap_applied": {
+            "const": false
+          }
         },
         "not": {
           "anyOf": [
-            {"required": ["raw_overall_score"]},
-            {"required": ["final_overall_score"]}
+            {
+              "required": [
+                "raw_overall_score"
+              ]
+            },
+            {
+              "required": [
+                "final_overall_score"
+              ]
+            }
           ]
         }
       }
     },
     {
       "if": {
-        "properties": {"score_state": {"const": "NOT_SCORED"}},
-        "required": ["score_state"]
+        "properties": {
+          "score_state": {
+            "const": "NOT_SCORED"
+          }
+        },
+        "required": [
+          "score_state"
+        ]
       },
       "then": {
         "properties": {
-          "score_confidence": {"const": "not_scored"},
-          "cap_applied": {"const": false}
+          "score_confidence": {
+            "const": "not_scored"
+          },
+          "cap_applied": {
+            "const": false
+          }
         },
         "not": {
           "anyOf": [
-            {"required": ["raw_overall_score"]},
-            {"required": ["final_overall_score"]}
+            {
+              "required": [
+                "raw_overall_score"
+              ]
+            },
+            {
+              "required": [
+                "final_overall_score"
+              ]
+            }
           ]
         }
       }
     },
     {
       "if": {
-        "properties": {"score_state": {"const": "SCORED"}},
-        "required": ["score_state"]
-      },
-      "then": {
         "properties": {
-          "evidence_coverage": {"const": 100},
-          "score_confidence": {"enum": ["high", "medium", "low"]}
+          "score_state": {
+            "const": "SCORED"
+          }
         },
-        "required": ["raw_overall_score"]
-      }
-    },
-    {
-      "if": {
-        "properties": {"verdict": {"const": "SHIP"}},
-        "required": ["verdict"]
-      },
-      "then": {
-        "properties": {
-          "status": {"const": "DONE"},
-          "score_state": {"const": "SCORED"},
-          "raw_overall_score": {"minimum": 75},
-          "veto_count": {"const": 0},
-          "cap_applied": {"const": false}
-        },
-        "required": ["raw_overall_score", "final_overall_score"]
-      }
-    },
-    {
-      "if": {
-        "properties": {"verdict": {"const": "FIX"}},
-        "required": ["verdict"]
-      },
-      "then": {
-        "properties": {
-          "status": {"const": "DONE_WITH_CONCERNS"},
-          "score_state": {"const": "SCORED"}
-        },
-        "required": ["raw_overall_score", "final_overall_score"]
-      }
-    },
-    {
-      "if": {
-        "properties": {"verdict": {"const": "BLOCK"}},
-        "required": ["verdict"]
-      },
-      "then": {
-        "properties": {
-          "status": {"const": "DONE"},
-          "veto_count": {"minimum": 2},
-          "cap_applied": {"const": false}
-        },
-        "not": {"required": ["final_overall_score"]}
-      }
-    },
-    {
-      "if": {
-        "allOf": [
-          {"properties": {"verdict": {"const": "UNDECIDED"}}, "required": ["verdict"]},
-          {"not": {"properties": {"framework": {"const": "MULTI"}}, "required": ["framework"]}}
+        "required": [
+          "score_state"
         ]
       },
       "then": {
         "properties": {
-          "status": {"enum": ["BLOCKED", "NEEDS_INPUT"]},
-          "score_state": {"const": "NOT_SCORED"}
-        }
+          "evidence_coverage": {
+            "const": 100
+          },
+          "score_confidence": {
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          }
+        },
+        "required": [
+          "raw_overall_score"
+        ]
       }
     },
     {
       "if": {
         "properties": {
-          "score_state": {"const": "SCORED"},
-          "veto_count": {"const": 0}
+          "verdict": {
+            "const": "SHIP"
+          }
         },
-        "required": ["score_state", "veto_count"]
-      },
-      "then": {
-        "properties": {
-          "verdict": {"enum": ["SHIP", "FIX"]},
-          "cap_applied": {"const": false}
-        },
-        "required": ["final_overall_score"]
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "score_state": {"const": "SCORED"},
-          "veto_count": {"const": 1}
-        },
-        "required": ["score_state", "veto_count"]
-      },
-      "then": {
-        "properties": {
-          "verdict": {"const": "FIX"},
-          "cap_applied": {"const": true},
-          "final_overall_score": {"maximum": 59}
-        },
-        "required": ["final_overall_score"]
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "score_state": {"const": "SCORED"},
-          "veto_count": {"minimum": 2}
-        },
-        "required": ["score_state", "veto_count"]
-      },
-      "then": {
-        "properties": {
-          "verdict": {"const": "BLOCK"},
-          "cap_applied": {"const": false}
-        },
-        "not": {"required": ["final_overall_score"]}
-      }
-    },
-    {
-      "if": {
-        "allOf": [
-          {"properties": {"score_state": {"const": "NOT_SCORED"}}, "required": ["score_state"]},
-          {"not": {"properties": {"framework": {"const": "MULTI"}}, "required": ["framework"]}},
-          {"properties": {"veto_count": {"minimum": 2}}, "required": ["veto_count"]}
+        "required": [
+          "verdict"
         ]
       },
       "then": {
         "properties": {
-          "status": {"const": "DONE"},
-          "verdict": {"const": "BLOCK"}
+          "status": {
+            "const": "DONE"
+          },
+          "score_state": {
+            "const": "SCORED"
+          },
+          "raw_overall_score": {
+            "minimum": 75
+          },
+          "veto_count": {
+            "const": 0
+          },
+          "cap_applied": {
+            "const": false
+          }
+        },
+        "required": [
+          "raw_overall_score",
+          "final_overall_score"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "FIX"
+          }
+        },
+        "required": [
+          "verdict"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "DONE_WITH_CONCERNS"
+          },
+          "score_state": {
+            "const": "SCORED"
+          }
+        },
+        "required": [
+          "raw_overall_score",
+          "final_overall_score"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "BLOCK"
+          }
+        },
+        "required": [
+          "verdict"
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "DONE"
+          },
+          "veto_count": {
+            "minimum": 2
+          },
+          "cap_applied": {
+            "const": false
+          }
+        },
+        "not": {
+          "required": [
+            "final_overall_score"
+          ]
         }
       }
     },
     {
       "if": {
         "allOf": [
-          {"properties": {"score_state": {"const": "NOT_SCORED"}}, "required": ["score_state"]},
-          {"not": {"properties": {"framework": {"const": "MULTI"}}, "required": ["framework"]}},
-          {"properties": {"veto_count": {"maximum": 1}}, "required": ["veto_count"]}
+          {
+            "properties": {
+              "verdict": {
+                "const": "UNDECIDED"
+              }
+            },
+            "required": [
+              "verdict"
+            ]
+          },
+          {
+            "not": {
+              "properties": {
+                "framework": {
+                  "const": "MULTI"
+                }
+              },
+              "required": [
+                "framework"
+              ]
+            }
+          }
         ]
       },
       "then": {
         "properties": {
-          "status": {"enum": ["BLOCKED", "NEEDS_INPUT"]},
-          "verdict": {"const": "UNDECIDED"}
+          "status": {
+            "enum": [
+              "BLOCKED",
+              "NEEDS_INPUT"
+            ]
+          },
+          "score_state": {
+            "const": "NOT_SCORED"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "score_state": {
+            "const": "SCORED"
+          },
+          "veto_count": {
+            "const": 0
+          }
+        },
+        "required": [
+          "score_state",
+          "veto_count"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verdict": {
+            "enum": [
+              "SHIP",
+              "FIX"
+            ]
+          },
+          "cap_applied": {
+            "const": false
+          }
+        },
+        "required": [
+          "final_overall_score"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "score_state": {
+            "const": "SCORED"
+          },
+          "veto_count": {
+            "const": 1
+          }
+        },
+        "required": [
+          "score_state",
+          "veto_count"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verdict": {
+            "const": "FIX"
+          },
+          "cap_applied": {
+            "const": true
+          },
+          "final_overall_score": {
+            "maximum": 59
+          }
+        },
+        "required": [
+          "final_overall_score"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "score_state": {
+            "const": "SCORED"
+          },
+          "veto_count": {
+            "minimum": 2
+          }
+        },
+        "required": [
+          "score_state",
+          "veto_count"
+        ]
+      },
+      "then": {
+        "properties": {
+          "verdict": {
+            "const": "BLOCK"
+          },
+          "cap_applied": {
+            "const": false
+          }
+        },
+        "not": {
+          "required": [
+            "final_overall_score"
+          ]
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "score_state": {
+                "const": "NOT_SCORED"
+              }
+            },
+            "required": [
+              "score_state"
+            ]
+          },
+          {
+            "not": {
+              "properties": {
+                "framework": {
+                  "const": "MULTI"
+                }
+              },
+              "required": [
+                "framework"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "veto_count": {
+                "minimum": 2
+              }
+            },
+            "required": [
+              "veto_count"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "DONE"
+          },
+          "verdict": {
+            "const": "BLOCK"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "allOf": [
+          {
+            "properties": {
+              "score_state": {
+                "const": "NOT_SCORED"
+              }
+            },
+            "required": [
+              "score_state"
+            ]
+          },
+          {
+            "not": {
+              "properties": {
+                "framework": {
+                  "const": "MULTI"
+                }
+              },
+              "required": [
+                "framework"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "veto_count": {
+                "maximum": 1
+              }
+            },
+            "required": [
+              "veto_count"
+            ]
+          }
+        ]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "enum": [
+              "BLOCKED",
+              "NEEDS_INPUT"
+            ]
+          },
+          "verdict": {
+            "const": "UNDECIDED"
+          }
         }
       }
     }

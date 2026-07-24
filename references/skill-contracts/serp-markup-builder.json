@@ -11,7 +11,7 @@
           "end_char": 227,
           "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d"
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
     }
   },
   "context_hints": {
@@ -39,7 +39,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 48
       },
       {
@@ -128,7 +128,7 @@
           "end_char": 112,
           "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -144,7 +144,7 @@
           "end_char": 261,
           "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
           "span_basis": "field-text",
           "start_char": 114
         },
@@ -162,7 +162,7 @@
           "end_char": 541,
           "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
           "span_basis": "field-text",
           "start_char": 262
         },
@@ -175,7 +175,7 @@
     "summary_ref": {
       "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d"
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -188,8 +188,8 @@
     "name": "serp-markup-builder",
     "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
     "phase": "implement",
-    "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d",
-    "version": "18.0.0"
+    "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "[meta|schema] <page URL or content>",
@@ -203,7 +203,7 @@
           "end_char": 106,
           "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -215,7 +215,7 @@
     "source": {
       "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d"
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
     }
   },
   "output_contract": {
@@ -230,7 +230,7 @@
           "end_char": 95,
           "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d",
+          "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -241,7 +241,7 @@
     "source": {
       "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d"
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
     },
     "summary": "a ready-to-paste document-head asset (metadata package and/or JSON-LD) plus the standard handoff summary ready for `memory/content/`.",
     "summary_source": "expected-output",
@@ -256,8 +256,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -266,7 +266,7 @@
     "source": {
       "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "e0f2703744ed0f134fc9562b4a8df31e7f4cb1fbd641d14ede3e3c5a8a3e9c1d"
+      "sha256": "6a602bff4d05655505d9f3128e102469586fd3d8d7d2505caf159b9dc1c8ed9f"
     },
     "trigger_phrases": [
       "add Open Graph or Twitter cards",

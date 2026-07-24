@@ -11,7 +11,7 @@
           "end_char": 130,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 208,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 132
         },
@@ -41,7 +41,7 @@
           "end_char": 290,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 210
         },
@@ -56,7 +56,7 @@
           "end_char": 406,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 292
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "launch/assemble/sales-enablement-kit/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+      "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229"
     }
   },
   "context_hints": {
@@ -84,7 +84,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 42
       },
       {
@@ -134,7 +134,7 @@
           "end_char": 227,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -152,7 +152,7 @@
           "end_char": 399,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 228
         },
@@ -170,7 +170,7 @@
           "end_char": 574,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 400
         },
@@ -188,7 +188,7 @@
           "end_char": 946,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 576
         },
@@ -201,7 +201,7 @@
     "summary_ref": {
       "path": "launch/assemble/sales-enablement-kit/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+      "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -216,8 +216,8 @@
     "name": "sales-enablement-kit",
     "path": "launch/assemble/sales-enablement-kit/SKILL.md",
     "phase": "assemble",
-    "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
-    "version": "18.0.0"
+    "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<product / launch> [named alternatives] [sales team context]",
@@ -231,7 +231,7 @@
           "end_char": 125,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -246,7 +246,7 @@
           "end_char": 189,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 127
         },
@@ -261,7 +261,7 @@
           "end_char": 251,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 191
         },
@@ -276,7 +276,7 @@
           "end_char": 398,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 253
         },
@@ -291,7 +291,7 @@
           "end_char": 492,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 400
         },
@@ -303,7 +303,7 @@
     "source": {
       "path": "launch/assemble/sales-enablement-kit/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+      "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229"
     }
   },
   "output_contract": {
@@ -318,7 +318,7 @@
           "end_char": 80,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -334,7 +334,7 @@
           "end_char": 372,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 82
         },
@@ -350,7 +350,7 @@
           "end_char": 550,
           "path": "launch/assemble/sales-enablement-kit/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c",
+          "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229",
           "span_basis": "field-text",
           "start_char": 374
         },
@@ -361,7 +361,7 @@
     "source": {
       "path": "launch/assemble/sales-enablement-kit/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+      "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229"
     },
     "summary": "a sales-led enablement kit — one battle card per named alternative, a talk track derived from the PR-FAQ spine, an objection-handling table (objection → response → evidence), internal FAQ + CS macros, and an internal launch announcement keyed to the embargo lift — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -376,8 +376,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -386,7 +386,7 @@
     "source": {
       "path": "launch/assemble/sales-enablement-kit/SKILL.md",
       "section": "frontmatter",
-      "sha256": "a4c920a3fc6c3c8c138b23fba4ab0fc172000e141b10b38bc5dfa11a5036596c"
+      "sha256": "be5675619e6bef7cb862f86006e6ec32deef390c92ce2ba4db5409ba55640229"
     },
     "trigger_phrases": [
       "build battle cards",

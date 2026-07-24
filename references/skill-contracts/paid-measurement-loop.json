@@ -11,7 +11,7 @@
           "end_char": 57,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 161,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 59
         },
@@ -41,7 +41,7 @@
           "end_char": 244,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 163
         },
@@ -56,7 +56,7 @@
           "end_char": 323,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 246
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1"
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
     }
   },
   "context_hints": {
@@ -84,7 +84,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 42
       },
       {
@@ -131,7 +131,7 @@
           "end_char": 213,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -149,7 +149,7 @@
           "end_char": 259,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 215
         },
@@ -165,7 +165,7 @@
           "end_char": 455,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 260
         },
@@ -183,7 +183,7 @@
           "end_char": 571,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 457
         },
@@ -199,7 +199,7 @@
           "end_char": 651,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 573
         },
@@ -212,7 +212,7 @@
     "summary_ref": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1"
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -226,8 +226,8 @@
     "name": "paid-measurement-loop",
     "path": "ad/scale/paid-measurement-loop/SKILL.md",
     "phase": "scale",
-    "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
-    "version": "18.0.1"
+    "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<campaign/change> [readback window]",
@@ -241,7 +241,7 @@
           "end_char": 249,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -253,7 +253,7 @@
     "source": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1"
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
     }
   },
   "output_contract": {
@@ -268,7 +268,7 @@
           "end_char": 112,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1",
+          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -279,7 +279,7 @@
     "source": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1"
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
     },
     "summary": "a per-change `readback_decision` (Promote / Keep-testing / Rollback / Unproven) with delta-vs-control on a primary metric (ROAS or CPA), the readback window used, normalization notes (attribution window + currency), and a handoff summary ready for `memory/ad/paid-measurement-loop/`. `readback_decision` is not an RQS auditor verdict.",
     "summary_source": "expected-output",
@@ -294,8 +294,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -304,7 +304,7 @@
     "source": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "frontmatter",
-      "sha256": "27419d854c5bd6852b82b6d5830ab836ace81463028c4158db8a2d9454464bd1"
+      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
     },
     "trigger_phrases": [
       "compare ROAS/CPA before and after",

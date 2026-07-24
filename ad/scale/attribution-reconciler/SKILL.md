@@ -4,13 +4,13 @@ slug: aaron-attribution-reconciler
 displayName: "Attribution Reconciler · 付费广告归因对账"
 summary: "付费广告归因对账/去重/增量"
 description: 'Use when platform-reported conversions disagree with GA4/ecommerce, when you suspect Meta and Google are double-counting the same sales, or for a standing (monthly) reconciliation workbook that de-dups stacked credit against an order-ID truth set, normalizes attribution windows and currency, compares attribution models, and reads incrementality from a geo/holdout test. Not for the point-in-time R2 veto or RQS gate — use ad-account-auditor; not for the ROI/ROAS ratio math itself — use roi-calculator; not for organic dark-social share attribution or GA4 direct-traffic decomposition — use dark-social-attributor. 付费广告归因对账/去重/增量'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when running a standing reconciliation of platform-reported conversions against the GA4/ecommerce order-ID truth set: de-dup stacked credit across Meta + Google, normalize differing attribution windows and currency, compare attribution models side by side, and read incrementality where a geo/holdout test exists. Activate when the user has each platform's conversion export plus an order-ID export and wants to know which conversions are real and not double-counted."
 argument-hint: "<GA4/ecommerce order-ID export> [platform conversion exports] [goal: DR|prospecting]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "ad", "phase": "scale", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "scale"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "scale", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "scale"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Attribution Reconciler

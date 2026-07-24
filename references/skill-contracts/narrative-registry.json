@@ -11,7 +11,7 @@
           "end_char": 155,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 366,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 157
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "protocol/narrative-registry/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+      "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580"
     }
   },
   "context_hints": {
@@ -47,7 +47,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 59
       },
       {
@@ -96,7 +96,7 @@
           "end_char": 108,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -114,7 +114,7 @@
           "end_char": 212,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 109
         },
@@ -132,7 +132,7 @@
           "end_char": 312,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 213
         },
@@ -150,7 +150,7 @@
           "end_char": 422,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 313
         },
@@ -165,7 +165,7 @@
     "summary_ref": {
       "path": "protocol/narrative-registry/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+      "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -181,8 +181,8 @@
     "name": "narrative-registry",
     "path": "protocol/narrative-registry/SKILL.md",
     "phase": "protocol",
-    "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
-    "version": "18.0.0"
+    "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<brand aggregate-id, canon version, or pending-proposal review>",
@@ -196,7 +196,7 @@
           "end_char": 111,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -208,7 +208,7 @@
     "source": {
       "path": "protocol/narrative-registry/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+      "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580"
     }
   },
   "output_contract": {
@@ -223,7 +223,7 @@
           "end_char": 45,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
           "end_char": 92,
           "path": "protocol/narrative-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56",
+          "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580",
           "span_basis": "field-text",
           "start_char": 47
         },
@@ -250,7 +250,7 @@
     "source": {
       "path": "protocol/narrative-registry/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+      "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580"
     },
     "summary": "narrative events through `registry-events.py`; `canon.md`/`versions.md` are generated views.",
     "summary_source": "writes-fallback",
@@ -265,8 +265,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -275,7 +275,7 @@
     "source": {
       "path": "protocol/narrative-registry/SKILL.md",
       "section": "frontmatter",
-      "sha256": "8d89fb8bd366171121a9697d01919ee14200741b391259d7b53e5d1c45401d56"
+      "sha256": "ff0dfe8e6376b222f5592fa70b8f6567a6a0a4ec66d744840ef172ea1e42a580"
     },
     "trigger_phrases": [
       "Use when recording/querying a brand's canonical positioning, narrative, message hierarchy, proof/claim pointers, voice/naming rules, conditional boilerplates, or accepting/rejecting a complete canon-version proposal."

@@ -305,17 +305,28 @@ else:
 
     def canonical_registry_snapshot(
             self, *, commit="a" * 40, repository="aaron-he-zhu/aaron-marketing-skills",
-            clawhub_behind=None, skillhub_behind=None, package_current=True):
-        plugin = json.loads(self.git(
-            ROOT, "show", "HEAD:.claude-plugin/plugin.json"
-        ).stdout)
+            clawhub_behind=None, skillhub_behind=None, package_current=True,
+            use_worktree=False):
+        if use_worktree:
+            plugin = json.loads(
+                (ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8")
+            )
+        else:
+            plugin = json.loads(self.git(
+                ROOT, "show", "HEAD:.claude-plugin/plugin.json"
+            ).stdout)
         version = plugin["version"]
         rows = []
         for declared in plugin["skills"]:
             relative = declared[2:] if declared.startswith("./") else declared
-            skill_text = self.git(
-                ROOT, "show", "HEAD:%s/SKILL.md" % relative
-            ).stdout
+            if use_worktree:
+                skill_text = (ROOT / relative / "SKILL.md").read_text(
+                    encoding="utf-8"
+                )
+            else:
+                skill_text = self.git(
+                    ROOT, "show", "HEAD:%s/SKILL.md" % relative
+                ).stdout
             slug = next(
                 line.split(":", 1)[1].strip()
                 for line in skill_text.splitlines()
@@ -825,10 +836,12 @@ print("fixture footer **T1** **S1**")
     def test_registry_snapshot_is_bound_to_repository_commit_and_full_canonical_set(self):
         with tempfile.TemporaryDirectory() as temporary:
             base = Path(temporary)
-            commit = self.git(ROOT, "rev-parse", "HEAD").stdout.strip()
+            environment, _mutation_log = self.fake_release_environment(base / "fake")
+            commit = environment["FAKE_GIT_COMMIT"]
             snapshot = self.canonical_registry_snapshot(
                 commit=commit,
                 clawhub_behind="narrative-quality-auditor",
+                use_worktree=True,
             )
 
             def run(candidate):
@@ -839,7 +852,7 @@ print("fixture footer **T1** **S1**")
                         "bash", "scripts/publish-registries.sh", "clawhub",
                         "--from-json", str(path),
                     ],
-                    cwd=ROOT, capture_output=True, text=True,
+                    cwd=ROOT, capture_output=True, text=True, env=environment,
                 )
 
             valid = run(snapshot)

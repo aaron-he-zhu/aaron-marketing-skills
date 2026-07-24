@@ -11,7 +11,7 @@
           "end_char": 140,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 258,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 142
         },
@@ -41,7 +41,7 @@
           "end_char": 461,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 260
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/architect/brand-language-codifier/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517"
+      "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 42
       },
       {
@@ -119,7 +119,7 @@
           "end_char": 161,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -137,7 +137,7 @@
           "end_char": 363,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 162
         },
@@ -155,7 +155,7 @@
           "end_char": 575,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 364
         },
@@ -173,7 +173,7 @@
           "end_char": 1038,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 577
         },
@@ -186,7 +186,7 @@
     "summary_ref": {
       "path": "narrative/architect/brand-language-codifier/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517"
+      "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -201,8 +201,8 @@
     "name": "brand-language-codifier",
     "path": "narrative/architect/brand-language-codifier/SKILL.md",
     "phase": "architect",
-    "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
-    "version": "18.0.0"
+    "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<brand / product> [own published samples] [existing naming or tier list]",
@@ -216,7 +216,7 @@
           "end_char": 177,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -231,7 +231,7 @@
           "end_char": 331,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 179
         },
@@ -246,7 +246,7 @@
           "end_char": 526,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 333
         },
@@ -258,7 +258,7 @@
     "source": {
       "path": "narrative/architect/brand-language-codifier/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517"
+      "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b"
     }
   },
   "output_contract": {
@@ -273,7 +273,7 @@
           "end_char": 71,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -289,7 +289,7 @@
           "end_char": 270,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 73
         },
@@ -305,7 +305,7 @@
           "end_char": 442,
           "path": "narrative/architect/brand-language-codifier/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517",
+          "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b",
           "span_basis": "field-text",
           "start_char": 272
         },
@@ -316,7 +316,7 @@
     "source": {
       "path": "narrative/architect/brand-language-codifier/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517"
+      "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b"
     },
     "summary": "a brand-language canon document with two blocks — (1)",
     "summary_source": "expected-output",
@@ -331,8 +331,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -341,7 +341,7 @@
     "source": {
       "path": "narrative/architect/brand-language-codifier/SKILL.md",
       "section": "frontmatter",
-      "sha256": "a51b4033686f7161ece03dfeec85f1cc4def449e905cabf6b774336693ca8517"
+      "sha256": "4bf94a3979527b228dc44c233b4358481334c2cd1f05547f5024058cebc00b9b"
     },
     "trigger_phrases": [
       "codify our brand voice",

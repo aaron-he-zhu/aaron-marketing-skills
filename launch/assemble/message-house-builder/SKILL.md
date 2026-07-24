@@ -4,13 +4,13 @@ slug: aaron-message-house-builder
 displayName: "Message House Builder · 消息屋构建"
 summary: "消息屋/PR-FAQ/价值支柱/发布叙事"
 description: 'Use when the user asks to "build a message house", "write a PR-FAQ for our launch", or "define the launch narrative and value pillars"; derives from the positioning canvas a message house — tagline, one-liner, three value pillars, per-persona proof points (each labeled Measured / User-provided / [needs source]) — plus a working-backwards PR-FAQ narrative spine (launch-day tense, empty-chair test, five external + five internal FAQs) and per-channel message angle packs (angles, not finished copy). Not for the positioning canvas itself — use positioning-mapper; not for finished blog posts or pages — use content-writer; not for ad or email units — use each discipline creative builder; not for claim adjudication — use offer-claims-registry. 消息屋/PR-FAQ/价值支柱/发布叙事'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when deriving launch messaging from a completed positioning canvas: a message house (tagline, one-liner, three value pillars, per-persona proof points), a working-backwards PR-FAQ narrative spine in launch-day tense, and per-channel message angle packs. The messaging layer between positioning (positioning-mapper) and asset production (launch-asset-packager)."
 argument-hint: "<product / launch> [personas] [channels] [positioning canvas path]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "assemble", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "assemble"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "assemble", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "assemble"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Message House Builder

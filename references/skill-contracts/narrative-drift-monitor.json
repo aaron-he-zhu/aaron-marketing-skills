@@ -11,7 +11,7 @@
           "end_char": 138,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 277,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 140
         },
@@ -41,7 +41,7 @@
           "end_char": 409,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 279
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2"
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 42
       },
       {
@@ -127,7 +127,7 @@
           "end_char": 192,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -145,7 +145,7 @@
           "end_char": 411,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 193
         },
@@ -163,7 +163,7 @@
           "end_char": 634,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 412
         },
@@ -181,7 +181,7 @@
           "end_char": 1019,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 636
         },
@@ -194,7 +194,7 @@
     "summary_ref": {
       "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2"
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -209,8 +209,8 @@
     "name": "narrative-drift-monitor",
     "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
     "phase": "evaluate",
-    "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
-    "version": "18.0.0"
+    "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<brand / surfaces to watch> [competitor set] [canon path] [window: D1|W1|M1]",
@@ -224,7 +224,7 @@
           "end_char": 120,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
           "end_char": 206,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 122
         },
@@ -254,7 +254,7 @@
           "end_char": 345,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 208
         },
@@ -269,7 +269,7 @@
           "end_char": 505,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 347
         },
@@ -284,7 +284,7 @@
           "end_char": 626,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 507
         },
@@ -296,7 +296,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2"
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
     }
   },
   "output_contract": {
@@ -311,7 +311,7 @@
           "end_char": 91,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -327,7 +327,7 @@
           "end_char": 296,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 93
         },
@@ -343,7 +343,7 @@
           "end_char": 509,
           "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2",
+          "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f",
           "span_basis": "field-text",
           "start_char": 298
         },
@@ -354,7 +354,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2"
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
     },
     "summary": "a drift report — a per-surface self-drift table (surface, canon element, current wording, drift verdict, as-of dated wayback snapshots), competitor-repositioning alerts (who moved, from what to what, dated), an explicit repositioning-trigger condition set (the named signals that justify a reposition, and the whiplash guardrail that does not), and a D1/W1/M1 message-shift retro (intended vs actual pull-through, each line labeled Measured / User-provided / Estimated) — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -369,8 +369,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -379,7 +379,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "2ff7d05be693b5b3a34eb0232f04e5de28a9030499d9054d5daf1e570f1105f2"
+      "sha256": "fc8d5d0c4f599f4d30a7ee953936edc7a9bbd42b6af728bb716428c30aac877f"
     },
     "trigger_phrases": [
       "check if our surfaces have drifted from the canon",

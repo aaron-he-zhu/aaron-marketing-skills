@@ -4,13 +4,13 @@ slug: aaron-sales-enablement-kit
 displayName: "Sales Enablement Kit · 销售赋能包"
 summary: "battle card/销售叙事/异议处理/内部FAQ"
 description: 'Use when the user asks to "build battle cards", "prep the sales team for launch", or "write the internal launch FAQ"; produces the internal enablement kit for a sales-led launch — battle cards vs each named alternative (where we win / where they win / trap questions, every fact traceable), a sales talk track derived from the PR-FAQ spine, an objection-handling table (objection → response → evidence), internal FAQ + CS macros, and an internal launch announcement with embargo discipline. Not for the external message house — use message-house-builder; not for competitor tracking itself — use competitor-tracker or competitor-analysis; not for outbound sequences — use cold-outbound-sequencer. 销售赋能/battle card/销售叙事/异议处理/内部FAQ'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when preparing internal teams for a sales-led launch: battle cards against named alternatives, a launch talk track for sales, an objection-handling table, internal FAQ and CS macros, or the internal launch announcement keyed to the embargo lift. The internal-enablement layer that derives from the external message house (message-house-builder) and sits above the outbound sequence (cold-outbound-sequencer)."
 argument-hint: "<product / launch> [named alternatives] [sales team context]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "assemble", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "assemble"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "assemble", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "assemble"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Sales Enablement Kit

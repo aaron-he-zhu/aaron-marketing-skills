@@ -11,7 +11,7 @@
           "end_char": 145,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 279,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 148
         },
@@ -41,7 +41,7 @@
           "end_char": 355,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 282
         },
@@ -56,7 +56,7 @@
           "end_char": 492,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 358
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "influencer/target/brief-generator/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf"
+      "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6"
     }
   },
   "context_hints": {
@@ -148,7 +148,7 @@
           "end_char": 156,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -166,7 +166,7 @@
           "end_char": 195,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 157
         },
@@ -182,7 +182,7 @@
           "end_char": 318,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 198
         },
@@ -200,7 +200,7 @@
           "end_char": 431,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 321
         },
@@ -218,7 +218,7 @@
           "end_char": 630,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 433
         },
@@ -231,7 +231,7 @@
     "summary_ref": {
       "path": "influencer/target/brief-generator/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf"
+      "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -246,8 +246,8 @@
     "name": "brief-generator",
     "path": "influencer/target/brief-generator/SKILL.md",
     "phase": "target",
-    "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
-    "version": "18.0.0"
+    "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<campaign or product> [platform] [content type]",
@@ -261,7 +261,7 @@
           "end_char": 187,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -276,7 +276,7 @@
           "end_char": 227,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 189
         },
@@ -288,7 +288,7 @@
     "source": {
       "path": "influencer/target/brief-generator/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf"
+      "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6"
     }
   },
   "output_contract": {
@@ -303,7 +303,7 @@
           "end_char": 117,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -319,7 +319,7 @@
           "end_char": 172,
           "path": "influencer/target/brief-generator/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf",
+          "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6",
           "span_basis": "field-text",
           "start_char": 119
         },
@@ -330,7 +330,7 @@
     "source": {
       "path": "influencer/target/brief-generator/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf"
+      "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6"
     },
     "summary": "a creator-ready brief in conversation and, with permission, `memory/influencer/brief-generator/YYYY-MM-DD-<topic>.md`; unresolved claims become authorized claims proposals.",
     "summary_source": "writes-fallback",
@@ -345,8 +345,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -355,7 +355,7 @@
     "source": {
       "path": "influencer/target/brief-generator/SKILL.md",
       "section": "frontmatter",
-      "sha256": "6e5a2b16abc101c21c57f5ac722b0219dd034f5b710a9ca4f42cf76a796362cf"
+      "sha256": "62b99800d8bb192157a509bf016e886fb2780d5249c2cbe6cf2ec894b76986a6"
     },
     "trigger_phrases": [
       "create an influencer brief",

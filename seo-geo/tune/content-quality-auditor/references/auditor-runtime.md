@@ -3,10 +3,10 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 18.0.0
+- **Catalog version:** 19.0.0
 - **Framework:** CORE-EEAT
 - **Auditor:** content-quality-auditor
-- **Source digest:** `sha256:81b823fb03ed46fcf7310bd606f281fecdd56198417f11d60624f1a41cf2d112`
+- **Source digest:** `sha256:f05b2991f55a189b374e7406d15a6ade4d8b8d5e1ab815bcb4d5cba8aa0d88ee`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -14,7 +14,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "18.0.0",
+  "catalog_version": "19.0.0",
   "frameworks": {
     "CORE-EEAT": {
       "construct": "content-quality controls for one declared content artifact",

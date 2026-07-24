@@ -17,6 +17,10 @@ import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
 TOOL = ROOT / "scripts" / "audit-trends.py"
+CURRENT_CATALOG_VERSION = json.loads(
+    (ROOT / "references" / "system-catalog.json").read_text(encoding="utf-8")
+)["architecture_version"]
+HISTORICAL_CATALOG_VERSION = "18.0.0"
 
 
 def load_module(name, path):
@@ -65,7 +69,8 @@ DEFAULTS = {
 def artifact(
         framework="CORE-EEAT", profile=None, target="asset-1",
         observed_at="2026-07-19", verdict="FIX", score=60,
-        confidence="medium", coverage=None, context=None, catalog_version="18.0.0"):
+        confidence="medium", coverage=None, context=None,
+        catalog_version=CURRENT_CATALOG_VERSION):
     default_profile, default_context = DEFAULTS[framework]
     profile = profile or default_profile
     context = dict(context or default_context)
@@ -265,10 +270,10 @@ class AuditTrendsTest(unittest.TestCase):
             self.assertEqual(row["artifact_sha256"], digest(latest))
             self.assertEqual(row["schema_version"], "3.0")
             self.assertEqual(row["runbook_version"], "3.0.0")
-            self.assertEqual(row["catalog_version"], "18.0.0")
+            self.assertEqual(row["catalog_version"], CURRENT_CATALOG_VERSION)
             self.assertEqual(row["schema_versions"], ["3.0"])
             self.assertEqual(row["runbook_versions"], ["3.0.0"])
-            self.assertEqual(row["catalog_versions"], ["18.0.0"])
+            self.assertEqual(row["catalog_versions"], [CURRENT_CATALOG_VERSION])
             self.assertFalse(row["catalog_drift"])
             self.assertEqual(row["context_changes"], 1)
             self.assertNotEqual(row["first_context_sha256"], row["latest_context_sha256"])
@@ -583,7 +588,7 @@ class AuditTrendsTest(unittest.TestCase):
             artifacts, skipped = trends.collect(tmp)
             self.assertEqual(skipped, 0)
             migrated = [dict(item) for item in artifacts]
-            migrated[-1]["catalog_version"] = "19.0.0"
+            migrated[-1]["catalog_version"] = HISTORICAL_CATALOG_VERSION
             row = trends.series_report(migrated)[0]
             self.assertTrue(row["catalog_drift"])
             self.assertFalse(row["score_comparable"])
@@ -600,7 +605,7 @@ class AuditTrendsTest(unittest.TestCase):
             artifacts, skipped = trends.collect(tmp)
             self.assertEqual(skipped, 0)
             migrated = [dict(item) for item in artifacts]
-            migrated[1]["catalog_version"] = "19.0.0"
+            migrated[1]["catalog_version"] = HISTORICAL_CATALOG_VERSION
             row = trends.series_report(migrated)[0]
             self.assertTrue(row["catalog_drift"])
             self.assertFalse(row["score_comparable"])

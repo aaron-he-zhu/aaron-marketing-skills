@@ -4,13 +4,13 @@ slug: aaron-send-experiment-designer
 displayName: "Send Experiment Designer · 邮件AB测试设计"
 summary: "邮件AB测试设计/多变量测试/发送时间测试/留出组/显著性判定"
 description: 'Use when the user asks to "design an email A/B test", "set up a multivariate subject/CTA test", "run a send-time test", "build a hold-out group", or "is this email result statistically and practically material?"; produces a falsifiable hypothesis, one-variable-per-cell matrix, sample-size/MDE/duration/power plan, and an effect/uncertainty read from own ESP data. Applies only a precommitted owner-approved action rule; the helper never chooses a business action. Not for EQS/vetoes or writing the email. 邮件AB测试设计/多变量测试/发送时间测试/留出组/显著性判定'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when designing an email A/B, multivariate, send-time, or hold-out experiment, or when reading effect size, uncertainty, and guardrails from a finished ESP export. Apply an action only under a precommitted rule with a named owner; otherwise return decision UNDECIDED. Not for EQS/vetoes or writing the email."
 argument-hint: "<what to test / results export> [mode: a-b|multivariate|send-time|hold-out] [profile: promotional|retention|cold-outbound|newsletter] [baseline] [alpha/power/MDE]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Send Experiment Designer

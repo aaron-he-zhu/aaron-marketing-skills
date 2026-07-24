@@ -4,13 +4,13 @@ slug: aaron-launch-feedback-synthesizer
 displayName: "Launch Feedback Synthesizer · 发布反馈综合"
 summary: "反馈分诊/状态环/社证收割/you-asked-we-shipped"
 description: 'Use when the user asks to "triage launch feedback", "cluster reviews, comments, and board posts into themes", or "set up a you asked, we shipped loop"; produces a feedback theme digest (frequency, severity, representative quotes per theme), an open→planned→started→completed/declined status loop with duplicate-merge and notification rules, shipped-change announcement material, and a compliant social-proof harvest protocol (never incentivized store reviews). Not for repurposing or amplifying the harvested proof — use content-amplifier; not for executing testimonial outreach threads — use outreach-manager. 反馈分诊/状态环/社证收割/评测合规'
-version: "18.0.0"
+version: "19.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when triaging the feedback a launch generates: clustering channel comments, store reviews, feedback-board posts, and support tickets into themes with frequency and severity; running an open→planned→started→completed/declined status loop with subscriber notifications; turning completed requests into you-asked-we-shipped announcement material; or speccing a compliant review/testimonial harvest. The feedback lever of RAMP Proof — not UGC amplification, not outreach execution, not roadmap decisions."
 argument-hint: "<launch slug / feedback exports> [channels] [review platforms]"
-metadata: {"author": "aaron-he-zhu", "version": "18.0.0", "discipline": "launch", "phase": "prove", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "prove"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "prove", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "prove"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Launch Feedback Synthesizer

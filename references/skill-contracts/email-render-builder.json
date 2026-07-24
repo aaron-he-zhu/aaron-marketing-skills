@@ -11,7 +11,7 @@
           "end_char": 375,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "email/engage/email-render-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c"
+      "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135"
     }
   },
   "context_hints": {
@@ -39,7 +39,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "71d2abc3f06dfff215762b3a898e1d280fe452519ae503689de15e956962db46",
+        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
         "source_line": 44
       },
       {
@@ -100,7 +100,7 @@
           "end_char": 229,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -118,7 +118,7 @@
           "end_char": 446,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 230
         },
@@ -136,7 +136,7 @@
           "end_char": 619,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 447
         },
@@ -154,7 +154,7 @@
           "end_char": 845,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 620
         },
@@ -172,7 +172,7 @@
           "end_char": 988,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 846
         },
@@ -188,7 +188,7 @@
           "end_char": 1190,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 990
         },
@@ -201,7 +201,7 @@
     "summary_ref": {
       "path": "email/engage/email-render-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c"
+      "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -217,8 +217,8 @@
     "name": "email-render-builder",
     "path": "email/engage/email-render-builder/SKILL.md",
     "phase": "engage",
-    "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
-    "version": "18.0.0"
+    "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<email creative or HTML> [target clients] [mode: promo|cold|newsletter]",
@@ -232,7 +232,7 @@
           "end_char": 103,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -247,7 +247,7 @@
           "end_char": 124,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 105
         },
@@ -262,7 +262,7 @@
           "end_char": 158,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 126
         },
@@ -277,7 +277,7 @@
           "end_char": 220,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 160
         },
@@ -292,7 +292,7 @@
           "end_char": 323,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 222
         },
@@ -304,7 +304,7 @@
     "source": {
       "path": "email/engage/email-render-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c"
+      "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135"
     }
   },
   "output_contract": {
@@ -319,7 +319,7 @@
           "end_char": 38,
           "path": "email/engage/email-render-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c",
+          "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -330,7 +330,7 @@
     "source": {
       "path": "email/engage/email-render-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c"
+      "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135"
     },
     "summary": "one email HTML build plus a render-QA report — inline-styled table layout, dark-mode-safe colors, an accessibility checklist result, a client-render matrix (Gmail/Outlook desktop+web/Apple Mail/iOS+Android), image-off fallback notes with bulletproof CTA markup, and a plain-text-parity check against the creative — with the standard handoff summary for `memory/email/email-render-builder/`.",
     "summary_source": "expected-output",
@@ -345,8 +345,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -355,7 +355,7 @@
     "source": {
       "path": "email/engage/email-render-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "af889b31a58595f2304a0ea1088ba720c705867bad35bc6a96c98c667c6e329c"
+      "sha256": "6691ea41eb4c8be469761a7c68bbc78a900ab519231ec2a61500e7e4b07ec135"
     },
     "trigger_phrases": [
       "QA the email across clients",

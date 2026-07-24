@@ -11,7 +11,7 @@
           "end_char": 73,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 193,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 76
         },
@@ -41,7 +41,7 @@
           "end_char": 269,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 196
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "influencer/target/campaign-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01"
+      "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4"
     }
   },
   "context_hints": {
@@ -109,7 +109,7 @@
           "end_char": 122,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -127,7 +127,7 @@
           "end_char": 259,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 123
         },
@@ -145,7 +145,7 @@
           "end_char": 409,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 260
         },
@@ -163,7 +163,7 @@
           "end_char": 657,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 411
         },
@@ -176,7 +176,7 @@
     "summary_ref": {
       "path": "influencer/target/campaign-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01"
+      "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -191,8 +191,8 @@
     "name": "campaign-planner",
     "path": "influencer/target/campaign-planner/SKILL.md",
     "phase": "target",
-    "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
-    "version": "18.0.0"
+    "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<brand or product> [budget] [platform] [timeframe]",
@@ -206,7 +206,7 @@
           "end_char": 230,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -218,7 +218,7 @@
     "source": {
       "path": "influencer/target/campaign-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01"
+      "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4"
     }
   },
   "output_contract": {
@@ -233,7 +233,7 @@
           "end_char": 93,
           "path": "influencer/target/campaign-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01",
+          "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -244,7 +244,7 @@
     "source": {
       "path": "influencer/target/campaign-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01"
+      "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4"
     },
     "summary": "a campaign plan document saved to `memory/influencer/campaign-planner/YYYY-MM-DD-<topic>.md`.",
     "summary_source": "writes-fallback",
@@ -259,8 +259,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -269,7 +269,7 @@
     "source": {
       "path": "influencer/target/campaign-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "77f2a99ac25197169f8dd7902fe7fd65c843bc2a6826447d37343ca080c7cd01"
+      "sha256": "5a6edd02ad8be854b933f802e69c58c10b7a063e9a4f44f10d1b6e422418a8e4"
     },
     "trigger_phrases": [
       "build a campaign blueprint",

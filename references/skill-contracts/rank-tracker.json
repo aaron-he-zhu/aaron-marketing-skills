@@ -11,7 +11,7 @@
           "end_char": 86,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8",
+          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 160,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8",
+          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
           "span_basis": "field-text",
           "start_char": 88
         },
@@ -41,7 +41,7 @@
           "end_char": 209,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8",
+          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
           "span_basis": "field-text",
           "start_char": 162
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8"
+      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
     }
   },
   "context_hints": {
@@ -116,7 +116,7 @@
           "end_char": 220,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8",
+          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -131,7 +131,7 @@
     "summary_ref": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8"
+      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -144,8 +144,8 @@
     "name": "rank-tracker",
     "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
     "phase": "evaluate",
-    "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8",
-    "version": "18.0.0"
+    "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
+    "version": "19.0.0"
   },
   "input_contract": {
     "argument_hint": "<domain> [keyword list]",
@@ -159,7 +159,7 @@
           "end_char": 109,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8",
+          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -171,7 +171,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8"
+      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
     }
   },
   "output_contract": {
@@ -186,7 +186,7 @@
           "end_char": 58,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8",
+          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -197,7 +197,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8"
+      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
     },
     "summary": "a ranking report or delta summary plus the standard handoff summary for `memory/monitoring/`.",
     "summary_source": "expected-output",
@@ -212,8 +212,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ef5480b12dc98692fc5ed31cab09aa9d73e50fed1bc5239534207186e8a6a2fe",
-      "version": "18.0.0"
+      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+      "version": "19.0.0"
     }
   },
   "routing_contract": {
@@ -222,7 +222,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "frontmatter",
-      "sha256": "1c27276a14680d48b33ed1ac51dc883912f6c7a0d96d63a35e505d504eb7eff8"
+      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
     },
     "trigger_phrases": [
       "track rankings",
