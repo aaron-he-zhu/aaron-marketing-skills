@@ -127,6 +127,3 @@ Content ready for AI citation should have:
 - [ ] Short paragraphs (2-4 sentences)
 - [ ] No promotional language
 
----
-
-*The dated "2026 platform updates" section is contributed and maintained — with the full per-platform detail and source list — at [abouchard11/ai-citation-patterns](https://github.com/abouchard11/ai-citation-patterns).*
