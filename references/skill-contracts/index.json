@@ -113,7 +113,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/geo-content-optimizer.json",
-      "contract_sha256": "fc15ade062e4b7a89f9abbf780be6b59cefe6593421235839f4b8feb7ae8c1c9",
+      "contract_sha256": "9a6043ba345ded27eb9ba045993837125c3d60dd20090c57cd8e36cfd8449e80",
       "skill": "geo-content-optimizer"
     },
     {
