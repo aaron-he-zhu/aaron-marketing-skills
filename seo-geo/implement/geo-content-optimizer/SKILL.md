@@ -87,7 +87,7 @@ On user confirmation, save to `memory/content/YYYY-MM-DD-<topic>.md` — see [Sk
 
 - [Instructions Detail](references/instructions-detail.md) - Full 5-step workflow, CORE-EEAT GEO targets, self-check matrix, worked example, tips
 - [GEO Optimization Techniques](references/geo-optimization-techniques.md) - Detailed before/after examples, templates, and checklists for each technique
-- [AI Citation Patterns](references/ai-citation-patterns.md) - Per-engine source selection across 9 engines: Google AI Overviews, ChatGPT, Perplexity, Claude, Copilot, Gemini, Grok, Brave, Bing
+- [AI Citation Patterns](references/ai-citation-patterns.md) - Evidence-bounded discovery, retrieval, and citation controls for Google AI features, ChatGPT Search, Perplexity, Claude, Gemini grounding, Copilot Studio, and Brave Search
 - [Quotable Content Examples](references/quotable-content-examples.md) - Before/after examples of content optimized for AI citation
 - [Medium / GitHub AI-Citation Surfaces](references/medium-github-surfaces.md) - Off-site surfaces engines cite (Medium articles, GitHub repos/READMEs)
 - [Slop Self-Check](../../../references/humanizer-slop.md) - Pre-publish pass to strip AI-tell phrasing before content ships
