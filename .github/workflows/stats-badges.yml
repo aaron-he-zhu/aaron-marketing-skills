@@ -1,15 +1,15 @@
 name: Refresh stats badges
 
 # Self-hosted shields.io endpoint badges: this job reads each registry's
-# owner-wide total (ClawHub profile downloads, SkillHub totalDownloads, skills.sh
-# profile installs — spanning every skill/repo under the owner, present and
-# future) and writes badges/*.json, which the README renders via
-# img.shields.io/endpoint. Badges are as fresh as the last run (daily) — a
-# transient fetch failure keeps the prior committed value rather than zeroing.
+# registry totals (ClawHub profile downloads, SkillHub totalDownloads, skills.sh
+# profile installs, and the combined installs from two ClaudeSkills collection
+# pages) and writes badges/*.json, which the README renders via
+# img.shields.io/endpoint. Badges refresh every six hours — a transient fetch
+# failure keeps the prior committed value rather than zeroing.
 
 on:
   schedule:
-    - cron: "17 6 * * *"   # daily 06:17 UTC
+    - cron: "0 */6 * * *"   # 00:00, 06:00, 12:00, 18:00 GMT/UTC
   workflow_dispatch: {}
 
 permissions:

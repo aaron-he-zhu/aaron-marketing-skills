@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """stats-dashboard.py — cross-registry download/install stats for the skills.
 
-The three README badges show each registry's **owner-wide total** — the same
-number the platform prints on the publisher's own profile page, spanning every
-skill/repo the owner has published (present and future), not just this bundle.
-Reading the owner total (rather than summing this repo's declared skills) means
-new skills, and skills that live in sibling family repos, are counted with no
-code change. Owner utility (not a skill); Python stdlib only.
+The README badges show registry totals. ClawHub, SkillHub, and skills.sh use the
+owner-wide number printed by each platform. ClaudeSkills is the sum of the two
+explicit collection pages that make up this repository family.
 
   ClawHub    GET https://clawhub.ai/<owner>                    -> profile "downloads"
   SkillHub   GET https://api.skillhub.cn/api/v1/users/<h>/skills -> totalDownloads
   skills.sh  GET https://www.skills.sh/<owner>                 -> "N total installs"
              (aggregates every repo under the owner)
+  ClaudeSkills
+             GET https://claudeskills.info/skills/<owner>/<repo>/ -> "N total installs"
+             (summed for aaron-marketing-skills + seo-geo-claude-skills)
 
 A per-skill detail table (this bundle's declared skills) is still available in
 the default / --out / --json modes for "which skills are most downloaded";
@@ -24,12 +24,10 @@ Usage:
   python3 scripts/stats-dashboard.py --out FILE.md   # also write markdown
   python3 scripts/stats-dashboard.py --badges DIR    # owner totals -> shields.io JSONs
 
---badges is the fast path used by the daily GitHub Action: three requests, one
-per platform. It writes clawhub.json / skillhub.json / skillssh.json in the
-shields.io "endpoint" schema so the README renders live-looking badges via
-https://img.shields.io/endpoint?url=<raw-github-url>/badges/<platform>.json.
-A transient fetch failure (value None) keeps the previously committed value
-instead of zeroing the badge.
+--badges is the fast path used by the scheduled GitHub Action. It writes one
+shields.io "endpoint" JSON per platform so the README renders live-looking
+badges via img.shields.io/endpoint. A transient fetch failure (value None)
+keeps the previously committed value instead of zeroing the badge.
 """
 from __future__ import annotations
 import json, os, re, sys, time, urllib.request, urllib.parse, pathlib
@@ -37,6 +35,7 @@ import json, os, re, sys, time, urllib.request, urllib.parse, pathlib
 REPO = pathlib.Path(__file__).resolve().parent.parent
 CLAWHUB_OWNER = "aaron-he-zhu"        # also the skills.sh owner handle
 SKILLHUB_OWNER = "user_2c0f1e77"
+CLAUDESKILLS_REPOS = ("aaron-marketing-skills", "seo-geo-claude-skills")
 SKILLS_SH_TOKEN = os.environ.get("SKILLS_SH_TOKEN")
 
 
@@ -118,6 +117,34 @@ def skills_sh_owner_total(owner):
     return _parse_human(m.group(1)) if m else None
 
 
+def claudeskills_repos_total(owner, repos):
+    """Combined install total for the explicitly tracked ClaudeSkills pages.
+
+    ClaudeSkills exposes a humanized total on each collection page but no
+    collection lookup in its public search API. Treat the pair as one atomic
+    source: if either page cannot be fetched or parsed, return None so the
+    previously committed combined badge is preserved instead of undercounting.
+    """
+    total = 0
+    for repo in repos:
+        url = (
+            "https://claudeskills.info/skills/"
+            f"{urllib.parse.quote(owner)}/{urllib.parse.quote(repo)}/"
+        )
+        page = _get_text(url)
+        if page is None:
+            return None
+        clean = re.sub(r"<!--.*?-->", "", page, flags=re.S)
+        clean = re.sub(r"<[^>]+>", " ", clean)
+        clean = re.sub(r"\s+", " ", clean)
+        match = re.search(r"([\d.,]+\s*[kmb]?)\s+total installs", clean, re.I)
+        value = _parse_human(match.group(1)) if match else None
+        if value is None:
+            return None
+        total += value
+    return total
+
+
 # ---- per-skill detail (this bundle's declared skills) ---------------------
 
 def clawhub(slug):
@@ -148,18 +175,20 @@ def skills_sh(owner, repo, slug):
 
 
 def main():
-    # Owner-wide totals — the three numbers the README badges display.
+    # Registry totals displayed by the README badges.
     owner = {
         "clawhub": clawhub_owner_total(CLAWHUB_OWNER),
         "skillhub": skillhub_owner_total(SKILLHUB_OWNER),
         "skillssh": skills_sh_owner_total(CLAWHUB_OWNER),
+        "claudeskills": claudeskills_repos_total(CLAWHUB_OWNER, CLAUDESKILLS_REPOS),
     }
 
-    # Fast path for the daily badge refresh: three requests, no per-skill crawl.
+    # Fast path for the scheduled badge refresh; no per-skill crawl.
     for i, a in enumerate(sys.argv):
         if a == "--badges" and i + 1 < len(sys.argv):
             write_badges(pathlib.Path(sys.argv[i + 1]),
-                         owner["clawhub"], owner["skillhub"], owner["skillssh"])
+                         owner["clawhub"], owner["skillhub"], owner["skillssh"],
+                         owner["claudeskills"])
             return
 
     # Per-skill detail for this bundle's declared skills (a subset of the owner's
@@ -196,7 +225,8 @@ def main():
            f"Owner-wide totals (what the badges show) — ClawHub downloads: "
            f"**{fmt(owner['clawhub'])}** · SkillHub downloads: **{fmt(owner['skillhub'])}** · "
            f"skills.sh installs: **{fmt(owner['skillssh'])}** (across all skills/repos "
-           f"under the owner, present and future).", "",
+           f"under the owner, present and future) · ClaudeSkills installs: "
+           f"**{fmt(owner['claudeskills'])}** (combined across the two tracked repos).", "",
            "Per-skill breakdown below covers this bundle's declared skills only:", "",
            "| Skill | ClawHub ↓ | SkillHub ↓ | SkillHub installs | ★ |",
            "|-------|-----------|------------|-------------------|---|"]
@@ -217,7 +247,7 @@ def _human(n):
     return str(n)
 
 
-def write_badges(dirpath, clawhub, skillhub, skillssh):
+def write_badges(dirpath, clawhub, skillhub, skillssh, claudeskills):
     """Write shields.io endpoint-badge JSONs. A value of None (transient fetch
     failure) preserves the previously committed value so the badge never zeroes;
     a genuine 0 is written normally."""
@@ -228,6 +258,7 @@ def write_badges(dirpath, clawhub, skillhub, skillssh):
         ("clawhub.json", "ClawHub", clawhub, "FF6B35"),
         ("skillhub.json", "SkillHub", skillhub, "00A9A5"),
         ("skillssh.json", "skills.sh", skillssh, "0A0A0A"),
+        ("claudeskills.json", "ClaudeSkills", claudeskills, "D97757"),
     ]
     for fname, label, value, color in specs:
         path = dirpath / fname
