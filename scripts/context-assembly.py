@@ -53,8 +53,14 @@ MAX_DISTRIBUTION_SCAN_ENTRIES = 2048
 
 def _load_module(name, path):
     spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError("context assembly dependency cannot be loaded: %s" % path)
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    # SourceFileLoader writes ``__pycache__`` beside the runtime on Linux.
+    # A governed distribution is a manifest-closed physical package, so that
+    # otherwise harmless cache would mutate the package before identity checks.
+    source = path.read_bytes()
+    exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
     return module
 
 

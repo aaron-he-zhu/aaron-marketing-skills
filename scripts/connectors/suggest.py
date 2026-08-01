@@ -34,7 +34,10 @@ import sys
 import time
 from urllib.parse import urlencode
 
-import _http
+_CONNECTOR_LOADER_PATH = __import__("pathlib").Path(__file__).with_name("_loader.py")
+exec(compile(_CONNECTOR_LOADER_PATH.read_bytes(), str(_CONNECTOR_LOADER_PATH), "exec",
+             dont_inherit=True), globals())
+_http = _load_connector_sibling("_http", __file__)
 
 SUGGEST_ENDPOINT = "https://suggestqueries.google.com/complete/search"
 EXPAND_SLEEP_SECONDS = 0.4  # be polite to an undocumented endpoint

@@ -236,7 +236,8 @@ def _run_events_module():
         if spec is None or spec.loader is None:
             raise WorkflowLoopError("cannot load scripts/run-events.py")
         module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        source = path.read_bytes()
+        exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
         _RUN_EVENTS_MODULE = module
     return _RUN_EVENTS_MODULE
 
@@ -252,7 +253,8 @@ def _audit_artifact_module():
         if spec is None or spec.loader is None:
             raise WorkflowLoopError("cannot load scripts/validate-audit-artifact.py")
         module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        source = path.read_bytes()
+        exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
         _AUDIT_ARTIFACT_MODULE = module
     return _AUDIT_ARTIFACT_MODULE
 

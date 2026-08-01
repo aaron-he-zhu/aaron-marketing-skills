@@ -35,7 +35,10 @@ import time
 import xml.etree.ElementTree as ET
 from urllib.parse import urljoin, urlsplit, urlunsplit
 
-import _http
+_CONNECTOR_LOADER_PATH = __import__("pathlib").Path(__file__).with_name("_loader.py")
+exec(compile(_CONNECTOR_LOADER_PATH.read_bytes(), str(_CONNECTOR_LOADER_PATH), "exec",
+             dont_inherit=True), globals())
+_http = _load_connector_sibling("_http", __file__)
 
 DEFAULT_LIMIT = 5000
 MAX_DEPTH = 8            # guard against pathological sitemap-index nesting

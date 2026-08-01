@@ -88,22 +88,22 @@
     },
     {
       "contract_ref": "references/skill-contracts/keyword-research.json",
-      "contract_sha256": "50d7cde8bba82412836a2d2a711b78d7713743c5e7e663b23f92ba7eb5b5eeff",
+      "contract_sha256": "47fa4c691260a7e1d21beff0a531061ce81399f19614f7c962d2befbb6b4e7d7",
       "skill": "keyword-research"
     },
     {
       "contract_ref": "references/skill-contracts/competitor-analysis.json",
-      "contract_sha256": "d40df634094c461bb3f4c5ad5b86449eb560dcc5079876e52e2c50a0eeeece95",
+      "contract_sha256": "37cb93891311e00745846faa73211177f14b8d171185a2fd7c99ff0d5cb7b65d",
       "skill": "competitor-analysis"
     },
     {
       "contract_ref": "references/skill-contracts/serp-analysis.json",
-      "contract_sha256": "6ef051837ee025005a6212be888c32d37cc1c79c71c684e190717a7d3cf254ad",
+      "contract_sha256": "93a4557fb02c79350cd09ed6d41bf9dc766b96446106f5a7cb31633e33d100c7",
       "skill": "serp-analysis"
     },
     {
       "contract_ref": "references/skill-contracts/content-gap-analysis.json",
-      "contract_sha256": "93ee84a67fdb3fd2a5e3c122ac7f592146eb7271f8e8496715a3165fefa7bf33",
+      "contract_sha256": "0a27fc226fc49a77e03990f02f76b3c7b32e99cbaac571422c0c8413f236e601",
       "skill": "content-gap-analysis"
     },
     {
@@ -113,7 +113,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/geo-content-optimizer.json",
-      "contract_sha256": "5227e2c895c1eb281f2549f2dfebb760221f85bada267b65a36adc76b84b5bff",
+      "contract_sha256": "a8c51862c60747966379e44985eab59fcf5836f9f3871caecfb34ccd739be29c",
       "skill": "geo-content-optimizer"
     },
     {
@@ -133,17 +133,17 @@
     },
     {
       "contract_ref": "references/skill-contracts/technical-seo-checker.json",
-      "contract_sha256": "082bcfaa1e54ba9f1df23fa7b10fb34c6c4799cc0ec45a7e917c98ea27be4dd7",
+      "contract_sha256": "8f91442f7ffc2ba1e59b40037cdcacf0ff796cd2aefcec90e029a90adb6498a7",
       "skill": "technical-seo-checker"
     },
     {
       "contract_ref": "references/skill-contracts/on-page-seo-checker.json",
-      "contract_sha256": "ee24c854b426ee989c35aff55f9c757814bde6a5ebcc05c05d9555fd182703d5",
+      "contract_sha256": "b740e353eb20435511c6dfdead40562d2cde22cf2ab539872f30427bfc6cb550",
       "skill": "on-page-seo-checker"
     },
     {
       "contract_ref": "references/skill-contracts/site-structure-optimizer.json",
-      "contract_sha256": "577d4e0f1a29f6e53c54f2300b62a6cf51d8c39d7f9ef60377727048251b467f",
+      "contract_sha256": "a04a715856b253dbeaf77ca3417a6bf67a77abf66b7653bd9598f4510f58a558",
       "skill": "site-structure-optimizer"
     },
     {
@@ -153,17 +153,17 @@
     },
     {
       "contract_ref": "references/skill-contracts/rank-tracker.json",
-      "contract_sha256": "63835616a59e4159852773cfc9a546ecbf5cf4836ec24f5a270ecc59d167bb0e",
+      "contract_sha256": "9d0b27f3520f8f2d963bff4b6c5d9cbda573d996bfcb9ad7ec6e0f6ebb612b1b",
       "skill": "rank-tracker"
     },
     {
       "contract_ref": "references/skill-contracts/performance-monitor.json",
-      "contract_sha256": "061c48945938cb3db5f69220c240bcd5a60f7c992e3d26462e82f4b9ddc0f2bd",
+      "contract_sha256": "461f3f4957c1b801baf87f86f3870e60c218a7f3d10a19ffa386c40b772f7260",
       "skill": "performance-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/offsite-signal-analyzer.json",
-      "contract_sha256": "0c2d7623595f37a4717ee2c577fdb7c3bcb525b86d0e717fd3407e637f272d2e",
+      "contract_sha256": "85a820f0ffe47b4d98d398a6f99ec68cde3f9e04b35156550f4fd27faad6a436",
       "skill": "offsite-signal-analyzer"
     },
     {
@@ -248,12 +248,12 @@
     },
     {
       "contract_ref": "references/skill-contracts/deliverability-qa.json",
-      "contract_sha256": "6cb52a2cc329463cf547533330718c581934ef3df3880a34f7c3f051bc4d1bbd",
+      "contract_sha256": "4bac6169dcebdc2774541f048024e096cc4466a3bd7ddce5129fd951ffe1b3cc",
       "skill": "deliverability-qa"
     },
     {
       "contract_ref": "references/skill-contracts/list-segment-builder.json",
-      "contract_sha256": "c45daadeca9b5e4cf6699bbff597a78da2448a30b77248cfa932f4f09d7b1cc9",
+      "contract_sha256": "aad79b380a8049df6a2077b13b4f2c7426d33a947fb978ac953286073a332fcc",
       "skill": "list-segment-builder"
     },
     {
@@ -263,7 +263,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/list-hygiene-monitor.json",
-      "contract_sha256": "4f5d98dab968803d3ea465caf29fa49874ac617cdbf1a6a5f5ef257018b70a8a",
+      "contract_sha256": "85648b2555671be68500b30f8c34211aa6980f393caaf7f9379b14c0d54dfca7",
       "skill": "list-hygiene-monitor"
     },
     {
@@ -278,7 +278,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/email-render-builder.json",
-      "contract_sha256": "634125a6da727db92376d72c7ed4a48cf76fcdddc109573c9c9ad26a8f6cccf1",
+      "contract_sha256": "d511150fa1ee396e847322481b3d81fc9fc3283aefc3585354f8b470d68bd5b7",
       "skill": "email-render-builder"
     },
     {
@@ -288,7 +288,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/email-sequence-designer.json",
-      "contract_sha256": "e9df0cf1ef58ee8a7d02e479695699d0325e7311d6f2ea36c897ba4c1c8b7189",
+      "contract_sha256": "5f0732ea3e3923536e3e34b70c1d5b5189c2bcc4c1ce37d148497c6c0fdafddc",
       "skill": "email-sequence-designer"
     },
     {
@@ -318,7 +318,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/inbox-placement-monitor.json",
-      "contract_sha256": "faf3273ebb373a961c37adceca597f6d993f2b2f10209c36900ef4f8f93982e9",
+      "contract_sha256": "cf2182a558f708756691488a792a21a913b5e1984200c79b07547b96d40aca9f",
       "skill": "inbox-placement-monitor"
     },
     {
@@ -363,7 +363,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/landing-experience-checker.json",
-      "contract_sha256": "82d954f692a212566d7b79e35553c3191215fd27a140bb39ba31bf2d7767c8bc",
+      "contract_sha256": "78897f4459508570507d7e9c71c6c08fcaad62656c85822541b204e972b13896",
       "skill": "landing-experience-checker"
     },
     {
@@ -388,7 +388,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/paid-measurement-loop.json",
-      "contract_sha256": "d8ae8601b390ad715cce4ebd1f6d2c4d22cb9e9fc7484c50161b6ea7c704ed85",
+      "contract_sha256": "c1c00e0b35404a648812faf6036e1edc316d587d4f55f77f29bf7f6cbcae927c",
       "skill": "paid-measurement-loop"
     },
     {
@@ -398,12 +398,12 @@
     },
     {
       "contract_ref": "references/skill-contracts/budget-pacing-monitor.json",
-      "contract_sha256": "88d7908dcd1995f48e9e6d069e2a6e356b9e5205b0d9d6db3a87fe590b09f30f",
+      "contract_sha256": "488aebd7b5304337994df18416d065bee0099611b661e3c62fc0463674ba01e9",
       "skill": "budget-pacing-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/fatigue-frequency-manager.json",
-      "contract_sha256": "b2c14a0f2a46c8763dc4b59e9d290ffb104cffae5507133280a68d37f5a7cc44",
+      "contract_sha256": "e15656b34d8e52cc686e1682069e2ecf79c9c2ca44e8d7cc5ee347e450d9995d",
       "skill": "fatigue-frequency-manager"
     },
     {
@@ -418,17 +418,17 @@
     },
     {
       "contract_ref": "references/skill-contracts/influencer-discovery.json",
-      "contract_sha256": "c17171dc21cb42df8c3373b93a5e4a8f9dc22466d96e3157c58b2e9425c1a700",
+      "contract_sha256": "5892f80f116e3d8fd5ed669d89bf38ea04839e48f6cc3e533ebd67019773ab37",
       "skill": "influencer-discovery"
     },
     {
       "contract_ref": "references/skill-contracts/fit-scorer.json",
-      "contract_sha256": "0964bf7cf9b7a188e1da413c1baebb85d44f9a7193841b558a4947c1da13d168",
+      "contract_sha256": "a1afcf8c1fa012d383b623099a06d20f4b945977fe9104c3807ab7808d1847b0",
       "skill": "fit-scorer"
     },
     {
       "contract_ref": "references/skill-contracts/competitor-tracker.json",
-      "contract_sha256": "b91e678abc1d11f76fc430b435a98c515331dbf79f6d162d42d0b51638a402de",
+      "contract_sha256": "07db2941f350da008067c4078e39ab651d0fcb2ad614118913f1733cae8273bc",
       "skill": "competitor-tracker"
     },
     {
@@ -473,7 +473,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/performance-analyzer.json",
-      "contract_sha256": "e68b7581f8ad700fd208b87a5702f8baca528c3a61859c6eee2d4c51bb230a32",
+      "contract_sha256": "64ece580e0492815c9d76a3c478746f88c9e6155df13dbf2e6d298eac434a244",
       "skill": "performance-analyzer"
     },
     {

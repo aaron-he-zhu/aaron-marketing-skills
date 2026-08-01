@@ -53,7 +53,8 @@ All HTTP goes through `_http.py`, which enforces public-only destinations by def
 | `discourse.py` | Discourse-forum community-health, keyless: `latest` topics + reply/view counts, `topic` time-to-first-response signal, `health` snapshot (stats + moderator count + trust-level distribution). Local robots pre-flight; login-required forums surface `forum_requires_login`. **Read-only** | `discourse.py health https://meta.discourse.org` · `discourse.py topic <base> <id>` | Discourse public JSON (keyless) |
 | `ledger.py` | Local time-series store: `record` connector snapshots → `diff`/`trend` for real before/after deltas | `psi.py <url> \| ledger.py record <url> --source psi` then `ledger.py diff <url> --source psi` | local files (no network) |
 | `experiment.py` | Statistical **decision inputs** on your own observations: `proportion` (two-proportion z-test + Wilson/effect intervals + separate practical-lift flag), `continuous` (Mann-Whitney U + bootstrap effect interval), `samplesize` (power / minimum detectable effect). Returns Calculated facts, never a promote/rollback verdict. | `experiment.py proportion --control 100 1000 --variant 130 1000 --min-lift 0.15` · `experiment.py samplesize --baseline 0.1 --mde 0.02` | local compute (no network) |
-| `_http.py` | Shared polite-HTTP module (imported by the others; not a CLI) | — | — |
+| `_http.py` | Shared polite-HTTP module (source-loaded by the others; not a CLI) | — | — |
+| `_loader.py` | Internal source-only sibling loader; prevents distributed connector runs from creating or consuming adjacent `.pyc` files | — | — |
 
 ## What stays external (not bundled)
 

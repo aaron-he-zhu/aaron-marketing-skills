@@ -42,6 +42,7 @@ import rss_monitor  # noqa: E402
 import suggest  # noqa: E402
 import wayback  # noqa: E402
 import _http  # noqa: E402
+import _loader  # noqa: E402
 import datetime as _dt  # noqa: E402
 
 

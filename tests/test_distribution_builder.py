@@ -1,3 +1,4 @@
+import ast
 import gzip
 import hashlib
 import importlib.util
@@ -258,7 +259,19 @@ class DistributionBuilderTests(unittest.TestCase):
         self.assertIsNotNone(assembly_spec)
         self.assertIsNotNone(assembly_spec.loader)
         built_assembly = importlib.util.module_from_spec(assembly_spec)
-        assembly_spec.loader.exec_module(built_assembly)
+        assembly_path = output / "scripts/context-assembly.py"
+        assembly_code = compile(
+            assembly_path.read_bytes(), str(assembly_path), "exec", dont_inherit=True
+        )
+        # macOS redirects bytecode to a system cache, while Linux normally writes
+        # it beside the source.  Execute the main script as a CLI would (without
+        # caching __main__) while forcing Linux's cache policy for every dynamic
+        # dependency; the governed package must remain physically unchanged.
+        with (
+                mock.patch.object(sys, "pycache_prefix", None),
+                mock.patch.object(sys, "dont_write_bytecode", False)):
+            exec(assembly_code, built_assembly.__dict__)
+            built_assembly.context_resolver._load_context_planner()
         distribution_identity = built_assembly._distribution_identity(
             output, "claude-code-plugin-host"
         )
@@ -414,6 +427,87 @@ class DistributionBuilderTests(unittest.TestCase):
                 cwd=output, capture_output=True, text=True,
             )
             self.assertEqual(0, validated.returncode, validated.stderr)
+
+    def test_governed_runtime_loading_is_bytecode_free_under_linux_policy(self):
+        output = self.build("--plugin", "--profile", "governed")
+        runtime_paths = tuple(
+            path.relative_to(output).as_posix()
+            for path in sorted((output / "scripts").rglob("*.py"))
+        )
+        self.assertIn("scripts/context-assembly.py", runtime_paths)
+        self.assertIn("scripts/connectors/_loader.py", runtime_paths)
+
+        def snapshot():
+            return {
+                path.relative_to(output).as_posix(): hashlib.sha256(
+                    path.read_bytes()
+                ).hexdigest()
+                for path in output.rglob("*") if path.is_file()
+            }
+
+        before = snapshot()
+        loaded = {}
+        with (
+                mock.patch.object(sys, "pycache_prefix", None),
+                mock.patch.object(sys, "dont_write_bytecode", False)):
+            for offset, relative in enumerate(runtime_paths):
+                path = output / relative
+                source = path.read_bytes()
+                syntax = ast.parse(source, filename=str(path))
+                cache_writing_imports = []
+                sibling_names = {
+                    sibling.stem
+                    for sibling in path.parent.glob("*.py")
+                    if sibling != path and sibling.stem.isidentifier()
+                }
+                for node in ast.walk(syntax):
+                    if isinstance(node, ast.Import):
+                        cache_writing_imports.extend(
+                            alias.name for alias in node.names
+                            if alias.name.split(".", 1)[0] in sibling_names
+                        )
+                    elif (
+                            isinstance(node, ast.ImportFrom)
+                            and node.module is not None
+                            and node.module.split(".", 1)[0] in sibling_names):
+                        cache_writing_imports.append(node.module)
+                    elif (
+                            isinstance(node, ast.Call)
+                            and isinstance(node.func, ast.Attribute)
+                            and node.func.attr == "exec_module"):
+                        cache_writing_imports.append("exec_module")
+                self.assertEqual([], cache_writing_imports, relative)
+                specification = importlib.util.spec_from_file_location(
+                    "built_runtime_%d" % offset, path
+                )
+                self.assertIsNotNone(specification)
+                self.assertIsNotNone(specification.loader)
+                module = importlib.util.module_from_spec(specification)
+                exec(
+                    compile(source, str(path), "exec", dont_inherit=True),
+                    module.__dict__,
+                )
+                loaded[relative] = module
+
+            loaded["scripts/context-resolver.py"]._load_context_planner()
+            loaded["scripts/run-events.py"]._load_context_resolver_validator()
+            loaded["scripts/workflow_loop.py"]._run_events_module()
+            loaded["scripts/workflow_loop.py"]._audit_artifact_module()
+            connector_http = loaded["scripts/connectors/sitemap.py"]._http
+            response = connector_http.get_hard_deadline(
+                "http://127.0.0.1/",
+                deadline=connector_http.time.monotonic() + 10,
+                retries=1,
+            )
+            self.assertIn("non-public", response["error"])
+
+        self.assertEqual(before, snapshot())
+        self.assertFalse(any(path.name == "__pycache__" for path in output.rglob("*")))
+        self.assertFalse(any(path.suffix == ".pyc" for path in output.rglob("*")))
+        identity = loaded["scripts/context-assembly.py"]._distribution_identity(
+            output, "claude-code-plugin-host"
+        )
+        self.assertEqual("governed", identity["profile"])
 
     def test_profiles_are_monotonic_closed_and_within_package_ceilings(self):
         distribution = json.loads(

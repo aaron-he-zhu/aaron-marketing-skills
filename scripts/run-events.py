@@ -2397,6 +2397,22 @@ def verified_json_reference(root, reference, expected_sha, label, limit=MAX_DOCU
     return path, strict_json_loads(text, label), metadata
 
 
+def _load_context_resolver_validator():
+    validator_path = Path(__file__).with_name("context-resolver.py")
+    if not validator_path.is_file():
+        raise RunEventError("context resolver is unavailable for manifest validation")
+    spec = importlib.util.spec_from_file_location("aaron_context_resolver", validator_path)
+    if spec is None or spec.loader is None:
+        raise RunEventError("context resolver cannot be loaded for manifest validation")
+    validator = importlib.util.module_from_spec(spec)
+    source = validator_path.read_bytes()
+    exec(
+        compile(source, str(validator_path), "exec", dont_inherit=True),
+        validator.__dict__,
+    )
+    return validator
+
+
 def validate_context_document(root, reference, expected_sha, expected_signature,
                               run_id, turn_id=None, verify_sources=False):
     path, document, metadata = verified_json_reference(
@@ -2416,15 +2432,8 @@ def validate_context_document(root, reference, expected_sha, expected_signature,
     validate_sha(document["context_signature"], "context manifest context_signature")
     if statmod.S_IMODE(metadata.st_mode) != 0o600:
         raise RunEventError("context manifest must use private file mode 0600")
-    validator_path = Path(__file__).with_name("context-resolver.py")
-    if not validator_path.is_file():
-        raise RunEventError("context resolver is unavailable for manifest validation")
-    spec = importlib.util.spec_from_file_location("aaron_context_resolver", validator_path)
-    if spec is None or spec.loader is None:
-        raise RunEventError("context resolver cannot be loaded for manifest validation")
-    validator = importlib.util.module_from_spec(spec)
     try:
-        spec.loader.exec_module(validator)
+        validator = _load_context_resolver_validator()
         validator.validate_manifest(document)
         expected_reference = "memory/runs/%s/turns/%s/context-manifest.json" % (
             document["run_id"], document["turn_id"],

@@ -53,8 +53,11 @@ import os
 import sys
 from urllib.parse import quote, urlsplit
 
-import _http
-import robots
+_CONNECTOR_LOADER_PATH = __import__("pathlib").Path(__file__).with_name("_loader.py")
+exec(compile(_CONNECTOR_LOADER_PATH.read_bytes(), str(_CONNECTOR_LOADER_PATH), "exec",
+             dont_inherit=True), globals())
+_http = _load_connector_sibling("_http", __file__)
+robots = _load_connector_sibling("robots", __file__)
 
 API_BASE = "https://api.firecrawl.dev/v2"
 ENV_KEY = "FIRECRAWL_API_KEY"

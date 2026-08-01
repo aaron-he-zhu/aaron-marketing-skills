@@ -35,7 +35,10 @@ import json
 import sys
 from urllib.parse import quote, urlencode
 
-import _http
+_CONNECTOR_LOADER_PATH = __import__("pathlib").Path(__file__).with_name("_loader.py")
+exec(compile(_CONNECTOR_LOADER_PATH.read_bytes(), str(_CONNECTOR_LOADER_PATH), "exec",
+             dont_inherit=True), globals())
+_http = _load_connector_sibling("_http", __file__)
 
 WIKIDATA_API = "https://www.wikidata.org/w/api.php"
 ENTITYDATA = "https://www.wikidata.org/wiki/Special:EntityData/%s.json"

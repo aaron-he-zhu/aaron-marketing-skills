@@ -83,14 +83,14 @@
         "path": "scripts/connectors/README.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "sha256": "755816582373b846b95783c125c6d9cd57d5c20bbf4af97bc00aecdbaa557c56",
         "source_line": 36
       },
       {
         "path": "scripts/connectors/rss_monitor.py",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e66174317fafbc36fd0eea06cfe01ccd63fe03f9a52078143e6a78dde1f01974",
+        "sha256": "243b462dd0a61c2961e6e3d1d453294269e54649031c83e06af6c24aa8803687",
         "source_line": 34
       },
       {

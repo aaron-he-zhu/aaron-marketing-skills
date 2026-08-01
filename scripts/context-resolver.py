@@ -1182,7 +1182,10 @@ def _load_context_planner():
         if spec is None or spec.loader is None:
             raise ContextResolutionError("context planner cannot be loaded")
         module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
+        # Do not let Linux's default in-tree bytecode cache mutate a verified
+        # distribution after the first planner-backed resolution.
+        source = path.read_bytes()
+        exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
         _PLANNER_MODULE = module
     return _PLANNER_MODULE
 

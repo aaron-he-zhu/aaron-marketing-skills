@@ -55,12 +55,10 @@ import re
 import sys
 from html.parser import HTMLParser
 
-try:  # works both as `python3 scripts/connectors/schema_lint.py` and on import
-    import _http
-except ImportError:  # pragma: no cover - fallback when cwd differs
-    import os
-    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-    import _http  # type: ignore
+_CONNECTOR_LOADER_PATH = __import__("pathlib").Path(__file__).with_name("_loader.py")
+exec(compile(_CONNECTOR_LOADER_PATH.read_bytes(), str(_CONNECTOR_LOADER_PATH), "exec",
+             dont_inherit=True), globals())
+_http = _load_connector_sibling("_http", __file__)
 
 # Versioned alongside the connector bundle.
 __version__ = "1.0"

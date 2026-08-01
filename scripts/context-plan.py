@@ -46,13 +46,17 @@ AUDITOR_EXCLUSIVE_GROUP = "auditor-runtime-chain"
 
 
 def _load_resolver():
+    path = ROOT / "scripts" / "context-resolver.py"
     specification = importlib.util.spec_from_file_location(
-        "aaron_context_resolver", ROOT / "scripts" / "context-resolver.py"
+        "aaron_context_resolver", path
     )
     if specification is None or specification.loader is None:
         raise RuntimeError("cannot load context resolver")
     module = importlib.util.module_from_spec(specification)
-    specification.loader.exec_module(module)
+    # Compile in memory so executing a manifest-closed distribution never adds
+    # a platform-specific ``scripts/__pycache__`` payload.
+    source = path.read_bytes()
+    exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
     return module
 
 

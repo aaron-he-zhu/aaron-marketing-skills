@@ -35,7 +35,10 @@ import sys
 from collections import Counter
 from urllib.parse import urlencode
 
-import _http
+_CONNECTOR_LOADER_PATH = __import__("pathlib").Path(__file__).with_name("_loader.py")
+exec(compile(_CONNECTOR_LOADER_PATH.read_bytes(), str(_CONNECTOR_LOADER_PATH), "exec",
+             dont_inherit=True), globals())
+_http = _load_connector_sibling("_http", __file__)
 
 CDX_ENDPOINT = "http://web.archive.org/cdx/search/cdx"
 # Fields we ask the CDX server to return, in this order. Requesting an explicit
