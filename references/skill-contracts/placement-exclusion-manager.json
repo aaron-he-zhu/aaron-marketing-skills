@@ -11,7 +11,7 @@
           "end_char": 63,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 120,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 65
         },
@@ -41,7 +41,7 @@
           "end_char": 187,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 122
         },
@@ -56,7 +56,7 @@
           "end_char": 320,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 189
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "ad/activate/placement-exclusion-manager/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+      "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9"
     }
   },
   "context_hints": {
@@ -117,7 +117,7 @@
           "end_char": 157,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -133,7 +133,7 @@
           "end_char": 401,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 159
         },
@@ -151,7 +151,7 @@
           "end_char": 536,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 402
         },
@@ -167,7 +167,7 @@
           "end_char": 579,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 538
         },
@@ -183,7 +183,7 @@
           "end_char": 785,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 580
         },
@@ -198,7 +198,7 @@
     "summary_ref": {
       "path": "ad/activate/placement-exclusion-manager/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+      "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -212,8 +212,8 @@
     "name": "placement-exclusion-manager",
     "path": "ad/activate/placement-exclusion-manager/SKILL.md",
     "phase": "activate",
-    "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
-    "version": "19.0.0"
+    "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<account/campaign goal> [platforms] [placements report path] [brand-safety constraints]",
@@ -227,7 +227,7 @@
           "end_char": 60,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
     "source": {
       "path": "ad/activate/placement-exclusion-manager/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+      "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9"
     }
   },
   "output_contract": {
@@ -254,7 +254,7 @@
           "end_char": 119,
           "path": "ad/activate/placement-exclusion-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00",
+          "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -265,7 +265,7 @@
     "source": {
       "path": "ad/activate/placement-exclusion-manager/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+      "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9"
     },
     "summary": "a placement/network exclusion list (sites, apps, channels, network opt-outs), a content-suitability & sensitive-topic block list, a reference to the audience exclusion set consumed from [audience-segment-builder](../../research/audience-segment-builder/SKILL.md) (not re-derived here), a packaged **A1 evidence file** (placements report + exclusion decisions with rationale), and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -280,8 +280,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -290,7 +290,7 @@
     "source": {
       "path": "ad/activate/placement-exclusion-manager/SKILL.md",
       "section": "frontmatter",
-      "sha256": "74cc02f342a1932d98d4a3aa8bb3a0d48c87c85f1dd088804c43483f88a86f00"
+      "sha256": "11cd3360644dbacfe70b4aab63b91b36040b385e591ff32a6b84e0be475535c9"
     },
     "trigger_phrases": [
       "add network and audience exclusions",

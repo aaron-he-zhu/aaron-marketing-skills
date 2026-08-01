@@ -11,7 +11,7 @@
           "end_char": 197,
           "path": "launch/assemble/message-house-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
+          "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "launch/assemble/message-house-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73"
+      "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb"
     }
   },
   "context_hints": {
@@ -82,7 +82,7 @@
           "end_char": 144,
           "path": "launch/assemble/message-house-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
+          "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -100,7 +100,7 @@
           "end_char": 313,
           "path": "launch/assemble/message-house-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
+          "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
           "span_basis": "field-text",
           "start_char": 145
         },
@@ -118,7 +118,7 @@
           "end_char": 508,
           "path": "launch/assemble/message-house-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
+          "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
           "span_basis": "field-text",
           "start_char": 314
         },
@@ -136,7 +136,7 @@
           "end_char": 758,
           "path": "launch/assemble/message-house-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
+          "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
           "span_basis": "field-text",
           "start_char": 510
         },
@@ -149,7 +149,7 @@
     "summary_ref": {
       "path": "launch/assemble/message-house-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73"
+      "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -164,8 +164,8 @@
     "name": "message-house-builder",
     "path": "launch/assemble/message-house-builder/SKILL.md",
     "phase": "assemble",
-    "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
-    "version": "19.0.0"
+    "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / launch> [personas] [channels] [positioning canvas path]",
@@ -179,7 +179,7 @@
           "end_char": 139,
           "path": "launch/assemble/message-house-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
+          "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -191,7 +191,7 @@
     "source": {
       "path": "launch/assemble/message-house-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73"
+      "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb"
     }
   },
   "output_contract": {
@@ -206,7 +206,7 @@
           "end_char": 93,
           "path": "launch/assemble/message-house-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
+          "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -222,7 +222,7 @@
           "end_char": 182,
           "path": "launch/assemble/message-house-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73",
+          "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb",
           "span_basis": "field-text",
           "start_char": 95
         },
@@ -233,7 +233,7 @@
     "source": {
       "path": "launch/assemble/message-house-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73"
+      "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb"
     },
     "summary": "a message house (tagline + one-liner + three value pillars + per-persona proof points, each labeled Measured / User-provided / `[needs source]`), a PR-FAQ narrative spine (launch-day tense, empty-chair test, numbers over adjectives, five external + five internal FAQs), per-channel message angle packs (angles, not finished copy), a `[needs source]` claims list for the ledger, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -248,8 +248,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -258,7 +258,7 @@
     "source": {
       "path": "launch/assemble/message-house-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "664118efdf62abcde8f457b5541c86f9a1847aab4415d3cf915adf3aae097a73"
+      "sha256": "b936a6503515e3d4bba486a075f58095b77e5b6270b3f2d7f760570017a45fbb"
     },
     "trigger_phrases": [
       "build a message house",

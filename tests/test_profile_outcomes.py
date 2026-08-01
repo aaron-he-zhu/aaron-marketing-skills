@@ -436,6 +436,19 @@ class ProfileOutcomeTests(unittest.TestCase):
                 evidence_manifest_sha256=digest("private-manifest"),
             )
 
+    def test_19_1_receipt_derives_version_without_dropping_19_0(self):
+        evidence = valid_evidence()
+        evidence["release_candidate"] = "19.1.0-rc.1"
+        summary = profile_outcomes.evaluate(evidence)
+        receipt = profile_outcomes.build_receipt(
+            evidence,
+            summary,
+            evidence_bytes=json.dumps(evidence, sort_keys=True).encode("utf-8"),
+            evidence_manifest_sha256=digest("private-manifest"),
+        )
+        self.assertEqual("19.1.0", receipt["release_version"])
+        self.assertEqual("19.1.0-rc.1", receipt["release_candidate"])
+
     def test_release_pilot_receipt_uses_distinct_gate_and_summary(self):
         evidence = valid_pilot_evidence()
         summary = profile_outcomes.evaluate(evidence, stage="release-pilot")
@@ -489,6 +502,10 @@ class ProfileOutcomeTests(unittest.TestCase):
             ).read_text(encoding="utf-8")
         )
         self.assertEqual(2, len(schema["oneOf"]))
+        self.assertEqual(
+            ["19.0.0", "19.1.0"],
+            schema["properties"]["release_version"]["enum"],
+        )
         pilot = schema["$defs"]["release_pilot_summary"]
         full = schema["$defs"]["governed_promotion_summary"]
         self.assertFalse(pilot["additionalProperties"])

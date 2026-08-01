@@ -1,0 +1,434 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/prompt-profile-paired-evidence.schema.json",
+  "title": "Paired prompt-profile ablation and release evidence",
+  "description": "Fail-closed protocol-v3 evidence. Explicit is the control; balanced or lean is the candidate. Provider telemetry is nullable and must never be inferred from local bytes or wall time.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "kind", "protocol_version", "evidence_id", "run_id",
+    "created_at", "completed_at", "evaluated_at", "expires_at", "distribution_profile", "host", "model",
+    "toolset", "profiles", "catalogs", "design", "pairs", "policy_snapshot",
+    "aggregate", "decision"
+  ],
+  "properties": {
+    "$schema": {"const": "../prompt-profile-paired-evidence.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "kind": {"const": "prompt-profile-paired-evidence"},
+    "protocol_version": {"const": "3.0"},
+    "evidence_id": {"$ref": "#/$defs/safeId"},
+    "run_id": {"$ref": "#/$defs/safeId"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "completed_at": {"type": "string", "format": "date-time"},
+    "evaluated_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "distribution_profile": {"const": "governed"},
+    "host": {
+      "type": "object", "additionalProperties": false,
+      "required": ["host_profile", "host_name", "host_version"],
+      "properties": {
+        "host_profile": {"$ref": "#/$defs/safeId"},
+        "host_name": {"$ref": "#/$defs/safeId"},
+        "host_version": {"type": "string", "minLength": 1, "maxLength": 128}
+      }
+    },
+    "model": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "provider", "model_id", "model_revision", "judge_provider",
+        "judge_model_id", "judge_model_revision"
+      ],
+      "properties": {
+        "provider": {"$ref": "#/$defs/safeId"},
+        "model_id": {"$ref": "#/$defs/safeId"},
+        "model_revision": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 256}]},
+        "judge_provider": {"$ref": "#/$defs/safeId"},
+        "judge_model_id": {"$ref": "#/$defs/safeId"},
+        "judge_model_revision": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 256}]}
+      }
+    },
+    "toolset": {
+      "type": "object", "additionalProperties": false,
+      "required": ["toolset_id", "toolset_sha256"],
+      "properties": {
+        "toolset_id": {"$ref": "#/$defs/safeId"},
+        "toolset_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "profiles": {
+      "type": "object", "additionalProperties": false,
+      "required": ["control", "candidate"],
+      "properties": {
+        "control": {"const": "explicit"},
+        "candidate": {"enum": ["balanced", "lean"]}
+      }
+    },
+    "catalogs": {"$ref": "#/$defs/catalogs"},
+    "design": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "randomization", "seed_sha256", "repeats", "case_count", "pair_count",
+        "coverage_strata"
+      ],
+      "properties": {
+        "randomization": {"const": "seeded-within-pair-v1"},
+        "seed_sha256": {"$ref": "#/$defs/sha256"},
+        "repeats": {"type": "integer", "minimum": 1, "maximum": 20},
+        "case_count": {"type": "integer", "minimum": 1, "maximum": 10000},
+        "pair_count": {"type": "integer", "minimum": 1, "maximum": 200000},
+        "coverage_strata": {
+          "type": "array", "minItems": 1, "maxItems": 128, "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safeId"}
+        }
+      }
+    },
+    "pairs": {
+      "type": "array", "minItems": 1, "maxItems": 200000,
+      "items": {"$ref": "#/$defs/pair"}
+    },
+    "policy_snapshot": {"$ref": "#/$defs/policy"},
+    "aggregate": {"$ref": "#/$defs/aggregate"},
+    "decision": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "valid", "reasons", "evidence_scope", "token_savings_claims_permitted",
+        "cost_savings_claims_permitted"
+      ],
+      "properties": {
+        "valid": {"type": "boolean"},
+        "evidence_scope": {
+          "enum": ["context-bytes-and-behavior", "context-bytes-behavior-and-provider-usage"]
+        },
+        "token_savings_claims_permitted": {"const": false},
+        "cost_savings_claims_permitted": {"const": false},
+        "reasons": {
+          "type": "array", "maxItems": 32, "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safeId"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "safeId": {
+      "type": "string", "minLength": 1, "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableCount": {
+      "oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]
+    },
+    "catalogs": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "host_catalog_sha256", "prompt_policy_sha256", "context_modules_sha256",
+        "system_catalog_sha256", "skill_contract_index_sha256", "capsule_index_sha256",
+        "behavior_protocol_base_sha256", "behavior_protocol_sha256",
+        "behavior_adapter_sha256", "context_assembly_sha256",
+        "eval_case_runtime_sha256"
+      ],
+      "properties": {
+        "host_catalog_sha256": {"$ref": "#/$defs/sha256"},
+        "prompt_policy_sha256": {"$ref": "#/$defs/sha256"},
+        "context_modules_sha256": {"$ref": "#/$defs/sha256"},
+        "system_catalog_sha256": {"$ref": "#/$defs/sha256"},
+        "skill_contract_index_sha256": {"$ref": "#/$defs/sha256"},
+        "capsule_index_sha256": {"$ref": "#/$defs/sha256"},
+        "behavior_protocol_base_sha256": {"$ref": "#/$defs/sha256"},
+        "behavior_protocol_sha256": {"$ref": "#/$defs/sha256"},
+        "behavior_adapter_sha256": {"$ref": "#/$defs/sha256"},
+        "context_assembly_sha256": {"$ref": "#/$defs/sha256"},
+        "eval_case_runtime_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "providerMetrics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input_tokens", "output_tokens", "total_tokens", "latency_ms", "tool_calls"],
+      "properties": {
+        "input_tokens": {"$ref": "#/$defs/nullableCount"},
+        "output_tokens": {"$ref": "#/$defs/nullableCount"},
+        "total_tokens": {"$ref": "#/$defs/nullableCount"},
+        "latency_ms": {"$ref": "#/$defs/nullableCount"},
+        "tool_calls": {"$ref": "#/$defs/nullableCount"}
+      }
+    },
+    "arm": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "profile", "request_sha256", "result_sha256", "outcome", "routing_correct",
+        "quality_pass", "safety_pass", "failure_codes", "forbidden_violation_ids",
+        "run_provenance", "execution", "context"
+      ],
+      "properties": {
+        "profile": {"enum": ["explicit", "balanced", "lean"]},
+        "request_sha256": {"$ref": "#/$defs/sha256"},
+        "result_sha256": {"$ref": "#/$defs/sha256"},
+        "outcome": {"enum": ["passed", "behavior-failed", "inconclusive", "host-failed", "adapter-failed"]},
+        "routing_correct": {"oneOf": [{"type": "null"}, {"type": "boolean"}]},
+        "quality_pass": {"type": "boolean"},
+        "safety_pass": {"type": "boolean"},
+        "failure_codes": {
+          "type": "array", "maxItems": 64,
+          "items": {"$ref": "#/$defs/safeId"}
+        },
+        "forbidden_violation_ids": {
+          "type": "array", "maxItems": 64, "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safeId"}
+        },
+        "run_provenance": {"$ref": "#/$defs/runProvenance"},
+        "execution": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "execution_mode", "adapter_implementation_sha256", "host_version",
+            "model_provider", "model_revision", "judge_model_provider",
+            "judge_model_revision", "started_at", "ended_at",
+            "observed_latency_ms", "provider"
+          ],
+          "properties": {
+            "execution_mode": {"enum": ["real", "simulated"]},
+            "adapter_implementation_sha256": {"$ref": "#/$defs/sha256"},
+            "host_version": {"type": "string", "minLength": 1, "maxLength": 128},
+            "model_provider": {"$ref": "#/$defs/safeId"},
+            "model_revision": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 256}]},
+            "judge_model_provider": {"$ref": "#/$defs/safeId"},
+            "judge_model_revision": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 256}]},
+            "started_at": {"type": "string", "format": "date-time"},
+            "ended_at": {"type": "string", "format": "date-time"},
+            "observed_latency_ms": {"type": "integer", "minimum": 0},
+            "provider": {"$ref": "#/$defs/providerMetrics"}
+          }
+        },
+        "context": {
+          "type": "object", "additionalProperties": false,
+          "required": [
+            "candidate_context_sha256", "candidate_sources_sha256", "assembly_sha256",
+            "assembly_signature", "context_signature",
+            "host_catalog_sha256", "prompt_policy_sha256", "context_modules_sha256",
+            "capsule_index_sha256", "model_body_bytes", "model_reduction_ratio",
+            "model_resources", "model_resources_sha256"
+          ],
+          "properties": {
+            "candidate_context_sha256": {"$ref": "#/$defs/sha256"},
+            "candidate_sources_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+            "assembly_sha256": {"$ref": "#/$defs/sha256"},
+            "assembly_signature": {"$ref": "#/$defs/sha256"},
+            "context_signature": {"$ref": "#/$defs/sha256"},
+            "host_catalog_sha256": {"$ref": "#/$defs/sha256"},
+            "prompt_policy_sha256": {"$ref": "#/$defs/sha256"},
+            "context_modules_sha256": {"$ref": "#/$defs/sha256"},
+            "capsule_index_sha256": {"$ref": "#/$defs/sha256"},
+            "model_body_bytes": {"type": "integer", "minimum": 0},
+            "model_reduction_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+            "model_resources": {
+              "type": "array", "minItems": 1, "maxItems": 128,
+              "items": {"$ref": "#/$defs/modelResource"}
+            },
+            "model_resources_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      }
+    },
+    "pair": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "pair_id", "case_id", "case_sha256", "case_provenance", "evidence_binding",
+        "source_group", "source_ref", "source_line", "target_skill",
+        "coverage_stratum", "repeat_index",
+        "order", "invariant", "arms"
+      ],
+      "properties": {
+        "pair_id": {"$ref": "#/$defs/safeId"},
+        "case_id": {"$ref": "#/$defs/safeId"},
+        "case_sha256": {"$ref": "#/$defs/sha256"},
+        "case_provenance": {"enum": ["simulated", "real"]},
+        "evidence_binding": {
+          "oneOf": [
+            {"type": "null"},
+            {
+              "type": "object", "additionalProperties": false,
+              "required": ["ref", "sha256"],
+              "properties": {
+                "ref": {"$ref": "#/$defs/safeId"},
+                "sha256": {"$ref": "#/$defs/sha256"}
+              }
+            }
+          ]
+        },
+        "source_group": {"enum": ["authored", "auto-routing", "derived-auditor"]},
+        "source_ref": {"$ref": "#/$defs/safeId"},
+        "source_line": {"type": "integer", "minimum": 1},
+        "target_skill": {"$ref": "#/$defs/safeId"},
+        "coverage_stratum": {
+          "description": "Evidence-only verifier-owned stratum recomputed from canonical truth: auto:<source scenario_family> for auto-routing, or discipline:<system-catalog discipline> for authored and derived cases. It must never be serialized into the public model request.",
+          "$ref": "#/$defs/safeId"
+        },
+        "repeat_index": {"type": "integer", "minimum": 1, "maximum": 20},
+        "order": {
+          "oneOf": [
+            {"const": ["control", "candidate"]},
+            {"const": ["candidate", "control"]}
+          ]
+        },
+        "invariant": {
+          "type": "object", "additionalProperties": false,
+          "required": ["host_profile", "model_id", "judge_model_id", "toolset_id", "toolset_sha256"],
+          "properties": {
+            "host_profile": {"$ref": "#/$defs/safeId"},
+            "model_id": {"$ref": "#/$defs/safeId"},
+            "judge_model_id": {"$ref": "#/$defs/safeId"},
+            "toolset_id": {"$ref": "#/$defs/safeId"},
+            "toolset_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        "arms": {
+          "type": "object", "additionalProperties": false,
+          "required": ["control", "candidate"],
+          "properties": {
+            "control": {"$ref": "#/$defs/arm"},
+            "candidate": {"$ref": "#/$defs/arm"}
+          }
+        }
+      }
+    },
+    "policy": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "protocol_version", "minimum_cases", "minimum_repeats", "minimum_coverage_strata", "minimum_control_routing_accuracy", "minimum_candidate_routing_accuracy", "minimum_control_quality_pass_rate", "minimum_candidate_quality_pass_rate",
+        "maximum_routing_accuracy_regression", "maximum_quality_pass_rate_regression",
+        "maximum_safety_regressions", "maximum_age_days"
+      ],
+      "properties": {
+        "protocol_version": {"const": "3.0"},
+        "minimum_cases": {"type": "integer", "minimum": 1},
+        "minimum_repeats": {"type": "integer", "minimum": 2},
+        "minimum_coverage_strata": {"type": "integer", "minimum": 1},
+        "minimum_control_routing_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimum_candidate_routing_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimum_control_quality_pass_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimum_candidate_quality_pass_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_routing_accuracy_regression": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_quality_pass_rate_regression": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_safety_regressions": {"const": 0},
+        "maximum_age_days": {"type": "integer", "minimum": 1}
+      }
+    },
+    "rates": {
+      "type": "object", "additionalProperties": false,
+      "required": ["routing_accuracy", "quality_pass_rate", "safety_pass_rate", "outcome_counts"],
+      "properties": {
+        "routing_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "quality_pass_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "safety_pass_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "outcome_counts": {
+          "type": "object", "additionalProperties": false,
+          "required": ["passed", "behavior-failed", "inconclusive", "host-failed", "adapter-failed"],
+          "properties": {
+            "passed": {"type": "integer", "minimum": 0},
+            "behavior-failed": {"type": "integer", "minimum": 0},
+            "inconclusive": {"type": "integer", "minimum": 0},
+            "host-failed": {"type": "integer", "minimum": 0},
+            "adapter-failed": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    },
+    "aggregate": {
+      "type": "object", "additionalProperties": false,
+      "required": ["case_count", "pair_count", "coverage_stratum_count", "arm_run_set_sha256", "repeats", "control", "candidate", "regressions", "advisories", "evidence_scope", "gates"],
+      "properties": {
+        "case_count": {"type": "integer", "minimum": 1},
+        "pair_count": {"type": "integer", "minimum": 1},
+        "coverage_stratum_count": {"type": "integer", "minimum": 1},
+        "arm_run_set_sha256": {"$ref": "#/$defs/sha256"},
+        "repeats": {"type": "integer", "minimum": 1},
+        "control": {"$ref": "#/$defs/rates"},
+        "candidate": {"$ref": "#/$defs/rates"},
+        "regressions": {
+          "type": "object", "additionalProperties": false,
+          "required": ["routing_accuracy", "quality_pass_rate", "safety_regressions", "candidate_safety_failures"],
+          "properties": {
+            "routing_accuracy": {"type": "number", "minimum": -1, "maximum": 1},
+            "quality_pass_rate": {"type": "number", "minimum": -1, "maximum": 1},
+            "safety_regressions": {"type": "integer", "minimum": 0},
+            "candidate_safety_failures": {"type": "integer", "minimum": 0}
+          }
+        },
+        "advisories": {
+          "type": "object", "additionalProperties": false,
+          "required": ["paired_model_body_above_target_maximum", "harness_only_above_target_maximum", "provider_telemetry_incomplete"],
+          "properties": {
+            "paired_model_body_above_target_maximum": {"type": "integer", "minimum": 0},
+            "harness_only_above_target_maximum": {"type": "integer", "minimum": 0},
+            "provider_telemetry_incomplete": {"type": "boolean"}
+          }
+        },
+        "evidence_scope": {
+          "enum": ["context-bytes-and-behavior", "context-bytes-behavior-and-provider-usage"]
+        },
+        "gates": {
+          "type": "object", "additionalProperties": false,
+          "required": ["minimum_cases", "minimum_repeats", "minimum_coverage_strata", "complete_pairs", "real_execution", "real_case_evidence", "immutable_model_identity", "immutable_judge_identity", "adapter_provenance", "assembly_source_equivalence", "minimum_candidate_reduction", "same_invariants", "current_age", "minimum_control_routing_accuracy", "minimum_candidate_routing_accuracy", "minimum_control_quality_pass_rate", "minimum_candidate_quality_pass_rate", "routing_noninferior", "quality_noninferior", "zero_safety_regressions", "zero_candidate_safety_failures"],
+          "properties": {
+            "minimum_cases": {"type": "boolean"},
+            "minimum_repeats": {"type": "boolean"},
+            "minimum_coverage_strata": {"type": "boolean"},
+            "complete_pairs": {"type": "boolean"},
+            "real_execution": {"type": "boolean"},
+            "real_case_evidence": {"type": "boolean"},
+            "immutable_model_identity": {"type": "boolean"},
+            "immutable_judge_identity": {"type": "boolean"},
+            "adapter_provenance": {"type": "boolean"},
+            "assembly_source_equivalence": {"type": "boolean"},
+            "minimum_candidate_reduction": {"type": "boolean"},
+            "same_invariants": {"type": "boolean"},
+            "current_age": {"type": "boolean"},
+            "minimum_control_routing_accuracy": {"type": "boolean"},
+            "minimum_candidate_routing_accuracy": {"type": "boolean"},
+            "minimum_control_quality_pass_rate": {"type": "boolean"},
+            "minimum_candidate_quality_pass_rate": {"type": "boolean"},
+            "routing_noninferior": {"type": "boolean"},
+            "quality_noninferior": {"type": "boolean"},
+            "zero_safety_regressions": {"type": "boolean"},
+            "zero_candidate_safety_failures": {"type": "boolean"}
+          }
+        }
+      }
+    }
+    ,
+    "runProvenance": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "run_id", "manifest_ref", "manifest_sha256", "requests_ref",
+        "request_stream_sha256", "results_ref", "result_stream_sha256",
+        "completion_ref", "completion_sha256", "record_sequence", "record_hash",
+        "head_record_hash"
+      ],
+      "properties": {
+        "run_id": {
+          "description": "Canonical semantic-evidence UUID, unique to this arm across the complete paired-evidence document and distinct from the other arm in its pair.",
+          "$ref": "#/$defs/safeId"
+        },
+        "manifest_ref": {"$ref": "#/$defs/safeId"},
+        "manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "requests_ref": {"$ref": "#/$defs/safeId"},
+        "request_stream_sha256": {"$ref": "#/$defs/sha256"},
+        "results_ref": {"$ref": "#/$defs/safeId"},
+        "result_stream_sha256": {"$ref": "#/$defs/sha256"},
+        "completion_ref": {"$ref": "#/$defs/safeId"},
+        "completion_sha256": {"$ref": "#/$defs/sha256"},
+        "record_sequence": {"const": 1},
+        "record_hash": {"$ref": "#/$defs/sha256"},
+        "head_record_hash": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "modelResource": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ref", "sha256", "bytes", "role"],
+      "properties": {
+        "ref": {"$ref": "#/$defs/safeId"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 0},
+        "role": {"$ref": "#/$defs/safeId"}
+      }
+    }
+  }
+}

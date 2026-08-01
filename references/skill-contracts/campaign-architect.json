@@ -11,7 +11,7 @@
           "end_char": 43,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 99,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 45
         },
@@ -41,7 +41,7 @@
           "end_char": 156,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 101
         },
@@ -56,7 +56,7 @@
           "end_char": 227,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 158
         },
@@ -71,7 +71,7 @@
           "end_char": 379,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 229
         },
@@ -83,15 +83,15 @@
     "source": {
       "path": "ad/research/campaign-architect/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde"
+      "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 36
       },
@@ -132,7 +132,7 @@
           "end_char": 133,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -150,7 +150,7 @@
           "end_char": 326,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 134
         },
@@ -168,7 +168,7 @@
           "end_char": 533,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 327
         },
@@ -183,7 +183,7 @@
     "summary_ref": {
       "path": "ad/research/campaign-architect/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde"
+      "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -198,8 +198,8 @@
     "name": "campaign-architect",
     "path": "ad/research/campaign-architect/SKILL.md",
     "phase": "research",
-    "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
-    "version": "19.0.0"
+    "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<account/campaign goal> [platforms] [target keywords or themes]",
@@ -213,7 +213,7 @@
           "end_char": 133,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -228,7 +228,7 @@
           "end_char": 243,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 135
         },
@@ -240,7 +240,7 @@
     "source": {
       "path": "ad/research/campaign-architect/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde"
+      "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81"
     }
   },
   "output_contract": {
@@ -255,7 +255,7 @@
           "end_char": 85,
           "path": "ad/research/campaign-architect/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde",
+          "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -266,7 +266,7 @@
     "source": {
       "path": "ad/research/campaign-architect/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde"
+      "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81"
     },
     "summary": "a paid account structure (campaign-type choice, ad-group/asset-group map, targeting + match-type plan, negative/exclusion lists), a paid↔organic cannibalization read, a ROAS **A** dimension score with structure notes, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -281,8 +281,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -291,7 +291,7 @@
     "source": {
       "path": "ad/research/campaign-architect/SKILL.md",
       "section": "frontmatter",
-      "sha256": "12ad9b52a1e850193642e9a902852b7457232d472debbb339a6665a12a178bde"
+      "sha256": "fc9743000f1ab36c7e5b65c8ef125ecdac625d826a9740942561a644a82f7e81"
     },
     "trigger_phrases": [
       "audit paid-vs-organic cannibalization",

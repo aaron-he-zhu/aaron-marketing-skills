@@ -98,6 +98,21 @@
       "timeout_seconds": 120
     },
     {
+      "id": "generated-context-projections",
+      "command": ["{python}", "-m", "unittest", "tests.test_claude_index", "tests.test_skill_capsules", "tests.test_router_facades", "tests.test_auditor_runtime"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "context-profile-certification-regressions",
+      "command": ["{python}", "-m", "unittest", "tests.test_context_profile_resolver", "tests.test_context_assembly", "tests.test_prompt_profile_evidence"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "blind-routing-v3-regressions",
+      "command": ["{python}", "-m", "unittest", "tests.test_codex_behavior_adapter"],
+      "timeout_seconds": 120
+    },
+    {
       "id": "standalone-auditor-runtime",
       "command": ["{python}", "scripts/generate-auditor-runtime.py", "--check"],
       "timeout_seconds": 60
@@ -121,6 +136,16 @@
       "id": "context-budget-regressions",
       "command": ["{python}", "tests/test_context_budget.py"],
       "timeout_seconds": 60
+    },
+    {
+      "id": "context-efficiency",
+      "command": ["{python}", "scripts/check-context-efficiency.py", "--check"],
+      "timeout_seconds": 120
+    },
+    {
+      "id": "context-measurement-and-isolation-regressions",
+      "command": ["{python}", "-m", "unittest", "tests.test_context_usage", "tests.test_context_efficiency", "tests.test_isolated_evals"],
+      "timeout_seconds": 120
     },
     {
       "id": "routing-lint",

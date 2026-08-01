@@ -11,7 +11,7 @@
           "end_char": 85,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 229,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 87
         },
@@ -41,7 +41,7 @@
           "end_char": 325,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 231
         },
@@ -53,15 +53,15 @@
     "source": {
       "path": "narrative/trace/category-narrative-mapper/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5"
+      "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 38
       },
@@ -111,7 +111,7 @@
           "end_char": 166,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -129,7 +129,7 @@
           "end_char": 367,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 167
         },
@@ -147,7 +147,7 @@
           "end_char": 554,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 368
         },
@@ -165,7 +165,7 @@
           "end_char": 901,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 556
         },
@@ -178,7 +178,7 @@
     "summary_ref": {
       "path": "narrative/trace/category-narrative-mapper/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5"
+      "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -193,8 +193,8 @@
     "name": "category-narrative-mapper",
     "path": "narrative/trace/category-narrative-mapper/SKILL.md",
     "phase": "trace",
-    "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
-    "version": "19.0.0"
+    "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<category / product> [named competitors] [competitor URLs]",
@@ -208,7 +208,7 @@
           "end_char": 145,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -223,7 +223,7 @@
           "end_char": 281,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 147
         },
@@ -238,7 +238,7 @@
           "end_char": 360,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 283
         },
@@ -253,7 +253,7 @@
           "end_char": 471,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 362
         },
@@ -265,7 +265,7 @@
     "source": {
       "path": "narrative/trace/category-narrative-mapper/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5"
+      "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab"
     }
   },
   "output_contract": {
@@ -280,7 +280,7 @@
           "end_char": 75,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -296,7 +296,7 @@
           "end_char": 416,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 77
         },
@@ -312,7 +312,7 @@
           "end_char": 514,
           "path": "narrative/trace/category-narrative-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5",
+          "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab",
           "span_basis": "field-text",
           "start_char": 418
         },
@@ -323,7 +323,7 @@
     "source": {
       "path": "narrative/trace/category-narrative-mapper/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5"
+      "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab"
     },
     "summary": "a category narrative map — the dominant category stories and points of view, the language conventions and framing clichés (approved/overused terms), a per-competitor narrative teardown table (arc, claimed onlyness sentence, proof pattern, primary framing), and a messaging-drift note per rival (today's copy vs archived copy, with as-of dates) — every line labeled Measured / User-provided / Estimated, plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -338,8 +338,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -348,7 +348,7 @@
     "source": {
       "path": "narrative/trace/category-narrative-mapper/SKILL.md",
       "section": "frontmatter",
-      "sha256": "971245d4f1081b9d3373e6424f2ed350239adb9150fb52a0cad72fbb8f550ba5"
+      "sha256": "c4b0fe19980ab430f8186f8a6f9ee37d338dba9edd277e429512d491b14623ab"
     },
     "trigger_phrases": [
       "find the language conventions in our market",

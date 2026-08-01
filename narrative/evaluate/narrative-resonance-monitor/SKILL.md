@@ -4,13 +4,13 @@ slug: aaron-narrative-resonance-monitor
 displayName: "Narrative Resonance Monitor · 叙事共鸣监测"
 summary: "回声率/AI回答感知/份额之声/共鸣信号"
 description: 'Use when the user asks to "measure how our narrative is landing", "track echo rate against our canon lexicon", or "check how AI answer engines describe our brand"; produces a resonance report — echo rate (overlap of market language with the narrative-registry canon lexicon, method declared), AI-answer perception via tavily.py --answer (proxy-labeled), share-of-voice on a locked competitor panel (reusing share-of-voice-tracker), and resonance signals from bluesky.py / gdelt.py / pageviews.py — every number labeled Measured / proxy / User-provided, feeding the TALE E dimension and the upstream of the E1 evidence-integrity veto. Not for rebuilding share-of-voice machinery — use share-of-voice-tracker; not for own-site GA4/GSC analytics — use performance-monitor; not for scoring TALE profile result — use narrative-quality-auditor; not for adjudicating claims — use offer-claims-registry. 回声率/AI回答感知/份额之声/共鸣信号'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use in the TALE Evaluate phase to measure whether the durable narrative is resonating in the market: echo rate (market language overlap with the canon lexicon, method stated), AI-answer perception (how answer engines describe the brand vs the canon, tavily.py --answer, proxy-labeled), share-of-voice on a locked competitor panel (reusing share-of-voice-tracker), and public resonance signals via bluesky.py / gdelt.py / pageviews.py. The resonance-evidence feed for the E1 veto — every proxy number labeled proxy, never Measured. Not for scoring TALE profile result (that is narrative-quality-auditor) or own-site analytics (performance-monitor)."
 argument-hint: "<brand / narrative> [canon lexicon path] [competitor panel] [platforms]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Narrative Resonance Monitor

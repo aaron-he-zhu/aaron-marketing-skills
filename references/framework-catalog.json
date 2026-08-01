@@ -1,5 +1,5 @@
 {
-  "catalog_version": "19.0.0",
+  "catalog_version": "19.1.0",
   "semantics": {
     "external_validity": "advisory-until-outcome-calibrated",
     "score_states": [

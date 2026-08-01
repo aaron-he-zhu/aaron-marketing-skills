@@ -532,7 +532,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:117",
+      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:125",
       "condition_text": "Asset/technical fixes: launch-asset-packager",
       "documentation_required": true,
       "exception": {
@@ -564,7 +564,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:118",
+      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:126",
       "condition_text": "Execute approved plan: launch-day-conductor",
       "documentation_required": true,
       "exception": null,
@@ -596,7 +596,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:119",
+      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:127",
       "condition_text": "Outcome monitoring: launch-monitor",
       "documentation_required": true,
       "exception": null,
@@ -624,7 +624,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:116",
+      "condition_source": "launch/mobilize/launch-readiness-auditor/SKILL.md:124",
       "condition_text": "Stage/commitment facts: launch-registry",
       "documentation_required": true,
       "exception": null,
@@ -655,7 +655,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/launch-registry/SKILL.md:75",
+      "condition_source": "protocol/launch-registry/SKILL.md:82",
       "condition_text": "Execute approved plan: launch-day-conductor",
       "documentation_required": true,
       "exception": null,
@@ -684,7 +684,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "protocol/launch-registry/SKILL.md:74",
+      "condition_source": "protocol/launch-registry/SKILL.md:81",
       "condition_text": "Run preflight: launch-readiness-auditor",
       "documentation_required": true,
       "exception": null,
@@ -714,7 +714,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/launch-registry/SKILL.md:72",
+      "condition_source": "protocol/launch-registry/SKILL.md:79",
       "condition_text": "Plan tier/type: launch-tier-planner",
       "documentation_required": true,
       "exception": null,
@@ -743,7 +743,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/launch-registry/SKILL.md:73",
+      "condition_source": "protocol/launch-registry/SKILL.md:80",
       "condition_text": "Plan window: launch-window-planner",
       "documentation_required": true,
       "exception": null,

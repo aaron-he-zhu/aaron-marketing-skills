@@ -11,7 +11,7 @@
           "end_char": 129,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 248,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 131
         },
@@ -41,7 +41,7 @@
           "end_char": 300,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 250
         },
@@ -56,7 +56,7 @@
           "end_char": 377,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 302
         },
@@ -71,7 +71,7 @@
           "end_char": 482,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 379
         },
@@ -83,7 +83,7 @@
     "source": {
       "path": "ad/activate/conversion-value-mapper/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13"
+      "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6"
     }
   },
   "context_hints": {
@@ -132,7 +132,7 @@
           "end_char": 175,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -150,7 +150,7 @@
           "end_char": 593,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 177
         },
@@ -168,7 +168,7 @@
           "end_char": 797,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 595
         },
@@ -183,7 +183,7 @@
     "summary_ref": {
       "path": "ad/activate/conversion-value-mapper/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13"
+      "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -198,8 +198,8 @@
     "name": "conversion-value-mapper",
     "path": "ad/activate/conversion-value-mapper/SKILL.md",
     "phase": "activate",
-    "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
-    "version": "19.0.0"
+    "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<account/offer topic> [bid goal: tROAS|max-value] [GA4 purchase-value + margin/COGS export]",
@@ -213,7 +213,7 @@
           "end_char": 64,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -228,7 +228,7 @@
           "end_char": 84,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 66
         },
@@ -240,7 +240,7 @@
     "source": {
       "path": "ad/activate/conversion-value-mapper/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13"
+      "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6"
     }
   },
   "output_contract": {
@@ -255,7 +255,7 @@
           "end_char": 88,
           "path": "ad/activate/conversion-value-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13",
+          "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -266,7 +266,7 @@
     "source": {
       "path": "ad/activate/conversion-value-mapper/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13"
+      "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6"
     },
     "summary": "a conversion value-model spec (per-conversion value + net-value/margin adjustment + rule logic), a static-vs-dynamic value-rule decision, proxy values for non-revenue actions with a stated derivation, a value-vs-count reconciliation (does the value the platform receives track the profit the business books?), and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -281,8 +281,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -291,7 +291,7 @@
     "source": {
       "path": "ad/activate/conversion-value-mapper/SKILL.md",
       "section": "frontmatter",
-      "sha256": "89d6ecda885790be8ae8e125311b366a8dcb4f7ad2bbc50c33577c83ad15ba13"
+      "sha256": "1761108313685e0dfcc44ba05b74e2896ac436bf241c1e85ed6ae71ff1133cf6"
     },
     "trigger_phrases": [
       "build value rules for lead / phone / signup conversions",

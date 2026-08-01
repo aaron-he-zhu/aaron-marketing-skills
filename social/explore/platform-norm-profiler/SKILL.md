@@ -4,13 +4,13 @@ slug: aaron-platform-norm-profiler
 displayName: "Platform Norm Profiler · 平台规范档案"
 summary: "平台规范卡/字符限制/折叠线/话题标签规范/算法侧重/防过期标注"
 description: 'Use when the user asks to "build the norm card for this platform", "what are the char limits and visible-fold cutoffs here", "is the LinkedIn link-in-first-comment thing documented or folklore", or "which of our platform cards are stale"; maintains the dated, versioned per-platform norm cards in the references/platforms/ pack — char limits, visible-fold cutoffs, hashtag norms, format/aspect specs, link and first-comment placement, disclosure-label mechanics, algorithm emphases (e.g. 小红书 search+saves weighting) — every row labeled platform-documented (official doc, Measured) or Estimated-folklore (named source) with last-verified and review-by dates, and any card past its review date flagged stale rather than trusted. Extends the single pack in place; never forks a second one. Not for picking which channels to run — use channel-portfolio-planner. 平台规范卡/字符限制/折叠线/话题标签/算法侧重/过期标记'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when building or refreshing per-platform organic-engagement norm cards before drafting or scheduling: char limits and visible-fold cutoffs, hashtag and link/first-comment norms, format and aspect specs, disclosure-label mechanics, and algorithm emphases — each row labeled platform-documented (Measured, official doc) or Estimated-folklore (named source), dated last-verified and review-by. Also for staleness sweeps: any card past its review date is flagged, not trusted. Feeds ECHO C3/C4/C9 and E4. Not for choosing channels (channel-portfolio-planner) or drafting the posts (social-creative-builder)."
 argument-hint: "<platform(s) or 'staleness sweep'> [rows to verify]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "social", "phase": "explore", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "explore"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "social", "phase": "explore", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "explore"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Platform Norm Profiler

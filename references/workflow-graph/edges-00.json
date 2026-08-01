@@ -4,7 +4,7 @@
   "edges": [
     {
       "condition_code": "unclassified",
-      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:121",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:129",
       "condition_text": "Attribution: attribution-reconciler",
       "documentation_required": true,
       "exception": null,
@@ -32,7 +32,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:123",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:131",
       "condition_text": "Pacing: budget-pacing-monitor",
       "documentation_required": true,
       "exception": null,
@@ -60,7 +60,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:122",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:130",
       "condition_text": "Structure/audience: campaign-architect",
       "documentation_required": true,
       "exception": {
@@ -92,7 +92,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:119",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:127",
       "condition_text": "Tracking: conversion-signal-qa",
       "documentation_required": true,
       "exception": null,
@@ -120,7 +120,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:120",
+      "condition_source": "ad/activate/ad-account-auditor/SKILL.md:128",
       "condition_text": "Claims/disclosures: offer-claims-registry — the approved claim/disclosure state behind ROAS-O1",
       "documentation_required": true,
       "exception": null,

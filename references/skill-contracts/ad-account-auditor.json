@@ -11,7 +11,7 @@
           "end_char": 141,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 414,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 143
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "ad/activate/ad-account-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0"
+      "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f"
     }
   },
   "context_hints": {
@@ -47,14 +47,14 @@
         "path": "ad/activate/ad-account-auditor/references/auditor-runtime.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "d6030c1a831f8e93faf89b094afe0ad49e379e6d0370d7b60d5522b9b0dbbb65",
-        "source_line": 40
+        "sha256": "e39e21ca6c3ee95e3662e73d798a6a346bff392a752c172e0ac0b84c445c17fe",
+        "source_line": 44
       },
       {
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "c5736873999d3d858df910525afe293311ce76df926f3319fe6132766b6e8135",
+        "sha256": "dc3b8367bbb87a1626d77f74f92a801871edd8b5230aae2f0e09d5cf017b823e",
         "source_line": 40
       },
       {
@@ -62,28 +62,28 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
-        "source_line": 97
+        "source_line": 105
       },
       {
         "path": "references/roas-benchmark.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
-        "source_line": 40
+        "source_line": 42
       },
       {
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
-        "source_line": 40
+        "source_line": 43
       },
       {
         "path": "references/scoring-semantics.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "c4e3eb8c5dc6d3e5dd2d30594a85b2610df2addce829e305c365ce9311b6b59b",
-        "source_line": 40
+        "source_line": 41
       }
     ],
     "project_paths": []
@@ -101,7 +101,7 @@
           "end_char": 72,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -119,7 +119,7 @@
           "end_char": 227,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 73
         },
@@ -137,7 +137,7 @@
           "end_char": 316,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 228
         },
@@ -155,7 +155,7 @@
           "end_char": 407,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 317
         },
@@ -173,7 +173,7 @@
           "end_char": 489,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 408
         },
@@ -205,8 +205,8 @@
     "name": "ad-account-auditor",
     "path": "ad/activate/ad-account-auditor/SKILL.md",
     "phase": "activate",
-    "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
-    "version": "19.0.0"
+    "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<campaign + outcome exports> <currency/window/lag> [profile]",
@@ -220,7 +220,7 @@
           "end_char": 46,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -232,7 +232,7 @@
     "source": {
       "path": "ad/activate/ad-account-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0"
+      "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f"
     }
   },
   "output_contract": {
@@ -247,7 +247,7 @@
           "end_char": 32,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0",
+          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -258,7 +258,7 @@
     "source": {
       "path": "ad/activate/ad-account-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0"
+      "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f"
     },
     "summary": "only a permissioned v3 artifact.",
     "summary_source": "writes-fallback",
@@ -273,8 +273,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -283,7 +283,7 @@
     "source": {
       "path": "ad/activate/ad-account-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "cf9751434ea8fcd0b24d58a14c19ef4162cef2962b4e1ed846b0d86c0ec661b0"
+      "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f"
     },
     "trigger_phrases": [
       "Use when checking whether a paid account or portfolio is safe to launch or scale. Requires normalized own-data outcomes, attribution windows, currency, conversion lag, and business constraints."

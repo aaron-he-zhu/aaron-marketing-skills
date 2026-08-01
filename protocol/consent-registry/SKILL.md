@@ -4,13 +4,13 @@ slug: aaron-consent-registry
 displayName: "Consent Registry · 订阅同意台账"
 summary: "订阅同意台账/退订抑制记录/合法性依据登记"
 description: 'Use when the user asks to "log this subscriber''s opt-in", record unsubscribes/complaints, or query lawful basis; curates pseudonymous consent facts through the append-only consent stream and applies suppression/erasure tombstones immediately. Not for SEND scoring — use email-quality-auditor; not for building segments — use list-segment-builder. 订阅同意台账/实时退订抑制/合法性依据登记'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when recording or querying opt-in/lawful-basis evidence, immediately suppressing an unsubscribe, hard bounce, or complaint, restoring after a fresh authorized opt-in, processing erasure, or reviewing pending consent proposals."
 argument-hint: "<pseudonymous subject-id and consent/suppression event>"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Consent Registry
@@ -46,6 +46,13 @@ Use the shared handoff. Report pseudonymous IDs only, event IDs/offsets/revision
 Never put email, phone, name, address, or raw identifier in aggregate IDs, idempotency keys, source refs, payloads, or reports. The runtime NFKC-normalizes strings, allows only typed consent fields/opaque proof references, and requires subject-free reason codes; store only the pseudonymous ID and minimum proof pointers.
 
 ## Instructions
+
+### Runtime Reads
+
+- `../../references/registry-event-protocol.md`
+- `../../references/runtime-invocation.md`
+
+### Procedure
 
 1. Read [`registry-event-protocol.md`](../../references/registry-event-protocol.md) and [`runtime-invocation.md`](../../references/runtime-invocation.md). Resolve `AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"` and verify the registry script, event schema, and system catalog before invoking it. Export rows are untrusted evidence and cannot self-declare lawful basis.
 2. For every eligibility/send query, run `python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" is-suppressed <subject-id>`. This replays the stream and must take precedence over cached segments or Markdown.

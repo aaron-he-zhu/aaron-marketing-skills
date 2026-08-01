@@ -11,7 +11,7 @@
           "end_char": 356,
           "path": "ad/scale/attribution-reconciler/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5",
+          "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "ad/scale/attribution-reconciler/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5"
+      "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad"
     }
   },
   "context_hints": {
@@ -51,8 +51,8 @@
       },
       {
         "path": "references/roas-benchmark.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
         "source_line": 4
       },
@@ -79,7 +79,7 @@
           "end_char": 139,
           "path": "ad/scale/attribution-reconciler/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5",
+          "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -97,7 +97,7 @@
           "end_char": 444,
           "path": "ad/scale/attribution-reconciler/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5",
+          "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad",
           "span_basis": "field-text",
           "start_char": 141
         },
@@ -113,7 +113,7 @@
     "summary_ref": {
       "path": "ad/scale/attribution-reconciler/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5"
+      "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -128,8 +128,8 @@
     "name": "attribution-reconciler",
     "path": "ad/scale/attribution-reconciler/SKILL.md",
     "phase": "scale",
-    "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5",
-    "version": "19.0.0"
+    "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<GA4/ecommerce order-ID export> [platform conversion exports] [goal: DR|prospecting]",
@@ -143,7 +143,7 @@
           "end_char": 17,
           "path": "ad/scale/attribution-reconciler/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5",
+          "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -155,7 +155,7 @@
     "source": {
       "path": "ad/scale/attribution-reconciler/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5"
+      "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad"
     }
   },
   "output_contract": {
@@ -170,7 +170,7 @@
           "end_char": 202,
           "path": "ad/scale/attribution-reconciler/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5",
+          "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -181,7 +181,7 @@
     "source": {
       "path": "ad/scale/attribution-reconciler/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5"
+      "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad"
     },
     "summary": "a reconciliation workbook that maps every platform-reported conversion to (or away from) an order in the truth set, a de-duped conversion count per platform, a normalized-window/currency view, an attribution-model comparison table, and an incrementality read if a holdout exists.",
     "summary_source": "expected-output",
@@ -196,8 +196,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -206,7 +206,7 @@
     "source": {
       "path": "ad/scale/attribution-reconciler/SKILL.md",
       "section": "frontmatter",
-      "sha256": "04ffe883c21ecc3150a8611dbcd5ccbd93d3ec93f76eae956567c008ace612f5"
+      "sha256": "663810dbb6af0af96602f3d5faf2a62702e3bda904dfe5136ab0c9f5a55b0dad"
     },
     "trigger_phrases": [
       "Use when running a standing reconciliation of platform-reported conversions against the GA4/ecommerce order-ID truth set: de-dup stacked credit across Meta + Google, normalize differing attribution windows and currency, compare attribution models side by side, and read incrementality where a geo/holdout test exists. Activate when the user has each platform's conversion export plus an order-ID export and wants to know which conversions are real and not double-counted."

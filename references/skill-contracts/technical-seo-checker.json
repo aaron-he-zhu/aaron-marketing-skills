@@ -11,7 +11,7 @@
           "end_char": 62,
           "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 112,
           "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518",
           "span_basis": "field-text",
           "start_char": 64
         },
@@ -41,7 +41,7 @@
           "end_char": 176,
           "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518",
           "span_basis": "field-text",
           "start_char": 114
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+      "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518"
     }
   },
   "context_hints": {
@@ -158,7 +158,7 @@
           "end_char": 130,
           "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -173,7 +173,7 @@
     "summary_ref": {
       "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+      "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -186,8 +186,8 @@
     "name": "technical-seo-checker",
     "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
     "phase": "tune",
-    "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
-    "version": "19.0.0"
+    "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<URL or domain>",
@@ -201,7 +201,7 @@
           "end_char": 90,
           "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -213,7 +213,7 @@
     "source": {
       "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+      "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518"
     }
   },
   "output_contract": {
@@ -228,7 +228,7 @@
           "end_char": 135,
           "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb",
+          "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
     "source": {
       "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+      "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518"
     },
     "summary": "a scored diagnosis, prioritized repair plan, and a short handoff summary ready for `memory/seo-geo/tune/technical-seo-checker/`.",
     "summary_source": "expected-output",
@@ -254,8 +254,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -264,7 +264,7 @@
     "source": {
       "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
       "section": "frontmatter",
-      "sha256": "b12d0a7616ea3eff63b5c11ec17974596e2f99cefbdcaecdf8c991f0fc0be0cb"
+      "sha256": "2dbbfd9f23b0351d3cd44b5fde50093fc373a7c1b358201b27642d1a0ff3f518"
     },
     "trigger_phrases": [
       "check technical SEO"

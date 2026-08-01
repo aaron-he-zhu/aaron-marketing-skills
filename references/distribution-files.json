@@ -26,14 +26,23 @@
         "references/capability-profiles.json",
         "references/capability-profiles.md",
         "references/capability-profiles.schema.json",
+        "references/context-modules.json",
+        "references/context-modules.schema.json",
         "references/framework-catalog.json",
+        "references/host-capability-profiles.json",
+        "references/host-capability-profiles.schema.json",
+        "references/policy-kernel.md",
         "references/profile-config.schema.json",
         "references/profile-resolution.schema.json",
+        "references/prompt-profiles.json",
+        "references/prompt-profiles.schema.json",
+        "references/router-facade-sidecar.schema.json",
         "references/scoring-semantics.md",
         "references/system-catalog.json",
         "scripts/connectors/README.md"
       ],
       "runtime_scripts": [
+        "scripts/context-profile-resolver.py",
         "scripts/profile-resolver.py",
         "scripts/rubric-score.py"
       ],
@@ -50,7 +59,7 @@
         ],
         "package_ceiling": {
           "max_files": 350,
-          "max_bytes": 3000000
+          "max_bytes": 3300000
         },
         "add": {
           "root_files": [],
@@ -68,7 +77,7 @@
         ],
         "package_ceiling": {
           "max_files": 400,
-          "max_bytes": 3700000
+          "max_bytes": 3800000
         },
         "add": {
           "root_files": [],
@@ -99,24 +108,27 @@
           "owner-capability"
         ],
         "package_ceiling": {
-          "max_files": 460,
-          "max_bytes": 5200000
+          "max_files": 560,
+          "max_bytes": 6500000
         },
         "add": {
           "root_files": [],
           "trees": [
             "hooks",
             "memory/templates",
+            "references/skill-capsules",
             "references/workflow-graph"
           ],
           "runtime_references": [
             "docs/workflow-graph.md",
             "references/audit-loop-protocol.md",
             "references/audit-loop-state.schema.json",
+            "references/context-assembly.schema.json",
             "references/context-manifest.schema.json",
             "references/context-planning.md",
             "references/context-request.schema.json",
             "references/context-resolution.md",
+            "references/prompt-profile-release-certificate.schema.json",
             "references/registry-event-protocol.md",
             "references/registry-event.schema.json",
             "references/run-envelope.schema.json",
@@ -125,6 +137,8 @@
             "references/runtime-controller.md",
             "references/runtime-protocol.md",
             "references/save-point.schema.json",
+            "references/skill-capsule-index.schema.json",
+            "references/skill-capsule.schema.json",
             "references/skill-machine-contract-index.schema.json",
             "references/skill-machine-contract.schema.json",
             "references/turn-snapshot.schema.json",
@@ -144,6 +158,7 @@
             "scripts/audit-loop.py",
             "scripts/audit-trends.py",
             "scripts/check-memory-private.py",
+            "scripts/context-assembly.py",
             "scripts/context-plan.py",
             "scripts/context-resolver.py",
             "scripts/registry-events.py",
@@ -164,6 +179,7 @@
   "standalone-skill": {
     "profile": "lite",
     "capabilities": [
+      "authored-workflows",
       "inline-delivery",
       "canonical-state-read"
     ],

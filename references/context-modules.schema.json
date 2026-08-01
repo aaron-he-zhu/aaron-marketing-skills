@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/context-modules.schema.json",
+  "title": "Aaron context module catalog",
+  "description": "Typed separation of controller, model, and tool context with progressive-disclosure and prompt-profile rules.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "consumer_order",
+    "load_policy_order",
+    "prompt_profile_order",
+    "host_profile_order",
+    "exclusive_groups",
+    "modules"
+  ],
+  "properties": {
+    "$schema": {"const": "./context-modules.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "consumer_order": {"const": ["controller", "model", "tool"]},
+    "load_policy_order": {"const": ["always", "activation", "conditional", "lookup-only", "fallback"]},
+    "prompt_profile_order": {"const": ["explicit", "balanced", "lean"]},
+    "host_profile_order": {
+      "const": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ]
+    },
+    "exclusive_groups": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model-policy-representation", "model-skill-representation"],
+      "properties": {
+        "model-policy-representation": {"$ref": "#/$defs/exclusiveGroup"},
+        "model-skill-representation": {"$ref": "#/$defs/exclusiveGroup"}
+      }
+    },
+    "modules": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 32,
+      "items": {"$ref": "#/$defs/module"}
+    }
+  },
+  "$defs": {
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96,
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "exclusiveGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["consumer", "selection"],
+      "properties": {
+        "consumer": {"const": "model"},
+        "selection": {"const": "exactly-one-primary-per-applicable-host-and-prompt-profile"}
+      }
+    },
+    "module": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "module_id",
+        "consumer",
+        "load_policy",
+        "source_role",
+        "materialization",
+        "prompt_profiles",
+        "host_profiles",
+        "exclusive_group",
+        "condition_code"
+      ],
+      "properties": {
+        "module_id": {"$ref": "#/$defs/safeId"},
+        "consumer": {"enum": ["controller", "model", "tool"]},
+        "load_policy": {"enum": ["always", "activation", "conditional", "lookup-only", "fallback"]},
+        "source_role": {
+          "enum": [
+            "skill-definition",
+            "skill-capsule",
+            "machine-contract",
+            "shared-skill-contract",
+            "policy-kernel",
+            "explicit-runtime-read",
+            "authored-reference",
+            "project-evidence",
+            "routing-shard",
+            "connector-catalog",
+            "connector-implementation"
+          ]
+        },
+        "materialization": {"enum": ["body", "metadata", "on-demand"]},
+        "prompt_profiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["explicit", "balanced", "lean"]}
+        },
+        "host_profiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "standalone-skill-host",
+              "generic-shared-root-host",
+              "claude-code-plugin-host"
+            ]
+          }
+        },
+        "exclusive_group": {
+          "oneOf": [
+            {"type": "null"},
+            {"enum": ["model-policy-representation", "model-skill-representation"]}
+          ]
+        },
+        "condition_code": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]
+        }
+      }
+    }
+  }
+}

@@ -11,7 +11,7 @@
           "end_char": 68,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 121,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 70
         },
@@ -38,15 +38,15 @@
     "source": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a"
+      "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 38
       },
@@ -59,15 +59,15 @@
       },
       {
         "path": "references/skill-contract.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
-        "source_line": 54
+        "source_line": 34
       },
       {
         "path": "references/tale-benchmark.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
         "source_line": 4
       }
@@ -96,7 +96,7 @@
           "end_char": 179,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -114,7 +114,7 @@
           "end_char": 396,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 180
         },
@@ -132,7 +132,7 @@
           "end_char": 600,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 397
         },
@@ -150,7 +150,7 @@
           "end_char": 974,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 602
         },
@@ -163,7 +163,7 @@
     "summary_ref": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a"
+      "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -178,8 +178,8 @@
     "name": "narrative-resonance-monitor",
     "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
     "phase": "evaluate",
-    "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
-    "version": "19.0.0"
+    "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<brand / narrative> [canon lexicon path] [competitor panel] [platforms]",
@@ -193,7 +193,7 @@
           "end_char": 218,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -208,7 +208,7 @@
           "end_char": 350,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 220
         },
@@ -223,7 +223,7 @@
           "end_char": 592,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 352
         },
@@ -238,7 +238,7 @@
           "end_char": 671,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 594
         },
@@ -250,7 +250,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a"
+      "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc"
     }
   },
   "output_contract": {
@@ -265,7 +265,7 @@
           "end_char": 71,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -281,7 +281,7 @@
           "end_char": 381,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a",
+          "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc",
           "span_basis": "field-text",
           "start_char": 73
         },
@@ -292,7 +292,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a"
+      "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc"
     },
     "summary": "a resonance report — an echo rate with its matching method and corpus declared, an AI-answer perception read (proxy-labeled) comparing answer-engine descriptions against the canon, a share-of-voice figure on a named locked panel, and resonance signals from the keyless connectors — every number labeled Measured / proxy / User-provided with its as-of date, plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -307,8 +307,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -317,7 +317,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "39fa02324e01346ba4379b389995186e52dea8fa5e68b282bf46807e4601f39a"
+      "sha256": "50ea8c9cea5b0cc715c175cd86148c6b403e369feebcfd1e391cdb2a7efd48cc"
     },
     "trigger_phrases": [
       "check how AI answer engines describe our brand",

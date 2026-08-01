@@ -28,6 +28,121 @@ class GenerationError(ValueError):
     pass
 
 
+ITEM_ID = re.compile(r"([A-Za-z]+[0-9]{1,2})$")
+
+
+def expected_item_dimensions(framework):
+    expected = {}
+    for dimension, spec in framework.get("dimensions", {}).items():
+        try:
+            prefix = spec["item_prefix"]
+            count = spec["item_count"]
+            width = spec["id_width"]
+        except (KeyError, TypeError) as exc:
+            raise GenerationError("framework dimension item identity is incomplete") from exc
+        if (not isinstance(prefix, str) or not prefix
+                or not isinstance(count, int) or isinstance(count, bool) or count < 1
+                or not isinstance(width, int) or isinstance(width, bool) or width < 1):
+            raise GenerationError("framework dimension item identity is invalid")
+        for item_number in range(1, count + 1):
+            item_id = "%s%s" % (prefix, str(item_number).zfill(width))
+            if item_id in expected:
+                raise GenerationError("framework contains duplicate item identity: %s" % item_id)
+            expected[item_id] = dimension
+    if not expected:
+        raise GenerationError("framework contains no item identities")
+    return expected
+
+
+def _clean_cell(value):
+    return value.strip().strip("`").strip()
+
+
+def parse_item_definitions(framework_name, framework, benchmark_path):
+    """Compile complete human item anchors into a deterministic typed slice."""
+    expected = expected_item_dimensions(framework)
+    try:
+        text = benchmark_path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as exc:
+        raise GenerationError("cannot read framework benchmark: %s" % exc) from exc
+    parsed = {}
+
+    # CORE-EEAT, CITE, STAR, ROAS, and SEND declare item tables. Ignore later
+    # qualified veto tables: their first cell is not an unqualified expected ID.
+    for line in text.splitlines():
+        if not line.startswith("|"):
+            continue
+        cells = [_clean_cell(cell) for cell in line.strip().strip("|").split("|")]
+        if not cells:
+            continue
+        raw_item_id = cells[0].replace("`", "").replace("⛔", "").strip()
+        match = ITEM_ID.fullmatch(raw_item_id)
+        if match is None or match.group(1) not in expected or len(cells) < 2:
+            continue
+        item_id = match.group(1)
+        dimension = expected[item_id]
+        dimension_name = framework["dimensions"][dimension]["name"]
+        middle = []
+        for cell in cells[1:-1]:
+            if cell in {dimension, dimension_name}:
+                continue
+            if any(marker in cell for marker in ("GEO", "SEO", "Dual")):
+                continue
+            middle.append(cell)
+        parsed.setdefault(item_id, {
+            "dimension": dimension,
+            "name": middle[0] if middle else None,
+            "criterion": cells[-1],
+        })
+
+    # RAMP, ECHO, and TALE use compact stable-anchor paragraphs. First
+    # occurrence wins so later explanatory prose such as "`T1` does not..."
+    # cannot replace the canonical anchor.
+    marker = "## Stable Item Anchors"
+    if marker in text:
+        anchor_section = text.split(marker, 1)[1].split("Per item:", 1)[0]
+        for match in re.finditer(r"`([A-Za-z]+[0-9]{1,2})`\s+([^·\n]+)", anchor_section):
+            item_id = match.group(1)
+            if item_id not in expected:
+                continue
+            parsed.setdefault(item_id, {
+                "dimension": expected[item_id],
+                "name": None,
+                "criterion": match.group(2).strip().rstrip("."),
+            })
+
+    missing = sorted(set(expected) - set(parsed))
+    extra = sorted(set(parsed) - set(expected))
+    if missing or extra:
+        raise GenerationError(
+            "%s item definitions differ from the typed catalog (missing=%s extra=%s)"
+            % (framework_name, missing, extra)
+        )
+    veto_items = set(framework.get("veto_items", []))
+    if not veto_items.issubset(expected):
+        raise GenerationError("%s veto items are absent from item identity" % framework_name)
+    policies = framework.get("item_policies", {})
+    if not isinstance(policies, dict) or not set(policies).issubset(expected):
+        raise GenerationError("%s item policies are absent from item identity" % framework_name)
+    compiled = {}
+    for item_id, dimension in expected.items():
+        definition = parsed[item_id]
+        if definition["dimension"] != dimension or not definition["criterion"]:
+            raise GenerationError("%s item definition is invalid: %s" % (framework_name, item_id))
+        policy = dict(policies.get(item_id, {}))
+        if "veto" in policy and bool(policy["veto"]) != (item_id in veto_items):
+            raise GenerationError("%s veto policy differs for %s" % (framework_name, item_id))
+        compiled[item_id] = {
+            "qualified_id": "%s-%s" % (framework_name, item_id),
+            "dimension": dimension,
+            "name": definition["name"],
+            "criterion": definition["criterion"],
+            "veto": item_id in veto_items,
+            "policy": policy,
+        }
+    return compiled
+
+
 def load_json(path):
     try:
         with path.open(encoding="utf-8") as handle:
@@ -53,10 +168,33 @@ def build_bundle(auditor, framework_catalog):
     if framework is None:
         raise GenerationError("unknown framework for %s: %s" % (auditor["skill"], framework_name))
     source_paths = [(relative, safe_source(relative)) for relative in auditor["runtime_sources"]]
+    benchmark_path = safe_source(framework["source"])
+    if framework["source"] not in auditor["runtime_sources"]:
+        raise GenerationError(
+            "%s benchmark is absent from its declared runtime sources" % framework_name
+        )
+    items = parse_item_definitions(framework_name, framework, benchmark_path)
     snapshot = {
         "catalog_version": framework_catalog["catalog_version"],
         "semantics": framework_catalog["semantics"],
-        "frameworks": {framework_name: framework},
+        "frameworks": {
+            framework_name: {
+                **framework,
+                "items": items,
+            },
+        },
+        "standalone_observation_contract": {
+            "item_states": ["pass", "partial", "fail", "unknown", "na"],
+            "evidence_types": [
+                "measured", "user-provided", "calculated", "estimated", "proxy"
+            ],
+            "result": {
+                "status": ["NEEDS_INPUT", "BLOCKED"],
+                "verdict": "UNDECIDED",
+                "score_state": "NOT_SCORED",
+                "score_confidence": "not_scored",
+            },
+        },
     }
     snapshot_text = json.dumps(snapshot, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
     digest = hashlib.sha256()
@@ -74,9 +212,10 @@ def build_bundle(auditor, framework_catalog):
         "- **Catalog version:** %s" % framework_catalog["catalog_version"],
         "- **Framework:** %s" % framework_name,
         "- **Auditor:** %s" % auditor["skill"],
+        "- **Complete item definitions:** %d" % len(items),
         "- **Source digest:** `sha256:%s`" % digest.hexdigest(),
         "",
-        "This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.",
+        "This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.",
         "",
         "## Typed Framework Snapshot",
         "",
@@ -95,7 +234,7 @@ def build_bundle(auditor, framework_catalog):
         "5. Do not write under `memory/audits/`, mutate registries, or claim a publish/ship decision. Offer the observation set for later execution in a full plugin or repository install.",
         "6. Do not search parent directories, accept an unverified runtime root, download repository files, or hand-calculate a substitute score.",
         "",
-        "The source digest binds this compact fallback to the authoritative runbook, scoring semantics, framework benchmark, run schema, and artifact schema without copying those maintenance sources into every standalone bundle.",
+        "The complete item definitions above are compiled from the authoritative benchmark. The source digest binds this compact fallback to the runbook, scoring semantics, benchmark, run schema, and artifact schema; those maintenance documents remain repository-only and are not misrepresented as separately bundled files.",
     ])
     lines.extend(["", "---", "", "End of generated standalone runtime.", ""])
     return "\n".join(lines).encode("utf-8")

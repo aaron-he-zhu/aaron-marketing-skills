@@ -4,13 +4,13 @@ slug: aaron-social-creative-builder
 displayName: "Social Creative Builder · 社媒创意包"
 summary: "一稿多平台原生改写/贴文线程/小红书笔记/轮播图规范"
 description: 'Use when the user asks to "turn this idea into posts for every platform", "write the X thread / LinkedIn post / 小红书 note", or "spec the carousel slides"; turns one idea into N platform-native ready-to-paste packages — post/thread, caption, Threads text, 小红书 note, link post with first-comment placement — each adapted per the dated platform norm card (never verbatim cross-posting), every product claim held to approved claims-ledger wording or flagged [needs source], every variant tagged {formula | hook family | CTA type | signal optimized}, plus a carousel slide-spec mode (intro/content/outro slide roles, per-element char budgets, 小红书 3:4 / IG 4:5 / LinkedIn document PDF artboards, text-safe-zone + alt-text checklist). Not for creator deliverable briefs — use brief-generator; not for repurposing existing assets with paid boost — use content-amplifier. 社媒文案/一稿多发改写/小红书笔记/轮播图脚本'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when converting one approved idea into platform-native social packages: post/thread, caption, Threads text, 小红书 note, link post with first-comment placement, or a carousel slide spec — each adapted to the dated norm card, the voice card, and approved claim wording, delivered ready-to-paste for a human to publish. Not the posting calendar, not the video beat sheet, and never auto-posting."
 argument-hint: "<idea/topic> <target platforms> [carousel mode] [destination URL]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "social", "phase": "craft", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "craft"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "social", "phase": "craft", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "craft"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Social Creative Builder

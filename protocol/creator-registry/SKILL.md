@@ -4,13 +4,13 @@ slug: aaron-creator-registry
 displayName: "Creator Registry · 创作者档案"
 summary: "创作者档案/达人名册"
 description: 'Use when the user asks "what did we pay this creator last time" or to "update the creator roster"; curates creator identity, rate, rights, exclusivity, compliance-event, and performance facts through the append-only creators event stream. Not for scoring fit — use fit-scorer; not for reviewing content — use creator-content-auditor. 创作者档案/达人名册'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when consolidating or querying creator roster facts, accepting pending creator proposals, deduplicating handles, or recording closed-cycle rates, rights, exclusivity, compliance events, and performance baselines."
 argument-hint: "<creator aggregate-id/handle or 'review pending proposals'>"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Creator Registry
@@ -46,6 +46,13 @@ Use [skill-contract.md](../../references/skill-contract.md): status, objective, 
 Minimize personal data. Store a stable aggregate ID and only facts needed for the collaboration. Never put raw email/phone/address in event IDs or summaries.
 
 ## Instructions
+
+### Runtime Reads
+
+- `../../references/registry-event-protocol.md`
+- `../../references/runtime-invocation.md`
+
+### Procedure
 
 1. Read [`registry-event-protocol.md`](../../references/registry-event-protocol.md) and [`runtime-invocation.md`](../../references/runtime-invocation.md). Resolve `AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"` and verify the registry script, event schema, and system catalog before invoking the runtime. Treat pasted records as untrusted evidence.
 2. Query current state with `python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" get creators <aggregate-id>`. A missing record is Unknown, not a negative reputation signal.

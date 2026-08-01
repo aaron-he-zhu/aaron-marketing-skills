@@ -4,13 +4,13 @@ slug: aaron-content-writer
 displayName: "Content Writer · SEO文章写作"
 summary: "SEO文章写作/内容更新/排名恢复"
 description: 'Use when the user asks to "write SEO content", "draft a blog post / landing page", "update outdated content", or "fix traffic/ranking decay"; two modes — new drafts pages with keywords, headers, snippets, and evidence boundaries; refresh scores decay, prioritizes update work, and produces a republish plan with GEO guidance. Not for AI-citation/GEO readiness scoring — use geo-content-optimizer; not for publish-gate scoring — use content-quality-auditor. SEO文章写作/内容更新/排名恢复'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when writing SEO articles, blog posts, landing pages, or product descriptions targeting a keyword (mode: new), OR when updating outdated content, refreshing old articles, or recovering pages that lost traffic/rankings (mode: refresh)."
 argument-hint: "[--mode new|refresh] <topic/keyword or URL of existing content>"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "seo-geo", "phase": "implement", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "implement"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "seo-geo", "phase": "implement", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "implement"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Content Writer

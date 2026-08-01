@@ -19,13 +19,30 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "references" / "system-catalog.json"
 CAPABILITY_CATALOG = ROOT / "references" / "capability-profiles.json"
+HOST_CAPABILITY_CATALOG = ROOT / "references" / "host-capability-profiles.json"
 MANIFEST = ROOT / "references" / "distribution-files.json"
+ROUTER_FACADE_GENERATOR = ROOT / "scripts" / "generate-router-facades.py"
+CONTEXT_PROFILE_RESOLVER = ROOT / "scripts" / "context-profile-resolver.py"
+ROUTER_FACADE_SIDECAR = "router-facades/sidecar-manifest.json"
+PROMPT_PROFILES_REF = "references/prompt-profiles.json"
+PROMPT_EVIDENCE_PREFIX = "references/prompt-profile-evidence/"
+PROMPT_RELEASE_CERTIFICATE_SCHEMA_REF = (
+    "references/prompt-profile-release-certificate.schema.json"
+)
+MAX_DISTRIBUTED_PROMPT_BINDINGS = 8
+MAX_PROMPT_CERTIFICATE_BYTES = 8_000_000
 IGNORED_NAMES = {".DS_Store", "__pycache__"}
 IGNORED_SUFFIXES = {".pyc", ".pyo"}
 DISTRIBUTION_MANIFEST = "distribution-manifest.json"
-MANIFEST_SCHEMA_VERSION = "1.1"
+MANIFEST_SCHEMA_VERSION = "1.2"
+PROFILE_MANIFEST_SCHEMA_VERSION = "1.1"
 LEGACY_MANIFEST_SCHEMA_VERSION = "1.0"
 PROFILE_NAMES = ("lite", "pro", "governed")
+HOST_PROFILE_NAMES = (
+    "standalone-skill-host",
+    "generic-shared-root-host",
+    "claude-code-plugin-host",
+)
 DERIVED_OUTPUT_NAMES = ("skill-contract-pack-v1",)
 SKILL_CONTRACT_TREE = "references/skill-contracts"
 SKILL_CONTRACT_PACK = "references/skill-contracts.pack.json.gz"
@@ -41,6 +58,11 @@ RUNTIME_PATH = re.compile(
     r"((?:references|scripts/connectors)/[A-Za-z0-9_./-]+\.(?:md|json|py)"
     r"|scripts/[A-Za-z0-9_-]+\.py)"  # top-level runtimes referenced in prose ship too
 )
+SAFE_PROMPT_EVIDENCE_REF = re.compile(
+    r"^references/prompt-profile-evidence/"
+    r"[A-Za-z0-9][A-Za-z0-9._/-]*\.json$"
+)
+SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
 class DistributionError(ValueError):
@@ -64,6 +86,27 @@ def canonical_compact_json(value):
         ).encode("utf-8")
     except (TypeError, ValueError) as exc:
         raise DistributionError("cannot encode compact distribution data: %s" % exc) from exc
+
+
+def strict_json_bytes(content, label):
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("duplicate key: %s" % key)
+            result[key] = value
+        return result
+
+    try:
+        return json.loads(
+            content.decode("utf-8"),
+            object_pairs_hook=unique_object,
+            parse_constant=lambda value: (_ for _ in ()).throw(
+                ValueError("non-finite constant: %s" % value)
+            ),
+        )
+    except (UnicodeDecodeError, ValueError, RecursionError) as exc:
+        raise DistributionError("%s is not strict UTF-8 JSON: %s" % (label, exc)) from exc
 
 
 def _path_label(path):
@@ -176,6 +219,67 @@ def load_json(path):
         return json.loads(read_source_bytes(relative).decode("utf-8"))
     except (UnicodeDecodeError, ValueError) as exc:
         raise DistributionError("cannot load %s: %s" % (path.relative_to(ROOT), exc)) from exc
+
+
+_ROUTER_FACADE_MODULE = None
+_CONTEXT_PROFILE_MODULE = None
+
+
+def router_facade_module():
+    global _ROUTER_FACADE_MODULE
+    if _ROUTER_FACADE_MODULE is not None:
+        return _ROUTER_FACADE_MODULE
+    source, _ = validate_source_node(
+        ROUTER_FACADE_GENERATOR.relative_to(ROOT), allow_directory=False
+    )
+    specification = importlib.util.spec_from_file_location(
+        "distribution_router_facades", source
+    )
+    if specification is None or specification.loader is None:
+        raise DistributionError("cannot load router-facade generator")
+    module = importlib.util.module_from_spec(specification)
+    specification.loader.exec_module(module)
+    _ROUTER_FACADE_MODULE = module
+    return module
+
+
+def context_profile_module():
+    global _CONTEXT_PROFILE_MODULE
+    if _CONTEXT_PROFILE_MODULE is not None:
+        return _CONTEXT_PROFILE_MODULE
+    source, _ = validate_source_node(
+        CONTEXT_PROFILE_RESOLVER.relative_to(ROOT), allow_directory=False
+    )
+    specification = importlib.util.spec_from_file_location(
+        "distribution_context_profiles", source
+    )
+    if specification is None or specification.loader is None:
+        raise DistributionError("cannot load context-profile resolver")
+    module = importlib.util.module_from_spec(specification)
+    specification.loader.exec_module(module)
+    _CONTEXT_PROFILE_MODULE = module
+    return module
+
+
+def resolve_host_profile(host_catalog, requested, distribution_kind):
+    if requested not in HOST_PROFILE_NAMES:
+        raise DistributionError("unknown host profile: %s" % requested)
+    try:
+        profiles = router_facade_module().validate_host_profiles(host_catalog)
+    except router_facade_module().RouterFacadeError as exc:
+        raise DistributionError("host capability profiles are invalid: %s" % exc) from exc
+    selected = profiles[requested]
+    if distribution_kind not in selected["compatible_distributions"]:
+        raise DistributionError(
+            "host profile %s is incompatible with %s distributions"
+            % (requested, distribution_kind)
+        )
+    definition = {"profile": requested, **selected}
+    return {
+        **definition,
+        "definition_sha256": hashlib.sha256(canonical_json(definition)).hexdigest(),
+        "catalog_sha256": hashlib.sha256(canonical_json(host_catalog)).hexdigest(),
+    }
 
 
 def _empty_entries():
@@ -696,8 +800,76 @@ def _validate_package_ceiling(
         )
 
 
+def _routing_sidecar_record(destination, host_profile):
+    path = destination / ROUTER_FACADE_SIDECAR
+    if host_profile["routing_surface"] != "router-skills":
+        if path.exists() or path.is_symlink():
+            raise DistributionError("router sidecar is forbidden for this host profile")
+        return None
+    try:
+        status = path.lstat()
+        raw = _read_checked_regular(path, status, "router facade sidecar")
+        sidecar = json.loads(raw.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, ValueError) as exc:
+        raise DistributionError("router facade sidecar is unavailable or invalid: %s" % exc) from exc
+    if (not isinstance(sidecar, dict)
+            or sidecar.get("kind") != "router-facade-sidecar"
+            or sidecar.get("host_profile") != host_profile["profile"]
+            or sidecar.get("host_profile_sha256") != host_profile["definition_sha256"]
+            or sidecar.get("facade_count") != 8
+            or sidecar.get("canonical_business_skill_count") != 120):
+        raise DistributionError("router facade sidecar identity is invalid")
+    facade_contents = {}
+    try:
+        for discipline in (
+                "narrative", "seo-geo", "social", "email", "ad",
+                "influencer", "launch", "protocol"):
+            relative = "router-facades/%s/SKILL.md" % discipline
+            facade_path = destination / relative
+            facade_status = facade_path.lstat()
+            facade_contents[relative] = _read_checked_regular(
+                facade_path, facade_status, "router facade %s" % discipline
+            )
+        catalog_path = destination / "references/system-catalog.json"
+        catalog_status = catalog_path.lstat()
+        catalog_raw = _read_checked_regular(
+            catalog_path, catalog_status, "built system catalog"
+        )
+        router_facade_module().validate_sidecar(
+            sidecar,
+            facade_contents,
+            expected_host_profile_sha256=host_profile["definition_sha256"],
+            expected_catalog_sha256=hashlib.sha256(catalog_raw).hexdigest(),
+        )
+        target_contents = {}
+        for facade in sidecar["facades"]:
+            for target in facade["targets"]:
+                relative = target["path"]
+                target_path = destination / validate_relative(relative)
+                target_status = target_path.lstat()
+                target_contents[relative] = _read_checked_regular(
+                    target_path, target_status, "router target %s" % relative
+                )
+        router_facade_module().validate_sidecar(
+            sidecar,
+            facade_contents,
+            expected_host_profile_sha256=host_profile["definition_sha256"],
+            expected_catalog_sha256=hashlib.sha256(catalog_raw).hexdigest(),
+            target_contents=target_contents,
+        )
+    except (OSError, router_facade_module().RouterFacadeError) as exc:
+        raise DistributionError("router facade sidecar validation failed: %s" % exc) from exc
+    return {
+        "path": ROUTER_FACADE_SIDECAR,
+        "sha256": hashlib.sha256(raw).hexdigest(),
+        "facade_count": sidecar["facade_count"],
+        "canonical_business_skill_count": sidecar["canonical_business_skill_count"],
+    }
+
+
 def build_manifest(
-        destination, kind, profile, source_repository=None, source_commit=None):
+        destination, kind, profile, host_profile,
+        source_repository=None, source_commit=None):
     validate_source_identity(source_repository, source_commit)
     files = _distribution_files(destination)
     _validate_package_ceiling(files, profile["package_ceiling"])
@@ -711,6 +883,14 @@ def build_manifest(
         "catalog_sha256": hashlib.sha256(read_source_bytes(
             CATALOG.relative_to(ROOT))).hexdigest(),
         "profile_definition_sha256": profile["definition_sha256"],
+        "host_profile": host_profile["profile"],
+        "host_capabilities": host_profile["capabilities"],
+        "host_profile_catalog_sha256": host_profile["catalog_sha256"],
+        "host_profile_definition_sha256": host_profile["definition_sha256"],
+        "routing_surface": host_profile["routing_surface"],
+        "reference_surface": host_profile["reference_surface"],
+        "connector_surface": host_profile["connector_surface"],
+        "routing_sidecar": _routing_sidecar_record(destination, host_profile),
         "package_ceiling": profile["package_ceiling"],
         "hash_algorithm": "sha256",
         "manifest_path": DISTRIBUTION_MANIFEST,
@@ -722,12 +902,13 @@ def build_manifest(
 
 
 def write_distribution_manifest(
-        destination, kind, profile, source_repository=None, source_commit=None):
+        destination, kind, profile, host_profile,
+        source_repository=None, source_commit=None):
     manifest_path = destination / DISTRIBUTION_MANIFEST
     if manifest_path.exists() or manifest_path.is_symlink():
         raise DistributionError("distribution manifest path already exists")
     manifest = build_manifest(
-        destination, kind, profile, source_repository, source_commit,
+        destination, kind, profile, host_profile, source_repository, source_commit,
     )
     data = canonical_json(manifest)
     _validate_package_ceiling(
@@ -748,7 +929,7 @@ def write_distribution_manifest(
 
 def verify_distribution_manifest(
         destination, expected_repository=None, expected_commit=None,
-        expected_profile=None):
+        expected_profile=None, expected_host_profile=None):
     validate_source_identity(expected_repository, expected_commit)
     path = destination / DISTRIBUTION_MANIFEST
     try:
@@ -767,27 +948,35 @@ def verify_distribution_manifest(
         "schema_version", "kind", "hash_algorithm", "manifest_path",
         "manifest_excludes", "source", "files_sha256", "files",
     }
-    current_required = legacy_required | {
+    profile_required = legacy_required | {
         "profile", "capability_ceiling", "capabilities", "catalog_sha256",
         "profile_definition_sha256", "package_ceiling",
+    }
+    host_required = profile_required | {
+        "host_profile", "host_capabilities", "host_profile_catalog_sha256",
+        "host_profile_definition_sha256", "routing_surface",
+        "reference_surface", "connector_surface", "routing_sidecar",
     }
     if not isinstance(manifest, dict):
         raise DistributionError("distribution manifest has unknown or missing fields")
     schema_version = manifest.get("schema_version")
-    required = (
-        legacy_required if schema_version == LEGACY_MANIFEST_SCHEMA_VERSION
-        else current_required
-    )
+    if schema_version == LEGACY_MANIFEST_SCHEMA_VERSION:
+        required = legacy_required
+    elif schema_version == PROFILE_MANIFEST_SCHEMA_VERSION:
+        required = profile_required
+    else:
+        required = host_required
     if set(manifest) != required:
         raise DistributionError("distribution manifest has unknown or missing fields")
     if (schema_version not in {
-                LEGACY_MANIFEST_SCHEMA_VERSION, MANIFEST_SCHEMA_VERSION}
+                LEGACY_MANIFEST_SCHEMA_VERSION, PROFILE_MANIFEST_SCHEMA_VERSION,
+                MANIFEST_SCHEMA_VERSION}
             or manifest["hash_algorithm"] != "sha256"
             or manifest["manifest_path"] != DISTRIBUTION_MANIFEST
             or manifest["manifest_excludes"] != [DISTRIBUTION_MANIFEST]
             or manifest["kind"] not in {"plugin", "standalone-skill"}):
         raise DistributionError("distribution manifest identity is invalid")
-    if schema_version == MANIFEST_SCHEMA_VERSION:
+    if schema_version in {PROFILE_MANIFEST_SCHEMA_VERSION, MANIFEST_SCHEMA_VERSION}:
         capabilities = manifest["capabilities"]
         ceiling = manifest["package_ceiling"]
         catalog_digest = manifest["catalog_sha256"]
@@ -813,6 +1002,134 @@ def verify_distribution_manifest(
             raise DistributionError("distribution manifest profile does not match")
     elif expected_profile is not None:
         raise DistributionError("legacy distribution manifest has no profile identity")
+    if schema_version == MANIFEST_SCHEMA_VERSION:
+        host_name = manifest["host_profile"]
+        host_capabilities = manifest["host_capabilities"]
+        host_catalog_digest = manifest["host_profile_catalog_sha256"]
+        host_definition_digest = manifest["host_profile_definition_sha256"]
+        host_surfaces = {
+            "standalone-skill-host": ("direct-skill", "skill-local-only", "none"),
+            "generic-shared-root-host": ("router-skills", "shared-root", "sidecar"),
+            "claude-code-plugin-host": ("slash-commands", "shared-root", "native-plugin"),
+        }
+        if (host_name not in host_surfaces
+                or not isinstance(host_capabilities, list)
+                or len(host_capabilities) != len(set(host_capabilities))
+                or any(not isinstance(item, str) or not item for item in host_capabilities)
+                or not all(isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value)
+                           for value in (host_catalog_digest, host_definition_digest))
+                or (manifest["routing_surface"], manifest["reference_surface"],
+                    manifest["connector_surface"]) != host_surfaces.get(host_name)
+                or (manifest["kind"] == "standalone-skill"
+                    and host_name != "standalone-skill-host")
+                or (manifest["kind"] == "plugin"
+                    and host_name == "standalone-skill-host")):
+            raise DistributionError("distribution manifest host profile identity is invalid")
+        required_host_capabilities = {
+            "direct-skill": {"skill-discovery", "skill-local-references"},
+            "router-skills": {
+                "skill-discovery", "skill-local-references",
+                "shared-root-references", "router-skills",
+            },
+            "slash-commands": {"skill-discovery", "slash-commands"},
+        }
+        if not required_host_capabilities[manifest["routing_surface"]].issubset(
+                set(host_capabilities)):
+            raise DistributionError("distribution manifest host capabilities are incomplete")
+        expected_host = resolve_host_profile(
+            load_json(HOST_CAPABILITY_CATALOG), host_name, manifest["kind"]
+        )
+        if (host_capabilities != expected_host["capabilities"]
+                or host_catalog_digest != expected_host["catalog_sha256"]
+                or host_definition_digest != expected_host["definition_sha256"]
+                or manifest["routing_surface"] != expected_host["routing_surface"]
+                or manifest["reference_surface"] != expected_host["reference_surface"]
+                or manifest["connector_surface"] != expected_host["connector_surface"]):
+            raise DistributionError(
+                "distribution manifest host profile does not match its typed catalog"
+            )
+        sidecar = manifest["routing_sidecar"]
+        if manifest["routing_surface"] == "router-skills":
+            if (not isinstance(sidecar, dict)
+                    or set(sidecar) != {
+                        "path", "sha256", "facade_count",
+                        "canonical_business_skill_count",
+                    }
+                    or sidecar["path"] != ROUTER_FACADE_SIDECAR
+                    or not isinstance(sidecar["sha256"], str)
+                    or not re.fullmatch(r"[0-9a-f]{64}", sidecar["sha256"])
+                    or sidecar["facade_count"] != 8
+                    or sidecar["canonical_business_skill_count"] != 120):
+                raise DistributionError("distribution manifest router sidecar is invalid")
+            sidecar_path = destination / sidecar["path"]
+            try:
+                sidecar_status = sidecar_path.lstat()
+                sidecar_bytes = _read_checked_regular(
+                    sidecar_path, sidecar_status, "router facade sidecar"
+                )
+                sidecar_value = json.loads(sidecar_bytes.decode("utf-8"))
+            except (OSError, UnicodeDecodeError, ValueError) as exc:
+                raise DistributionError("router facade sidecar cannot be verified: %s" % exc) from exc
+            if (hashlib.sha256(sidecar_bytes).hexdigest() != sidecar["sha256"]
+                    or not isinstance(sidecar_value, dict)
+                    or sidecar_value.get("host_profile") != host_name
+                    or sidecar_value.get("host_profile_sha256") != host_definition_digest
+                    or sidecar_value.get("facade_count") != sidecar["facade_count"]
+                    or sidecar_value.get("canonical_business_skill_count")
+                    != sidecar["canonical_business_skill_count"]):
+                raise DistributionError("router facade sidecar binding is invalid")
+            facade_contents = {}
+            try:
+                for discipline in (
+                        "narrative", "seo-geo", "social", "email", "ad",
+                        "influencer", "launch", "protocol"):
+                    relative = "router-facades/%s/SKILL.md" % discipline
+                    facade_path = destination / relative
+                    facade_status = facade_path.lstat()
+                    facade_contents[relative] = _read_checked_regular(
+                        facade_path, facade_status, "router facade %s" % discipline
+                    )
+                catalog_path = destination / "references/system-catalog.json"
+                catalog_status = catalog_path.lstat()
+                catalog_raw = _read_checked_regular(
+                    catalog_path, catalog_status, "built system catalog"
+                )
+                router_facade_module().validate_sidecar(
+                    sidecar_value,
+                    facade_contents,
+                    expected_host_profile_sha256=host_definition_digest,
+                    expected_catalog_sha256=hashlib.sha256(catalog_raw).hexdigest(),
+                )
+                target_contents = {}
+                for facade in sidecar_value["facades"]:
+                    for target in facade["targets"]:
+                        relative = target["path"]
+                        target_path = destination / validate_relative(relative)
+                        target_status = target_path.lstat()
+                        target_contents[relative] = _read_checked_regular(
+                            target_path, target_status,
+                            "router target %s" % relative,
+                        )
+                router_facade_module().validate_sidecar(
+                    sidecar_value,
+                    facade_contents,
+                    expected_host_profile_sha256=host_definition_digest,
+                    expected_catalog_sha256=hashlib.sha256(catalog_raw).hexdigest(),
+                    target_contents=target_contents,
+                )
+            except (OSError, router_facade_module().RouterFacadeError) as exc:
+                raise DistributionError(
+                    "router facade sidecar validation failed: %s" % exc
+                ) from exc
+        elif sidecar is not None or any(
+                item.get("path", "").startswith("router-facades/")
+                for item in manifest["files"] if isinstance(item, dict)):
+            raise DistributionError("router facades are forbidden for this host profile")
+        if expected_host_profile is not None and host_name != expected_host_profile:
+            raise DistributionError("distribution manifest host profile does not match")
+    elif expected_host_profile is not None:
+        raise DistributionError("legacy distribution manifest has no host profile identity")
+
     source = manifest["source"]
     if not isinstance(source, dict) or set(source) != {"repository", "commit"}:
         raise DistributionError("distribution manifest source provenance is invalid")
@@ -823,7 +1140,11 @@ def verify_distribution_manifest(
     actual_files = _distribution_files(destination)
     if manifest["files"] != actual_files:
         raise DistributionError("distribution files do not match the SHA-256 manifest")
-    if schema_version == MANIFEST_SCHEMA_VERSION:
+    if manifest["kind"] == "plugin":
+        _reject_untrusted_prompt_bindings(destination)
+    if schema_version == MANIFEST_SCHEMA_VERSION and manifest["kind"] == "plugin":
+        validate_prompt_profile_distribution(destination, manifest["profile"])
+    if schema_version in {PROFILE_MANIFEST_SCHEMA_VERSION, MANIFEST_SCHEMA_VERSION}:
         _validate_package_ceiling(
             actual_files, manifest["package_ceiling"],
             manifest_bytes=len(manifest_bytes), include_manifest=True,
@@ -840,8 +1161,265 @@ def verify_distribution_manifest(
     return manifest
 
 
+def _install_generated_file(destination, relative, content, mode=0o644):
+    target = destination / validate_relative(relative)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    if target.exists() or target.is_symlink():
+        raise DistributionError("generated distribution path already exists: %s" % relative)
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(target, flags, mode)
+        with os.fdopen(descriptor, "wb", closefd=True) as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+    except OSError as exc:
+        raise DistributionError("cannot install generated %s: %s" % (relative, exc)) from exc
+
+
+def _safe_prompt_evidence_ref(value):
+    if (not isinstance(value, str) or len(value) > 512
+            or not SAFE_PROMPT_EVIDENCE_REF.fullmatch(value)):
+        raise DistributionError("prompt binding evidence_ref is unsafe: %r" % value)
+    relative = validate_relative(value)
+    if (relative.as_posix() != value
+            or len(relative.parts) < 3
+            or relative.parts[:2] != ("references", "prompt-profile-evidence")):
+        raise DistributionError("prompt binding evidence_ref is unsafe: %r" % value)
+    return relative
+
+
+def _built_prompt_catalog(destination):
+    path = destination / PROMPT_PROFILES_REF
+    try:
+        status = path.lstat()
+        raw = _read_checked_regular(path, status, "built prompt profile catalog")
+    except OSError as exc:
+        raise DistributionError("built prompt profile catalog is unavailable: %s" % exc) from exc
+    return strict_json_bytes(raw, "built prompt profile catalog"), raw, path, status
+
+
+def _reject_untrusted_prompt_bindings(destination):
+    """Reject compact bindings even when verifying a legacy manifest.
+
+    Manifest 1.0/1.1 remains readable for historical assets, but schema
+    downgrading must not bypass the current production trust boundary. Old
+    packages without a prompt catalog are unaffected.
+    """
+    path = destination / PROMPT_PROFILES_REF
+    if not path.exists() and not path.is_symlink():
+        return
+    catalog, _raw, _path, _status = _built_prompt_catalog(destination)
+    bindings = catalog.get("certified_bindings")
+    if not isinstance(bindings, list):
+        raise DistributionError("built certified_bindings must be an array")
+    if bindings:
+        raise DistributionError(
+            "non-empty certified_bindings are not distributable until a signed "
+            "release-attestation trust path is implemented"
+        )
+
+
+def _replace_built_regular(path, status, content, label):
+    temporary = path.with_name(".%s.distribution-projection" % path.name)
+    if temporary.exists() or temporary.is_symlink():
+        raise DistributionError("%s projection residue exists" % label)
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(temporary, flags, stat.S_IMODE(status.st_mode) or 0o644)
+        with os.fdopen(descriptor, "wb", closefd=True) as handle:
+            handle.write(content)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except OSError as exc:
+        try:
+            temporary.unlink()
+        except FileNotFoundError:
+            pass
+        raise DistributionError("cannot install %s projection: %s" % (label, exc)) from exc
+
+
+def validate_prompt_profile_distribution(destination, profile_name):
+    if profile_name not in PROFILE_NAMES:
+        raise DistributionError("unknown prompt-profile distribution: %s" % profile_name)
+    module = context_profile_module()
+    try:
+        host_catalog, _ = module.load_host_catalog(destination)
+        prompt_catalog, _ = module.load_prompt_catalog(destination, host_catalog)
+    except module.ContextProfileError as exc:
+        raise DistributionError(
+            "built prompt profile projection is invalid: %s" % exc
+        ) from exc
+    bindings = prompt_catalog["certified_bindings"]
+    if bindings:
+        raise DistributionError(
+            "non-empty certified_bindings are not distributable until a signed "
+            "release-attestation trust path is implemented"
+        )
+    if profile_name in {"lite", "pro"}:
+        if bindings != []:
+            raise DistributionError(
+                "%s prompt profile projection must remove all certified bindings"
+                % profile_name
+            )
+    elif len(bindings) > MAX_DISTRIBUTED_PROMPT_BINDINGS:
+        raise DistributionError(
+            "governed prompt profile projection exceeds %d certified bindings"
+            % MAX_DISTRIBUTED_PROMPT_BINDINGS
+        )
+
+    expected = {}
+    for binding in bindings:
+        relative = _safe_prompt_evidence_ref(binding.get("evidence_ref"))
+        digest = binding.get("evidence_sha256")
+        if not isinstance(digest, str) or not SHA256.fullmatch(digest):
+            raise DistributionError("prompt binding evidence_sha256 is invalid")
+        key = relative.as_posix()
+        if key in expected and expected[key] != digest:
+            raise DistributionError("prompt bindings disagree on evidence hash: %s" % key)
+        expected[key] = digest
+
+    records = _distribution_files(destination)
+    actual = {
+        item["path"]: item["sha256"]
+        for item in records
+        if item["path"].startswith(PROMPT_EVIDENCE_PREFIX)
+    }
+    if set(actual) != set(expected):
+        raise DistributionError(
+            "built prompt certificate set does not exactly match catalog references"
+        )
+    for relative, digest in expected.items():
+        if actual[relative] != digest:
+            raise DistributionError(
+                "built prompt certificate hash differs from catalog: %s" % relative
+            )
+    paths = {item["path"] for item in records}
+    schema_present = PROMPT_RELEASE_CERTIFICATE_SCHEMA_REF in paths
+    if schema_present != (profile_name == "governed"):
+        raise DistributionError(
+            "prompt release-certificate schema must ship only in governed"
+        )
+    return prompt_catalog
+
+
+def project_prompt_profile_distribution(destination, profile_name):
+    source_raw = read_source_bytes(PROMPT_PROFILES_REF)
+    source_catalog = strict_json_bytes(source_raw, "source prompt profile catalog")
+    built_catalog, built_raw, built_path, built_status = _built_prompt_catalog(destination)
+    if built_raw != source_raw or built_catalog != source_catalog:
+        raise DistributionError(
+            "built prompt profile catalog differs before distribution projection"
+        )
+    bindings = source_catalog.get("certified_bindings")
+    if not isinstance(bindings, list):
+        raise DistributionError("source certified_bindings must be an array")
+    if bindings:
+        # A hash-bound compact certificate can be made self-consistent by the
+        # party that authored it.  Until distributions carry either the full
+        # paired evidence for trusted revalidation or a signed release
+        # attestation, no compact prompt binding is a production authority.
+        raise DistributionError(
+            "non-empty certified_bindings are not distributable until a signed "
+            "release-attestation trust path is implemented"
+        )
+
+    if profile_name in {"lite", "pro"}:
+        projected = dict(source_catalog)
+        projected["certified_bindings"] = []
+        _replace_built_regular(
+            built_path, built_status, canonical_json(projected),
+            "%s prompt profile" % profile_name,
+        )
+    elif profile_name == "governed":
+        if len(bindings) > MAX_DISTRIBUTED_PROMPT_BINDINGS:
+            raise DistributionError(
+                "governed source has %d certified bindings; maximum is %d"
+                % (len(bindings), MAX_DISTRIBUTED_PROMPT_BINDINGS)
+            )
+        copied = set()
+        for binding in bindings:
+            if not isinstance(binding, dict):
+                raise DistributionError("governed certified binding must be an object")
+            relative = _safe_prompt_evidence_ref(binding.get("evidence_ref"))
+            digest = binding.get("evidence_sha256")
+            if not isinstance(digest, str) or not SHA256.fullmatch(digest):
+                raise DistributionError("prompt binding evidence_sha256 is invalid")
+            content = read_source_bytes(relative)
+            if len(content) > MAX_PROMPT_CERTIFICATE_BYTES:
+                raise DistributionError(
+                    "prompt release certificate exceeds %d bytes: %s"
+                    % (MAX_PROMPT_CERTIFICATE_BYTES, relative)
+                )
+            if hashlib.sha256(content).hexdigest() != digest:
+                raise DistributionError(
+                    "prompt release certificate hash differs from binding: %s" % relative
+                )
+            if relative.as_posix() not in copied:
+                copy_entry(relative, destination, allow_untracked=True)
+                copied.add(relative.as_posix())
+    else:
+        raise DistributionError("unknown prompt-profile distribution: %s" % profile_name)
+    return validate_prompt_profile_distribution(destination, profile_name)
+
+
+def project_plugin_manifest_for_host(destination, host_profile, expected_skills):
+    """Remove the Claude-only command surface from generic-host payloads."""
+    if host_profile["routing_surface"] == "slash-commands":
+        return
+    path = destination / ".claude-plugin" / "plugin.json"
+    try:
+        status = path.lstat()
+        raw = _read_checked_regular(path, status, "built plugin manifest")
+        value = json.loads(raw.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, ValueError) as exc:
+        raise DistributionError("cannot project plugin manifest: %s" % exc) from exc
+    expected_declarations = ["./%s" % skill for skill in expected_skills]
+    if (not isinstance(value, dict)
+            or value.get("skills") != expected_declarations
+            or value.get("commands") != ["./commands/"]):
+        raise DistributionError("source plugin manifest cannot be projected safely")
+    value["commands"] = []
+    replacement = canonical_json(value)
+    temporary = path.with_name(".%s.host-projection" % path.name)
+    if temporary.exists() or temporary.is_symlink():
+        raise DistributionError("plugin-manifest projection residue exists")
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
+    try:
+        descriptor = os.open(temporary, flags, stat.S_IMODE(status.st_mode) or 0o644)
+        with os.fdopen(descriptor, "wb", closefd=True) as handle:
+            handle.write(replacement)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    except OSError as exc:
+        try:
+            temporary.unlink()
+        except FileNotFoundError:
+            pass
+        raise DistributionError("cannot install plugin-manifest host projection: %s" % exc) from exc
+
+
+def install_router_facades(destination, host_profile):
+    if host_profile["routing_surface"] != "router-skills":
+        if (destination / "router-facades").exists():
+            raise DistributionError("router facades leaked into a non-router host")
+        return
+    module = router_facade_module()
+    try:
+        outputs = module.build_outputs(destination, host_profile["profile"])
+    except module.RouterFacadeError as exc:
+        raise DistributionError("cannot build router facades: %s" % exc) from exc
+    if len(outputs) != 9 or ROUTER_FACADE_SIDECAR not in outputs:
+        raise DistributionError("router-facade generator did not produce 8 facades plus sidecar")
+    for relative, content in sorted(outputs.items()):
+        _install_generated_file(destination, relative, content)
+
+
 def build_plugin(
-        destination, catalog, distribution, profile, slim_frontmatter=False):
+        destination, catalog, distribution, profile, host_profile,
+        slim_frontmatter=False):
     entries_by_kind = profile["entries"]
     skills = skill_paths(catalog)
     for key in ("root_files", "runtime_scripts"):
@@ -849,14 +1427,18 @@ def build_plugin(
             copy_entry(relative, destination, allow_untracked=True)
     for key in ("trees", "runtime_script_trees"):
         for relative in entries_by_kind[key]:
+            if relative == "commands" and host_profile["routing_surface"] != "slash-commands":
+                continue
             copy_entry(relative, destination, allow_untracked=True)
     for relative in skills:
         copy_entry(relative, destination)
+    project_plugin_manifest_for_host(destination, host_profile, skills)
     markdown_seeds = [
         relative for relative in entries_by_kind["root_files"]
         if Path(relative).suffix == ".md"
     ]
-    markdown_seeds += ["commands/%s.md" % command for command in catalog["commands"]]
+    if host_profile["routing_surface"] == "slash-commands":
+        markdown_seeds += ["commands/%s.md" % command for command in catalog["commands"]]
     markdown_seeds += [path + "/SKILL.md" for path in skills]
     referenced = set(entries_by_kind["runtime_references"])
     for relative in markdown_seeds:
@@ -865,12 +1447,14 @@ def build_plugin(
             if dependency_allowed(dependency, profile)
         )
     copy_runtime_closure(referenced, destination, profile)
+    project_prompt_profile_distribution(destination, profile["profile"])
     for forbidden in distribution["excluded_top_level"]:
         if (destination / forbidden).exists():
             raise DistributionError("maintenance path leaked into plugin: %s" % forbidden)
     if slim_frontmatter:
         for skill in skills:
             slim_skill_frontmatter(destination / skill / "SKILL.md")
+    install_router_facades(destination, host_profile)
     if "skill-contract-pack-v1" in profile["derived_outputs"]:
         build_skill_contract_pack(destination)
 
@@ -1034,6 +1618,12 @@ def main(argv=None):
              "with a deprecation warning through v20.",
     )
     parser.add_argument(
+        "--host-profile", choices=HOST_PROFILE_NAMES,
+        help="Host capability projection. Plugin builds default to "
+             "claude-code-plugin-host; one-skill builds default to "
+             "standalone-skill-host.",
+    )
+    parser.add_argument(
         "--source-repository",
         help="Optional owner/repository provenance bound into the output manifest.",
     )
@@ -1051,6 +1641,7 @@ def main(argv=None):
             verified = verify_distribution_manifest(
                 args.verify_manifest, args.source_repository, args.source_commit,
                 expected_profile=args.profile,
+                expected_host_profile=args.host_profile,
             )
             print(
                 "verified %s distribution: %d files, manifest sha256:%s"
@@ -1061,6 +1652,7 @@ def main(argv=None):
             raise DistributionError("--output is required when building a distribution")
         catalog = load_json(CATALOG)
         distribution = load_json(MANIFEST)
+        host_catalog = load_json(HOST_CAPABILITY_CATALOG)
         prepare_destination(args.output)
         if args.slim_frontmatter and not args.plugin:
             raise DistributionError("--slim-frontmatter applies to --plugin builds only")
@@ -1074,19 +1666,32 @@ def main(argv=None):
                     file=sys.stderr,
                 )
             profile = resolve_plugin_profile(distribution, selected_profile)
-            build_plugin(args.output, catalog, distribution, profile,
+            selected_host_profile = args.host_profile or "claude-code-plugin-host"
+            host_profile = resolve_host_profile(
+                host_catalog, selected_host_profile, "plugin"
+            )
+            build_plugin(args.output, catalog, distribution, profile, host_profile,
                          slim_frontmatter=args.slim_frontmatter)
             kind = "plugin"
         else:
             if args.profile is not None:
                 raise DistributionError("--profile applies to --plugin builds only")
+            selected_host_profile = args.host_profile or "standalone-skill-host"
+            host_profile = resolve_host_profile(
+                host_catalog, selected_host_profile, "standalone-skill"
+            )
             build_standalone(args.output, catalog, args.skill)
             kind = "standalone-skill"
             profile = standalone_profile(distribution)
         written = write_distribution_manifest(
-            args.output, kind, profile, args.source_repository, args.source_commit,
+            args.output, kind, profile, host_profile,
+            args.source_repository, args.source_commit,
         )
-        verify_distribution_manifest(args.output, expected_profile=profile["profile"])
+        verify_distribution_manifest(
+            args.output,
+            expected_profile=profile["profile"],
+            expected_host_profile=host_profile["profile"],
+        )
     except DistributionError as exc:
         print("error: %s" % exc, file=sys.stderr)
         return 1

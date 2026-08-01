@@ -38,7 +38,7 @@
       "const": "3.0.0"
     },
     "catalog_version": {
-      "const": "19.0.0"
+      "const": "19.1.0"
     },
     "framework": {
       "enum": [

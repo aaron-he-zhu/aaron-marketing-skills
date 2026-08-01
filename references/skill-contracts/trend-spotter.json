@@ -11,7 +11,7 @@
           "end_char": 77,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 167,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 80
         },
@@ -41,7 +41,7 @@
           "end_char": 244,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 170
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "influencer/scout/trend-spotter/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a"
+      "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12"
     }
   },
   "context_hints": {
@@ -125,7 +125,7 @@
           "end_char": 147,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -143,7 +143,7 @@
           "end_char": 290,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 148
         },
@@ -161,7 +161,7 @@
           "end_char": 422,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 291
         },
@@ -179,7 +179,7 @@
           "end_char": 623,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 424
         },
@@ -195,7 +195,7 @@
           "end_char": 680,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 625
         },
@@ -208,7 +208,7 @@
     "summary_ref": {
       "path": "influencer/scout/trend-spotter/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a"
+      "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -223,8 +223,8 @@
     "name": "trend-spotter",
     "path": "influencer/scout/trend-spotter/SKILL.md",
     "phase": "scout",
-    "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
-    "version": "19.0.0"
+    "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<brand or industry> [platform] [time horizon]",
@@ -238,7 +238,7 @@
           "end_char": 94,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -253,7 +253,7 @@
           "end_char": 167,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 96
         },
@@ -265,7 +265,7 @@
     "source": {
       "path": "influencer/scout/trend-spotter/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a"
+      "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12"
     }
   },
   "output_contract": {
@@ -280,7 +280,7 @@
           "end_char": 166,
           "path": "influencer/scout/trend-spotter/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a",
+          "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -291,7 +291,7 @@
     "source": {
       "path": "influencer/scout/trend-spotter/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a"
+      "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12"
     },
     "summary": "a trend report (ranked trends, brand-fit scores, format calls, cultural calendar, go/skip recommendations) to `memory/influencer/trend-spotter/YYYY-MM-DD-<topic>.md`.",
     "summary_source": "writes-fallback",
@@ -306,8 +306,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -316,7 +316,7 @@
     "source": {
       "path": "influencer/scout/trend-spotter/SKILL.md",
       "section": "frontmatter",
-      "sha256": "4f9873face9c6229280006cd4c0beb9cee27c31352df81cd089f4e04f4e25d2a"
+      "sha256": "ae4692aa59d8c695f96e9748506f53518337ba53da2e78d4787f7a3f6df32d12"
     },
     "trigger_phrases": [
       "find trending topics",

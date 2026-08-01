@@ -105,14 +105,17 @@ class BumpReleaseTests(unittest.TestCase):
                 historical,
             )
             versions = (fixture / "VERSIONS.md").read_text(encoding="utf-8")
-            self.assertIn("### v99.0.0 — Runtime and distribution", versions)
-            self.assertIn("### v18.0.0 — Seven-discipline", versions)
-            self.assertIn("engineering-validated against the exact", versions)
-            self.assertIn("real-project outcomes remain unvalidated", versions)
             self.assertIn(
-                "post-release 14 pilot + 70 paired + 28 shadow promotion",
+                "### v99.0.0 — Progressive context disclosure and host-aware harnessing",
                 versions,
             )
+            self.assertIn("### v18.0.0 — Seven-discipline", versions)
+            self.assertIn("Manifest 1.2 binds the physical capability", versions)
+            self.assertIn("zero certified", versions)
+            self.assertIn("trusted signed release attestation", versions)
+            self.assertIn("700-case corpus is simulated", versions)
+            self.assertIn("no token-savings or cost-savings", versions)
+            self.assertIn("explicit` remains the safe deployment", versions)
             for relative in canonical_skill_paths():
                 text = (fixture / relative).read_text(encoding="utf-8")
                 self.assertIn('version: "99.0.0"', text)

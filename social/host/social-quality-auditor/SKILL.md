@@ -4,14 +4,14 @@ slug: aaron-social-quality-auditor
 displayName: "Social Quality Auditor · 社媒质量门"
 summary: "社媒资产门/运营成熟度/六条红线"
 description: 'Use when the user asks to "audit our social presence" or "is this batch safe to publish"; runs either the typed ECHO asset gate or a separate program-maturity profile, with channel-truth, claim, disclosure, manipulation, UGC-rights, and denominator checks. Not for creator deliverables — use creator-content-auditor; not for launch readiness — use launch-readiness-auditor. 社媒资产门/运营成熟度/发布前放行'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use for a pre-publish social asset/batch gate or a separate channel-program maturity audit. Never combine the asset and operating profiles into one score."
 argument-hint: "<asset batch or channel portfolio> [asset-gate|community|b2c|founder]"
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Social Quality Auditor
@@ -49,6 +49,14 @@ Audit the last 90 days with program-maturity-community; report outcomes separate
 | Public signal | Compliant public connectors; adjacent sources labeled proxy |
 
 ## Instructions
+
+### Runtime Reads
+
+- `../../../references/auditor-runbook.md`
+- `../../../references/scoring-semantics.md`
+- `../../../references/echo-benchmark.md`
+- `../../../references/runtime-invocation.md`
+- `references/auditor-runtime.md`
 
 ### Runtime and Setup
 

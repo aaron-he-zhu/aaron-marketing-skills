@@ -105,14 +105,56 @@ One hard rule the ecosystem enforces silently: frontmatter must be **valid YAML*
 
 ## What degrades outside the Claude Code plugin
 
+### Generic shared-root router sidecar
+
+A host adapter that installs the complete shared-root payload but cannot expose
+Claude-style slash commands can request the typed
+`generic-shared-root-host` projection:
+
+```bash
+python3 scripts/build-distribution.py \
+  --plugin --profile lite \
+  --host-profile generic-shared-root-host \
+  --output /private/path/aaron-generic-host
+```
+
+That payload keeps the 120 business skills unchanged and adds eight generated
+`class: router` facades under `router-facades/`, described by
+`router-facades/sidecar-manifest.json`. A generic host registers those eight
+sidecar entries as its discipline-level discovery surface; after one facade
+selects a target, the host invokes the target business Skill itself. The
+facade never executes the target workflow and never grants permission. All 120
+targets appear exactly once across Narrative, SEO/GEO, Social, Email, Paid Ads,
+Influencer, Launch, and Protocol. The normal `npx skills add` route still reads
+the canonical 120 entries directly from `.claude-plugin/plugin.json`; generated
+facades do not appear in registries or inflate the public Skill count.
+
+All complete plugin/shared-root host projections include the typed host,
+prompt, and context-module catalogs, their resolver, and the compact portable
+policy kernel. These files select a representation; they are not executable
+authority and are not additional Skills. A standalone one-folder install keeps
+the full Skill as its embedded explicit-policy representation and does not
+claim the missing root resolver, kernel, or capsule runtime.
+
+The Governed physical profile also includes the generated
+`references/skill-capsules/` index and 120 per-skill capsule JSON records for
+typed lean context assembly. Balanced assembly keeps the complete selected
+Skill and replaces only shared policy with the kernel. Its `context-assembly.py` runtime and
+schema keep controller, model, tool, and deferred resources separate instead
+of treating manifest capacity as model-visible prompt. Capsule records contain
+no `SKILL.md`, are not plugin or registry declarations, and therefore never
+expand the canonical 120-Skill surface. Explicit and balanced execution still
+select the complete Skill; Lite, Pro, and standalone payloads do not ship the
+capsule tree or assembly runtime.
+
 A standalone install bundles **only each skill's folder** (its `SKILL.md` + own `references/`). Everything below ships with the plugin (or a full `git clone`) instead:
 
 | Shared resource | Standalone behavior |
 |-----------------|---------------------|
-| Repo-root `references/` (auditor runbook, typed catalogs, benchmarks, skill contract, state model) | Relative root links are unavailable, but every auditor folder includes a generated immutable `references/auditor-runtime.md` containing its shared runbook, typed framework slice, schemas, and benchmark. It never fetches a mutable branch or guesses missing policy. Non-gate skills inline their essential rules. |
+| Repo-root `references/` (auditor runbook, typed catalogs, benchmarks, skill contract, state model) | Relative root links are unavailable, but every auditor folder includes a generated immutable `references/auditor-runtime.md` containing all item identities and human benchmark anchors plus the selected framework's typed profiles, applicability, veto, missingness, and observation vocabulary. The root runbook, full schemas, and benchmark remain repository/plugin maintenance sources and are not falsely presented as separate standalone files. The fallback never fetches a mutable branch, guesses missing policy, calculates a score, or claims a gate verdict. Non-gate skills inline their essential rules. |
 | Deterministic repo-root runtimes (`rubric-score.py`, `validate-audit-artifact.py`, `context-resolver.py`, `registry-events.py`, `run-events.py`, `audit-loop.py`, `audit-trends.py`) | Not bundled. In a Claude Code plugin install, commands resolve them through `${CLAUDE_PLUGIN_ROOT}`; in a full clone they fall back to the Git repository root, following the [root runtime invocation contract](../references/runtime-invocation.md). In **every** form, agent sessions are limited to `propose`/`suppress` and preparing owner request files — canonical acceptance (`owner-append`/`safety-append`) is an owner-run terminal step outside agent sessions, per the [Owner Ritual](../references/registry-event-protocol.md); once canonical events exist, agent sessions read the owner-installed projections rather than replaying. Run evidence, context manifests, and audit-loop steps are separate non-authoritative metadata and cannot widen that boundary; loop owner approval advances bookkeeping only and is never external-mutation authority. The runtime, not prose or a host-supplied field, derives selected-ancestry loop closure: event-first missing-step recovery requires the same original request, sibling loops stay isolated, successful closure is strict, and a failed/aborted unresolved closure preserves failure evidence without claiming convergence. A standalone one-folder install must fail closed: auditors return `NOT_SCORED` instead of hand-calculating or claiming a gate verdict, registry skills may prepare a proposal but cannot append/project/claim canonical truth, and a host cannot claim a resolver-verified context manifest, session tree, save point, envelope, or converged loop without the corresponding runtime. Install the plugin or use a full clone for those operations. Semantic eval profiles, generated prompt contracts, and the opt-in real Codex adapter are repository-maintenance assets and are intentionally absent from user distributions. |
 | `scripts/connectors/*.py` (keyless data helpers) | Not bundled. Every skill is designed Tier-1: it runs on user-provided data with no connector. Clone the repo to use the connectors. |
-| The 8 `/aaron-marketing:*` commands | Claude Code plugin only. On other hosts, describe the goal — skill descriptions carry the routing triggers. |
+| The 8 `/aaron-marketing:*` commands | Claude Code plugin only. Ordinary per-Skill installs route from the 120 descriptions. A complete generic shared-root build may instead register the generated eight-facade sidecar described above; standalone one-folder installs remain direct-skill. |
 | Hooks (bounded working-memory/run-resume context, Artifact Gate) | Claude Code plugin only, and hook **enforcement requires `python3` on PATH**. Run tracing is off unless `AARON_ACTIVE_RUN_ID` is explicit and stable lifecycle IDs are available; traces contain metadata/hashes, not payloads. Without python3 the hooks degrade instead of refusing everything: non-memory tool calls pass through, and only identifiable memory-namespace / reserved-sink calls are refused until python3 is installed. A standalone host has no machine-enforced audit write interception; without the deterministic validator, an auditor may collect typed inputs but must return `NOT_SCORED` and must not claim `SHIP`, `FIX`, or a persisted valid artifact. |
 | Cross-skill handoffs (`../<skill>/SKILL.md` links) | Literal paths may break, but handoffs reference skills **by name** — any host with the sibling skill installed routes fine. Install the full bundle rather than single skills to keep chains intact. |
 

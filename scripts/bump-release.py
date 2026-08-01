@@ -37,54 +37,55 @@ VERSION_ROW_RE = re.compile(
 )
 
 CURRENT_SUMMARY = (
-    "**Runtime and distribution simplification.** The same 120 skills, seven "
+    "**Progressive context disclosure and host-aware harnessing.** The same 120 "
+    "skills, seven "
     "mandatory 4×4 discipline loops, TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP "
     "acronyms, eight commands, framework IDs, routes, and state paths remain "
-    "intact. Fresh projects now resolve to Lite; Pro and Governed are explicit "
-    "capability profiles with non-disableable consent, claims, PII, external-"
-    "mutation, audit, and release-provenance safeguards. Three reproducible "
-    "profile archives use manifest 1.1 capability ceilings, and the release "
-    "surfaces are generated from authoritative sources. v19 is engineering-"
-    "validated against current-source real-provider model runs over simulated "
-    "semantic fixtures; "
-    "real-project outcomes remain unvalidated. Governed is available only as an "
-    "explicit capability choice, not as an outcome-validated or default profile. "
-    "This major release absorbs every 18.0.x single-skill patch; no skill was "
-    "added, removed, merged, or renamed."
+    "intact. Exact Runtime Reads, generated Skill capsules, a non-reducible policy "
+    "kernel, host capability profiles, and manifest 1.2 separate controller, "
+    "model, tool, and deferred context without weakening deterministic safety "
+    "controls. Protocol v3 adds blind routing and paired compact-profile "
+    "evaluation. The current 700-case corpus is simulated, certified_bindings is "
+    "empty, and the bundled adapter supplies no immutable model revision; "
+    "therefore explicit remains the only deployable prompt profile. No token or "
+    "cost reduction is claimed."
 )
 CHANGELOG_BODY = """\
-### v{version} — Runtime and distribution simplification ({date})
+### v{version} — Progressive context disclosure and host-aware harnessing ({date})
 
-Direct major cutover with no public v18.x profile transition. All 120 canonical
-skills align to `{version}` together while the exact 7 × (4 phases × 4 skills)
-shape, TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP acronym symmetry, eight public
-commands, framework/veto IDs, registry keys, and user state paths remain
-unchanged.
+All 120 canonical skills align to `{version}` together while the exact 7 ×
+(4 phases × 4 skills) shape, TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP acronym
+symmetry, eight public commands, framework/veto IDs, registry keys, and user
+state paths remain unchanged.
 
-- **Lite by default for fresh projects.** Pro and Governed are explicit,
-  capability-bounded profiles; existing canonical state without a profile is
-  read-only until the owner chooses, and residual pre-v19 operational runs
-  fail closed rather than being resumed by changed source.
-- **Safety remains universal.** Consent, material claims, PII, external
-  mutation, audit validity, and pinned release provenance cannot be disabled
-  by profile selection. Every external mutation remains dry-run by default.
-- **Smaller, reproducible delivery.** Lite, Pro, and Governed archives share one
-  skill inventory and plugin identity, declare manifest 1.1 capability
-  ceilings, exclude ignored/undeclared files, and bind source/catalog/profile
-  digests.
-- **Generated release surfaces and risk-tiered CI.** Version/count/inventory
-  projections come from authoritative inputs; S0-S3 pull-request validation,
-  nightly full verification, and release-only provenance gates preserve the
-  complete safety and compatibility contract with less routine overhead.
-- **Validation status.** This release is engineering-validated against the exact
-  source using real model/provider execution over simulated semantic fixtures;
-  that is not real-project outcome evidence. Real-project outcomes remain
-  unvalidated. Governed capability availability does not validate Governed
-  outcomes or authorize it as the fresh-project default. Lite remains the
-  default until the post-release 14 pilot + 70 paired + 28 shadow promotion
-  cohort passes.
-- **Patch absorption.** Every 18.0.x skill patch is included. No skill name,
-  directory, route, phase selector, 4×4 position, or acronym changed.
+- **Explicit runtime dependencies.** Only an exact closed `### Runtime Reads`
+  section creates required context. Ordinary links stay discoverable instead of
+  becoming accidental activation dependencies. Generated machine contracts and
+  Skill capsules bind those declarations to source hashes.
+- **Progressive disclosure without policy loss.** The runtime separates
+  controller, model, tool, metadata-only, and deferred consumers. A compact
+  policy kernel remains non-reducible; consent, claims, PII, mutation authority,
+  audit integrity, state ownership, and release provenance remain deterministic
+  controls outside optional prose reduction.
+- **Host-aware reproducible delivery.** Lite, Pro, and Governed archives share
+  one canonical Skill inventory. Manifest 1.2 binds the physical capability
+  ceiling, host profile, routing surface, reference surface, and generated
+  sidecar hashes. Legacy manifest 1.0 and profile manifest 1.1 remain accepted
+  for bounded read-only verification.
+- **Evidence-gated prompt profiles.** `explicit` remains the safe deployment
+  default. `balanced` and `lean` are evaluation-only unless an exact
+  host/model/model-revision/toolset binding has current paired evidence, a valid
+  release certificate, and a trusted signed release attestation that can be
+  revalidated. The repository currently carries zero certified compact bindings.
+- **Blind paired evaluation.** Protocol v3 hides target routes and experiment
+  labels from the candidate, loads selected context only after routing, and uses
+  an independent judge. Requests, results, completion streams, assemblies, and
+  selected sources are hash-bound per arm.
+- **Honest measurement boundary.** The current 700-case corpus is simulated and
+  the bundled adapter supplies no immutable model revision, so it cannot certify
+  a compact deployment. Deterministic UTF-8 byte measurements are not presented
+  as tokens or cost, and this release makes no token-savings or cost-savings
+  claim.
 """
 
 

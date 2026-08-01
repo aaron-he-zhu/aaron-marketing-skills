@@ -21,6 +21,12 @@ import sys
 import tempfile
 
 
+SCRIPTS = Path(__file__).resolve().parent
+if str(SCRIPTS) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS))
+import eval_cases
+
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_REL = Path("evals/auto-routing-scenarios.source.md")
 CATALOG_REL = Path("references/system-catalog.json")
@@ -29,6 +35,15 @@ SHARD_DIR_REL = Path("references/auto-routing")
 MARKER_RE = re.compile(r"^<!-- auto-routing-shard: ([a-z0-9-]+) -->$")
 CASE_RE = re.compile(r'^\s*-\s*\{id:\s*"([^"]+)"')
 CROSS_SHARD = "cross-discipline"
+RUNTIME_FIELDS = (
+    "id",
+    "target_skill",
+    "scenario_family",
+    "risk_gates",
+    "expected_route",
+    "blocking_inputs",
+    "must_not",
+)
 
 
 class SourceError(ValueError):
@@ -50,8 +65,17 @@ def _catalog_disciplines(root: Path) -> list[str]:
     return list(disciplines)
 
 
-def parse_source(root: Path = ROOT) -> tuple[list[str], dict[str, str], dict[str, list[str]]]:
-    """Return marker order, section bodies, and case IDs after fail-closed lint."""
+def parse_source(
+    root: Path = ROOT,
+) -> tuple[list[str], dict[str, str], dict[str, list[str]], dict[str, list[dict]]]:
+    """Return source partitions and validated runtime projections.
+
+    The authoritative source retains the complete eval-case object. Runtime
+    shards deliberately project only the fields required to choose a route and
+    preserve its safety/blocking constraints. This keeps evaluation prose out
+    of the model-facing routing envelope without creating a second authored
+    source of truth.
+    """
     path = root / SOURCE_REL
     try:
         lines = path.read_text(encoding="utf-8").splitlines(keepends=True)
@@ -85,17 +109,38 @@ def parse_source(root: Path = ROOT) -> tuple[list[str], dict[str, str], dict[str
 
     bodies: dict[str, str] = {}
     case_ids: dict[str, list[str]] = {}
+    runtime_cases: dict[str, list[dict]] = {}
     all_ids: dict[str, tuple[str, int]] = {}
     for position, (name, marker_line, marker_index) in enumerate(starts):
         end_index = starts[position + 1][2] - 1 if position + 1 < len(starts) else len(lines)
         body_lines = lines[marker_index:end_index]
         body = "".join(body_lines).strip() + "\n"
         ids: list[str] = []
+        projections: list[dict] = []
         for offset, line in enumerate(body_lines, marker_line + 1):
             match = CASE_RE.match(line)
             if not match:
                 continue
-            case_id = match.group(1)
+            raw = line.strip()
+            if raw.startswith("-"):
+                raw = raw[1:].lstrip()
+            try:
+                parsed = eval_cases.parse_flow_object(
+                    raw, "%s:%d" % (SOURCE_REL, offset)
+                )
+            except eval_cases.EvalCaseError as exc:
+                raise SourceError(str(exc)) from exc
+            missing_fields = [field for field in RUNTIME_FIELDS if field not in parsed]
+            if missing_fields:
+                raise SourceError(
+                    "%s:%d lacks runtime fields: %s"
+                    % (SOURCE_REL, offset, ", ".join(missing_fields))
+                )
+            case_id = parsed["id"]
+            if case_id != match.group(1):
+                raise SourceError(
+                    "%s:%d case id parser disagreement" % (SOURCE_REL, offset)
+                )
             if case_id in all_ids:
                 prior_shard, prior_line = all_ids[case_id]
                 raise SourceError(
@@ -104,12 +149,14 @@ def parse_source(root: Path = ROOT) -> tuple[list[str], dict[str, str], dict[str
                 )
             all_ids[case_id] = (name, offset)
             ids.append(case_id)
+            projections.append({field: parsed[field] for field in RUNTIME_FIELDS})
         if not ids:
             raise SourceError("%s shard %r has no cases" % (SOURCE_REL, name))
         bodies[name] = body
         case_ids[name] = ids
+        runtime_cases[name] = projections
 
-    return order, bodies, case_ids
+    return order, bodies, case_ids, runtime_cases
 
 
 def _display_name(body: str, fallback: str) -> str:
@@ -120,7 +167,7 @@ def _display_name(body: str, fallback: str) -> str:
 
 
 def render_outputs(root: Path = ROOT) -> dict[Path, str]:
-    order, bodies, case_ids = parse_source(root)
+    order, bodies, case_ids, runtime_cases = parse_source(root)
     outputs: dict[Path, str] = {}
     rows: dict[str, str] = {}
 
@@ -135,9 +182,17 @@ def render_outputs(root: Path = ROOT) -> dict[Path, str]:
                 "| `%s` | [%s](auto-routing/%s.md) | %d |"
                 % (name, display, name, len(case_ids[name]))
             )
-        body = bodies[name].replace(
-            "(../references/aaron-product-api-contract.md)",
-            "(../aaron-product-api-contract.md)",
+        projected_lines = [
+            "- " + json.dumps(case, ensure_ascii=False, separators=(",", ":"))
+            for case in runtime_cases[name]
+        ]
+        body = (
+            "## Runtime routing records\n\n"
+            "Each record is generated from the authoritative eval case and contains only "
+            "route selection, blocking-input, risk-gate, and must-not fields.\n\n"
+            "```json\n"
+            + "\n".join(projected_lines)
+            + "\n```\n"
         )
         outputs[relative] = (
             "<!-- Generated routing projection; do not edit directly. -->\n"

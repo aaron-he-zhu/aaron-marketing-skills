@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/prompt-profiles.schema.json",
+  "title": "Aaron model prompt profiles",
+  "description": "Fail-closed prompt-detail profiles. Safety overlays are invariant; only workflow explanation, examples, templates, rationale, and reminders may be reduced after paired evidence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "default_profile",
+    "unknown_model_profile",
+    "profile_order",
+    "always_on_overlays",
+    "reducible_dimensions",
+    "profiles",
+    "host_defaults",
+    "certified_bindings",
+    "certification_policy"
+  ],
+  "properties": {
+    "$schema": {"const": "./prompt-profiles.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "default_profile": {"const": "explicit"},
+    "unknown_model_profile": {"const": "explicit"},
+    "profile_order": {"const": ["explicit", "balanced", "lean"]},
+    "always_on_overlays": {
+      "const": [
+        "consent",
+        "claims",
+        "pii-secrets",
+        "external-mutation",
+        "audit-verdict",
+        "release-provenance"
+      ]
+    },
+    "reducible_dimensions": {
+      "const": ["workflow-detail", "examples", "templates", "rationale", "reminders"]
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["explicit", "balanced", "lean"],
+      "properties": {
+        "explicit": {"$ref": "#/$defs/profile"},
+        "balanced": {"$ref": "#/$defs/profile"},
+        "lean": {"$ref": "#/$defs/profile"}
+      }
+    },
+    "host_defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "properties": {
+        "standalone-skill-host": {"const": "explicit"},
+        "generic-shared-root-host": {"const": "explicit"},
+        "claude-code-plugin-host": {"const": "explicit"}
+      }
+    },
+    "certified_bindings": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {"$ref": "#/$defs/binding"}
+    },
+    "certification_policy": {"$ref": "#/$defs/certificationPolicy"}
+  },
+  "$defs": {
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rank",
+        "requires_certification",
+        "workflow_detail",
+        "example_budget",
+        "template_detail",
+        "rationale_detail",
+        "reminder_density",
+        "target_model_context_reduction"
+      ],
+      "properties": {
+        "rank": {"type": "integer", "minimum": 0, "maximum": 2},
+        "requires_certification": {"type": "boolean"},
+        "workflow_detail": {"enum": ["full", "compact", "minimum"]},
+        "example_budget": {"type": "integer", "minimum": 0, "maximum": 4},
+        "template_detail": {"enum": ["expanded", "compact", "schema-only"]},
+        "rationale_detail": {"enum": ["full", "decision-only", "omitted"]},
+        "reminder_density": {"enum": ["repeated", "boundary-only", "once"]},
+        "target_model_context_reduction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["minimum_percent", "maximum_percent"],
+          "properties": {
+            "minimum_percent": {"type": "integer", "minimum": 0, "maximum": 90},
+            "maximum_percent": {"type": "integer", "minimum": 0, "maximum": 90}
+          }
+        }
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "binding_id",
+        "distribution_profile",
+        "host_profile",
+        "model_id",
+        "model_revision",
+        "prompt_profile",
+        "evidence_ref",
+        "evidence_sha256",
+        "certified_at",
+        "expires_at"
+      ],
+      "properties": {
+        "binding_id": {"$ref": "#/$defs/safeId"},
+        "distribution_profile": {"const": "governed"},
+        "host_profile": {
+          "enum": [
+            "standalone-skill-host",
+            "generic-shared-root-host",
+            "claude-code-plugin-host"
+          ]
+        },
+        "model_id": {"$ref": "#/$defs/safeId"},
+        "model_revision": {"type": "string", "minLength": 1, "maxLength": 256},
+        "prompt_profile": {"enum": ["balanced", "lean"]},
+        "evidence_ref": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512,
+          "pattern": "^references/prompt-profile-evidence/[A-Za-z0-9][A-Za-z0-9._/-]*\\.json$"
+        },
+        "evidence_sha256": {"$ref": "#/$defs/sha256"},
+        "certified_at": {"type": "string", "format": "date-time"},
+        "expires_at": {"type": "string", "format": "date-time"}
+      }
+    },
+    "certificationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "protocol_version",
+        "minimum_cases",
+        "minimum_repeats",
+        "minimum_coverage_strata",
+        "minimum_control_routing_accuracy",
+        "minimum_candidate_routing_accuracy",
+        "minimum_control_quality_pass_rate",
+        "minimum_candidate_quality_pass_rate",
+        "maximum_routing_accuracy_regression",
+        "maximum_quality_pass_rate_regression",
+        "maximum_safety_regressions",
+        "maximum_age_days"
+      ],
+      "properties": {
+        "protocol_version": {"const": "3.0"},
+        "minimum_cases": {"type": "integer", "minimum": 1, "maximum": 10000},
+        "minimum_repeats": {"type": "integer", "minimum": 2, "maximum": 20},
+        "minimum_coverage_strata": {"type": "integer", "minimum": 1, "maximum": 128},
+        "minimum_control_routing_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimum_candidate_routing_accuracy": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimum_control_quality_pass_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "minimum_candidate_quality_pass_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_routing_accuracy_regression": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_quality_pass_rate_regression": {"type": "number", "minimum": 0, "maximum": 1},
+        "maximum_safety_regressions": {"const": 0},
+        "maximum_age_days": {"type": "integer", "minimum": 1, "maximum": 365}
+      }
+    }
+  }
+}

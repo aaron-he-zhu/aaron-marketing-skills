@@ -11,7 +11,7 @@
           "end_char": 135,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 490,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 137
         },
@@ -41,7 +41,7 @@
           "end_char": 581,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 492
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+      "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc"
     }
   },
   "context_hints": {
@@ -63,35 +63,35 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "b54865ad9bcd7bd31602708b9ea33be6d25ead55a2bbd300afa384e57521a541",
-        "source_line": 57
+        "source_line": 64
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
-        "source_line": 58
+        "source_line": 65
       },
       {
         "path": "references/registry-event-protocol.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
-        "source_line": 36
+        "source_line": 38
       },
       {
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
-        "source_line": 36
+        "source_line": 39
       },
       {
         "path": "references/send-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
-        "source_line": 56
+        "source_line": 63
       }
     ],
     "project_paths": [
@@ -118,7 +118,7 @@
           "end_char": 95,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -136,7 +136,7 @@
           "end_char": 189,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 96
         },
@@ -154,7 +154,7 @@
           "end_char": 286,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 190
         },
@@ -172,7 +172,7 @@
           "end_char": 358,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 287
         },
@@ -187,7 +187,7 @@
     "summary_ref": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+      "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -203,8 +203,8 @@
     "name": "consent-registry",
     "path": "protocol/consent-registry/SKILL.md",
     "phase": "protocol",
-    "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
-    "version": "19.0.0"
+    "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<pseudonymous subject-id and consent/suppression event>",
@@ -218,7 +218,7 @@
           "end_char": 87,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -230,7 +230,7 @@
     "source": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+      "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc"
     }
   },
   "output_contract": {
@@ -245,7 +245,7 @@
           "end_char": 48,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -261,7 +261,7 @@
           "end_char": 80,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c",
+          "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc",
           "span_basis": "field-text",
           "start_char": 50
         },
@@ -272,7 +272,7 @@
     "source": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+      "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc"
     },
     "summary": "consent events only through `registry-events.py`; human records are projections.",
     "summary_source": "writes-fallback",
@@ -287,8 +287,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -297,7 +297,7 @@
     "source": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "frontmatter",
-      "sha256": "c0052b642cc7fc5edd60f474e74a1e32292b09faddc3f6cca8d9cdf26d02c62c"
+      "sha256": "40abb9cf97d56ab6022ffc613db40978c9bc8d67ca233c2755698bf0bcc14acc"
     },
     "trigger_phrases": [
       "log this subscriber's opt-in"

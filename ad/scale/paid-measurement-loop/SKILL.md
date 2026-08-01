@@ -4,13 +4,13 @@ slug: aaron-paid-measurement-loop
 displayName: "Paid Measurement Loop · 付费广告复盘"
 summary: "付费广告复盘/ROAS回看/投放效果归因"
 description: 'Use when the user asks to "read back" a paid campaign change, "did this ad change work", or "compare ROAS/CPA before and after"; reads ROAS/CPA against a control over a fixed readback window and returns a Promote / Keep-testing / Rollback / Unproven readback decision with the math delegated to roi-calculator. Not for RQS scoring or veto adjudication — use ad-account-auditor; not for the ROI ratio math — use roi-calculator; not for cross-channel rollups — use performance-analyzer. 付费广告复盘/ROAS回看/投放效果归因'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when reading back a paid-ads change (budget shift, new creative, bid/target edit) against a control over a fixed readback window, deciding 复盘 Promote/Keep-testing/Rollback/Unproven on ROAS/CPA, or normalizing a cross-platform ROAS comparison. Not for RQS/veto adjudication (use ad-account-auditor), ROI ratio math (use roi-calculator), or cross-channel reporting (use performance-analyzer)."
 argument-hint: "<campaign/change> [readback window]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "scale", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "scale"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "ad", "phase": "scale", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "scale"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Paid Measurement Loop

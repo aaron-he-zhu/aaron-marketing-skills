@@ -96,6 +96,25 @@ class SkillMachineContractTests(unittest.TestCase):
         self.assertEqual(shared_handoffs, 8)
         self.assertGreater(unclassified_dimensions, 0)
 
+    def test_runtime_required_bundle_references_are_explicit_and_closed(self):
+        index = self.load(generator.INDEX_REF)
+        required = []
+        for entry in index["contracts"]:
+            contract = self.load(entry["contract_ref"])
+            for reference in contract["context_hints"]["bundle_references"]:
+                if reference["requirement"] == "required":
+                    required.append((entry["skill"], reference))
+        self.assertEqual(len(required), 61)
+        self.assertEqual(len({skill for skill, _reference in required}), 18)
+        self.assertTrue(all(
+            reference["reason_code"] == "explicit-runtime-read"
+            for _skill, reference in required
+        ))
+        self.assertFalse(any(
+            reference["path"] == "CONNECTORS.md"
+            for _skill, reference in required
+        ))
+
     def test_ambiguous_clauses_remain_explicitly_unclassified(self):
         reads = generator.input_clauses(
             "market context and priorities", "fixture/SKILL.md", "0" * 64
@@ -212,6 +231,96 @@ class SkillMachineContractTests(unittest.TestCase):
                 generator.check_outputs(outputs, root),
                 ["missing generated contract: references/skill-contracts/example.json"],
             )
+
+    def test_only_closed_runtime_reads_declarations_make_references_required(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "skill").mkdir()
+            (root / "references").mkdir()
+            (root / "skill" / "SKILL.md").write_text("fixture\n", encoding="utf-8")
+            (root / "references" / "required.md").write_text("required\n", encoding="utf-8")
+            (root / "references" / "optional.md").write_text("optional\n", encoding="utf-8")
+            body = """\
+Read [the optional guide](../references/optional.md) before a read-only readout.
+
+### Runtime Reads
+
+- `../references/required.md`
+
+### Instructions
+
+The optional guide remains an authored reference even when prose says read.
+"""
+            references = generator.bundle_references(root, "skill/SKILL.md", body)
+            by_path = {item["path"]: item for item in references}
+            self.assertEqual(by_path["references/required.md"]["requirement"], "required")
+            self.assertEqual(
+                by_path["references/required.md"]["reason_code"],
+                "explicit-runtime-read",
+            )
+            self.assertEqual(by_path["references/required.md"]["source_line"], 5)
+            self.assertEqual(by_path["references/optional.md"]["requirement"], "optional")
+            self.assertEqual(
+                by_path["references/optional.md"]["reason_code"],
+                "authored-reference",
+            )
+
+    def test_runtime_reads_section_rejects_prose_and_duplicate_sections(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "skill").mkdir()
+            (root / "references").mkdir()
+            (root / "references" / "guide.md").write_text("guide\n", encoding="utf-8")
+            malformed = """\
+### Runtime Reads
+
+Read `../references/guide.md` before continuing.
+"""
+            with self.assertRaisesRegex(
+                    generator.ContractGenerationError, "invalid Runtime Reads entry"):
+                generator.bundle_references(root, "skill/SKILL.md", malformed)
+
+            duplicate = """\
+### Runtime Reads
+- `../references/guide.md`
+### Instructions
+Do work.
+### Runtime Reads
+- `../references/guide.md`
+"""
+            with self.assertRaisesRegex(
+                    generator.ContractGenerationError, "more than one"):
+                generator.bundle_references(root, "skill/SKILL.md", duplicate)
+
+    def test_runtime_reads_heading_inside_code_fence_has_no_control_semantics(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "skill").mkdir()
+            (root / "references").mkdir()
+            (root / "references" / "guide.md").write_text("guide\n", encoding="utf-8")
+            body = """\
+```markdown
+### Runtime Reads
+- `../references/guide.md`
+```
+"""
+            references = generator.bundle_references(root, "skill/SKILL.md", body)
+            self.assertEqual(len(references), 1)
+            self.assertEqual(references[0]["requirement"], "optional")
+
+    def test_runtime_reads_heading_inside_indented_code_has_no_control_semantics(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            (root / "skill").mkdir()
+            (root / "references").mkdir()
+            (root / "references" / "guide.md").write_text("guide\n", encoding="utf-8")
+            body = """\
+    ### Runtime Reads
+    - `../references/guide.md`
+"""
+            references = generator.bundle_references(root, "skill/SKILL.md", body)
+            self.assertEqual(len(references), 1)
+            self.assertEqual(references[0]["requirement"], "optional")
 
 
 if __name__ == "__main__":

@@ -146,6 +146,64 @@ class ReleaseAssetArchiveSafetyTests(unittest.TestCase):
         self.assert_rejected(member)
 
 
+class ReleaseAssetPromptBindingGateTests(unittest.TestCase):
+    def test_release_build_rejects_nonempty_certified_bindings(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source_repo = root / "source-repo"
+            source_repo.mkdir()
+            _commit, version = current_source_snapshot(source_repo)
+            catalog_path = source_repo / "references/prompt-profiles.json"
+            catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+            catalog["certified_bindings"] = [{"hand_forged": True}]
+            catalog_path.write_text(
+                json.dumps(catalog, ensure_ascii=False, indent=2, sort_keys=True)
+                + "\n",
+                encoding="utf-8",
+            )
+            subprocess.run(
+                ["git", "add", "references/prompt-profiles.json"],
+                cwd=source_repo,
+                check=True,
+            )
+            subprocess.run(
+                ["git", "commit", "-q", "-m", "forge compact binding"],
+                cwd=source_repo,
+                check=True,
+            )
+            commit = subprocess.run(
+                ["git", "rev-parse", "HEAD"],
+                cwd=source_repo,
+                check=True,
+                capture_output=True,
+                text=True,
+            ).stdout.strip()
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(BUILDER),
+                    "--output",
+                    str(root / "release-assets"),
+                    "--source-repo",
+                    str(source_repo),
+                    "--source-repository",
+                    REPOSITORY,
+                    "--source-commit",
+                    commit,
+                    "--version",
+                    version,
+                ],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
+        self.assertNotEqual(0, completed.returncode)
+        self.assertIn(
+            "non-empty certified_bindings are not distributable",
+            completed.stderr,
+        )
+
+
 class ReleaseAssetIntegrationTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

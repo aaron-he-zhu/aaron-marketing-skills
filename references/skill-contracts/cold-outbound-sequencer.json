@@ -11,7 +11,7 @@
           "end_char": 65,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 138,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 67
         },
@@ -41,7 +41,7 @@
           "end_char": 203,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 140
         },
@@ -56,7 +56,7 @@
           "end_char": 329,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 205
         },
@@ -71,7 +71,7 @@
           "end_char": 409,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 331
         },
@@ -83,15 +83,15 @@
     "source": {
       "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+      "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 36
       },
@@ -111,10 +111,10 @@
       },
       {
         "path": "references/skill-contract.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
-        "source_line": 59
+        "source_line": 32
       }
     ],
     "project_paths": []
@@ -132,7 +132,7 @@
           "end_char": 196,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -150,7 +150,7 @@
           "end_char": 415,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 197
         },
@@ -168,7 +168,7 @@
           "end_char": 603,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 416
         },
@@ -186,7 +186,7 @@
           "end_char": 1170,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 605
         },
@@ -199,7 +199,7 @@
     "summary_ref": {
       "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+      "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -214,8 +214,8 @@
     "name": "cold-outbound-sequencer",
     "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
     "phase": "deliver",
-    "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
-    "version": "19.0.0"
+    "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<sequence goal or ICP> [sending domain/mailbox setup] [target jurisdiction(s)] [list source]",
@@ -229,7 +229,7 @@
           "end_char": 388,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -241,7 +241,7 @@
     "source": {
       "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+      "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0"
     }
   },
   "output_contract": {
@@ -256,7 +256,7 @@
           "end_char": 178,
           "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7",
+          "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -267,7 +267,7 @@
     "source": {
       "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+      "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0"
     },
     "summary": "a cold-outbound sequence map (per-step timing, goal, exit conditions), a reply-triage branch table routing every reply type, a warmup + send-throttle ramp schedule (per-mailbox daily volume by week), a jurisdiction guardrail block (CAN-SPAM required elements, opt-in-jurisdiction flags — labeled guidance, not legal advice), a SEND **S**-dimension read with sub-item notes and the Cold-outbound typed profile named, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -282,8 +282,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -292,7 +292,7 @@
     "source": {
       "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "c6e300838b19807610c9c96dfaf7a1d9fe62674da2a91561ce3a21797cd8e6d7"
+      "sha256": "0af71caa8977021a6f1941ca5fd15e8346e6116b8a67215c1ef1ccfc67812bd0"
     },
     "trigger_phrases": [
       "build a B2B cold-outbound sequence",

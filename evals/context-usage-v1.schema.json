@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/evals/context-usage-v1.schema.json",
+  "title": "Aaron Marketing Skills context usage record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "record_id",
+    "recorded_at",
+    "route",
+    "profiles",
+    "experiment",
+    "context",
+    "provider",
+    "outcome",
+    "provenance"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "record_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$"},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "route": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "target_skill", "reason_code"],
+      "properties": {
+        "command": {"type": ["string", "null"]},
+        "target_skill": {"type": ["string", "null"]},
+        "reason_code": {"type": ["string", "null"]}
+      }
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capability", "prompt", "host"],
+      "properties": {
+        "capability": {"type": ["string", "null"]},
+        "prompt": {"type": ["string", "null"]},
+        "host": {"type": ["string", "null"]}
+      }
+    },
+    "experiment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pair_id",
+        "arm_id",
+        "repeat_index",
+        "randomized_order",
+        "context_profile_sha256",
+        "prompt_sha256",
+        "toolset_sha256"
+      ],
+      "properties": {
+        "pair_id": {"type": ["string", "null"], "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$"},
+        "arm_id": {"type": ["string", "null"], "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$"},
+        "repeat_index": {"type": ["integer", "null"], "minimum": 0},
+        "randomized_order": {"type": ["integer", "null"], "minimum": 0},
+        "context_profile_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "prompt_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "toolset_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}
+      }
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "context_signature",
+        "request_sha256",
+        "bytes",
+        "tokens",
+        "resources",
+        "disclosure",
+        "reference_bytes_by_reason"
+      ],
+      "properties": {
+        "context_signature": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "request_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "bytes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "discovery",
+            "repository_instructions",
+            "control_plane",
+            "model_visible_static",
+            "tool_schemas",
+            "references",
+            "evidence",
+            "required_total",
+            "selected_total",
+            "capacity"
+          ],
+          "properties": {
+            "discovery": {"type": ["integer", "null"], "minimum": 0},
+            "repository_instructions": {"type": ["integer", "null"], "minimum": 0},
+            "control_plane": {"type": ["integer", "null"], "minimum": 0},
+            "model_visible_static": {"type": ["integer", "null"], "minimum": 0},
+            "tool_schemas": {"type": ["integer", "null"], "minimum": 0},
+            "references": {"type": ["integer", "null"], "minimum": 0},
+            "evidence": {"type": ["integer", "null"], "minimum": 0},
+            "required_total": {"type": ["integer", "null"], "minimum": 0},
+            "selected_total": {"type": ["integer", "null"], "minimum": 0},
+            "capacity": {"type": ["integer", "null"], "minimum": 1}
+          }
+        },
+        "tokens": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["input", "cache_creation", "cache_read", "output", "reasoning"],
+          "properties": {
+            "input": {"type": ["integer", "null"], "minimum": 0},
+            "cache_creation": {"type": ["integer", "null"], "minimum": 0},
+            "cache_read": {"type": ["integer", "null"], "minimum": 0},
+            "output": {"type": ["integer", "null"], "minimum": 0},
+            "reasoning": {"type": ["integer", "null"], "minimum": 0}
+          }
+        },
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["candidates", "required", "selected", "omitted"],
+          "properties": {
+            "candidates": {"type": ["integer", "null"], "minimum": 0},
+            "required": {"type": ["integer", "null"], "minimum": 0},
+            "selected": {"type": ["integer", "null"], "minimum": 0},
+            "omitted": {"type": ["integer", "null"], "minimum": 0}
+          }
+        },
+        "disclosure": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["events", "required", "satisfied", "recall", "precision"],
+          "properties": {
+            "events": {"type": ["integer", "null"], "minimum": 0},
+            "required": {"type": ["integer", "null"], "minimum": 0},
+            "satisfied": {"type": ["integer", "null"], "minimum": 0},
+            "recall": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+            "precision": {"type": ["number", "null"], "minimum": 0, "maximum": 1}
+          }
+        },
+        "reference_bytes_by_reason": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["reason_code", "bytes", "resources"],
+            "properties": {
+              "reason_code": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$"},
+              "bytes": {"type": "integer", "minimum": 0},
+              "resources": {"type": "integer", "minimum": 0}
+            }
+          }
+        }
+      }
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "model_id", "model_revision"],
+      "properties": {
+        "name": {"type": ["string", "null"]},
+        "model_id": {"type": ["string", "null"]},
+        "model_revision": {"type": ["string", "null"]}
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "route_outcome", "task_outcome", "latency_ms", "tool_calls", "cost_usd"],
+      "properties": {
+        "status": {"enum": ["measured", "passed", "failed", "inconclusive", null]},
+        "route_outcome": {"type": ["string", "null"]},
+        "task_outcome": {"type": ["string", "null"]},
+        "latency_ms": {"type": ["integer", "null"], "minimum": 0},
+        "tool_calls": {"type": ["integer", "null"], "minimum": 0},
+        "cost_usd": {"type": ["number", "null"], "minimum": 0}
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "manifest_sha256", "notes"],
+      "properties": {
+        "source": {"enum": ["manifest", "assembly", "adapter", "static-baseline", "manual"]},
+        "manifest_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "notes": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {"type": "string", "minLength": 1, "maxLength": 500}
+        }
+      }
+    }
+  }
+}

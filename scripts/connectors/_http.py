@@ -454,21 +454,38 @@ def get(url, *, headers=None, timeout=DEFAULT_TIMEOUT, max_bytes=DEFAULT_MAX_BYT
             return {"status": 0, "url": url, "headers": {}, "body": b"",
                     "error": str(getattr(exc, "reason", exc)), "truncated": False}
         except urllib.error.HTTPError as e:
+            # ``HTTPError`` is also a response object, but Python 3.9's
+            # implementation delegates ``geturl()``, ``read()`` and ``close()``
+            # through the optional ``fp`` object.  Synthetic errors used by
+            # tests and a few opener implementations legitimately carry
+            # ``fp=None``; in that case those methods can raise AttributeError
+            # (or even KeyError through tempfile's proxy) while we are already
+            # handling the HTTP status.  Keep status handling authoritative and
+            # make response metadata/body cleanup best-effort.
+            status = e.code
+            # ``filename`` is stored directly by ``HTTPError`` even when the
+            # inherited response ``url`` property is unusable without ``fp``.
+            response_url = getattr(e, "filename", None) or url
+            response_headers = dict(getattr(e, "headers", {}) or {})
+            err_body, err_truncated = b"", False
             try:
-                status = e.code
-                response_url = e.geturl()
-                response_headers = dict(getattr(e, "headers", {}) or {})
+                try:
+                    response_url = e.geturl() or response_url
+                except (AttributeError, KeyError, OSError, ValueError):
+                    pass
                 # Read the error body before close — 4xx/5xx payloads carry the
                 # API's actual diagnostic (validation JSON, quota detail), which
                 # callers surface alongside the status-line error.
-                err_body, err_truncated = b"", False
                 try:
                     (err_body, err_truncated, _decode_err, _tb,
                      _exp) = _read_response(e, max_bytes, max_gzip_validation_bytes)
-                except (OSError, ValueError):
+                except (AttributeError, KeyError, OSError, ValueError):
                     pass  # best-effort: the status line remains the error
             finally:
-                e.close()
+                try:
+                    e.close()
+                except (AttributeError, KeyError, OSError, ValueError):
+                    pass
             if status in (429, 503) and attempt < retries - 1:
                 # Honor the server's Retry-After (integer seconds OR HTTP-date) when
                 # present, never waiting less than it asked; fall back to exponential

@@ -45,6 +45,14 @@ MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 INLINE_PATH_RE = re.compile(r"`([^`]+\.(?:md|json))`")
 MEMORY_PATH_RE = re.compile(r"`(memory/[A-Za-z0-9._/<>-]+)`")
 BACKTICK_TOKEN_RE = re.compile(r"`([a-z0-9]+(?:-[a-z0-9]+)+)`")
+RUNTIME_READ_HEADING = "### Runtime Reads"
+RUNTIME_READ_HEADING_RE = re.compile(r"^ {0,3}### Runtime Reads[ \t]*$")
+RUNTIME_READ_ITEM_RE = re.compile(
+    r"^\s*-\s+(?:`(?P<inline>[^`]+\.(?:md|json)(?:#[^`]*)?)`|"
+    r"\[[^\]]+\]\((?P<link>[^)]+)\))\s*$"
+)
+MARKDOWN_HEADING_RE = re.compile(r"^\s{0,3}#{1,6}\s+")
+MARKDOWN_FENCE_RE = re.compile(r"^\s{0,3}(?P<fence>`{3,}|~{3,})")
 
 
 class ContractGenerationError(ValueError):
@@ -484,17 +492,97 @@ def repository_link(root, skill_ref, raw_target):
     return relative.as_posix()
 
 
-def bundle_references(root, skill_ref, body):
-    references = {}
-    lines = body.splitlines()
-    required_list = False
-    for line_number, line in enumerate(lines, 1):
+def runtime_read_declarations(root, skill_ref, body):
+    """Parse the one closed, explicit model-runtime dependency section.
+
+    Runtime-required bundle references must be declared under an exact
+    ``### Runtime Reads`` heading.  Each entry is a bare Markdown bullet whose
+    value is one repository-local Markdown/JSON link or backticked path.  The
+    intentionally narrow grammar prevents ordinary prose containing words such
+    as "read", "read-only", or "readout" from changing context requirements.
+    """
+    declarations = []
+    seen_paths = set()
+    in_section = False
+    found_section = False
+    active_fence = None
+
+    for line_number, line in enumerate(body.splitlines(), 1):
+        fence_match = MARKDOWN_FENCE_RE.match(line)
+        if fence_match:
+            marker = fence_match.group("fence")
+            character = marker[0]
+            if active_fence is None:
+                active_fence = (character, len(marker))
+            elif active_fence[0] == character and len(marker) >= active_fence[1]:
+                active_fence = None
+            continue
+        if active_fence is not None:
+            continue
+
         stripped = line.strip()
-        line_declares_read = bool(re.search(r"\bread\b", line, re.I))
-        list_item = bool(re.match(r"^(?:\d+\.|[-*])\s+", stripped))
-        if stripped and required_list and not list_item:
-            required_list = False
-        required = line_declares_read or (required_list and list_item)
+        if RUNTIME_READ_HEADING_RE.fullmatch(line):
+            if found_section:
+                raise ContractGenerationError(
+                    "%s has more than one %s section" % (skill_ref, RUNTIME_READ_HEADING)
+                )
+            found_section = True
+            in_section = True
+            continue
+        if not in_section:
+            continue
+        if MARKDOWN_HEADING_RE.match(line):
+            in_section = False
+            continue
+        if not stripped:
+            continue
+
+        item_match = RUNTIME_READ_ITEM_RE.fullmatch(line)
+        if not item_match:
+            raise ContractGenerationError(
+                "%s:%d has invalid Runtime Reads entry; use '- `relative/path.md`' "
+                "or '- [label](relative/path.md)'" % (skill_ref, line_number)
+            )
+        raw_target = item_match.group("inline") or item_match.group("link")
+        relative = repository_link(root, skill_ref, raw_target)
+        if relative is None:
+            raise ContractGenerationError(
+                "%s:%d Runtime Reads target is not a repository file: %s"
+                % (skill_ref, line_number, raw_target)
+            )
+        if relative.endswith("/SKILL.md"):
+            raise ContractGenerationError(
+                "%s:%d Runtime Reads cannot load another SKILL.md: %s"
+                % (skill_ref, line_number, raw_target)
+            )
+        if relative in seen_paths:
+            raise ContractGenerationError(
+                "%s:%d duplicates Runtime Reads target %s"
+                % (skill_ref, line_number, relative)
+            )
+        seen_paths.add(relative)
+        declarations.append({
+            "path": relative,
+            "sha256": sha256_path(root / relative),
+            "requirement": "required",
+            "reason_code": "explicit-runtime-read",
+            "source_line": line_number,
+        })
+
+    if found_section and not declarations:
+        raise ContractGenerationError(
+            "%s has an empty %s section" % (skill_ref, RUNTIME_READ_HEADING)
+        )
+    return declarations
+
+
+def bundle_references(root, skill_ref, body):
+    references = {
+        item["path"]: item
+        for item in runtime_read_declarations(root, skill_ref, body)
+    }
+    lines = body.splitlines()
+    for line_number, line in enumerate(lines, 1):
         raw_targets = list(MARKDOWN_LINK_RE.findall(line))
         raw_targets.extend(INLINE_PATH_RE.findall(line))
         for raw in raw_targets:
@@ -509,15 +597,12 @@ def bundle_references(root, skill_ref, body):
             item = {
                 "path": relative,
                 "sha256": sha256_path(root / relative),
-                "requirement": "required" if required else "optional",
-                "reason_code": "explicit-runtime-read" if required else "authored-reference",
+                "requirement": "optional",
+                "reason_code": "authored-reference",
                 "source_line": line_number,
             }
-            if current is None or (
-                    current["requirement"] == "optional" and item["requirement"] == "required"):
+            if current is None:
                 references[relative] = item
-        if line_declares_read and stripped.endswith(":"):
-            required_list = True
     return [references[key] for key in sorted(references)]
 
 

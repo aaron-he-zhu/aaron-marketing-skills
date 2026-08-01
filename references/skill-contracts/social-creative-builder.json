@@ -11,7 +11,7 @@
           "end_char": 215,
           "path": "social/craft/social-creative-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
+          "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,15 +23,15 @@
     "source": {
       "path": "social/craft/social-creative-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae"
+      "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 39
       },
@@ -104,7 +104,7 @@
           "end_char": 148,
           "path": "social/craft/social-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
+          "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -122,7 +122,7 @@
           "end_char": 345,
           "path": "social/craft/social-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
+          "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
           "span_basis": "field-text",
           "start_char": 149
         },
@@ -140,7 +140,7 @@
           "end_char": 486,
           "path": "social/craft/social-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
+          "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
           "span_basis": "field-text",
           "start_char": 346
         },
@@ -158,7 +158,7 @@
           "end_char": 806,
           "path": "social/craft/social-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
+          "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
           "span_basis": "field-text",
           "start_char": 488
         },
@@ -171,7 +171,7 @@
     "summary_ref": {
       "path": "social/craft/social-creative-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae"
+      "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -186,8 +186,8 @@
     "name": "social-creative-builder",
     "path": "social/craft/social-creative-builder/SKILL.md",
     "phase": "craft",
-    "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
-    "version": "19.0.0"
+    "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<idea/topic> <target platforms> [carousel mode] [destination URL]",
@@ -201,7 +201,7 @@
           "end_char": 198,
           "path": "social/craft/social-creative-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
+          "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -213,7 +213,7 @@
     "source": {
       "path": "social/craft/social-creative-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae"
+      "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e"
     }
   },
   "output_contract": {
@@ -228,7 +228,7 @@
           "end_char": 75,
           "path": "social/craft/social-creative-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
+          "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -244,7 +244,7 @@
           "end_char": 204,
           "path": "social/craft/social-creative-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae",
+          "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e",
           "span_basis": "field-text",
           "start_char": 77
         },
@@ -255,7 +255,7 @@
     "source": {
       "path": "social/craft/social-creative-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae"
+      "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e"
     },
     "summary": "one package per requested platform, ready to paste — copy, hashtags/tags, link + first-comment placement where the norm card calls for it, disclosure lines where required, alt text — every variant tagged `{formula | hook family | CTA type | signal optimized}`, every claim ledger-traced or `[needs source]`-flagged, and (in carousel mode) a slide-by-slide spec; plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -270,8 +270,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -280,7 +280,7 @@
     "source": {
       "path": "social/craft/social-creative-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "fd894be71736f7fc428344006f253632e681abdc536a01cec812257cf6c845ae"
+      "sha256": "0b153a7d52bb7baecba52c27678017eb47ef7963960c6a10f9f5ac369e7b806e"
     },
     "trigger_phrases": [
       "spec the carousel slides",

@@ -11,7 +11,7 @@
           "end_char": 74,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 130,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 76
         },
@@ -41,7 +41,7 @@
           "end_char": 218,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 132
         },
@@ -56,7 +56,7 @@
           "end_char": 285,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 220
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "ad/research/search-term-miner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22"
+      "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad"
     }
   },
   "context_hints": {
@@ -117,7 +117,7 @@
           "end_char": 215,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -133,7 +133,7 @@
           "end_char": 391,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 217
         },
@@ -151,7 +151,7 @@
           "end_char": 633,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 392
         },
@@ -169,7 +169,7 @@
           "end_char": 801,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 634
         },
@@ -187,7 +187,7 @@
           "end_char": 824,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 803
         },
@@ -203,7 +203,7 @@
           "end_char": 940,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 825
         },
@@ -216,7 +216,7 @@
     "summary_ref": {
       "path": "ad/research/search-term-miner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22"
+      "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -231,8 +231,8 @@
     "name": "search-term-miner",
     "path": "ad/research/search-term-miner/SKILL.md",
     "phase": "research",
-    "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
-    "version": "19.0.0"
+    "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<search-terms export path/paste> [goal] [conversion column]",
@@ -246,7 +246,7 @@
           "end_char": 280,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -258,7 +258,7 @@
     "source": {
       "path": "ad/research/search-term-miner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22"
+      "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad"
     }
   },
   "output_contract": {
@@ -273,7 +273,7 @@
           "end_char": 81,
           "path": "ad/research/search-term-miner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22",
+          "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -284,7 +284,7 @@
     "source": {
       "path": "ad/research/search-term-miner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22"
+      "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad"
     },
     "summary": "a maintenance diff (add / negate / move), a set of harvested keywords/ad-groups from converting queries, a standing negative-keyword list, an n-gram waste report ranking the tokens draining spend without converting, a ROAS **S** dimension score with notes, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -299,8 +299,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -309,7 +309,7 @@
     "source": {
       "path": "ad/research/search-term-miner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "384e4bb848708ac5706d8015fb9f6c17e2236eb505210baeec491747ce2f0c22"
+      "sha256": "9bf39ef06478ca1f975acb2e454f53d7627e7520bf628461e213589894b3dbad"
     },
     "trigger_phrases": [
       "build a negative-keyword list",

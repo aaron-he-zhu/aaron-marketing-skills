@@ -42,6 +42,7 @@ def engineering_fixture(
     base: Path,
     *,
     age_hours: int = 0,
+    release_version: str = "19.0.0",
 ) -> tuple[Path, str, dict, dict[str, Path], Path, Path]:
     repository = base / "engineering-repository"
     repository.mkdir()
@@ -142,8 +143,8 @@ def engineering_fixture(
         "schema_version": "1.0",
         "gate": "engineering-validation-v19",
         "passed": True,
-        "release_version": "19.0.0",
-        "release_candidate": "19.0.0-rc.1",
+        "release_version": release_version,
+        "release_candidate": release_version + "-rc.1",
         "source_commit": commit,
         "issued_at": stamp,
         "repository": {
@@ -351,6 +352,30 @@ class ReleaseReceiptTests(unittest.TestCase):
         self.assertRegex(fields[0], r"^[0-9a-f]{64}$")
         self.assertEqual("19.0.0-rc.1", fields[1])
         self.assertEqual(commit, fields[2])
+
+    def test_19_1_engineering_receipt_is_accepted_without_dropping_19_0(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            (
+                repository,
+                commit,
+                receipt,
+                paths,
+                report_path,
+                evidence_root,
+            ) = engineering_fixture(Path(tmp), release_version="19.1.0")
+            identity = release_receipt.validate_receipt(
+                receipt,
+                expected_commit=commit,
+                expected_version="19.1.0",
+                verifier_path=ROOT / "scripts" / "verify-profile-outcomes.py",
+                repository_root=repository,
+                engineering_paths=paths,
+                maturity_report_path=report_path,
+                evidence_root=evidence_root,
+                semantic_revalidator=mocked_semantic_revalidator,
+            )
+        self.assertEqual("engineering-validation-v19", identity["gate"])
+        self.assertEqual("19.1.0-rc.1", identity["release_candidate"])
 
     def test_engineering_receipt_reasserts_provenance_scores_claims_and_tools(self):
         def rejected(path, value):

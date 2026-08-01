@@ -55,10 +55,22 @@ candidates. Every candidate declares:
 | `expected_sha256` | Optional content pin; a required mismatch stops resolution |
 | `conflict_group` | Mutually exclusive alternatives |
 | `supersedes` | Explicit replacement edges between candidate IDs |
+| `load_policy` | Planner metadata: `always`, `activation`, `conditional`, `fallback`, or `lookup` |
+| `exclusive_group` + `condition_code` | A closed distribution XOR; currently repository/plugin auditor sources versus the standalone fallback |
 
 Unknown fields, duplicate IDs/JSON keys, non-finite numbers, future
 observations, supersedes cycles, unsafe paths, and contradictory
 forbidden/non-forbidden declarations fail closed.
+
+A planner-backed request also binds `distribution_profile` to exactly
+`repository`, `plugin`, or `standalone-skill`. Auditor candidates declare both
+branches of `auditor-runtime-chain`: root policy/schema/benchmark sources use
+`repository-or-plugin`, while the generated local `auditor-runtime.md` uses
+`standalone-skill`. Missing either branch fails request validation. Resolution
+omits the inactive branch as `condition-not-met` before reading it, so a
+repository/plugin manifest and a standalone manifest can never select both
+chains. `plugin` intentionally aliases repository policy availability; it does
+not imply a capability profile or grant an external action.
 
 The `auto` route must declare one primary allowlisted generated scenario shard,
 may add `cross-discipline`, and may name a second primary only together with
@@ -79,30 +91,33 @@ architecture version.
 
 Resolution is deterministic and does not depend on request array order:
 
-1. Record `forbidden` candidates without reading them.
-2. Enforce sensitivity and freshness. A rejected required candidate stops the
+1. Resolve the closed distribution conditions and record every inactive branch
+   as `condition-not-met` without reading it.
+2. Record `forbidden` candidates without reading them.
+3. Enforce sensitivity and freshness. A rejected required candidate stops the
    run; an optional candidate receives an omission reason.
-3. Inspect required candidates first, then optional candidates by authority,
+4. Inspect required candidates first, then optional candidates by authority,
    freshness, priority, scope, path, and ID. Each stable source is read twice;
    `max_inspection_bytes` caps those aggregate reads independently of selected bytes.
    An over-budget required source stops resolution; an optional one receives
    `inspection-budget` without being read.
-4. Calculate SHA-256 and bytes for each inspected source and enforce any expected hash.
-5. Apply the acyclic `supersedes` graph. Replacements inherit the required
+5. Calculate SHA-256 and bytes for each inspected source and enforce any expected hash.
+6. Apply the acyclic `supersedes` graph. Replacements inherit the required
    status of resources they satisfy.
-6. Fail closed when more than one active member of a conflict group has a
+7. Fail closed when more than one active member of a conflict group has a
    different content hash. The caller must use explicit `supersedes` edges to
    resolve that conflict; equal-hash members are safe duplicates.
-7. Deduplicate identical content hashes by required status, authority,
+8. Deduplicate identical content hashes by required status, authority,
    freshness, priority, scope, path, then resource ID. A selected
    resource lists every candidate ID it satisfies.
-8. Admit all effective-required resources, then optional resources in the same
+9. Admit all effective-required resources, then optional resources in the same
    order until the resource or byte budget is reached. Required budget overflow
    stops resolution; optional overflow is explicit in `omitted`.
 
 Every omission uses a typed reason (`forbidden`, `missing`, `stale`,
 `sensitivity-budget`, `hash-mismatch`, `duplicate-content`, `superseded`,
-`byte-budget`, `resource-budget`, or `inspection-budget`). Conflict and supersedes
+`byte-budget`, `resource-budget`, `inspection-budget`, or
+`condition-not-met`). Conflict and supersedes
 decisions are retained separately from budget decisions.
 
 ## Filesystem and output guarantees

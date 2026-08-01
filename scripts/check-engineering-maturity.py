@@ -11,6 +11,7 @@ below the 95/100 target regardless of the raw point total.
 from __future__ import annotations
 
 import argparse
+import ast
 from dataclasses import dataclass
 import datetime as dt
 import hashlib
@@ -100,13 +101,15 @@ H19_ADAPTER_MARKERS = (
     '"judge_protocol_retry": JUDGE_PROTOCOL_RETRY_TEMPLATE',
     '"judge_protocol_max_attempts": MAX_JUDGE_ATTEMPTS',
     '"judge_protocol_retry_policy": "full-regeneration-no-rejected-raw-v1"',
-    "for attempt in range(1, MAX_JUDGE_ATTEMPTS + 1):",
-    'judge_project = case_root / ("judge-project-%d" % attempt)',
-    'judge_output = outputs / ("judge-%d.json" % attempt)',
     '"response_sha256": sha256_bytes(rejected_response)',
     '"size_bytes": len(rejected_response)',
     '"judge_attempts": attempts',
     '"response_sha256": combined_response_sha256(candidate_response, attempts)',
+)
+H19_V2_EVALUATE_MARKERS = (
+    "for attempt in range(1, MAX_JUDGE_ATTEMPTS + 1):",
+    'judge_project = case_root / ("judge-project-%d" % attempt)',
+    'judge_output = outputs / ("judge-%d.json" % attempt)',
 )
 H19_RUNNER_MARKERS = (
     "JUDGE_ATTEMPT_KEYS = {",
@@ -180,6 +183,27 @@ def p18_fact(semantic_request_suite, semantic_runner_text,
     )
 
 
+def _top_level_function_source(source, function_name):
+    """Return one exact top-level function body, or an empty string on drift.
+
+    H19 is the protocol-v2 engineering-maturity control. Protocol v3 has a
+    deliberately similar judge loop, so repository-wide substring checks can
+    no longer prove that the v2 implementation still contains its safeguards.
+    """
+    try:
+        tree = ast.parse(source)
+    except (SyntaxError, TypeError, ValueError):
+        return ""
+    lines = source.splitlines()
+    for node in tree.body:
+        if (
+                isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+                and node.name == function_name
+                and getattr(node, "end_lineno", None) is not None):
+            return "\n".join(lines[node.lineno - 1:node.end_lineno])
+    return ""
+
+
 def h17_fact(harness_suite, publishers, common_publish, sync_about,
              sync_family, publisher_tests):
     missing = []
@@ -245,6 +269,12 @@ def h19_fact(harness_suite, semantic_request_suite, adapter_text, runner_text,
     for marker in H19_ADAPTER_MARKERS:
         if marker not in adapter_text:
             missing.append("adapter-marker:%s" % marker)
+    v2_evaluate = _top_level_function_source(adapter_text, "evaluate_request")
+    if not v2_evaluate:
+        missing.append("adapter-v2-function:evaluate_request")
+    for marker in H19_V2_EVALUATE_MARKERS:
+        if marker not in v2_evaluate:
+            missing.append("adapter-v2-marker:%s" % marker)
     for marker in H19_RUNNER_MARKERS:
         if marker not in runner_text:
             missing.append("runner-marker:%s" % marker)

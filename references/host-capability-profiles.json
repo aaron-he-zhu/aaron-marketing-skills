@@ -1,0 +1,80 @@
+{
+  "$schema": "./host-capability-profiles.schema.json",
+  "capability_order": [
+    "skill-discovery",
+    "skill-local-references",
+    "shared-root-references",
+    "local-runtime-scripts",
+    "router-skills",
+    "slash-commands",
+    "prewrite-hooks",
+    "connector-sidecars",
+    "native-plugin-connectors",
+    "persistent-project-memory",
+    "governed-context-planning",
+    "runtime-owner-capabilities"
+  ],
+  "default_profile": "standalone-skill-host",
+  "profile_order": [
+    "standalone-skill-host",
+    "generic-shared-root-host",
+    "claude-code-plugin-host"
+  ],
+  "profiles": {
+    "claude-code-plugin-host": {
+      "capabilities": [
+        "skill-discovery",
+        "skill-local-references",
+        "shared-root-references",
+        "local-runtime-scripts",
+        "router-skills",
+        "slash-commands",
+        "prewrite-hooks",
+        "connector-sidecars",
+        "native-plugin-connectors",
+        "persistent-project-memory",
+        "governed-context-planning",
+        "runtime-owner-capabilities"
+      ],
+      "compatible_distributions": [
+        "repository",
+        "plugin"
+      ],
+      "connector_surface": "native-plugin",
+      "rank": 2,
+      "reference_surface": "shared-root",
+      "routing_surface": "slash-commands"
+    },
+    "generic-shared-root-host": {
+      "capabilities": [
+        "skill-discovery",
+        "skill-local-references",
+        "shared-root-references",
+        "router-skills",
+        "connector-sidecars"
+      ],
+      "compatible_distributions": [
+        "repository",
+        "plugin"
+      ],
+      "connector_surface": "sidecar",
+      "rank": 1,
+      "reference_surface": "shared-root",
+      "routing_surface": "router-skills"
+    },
+    "standalone-skill-host": {
+      "capabilities": [
+        "skill-discovery",
+        "skill-local-references"
+      ],
+      "compatible_distributions": [
+        "standalone-skill"
+      ],
+      "connector_surface": "none",
+      "rank": 0,
+      "reference_surface": "skill-local-only",
+      "routing_surface": "direct-skill"
+    }
+  },
+  "schema_version": "1.0"
+}

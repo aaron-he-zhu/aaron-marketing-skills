@@ -11,7 +11,7 @@
           "end_char": 90,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 169,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 93
         },
@@ -41,7 +41,7 @@
           "end_char": 255,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 172
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "influencer/report/report-generator/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3"
+      "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c"
     }
   },
   "context_hints": {
@@ -102,7 +102,7 @@
           "end_char": 188,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -120,7 +120,7 @@
           "end_char": 245,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 190
         },
@@ -136,7 +136,7 @@
           "end_char": 372,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 247
         },
@@ -154,7 +154,7 @@
           "end_char": 479,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 373
         },
@@ -172,7 +172,7 @@
           "end_char": 692,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 481
         },
@@ -185,7 +185,7 @@
     "summary_ref": {
       "path": "influencer/report/report-generator/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3"
+      "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -200,8 +200,8 @@
     "name": "report-generator",
     "path": "influencer/report/report-generator/SKILL.md",
     "phase": "report",
-    "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
-    "version": "19.0.0"
+    "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<campaign name> [audience: executive|client|team|board]",
@@ -215,7 +215,7 @@
           "end_char": 231,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -227,7 +227,7 @@
     "source": {
       "path": "influencer/report/report-generator/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3"
+      "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c"
     }
   },
   "output_contract": {
@@ -242,7 +242,7 @@
           "end_char": 124,
           "path": "influencer/report/report-generator/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3",
+          "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -253,7 +253,7 @@
     "source": {
       "path": "influencer/report/report-generator/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3"
+      "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c"
     },
     "summary": "a finished report in the audience-appropriate template, saved to `memory/influencer/report-generator/YYYY-MM-DD-<topic>.md`.",
     "summary_source": "writes-fallback",
@@ -268,8 +268,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -278,7 +278,7 @@
     "source": {
       "path": "influencer/report/report-generator/SKILL.md",
       "section": "frontmatter",
-      "sha256": "51fe1d8571964f2ba42c9b9e8380f326fbf5c99f4818c662a5d9c53be54522c3"
+      "sha256": "0f261d89a454f3a33e609f99e472a06befae06329f5801322ef31e962a27f95c"
     },
     "trigger_phrases": [
       "build an executive summary",

@@ -11,7 +11,7 @@
           "end_char": 149,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 269,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 151
         },
@@ -41,7 +41,7 @@
           "end_char": 322,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 271
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639"
+      "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea"
     }
   },
   "context_hints": {
@@ -137,7 +137,7 @@
           "end_char": 165,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -153,7 +153,7 @@
           "end_char": 393,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 167
         },
@@ -169,7 +169,7 @@
           "end_char": 552,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 394
         },
@@ -187,7 +187,7 @@
           "end_char": 803,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 553
         },
@@ -202,7 +202,7 @@
     "summary_ref": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639"
+      "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -216,8 +216,8 @@
     "name": "site-structure-optimizer",
     "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
     "phase": "tune",
-    "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
-    "version": "19.0.0"
+    "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "[--mode architecture|linking] <domain, sitemap, or page list + site type>",
@@ -231,7 +231,7 @@
           "end_char": 166,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -243,7 +243,7 @@
     "source": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639"
+      "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea"
     }
   },
   "output_contract": {
@@ -258,7 +258,7 @@
           "end_char": 126,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639",
+          "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -269,7 +269,7 @@
     "source": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639"
+      "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea"
     },
     "summary": "(mode-dependent): architecture mode → a page hierarchy (ASCII tree), a URL map table, a navigation spec, a hub/spoke link plan, a Mermaid site map flagging orphans/islands, an **architecture score /100**. Linking mode → a scored diagnosis, orphan list with disposition, anchor distribution check, and a prioritized source/target/anchor plan (**structure score /100**). Both emit a short handoff summary ready for `memory/seo-geo/tune/site-structure-optimizer/`.",
     "summary_source": "expected-output",
@@ -284,8 +284,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -294,7 +294,7 @@
     "source": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "b7664a91229a5623f05874bcead56e33ccd6e9cbeefb41a8c31ad29dc5955639"
+      "sha256": "a25946410c2ccd64834a40c89f4d76334460c7aae48af1951b88e933f76a9bea"
     },
     "trigger_phrases": [
       "design the page hierarchy / navigation / URL taxonomy",

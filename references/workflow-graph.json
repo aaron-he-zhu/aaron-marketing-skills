@@ -3,16 +3,16 @@
   "authority": {
     "markdown_role": "bidirectionally-checked-documentation-only",
     "node_source": "references/system-catalog.json",
-    "node_source_sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
+    "node_source_sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
     "source": "references/workflow-graph.source.json",
-    "source_sha256": "f4bd429c2a935ec0b61e65411ce9b055e22f376fdd502ff94900d2602462dab1"
+    "source_sha256": "a984ff993320811dc39ec060502cd61dc311121c9fbc4856676b148069a4776d"
   },
   "automatic_handoff_policy": {
     "ambiguity_stop": true,
     "max_automatic_handoffs": 3,
     "visited_set_required": true
   },
-  "catalog_version": "19.0.0",
+  "catalog_version": "19.1.0",
   "counts": {
     "edges": 376,
     "nodes": 120,
@@ -25,7 +25,7 @@
       "id": "edges-00",
       "last_edge_id": "campaign-architect--ad-creative-builder",
       "ref": "references/workflow-graph/edges-00.json",
-      "sha256": "7c9111907280212ad3bae839684fa275f4a423a124520f3a5693527c29fbdf87"
+      "sha256": "6b62f21db0d78a06405e98be270a0aef051bdf5e79d84becf8eb0115ab100b9c"
     },
     {
       "edge_count": 40,
@@ -33,7 +33,7 @@
       "id": "edges-01",
       "last_edge_id": "content-quality-auditor--technical-seo-checker",
       "ref": "references/workflow-graph/edges-01.json",
-      "sha256": "30cb56296fe58ba4f9cc0c8b5e8a549c6299e2a4199d9834030152b00a44ef5c"
+      "sha256": "996f4bce94a4739e4a9198e647ebdc96bb8e4b7ef626c5af67230ad59254c7e9"
     },
     {
       "edge_count": 40,
@@ -41,7 +41,7 @@
       "id": "edges-02",
       "last_edge_id": "email-creative-builder--landing-optimizer",
       "ref": "references/workflow-graph/edges-02.json",
-      "sha256": "df130290298051b40f3cbf327df3bec688b6d2e2605e7e9af97459ed2e1728d0"
+      "sha256": "ac8d17830f5559eedc1f80b6711ebe8329988ca70afd6a3fb9b6951953d06332"
     },
     {
       "edge_count": 40,
@@ -49,7 +49,7 @@
       "id": "edges-03",
       "last_edge_id": "keyword-research--serp-analysis",
       "ref": "references/workflow-graph/edges-03.json",
-      "sha256": "ebf93c75221d9cf958e6286977e065377b8dae950c3887ad1c42b9e10928dbdd"
+      "sha256": "9d08ea81ed3ffda4678de75f0f7efc7284a4dcaad4973c2d9c449cd2948c2ccd"
     },
     {
       "edge_count": 40,
@@ -57,7 +57,7 @@
       "id": "edges-04",
       "last_edge_id": "list-hygiene-monitor--email-quality-auditor",
       "ref": "references/workflow-graph/edges-04.json",
-      "sha256": "a547e8e8d59f80e7c0dad92d7fe8b1a7c213cd7871a33b2adfb940fecb7998c5"
+      "sha256": "e450f3a8ff7cb4d7505645a4d15a4fb1ce1f95b4c0ff37793443869e264bee2c"
     },
     {
       "edge_count": 40,
@@ -65,7 +65,7 @@
       "id": "edges-05",
       "last_edge_id": "narrative-quality-auditor--narrative-cascade-planner",
       "ref": "references/workflow-graph/edges-05.json",
-      "sha256": "11d8405bffa7c05c041bdba245401697ad51983151e0c616dd294bb44106d556"
+      "sha256": "47798eec0bd9998d2be8ce052fd62a4bafa0cf336fcb538141f04f1b99eaf900"
     },
     {
       "edge_count": 40,
@@ -73,7 +73,7 @@
       "id": "edges-06",
       "last_edge_id": "pitch-narrative-builder--narrative-enablement-kit",
       "ref": "references/workflow-graph/edges-06.json",
-      "sha256": "1d8e0fae0bdd730a1c4ad69aa1e15b34b781b5e0ab93c230fefdad8a22970810"
+      "sha256": "1eecad8a23eed86bc6e630d220d33f1c50a075e1d93ef99fc807a162835f915f"
     },
     {
       "edge_count": 40,
@@ -89,7 +89,7 @@
       "id": "edges-08",
       "last_edge_id": "story-bank-builder--narrative-cascade-planner",
       "ref": "references/workflow-graph/edges-08.json",
-      "sha256": "49dd5dc886f315088b7403f236eed5371ccb67f86f79adf289d930e177b44c5a"
+      "sha256": "7f913f523ec278df41136a150cdb794c286ef1b1a5c6e815d3f10db692703f6c"
     },
     {
       "edge_count": 16,
@@ -100,7 +100,7 @@
       "sha256": "2ab40d1ab59f1c161a205992e922cd05460a4dc91f3a6b47ea62ff4a961faf48"
     }
   ],
-  "graph_sha256": "0f3ea5462a73ca845ab2d500f651198ff2ffb99ec21861af1a35f72ec19d50f3",
+  "graph_sha256": "d8b092e27cf9f76c643cc12dbfa164b2b5e45691c3ffe1e8bf043835a67ba2e6",
   "nodes": [
     {
       "discipline": "narrative",

@@ -45,7 +45,7 @@ ADOPTION = ("adopt", "minor", "major", "reject")
 SUCCESS = {"adopt", "minor"}
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
-RC_RE = re.compile(r"^19\.0\.0-rc\.[1-9][0-9]*$")
+RC_RE = re.compile(r"^(?P<version>19\.(?:0|1)\.0)-rc\.[1-9][0-9]*$")
 EVIDENCE_MAX_BYTES = 10 * 1024 * 1024
 PRIVATE_MANIFEST_MAX_BYTES = 10 * 1024 * 1024
 TOP_KEYS = {
@@ -218,7 +218,9 @@ def load_evidence_with_bytes(path: Path) -> tuple[dict, bytes]:
     if not isinstance(root["release_candidate"], str) or not RC_RE.fullmatch(
         root["release_candidate"]
     ):
-        raise OutcomeError("release_candidate must be v19.0.0 RC identity")
+        raise OutcomeError(
+            "release_candidate must be a supported v19.0.0 or v19.1.0 RC identity"
+        )
     _hash(root["source_commit"], "source_commit", sha1=True)
     model = _object(root["model_identity"], MODEL_KEYS, "model_identity")
     for key in ("provider", "model", "version"):
@@ -322,7 +324,8 @@ def verify_expected_identity(
     if release_candidate is not None:
         if not RC_RE.fullmatch(release_candidate):
             raise OutcomeError(
-                "expected release_candidate must be a 19.0.0 RC identity"
+                "expected release_candidate must be a supported v19.0.0 or "
+                "v19.1.0 RC identity"
             )
         if evidence["release_candidate"] != release_candidate:
             raise OutcomeError(
@@ -847,12 +850,19 @@ def build_receipt(
         raise OutcomeError(
             "receipt outcome summary does not match a fresh stage evaluation"
         )
+    release_match = (
+        RC_RE.fullmatch(evidence.get("release_candidate", ""))
+        if isinstance(evidence, dict)
+        else None
+    )
+    if release_match is None:
+        raise OutcomeError("receipt evidence has an unsupported release candidate")
     verifier_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     return {
         "schema_version": "1.0",
         "gate": expected_gate,
         "passed": True,
-        "release_version": "19.0.0",
+        "release_version": release_match.group("version"),
         "release_candidate": evidence["release_candidate"],
         "source_commit": evidence["source_commit"],
         "evidence_sha256": hashlib.sha256(evidence_bytes).hexdigest(),
@@ -920,7 +930,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--release-candidate",
         required=True,
-        help="Require the evidence to bind this exact 19.0.0-rc.N identity.",
+        help=(
+            "Require the evidence to bind an exact supported "
+            "19.0.0-rc.N or 19.1.0-rc.N identity."
+        ),
     )
     parser.add_argument(
         "--evidence-manifest",

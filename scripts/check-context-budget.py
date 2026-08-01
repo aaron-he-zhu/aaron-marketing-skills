@@ -24,6 +24,10 @@ references/ or split the reference instead):
      ship over budget.
   5. The largest valid `/auto` assembly (command + API contract + routing
      index + three shards) <= AUTO_ASSEMBLY_MAX_BYTES.
+  6. Root host instructions remain navigation surfaces: CLAUDE.md and
+     AGENTS.md have individual and combined byte ceilings.
+  7. Every generated model capsule plus the portable policy kernel stays
+     under the compact activation ceiling recorded in its generated index.
 
 Usage:
   python3 scripts/check-context-budget.py   # CI gate; exit 1 on fail
@@ -42,6 +46,9 @@ AUTO_COMMAND = ROOT / "commands" / "auto.md"
 AUTO_CONTRACT = ROOT / "references" / "aaron-product-api-contract.md"
 AUTO_INDEX = ROOT / "references" / "auto-routing-scenarios.md"
 AUTO_SHARDS = ROOT / "references" / "auto-routing"
+CLAUDE_CONTEXT = ROOT / "CLAUDE.md"
+AGENT_CONTEXT = ROOT / "AGENTS.md"
+CAPSULE_INDEX = ROOT / "references" / "skill-capsules" / "index.json"
 
 SKILL_MD_MAX_LINES = 220
 ACTIVATION_MAX_BYTES = 125_000
@@ -50,6 +57,10 @@ HOT_MAX_LINES = 80
 HOT_MAX_BYTES = 25_600
 AUTO_ASSEMBLY_MAX_BYTES = 90_000
 AUTO_MAX_SHARDS = 3
+CLAUDE_CONTEXT_MAX_BYTES = 16_000
+AGENT_CONTEXT_MAX_BYTES = 14_000
+ROOT_CONTEXT_COMBINED_MAX_BYTES = 28_000
+CAPSULE_MODEL_MAX_BYTES = 24_000
 
 # Backticked repo-root reference paths inside an auditor runtime section,
 # e.g. `../../../references/auditor-runbook.md`.
@@ -174,11 +185,50 @@ def main():
     else:
         fail("memory/templates/hot-cache.md missing — HOT template baseline is gone")
 
+    root_context_bytes = 0
+    for path, ceiling in (
+            (CLAUDE_CONTEXT, CLAUDE_CONTEXT_MAX_BYTES),
+            (AGENT_CONTEXT, AGENT_CONTEXT_MAX_BYTES)):
+        try:
+            size = path.stat().st_size
+        except OSError as exc:
+            fail("cannot inspect root context %s: %s" % (path.name, exc))
+            continue
+        root_context_bytes += size
+        if size > ceiling:
+            fail("%s is %d bytes (navigation-context budget %d)"
+                 % (path.name, size, ceiling))
+    if root_context_bytes > ROOT_CONTEXT_COMBINED_MAX_BYTES:
+        fail("root host contexts total %d bytes (combined budget %d)"
+             % (root_context_bytes, ROOT_CONTEXT_COMBINED_MAX_BYTES))
+
+    if CAPSULE_INDEX.is_file():
+        try:
+            capsule_index = load_json(CAPSULE_INDEX)
+            entries = capsule_index["capsules"]
+        except (BudgetError, KeyError, TypeError) as exc:
+            fail("cannot validate skill capsule budget: %s" % exc)
+            entries = []
+        if len(entries) != 120:
+            fail("skill capsule index must contain 120 entries (found %d)" % len(entries))
+        for entry in entries:
+            model_bytes = entry.get("model_bytes") if isinstance(entry, dict) else None
+            skill = entry.get("skill", "unknown") if isinstance(entry, dict) else "unknown"
+            if (not isinstance(model_bytes, int) or isinstance(model_bytes, bool)
+                    or model_bytes <= 0):
+                fail("skill capsule %s has invalid model_bytes" % skill)
+            elif model_bytes > CAPSULE_MODEL_MAX_BYTES:
+                fail("skill capsule %s model context is %d bytes (budget %d)"
+                     % (skill, model_bytes, CAPSULE_MODEL_MAX_BYTES))
+    else:
+        fail("references/skill-capsules/index.json missing — compact model context is gone")
+
     if fails:
         print("\nCONTEXT BUDGET FAILED — %d issue(s)." % len(fails))
         return 1
-    print("Context budget passed: %d skills, auditor activation chains, recursive "
-          "references, assembled /auto profile, and HOT template all within budget."
+    print("Context budget passed: %d skills, root navigation contexts, model capsules, "
+          "auditor activation chains, recursive references, assembled /auto profile, "
+          "and HOT template all within budget."
           % len(skill_dirs()))
     return 0
 
