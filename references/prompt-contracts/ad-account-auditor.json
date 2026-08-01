@@ -327,7 +327,7 @@
   "skill": {
     "name": "ad-account-auditor",
     "path": "ad/activate/ad-account-auditor/SKILL.md",
-    "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+    "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
     "version": "19.1.0"
   },
   "source_catalog": {

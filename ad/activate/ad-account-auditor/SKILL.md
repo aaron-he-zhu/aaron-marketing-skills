@@ -38,6 +38,8 @@ Run the incremental-profit profile against the holdout and order-ID exports.
 
 This skill judges. `conversion-signal-qa`, `attribution-reconciler`, `campaign-architect`, `ad-creative-builder`, and `budget-pacing-monitor` build/fix the inputs. Never enable campaigns, change bids, upload audiences, or scale budgets without separate explicit approval.
 
+For a pre-launch account-audit request, use the narrow route `conversion-signal-qa` immediately before this gate. Do not automatically insert `placement-exclusion-manager` or `conversion-value-mapper` between signal QA and the audit; missing placement or value evidence remains Unknown in this run, and those sibling builders become separate remediation only when the user requests them or the completed gate identifies the corresponding finding.
+
 ## Data Sources
 
 | Need | Preferred evidence |

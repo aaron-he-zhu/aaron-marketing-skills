@@ -11,7 +11,7 @@
           "end_char": 122,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 228,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 124
         },
@@ -41,7 +41,7 @@
           "end_char": 286,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 230
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940"
+      "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba"
     }
   },
   "context_hints": {
@@ -116,7 +116,7 @@
           "end_char": 93,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -134,7 +134,7 @@
           "end_char": 198,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 94
         },
@@ -152,7 +152,7 @@
           "end_char": 295,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 199
         },
@@ -170,7 +170,7 @@
           "end_char": 384,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 296
         },
@@ -201,7 +201,7 @@
     "name": "narrative-quality-auditor",
     "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
     "phase": "evaluate",
-    "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+    "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
     "version": "19.1.0"
   },
   "input_contract": {
@@ -216,7 +216,7 @@
           "end_char": 80,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -228,7 +228,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940"
+      "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba"
     }
   },
   "output_contract": {
@@ -243,7 +243,7 @@
           "end_char": 31,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+          "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -254,7 +254,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940"
+      "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba"
     },
     "summary": "only permissioned v3 artifacts.",
     "summary_source": "writes-fallback",
@@ -279,7 +279,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940"
+      "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba"
     },
     "trigger_phrases": [
       "audit our brand narrative",

@@ -11,7 +11,7 @@
           "end_char": 141,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,19 +26,49 @@
           "end_char": 414,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 143
         },
         "text": "This skill judges. `conversion-signal-qa`, `attribution-reconciler`, `campaign-architect`, `ad-creative-builder`, and `budget-pacing-monitor` build/fix the inputs. Never enable campaigns, change bids, upload audiences, or scale budgets without separate explicit approval."
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 648,
+          "path": "ad/activate/ad-account-auditor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
+          "span_basis": "field-text",
+          "start_char": 416
+        },
+        "text": "For a pre-launch account-audit request, use the narrow route `conversion-signal-qa` immediately before this gate. Do not automatically insert `placement-exclusion-manager` or `conversion-value-mapper` between signal QA and the audit"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 862,
+          "path": "ad/activate/ad-account-auditor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
+          "span_basis": "field-text",
+          "start_char": 650
+        },
+        "text": "missing placement or value evidence remains Unknown in this run, and those sibling builders become separate remediation only when the user requests them or the completed gate identifies the corresponding finding."
       }
     ],
-    "done_when": "required context and all 20 states are explicit, vetoes use verified evidence, and scorer output is reported without executing spend changes.\n\nThis skill judges. `conversion-signal-qa`, `attribution-reconciler`, `campaign-architect`, `ad-creative-builder`, and `budget-pacing-monitor` build/fix the inputs. Never enable campaigns, change bids, upload audiences, or scale budgets without separate explicit approval.",
+    "done_when": "required context and all 20 states are explicit, vetoes use verified evidence, and scorer output is reported without executing spend changes.\n\nThis skill judges. `conversion-signal-qa`, `attribution-reconciler`, `campaign-architect`, `ad-creative-builder`, and `budget-pacing-monitor` build/fix the inputs. Never enable campaigns, change bids, upload audiences, or scale budgets without separate explicit approval.\n\nFor a pre-launch account-audit request, use the narrow route `conversion-signal-qa` immediately before this gate. Do not automatically insert `placement-exclusion-manager` or `conversion-value-mapper` between signal QA and the audit; missing placement or value evidence remains Unknown in this run, and those sibling builders become separate remediation only when the user requests them or the completed gate identifies the corresponding finding.",
     "extraction_status": "classified",
     "source": {
       "path": "ad/activate/ad-account-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f"
+      "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1"
     }
   },
   "context_hints": {
@@ -48,42 +78,42 @@
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "e39e21ca6c3ee95e3662e73d798a6a346bff392a752c172e0ac0b84c445c17fe",
-        "source_line": 44
+        "source_line": 46
       },
       {
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "dc3b8367bbb87a1626d77f74f92a801871edd8b5230aae2f0e09d5cf017b823e",
-        "source_line": 40
+        "source_line": 42
       },
       {
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
-        "source_line": 105
+        "source_line": 107
       },
       {
         "path": "references/roas-benchmark.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
-        "source_line": 42
+        "source_line": 44
       },
       {
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
-        "source_line": 43
+        "source_line": 45
       },
       {
         "path": "references/scoring-semantics.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "c4e3eb8c5dc6d3e5dd2d30594a85b2610df2addce829e305c365ce9311b6b59b",
-        "source_line": 41
+        "source_line": 43
       }
     ],
     "project_paths": []
@@ -101,7 +131,7 @@
           "end_char": 72,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -119,7 +149,7 @@
           "end_char": 227,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 73
         },
@@ -137,7 +167,7 @@
           "end_char": 316,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 228
         },
@@ -155,7 +185,7 @@
           "end_char": 407,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 317
         },
@@ -173,7 +203,7 @@
           "end_char": 489,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 408
         },
@@ -205,7 +235,7 @@
     "name": "ad-account-auditor",
     "path": "ad/activate/ad-account-auditor/SKILL.md",
     "phase": "activate",
-    "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+    "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
     "version": "19.1.0"
   },
   "input_contract": {
@@ -220,7 +250,7 @@
           "end_char": 46,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -232,7 +262,7 @@
     "source": {
       "path": "ad/activate/ad-account-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f"
+      "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1"
     }
   },
   "output_contract": {
@@ -247,7 +277,7 @@
           "end_char": 32,
           "path": "ad/activate/ad-account-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+          "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -258,7 +288,7 @@
     "source": {
       "path": "ad/activate/ad-account-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f"
+      "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1"
     },
     "summary": "only a permissioned v3 artifact.",
     "summary_source": "writes-fallback",
@@ -283,7 +313,7 @@
     "source": {
       "path": "ad/activate/ad-account-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f"
+      "sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1"
     },
     "trigger_phrases": [
       "Use when checking whether a paid account or portfolio is safe to launch or scale. Requires normalized own-data outcomes, attribution windows, currency, conversion lag, and business constraints."

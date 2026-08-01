@@ -68,7 +68,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/narrative-quality-auditor.json",
-      "contract_sha256": "0c31c01eed1edeceff8bde6bc0f56127e5d5553e850ab63fbf4654a724ac6f32",
+      "contract_sha256": "f1f05c30eb78ec98d73814e733f368a1557b5ecae988f20925884c54d24575a6",
       "skill": "narrative-quality-auditor"
     },
     {
@@ -368,7 +368,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/ad-account-auditor.json",
-      "contract_sha256": "982eff13a6925153d37ae97455793d88155ab778425b144d0be662244e1325de",
+      "contract_sha256": "4039327477bff03d432602c17a2a1129d44ab0e7ad5b053850fa588155e64a9b",
       "skill": "ad-account-auditor"
     },
     {

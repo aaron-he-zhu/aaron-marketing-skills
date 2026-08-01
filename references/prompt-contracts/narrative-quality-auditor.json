@@ -323,7 +323,7 @@
   "skill": {
     "name": "narrative-quality-auditor",
     "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
-    "sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+    "sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
     "version": "19.1.0"
   },
   "source_catalog": {

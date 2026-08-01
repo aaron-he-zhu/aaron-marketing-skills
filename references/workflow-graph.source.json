@@ -60,7 +60,7 @@
       "id": "edges-00",
       "last_edge_id": "campaign-architect--ad-creative-builder",
       "ref": "references/workflow-graph/edges-00.json",
-      "sha256": "6b62f21db0d78a06405e98be270a0aef051bdf5e79d84becf8eb0115ab100b9c"
+      "sha256": "b51401e75c92ab70d0e2c96d0679c2420416fd7bcbb1f56448ddbb75c7ad94bb"
     },
     {
       "edge_count": 40,

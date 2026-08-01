@@ -5,7 +5,7 @@
     "node_source": "references/system-catalog.json",
     "node_source_sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
     "source": "references/workflow-graph.source.json",
-    "source_sha256": "36d7cbfde016ff1db867cb7ae778fd9516baca0ebce17d02ab29c433e7293b77"
+    "source_sha256": "901ba3531b48bcb60617a74d97d72c79a997911fc040e894eafce5ceb11e14af"
   },
   "automatic_handoff_policy": {
     "ambiguity_stop": true,
@@ -25,7 +25,7 @@
       "id": "edges-00",
       "last_edge_id": "campaign-architect--ad-creative-builder",
       "ref": "references/workflow-graph/edges-00.json",
-      "sha256": "6b62f21db0d78a06405e98be270a0aef051bdf5e79d84becf8eb0115ab100b9c"
+      "sha256": "b51401e75c92ab70d0e2c96d0679c2420416fd7bcbb1f56448ddbb75c7ad94bb"
     },
     {
       "edge_count": 40,
@@ -100,7 +100,7 @@
       "sha256": "2ab40d1ab59f1c161a205992e922cd05460a4dc91f3a6b47ea62ff4a961faf48"
     }
   ],
-  "graph_sha256": "5313dd3635b163061ca84957c3cc9a1cd49ce2bf883fd7494b2afcea4d9b9990",
+  "graph_sha256": "920c2851f2c47e45563a2a859370497a897c11bbfb9c3a47c42c69ed2c7e8c4b",
   "nodes": [
     {
       "discipline": "narrative",

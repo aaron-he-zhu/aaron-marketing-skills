@@ -17,9 +17,9 @@
       ],
       "framework": "TALE",
       "ref": "references/prompt-contracts/narrative-quality-auditor.json",
-      "sha256": "85a20831e7244c09f45ebe31aeb472828351a3772a0e69346e04c7793e314e38",
+      "sha256": "4d6893367539cb527878b26bd62a54ed397295bae940c3bd4f7924f14866a8ed",
       "skill": "narrative-quality-auditor",
-      "skill_sha256": "4a86da2a787d06234455c229276d713c0fcbc7ab92517573c0835c6cf1281940",
+      "skill_sha256": "f56b369cb11f98097fac0f0d44d58e9e8f3200b2a8d4b57cea6cc03d673e21ba",
       "skill_version": "19.1.0"
     },
     {
@@ -97,9 +97,9 @@
       ],
       "framework": "ROAS",
       "ref": "references/prompt-contracts/ad-account-auditor.json",
-      "sha256": "34a8bdb36b9fd19818c324ed83f93673a7f0ea8adb204e4a089522a87b323315",
+      "sha256": "13824f21f4169da5e732d820eb23cdbc088374ee05fa031b7860da9d995c874a",
       "skill": "ad-account-auditor",
-      "skill_sha256": "fa783b3abf9dc5ae36687144cedf5dda1501d667550964569a38003c609d084f",
+      "skill_sha256": "fa95c3fdd40e4a225dccaaea038318569cfe608a068955fae0556e6a7cd604c1",
       "skill_version": "19.1.0"
     },
     {

@@ -61,7 +61,7 @@ Run a full review as three linked profile results; do not compute an overall sco
 
 ### Runtime and Setup
 
-Read `../../../references/auditor-runbook.md`, `scoring-semantics.md`, `tale-benchmark.md`, and the TALE catalog entry. Standalone installs use bundled immutable `references/auditor-runtime.md`; never fetch mutable `main`. Before deterministic calls, follow [`runtime-invocation.md`](../../../references/runtime-invocation.md), resolve `AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`, and require the scorer, validator, and typed catalogs. If unavailable, return `score_state: NOT_SCORED` / `score_confidence: not_scored` with no gate verdict or persistent artifact.
+Read `../../../references/auditor-runbook.md`, `scoring-semantics.md`, `tale-benchmark.md`, and the TALE catalog entry. Standalone installs use bundled immutable `references/auditor-runtime.md`; never fetch mutable `main`. Before deterministic calls, follow [`runtime-invocation.md`](../../../references/runtime-invocation.md), resolve `AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`, and require the scorer, validator, and typed catalogs. If unavailable, still collect the selected profile's typed observations and Unknowns, but return `score_state: NOT_SCORED` / `score_confidence: not_scored` with no gate verdict or persistent artifact; runtime absence blocks deterministic scoring, not the observation pass.
 
 Declare target, profile/mode, brand scope, market, audience, canon version, observation date, and evidence window.
 
@@ -72,7 +72,7 @@ Declare target, profile/mode, brand scope, market, audience, canon version, obse
 - **`effectiveness`:** score E1–E10 for one experiment/locked panel/date.
 - **`full`:** run the three profiles independently and keep three artifacts/results. Aggregate release language conservatively: any BLOCK → block; otherwise any UNDECIDED → undecided; otherwise any FIX → fix; all SHIP → ship. Never average scores.
 
-For a flagship pre-publish system gate, require a compatible current truth result; if none exists, run truth or state the prerequisite Unknown. Effectiveness is not required to establish internal system consistency unless the surface makes an effectiveness claim.
+For a flagship pre-publish gate, always execute the `system` profile procedure and require a compatible current `truth` result. If no compatible truth result exists, run `truth` separately when its evidence is available; otherwise record the truth prerequisite as Unknown while still rendering the requested system-profile result. A missing scorer/runtime changes that result to `NOT_SCORED/UNDECIDED`; it does not justify skipping the profile. Run `effectiveness` separately only when the user requests it or the surface makes an effectiveness claim.
 
 Every observed state needs source/date/type/confidence. A missing canon is Unknown, not N/A. A2/A4/A8 are conditional: three pillars, a change arc, and fixed boilerplate lengths are patterns only when deliberately chosen. Run the typed scorer per profile.
 
