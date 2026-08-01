@@ -100,6 +100,7 @@ REQUIRED_DISABLED_FEATURES = (
     "hooks",
     "image_generation",
     "in_app_browser",
+    "in_app_updates",
     "memories",
     "mentions_v2",
     "multi_agent",

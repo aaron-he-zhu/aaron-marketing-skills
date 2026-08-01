@@ -143,6 +143,11 @@ An optional host/model adapter can evaluate the selected cases without becoming 
 
 ### Protocol v2: engineering-maturity smoke
 
+Calibrate the model pair with one case before running the complete release
+profile. This command is calibration only: an explicit `--case` filter records
+the evidence profile as `filtered`, so its result cannot satisfy the release
+policy's complete `smoke` requirement.
+
 ```bash
 python3 scripts/run-behavior-evals.py \
   --adapter-only \
@@ -150,10 +155,30 @@ python3 scripts/run-behavior-evals.py \
   --profile smoke \
   --case derived-content-quality-auditor-missing-evidence \
   --adapter-batch-size 1 \
-  --evidence-run-id <CANONICAL_UUID> \
+  --evidence-run-id <CALIBRATION_UUID> \
   --adapter-implementation-ref scripts/adapters/codex-behavior-adapter.py \
   --adapter-command 'python3 scripts/adapters/codex-behavior-adapter.py --codex-bin <ABSOLUTE_CODEX_PATH> --codex-sha256 <CODEX_BINARY_SHA256> --model <SUT_MODEL_ID> --judge-model <DISTINCT_JUDGE_MODEL_ID> --workers 1'
 ```
+
+After calibration passes, use a fresh UUID and run all 24 fixed smoke cases in
+one bounded batch. Do not add `--case`, `--suite`, `--changed-file`, or
+`--changed-from` to the release-evidence command:
+
+```bash
+python3 scripts/run-behavior-evals.py \
+  --adapter-only \
+  --adapter-protocol 2 \
+  --profile smoke \
+  --adapter-batch-size 24 \
+  --evidence-run-id <FRESH_RELEASE_UUID> \
+  --adapter-implementation-ref scripts/adapters/codex-behavior-adapter.py \
+  --adapter-command 'python3 scripts/adapters/codex-behavior-adapter.py --codex-bin <ABSOLUTE_CODEX_PATH> --codex-sha256 <CODEX_BINARY_SHA256> --model <SUT_MODEL_ID> --judge-model <DISTINCT_JUDGE_MODEL_ID> --workers 4'
+```
+
+In both commands, the runner and the adapter command must resolve `python3` to
+the same stable, single-link regular interpreter. Use its absolute path when a
+system alias is a symlink or has multiple hard links; the evidence runner
+rejects an ambiguous interpreter before any model call.
 
 Protocol v2 sends one hash-bound NDJSON request per case and requires one result conforming to [`behavior-adapter-v2.schema.json`](behavior-adapter-v2.schema.json). Results bind the request, SUT/judge model and adapter identity, exact adapter implementation, prompt/parameter hashes, timestamps, candidate/judge response hashes, complete expected/forbidden assertion coverage, and a closed behavior/inconclusive/host/adapter failure taxonomy. Real and simulated execution modes cannot be conflated; the v2 runner requires `execution_mode: real`. Missing, duplicate, unknown, malformed, simulated, or failed results fail closed. Raw prompts and responses are not result fields. Adapter commands are parsed into an argument vector and run without a shell. Existing adapter commands still default to protocol v1 for compatibility; select v2 explicitly and provide the project-relative `--adapter-implementation-ref` for model-backed profiles. The official adapter must initially be the Python script at `argv[1]` of the same resolved interpreter as the runner. The runner then copies the already-read adapter and both already-read output schemas into a private read-only staging tree and executes only that staged script as `<current-python> -I -S <staged-script>`. Its child environment is rebuilt from a six-key allowlist and contains no inherited `PYTHON*` variables, so `PYTHONPATH`, `sitecustomize`, user-site packages, and a source-schema swap after binding cannot intercept execution. The staged adapter and both staged schemas are re-hashed before and after every batch. `--adapter-timeout` applies per outer batch. The bundled adapter's `--workers 1..4` partitions that batch across isolated private runtimes while preserving input result order; use one worker for calibration, then a single full-profile batch with a bounded worker count after calibration passes.
 

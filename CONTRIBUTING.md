@@ -215,8 +215,8 @@ run `python3 scripts/create-github-release.py` as a network-free preview and its
 `--live --receipt <private-receipt> --maturity-report <private-report>
 --evidence-root <absolute-private-root> --asset-dir <verified-assets>` form to
 create or read-only verify the immutable tag/release; (b) sync the downstream
-repo family with `sync-family.sh`; (c) project GitHub About with
-`sync-about.sh`; and (d) publish the Governed-ceiling/Lite-default bundle and
+GitHub About surface with `sync-about.sh`; (c) sync the downstream repo family
+with `sync-family.sh`; and (d) publish the Governed-ceiling/Lite-default bundle and
 per-skill registry records. Full gate, rollback, and distribution order:
 [docs/distribution.md](docs/distribution.md). All external mutations are
 owner-run. Between releases, the weekly `family-drift.yml` and

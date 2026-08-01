@@ -327,6 +327,7 @@ class CodexBehaviorAdapterTests(unittest.TestCase):
         self.assertIn('":minimal" = "read"', captured["config_text"])
         self.assertIn('[permissions.behavior_eval.network]\nenabled = false', captured["config_text"])
         self.assertIn('shell_tool = false', captured["config_text"])
+        self.assertIn('in_app_updates = false', captured["config_text"])
         self.assertEqual(0o600, candidate_call["output_mode"])
         self.assertEqual(0o400, candidate_call["schema_mode"])
         self.assertNotEqual(self.codex_source, candidate_call["executable_path"])
@@ -419,6 +420,13 @@ class CodexBehaviorAdapterTests(unittest.TestCase):
     def test_unproved_tool_free_feature_state_fails_closed(self):
         captured = {}
         result = self._run(self._router(captured, feature_override={"shell_tool": True}))
+        self.assertEqual("adapter-failed", result["outcome"])
+        self.assertEqual("ADAPTER_PROVENANCE", result["failures"][0]["code"])
+        self.assertEqual([], captured.get("model_calls", []))
+
+    def test_in_app_updates_must_be_disabled(self):
+        captured = {}
+        result = self._run(self._router(captured, feature_override={"in_app_updates": True}))
         self.assertEqual("adapter-failed", result["outcome"])
         self.assertEqual("ADAPTER_PROVENANCE", result["failures"][0]["code"])
         self.assertEqual([], captured.get("model_calls", []))
