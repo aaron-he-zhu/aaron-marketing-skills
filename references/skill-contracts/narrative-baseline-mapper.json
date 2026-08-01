@@ -11,7 +11,7 @@
           "end_char": 112,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 232,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 114
         },
@@ -41,7 +41,7 @@
           "end_char": 307,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 234
         },
@@ -53,15 +53,15 @@
     "source": {
       "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5"
+      "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 38
       },
@@ -74,17 +74,17 @@
       },
       {
         "path": "references/skill-contract.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
-        "source_line": 73
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "source_line": 34
       },
       {
         "path": "references/tale-benchmark.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
-        "source_line": 58
+        "source_line": 4
       }
     ],
     "project_paths": [
@@ -111,7 +111,7 @@
           "end_char": 176,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -129,7 +129,7 @@
           "end_char": 389,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 177
         },
@@ -147,7 +147,7 @@
           "end_char": 587,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 390
         },
@@ -165,7 +165,7 @@
           "end_char": 949,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 589
         },
@@ -178,7 +178,7 @@
     "summary_ref": {
       "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5"
+      "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -193,8 +193,8 @@
     "name": "narrative-baseline-mapper",
     "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
     "phase": "trace",
-    "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
-    "version": "19.0.0"
+    "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<brand / product> [surface URLs or paste] [intended message, if known]",
@@ -208,7 +208,7 @@
           "end_char": 125,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -223,7 +223,7 @@
           "end_char": 179,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 127
         },
@@ -238,7 +238,7 @@
           "end_char": 226,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 181
         },
@@ -253,7 +253,7 @@
           "end_char": 417,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 228
         },
@@ -265,7 +265,7 @@
     "source": {
       "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5"
+      "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95"
     }
   },
   "output_contract": {
@@ -280,7 +280,7 @@
           "end_char": 65,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -296,7 +296,7 @@
           "end_char": 269,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 67
         },
@@ -312,7 +312,7 @@
           "end_char": 415,
           "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5",
+          "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95",
           "span_basis": "field-text",
           "start_char": 271
         },
@@ -323,7 +323,7 @@
     "source": {
       "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5"
+      "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95"
     },
     "summary": "a narrative baseline document — a surface-by-surface inventory (surface · current headline/value line/claim · as-of date · label Measured / User-provided / Estimated), a per-surface gap read vs the intended message (aligned / drifted / contradictory / silent), a `[needs source]` list of any unverifiable claim found on a live surface, the frozen drift-baseline snapshot, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -334,12 +334,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -348,7 +348,7 @@
     "source": {
       "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
       "section": "frontmatter",
-      "sha256": "16f439ee15350a3e29cef4a3d5d50cc7954da2f265fdd6612e87699e1d4fdaf5"
+      "sha256": "df74558d78824a809c9f35d872a7c06fe20cefd4dbf3565179eefcbba7240b95"
     },
     "trigger_phrases": [
       "find the gap between what we say and what we mean",

@@ -390,12 +390,13 @@ else:
             result = self.run_gate(repository, commit)
             self.assertEqual(0, result.returncode, result.stderr)
 
-    def test_v19_release_requires_a_private_receipt(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            repository, commit = self.fixture_repo(Path(temporary), "19.0.0")
-            result = self.run_gate(repository, commit)
-            self.assertNotEqual(0, result.returncode)
-            self.assertIn("AARON_RELEASE_RECEIPT", result.stderr)
+    def test_supported_v19_releases_require_a_private_receipt(self):
+        for version in ("19.0.0", "19.1.0"):
+            with self.subTest(version=version), tempfile.TemporaryDirectory() as temporary:
+                repository, commit = self.fixture_repo(Path(temporary), version)
+                result = self.run_gate(repository, commit)
+                self.assertNotEqual(0, result.returncode)
+                self.assertIn("AARON_RELEASE_RECEIPT", result.stderr)
 
     def test_exact_parent_gate_token_allows_a_child_without_repeating_network_checks(self):
         with tempfile.TemporaryDirectory() as temporary:

@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/host-capability-profiles.schema.json",
+  "title": "Aaron host capability profiles",
+  "description": "Capability-based host profiles used to choose portable routing, reference, connector, and governed-runtime surfaces without relying on product-name guesses.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "default_profile",
+    "profile_order",
+    "capability_order",
+    "profiles"
+  ],
+  "properties": {
+    "$schema": {"const": "./host-capability-profiles.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "default_profile": {"const": "standalone-skill-host"},
+    "profile_order": {
+      "const": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ]
+    },
+    "capability_order": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/safeId"}
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "properties": {
+        "standalone-skill-host": {"$ref": "#/$defs/profile"},
+        "generic-shared-root-host": {"$ref": "#/$defs/profile"},
+        "claude-code-plugin-host": {"$ref": "#/$defs/profile"}
+      }
+    }
+  },
+  "$defs": {
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rank",
+        "capabilities",
+        "compatible_distributions",
+        "routing_surface",
+        "reference_surface",
+        "connector_surface"
+      ],
+      "properties": {
+        "rank": {"type": "integer", "minimum": 0, "maximum": 2},
+        "capabilities": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safeId"}
+        },
+        "compatible_distributions": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["repository", "plugin", "standalone-skill"]}
+        },
+        "routing_surface": {"enum": ["direct-skill", "router-skills", "slash-commands"]},
+        "reference_surface": {"enum": ["skill-local-only", "shared-root"]},
+        "connector_surface": {"enum": ["none", "sidecar", "native-plugin"]}
+      }
+    }
+  }
+}

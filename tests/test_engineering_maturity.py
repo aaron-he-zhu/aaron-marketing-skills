@@ -301,6 +301,24 @@ class EngineeringMaturityTests(unittest.TestCase):
                 self.assertFalse(fact.passed)
                 self.assertIn("adapter-marker:%s" % marker, fact.evidence)
 
+        v2_evaluate = maturity._top_level_function_source(adapter, "evaluate_request")
+        v3_evaluate = maturity._top_level_function_source(adapter, "evaluate_request_v3")
+        self.assertTrue(v2_evaluate)
+        self.assertTrue(v3_evaluate)
+        for marker in maturity.H19_V2_EVALUATE_MARKERS:
+            with self.subTest(kind="adapter-v2-marker", marker=marker):
+                self.assertIn(marker, v2_evaluate)
+                # v3 intentionally contains the same control text. Removing it
+                # from v2 must still fail H19 instead of matching the v3 copy.
+                self.assertIn(marker, v3_evaluate)
+                mutated_v2 = v2_evaluate.replace(
+                    marker, "removed-h19-v2-evaluate-marker", 1,
+                )
+                mutated_adapter = adapter.replace(v2_evaluate, mutated_v2, 1)
+                fact = evaluate(adapter_text=mutated_adapter)
+                self.assertFalse(fact.passed)
+                self.assertIn("adapter-v2-marker:%s" % marker, fact.evidence)
+
         for marker in maturity.H19_RUNNER_MARKERS:
             with self.subTest(kind="runner-marker", marker=marker):
                 self.assertIn(marker, runner)

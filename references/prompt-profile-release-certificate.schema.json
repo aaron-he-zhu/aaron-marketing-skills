@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/prompt-profile-release-certificate.schema.json",
+  "title": "Prompt-profile release promotion certificate",
+  "description": "Compact, package-safe projection of repository-verified paired evidence. The full paired evidence remains a repository-side promotion input.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema", "schema_version", "kind", "protocol_version", "certificate_id",
+    "paired_evidence", "distribution_profile", "host", "model", "profiles",
+    "catalogs", "policy_snapshot_sha256", "evaluated_at", "expires_at",
+    "aggregate", "decision", "promotion"
+  ],
+  "properties": {
+    "$schema": {"const": "../prompt-profile-release-certificate.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "kind": {"const": "prompt-profile-release-certificate"},
+    "protocol_version": {"const": "3.0"},
+    "certificate_id": {"$ref": "#/$defs/safeId"},
+    "paired_evidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["evidence_id", "sha256", "arm_run_set_sha256"],
+      "properties": {
+        "evidence_id": {"$ref": "#/$defs/safeId"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "arm_run_set_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "distribution_profile": {"const": "governed"},
+    "host": {"type": "object"},
+    "model": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "provider", "model_id", "model_revision", "judge_provider",
+        "judge_model_id", "judge_model_revision"
+      ],
+      "properties": {
+        "provider": {"$ref": "#/$defs/safeId"},
+        "model_id": {"$ref": "#/$defs/safeId"},
+        "model_revision": {"type": "string", "minLength": 1, "maxLength": 256},
+        "judge_provider": {"$ref": "#/$defs/safeId"},
+        "judge_model_id": {"$ref": "#/$defs/safeId"},
+        "judge_model_revision": {"type": "string", "minLength": 1, "maxLength": 256}
+      }
+    },
+    "profiles": {"type": "object"},
+    "catalogs": {"type": "object"},
+    "policy_snapshot_sha256": {"$ref": "#/$defs/sha256"},
+    "evaluated_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "aggregate": {"type": "object"},
+    "decision": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "valid", "reasons", "evidence_scope", "token_savings_claims_permitted",
+        "cost_savings_claims_permitted"
+      ],
+      "properties": {
+        "valid": {"const": true},
+        "reasons": {"const": []},
+        "evidence_scope": {
+          "enum": ["context-bytes-and-behavior", "context-bytes-behavior-and-provider-usage"]
+        },
+        "token_savings_claims_permitted": {"const": false},
+        "cost_savings_claims_permitted": {"const": false}
+      }
+    },
+    "promotion": {
+      "type": "object", "additionalProperties": false,
+      "required": ["verifier_ref", "verifier_sha256", "promoted_at"],
+      "properties": {
+        "verifier_ref": {"const": "scripts/verify-prompt-profile-release.py"},
+        "verifier_sha256": {"$ref": "#/$defs/sha256"},
+        "promoted_at": {"type": "string", "format": "date-time"}
+      }
+    }
+  },
+  "$defs": {
+    "safeId": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  }
+}

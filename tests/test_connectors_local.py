@@ -1,3 +1,4 @@
+import io
 import os
 import pathlib
 import sys
@@ -41,6 +42,7 @@ import rss_monitor  # noqa: E402
 import suggest  # noqa: E402
 import wayback  # noqa: E402
 import _http  # noqa: E402
+import _loader  # noqa: E402
 import datetime as _dt  # noqa: E402
 
 
@@ -285,12 +287,13 @@ class SharedHttpSafetyTests(unittest.TestCase):
         self.assertEqual(after_children - before_children, set())
 
     def test_retry_after_wait_is_capped(self):
+        streams = [io.BytesIO(), io.BytesIO()]
         errors = [
             _http.urllib.error.HTTPError(
                 "https://example.com/", 429, "rate limited",
-                {"Retry-After": "999"}, None
+                {"Retry-After": "999"}, stream
             )
-            for _ in range(2)
+            for stream in streams
         ]
         opener = mock.Mock()
         opener.open.side_effect = errors
@@ -301,9 +304,12 @@ class SharedHttpSafetyTests(unittest.TestCase):
             result = _http.get("https://example.com/", retries=2, max_retry_after=3)
         sleep.assert_called_once_with(3)
         self.assertEqual(result["status"], 429)
-        self.assertTrue(all(error.closed for error in errors))
+        self.assertTrue(all(stream.closed for stream in streams))
 
     def test_retry_after_header_lookup_is_case_insensitive(self):
+        # Python 3.9's HTTPError response methods proxy through ``fp`` and may
+        # raise while handling a perfectly valid synthetic ``fp=None`` error.
+        # The connector must still preserve the status/header retry behavior.
         error = _http.urllib.error.HTTPError(
             "https://example.com/", 503, "unavailable", {"retry-after": "9"}, None
         )

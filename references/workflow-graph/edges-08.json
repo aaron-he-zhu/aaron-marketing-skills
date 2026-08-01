@@ -413,7 +413,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "social/craft/short-video-scripter/SKILL.md:94",
+      "condition_source": "social/craft/short-video-scripter/SKILL.md:101",
       "condition_text": "If the script is approved and needs a slot: social-calendar-builder — slot it against the committed cadence.",
       "documentation_required": true,
       "exception": null,
@@ -442,7 +442,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "social/craft/short-video-scripter/SKILL.md:95",
+      "condition_source": "social/craft/short-video-scripter/SKILL.md:102",
       "condition_text": "If the concept should also ship as non-video posts: social-creative-builder — build the platform-native text/image packages from the same idea.",
       "documentation_required": true,
       "exception": null,
@@ -471,7 +471,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "social/craft/short-video-scripter/SKILL.md:93",
+      "condition_source": "social/craft/short-video-scripter/SKILL.md:100",
       "condition_text": "Primary: social-quality-auditor — run the pre-publish gate on the finished package before anything ships.",
       "documentation_required": true,
       "exception": null,
@@ -927,7 +927,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "social/host/social-quality-auditor/SKILL.md:116",
+      "condition_source": "social/host/social-quality-auditor/SKILL.md:124",
       "condition_text": "Channel truth: channel-registry",
       "documentation_required": true,
       "exception": null,
@@ -958,7 +958,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "social/host/social-quality-auditor/SKILL.md:118",
+      "condition_source": "social/host/social-quality-auditor/SKILL.md:126",
       "condition_text": "UGC/response: engagement-inbox-manager",
       "documentation_required": true,
       "exception": null,
@@ -986,7 +986,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "social/host/social-quality-auditor/SKILL.md:117",
+      "condition_source": "social/host/social-quality-auditor/SKILL.md:125",
       "condition_text": "Claims: offer-claims-registry",
       "documentation_required": true,
       "exception": null,
@@ -1017,7 +1017,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "social/host/social-quality-auditor/SKILL.md:119",
+      "condition_source": "social/host/social-quality-auditor/SKILL.md:127",
       "condition_text": "Measurement: social-measurement-loop",
       "documentation_required": true,
       "exception": null,

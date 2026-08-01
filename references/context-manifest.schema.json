@@ -112,11 +112,16 @@
           "then": {
             "properties": {
               "scenario_shards": {
-                "minItems": 1,
                 "maxItems": 3,
-                "contains": {"$ref": "#/$defs/primaryScenarioShard"},
-                "minContains": 1,
-                "maxContains": 2
+                "anyOf": [
+                  {"maxItems": 0},
+                  {
+                    "minItems": 1,
+                    "contains": {"$ref": "#/$defs/primaryScenarioShard"},
+                    "minContains": 1,
+                    "maxContains": 2
+                  }
+                ]
               }
             }
           },
@@ -169,14 +174,17 @@
       "additionalProperties": false,
       "required": [
         "planner_version", "generator", "skill_contract", "contract_index",
-        "system_catalog", "candidate_discovery", "freshness", "token_budget"
+        "system_catalog", "distribution_profile", "post_route", "candidate_discovery",
+        "freshness", "token_budget"
       ],
       "properties": {
-        "planner_version": {"const": "1.0"},
-        "generator": {"const": "context-plan-v1"},
+        "planner_version": {"const": "1.1"},
+        "generator": {"const": "context-plan-v1.1"},
         "skill_contract": {"$ref": "#/$defs/plannerFileRef"},
         "contract_index": {"$ref": "#/$defs/plannerFileRef"},
         "system_catalog": {"$ref": "#/$defs/plannerFileRef"},
+        "distribution_profile": {"enum": ["repository", "plugin", "standalone-skill"]},
+        "post_route": {"type": "boolean"},
         "candidate_discovery": {
           "type": "object",
           "additionalProperties": false,
@@ -229,6 +237,10 @@
     "candidate": {
       "type": "object",
       "additionalProperties": false,
+      "dependentRequired": {
+        "exclusive_group": ["condition_code"],
+        "condition_code": ["exclusive_group"]
+      },
       "required": [
         "resource_id", "scope", "path", "role", "requirement", "authority",
         "observed_at", "max_age_seconds", "priority", "reason_code",
@@ -250,6 +262,14 @@
         "sensitivity": {"enum": ["public", "internal", "confidential", "restricted"]},
         "expected_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
         "conflict_group": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]},
+        "load_policy": {"enum": ["always", "activation", "conditional", "fallback", "lookup"]},
+        "exclusive_group": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]},
+        "condition_code": {
+          "oneOf": [
+            {"type": "null"},
+            {"enum": ["repository-or-plugin", "standalone-skill"]}
+          ]
+        },
         "supersedes": {
           "type": "array",
           "maxItems": 32,
@@ -286,11 +306,16 @@
           "then": {
             "properties": {
               "scenario_shards": {
-                "minItems": 1,
                 "maxItems": 3,
-                "contains": {"$ref": "#/$defs/primaryScenarioShard"},
-                "minContains": 1,
-                "maxContains": 2
+                "anyOf": [
+                  {"maxItems": 0},
+                  {
+                    "minItems": 1,
+                    "contains": {"$ref": "#/$defs/primaryScenarioShard"},
+                    "minContains": 1,
+                    "maxContains": 2
+                  }
+                ]
               }
             }
           },
@@ -372,7 +397,7 @@
           "enum": [
             "forbidden", "missing", "stale", "sensitivity-budget", "hash-mismatch",
             "duplicate-content", "superseded", "byte-budget",
-            "resource-budget", "inspection-budget"
+            "resource-budget", "inspection-budget", "condition-not-met"
           ]
         },
         "selected_resource_id": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]}

@@ -13,6 +13,7 @@ import contextlib
 import datetime as dt
 import gzip
 import hashlib
+import importlib.util
 import io
 import json
 import os
@@ -51,6 +52,10 @@ AUTHORITIES = {"canonical", "approved", "working", "untrusted"}
 AUTHORITY_RANK = {"canonical": 0, "approved": 1, "working": 2, "untrusted": 3}
 SENSITIVITIES = {"public", "internal", "confidential", "restricted"}
 SENSITIVITY_RANK = {"public": 0, "internal": 1, "confidential": 2, "restricted": 3}
+DISTRIBUTION_PROFILES = {"repository", "plugin", "standalone-skill"}
+LOAD_POLICIES = {"always", "activation", "conditional", "fallback", "lookup"}
+CONDITION_CODES = {"repository-or-plugin", "standalone-skill"}
+_PLANNER_MODULE = None
 ALLOWED_SHARDS = {
     "references/auto-routing/narrative.md",
     "references/auto-routing/seo-geo.md",
@@ -64,7 +69,7 @@ ALLOWED_SHARDS = {
 OMISSION_REASONS = {
     "forbidden", "missing", "stale", "sensitivity-budget", "hash-mismatch",
     "duplicate-content", "superseded", "byte-budget", "resource-budget",
-    "inspection-budget",
+    "inspection-budget", "condition-not-met",
 }
 
 
@@ -640,11 +645,11 @@ def _validate_route(value, label, manifest=False):
     if len(shards) != len(set(shards)):
         raise ContextResolutionError("%s.scenario_shards must be a unique array" % label)
     if value["command"] == "auto":
-        if not 1 <= len(shards) <= 3:
-            raise ContextResolutionError("/auto requires one to three scenario shards")
+        if len(shards) > 3:
+            raise ContextResolutionError("/auto permits at most three scenario shards")
         primary_shards = [shard for shard in shards if not shard.endswith("/cross-discipline.md")]
         has_cross = any(shard.endswith("/cross-discipline.md") for shard in shards)
-        if not primary_shards:
+        if shards and not primary_shards:
             raise ContextResolutionError("/auto requires one primary discipline shard")
         if len(primary_shards) > 2:
             raise ContextResolutionError("/auto permits at most two primary discipline shards")
@@ -702,13 +707,26 @@ def _validate_planner(value, request):
         value,
         {
             "planner_version", "generator", "skill_contract", "contract_index",
-            "system_catalog", "candidate_discovery", "freshness", "token_budget",
+            "system_catalog", "distribution_profile", "post_route", "candidate_discovery",
+            "freshness", "token_budget",
         },
         set(),
         "planner",
     )
-    if value["planner_version"] != "1.0" or value["generator"] != "context-plan-v1":
+    if value["planner_version"] != "1.1" or value["generator"] != "context-plan-v1.1":
         raise ContextResolutionError("planner identity is unsupported")
+    validate_enum(
+        value["distribution_profile"], DISTRIBUTION_PROFILES,
+        "planner.distribution_profile",
+    )
+    if not isinstance(value["post_route"], bool):
+        raise ContextResolutionError("planner.post_route must be boolean")
+    if request["route"]["command"] == "auto":
+        has_shards = bool(request["route"]["scenario_shards"])
+        if value["post_route"] == has_shards:
+            raise ContextResolutionError(
+                "planner.post_route must be true exactly when /auto shards are absent"
+            )
     for field in ("skill_contract", "contract_index", "system_catalog"):
         reference = value[field]
         exact_object(reference, {"path", "sha256"}, set(), "planner." + field)
@@ -806,7 +824,8 @@ def _validate_candidate(value, index):
         "observed_at", "max_age_seconds", "priority", "reason_code", "sensitivity",
         "expected_sha256", "conflict_group", "supersedes",
     }
-    exact_object(value, required, set(), label)
+    optional = {"load_policy", "exclusive_group", "condition_code"}
+    exact_object(value, required, optional, label)
     validate_safe_id(value["resource_id"], label + ".resource_id")
     validate_enum(value["scope"], {"bundle", "project"}, label + ".scope")
     validate_relative_path(value["path"], label + ".path")
@@ -823,6 +842,18 @@ def _validate_candidate(value, index):
         validate_sha(value["expected_sha256"], label + ".expected_sha256")
     if value["conflict_group"] is not None:
         validate_safe_id(value["conflict_group"], label + ".conflict_group")
+    if "load_policy" in value:
+        validate_enum(value["load_policy"], LOAD_POLICIES, label + ".load_policy")
+    exclusive_group = value.get("exclusive_group")
+    condition_code = value.get("condition_code")
+    if exclusive_group is not None:
+        validate_safe_id(exclusive_group, label + ".exclusive_group")
+    if condition_code is not None:
+        validate_enum(condition_code, CONDITION_CODES, label + ".condition_code")
+    if (exclusive_group is None) != (condition_code is None):
+        raise ContextResolutionError(
+            "%s exclusive_group and condition_code must be declared together" % label
+        )
     supersedes = value["supersedes"]
     if not isinstance(supersedes, list) or len(supersedes) > 32:
         raise ContextResolutionError("%s.supersedes must be a unique array of at most 32 IDs" % label)
@@ -895,6 +926,25 @@ def validate_request(value):
     _assert_acyclic(candidates)
     if "planner" in value:
         _validate_planner(value["planner"], value)
+    conditional = [
+        candidate for candidate in candidates if candidate.get("condition_code") is not None
+    ]
+    if conditional and "planner" not in value:
+        raise ContextResolutionError(
+            "conditional candidates require planner distribution_profile provenance"
+        )
+    groups = {}
+    for candidate in conditional:
+        groups.setdefault(candidate["exclusive_group"], set()).add(
+            candidate["condition_code"]
+        )
+    expected_branches = {"repository-or-plugin", "standalone-skill"}
+    for group, branches in sorted(groups.items()):
+        if branches != expected_branches:
+            raise ContextResolutionError(
+                "exclusive group %s must declare repository/plugin and standalone branches"
+                % group
+            )
     by_path = {}
     for candidate in candidates:
         by_path.setdefault((candidate["scope"], candidate["path"]), []).append(candidate)
@@ -1096,6 +1146,19 @@ def _omission(resource_id, reason_code, selected_resource_id=None):
     }
 
 
+def _condition_matches(candidate, request):
+    """Resolve the small closed distribution condition vocabulary."""
+    condition = candidate.get("condition_code")
+    if condition is None:
+        return True
+    profile = request["planner"]["distribution_profile"]
+    if condition == "repository-or-plugin":
+        return profile in {"repository", "plugin"}
+    if condition == "standalone-skill":
+        return profile == "standalone-skill"
+    raise ContextResolutionError("unsupported candidate condition_code: %s" % condition)
+
+
 def _signature_payload(manifest):
     return {
         "schema_version": manifest["schema_version"],
@@ -1108,6 +1171,46 @@ def _signature_payload(manifest):
     }
 
 
+def _load_context_planner():
+    """Load the sibling planner lazily so its closure remains the single source of truth."""
+    global _PLANNER_MODULE
+    if _PLANNER_MODULE is None:
+        path = Path(__file__).resolve().with_name("context-plan.py")
+        spec = importlib.util.spec_from_file_location(
+            "context_resolver_candidate_closure", path
+        )
+        if spec is None or spec.loader is None:
+            raise ContextResolutionError("context planner cannot be loaded")
+        module = importlib.util.module_from_spec(spec)
+        # Do not let Linux's default in-tree bytecode cache mutate a verified
+        # distribution after the first planner-backed resolution.
+        source = path.read_bytes()
+        exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
+        _PLANNER_MODULE = module
+    return _PLANNER_MODULE
+
+
+def validate_planner_candidate_closure(request, bundle_root, project_root):
+    """Prove a planner-backed request equals the current complete candidate closure."""
+    validate_request(request)
+    if "planner" not in request:
+        return request
+    planner = _load_context_planner()
+    try:
+        planner.validate_planned_request(
+            request,
+            bundle_root=bundle_root,
+            project_root=project_root,
+            resolve_sources=True,
+            _skip_resolve=True,
+        )
+    except (planner.ContextPlanError, planner.resolver.ContextResolutionError) as exc:
+        raise ContextResolutionError(
+            "planner candidate closure is invalid: %s" % exc
+        ) from exc
+    return request
+
+
 def resolve_context(request, bundle_root, project_root):
     """Return a validated manifest for a validated explicit request."""
     validate_request(request)
@@ -1115,6 +1218,7 @@ def resolve_context(request, bundle_root, project_root):
     request["route"]["scenario_shards"] = sorted(request["route"]["scenario_shards"])
     bundle_path = normalized_root(bundle_root, "bundle root")
     project_path = normalized_root(project_root, "project root")
+    validate_planner_candidate_closure(request, bundle_path, project_path)
     catalog_data = load_catalog(bundle_path)
     catalog_sha, catalog_version, skill_version, skill_sha = validate_route_against_catalog(
         request, bundle_path, catalog_data
@@ -1130,6 +1234,9 @@ def resolve_context(request, bundle_root, project_root):
 
     for candidate in request["candidates"]:
         resource_id = candidate["resource_id"]
+        if not _condition_matches(candidate, request):
+            omitted[resource_id] = _omission(resource_id, "condition-not-met")
+            continue
         if candidate["requirement"] == "forbidden":
             omitted[resource_id] = _omission(resource_id, "forbidden")
             continue
@@ -1495,6 +1602,29 @@ def validate_manifest(value):
             validate_safe_id(target, label + ".selected_resource_id")
             if target not in selected_ids:
                 raise ContextResolutionError("omission selected_resource_id is not selected")
+    candidate_by_id = {
+        candidate["resource_id"]: candidate for candidate in request["candidates"]
+    }
+    represented = satisfied_ids | omitted_ids
+    if represented != set(candidate_by_id):
+        raise ContextResolutionError(
+            "manifest resources and omissions must cover every request candidate exactly once"
+        )
+    for resource in resources:
+        for candidate_id in resource["satisfies_resource_ids"]:
+            if not _condition_matches(candidate_by_id[candidate_id], request):
+                raise ContextResolutionError(
+                    "selected resource satisfies an inactive distribution branch: %s"
+                    % candidate_id
+                )
+    for omission in omissions:
+        candidate = candidate_by_id[omission["resource_id"]]
+        active = _condition_matches(candidate, request)
+        if active == (omission["reason_code"] == "condition-not-met"):
+            raise ContextResolutionError(
+                "condition-not-met omission differs from distribution branch: %s"
+                % omission["resource_id"]
+            )
     conflicts = value["conflicts"]
     if not isinstance(conflicts, list) or len(conflicts) > MAX_CANDIDATES:
         raise ContextResolutionError("conflicts must be an array with at most 256 entries")

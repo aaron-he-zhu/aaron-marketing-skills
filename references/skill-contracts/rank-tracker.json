@@ -11,7 +11,7 @@
           "end_char": 86,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
+          "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 160,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
+          "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562",
           "span_basis": "field-text",
           "start_char": 88
         },
@@ -41,7 +41,7 @@
           "end_char": 209,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
+          "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562",
           "span_basis": "field-text",
           "start_char": 162
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
+      "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562"
     }
   },
   "context_hints": {
@@ -76,14 +76,14 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 28
       },
       {
         "path": "scripts/connectors/README.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "sha256": "755816582373b846b95783c125c6d9cd57d5c20bbf4af97bc00aecdbaa557c56",
         "source_line": 34
       },
       {
@@ -116,7 +116,7 @@
           "end_char": 220,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
+          "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -131,7 +131,7 @@
     "summary_ref": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
+      "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -144,8 +144,8 @@
     "name": "rank-tracker",
     "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
     "phase": "evaluate",
-    "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
-    "version": "19.0.0"
+    "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<domain> [keyword list]",
@@ -159,7 +159,7 @@
           "end_char": 109,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
+          "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -171,7 +171,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
+      "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562"
     }
   },
   "output_contract": {
@@ -186,7 +186,7 @@
           "end_char": 58,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233",
+          "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -197,7 +197,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
+      "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562"
     },
     "summary": "a ranking report or delta summary plus the standard handoff summary for `memory/monitoring/`.",
     "summary_source": "expected-output",
@@ -208,12 +208,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -222,7 +222,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "frontmatter",
-      "sha256": "0abdf957a177bc4129eb8a196a81e5a1f40f5fb6b4ebabd44cd1a763295e7233"
+      "sha256": "fc2c23d67d76f07c5bad24ffdf4a8d5195631fff222aefab385922bfd2988562"
     },
     "trigger_phrases": [
       "track rankings",

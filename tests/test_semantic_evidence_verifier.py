@@ -8,6 +8,7 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+import shlex
 import tempfile
 import textwrap
 import unittest
@@ -81,7 +82,7 @@ class SemanticEvidenceVerifierTests(unittest.TestCase):
         self.selection = runner.select_semantic_cases("smoke", set())
         with contextlib.redirect_stdout(io.StringIO()):
             failures = runner.run_adapter_v2(
-                "python3 %s" % self.adapter,
+                shlex.join([runner.sys.executable, str(self.adapter)]),
                 self.selection,
                 60,
                 batch_size=7,
@@ -142,6 +143,41 @@ class SemanticEvidenceVerifierTests(unittest.TestCase):
                 self.evidence_root, self.run_id, policy=self.policy, runner=runner,
             )
 
+    def test_manifest_command_digest_tamper_fails_closed(self):
+        path = (
+            self.evidence_root / "memory" / "runs" / self.run_id
+            / "semantic-eval" / "manifest.json"
+        )
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        manifest["adapter_command_sha256"] = "f" * 64
+        path.write_text(
+            json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        with self.assertRaisesRegex(verifier.EvidenceError, "command digest"):
+            verifier.verify_evidence(
+                self.evidence_root, self.run_id, policy=self.policy, runner=runner,
+            )
+
+    def test_manifest_selection_provenance_tamper_fails_closed(self):
+        path = (
+            self.evidence_root / "memory" / "runs" / self.run_id
+            / "semantic-eval" / "manifest.json"
+        )
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+        manifest["selection_provenance"]["selected_count"] += 1
+        manifest["selection_sha256"] = runner.sha256_json({
+            "profile": manifest["profile"],
+            "case_ids": self.selection["case_ids"],
+            "provenance": manifest["selection_provenance"],
+        })
+        path.write_text(
+            json.dumps(manifest, sort_keys=True) + "\n", encoding="utf-8"
+        )
+        with self.assertRaisesRegex(verifier.EvidenceError, "current case selection"):
+            verifier.verify_evidence(
+                self.evidence_root, self.run_id, policy=self.policy, runner=runner,
+            )
+
     def test_stale_result_fails_closed(self):
         with self.assertRaisesRegex(verifier.EvidenceError, "stale"):
             verifier.verify_evidence(
@@ -173,7 +209,7 @@ class SemanticEvidenceVerifierTests(unittest.TestCase):
             self.assertEqual(
                 [],
                 runner.run_adapter_v2(
-                    "python3 %s" % same_judge_adapter,
+                    shlex.join([runner.sys.executable, str(same_judge_adapter)]),
                     self.selection,
                     60,
                     batch_size=8,

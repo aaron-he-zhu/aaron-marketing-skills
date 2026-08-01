@@ -8,13 +8,16 @@ from io import StringIO
 import json
 import os
 from pathlib import Path
+import shutil
 import stat
 import subprocess
 import sys
 import tempfile
 import threading
+from types import SimpleNamespace
 import unittest
 from unittest import mock
+import uuid
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -324,6 +327,7 @@ class CodexBehaviorAdapterTests(unittest.TestCase):
         self.assertIn('":minimal" = "read"', captured["config_text"])
         self.assertIn('[permissions.behavior_eval.network]\nenabled = false', captured["config_text"])
         self.assertIn('shell_tool = false', captured["config_text"])
+        self.assertIn('in_app_updates = false', captured["config_text"])
         self.assertEqual(0o600, candidate_call["output_mode"])
         self.assertEqual(0o400, candidate_call["schema_mode"])
         self.assertNotEqual(self.codex_source, candidate_call["executable_path"])
@@ -416,6 +420,13 @@ class CodexBehaviorAdapterTests(unittest.TestCase):
     def test_unproved_tool_free_feature_state_fails_closed(self):
         captured = {}
         result = self._run(self._router(captured, feature_override={"shell_tool": True}))
+        self.assertEqual("adapter-failed", result["outcome"])
+        self.assertEqual("ADAPTER_PROVENANCE", result["failures"][0]["code"])
+        self.assertEqual([], captured.get("model_calls", []))
+
+    def test_in_app_updates_must_be_disabled(self):
+        captured = {}
+        result = self._run(self._router(captured, feature_override={"in_app_updates": True}))
         self.assertEqual("adapter-failed", result["outcome"])
         self.assertEqual("ADAPTER_PROVENANCE", result["failures"][0]["code"])
         self.assertEqual([], captured.get("model_calls", []))
@@ -725,6 +736,20 @@ class CodexBehaviorAdapterTests(unittest.TestCase):
             self.module._host_failure_code(completed),
         )
 
+    def test_usage_limit_wins_over_incidental_auth_language(self):
+        completed = subprocess.CompletedProcess(
+            ["codex"], 1,
+            "The candidate context mentions an API key.",
+            "You've hit your usage limit. Purchase more credits or try again later.",
+        )
+        self.assertEqual(
+            (
+                "HOST_RATE_LIMIT", True,
+                "Codex CLI rate or usage limiting prevented a behavior result.",
+            ),
+            self.module._host_failure_code(completed),
+        )
+
     def test_parallel_workers_preserve_request_order_and_partition_isolation(self):
         requests = self._requests(6)
         config = self.module.AdapterConfig(
@@ -933,6 +958,947 @@ class CodexBehaviorAdapterTests(unittest.TestCase):
             self.module.MAX_JUDGE_ATTEMPTS,
             protocol["$defs"]["execution"]["properties"]["judge_attempts"]["maxItems"],
         )
+
+
+class CodexBehaviorAdapterV3Tests(unittest.TestCase):
+    """Offline proofs for real v3 route -> selected context -> judge semantics."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.module = load_module()
+        runner_path = ROOT / "scripts" / "run-behavior-evals.py"
+        spec = importlib.util.spec_from_file_location("behavior_runner_for_v3_adapter", runner_path)
+        cls.runner = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = cls.runner
+        spec.loader.exec_module(cls.runner)
+
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.scratch = Path(os.path.realpath(self.temporary.name))
+        self.codex = self.scratch / "codex"
+        self.codex.write_bytes(b"#!/bin/sh\nexit 1\n")
+        os.chmod(self.codex, 0o700)
+        self.config = self.module.AdapterConfig(
+            str(self.codex), "gpt-fixture", 30, "gpt-judge-fixture",
+            hashlib.sha256(self.codex.read_bytes()).hexdigest(),
+        )
+        selection = self.runner.select_semantic_cases(
+            "smoke", {"routing-outreach-vs-contract-helper-outreach-manager-001"},
+        )
+        self.request = self.runner.build_v3_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"],
+            host_profile="claude-code-plugin-host",
+            model_id="gpt-fixture",
+            judge_model_id="gpt-judge-fixture",
+        )[0]
+        schema_sha = hashlib.sha256(b"fixture-schema").hexdigest()
+        self.runtime = SimpleNamespace(
+            scratch=self.scratch,
+            routing_schema=Path("routing-output.schema.json"),
+            candidate_schema=Path("candidate-output.schema.json"),
+            judge_schema=Path("judge-output.schema.json"),
+            routing_schema_sha256=schema_sha,
+            candidate_schema_sha256=schema_sha,
+            judge_schema_sha256=schema_sha,
+            config_sha256=hashlib.sha256(b"fixture-config").hexdigest(),
+            environment={},
+            executable=str(self.codex),
+        )
+
+    def tearDown(self):
+        self.temporary.cleanup()
+
+    def _rehash(self, request):
+        request.pop("request_sha256", None)
+        request["request_sha256"] = self.module.sha256_json(request)
+
+    def _binding_for(self, request, selected_skill=None):
+        selected_skill = selected_skill or request["judge_contract"]["expected_route"]
+        sources = self.module.collect_v3_selected_sources(request, selected_skill, ROOT)
+        resources = self.module.v3_model_resource_projection(sources)
+        return {
+            "assembly_sha256": hashlib.sha256(b"fixture-assembly").hexdigest(),
+            "assembly_signature": hashlib.sha256(b"fixture-assembly-signature").hexdigest(),
+            "context_signature": hashlib.sha256(b"fixture-context-signature").hexdigest(),
+            "host_catalog_sha256": hashlib.sha256(
+                (ROOT / "references/host-capability-profiles.json").read_bytes()
+            ).hexdigest(),
+            "prompt_policy_sha256": self.module.sha256_json({
+                **json.loads(
+                    (ROOT / "references/prompt-profiles.json").read_text(encoding="utf-8")
+                ),
+                "certified_bindings": [],
+            }),
+            "context_modules_sha256": hashlib.sha256(
+                (ROOT / "references/context-modules.json").read_bytes()
+            ).hexdigest(),
+            "model_body_bytes": sum(item["bytes"] for item in resources),
+            "model_reduction_ratio": 0,
+            "model_resources": resources,
+            "model_resources_sha256": self.module.sha256_json(resources),
+        }
+
+    @staticmethod
+    def _string_values(value):
+        if isinstance(value, str):
+            yield value
+        elif isinstance(value, dict):
+            for item in value.values():
+                yield from CodexBehaviorAdapterV3Tests._string_values(item)
+        elif isinstance(value, list):
+            for item in value:
+                yield from CodexBehaviorAdapterV3Tests._string_values(item)
+
+    def _execution_prompt_payload(self, prompt):
+        opening = "<blind-execution-data>\n"
+        closing = "\n</blind-execution-data>"
+        self.assertEqual(1, prompt.count(opening))
+        self.assertEqual(1, prompt.count(closing))
+        encoded = prompt.split(opening, 1)[1].split(closing, 1)[0]
+        return self.module.strict_json_loads(encoded, "test blind execution payload")
+
+    def _judge_pass(self):
+        return {
+            "outcome": "passed",
+            "assertions": [
+                {
+                    "id": "expected-%d" % index,
+                    "kind": "expected",
+                    "verdict": "met",
+                    "evidence": "The candidate satisfies the expected behavior.",
+                }
+                for index in range(1, len(self.request["judge_contract"]["assertions"]) + 1)
+            ] + [
+                {
+                    "id": "forbidden-%d" % index,
+                    "kind": "forbidden",
+                    "verdict": "not-observed",
+                    "evidence": "The forbidden behavior is absent.",
+                }
+                for index in range(1, len(self.request["judge_contract"]["must_not"]) + 1)
+            ],
+            "failures": [],
+        }
+
+    def _model_side_effect(self, selected_skill, *, routing_returncode=0, invalid_route=False):
+        def run(_runtime, _config, _project, output_schema, _output_path, _model_id, _prompt):
+            name = output_schema.name
+            if name.startswith("routing-"):
+                selected = "not-in-index" if invalid_route else selected_skill
+                return subprocess.CompletedProcess([], routing_returncode, "", "rate limit"), json.dumps(
+                    {"selected_skill": selected}
+                ).encode("utf-8")
+            if name.startswith("candidate-"):
+                return subprocess.CompletedProcess([], 0, "", ""), json.dumps({
+                    "candidate_response": "I will use the selected skill and preserve authority boundaries."
+                }).encode("utf-8")
+            return subprocess.CompletedProcess([], 0, "", ""), json.dumps(
+                self._judge_pass()
+            ).encode("utf-8")
+        return run
+
+    def test_v3_route_prompt_is_target_and_judge_leak_free(self):
+        payload = self.module.v3_routing_candidate_payload(self.request)
+        rendered = self.module.canonical_json(payload)
+        target = next(
+            item for item in self.request["routing_index"]["entries"]
+            if item["skill"] == self.request["judge_contract"]["expected_route"]
+        )
+        for key in self.module.V3_CANDIDATE_FORBIDDEN_KEYS:
+            self.assertNotIn('"%s"' % key, rendered)
+        self.assertNotIn(target["skill_ref"], rendered)
+        self.assertNotIn(target["contract_ref"], rendered)
+        for marker in (
+                self.request["judge_contract"]["assertions"]
+                + self.request["judge_contract"]["must_not"]):
+            self.assertNotIn(marker, rendered)
+
+        changed = json.loads(json.dumps(self.request))
+        changed["judge_contract"]["expected_route"] = "contract-helper"
+        changed["judge_contract"]["assertions"] = ["UNIQUE-JUDGE-SENTINEL"]
+        changed["judge_contract"]["must_not"] = ["UNIQUE-FORBIDDEN-SENTINEL"]
+        changed["case"]["id"] = "TARGET-SHAPED-contract-helper-narrative-SENTINEL"
+        changed["case"]["source_ref"] = "TARGET-SHAPED-SOURCE-SENTINEL.md"
+        changed["selection"] = {
+            "profile": "nightly",
+            "reasons": ["TARGET-SHAPED-SELECTION-SENTINEL"],
+        }
+        self._rehash(changed)
+        self.assertEqual(payload, self.module.v3_routing_candidate_payload(changed))
+        for marker in (
+                "TARGET-SHAPED-contract-helper-narrative-SENTINEL",
+                "TARGET-SHAPED-SOURCE-SENTINEL.md",
+                "TARGET-SHAPED-SELECTION-SENTINEL",
+                '"profile"', '"reasons"', '"source_ref"'):
+            self.assertNotIn(marker, rendered)
+
+    def test_v3_source_loading_is_derived_from_selection_not_expected_route(self):
+        selected = "contract-helper"
+        sources = self.module.collect_v3_selected_sources(self.request, selected, ROOT)
+        refs = {item.ref for item in sources}
+        expected_entry = next(
+            item for item in self.request["routing_index"]["entries"]
+            if item["skill"] == self.request["judge_contract"]["expected_route"]
+        )
+        selected_entry = next(
+            item for item in self.request["routing_index"]["entries"]
+            if item["skill"] == selected
+        )
+        self.assertIn(selected_entry["skill_ref"], refs)
+        self.assertIn(self.request["routing_index"]["shared_contract"]["path"], refs)
+        self.assertNotIn(selected_entry["contract_ref"], refs)
+        self.assertNotIn(self.request["routing_index"]["system_catalog"]["path"], refs)
+        self.assertNotIn(expected_entry["skill_ref"], refs)
+        self.assertNotIn(expected_entry["contract_ref"], refs)
+        contract = json.loads((ROOT / selected_entry["contract_ref"]).read_text(encoding="utf-8"))
+        optional = {
+            item["path"] for item in contract["context_hints"]["bundle_references"]
+            if item["requirement"] != "required"
+            and item["reason_code"] != "explicit-runtime-read"
+            and item["path"] != self.request["routing_index"]["shared_contract"]["path"]
+        }
+        self.assertTrue(optional)
+        self.assertTrue(optional.isdisjoint(refs))
+
+    def test_v3_auto_route_execution_uses_direct_selected_skill_assembly(self):
+        selection = self.runner.select_semantic_cases(
+            "nightly", {"auto-memory-cleanup-001"},
+        )
+        request = self.runner.build_v3_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"],
+            host_profile="claude-code-plugin-host", model_id="gpt-fixture",
+            judge_model_id="gpt-judge-fixture",
+        )[0]
+        selected = request["judge_contract"]["expected_route"]
+        original_read = self.module.read_project_reference
+        reads = []
+
+        def read(root, reference, label):
+            reads.append(reference)
+            if (
+                    reference == "evals/auto-routing-scenarios.source.md"
+                    or reference.startswith("references/auto-routing/")):
+                self.fail("routing-only case material was loaded after selection")
+            return original_read(root, reference, label)
+
+        with mock.patch.object(
+                self.module, "read_project_reference", side_effect=read):
+            sources = self.module.collect_v3_selected_sources(request, selected, ROOT)
+
+        refs = {source.ref for source in sources}
+        roles = {source.role for source in sources}
+        selected_entry = next(
+            entry for entry in request["routing_index"]["entries"]
+            if entry["skill"] == selected
+        )
+        self.assertIn(selected_entry["skill_ref"], refs)
+        self.assertNotIn("routing-scenario", roles)
+        self.assertFalse(
+            any(ref.startswith("references/auto-routing/") for ref in refs), refs,
+        )
+        self.assertNotIn("evals/auto-routing-scenarios.source.md", refs)
+        self.assertFalse(
+            any(ref.startswith("references/auto-routing/") for ref in reads), reads,
+        )
+
+    def test_v3_execution_leave_one_out_markers_never_reach_prompt_or_staged_strings(self):
+        selection = self.runner.select_semantic_cases(
+            "nightly", {"auto-memory-cleanup-001"},
+        )
+        request = self.runner.build_v3_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"],
+            host_profile="claude-code-plugin-host", model_id="gpt-fixture",
+            judge_model_id="gpt-judge-fixture",
+        )[0]
+        selected = request["judge_contract"]["expected_route"]
+        sources = self.module.collect_v3_selected_sources(request, selected, ROOT)
+        project = self.scratch / "v3-leave-one-out-candidate"
+        project.mkdir(mode=0o700)
+        staged = self.module._stage_sources(project, sources)
+
+        baseline = self.module.v3_execution_candidate_payload(request, selected, staged)
+        prompt = self.module.build_v3_execution_prompt(request, selected, staged)
+        parsed = self._execution_prompt_payload(prompt)
+        self.assertEqual(baseline, parsed)
+        self.assertNotIn("case_id", parsed)
+
+        staged_text = [
+            (project / item.staged_ref).read_text(encoding="utf-8")
+            for item in staged
+        ]
+        candidate_strings = [*self._string_values(parsed), *staged_text]
+        baseline_markers = [
+            request["case"]["id"],
+            *request["judge_contract"]["assertions"],
+            *request["judge_contract"]["must_not"],
+            '"expected_route"',
+            '"blocking_inputs"',
+            '"must_not"',
+            '"assertions"',
+        ]
+        for marker in baseline_markers:
+            self.assertFalse(
+                any(marker in text for text in candidate_strings), marker,
+            )
+
+        mutations = (
+            (
+                "case-id",
+                "CASE-ID-LEAVE-ONE-OUT-SENTINEL",
+                lambda changed, marker: changed["case"].__setitem__("id", marker),
+            ),
+            (
+                "expected-route",
+                "EXPECTED-ROUTE-LEAVE-ONE-OUT-SENTINEL",
+                lambda changed, marker: changed["judge_contract"].__setitem__(
+                    "expected_route", marker,
+                ),
+            ),
+            (
+                "target-rubric",
+                "TARGET-RUBRIC-LEAVE-ONE-OUT-SENTINEL",
+                lambda changed, marker: changed["judge_contract"].__setitem__(
+                    "assertions", [marker],
+                ),
+            ),
+            (
+                "expected-blocking",
+                "EXPECTED-BLOCKING-LEAVE-ONE-OUT-SENTINEL",
+                lambda changed, marker: changed["judge_contract"].__setitem__(
+                    "assertions", ["Ask blocking inputs: %s." % marker],
+                ),
+            ),
+            (
+                "must-not",
+                "MUST-NOT-LEAVE-ONE-OUT-SENTINEL",
+                lambda changed, marker: changed["judge_contract"].__setitem__(
+                    "must_not", [marker],
+                ),
+            ),
+        )
+        for label, marker, mutate in mutations:
+            with self.subTest(hidden_field=label):
+                changed = json.loads(json.dumps(request))
+                mutate(changed, marker)
+                self._rehash(changed)
+                changed_payload = self.module.v3_execution_candidate_payload(
+                    changed, selected, staged,
+                )
+                changed_prompt = self.module.build_v3_execution_prompt(
+                    changed, selected, staged,
+                )
+                changed_parsed = self._execution_prompt_payload(changed_prompt)
+                self.assertEqual(baseline, changed_payload)
+                self.assertEqual(baseline, changed_parsed)
+                visible_strings = [*self._string_values(changed_parsed), *staged_text]
+                self.assertFalse(
+                    any(marker in text for text in visible_strings), marker,
+                )
+
+        leaked = b'{"blocking_inputs":["STRING-CONTENT-LEAK-SENTINEL"]}'
+        forged = self.module.BoundSource(
+            "skill-reference", "references/leaked-source.json",
+            hashlib.sha256(leaked).hexdigest(), leaked,
+        )
+        with self.assertRaisesRegex(
+                self.module.AdapterError, "serialized judge-only key"):
+            self.module._audit_v3_execution_sources(request, [forged])
+
+    def test_v3_real_assembly_projection_matches_three_case_types_and_profiles(self):
+        planner_path = ROOT / "scripts" / "context-plan.py"
+        planner_spec = importlib.util.spec_from_file_location(
+            "v3_projection_context_planner", planner_path,
+        )
+        planner = importlib.util.module_from_spec(planner_spec)
+        sys.modules[planner_spec.name] = planner
+        planner_spec.loader.exec_module(planner)
+        assembly_path = ROOT / "scripts" / "context-assembly.py"
+        assembly_spec = importlib.util.spec_from_file_location(
+            "v3_projection_context_assembly", assembly_path,
+        )
+        assembly_runtime = importlib.util.module_from_spec(assembly_spec)
+        sys.modules[assembly_spec.name] = assembly_runtime
+        assembly_spec.loader.exec_module(assembly_runtime)
+
+        case_ids = {
+            "routing-outreach-vs-contract-helper-outreach-manager-001",
+            "auto-memory-cleanup-001",
+            "derived-content-quality-auditor-missing-evidence",
+        }
+        selection = self.runner.select_semantic_cases("nightly", case_ids)
+        self.assertEqual(
+            {"authored", "auto-routing", "derived-auditor"},
+            {case["source_group"] for case in selection["cases"]},
+        )
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        copied_root = Path(os.path.realpath(temporary.name))
+        bundle = copied_root / "bundle"
+        project = copied_root / "project"
+        project.mkdir(mode=0o700)
+        shutil.copytree(
+            ROOT, bundle,
+            ignore=shutil.ignore_patterns(".git", "__pycache__", "*.pyc"),
+        )
+        as_of = "2026-08-01T00:00:00Z"
+
+        prompt_catalog = json.loads(
+            (bundle / "references/prompt-profiles.json").read_text(encoding="utf-8")
+        )
+        prompt_catalog["certified_bindings"] = []
+
+        def binding_for(assembly):
+            resources = sorted([
+                {
+                    "ref": item["path"],
+                    "sha256": item["sha256"],
+                    "bytes": item["body_bytes"],
+                    "role": item["role"],
+                }
+                for item in assembly["consumers"]["model"]
+                if item["body_bytes"] > 0
+            ], key=lambda item: (item["ref"], item["role"]))
+            return {
+                "assembly_sha256": self.module.sha256_json(assembly),
+                "assembly_signature": assembly["assembly_signature"],
+                "context_signature": assembly["context_signature"],
+                "host_catalog_sha256": hashlib.sha256(
+                    (bundle / "references/host-capability-profiles.json").read_bytes()
+                ).hexdigest(),
+                "prompt_policy_sha256": self.module.sha256_json(prompt_catalog),
+                "context_modules_sha256": hashlib.sha256(
+                    (bundle / "references/context-modules.json").read_bytes()
+                ).hexdigest(),
+                "model_body_bytes": assembly["usage"]["model_body_bytes"],
+                "model_reduction_ratio": assembly["usage"]["model_reduction_ratio"],
+                "model_resources": resources,
+                "model_resources_sha256": self.module.sha256_json(resources),
+            }
+
+        for case in selection["cases"]:
+            contract, _raw, _entry, _index, _index_raw = planner._load_contract(
+                bundle, case["target_skill"],
+            )
+            command = (
+                "auto" if contract["identity"]["discipline"] == "protocol"
+                else contract["identity"]["discipline"]
+            )
+            plan = planner.build_request(
+                skill=case["target_skill"], run_id=str(uuid.uuid4()),
+                turn_id="v3-projection-%s" % case["source_group"], as_of=as_of,
+                project_root=project, bundle_root=bundle, command=command,
+                distribution_profile="repository", post_route=True,
+            )
+            self.assertEqual([], plan["route"]["scenario_shards"])
+            self.assertFalse(
+                any(item["role"] == "routing-scenario" for item in plan["candidates"])
+            )
+            manifest = planner.resolver.resolve_context(plan, bundle, project)
+            if case["source_group"] == "derived-auditor":
+                plugin_plan = planner.build_request(
+                    skill=case["target_skill"], run_id=str(uuid.uuid4()),
+                    turn_id="v3-projection-plugin-auditor", as_of=as_of,
+                    project_root=project, bundle_root=bundle, command=command,
+                    distribution_profile="plugin", post_route=True,
+                )
+                plugin_manifest = planner.resolver.resolve_context(
+                    plugin_plan, bundle, project,
+                )
+                self.assertFalse(any(
+                    item["path"].endswith("/references/auditor-runtime.md")
+                    for item in plugin_manifest["resources"]
+                ))
+            for profile in ("explicit", "balanced", "lean"):
+                build_options = {
+                    "requested_prompt_profile": "explicit",
+                } if profile == "explicit" else {
+                    "evaluation_prompt_profile": profile,
+                    "evaluation_run_id": "projection-%s-%s" % (
+                        case["source_group"], profile,
+                    ),
+                }
+                assembly = assembly_runtime.build_assembly(
+                    manifest, bundle_root=bundle, project_root=project,
+                    host_profile="claude-code-plugin-host", model_id="gpt-fixture",
+                    as_of=as_of, **build_options,
+                )
+                binding = binding_for(assembly)
+                request = self.runner.build_v3_requests(
+                    [case], selection["profile"], selection["selection_reasons"],
+                    host_profile="claude-code-plugin-host", model_id="gpt-fixture",
+                    judge_model_id="gpt-judge-fixture", prompt_profile=profile,
+                    evaluation_only=(profile != "explicit"),
+                    assembly_bindings={case["id"]: binding},
+                )[0]
+                self.assertNotIn("scenario_family", request["case"])
+                sources = self.module.collect_v3_selected_sources(
+                    request, case["target_skill"], bundle,
+                )
+                projection = self.module.v3_model_resource_projection(sources)
+                self.assertEqual(binding["model_resources"], projection)
+                self.assertFalse(
+                    any(
+                        item["role"] == "routing-scenario"
+                        or item["ref"].startswith("references/auto-routing/")
+                        for item in projection
+                    ),
+                    (case["id"], profile, projection),
+                )
+                if case["source_group"] == "derived-auditor":
+                    self.assertFalse(any(
+                        item["ref"].endswith("/references/auditor-runtime.md")
+                        for item in projection
+                    ))
+
+    def test_v3_exhaustive_blind_payloads_and_post_route_assembly_closure(self):
+        """Prove the complete 700-case/120-skill v3 surface without credentials."""
+        selection = self.runner.select_semantic_cases("nightly", set())
+        requests = self.runner.build_v3_requests(
+            selection["cases"], selection["profile"],
+            selection["selection_reasons"],
+            host_profile="claude-code-plugin-host",
+            model_id="gpt-fixture",
+            judge_model_id="gpt-judge-fixture",
+        )
+        self.assertEqual(700, len(requests))
+        self.assertEqual(700, len({item["request_sha256"] for item in requests}))
+
+        request_by_skill = {}
+        for request in requests:
+            self.module.validate_v3_request(request)
+            payload = self.module.v3_routing_candidate_payload(request)
+            self.assertEqual(
+                {"scenario", "input_summary", "routing_index_sha256", "skills"},
+                set(payload),
+            )
+            rendered = self.module.canonical_json(payload)
+            self.assertNotIn(request["case"]["id"], rendered)
+            self.assertNotIn(request["case"]["source_ref"], rendered)
+            self.assertNotIn('"case_id"', rendered)
+            self.assertNotIn('"judge_contract"', rendered)
+            target = request["judge_contract"]["expected_route"]
+            request_by_skill.setdefault(target, request)
+
+        self.assertEqual(
+            {"authored", "auto-routing", "derived-auditor"},
+            {case["source_group"] for case in selection["cases"]},
+        )
+        self.assertEqual(120, len(request_by_skill))
+        self.assertEqual(
+            {item["skill"] for item in requests[0]["routing_index"]["entries"]},
+            set(request_by_skill),
+        )
+
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        copied_root = Path(os.path.realpath(temporary.name))
+        bundle = copied_root / "bundle"
+        project = copied_root / "project"
+        project.mkdir(mode=0o700)
+        shutil.copytree(
+            ROOT, bundle,
+            ignore=shutil.ignore_patterns(".git", "__pycache__", "*.pyc"),
+        )
+
+        planner_path = bundle / "scripts" / "context-plan.py"
+        planner_spec = importlib.util.spec_from_file_location(
+            "v3_exhaustive_context_planner", planner_path,
+        )
+        planner = importlib.util.module_from_spec(planner_spec)
+        sys.modules[planner_spec.name] = planner
+        planner_spec.loader.exec_module(planner)
+        assembly_path = bundle / "scripts" / "context-assembly.py"
+        assembly_spec = importlib.util.spec_from_file_location(
+            "v3_exhaustive_context_assembly", assembly_path,
+        )
+        assembly_runtime = importlib.util.module_from_spec(assembly_spec)
+        sys.modules[assembly_spec.name] = assembly_runtime
+        assembly_spec.loader.exec_module(assembly_runtime)
+
+        as_of = "2026-08-01T00:00:00Z"
+        prompt_catalog = json.loads(
+            (bundle / "references/prompt-profiles.json").read_text(encoding="utf-8")
+        )
+        prompt_catalog["certified_bindings"] = []
+
+        def binding_for(context_assembly):
+            resources = sorted([
+                {
+                    "ref": item["path"],
+                    "sha256": item["sha256"],
+                    "bytes": item["body_bytes"],
+                    "role": item["role"],
+                }
+                for item in context_assembly["consumers"]["model"]
+                if item["body_bytes"] > 0
+            ], key=lambda item: (item["ref"], item["role"]))
+            return {
+                "assembly_sha256": self.module.sha256_json(context_assembly),
+                "assembly_signature": context_assembly["assembly_signature"],
+                "context_signature": context_assembly["context_signature"],
+                "host_catalog_sha256": hashlib.sha256(
+                    (bundle / "references/host-capability-profiles.json").read_bytes()
+                ).hexdigest(),
+                "prompt_policy_sha256": self.module.sha256_json(prompt_catalog),
+                "context_modules_sha256": hashlib.sha256(
+                    (bundle / "references/context-modules.json").read_bytes()
+                ).hexdigest(),
+                "model_body_bytes": context_assembly["usage"]["model_body_bytes"],
+                "model_reduction_ratio": context_assembly["usage"][
+                    "model_reduction_ratio"
+                ],
+                "model_resources": resources,
+                "model_resources_sha256": self.module.sha256_json(resources),
+            }
+
+        closure_count = 0
+        for position, skill in enumerate(sorted(request_by_skill), 1):
+            template = request_by_skill[skill]
+            entry = next(
+                item for item in template["routing_index"]["entries"]
+                if item["skill"] == skill
+            )
+            command = "auto" if entry["discipline"] == "protocol" else entry[
+                "discipline"
+            ]
+            plan = planner.build_request(
+                skill=skill,
+                run_id=str(uuid.uuid5(uuid.NAMESPACE_URL, "v3-exhaustive:%s" % skill)),
+                turn_id="v3-exhaustive-%03d" % position,
+                as_of=as_of,
+                project_root=project,
+                bundle_root=bundle,
+                command=command,
+                distribution_profile="repository",
+                post_route=True,
+            )
+            self.assertEqual([], plan["route"]["scenario_shards"])
+            manifest = planner.resolver.resolve_context(plan, bundle, project)
+            planner.resolver.verify_manifest_sources(manifest, bundle, project)
+
+            for profile in ("explicit", "balanced", "lean"):
+                options = {
+                    "requested_prompt_profile": "explicit",
+                } if profile == "explicit" else {
+                    "evaluation_prompt_profile": profile,
+                    "evaluation_run_id": "v3-exhaustive-%03d-%s" % (
+                        position, profile,
+                    ),
+                }
+                context_assembly = assembly_runtime.build_assembly(
+                    manifest,
+                    bundle_root=bundle,
+                    project_root=project,
+                    host_profile="claude-code-plugin-host",
+                    model_id="gpt-fixture",
+                    as_of=as_of,
+                    verify_sources=False,
+                    **options,
+                )
+                binding = binding_for(context_assembly)
+                request = json.loads(json.dumps(template))
+                request["execution"].update({
+                    "prompt_profile": profile,
+                    "evaluation_only": profile != "explicit",
+                    "assembly_binding": binding,
+                })
+                self._rehash(request)
+                self.module.validate_v3_request(request)
+                sources = self.module.collect_v3_selected_sources(
+                    request, skill, bundle,
+                )
+                projection = self.module.v3_model_resource_projection(sources)
+                self.assertEqual(binding["model_resources"], projection)
+                self.assertEqual(
+                    binding["model_body_bytes"],
+                    sum(len(source.content) for source in sources),
+                )
+                bound = {(source.ref, source.role): source for source in sources}
+                for resource in binding["model_resources"]:
+                    source = bound[(resource["ref"], resource["role"])]
+                    self.assertEqual(
+                        (bundle / resource["ref"]).read_bytes(),
+                        source.content,
+                        (skill, profile, resource["ref"]),
+                    )
+                self.assertFalse(any(
+                    item["role"] == "routing-scenario"
+                    or item["ref"].startswith("references/auto-routing/")
+                    for item in projection
+                ))
+                closure_count += 1
+
+        self.assertEqual(120 * 3, closure_count)
+
+    def test_v3_profiles_have_three_distinct_candidate_representations(self):
+        selection = self.runner.select_semantic_cases(
+            "smoke", {"routing-outreach-vs-contract-helper-outreach-manager-001"},
+        )
+        refs_by_profile = {}
+        context_hashes = {}
+        target = self.request["judge_contract"]["expected_route"]
+        for profile in ("explicit", "balanced", "lean"):
+            request = self.runner.build_v3_requests(
+                selection["cases"], selection["profile"], selection["selection_reasons"],
+                host_profile="claude-code-plugin-host",
+                model_id="gpt-fixture",
+                judge_model_id="gpt-judge-fixture",
+                prompt_profile=profile,
+                evaluation_only=(profile != "explicit"),
+            )[0]
+            sources = self.module.collect_v3_selected_sources(request, target, ROOT)
+            refs_by_profile[profile] = {item.ref for item in sources}
+            staged = [
+                self.module.StagedSource(source, "bound/%03d-%s.bin" % (index, source.role))
+                for index, source in enumerate(sources, 1)
+            ]
+            payload = self.module.v3_execution_candidate_payload(request, target, staged)
+            context_hashes[profile] = self.module.sha256_json(payload)
+            rendered = self.module.canonical_json(payload)
+            self.assertNotIn('"prompt_profile"', rendered)
+            changed = json.loads(json.dumps(request))
+            arm_sentinel = "ARM-LABEL-%s-experiment-evaluation-SENTINEL" % profile
+            changed["execution"]["prompt_profile"] = arm_sentinel
+            self.assertEqual(
+                payload,
+                self.module.v3_execution_candidate_payload(changed, target, staged),
+            )
+            self.assertNotIn(arm_sentinel, rendered)
+
+        target_entry = next(
+            item for item in self.request["routing_index"]["entries"]
+            if item["skill"] == target
+        )
+        shared = self.request["routing_index"]["shared_contract"]["path"]
+        kernel = "references/policy-kernel.md"
+        capsule = "references/skill-capsules/%s.json" % target
+        self.assertIn(target_entry["skill_ref"], refs_by_profile["explicit"])
+        self.assertIn(shared, refs_by_profile["explicit"])
+        self.assertNotIn(kernel, refs_by_profile["explicit"])
+        self.assertIn(target_entry["skill_ref"], refs_by_profile["balanced"])
+        self.assertIn(kernel, refs_by_profile["balanced"])
+        self.assertNotIn(shared, refs_by_profile["balanced"])
+        self.assertIn(capsule, refs_by_profile["lean"])
+        self.assertIn(kernel, refs_by_profile["lean"])
+        self.assertNotIn(target_entry["skill_ref"], refs_by_profile["lean"])
+        self.assertEqual(3, len(set(context_hashes.values())))
+
+    def test_v3_lean_rejects_reanchored_but_stale_capsule_provenance(self):
+        selection = self.runner.select_semantic_cases(
+            "smoke", {"routing-outreach-vs-contract-helper-outreach-manager-001"},
+        )
+        request = self.runner.build_v3_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"],
+            host_profile="claude-code-plugin-host",
+            model_id="gpt-fixture", judge_model_id="gpt-judge-fixture",
+            prompt_profile="lean", evaluation_only=True,
+        )[0]
+        target = request["judge_contract"]["expected_route"]
+        index_ref = request["routing_index"]["capsule_index"]["path"]
+        capsule_index = json.loads((ROOT / index_ref).read_text(encoding="utf-8"))
+        entry = next(item for item in capsule_index["capsules"] if item["skill"] == target)
+        capsule = json.loads((ROOT / entry["capsule_ref"]).read_text(encoding="utf-8"))
+        capsule["provenance"]["source"]["sha256"] = "0" * 64
+        capsule_raw = (
+            json.dumps(capsule, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+            + "\n"
+        ).encode("utf-8")
+        kernel_raw = (ROOT / capsule_index["policy_kernel"]["path"]).read_bytes()
+        entry["capsule_sha256"] = hashlib.sha256(capsule_raw).hexdigest()
+        entry["model_bytes"] = len(capsule_raw) + len(kernel_raw)
+        index_raw = (
+            json.dumps(capsule_index, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+            + "\n"
+        ).encode("utf-8")
+        request["routing_index"]["capsule_index"]["sha256"] = hashlib.sha256(
+            index_raw
+        ).hexdigest()
+        index_payload = dict(request["routing_index"])
+        index_payload.pop("index_sha256")
+        request["routing_index"]["index_sha256"] = self.module.sha256_json(index_payload)
+        self._rehash(request)
+        original_read = self.module.read_project_reference
+
+        def read(root, reference, label):
+            if reference == index_ref:
+                return index_raw
+            if reference == entry["capsule_ref"]:
+                return capsule_raw
+            return original_read(root, reference, label)
+
+        with mock.patch.object(self.module, "read_project_reference", side_effect=read):
+            with self.assertRaisesRegex(self.module.AdapterError, "provenance is stale"):
+                self.module.collect_v3_selected_sources(request, target, ROOT)
+
+    def test_v3_three_stage_success_and_wrong_route_deterministic_failure(self):
+        expected = self.request["judge_contract"]["expected_route"]
+        with mock.patch.object(
+                self.module, "_run_model_stage",
+                side_effect=self._model_side_effect(expected)) as run:
+            passed = self.module.evaluate_request(
+                self.request, self.config, "codex fixture", self.runtime, ROOT,
+            )
+        self.assertEqual(3, run.call_count)
+        self.assertEqual("3.0", passed["protocol_version"])
+        self.assertEqual("passed", passed["outcome"])
+        self.assertTrue(passed["routing"]["correct"])
+        self.assertTrue(all(value is None for value in passed["provider_metrics"].values()))
+        self.assertEqual(
+            "openai", passed["execution_provenance"]["judge_model_provider"]
+        )
+        self.assertIsNone(
+            passed["execution_provenance"]["judge_model_revision"]
+        )
+        self.runner.validate_v3_adapter_result(passed, self.request)
+
+        with mock.patch.object(
+                self.module, "_run_model_stage",
+                side_effect=self._model_side_effect("contract-helper")) as run:
+            failed = self.module.evaluate_request(
+                self.request, self.config, "codex fixture", self.runtime, ROOT,
+            )
+        self.assertEqual(1, run.call_count)
+        self.assertEqual("3.0", failed["protocol_version"])
+        self.assertEqual("behavior-failed", failed["outcome"])
+        self.assertFalse(failed["routing"]["correct"])
+        self.assertEqual(
+            ["ROUTING_WRONG_TARGET_OR_ORDER"],
+            [item["code"] for item in failed["failures"]],
+        )
+        self.assertEqual([], failed["execution_provenance"]["judge_attempts"])
+        self.runner.validate_v3_adapter_result(failed, self.request)
+
+    def test_v3_verified_assembly_matches_actual_candidate_sources(self):
+        request = json.loads(json.dumps(self.request))
+        request["execution"]["assembly_binding"] = self._binding_for(request)
+        self._rehash(request)
+        expected = request["judge_contract"]["expected_route"]
+        with mock.patch.object(
+                self.module, "_run_model_stage",
+                side_effect=self._model_side_effect(expected)) as run:
+            result = self.module.evaluate_request(
+                request, self.config, "codex fixture", self.runtime, ROOT,
+            )
+        self.assertEqual(3, run.call_count)
+        self.assertEqual("passed", result["outcome"])
+        context = result["context_binding"]
+        self.assertEqual(
+            request["execution"]["assembly_binding"]["model_resources_sha256"],
+            context["candidate_sources_sha256"],
+        )
+        self.runner.validate_v3_adapter_result(result, request)
+
+    def test_v3_cross_skill_cross_profile_and_forged_bytes_fail_before_candidate(self):
+        expected = self.request["judge_contract"]["expected_route"]
+        variants = []
+
+        cross_skill = json.loads(json.dumps(self.request))
+        cross_skill["execution"]["assembly_binding"] = self._binding_for(
+            cross_skill, "contract-helper"
+        )
+        self._rehash(cross_skill)
+        variants.append(cross_skill)
+
+        selection = self.runner.select_semantic_cases(
+            "smoke", {"routing-outreach-vs-contract-helper-outreach-manager-001"},
+        )
+        balanced = self.runner.build_v3_requests(
+            selection["cases"], selection["profile"], selection["selection_reasons"],
+            host_profile="claude-code-plugin-host", model_id="gpt-fixture",
+            judge_model_id="gpt-judge-fixture", prompt_profile="balanced",
+            evaluation_only=True,
+        )[0]
+        cross_profile = json.loads(json.dumps(self.request))
+        cross_profile["execution"]["assembly_binding"] = self._binding_for(balanced)
+        self._rehash(cross_profile)
+        variants.append(cross_profile)
+
+        forged_bytes = json.loads(json.dumps(self.request))
+        binding = self._binding_for(forged_bytes)
+        binding["model_resources"][0]["bytes"] += 1
+        binding["model_body_bytes"] += 1
+        binding["model_resources_sha256"] = self.module.sha256_json(
+            binding["model_resources"]
+        )
+        forged_bytes["execution"]["assembly_binding"] = binding
+        self._rehash(forged_bytes)
+        variants.append(forged_bytes)
+
+        for request in variants:
+            with self.subTest(binding=request["execution"]["assembly_binding"][
+                    "model_resources_sha256"]):
+                with mock.patch.object(
+                        self.module, "_run_model_stage",
+                        side_effect=self._model_side_effect(expected)) as run:
+                    result = self.module.evaluate_request(
+                        request, self.config, "codex fixture", self.runtime, ROOT,
+                    )
+                self.assertEqual(1, run.call_count)
+                self.assertEqual("adapter-failed", result["outcome"])
+                self.assertEqual(
+                    ["ADAPTER_PROTOCOL"],
+                    [item["code"] for item in result["failures"]],
+                )
+                self.runner.validate_v3_adapter_result(result, request)
+
+    def test_v3_host_and_adapter_failures_keep_v3_envelope(self):
+        with mock.patch.object(
+                self.module, "_run_model_stage",
+                side_effect=self._model_side_effect("contract-helper", routing_returncode=1)):
+            host = self.module.evaluate_request(
+                self.request, self.config, "codex fixture", self.runtime, ROOT,
+            )
+        self.assertEqual("3.0", host["protocol_version"])
+        self.assertEqual("host-failed", host["outcome"])
+        self.assertEqual("HOST_RATE_LIMIT", host["failures"][0]["code"])
+        self.assertIsNone(host["routing"]["selected_skill"])
+
+        with mock.patch.object(
+                self.module, "_run_model_stage",
+                side_effect=self._model_side_effect("contract-helper", invalid_route=True)):
+            adapter = self.module.evaluate_request(
+                self.request, self.config, "codex fixture", self.runtime, ROOT,
+            )
+        self.assertEqual("3.0", adapter["protocol_version"])
+        self.assertEqual("adapter-failed", adapter["outcome"])
+        self.assertEqual("ADAPTER_PROTOCOL", adapter["failures"][0]["code"])
+
+    def test_v3_worker_crash_envelopes_preserve_identity_and_input_order(self):
+        requests = []
+        for index in range(4):
+            request = json.loads(json.dumps(self.request))
+            request["case"]["id"] = "v3-worker-%d" % index
+            self._rehash(request)
+            requests.append(request)
+        config = self.module.AdapterConfig(
+            str(self.codex), "gpt-fixture", 30, "gpt-judge-fixture",
+            hashlib.sha256(self.codex.read_bytes()).hexdigest(), 2,
+        )
+
+        def partition(partition_requests, _config, _root):
+            if partition_requests[0][0] == 0:
+                raise RuntimeError("private worker detail")
+            return [
+                (index, {
+                    "case_id": request["case"]["id"],
+                    "request_sha256": request["request_sha256"],
+                    "protocol_version": "3.0",
+                    "outcome": "passed",
+                })
+                for index, request in partition_requests
+            ]
+
+        with mock.patch.object(self.module, "_run_request_batch", side_effect=partition):
+            results = self.module.run_requests(requests, config, ROOT)
+        self.assertEqual(
+            [request["case"]["id"] for request in requests],
+            [result["case_id"] for result in results],
+        )
+        for index in (0, 2):
+            self.assertEqual("3.0", results[index]["protocol_version"])
+            self.assertEqual(requests[index]["request_sha256"], results[index]["request_sha256"])
+            self.assertEqual("adapter-failed", results[index]["outcome"])
+            self.assertEqual("ADAPTER_CRASH", results[index]["failures"][0]["code"])
 
 
 if __name__ == "__main__":

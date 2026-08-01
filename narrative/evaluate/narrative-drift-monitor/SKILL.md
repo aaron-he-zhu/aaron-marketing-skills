@@ -4,13 +4,13 @@ slug: aaron-narrative-drift-monitor
 displayName: "Narrative Drift Monitor · 叙事漂移监测"
 summary: "自漂移监测/竞品重定位告警/重定位触发条件/D1-W1-M1 复盘"
 description: 'Use when the user asks to "check if our surfaces have drifted from the canon", "watch for competitor repositioning", or "define when we should reposition"; produces a drift report — self-drift per flagship surface vs the narrative-registry canon over time (via wayback.py, change history Measured with as-of dates), competitor-repositioning alerts, an explicit repositioning-trigger condition set, and a D1/W1/M1 message-shift retro (intended vs actual pull-through, evidence-labeled) — feeding the TALE L drift-audit sub-items and the narrative-whiplash guardrail fact base. Not for the first-time consistency check before a surface ships — use narrative-cascade-planner; not for computing the TALE profile result or running the vetoes — use narrative-quality-auditor; not for echo-rate / AI-answer resonance measurement — use narrative-resonance-monitor. 自漂移监测/竞品重定位告警/重定位触发/叙事漂移复盘'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when watching a live narrative for drift over time: detecting flagship surfaces that have drifted from the narrative-registry canon (wayback change history), catching competitor repositioning, defining the explicit conditions that should trigger a repositioning, or running the D1/W1/M1 message-shift retro. The last move of the TALE Evaluate phase — it decides between a re-audit and a repositioning, and it is the fact base for the narrative-whiplash guardrail. Not the first-time consistency check and not the TALE profile result computation."
 argument-hint: "<brand / surfaces to watch> [competitor set] [canon path] [window: D1|W1|M1]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Narrative Drift Monitor

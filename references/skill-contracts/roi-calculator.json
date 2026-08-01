@@ -11,7 +11,7 @@
           "end_char": 78,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 165,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 81
         },
@@ -41,7 +41,7 @@
           "end_char": 202,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 167
         },
@@ -56,7 +56,7 @@
           "end_char": 302,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 205
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "influencer/report/roi-calculator/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+      "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725"
     }
   },
   "context_hints": {
@@ -89,8 +89,8 @@
       },
       {
         "path": "references/measurement-protocol.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
         "source_line": 122
       },
@@ -98,7 +98,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 35
       },
       {
@@ -131,7 +131,7 @@
           "end_char": 117,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -149,7 +149,7 @@
           "end_char": 155,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 119
         },
@@ -165,7 +165,7 @@
           "end_char": 289,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 157
         },
@@ -183,7 +183,7 @@
           "end_char": 420,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 290
         },
@@ -201,7 +201,7 @@
           "end_char": 641,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 422
         },
@@ -214,7 +214,7 @@
     "summary_ref": {
       "path": "influencer/report/roi-calculator/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+      "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -229,8 +229,8 @@
     "name": "roi-calculator",
     "path": "influencer/report/roi-calculator/SKILL.md",
     "phase": "report",
-    "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
-    "version": "19.0.0"
+    "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<campaign name or spend> [revenue] [results data]",
@@ -244,7 +244,7 @@
           "end_char": 221,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -256,7 +256,7 @@
     "source": {
       "path": "influencer/report/roi-calculator/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+      "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725"
     }
   },
   "output_contract": {
@@ -271,7 +271,7 @@
           "end_char": 229,
           "path": "influencer/report/roi-calculator/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311",
+          "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -282,7 +282,7 @@
     "source": {
       "path": "influencer/report/roi-calculator/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+      "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725"
     },
     "summary": "ROI calculation file at `memory/influencer/roi-calculator/YYYY-MM-DD-<topic>.md` containing direct ROI/ROAS, EMV, cost-efficiency metrics, attribution-modeled revenue, LTV-based ROI, by-influencer ROI, and a summary report block.",
     "summary_source": "writes-fallback",
@@ -293,12 +293,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -307,7 +307,7 @@
     "source": {
       "path": "influencer/report/roi-calculator/SKILL.md",
       "section": "frontmatter",
-      "sha256": "67510ab1308579d799525c21277cdb6ec6f3962dcb00463d4e1f7a640cf80311"
+      "sha256": "ce3f8b025e7ec449314140b42ba3a7dc5a7aa2e568083b297bff96db10ea0725"
     },
     "trigger_phrases": [
       "calculate influencer ROI",

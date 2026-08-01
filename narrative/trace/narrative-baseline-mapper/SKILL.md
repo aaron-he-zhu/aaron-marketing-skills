@@ -4,13 +4,13 @@ slug: aaron-narrative-baseline-mapper
 displayName: "Narrative Baseline Mapper · 叙事基线盘点"
 summary: "现状叙事盘点/各触点口径/意图差距/漂移基线"
 description: 'Use when the user asks to "map what our surfaces say today", "inventory our current messaging", or "find the gap between what we say and what we mean"; produces the narrative baseline — a surface-by-surface inventory of what every owned touchpoint (homepage, pricing, docs, decks, social bios, email footers) claims RIGHT NOW, each line labeled Measured / User-provided / Estimated, plus a per-surface gap read vs the intended message and the drift-baseline snapshot the Evaluate phase measures future drift against. Not for authoring the canon — use message-system-architect; not for scoring the surfaces or running the vetoes — use narrative-quality-auditor. 现状叙事盘点/各触点口径/意图差距/漂移基线'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use as the first move of the TALE Trace phase, before any canon exists or before a repositioning: inventory what every owned surface (homepage, pricing, docs, decks, social bios, emails) says today, capture the gap vs the intended message, and freeze the drift baseline the Evaluate phase measures against. The before snapshot — not the canon itself and not the score."
 argument-hint: "<brand / product> [surface URLs or paste] [intended message, if known]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "trace", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "trace"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "narrative", "phase": "trace", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "trace"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Narrative Baseline Mapper

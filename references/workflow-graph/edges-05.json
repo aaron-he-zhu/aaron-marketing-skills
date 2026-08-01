@@ -150,7 +150,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_source": "protocol/memory-management/SKILL.md:153",
       "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
       "documentation_required": true,
       "exception": null,
@@ -181,7 +181,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_source": "protocol/memory-management/SKILL.md:153",
       "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
       "documentation_required": true,
       "exception": null,
@@ -213,7 +213,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_source": "protocol/memory-management/SKILL.md:153",
       "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
       "documentation_required": true,
       "exception": null,
@@ -244,7 +244,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_source": "protocol/memory-management/SKILL.md:153",
       "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
       "documentation_required": true,
       "exception": null,
@@ -275,7 +275,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_source": "protocol/memory-management/SKILL.md:153",
       "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
       "documentation_required": true,
       "exception": null,
@@ -306,7 +306,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_source": "protocol/memory-management/SKILL.md:153",
       "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
       "documentation_required": true,
       "exception": null,
@@ -337,7 +337,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/memory-management/SKILL.md:149",
+      "condition_source": "protocol/memory-management/SKILL.md:153",
       "condition_text": "Route a canonical conflict to its owner: entity-registry, creator-registry, offer-claims-registry, consent-registry, launch-registry, channel-registry, or narrative-registry. Resume execution work only after the needed projection and authorization state are clear.",
       "documentation_required": true,
       "exception": null,
@@ -1115,7 +1115,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:120",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:128",
       "condition_text": "Architecture repair: message-system-architect",
       "documentation_required": true,
       "exception": {
@@ -1147,7 +1147,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:122",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:130",
       "condition_text": "Effectiveness evidence: message-test-designer",
       "documentation_required": true,
       "exception": null,
@@ -1175,7 +1175,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:121",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:129",
       "condition_text": "Landing repair: narrative-cascade-planner",
       "documentation_required": true,
       "exception": {

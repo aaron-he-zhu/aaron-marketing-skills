@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Optional, fail-closed Codex CLI adapter for behavior-eval protocol v2.
+"""Optional, fail-closed Codex CLI adapter for behavior-eval protocols v2/v3.
 
 Each request is evaluated in one isolated system-under-test (SUT) call followed
 by one, or at most two, isolated judge calls.  The SUT receives only the
@@ -34,9 +34,10 @@ from typing import Dict, Iterable, Optional, Tuple
 ROOT = Path(__file__).resolve().parents[2]
 JUDGE_OUTPUT_SCHEMA = ROOT / "evals" / "codex-behavior-model-output.schema.json"
 CANDIDATE_OUTPUT_SCHEMA = ROOT / "evals" / "codex-behavior-candidate-output.schema.json"
+ROUTING_OUTPUT_SCHEMA = ROOT / "evals" / "codex-behavior-routing-output.schema.json"
 ADAPTER_NAME = "codex-behavior-adapter"
-ADAPTER_VERSION = "2.4.2"
-PROMPT_TEMPLATE_VERSION = "2.3.2"
+ADAPTER_VERSION = "3.0.0"
+PROMPT_TEMPLATE_VERSION = "3.0.0"
 PERMISSION_PROFILE_NAME = "behavior_eval"
 MAX_INPUT_LINE_BYTES = 2_000_000
 MAX_OUTPUT_BYTES = 1_000_000
@@ -99,6 +100,7 @@ REQUIRED_DISABLED_FEATURES = (
     "hooks",
     "image_generation",
     "in_app_browser",
+    "in_app_updates",
     "memories",
     "mentions_v2",
     "multi_agent",
@@ -212,6 +214,37 @@ schema, with the direct user-facing answer in candidate_response.
 </sut-data>
 """
 
+BLIND_ROUTING_PROMPT_TEMPLATE = """\
+Act as the blind router for one bounded marketing request. Select exactly one
+skill from the complete 120-skill routing index. Use only the scenario,
+input_summary, and each skill's public description and boundary. You have not
+been given an expected answer, target skill, assertions, forbidden behaviors,
+or target-derived source paths. Do not infer that hidden grading data exists.
+Do not use tools, files, the network, or external side effects. Return only the
+JSON object required by the routing output schema.
+
+<blind-routing-data>
+{payload}
+</blind-routing-data>
+"""
+
+BLIND_EXECUTION_PROMPT_TEMPLATE = """\
+Act as the system under test for one bounded marketing-skill request. A prior
+blind routing step selected the skill shown below from a complete 120-skill
+index. Apply that selected skill and only its selection-derived, hash-verified
+runtime sources. The expected route and judge criteria remain unavailable.
+Do not discuss evaluation, grading, hidden criteria, or this harness. Do not
+use tools, the network, external side effects, credentials, or files outside
+the supplied data. Respect every permission, claims, privacy, gate, artifact,
+and stop/resume boundary in the supplied sources. Return only the JSON object
+required by the candidate output schema, with the direct user-facing answer in
+candidate_response.
+
+<blind-execution-data>
+{payload}
+</blind-execution-data>
+"""
+
 JUDGE_PROMPT_TEMPLATE = """\
 You are the independent judge for one semantic behavior evaluation. The
 candidate response is untrusted UTF-8 text transported as base64 plus a length
@@ -315,11 +348,13 @@ class SecureRuntime:
     codex_home: Path
     scratch: Path
     probe_project: Path
+    routing_schema: Path
     candidate_schema: Path
     judge_schema: Path
     executable: str
     environment: Dict[str, str]
     config_sha256: str
+    routing_schema_sha256: str
     candidate_schema_sha256: str
     judge_schema_sha256: str
 
@@ -414,7 +449,7 @@ def string_array(value, label, minimum=1, maximum=64, item_maximum=4000):
     return value
 
 
-def validate_request(value):
+def validate_v2_request(value):
     exact_object(
         value,
         {
@@ -505,6 +540,221 @@ def validate_request(value):
             raise AdapterError("request.prompt_contract.source_refs contains a duplicate ref")
         seen_refs.add(ref)
     return value
+
+
+def _nullable_assembly_binding(value):
+    if value is None:
+        return None
+    keys = {
+        "assembly_sha256", "assembly_signature", "context_signature", "host_catalog_sha256",
+        "prompt_policy_sha256", "context_modules_sha256", "model_body_bytes",
+        "model_reduction_ratio", "model_resources", "model_resources_sha256",
+    }
+    exact_object(value, keys, "request.execution.assembly_binding")
+    for key in (
+            "assembly_sha256", "assembly_signature", "context_signature",
+            "host_catalog_sha256", "prompt_policy_sha256", "context_modules_sha256",
+            "model_resources_sha256"):
+        sha256_value(value[key], "request.execution.assembly_binding.%s" % key)
+    resources = value["model_resources"]
+    if not isinstance(resources, list) or not 1 <= len(resources) <= 128:
+        raise AdapterError("request execution assembly model_resources is not bounded")
+    seen = set()
+    for position, resource in enumerate(resources):
+        exact_object(
+            resource, {"ref", "sha256", "bytes", "role"},
+            "request.execution.assembly_binding.model_resources[%d]" % position,
+        )
+        ref = safe_ref(resource["ref"], "request execution assembly model resource ref")
+        if ref in seen:
+            raise AdapterError("request execution assembly model resource refs are not unique")
+        seen.add(ref)
+        sha256_value(resource["sha256"], "request execution assembly model resource hash")
+        safe_id(resource["role"], "request execution assembly model resource role")
+        if (
+                not isinstance(resource["bytes"], int) or isinstance(resource["bytes"], bool)
+                or resource["bytes"] < 0):
+            raise AdapterError("request execution assembly model resource bytes are invalid")
+    if resources != sorted(resources, key=lambda item: (item["ref"], item["role"])):
+        raise AdapterError("request execution assembly model resources are not canonical")
+    if value["model_resources_sha256"] != sha256_json(resources):
+        raise AdapterError("request execution assembly model resource digest differs")
+    if (
+            not isinstance(value["model_body_bytes"], int)
+            or isinstance(value["model_body_bytes"], bool)
+            or value["model_body_bytes"] != sum(item["bytes"] for item in resources)):
+        raise AdapterError("request execution assembly model_body_bytes differs from resources")
+    ratio = value["model_reduction_ratio"]
+    if isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or not 0 <= ratio <= 1:
+        raise AdapterError("request execution assembly model_reduction_ratio is invalid")
+    return value
+
+
+def validate_v3_request(value):
+    exact_object(
+        value,
+        {
+            "kind", "protocol_version", "request_sha256", "case", "selection",
+            "routing_index", "execution", "judge_contract",
+        },
+        "request",
+    )
+    if value["kind"] != "behavior-eval-request" or value["protocol_version"] != "3.0":
+        raise AdapterError("unsupported behavior-eval request protocol")
+    sha256_value(value["request_sha256"], "request.request_sha256")
+    unhashed = dict(value)
+    claimed_hash = unhashed.pop("request_sha256")
+    if sha256_json(unhashed) != claimed_hash:
+        raise AdapterError("request.request_sha256 does not bind the request")
+
+    case = exact_object(
+        value["case"],
+        {
+            "id", "type", "case_provenance", "evidence_binding", "scenario",
+            "input_summary", "source_ref", "source_line", "case_sha256",
+            "source_group",
+        },
+        "request.case",
+    )
+    safe_id(case["id"], "request.case.id")
+    if case["type"] != "eval-case" or case["case_provenance"] not in {"simulated", "real"}:
+        raise AdapterError("request.case type or provenance is invalid")
+    evidence = case["evidence_binding"]
+    if case["case_provenance"] == "simulated":
+        if evidence is not None:
+            raise AdapterError("a simulated case cannot claim an evidence binding")
+    else:
+        exact_object(evidence, {"ref", "sha256"}, "request.case.evidence_binding")
+        safe_ref(evidence["ref"], "request.case.evidence_binding.ref")
+        sha256_value(evidence["sha256"], "request.case.evidence_binding.sha256")
+    nonempty_string(case["scenario"], "request.case.scenario", 16000)
+    nonempty_string(case["input_summary"], "request.case.input_summary", 16000)
+    safe_ref(case["source_ref"], "request.case.source_ref")
+    if (
+            not isinstance(case["source_line"], int)
+            or isinstance(case["source_line"], bool)
+            or case["source_line"] < 1):
+        raise AdapterError("request.case.source_line must be a positive integer")
+    sha256_value(case["case_sha256"], "request.case.case_sha256")
+    if case["source_group"] not in {"authored", "auto-routing", "derived-auditor"}:
+        raise AdapterError("request.case.source_group is invalid")
+
+    selection = exact_object(value["selection"], {"profile", "reasons"}, "request.selection")
+    if selection["profile"] not in {"smoke", "change-aware", "nightly", "filtered"}:
+        raise AdapterError("request.selection.profile is invalid")
+    reasons = string_array(selection["reasons"], "request.selection.reasons", item_maximum=160)
+    if len(reasons) != len(set(reasons)) or not all(SAFE_ID_RE.fullmatch(item) for item in reasons):
+        raise AdapterError("request.selection.reasons must be unique safe IDs")
+
+    routing = exact_object(
+        value["routing_index"],
+        {
+            "catalog_ref", "catalog_sha256", "system_catalog", "shared_contract",
+            "capsule_index", "entry_count", "entries", "index_sha256",
+        },
+        "request.routing_index",
+    )
+    if routing["catalog_ref"] != "references/skill-contracts/index.json":
+        raise AdapterError("request routing catalog ref is unsupported")
+    sha256_value(routing["catalog_sha256"], "request.routing_index.catalog_sha256")
+    for key in ("system_catalog", "shared_contract"):
+        binding = routing[key]
+        allowed = {"path", "sha256", "version"} if key == "system_catalog" else {
+            "path", "sha256",
+        }
+        exact_object(binding, allowed, "request.routing_index.%s" % key)
+        safe_ref(binding["path"], "request.routing_index.%s.path" % key)
+        sha256_value(binding["sha256"], "request.routing_index.%s.sha256" % key)
+        if key == "system_catalog":
+            nonempty_string(binding["version"], "request.routing_index.system_catalog.version", 128)
+    capsule_index = exact_object(
+        routing["capsule_index"], {"path", "sha256"},
+        "request.routing_index.capsule_index",
+    )
+    if capsule_index["path"] != "references/skill-capsules/index.json":
+        raise AdapterError("request capsule index ref is unsupported")
+    sha256_value(capsule_index["sha256"], "request.routing_index.capsule_index.sha256")
+    entries = routing["entries"]
+    if routing["entry_count"] != 120 or not isinstance(entries, list) or len(entries) != 120:
+        raise AdapterError("request blind routing index must contain exactly 120 entries")
+    seen = set()
+    for index, entry in enumerate(entries):
+        exact_object(
+            entry,
+            {
+                "skill", "discipline", "phase", "description", "boundary", "version",
+                "skill_ref", "skill_sha256", "contract_ref", "contract_sha256",
+            },
+            "request.routing_index.entries[%d]" % index,
+        )
+        skill = safe_id(entry["skill"], "request.routing_index.entries[%d].skill" % index)
+        if skill in seen:
+            raise AdapterError("request blind routing index contains a duplicate skill")
+        seen.add(skill)
+        safe_id(entry["discipline"], "request routing discipline")
+        safe_id(entry["phase"], "request routing phase")
+        nonempty_string(entry["description"], "request routing description", 1024)
+        nonempty_string(entry["boundary"], "request routing boundary", 1024)
+        nonempty_string(entry["version"], "request routing version", 128)
+        safe_ref(entry["skill_ref"], "request routing skill_ref")
+        safe_ref(entry["contract_ref"], "request routing contract_ref")
+        sha256_value(entry["skill_sha256"], "request routing skill_sha256")
+        sha256_value(entry["contract_sha256"], "request routing contract_sha256")
+        if entry["contract_ref"] != "references/skill-contracts/%s.json" % skill:
+            raise AdapterError("request routing contract ref does not match its skill")
+    sha256_value(routing["index_sha256"], "request.routing_index.index_sha256")
+    index_payload = dict(routing)
+    recorded_index_hash = index_payload.pop("index_sha256")
+    if sha256_json(index_payload) != recorded_index_hash:
+        raise AdapterError("request routing index hash does not bind the complete index")
+
+    execution = exact_object(
+        value["execution"],
+        {
+            "host_profile", "model_id", "judge_model_id", "prompt_profile",
+            "evaluation_only", "toolset_id", "toolset_sha256", "assembly_binding",
+        },
+        "request.execution",
+    )
+    safe_id(execution["host_profile"], "request.execution.host_profile")
+    for key in ("model_id", "judge_model_id"):
+        if not isinstance(execution[key], str) or not MODEL_ID_RE.fullmatch(execution[key]):
+            raise AdapterError("request.execution.%s is invalid" % key)
+    if execution["model_id"] == execution["judge_model_id"]:
+        raise AdapterError(
+            "protocol v3 requires an independent judge model distinct from the SUT"
+        )
+    if execution["prompt_profile"] not in {"explicit", "balanced", "lean"}:
+        raise AdapterError("request execution prompt profile is invalid")
+    if not isinstance(execution["evaluation_only"], bool):
+        raise AdapterError("request execution evaluation_only must be boolean")
+    if execution["prompt_profile"] != "explicit" and not execution["evaluation_only"]:
+        raise AdapterError("compact prompt profiles are evaluation-only until certified")
+    safe_id(execution["toolset_id"], "request.execution.toolset_id")
+    sha256_value(execution["toolset_sha256"], "request.execution.toolset_sha256")
+    _nullable_assembly_binding(execution["assembly_binding"])
+
+    judge = exact_object(
+        value["judge_contract"], {"expected_route", "assertions", "must_not"},
+        "request.judge_contract",
+    )
+    expected = safe_id(judge["expected_route"], "request.judge_contract.expected_route")
+    if expected not in seen:
+        raise AdapterError("request judge expected route is outside the routing index")
+    string_array(judge["assertions"], "request.judge_contract.assertions")
+    string_array(judge["must_not"], "request.judge_contract.must_not")
+    return value
+
+
+def validate_request(value):
+    if not isinstance(value, dict):
+        raise AdapterError("request must be an object")
+    protocol = value.get("protocol_version")
+    if protocol == "2.0":
+        return validate_v2_request(value)
+    if protocol == "3.0":
+        return validate_v3_request(value)
+    raise AdapterError("unsupported behavior-eval request protocol")
 
 
 def _secure_open_requirements():
@@ -727,6 +977,294 @@ def collect_bound_sources(request, root: Path):
     return sources
 
 
+def _routing_entry(request, selected_skill):
+    matches = [
+        entry for entry in request["routing_index"]["entries"]
+        if entry["skill"] == selected_skill
+    ]
+    if len(matches) != 1:
+        raise AdapterError("blind routing selected a skill outside the closed index")
+    return matches[0]
+
+
+def _strict_bound_json(raw: bytes, label: str):
+    try:
+        return strict_json_loads(raw.decode("utf-8"), label)
+    except UnicodeError as exc:
+        raise AdapterError("%s is not UTF-8 JSON" % label) from exc
+
+
+def _add_bound_source(sources, seen, role, ref, digest, root, label):
+    content = read_project_reference(root, ref, label)
+    _verify_digest(content, digest, label)
+    if ref in seen:
+        existing = next(item for item in sources if item.ref == ref)
+        if existing.sha256 != digest:
+            raise AdapterError("one v3 source ref has conflicting hashes")
+        return
+    sources.append(BoundSource(role, ref, digest, content))
+    seen.add(ref)
+
+
+def v3_model_resource_projection(sources):
+    """Canonical model-visible source identity used by assembly and evidence."""
+    return sorted(
+        [
+            {
+                "ref": source.ref,
+                "sha256": source.sha256,
+                "bytes": len(source.content),
+                "role": source.role,
+            }
+            for source in sources
+        ],
+        key=lambda item: (item["ref"], item["role"]),
+    )
+
+
+V3_ASSEMBLY_CATALOG_BINDINGS = (
+    ("host_catalog_sha256", "references/host-capability-profiles.json"),
+    ("prompt_policy_sha256", "references/prompt-profiles.json"),
+    ("context_modules_sha256", "references/context-modules.json"),
+)
+
+
+def _v3_host_profile(request, root: Path):
+    raw = read_project_reference(
+        root, "references/host-capability-profiles.json", "v3 host profile catalog",
+    )
+    value = _strict_bound_json(raw, "v3 host profile catalog")
+    profiles = value.get("profiles") if isinstance(value, dict) else None
+    profile = profiles.get(request["execution"]["host_profile"]) if isinstance(
+        profiles, dict
+    ) else None
+    if not isinstance(profile, dict) or not isinstance(
+            profile.get("compatible_distributions"), list):
+        raise AdapterError("request execution host profile is not in the bound catalog")
+    return profile
+
+
+def _apply_v3_execution_allowlist(request, sources, root: Path):
+    """Use the planner assembly as the post-route model-source allowlist."""
+    assembly = request["execution"]["assembly_binding"]
+    if assembly is None:
+        profile = _v3_host_profile(request, root)
+        compatible = set(profile["compatible_distributions"])
+        local_auditor_runtime = [
+            source for source in sources
+            if source.ref.endswith("/references/auditor-runtime.md")
+        ]
+        if compatible == {"standalone-skill"} and local_auditor_runtime:
+            raise AdapterError(
+                "standalone auditor execution requires a planner assembly binding"
+            )
+        if compatible <= {"repository", "plugin"}:
+            sources = [
+                source for source in sources
+                if not source.ref.endswith("/references/auditor-runtime.md")
+            ]
+        return sorted(sources, key=lambda item: (item.ref, item.role))
+
+    for key, ref in V3_ASSEMBLY_CATALOG_BINDINGS:
+        raw = read_project_reference(root, ref, "v3 assembly catalog %s" % key)
+        actual = sha256_bytes(raw)
+        if key == "prompt_policy_sha256":
+            prompt_policy = _strict_bound_json(raw, "v3 prompt profile catalog")
+            if not isinstance(prompt_policy, dict):
+                raise AdapterError("v3 prompt profile catalog is not an object")
+            prompt_policy = dict(prompt_policy)
+            prompt_policy["certified_bindings"] = []
+            actual = sha256_json(prompt_policy)
+        if actual != assembly[key]:
+            raise AdapterError(
+                "planner assembly catalog binding differs from current source"
+            )
+    _v3_host_profile(request, root)
+
+    available = {(source.ref, source.role): source for source in sources}
+    selected = []
+    for resource in assembly["model_resources"]:
+        if (
+                resource["role"] in V3_CANDIDATE_FORBIDDEN_SOURCE_ROLES
+                or any(resource["ref"].startswith(prefix)
+                       for prefix in V3_CANDIDATE_FORBIDDEN_SOURCE_PREFIXES)):
+            raise AdapterError(
+                "planner assembly exposes routing-only material after selection"
+            )
+        source = available.get((resource["ref"], resource["role"]))
+        if source is None or resource != {
+                "ref": source.ref,
+                "sha256": source.sha256,
+                "bytes": len(source.content),
+                "role": source.role,
+        }:
+            raise AdapterError(
+                "planner assembly resource is outside the selected-skill source closure"
+            )
+        selected.append(source)
+    return sorted(selected, key=lambda item: (item.ref, item.role))
+
+
+def collect_v3_selected_sources(request, selected_skill: str, root: Path):
+    """Resolve source bytes only after blind selection, never from expected_route."""
+    entry = _routing_entry(request, selected_skill)
+    routing = request["routing_index"]
+    catalog_raw = read_project_reference(root, routing["catalog_ref"], "routing catalog")
+    _verify_digest(catalog_raw, routing["catalog_sha256"], "routing catalog")
+    catalog = _strict_bound_json(catalog_raw, "routing catalog")
+    catalog_entries = catalog.get("contracts") if isinstance(catalog, dict) else None
+    catalog_match = [
+        item for item in (catalog_entries or [])
+        if isinstance(item, dict) and item.get("skill") == selected_skill
+    ]
+    if len(catalog_match) != 1 or catalog_match[0] != {
+            "skill": selected_skill,
+            "contract_ref": entry["contract_ref"],
+            "contract_sha256": entry["contract_sha256"],
+    }:
+        raise AdapterError("selected route differs from its bound machine-contract catalog")
+
+    contract_raw = read_project_reference(root, entry["contract_ref"], "selected contract")
+    _verify_digest(contract_raw, entry["contract_sha256"], "selected contract")
+    contract = _strict_bound_json(contract_raw, "selected contract")
+    identity = contract.get("identity") if isinstance(contract, dict) else None
+    if not isinstance(identity, dict) or any((
+            identity.get("name") != selected_skill,
+            identity.get("path") != entry["skill_ref"],
+            identity.get("sha256") != entry["skill_sha256"],
+            identity.get("version") != entry["version"],
+            identity.get("discipline") != entry["discipline"],
+            identity.get("phase") != entry["phase"],
+    )):
+        raise AdapterError("selected contract identity differs from the routing index")
+    context_hints = contract.get("context_hints")
+    if not isinstance(context_hints, dict) or not isinstance(
+            context_hints.get("bundle_references"), list):
+        raise AdapterError("selected contract context hints are invalid")
+
+    sources = []
+    seen = set()
+    profile = request["execution"]["prompt_profile"]
+    if profile == "explicit":
+        _add_bound_source(
+            sources, seen, "skill-definition", entry["skill_ref"], entry["skill_sha256"],
+            root, "blind-selected skill",
+        )
+        # The catalog and machine contract were verified above but are
+        # controller-only.  The explicit SUT sees the full authored skill plus
+        # shared execution policy, never controller metadata bodies.
+        binding = routing["shared_contract"]
+        _add_bound_source(
+            sources, seen, "shared-contract", binding["path"], binding["sha256"], root,
+            "blind-selected shared_contract",
+        )
+    else:
+        capsule_index_binding = routing["capsule_index"]
+        capsule_index_ref = capsule_index_binding["path"]
+        capsule_index_raw = read_project_reference(root, capsule_index_ref, "skill capsule index")
+        _verify_digest(
+            capsule_index_raw, capsule_index_binding["sha256"], "skill capsule index",
+        )
+        capsule_index = _strict_bound_json(capsule_index_raw, "skill capsule index")
+        if (
+                not isinstance(capsule_index, dict)
+                or set(capsule_index) != {
+                    "$schema", "schema_version", "capsule_count", "capsule_schema",
+                    "capsules", "policy_kernel", "source_contract_index",
+                }
+                or capsule_index.get("schema_version") != "1.0"
+                or capsule_index.get("capsule_count") != 120
+                or not isinstance(capsule_index.get("capsules"), list)
+                or len(capsule_index["capsules"]) != 120
+                or capsule_index.get("source_contract_index") != {
+                    "path": routing["catalog_ref"], "sha256": routing["catalog_sha256"],
+                }):
+            raise AdapterError("compact source catalog is not bound to the routing catalog")
+        capsules = [
+            item for item in capsule_index["capsules"]
+            if isinstance(item, dict) and item.get("skill") == selected_skill
+        ]
+        if len(capsules) != 1:
+            raise AdapterError("selected route has no unique compact capsule")
+        capsule = capsules[0]
+        exact_object(
+            capsule, {"skill", "capsule_ref", "capsule_sha256", "model_bytes"},
+            "selected capsule index entry",
+        )
+        kernel = capsule_index.get("policy_kernel")
+        if not isinstance(kernel, dict) or set(kernel) != {"path", "sha256"}:
+            raise AdapterError("compact source catalog has no bound policy kernel")
+        kernel_raw = read_project_reference(root, kernel["path"], "blind-selected policy kernel")
+        _verify_digest(kernel_raw, kernel["sha256"], "blind-selected policy kernel")
+        if profile == "balanced":
+            _add_bound_source(
+                sources, seen, "skill-definition", entry["skill_ref"], entry["skill_sha256"],
+                root, "blind-selected skill",
+            )
+        else:
+            capsule_raw = read_project_reference(
+                root, capsule["capsule_ref"], "blind-selected skill capsule",
+            )
+            _verify_digest(
+                capsule_raw, capsule["capsule_sha256"], "blind-selected skill capsule",
+            )
+            capsule_value = _strict_bound_json(capsule_raw, "blind-selected skill capsule")
+            if (
+                    not isinstance(capsule_value, dict)
+                    or capsule_value.get("schema_version") != "1.0"
+                    or capsule_value.get("capsule_id") != "skill-capsule:%s" % selected_skill
+                    or capsule_value.get("identity") != {
+                        "class": identity.get("class"),
+                        "discipline": entry["discipline"],
+                        "name": selected_skill,
+                        "phase": entry["phase"],
+                        "version": entry["version"],
+                    }
+                    or capsule_value.get("provenance", {}).get("source") != {
+                        "path": entry["skill_ref"], "sha256": entry["skill_sha256"],
+                    }
+                    or capsule_value.get("provenance", {}).get("machine_contract") != {
+                        "path": entry["contract_ref"], "sha256": entry["contract_sha256"],
+                    }
+                    or capsule_value.get("policy", {}).get("kernel") != kernel
+                    or capsule.get("model_bytes") != len(capsule_raw) + len(kernel_raw)):
+                raise AdapterError("selected compact capsule provenance is stale or invalid")
+            sources.append(BoundSource(
+                "skill-capsule", capsule["capsule_ref"], capsule["capsule_sha256"], capsule_raw,
+            ))
+            seen.add(capsule["capsule_ref"])
+        _add_bound_source(
+            sources, seen, "policy-kernel", kernel["path"], kernel["sha256"], root,
+            "blind-selected policy kernel",
+        )
+
+    for position, source in enumerate(context_hints["bundle_references"], 1):
+        if not isinstance(source, dict) or set(source) != {
+                "path", "reason_code", "requirement", "sha256", "source_line"}:
+            raise AdapterError("selected contract bundle reference is invalid")
+        # Every profile keeps only required/explicit runtime reads visible;
+        # optional authored references and connector catalogs remain deferred.
+        if source["requirement"] != "required" and source[
+                "reason_code"] != "explicit-runtime-read":
+            continue
+        _add_bound_source(
+            sources, seen, "skill-reference", source["path"], source["sha256"], root,
+            "blind-selected runtime source %d" % position,
+        )
+
+    evidence = request["case"]["evidence_binding"]
+    if evidence is not None:
+        if evidence["ref"] in seen:
+            raise AdapterError("real evidence cannot also be a SUT-visible source")
+        evidence_raw = read_project_reference(root, evidence["ref"], "real evidence")
+        _verify_digest(evidence_raw, evidence["sha256"], "real evidence")
+    if sum(len(item.content) for item in sources) > MAX_TOTAL_BOUND_BYTES:
+        raise AdapterError("blind-selected SUT sources exceed the aggregate byte limit")
+    selected_sources = _apply_v3_execution_allowlist(request, sources, root)
+    _audit_v3_execution_sources(request, selected_sources)
+    return selected_sources
+
+
 def _decode_source(source: BoundSource) -> str:
     try:
         value = source.content.decode("utf-8")
@@ -757,6 +1295,183 @@ def build_candidate_prompt(request, staged_sources) -> str:
         ],
     }
     return CANDIDATE_PROMPT_TEMPLATE.format(payload=canonical_json(payload))
+
+
+V3_CANDIDATE_FORBIDDEN_KEYS = {
+    "case_id", "target_skill", "expected_route", "target_rubric",
+    "assertions", "expected_assertions", "must_not", "forbidden_assertions",
+    "expected_behavior", "expected_blocking_data", "blocking_inputs", "risk_gates",
+    "failure_modes", "judge_contract",
+}
+
+V3_CANDIDATE_FORBIDDEN_SOURCE_ROLES = {"routing-scenario"}
+V3_CANDIDATE_FORBIDDEN_SOURCE_PREFIXES = (
+    "evals/auto-routing-scenarios.source.md",
+    "references/auto-routing/",
+)
+V3_CANDIDATE_FORBIDDEN_SERIALIZED_KEYS = tuple(
+    '"%s"' % key for key in sorted(V3_CANDIDATE_FORBIDDEN_KEYS)
+)
+
+
+def _audit_v3_candidate_payload(value, label="candidate payload"):
+    """Reject answer-bearing keys anywhere in a candidate-visible structure."""
+    if isinstance(value, dict):
+        leaked = sorted(set(value) & V3_CANDIDATE_FORBIDDEN_KEYS)
+        if leaked:
+            raise AdapterError("%s leaks judge-only keys: %s" % (label, leaked))
+        for item in value.values():
+            _audit_v3_candidate_payload(item, label)
+    elif isinstance(value, list):
+        for item in value:
+            _audit_v3_candidate_payload(item, label)
+
+
+def _v3_candidate_string_values(value):
+    """Yield candidate-visible string bodies, including decoded source content."""
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, dict):
+        for item in value.values():
+            yield from _v3_candidate_string_values(item)
+    elif isinstance(value, list):
+        for item in value:
+            yield from _v3_candidate_string_values(item)
+
+
+def _audit_v3_execution_content(request, value, label):
+    """Reject structural leaks even when hidden inside an otherwise safe string."""
+    _audit_v3_candidate_payload(value, label)
+    visible_strings = tuple(_v3_candidate_string_values(value))
+    for candidate_text in visible_strings:
+        if any(token in candidate_text for token in V3_CANDIDATE_FORBIDDEN_SERIALIZED_KEYS):
+            raise AdapterError("%s embeds a serialized judge-only key" % label)
+
+    # A direct Skill can legitimately contain the same normative sentence as
+    # a judge assertion that was derived from it.  Provenance and forbidden
+    # serialized keys exclude eval/routing records without treating semantic
+    # overlap with the authoritative Skill as leakage.  The case identifier,
+    # unlike rubric prose, has no legitimate execution-source role.
+    case_id = request["case"]["id"]
+    if any(case_id in candidate_text for candidate_text in visible_strings):
+        raise AdapterError("%s embeds the controller-only case ID" % label)
+
+
+def _audit_v3_execution_sources(request, sources):
+    """Prove selected source bytes are direct skill context before staging them."""
+    entries = []
+    for source in sources:
+        if (
+                source.role in V3_CANDIDATE_FORBIDDEN_SOURCE_ROLES
+                or any(source.ref.startswith(prefix)
+                       for prefix in V3_CANDIDATE_FORBIDDEN_SOURCE_PREFIXES)):
+            raise AdapterError("blind execution sources include routing-only material")
+        entries.append({
+            "role": source.role,
+            "ref": source.ref,
+            "sha256": source.sha256,
+            "content": _decode_source(source),
+        })
+    _audit_v3_execution_content(request, entries, "blind execution sources")
+
+
+def v3_routing_candidate_payload(request):
+    case = request["case"]
+    payload = {
+        "scenario": case["scenario"],
+        "input_summary": case["input_summary"],
+        "routing_index_sha256": request["routing_index"]["index_sha256"],
+        "skills": [
+            {
+                "skill": entry["skill"],
+                "discipline": entry["discipline"],
+                "phase": entry["phase"],
+                "description": entry["description"],
+                "boundary": entry["boundary"],
+            }
+            for entry in request["routing_index"]["entries"]
+        ],
+    }
+    _audit_v3_candidate_payload(payload, "blind routing payload")
+    expected = request["judge_contract"]
+    rendered = canonical_json(payload)
+    for marker in [*expected["assertions"], *expected["must_not"]]:
+        if marker in rendered:
+            raise AdapterError("blind routing payload contains judge-only behavior text")
+    target_entry = _routing_entry(request, expected["expected_route"])
+    for answer_path in (target_entry["skill_ref"], target_entry["contract_ref"]):
+        if answer_path in rendered:
+            raise AdapterError("blind routing payload contains an answer-derived source path")
+    return payload
+
+
+def build_v3_routing_prompt(request) -> str:
+    return BLIND_ROUTING_PROMPT_TEMPLATE.format(
+        payload=canonical_json(v3_routing_candidate_payload(request)),
+    )
+
+
+def v3_execution_candidate_payload(request, selected_skill, staged_sources):
+    case = request["case"]
+    _audit_v3_execution_sources(
+        request, [staged.source for staged in staged_sources],
+    )
+    payload = {
+        "scenario": case["scenario"],
+        "input_summary": case["input_summary"],
+        "selected_skill": selected_skill,
+        "bound_sources": [
+            {
+                "role": staged.source.role,
+                "ref": staged.source.ref,
+                "staged_ref": staged.staged_ref,
+                "sha256": staged.source.sha256,
+                "content": _decode_source(staged.source),
+            }
+            for staged in staged_sources
+        ],
+    }
+    _audit_v3_execution_content(request, payload, "blind execution payload")
+    return payload
+
+
+def build_v3_execution_prompt(request, selected_skill, staged_sources) -> str:
+    return BLIND_EXECUTION_PROMPT_TEMPLATE.format(
+        payload=canonical_json(
+            v3_execution_candidate_payload(request, selected_skill, staged_sources)
+        ),
+    )
+
+
+def build_v3_judge_prompt(request, selected_skill, candidate_response: str) -> str:
+    candidate_bytes = candidate_response.encode("utf-8")
+    judge = request["judge_contract"]
+    payload = {
+        "request_sha256": request["request_sha256"],
+        "case_id": request["case"]["id"],
+        "scenario": request["case"]["scenario"],
+        "input_summary": request["case"]["input_summary"],
+        "route": {
+            "selected_skill": selected_skill,
+            "expected_skill": judge["expected_route"],
+            "correct": selected_skill == judge["expected_route"],
+        },
+        "candidate_response": {
+            "encoding": "base64-utf8",
+            "byte_length": len(candidate_bytes),
+            "sha256": sha256_bytes(candidate_bytes),
+            "data": base64.b64encode(candidate_bytes).decode("ascii"),
+        },
+        "expected_assertions": [
+            {"id": "expected-%d" % index, "behavior": behavior}
+            for index, behavior in enumerate(judge["assertions"], 1)
+        ],
+        "forbidden_assertions": [
+            {"id": "forbidden-%d" % index, "behavior": behavior}
+            for index, behavior in enumerate(judge["must_not"], 1)
+        ],
+    }
+    return JUDGE_PROMPT_TEMPLATE.format(payload=canonical_json(payload))
 
 
 def build_judge_prompt(request, candidate_response: str) -> str:
@@ -978,11 +1693,16 @@ def secure_runtime(config: AdapterConfig):
         candidate_schema_bytes, _ = _read_absolute_file(
             CANDIDATE_OUTPUT_SCHEMA, "candidate output schema", MAX_REFERENCE_BYTES,
         )
+        routing_schema_bytes, _ = _read_absolute_file(
+            ROUTING_OUTPUT_SCHEMA, "routing output schema", MAX_REFERENCE_BYTES,
+        )
         judge_schema_bytes, _ = _read_absolute_file(
             JUDGE_OUTPUT_SCHEMA, "judge output schema", MAX_REFERENCE_BYTES,
         )
+        routing_schema = control / "routing-output.schema.json"
         candidate_schema = control / "candidate-output.schema.json"
         judge_schema = control / "judge-output.schema.json"
+        _write_private_file(routing_schema, routing_schema_bytes, 0o400)
         _write_private_file(candidate_schema, candidate_schema_bytes, 0o400)
         _write_private_file(judge_schema, judge_schema_bytes, 0o400)
         os.chmod(control, 0o500)
@@ -994,11 +1714,13 @@ def secure_runtime(config: AdapterConfig):
             codex_home=codex_home,
             scratch=scratch,
             probe_project=probe_project,
+            routing_schema=routing_schema,
             candidate_schema=candidate_schema,
             judge_schema=judge_schema,
             executable=executable,
             environment=environment,
             config_sha256=sha256_bytes(config_bytes),
+            routing_schema_sha256=sha256_bytes(routing_schema_bytes),
             candidate_schema_sha256=sha256_bytes(candidate_schema_bytes),
             judge_schema_sha256=sha256_bytes(judge_schema_bytes),
         )
@@ -1113,15 +1835,25 @@ def validate_candidate_output(value):
     return value
 
 
+def _judge_expectations(request):
+    if request.get("protocol_version") == "3.0":
+        return (
+            request["judge_contract"]["assertions"],
+            request["judge_contract"]["must_not"],
+        )
+    case = request["case"]
+    return case["expected_behavior"], case["failure_modes"]
+
+
 def validate_model_output(value, request):
     if not isinstance(value, dict) or set(value) != {"outcome", "assertions", "failures"}:
         raise JudgeProtocolError("JUDGE_TOP_LEVEL_SHAPE")
     if value["outcome"] not in {"passed", "behavior-failed", "inconclusive"}:
         raise JudgeProtocolError("JUDGE_OUTCOME")
 
-    case = request["case"]
-    expected_ids = ["expected-%d" % index for index in range(1, len(case["expected_behavior"]) + 1)]
-    forbidden_ids = ["forbidden-%d" % index for index in range(1, len(case["failure_modes"]) + 1)]
+    expected_behaviors, forbidden_behaviors = _judge_expectations(request)
+    expected_ids = ["expected-%d" % index for index in range(1, len(expected_behaviors) + 1)]
+    forbidden_ids = ["forbidden-%d" % index for index in range(1, len(forbidden_behaviors) + 1)]
     ordered_ids = expected_ids + forbidden_ids
     assertions = value["assertions"]
     if not isinstance(assertions, list) or len(assertions) != len(ordered_ids):
@@ -1223,6 +1955,8 @@ def format_timestamp(value: dt.datetime) -> str:
 def prompt_template_sha256() -> str:
     return sha256_json({
         "candidate": CANDIDATE_PROMPT_TEMPLATE,
+        "blind_routing": BLIND_ROUTING_PROMPT_TEMPLATE,
+        "blind_execution": BLIND_EXECUTION_PROMPT_TEMPLATE,
         "judge": JUDGE_PROMPT_TEMPLATE,
         "judge_protocol_retry": JUDGE_PROTOCOL_RETRY_TEMPLATE,
     })
@@ -1235,6 +1969,9 @@ def parameters_sha256(config: AdapterConfig, runtime: Optional[SecureRuntime]) -
         "codex_binary_sha256": config.codex_sha256,
         "candidate_output_schema_sha256": (
             runtime.candidate_schema_sha256 if runtime else sha256_bytes(b"")
+        ),
+        "routing_output_schema_sha256": (
+            runtime.routing_schema_sha256 if runtime else sha256_bytes(b"")
         ),
         "command_flags": list(REQUIRED_EXEC_FLAGS),
         "environment_keys": sorted(
@@ -1330,6 +2067,29 @@ def execution_provenance(
     }
 
 
+def v3_execution_provenance(
+    config: AdapterConfig,
+    runtime: Optional[SecureRuntime],
+    host_version: str,
+    started_at: dt.datetime,
+    ended_at: dt.datetime,
+    elapsed_seconds: float,
+    candidate_response: bytes,
+    judge_attempts,
+):
+    """Add v3's independent-judge identity to the base provenance envelope."""
+    provenance = execution_provenance(
+        config, runtime, host_version, started_at, ended_at, elapsed_seconds,
+        candidate_response, judge_attempts,
+    )
+    provenance["judge_model_provider"] = "openai"
+    # Codex CLI currently exposes aliases but no immutable provider revision.
+    # Null is honest evaluation provenance and deliberately cannot certify a
+    # deployable compact prompt profile.
+    provenance["judge_model_revision"] = None
+    return provenance
+
+
 def result_envelope(request, outcome, provenance, assertions, failures):
     return {
         "kind": "behavior-eval-result",
@@ -1343,26 +2103,93 @@ def result_envelope(request, outcome, provenance, assertions, failures):
     }
 
 
+def _v3_context_binding(request, candidate_context_sha256, candidate_sources_sha256):
+    execution = request["execution"]
+    assembly = execution["assembly_binding"]
+    result = {
+        "prompt_profile": execution["prompt_profile"],
+        "host_profile": execution["host_profile"],
+        "toolset_id": execution["toolset_id"],
+        "toolset_sha256": execution["toolset_sha256"],
+        "candidate_context_sha256": candidate_context_sha256,
+        "candidate_sources_sha256": candidate_sources_sha256,
+        "assembly_sha256": None,
+        "assembly_signature": None,
+        "context_signature": None,
+        "host_catalog_sha256": None,
+        "prompt_policy_sha256": None,
+        "context_modules_sha256": None,
+        "capsule_index_sha256": request["routing_index"]["capsule_index"]["sha256"],
+        "model_body_bytes": None,
+        "model_reduction_ratio": None,
+        "model_resources_sha256": None,
+    }
+    if assembly is not None:
+        result.update({
+            key: value for key, value in assembly.items() if key != "model_resources"
+        })
+    return result
+
+
+def v3_result_envelope(
+        request, outcome, provenance, assertions, failures, *, selected_skill,
+        routing_response, candidate_context_sha256, stage_latency_ms,
+        candidate_sources_sha256=None):
+    expected = request["judge_contract"]["expected_route"]
+    return {
+        "kind": "behavior-eval-result",
+        "protocol_version": "3.0",
+        "case_id": request["case"]["id"],
+        "request_sha256": request["request_sha256"],
+        "outcome": outcome,
+        "routing": {
+            "selected_skill": selected_skill,
+            "expected_skill": expected,
+            "correct": None if selected_skill is None else selected_skill == expected,
+            "routing_index_sha256": request["routing_index"]["index_sha256"],
+            "routing_response_sha256": sha256_bytes(routing_response),
+        },
+        "execution_provenance": provenance,
+        # Codex CLI does not currently expose stable provider usage fields in
+        # this adapter transport.  Null is evidence of unavailability; local
+        # byte counts or wall-clock timings must never be relabeled as tokens
+        # or provider telemetry.
+        "provider_metrics": {
+            "input_tokens": None,
+            "output_tokens": None,
+            "total_tokens": None,
+            "latency_ms": None,
+            "tool_calls": None,
+        },
+        "context_binding": _v3_context_binding(
+            request, candidate_context_sha256, candidate_sources_sha256,
+        ),
+        "stage_latency_ms": dict(stage_latency_ms),
+        "assertions": assertions,
+        "failures": failures,
+    }
+
+
 def failure(code: str, failure_class: str, retryable: bool, summary: str):
     return {"code": code, "class": failure_class, "retryable": retryable, "summary": summary}
 
 
 def not_observed_assertions(request):
-    case = request["case"]
+    expected_behaviors, forbidden_behaviors = _judge_expectations(request)
     assertions = []
-    for index in range(1, len(case["expected_behavior"]) + 1):
+    for index in range(1, len(expected_behaviors) + 1):
         assertions.append({
             "id": "expected-%d" % index,
             "kind": "expected",
             "verdict": "not-observed",
-            "evidence": "Host execution did not produce an evaluable two-stage behavior result.",
+            "evidence": "Host execution did not produce an evaluable behavior result.",
         })
-    for index in range(1, len(case["failure_modes"]) + 1):
+    for index in range(1, len(forbidden_behaviors) + 1):
         assertions.append({
             "id": "forbidden-%d" % index,
             "kind": "forbidden",
             "verdict": "not-observed",
-            "evidence": "Host execution did not produce an evaluable two-stage behavior result.",
+            "evidence": "Host execution did not produce an evaluable behavior result.",
         })
     return assertions
 
@@ -1374,13 +2201,24 @@ def _host_failure_code(completed) -> Tuple[str, bool, str]:
             "ADAPTER_PROTOCOL", False,
             "Codex rejected the bundled structured-output schema before evaluation.",
         )
-    if any(marker in diagnostic for marker in ("unauthorized", "authentication", "not logged in", "api key", "401")):
-        return "HOST_AUTH", False, "Codex CLI authentication failed before a two-stage result was produced."
-    if any(marker in diagnostic for marker in ("rate limit", "rate-limit", "too many requests", "429", "quota")):
-        return "HOST_RATE_LIMIT", True, "Codex CLI rate limiting prevented a two-stage result."
+    # Check capacity failures before authentication: stdout can echo candidate
+    # context that happens to mention an API key, while stderr carries the real
+    # host error.  ChatGPT-backed Codex reports exhausted weekly capacity as a
+    # "usage limit" with a "purchase more credits" recovery path rather than a
+    # conventional 429 or quota string.
+    if any(marker in diagnostic for marker in (
+            "rate limit", "rate-limit", "too many requests", "429", "quota",
+            "usage limit", "purchase more credits")):
+        return (
+            "HOST_RATE_LIMIT", True,
+            "Codex CLI rate or usage limiting prevented a behavior result.",
+        )
+    if any(marker in diagnostic for marker in (
+            "unauthorized", "authentication", "not logged in", "api key", "401")):
+        return "HOST_AUTH", False, "Codex CLI authentication failed before a behavior result was produced."
     if any(marker in diagnostic for marker in ("context window", "context length", "too many tokens")):
         return "HOST_CONTEXT_LIMIT", False, "Codex CLI could not fit the behavior case in model context."
-    return "HOST_TOOL_ERROR", True, "Codex CLI exited before a two-stage result was produced."
+    return "HOST_TOOL_ERROR", True, "Codex CLI exited before a behavior result was produced."
 
 
 def _failure_result(
@@ -1409,6 +2247,37 @@ def _failure_result(
         provenance,
         not_observed_assertions(request),
         [failure(code, "adapter" if is_adapter else "host", retryable, summary)],
+    )
+
+
+def _v3_failure_result(
+        request, config: AdapterConfig, runtime: Optional[SecureRuntime], host_version: str,
+        code: str, retryable: bool, summary: str, started_at: dt.datetime,
+        ended_at: dt.datetime, elapsed_seconds: float, *, selected_skill=None,
+        routing_response=b"", candidate_response=b"", candidate_context_sha256=None,
+        candidate_sources_sha256=None,
+        stage_latency_ms=None, judge_attempts=None):
+    attempts = [] if judge_attempts is None else judge_attempts
+    provenance = v3_execution_provenance(
+        config, runtime, host_version, started_at, ended_at, elapsed_seconds,
+        candidate_response, attempts,
+    )
+    is_adapter = code.startswith("ADAPTER_")
+    if candidate_context_sha256 is None:
+        candidate_context_sha256 = sha256_bytes(b"")
+    if stage_latency_ms is None:
+        stage_latency_ms = {"routing_ms": None, "execution_ms": None, "judge_ms": None}
+    return v3_result_envelope(
+        request,
+        "adapter-failed" if is_adapter else "host-failed",
+        provenance,
+        not_observed_assertions(request),
+        [failure(code, "adapter" if is_adapter else "host", retryable, summary)],
+        selected_skill=selected_skill,
+        routing_response=routing_response,
+        candidate_context_sha256=candidate_context_sha256,
+        candidate_sources_sha256=candidate_sources_sha256,
+        stage_latency_ms=stage_latency_ms,
     )
 
 
@@ -1481,6 +2350,317 @@ def _run_model_stage(
     return completed, raw_response
 
 
+def _milliseconds(started_monotonic):
+    return min(86_400_000, max(0, round((time.monotonic() - started_monotonic) * 1000)))
+
+
+def evaluate_request_v3(
+    request,
+    config: AdapterConfig,
+    host_version: str,
+    runtime: SecureRuntime,
+    root: Path = ROOT,
+):
+    """Execute blind route -> selected context -> candidate -> independent judge."""
+    started_at = timestamp_now()
+    started_monotonic = time.monotonic()
+    routing_raw = b""
+    candidate_raw = b""
+    selected_skill = None
+    candidate_context_sha256 = sha256_bytes(b"")
+    candidate_sources_sha256 = None
+    judge_attempts = []
+    stage_latency = {"routing_ms": None, "execution_ms": None, "judge_ms": None}
+    try:
+        validate_v3_request(request)
+        if not root.is_absolute():
+            raise AdapterError("repository root must be absolute")
+        execution = request["execution"]
+        if execution["model_id"] != config.model_id or execution[
+                "judge_model_id"] != config.effective_judge_model_id:
+            raise AdapterError("request model identities differ from adapter configuration")
+        with tempfile.TemporaryDirectory(prefix="case-", dir=runtime.scratch) as case_temporary:
+            case_root = Path(case_temporary)
+            os.chmod(case_root, 0o700)
+            routing_project = case_root / "routing-project"
+            candidate_project = case_root / "candidate-project"
+            outputs = case_root / "outputs"
+            for directory in (routing_project, candidate_project, outputs):
+                directory.mkdir(mode=0o700)
+
+            routing_output = outputs / "routing.json"
+            _write_private_file(routing_output, b"", 0o600)
+            routing_prompt = build_v3_routing_prompt(request)
+            routing_started = time.monotonic()
+            try:
+                completed, routing_raw = _run_model_stage(
+                    runtime, config, routing_project, runtime.routing_schema,
+                    routing_output, config.model_id, routing_prompt,
+                )
+            except subprocess.TimeoutExpired:
+                stage_latency["routing_ms"] = _milliseconds(routing_started)
+                ended_at = timestamp_now()
+                return _v3_failure_result(
+                    request, config, runtime, host_version, "HOST_TIMEOUT", True,
+                    "Codex CLI timed out during blind routing.", started_at, ended_at,
+                    time.monotonic() - started_monotonic, routing_response=routing_raw,
+                    stage_latency_ms=stage_latency,
+                )
+            stage_latency["routing_ms"] = _milliseconds(routing_started)
+            if completed.returncode:
+                code, retryable, summary = _host_failure_code(completed)
+                ended_at = timestamp_now()
+                return _v3_failure_result(
+                    request, config, runtime, host_version, code, retryable, summary,
+                    started_at, ended_at, time.monotonic() - started_monotonic,
+                    routing_response=routing_raw, stage_latency_ms=stage_latency,
+                )
+            try:
+                route_value = strict_json_loads(
+                    routing_raw.decode("utf-8"), "Codex blind-routing structured output",
+                )
+                exact_object(route_value, {"selected_skill"}, "Codex blind-routing output")
+                selected_skill = safe_id(
+                    route_value["selected_skill"], "Codex blind-routing selected_skill",
+                )
+                _routing_entry(request, selected_skill)
+            except (UnicodeError, AdapterError):
+                ended_at = timestamp_now()
+                return _v3_failure_result(
+                    request, config, runtime, host_version, "ADAPTER_PROTOCOL", False,
+                    "Codex returned a non-conforming blind-routing selection.",
+                    started_at, ended_at, time.monotonic() - started_monotonic,
+                    routing_response=routing_raw, stage_latency_ms=stage_latency,
+                )
+
+            if selected_skill != request["judge_contract"]["expected_route"]:
+                # The route mismatch is already a deterministic judge-contract
+                # observation.  Stop before loading any selected-skill body or
+                # spending candidate/judge calls; a later host error must not
+                # erase the known routing regression or create an invalid
+                # host-failed + routing.correct=false envelope.
+                ended_at = timestamp_now()
+                provenance = v3_execution_provenance(
+                    config, runtime, host_version, started_at, ended_at,
+                    time.monotonic() - started_monotonic, b"", [],
+                )
+                return v3_result_envelope(
+                    request, "behavior-failed", provenance,
+                    not_observed_assertions(request),
+                    [failure(
+                        "ROUTING_WRONG_TARGET_OR_ORDER", "routing", False,
+                        "Blind discovery selected %s instead of the judge-only expected skill."
+                        % selected_skill,
+                    )],
+                    selected_skill=selected_skill,
+                    routing_response=routing_raw,
+                    candidate_context_sha256=sha256_bytes(b""),
+                    stage_latency_ms=stage_latency,
+                )
+
+            sources = collect_v3_selected_sources(request, selected_skill, root)
+            source_projection = v3_model_resource_projection(sources)
+            candidate_sources_sha256 = sha256_json(source_projection)
+            assembly = request["execution"]["assembly_binding"]
+            if assembly is not None and (
+                    source_projection != assembly["model_resources"]
+                    or candidate_sources_sha256 != assembly["model_resources_sha256"]
+                    or sum(len(source.content) for source in sources)
+                    != assembly["model_body_bytes"]):
+                ended_at = timestamp_now()
+                return _v3_failure_result(
+                    request, config, runtime, host_version,
+                    "ADAPTER_CONTEXT_ASSEMBLY_MISMATCH", False,
+                    "The selected candidate sources differ from the verified assembly projection.",
+                    started_at, ended_at, time.monotonic() - started_monotonic,
+                    selected_skill=selected_skill, routing_response=routing_raw,
+                    candidate_context_sha256=candidate_context_sha256,
+                    candidate_sources_sha256=candidate_sources_sha256,
+                    stage_latency_ms=stage_latency,
+                )
+            staged = _stage_sources(candidate_project, sources)
+            candidate_output = outputs / "candidate.json"
+            _write_private_file(candidate_output, b"", 0o600)
+            candidate_payload = v3_execution_candidate_payload(
+                request, selected_skill, staged,
+            )
+            candidate_context_sha256 = sha256_json(candidate_payload)
+            candidate_prompt = BLIND_EXECUTION_PROMPT_TEMPLATE.format(
+                payload=canonical_json(candidate_payload),
+            )
+            execution_started = time.monotonic()
+            try:
+                completed, candidate_raw = _run_model_stage(
+                    runtime, config, candidate_project, runtime.candidate_schema,
+                    candidate_output, config.model_id, candidate_prompt,
+                )
+            except subprocess.TimeoutExpired:
+                stage_latency["execution_ms"] = _milliseconds(execution_started)
+                ended_at = timestamp_now()
+                return _v3_failure_result(
+                    request, config, runtime, host_version, "HOST_TIMEOUT", True,
+                    "Codex CLI timed out during blind selected-skill execution.",
+                    started_at, ended_at, time.monotonic() - started_monotonic,
+                    selected_skill=selected_skill, routing_response=routing_raw,
+                    candidate_response=candidate_raw,
+                    candidate_context_sha256=candidate_context_sha256,
+                    candidate_sources_sha256=candidate_sources_sha256,
+                    stage_latency_ms=stage_latency,
+                )
+            stage_latency["execution_ms"] = _milliseconds(execution_started)
+            verify_staged_sources(candidate_project, staged)
+            if completed.returncode:
+                code, retryable, summary = _host_failure_code(completed)
+                ended_at = timestamp_now()
+                return _v3_failure_result(
+                    request, config, runtime, host_version, code, retryable, summary,
+                    started_at, ended_at, time.monotonic() - started_monotonic,
+                    selected_skill=selected_skill, routing_response=routing_raw,
+                    candidate_response=candidate_raw,
+                    candidate_context_sha256=candidate_context_sha256,
+                    candidate_sources_sha256=candidate_sources_sha256,
+                    stage_latency_ms=stage_latency,
+                )
+            try:
+                candidate_value = strict_json_loads(
+                    candidate_raw.decode("utf-8"), "Codex candidate structured output",
+                )
+                validate_candidate_output(candidate_value)
+            except (UnicodeError, AdapterError):
+                ended_at = timestamp_now()
+                return _v3_failure_result(
+                    request, config, runtime, host_version, "ADAPTER_PROTOCOL", False,
+                    "Codex returned a non-conforming bounded candidate response.",
+                    started_at, ended_at, time.monotonic() - started_monotonic,
+                    selected_skill=selected_skill, routing_response=routing_raw,
+                    candidate_response=candidate_raw,
+                    candidate_context_sha256=candidate_context_sha256,
+                    candidate_sources_sha256=candidate_sources_sha256,
+                    stage_latency_ms=stage_latency,
+                )
+
+            original_judge_prompt = build_v3_judge_prompt(
+                request, selected_skill, candidate_value["candidate_response"],
+            )
+            rejected_raw = b""
+            rejected_diagnostic = None
+            judge_value = None
+            judge_elapsed = 0
+            for attempt in range(1, MAX_JUDGE_ATTEMPTS + 1):
+                judge_project = case_root / ("judge-project-%d" % attempt)
+                judge_project.mkdir(mode=0o700)
+                os.chmod(judge_project, 0o500)
+                judge_output = outputs / ("judge-%d.json" % attempt)
+                _write_private_file(judge_output, b"", 0o600)
+                judge_prompt = original_judge_prompt if attempt == 1 else (
+                    build_judge_retry_prompt(
+                        original_judge_prompt, rejected_diagnostic, rejected_raw,
+                    )
+                )
+                judge_started = time.monotonic()
+                try:
+                    completed, judge_raw = _run_model_stage(
+                        runtime, config, judge_project, runtime.judge_schema,
+                        judge_output, config.effective_judge_model_id, judge_prompt,
+                    )
+                except subprocess.TimeoutExpired:
+                    judge_elapsed += _milliseconds(judge_started)
+                    stage_latency["judge_ms"] = judge_elapsed
+                    ended_at = timestamp_now()
+                    return _v3_failure_result(
+                        request, config, runtime, host_version, "HOST_TIMEOUT", True,
+                        "Codex CLI timed out during the independent judge stage.",
+                        started_at, ended_at, time.monotonic() - started_monotonic,
+                        selected_skill=selected_skill, routing_response=routing_raw,
+                        candidate_response=candidate_raw,
+                        candidate_context_sha256=candidate_context_sha256,
+                        candidate_sources_sha256=candidate_sources_sha256,
+                        stage_latency_ms=stage_latency, judge_attempts=judge_attempts,
+                    )
+                judge_elapsed += _milliseconds(judge_started)
+                stage_latency["judge_ms"] = judge_elapsed
+                if completed.returncode:
+                    code, retryable, summary = _host_failure_code(completed)
+                    ended_at = timestamp_now()
+                    return _v3_failure_result(
+                        request, config, runtime, host_version, code, retryable, summary,
+                        started_at, ended_at, time.monotonic() - started_monotonic,
+                        selected_skill=selected_skill, routing_response=routing_raw,
+                        candidate_response=candidate_raw,
+                        candidate_context_sha256=candidate_context_sha256,
+                        candidate_sources_sha256=candidate_sources_sha256,
+                        stage_latency_ms=stage_latency, judge_attempts=judge_attempts,
+                    )
+                try:
+                    judge_value = parse_and_validate_judge_output(judge_raw, request)
+                except JudgeProtocolError as exc:
+                    rejected_raw = judge_raw
+                    rejected_diagnostic = exc.diagnostic_code
+                    judge_attempts.append(judge_attempt_record(
+                        attempt, judge_raw, "protocol-rejected", rejected_diagnostic,
+                    ))
+                    if attempt < MAX_JUDGE_ATTEMPTS:
+                        continue
+                    ended_at = timestamp_now()
+                    return _v3_failure_result(
+                        request, config, runtime, host_version, "ADAPTER_PROTOCOL", False,
+                        "Codex returned output that does not conform to the judge protocol.",
+                        started_at, ended_at, time.monotonic() - started_monotonic,
+                        selected_skill=selected_skill, routing_response=routing_raw,
+                        candidate_response=candidate_raw,
+                        candidate_context_sha256=candidate_context_sha256,
+                        candidate_sources_sha256=candidate_sources_sha256,
+                        stage_latency_ms=stage_latency, judge_attempts=judge_attempts,
+                    )
+                judge_attempts.append(judge_attempt_record(
+                    attempt, judge_raw, "accepted", None,
+                ))
+                break
+            if judge_value is None:
+                raise AdapterError("bounded judge execution omitted a terminal result")
+
+            outcome = judge_value["outcome"]
+            assertions = judge_value["assertions"]
+            failures = list(judge_value["failures"])
+            ended_at = timestamp_now()
+            provenance = v3_execution_provenance(
+                config, runtime, host_version, started_at, ended_at,
+                time.monotonic() - started_monotonic, candidate_raw, judge_attempts,
+            )
+            return v3_result_envelope(
+                request, outcome, provenance, assertions, failures,
+                selected_skill=selected_skill,
+                routing_response=routing_raw,
+                candidate_context_sha256=candidate_context_sha256,
+                candidate_sources_sha256=candidate_sources_sha256,
+                stage_latency_ms=stage_latency,
+            )
+    except (FileNotFoundError, OSError):
+        ended_at = timestamp_now()
+        return _v3_failure_result(
+            request, config, runtime, host_version, "HOST_UNAVAILABLE", True,
+            "Codex CLI could not be started for blind semantic execution.",
+            started_at, ended_at, time.monotonic() - started_monotonic,
+            selected_skill=selected_skill, routing_response=routing_raw,
+            candidate_response=candidate_raw,
+            candidate_context_sha256=candidate_context_sha256,
+            candidate_sources_sha256=candidate_sources_sha256,
+            stage_latency_ms=stage_latency, judge_attempts=judge_attempts,
+        )
+    except AdapterError:
+        ended_at = timestamp_now()
+        return _v3_failure_result(
+            request, config, runtime, host_version, "ADAPTER_PROTOCOL", False,
+            "The v3 request, secure runtime, or one of its discovery-bound references is invalid.",
+            started_at, ended_at, time.monotonic() - started_monotonic,
+            selected_skill=selected_skill, routing_response=routing_raw,
+            candidate_response=candidate_raw,
+            candidate_context_sha256=candidate_context_sha256,
+            candidate_sources_sha256=candidate_sources_sha256,
+            stage_latency_ms=stage_latency, judge_attempts=judge_attempts,
+        )
+
+
 def evaluate_request(
     request,
     config: AdapterConfig,
@@ -1488,6 +2668,8 @@ def evaluate_request(
     runtime: SecureRuntime,
     root: Path = ROOT,
 ):
+    if isinstance(request, dict) and request.get("protocol_version") == "3.0":
+        return evaluate_request_v3(request, config, host_version, runtime, root)
     started_at = timestamp_now()
     started_monotonic = time.monotonic()
     candidate_raw = b""
@@ -1642,6 +2824,13 @@ def evaluate_request(
 def _probe_failure_result(request, config: AdapterConfig, runtime, probe: ProbeResult):
     started_at = timestamp_now()
     ended_at = timestamp_now()
+    if request.get("protocol_version") == "3.0":
+        return _v3_failure_result(
+            request, config, runtime, probe.host_version,
+            probe.failure_code or "HOST_UNAVAILABLE", probe.retryable,
+            probe.summary or "Codex CLI is unavailable; no semantic execution occurred.",
+            started_at, ended_at, 0,
+        )
     return _failure_result(
         request, config, runtime, probe.host_version,
         probe.failure_code or "HOST_UNAVAILABLE", probe.retryable,
@@ -1653,6 +2842,12 @@ def _probe_failure_result(request, config: AdapterConfig, runtime, probe: ProbeR
 def _adapter_runtime_failure_result(request, config: AdapterConfig, runtime, host_version: str):
     started_at = timestamp_now()
     ended_at = timestamp_now()
+    if request.get("protocol_version") == "3.0":
+        return _v3_failure_result(
+            request, config, runtime, host_version, "ADAPTER_PROVENANCE", False,
+            "Codex could not prove the required isolated, tool-free permission profile.",
+            started_at, ended_at, 0,
+        )
     return _failure_result(
         request, config, runtime, host_version, "ADAPTER_PROVENANCE", False,
         "Codex could not prove the required isolated, tool-free permission profile.",
@@ -1663,6 +2858,12 @@ def _adapter_runtime_failure_result(request, config: AdapterConfig, runtime, hos
 def _adapter_worker_crash_result(request, config: AdapterConfig):
     started_at = timestamp_now()
     ended_at = timestamp_now()
+    if request.get("protocol_version") == "3.0":
+        return _v3_failure_result(
+            request, config, None, "unavailable", "ADAPTER_CRASH", False,
+            "An isolated adapter worker stopped before producing a result.",
+            started_at, ended_at, 0,
+        )
     return _failure_result(
         request, config, None, "unavailable", "ADAPTER_CRASH", False,
         "An isolated adapter worker stopped before producing a result.",

@@ -11,7 +11,7 @@
           "end_char": 57,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 161,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 59
         },
@@ -41,7 +41,7 @@
           "end_char": 244,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 163
         },
@@ -56,7 +56,7 @@
           "end_char": 323,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 246
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+      "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919"
     }
   },
   "context_hints": {
@@ -105,14 +105,14 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 26
       },
       {
         "path": "scripts/connectors/README.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "73a31e58891ea527e13c2cb90d64880ad569989ebe125617c554ee2acc848401",
+        "sha256": "755816582373b846b95783c125c6d9cd57d5c20bbf4af97bc00aecdbaa557c56",
         "source_line": 64
       }
     ],
@@ -131,7 +131,7 @@
           "end_char": 213,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -149,7 +149,7 @@
           "end_char": 259,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 215
         },
@@ -165,7 +165,7 @@
           "end_char": 455,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 260
         },
@@ -183,7 +183,7 @@
           "end_char": 571,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 457
         },
@@ -199,7 +199,7 @@
           "end_char": 651,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 573
         },
@@ -212,7 +212,7 @@
     "summary_ref": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+      "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -226,8 +226,8 @@
     "name": "paid-measurement-loop",
     "path": "ad/scale/paid-measurement-loop/SKILL.md",
     "phase": "scale",
-    "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
-    "version": "19.0.0"
+    "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<campaign/change> [readback window]",
@@ -241,7 +241,7 @@
           "end_char": 249,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -253,7 +253,7 @@
     "source": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+      "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919"
     }
   },
   "output_contract": {
@@ -268,7 +268,7 @@
           "end_char": 112,
           "path": "ad/scale/paid-measurement-loop/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97",
+          "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -279,7 +279,7 @@
     "source": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+      "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919"
     },
     "summary": "a per-change `readback_decision` (Promote / Keep-testing / Rollback / Unproven) with delta-vs-control on a primary metric (ROAS or CPA), the readback window used, normalization notes (attribution window + currency), and a handoff summary ready for `memory/ad/paid-measurement-loop/`. `readback_decision` is not an RQS auditor verdict.",
     "summary_source": "expected-output",
@@ -290,12 +290,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -304,7 +304,7 @@
     "source": {
       "path": "ad/scale/paid-measurement-loop/SKILL.md",
       "section": "frontmatter",
-      "sha256": "f769a28330fc5ffd312be851f9e96f39428021011baf85b6f0f2c3ead8a5cc97"
+      "sha256": "2e349453e7d2432d026e42ad0acbe06425c43a52b4b601dc62c1b8e483b18919"
     },
     "trigger_phrases": [
       "compare ROAS/CPA before and after",

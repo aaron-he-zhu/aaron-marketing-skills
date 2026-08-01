@@ -6,7 +6,9 @@
 # probes are outside this guard. The guard fails CLOSED: every top-level
 # module imported by scripts/*.py, scripts/connectors/*.py,
 # scripts/adapters/*.py, and tests/*.py must be on the ALLOWLIST — (a) the Python standard
-# library (sys.stdlib_module_names, queried from the interpreter at runtime) or
+# library (queried from the interpreter at runtime; Python 3.9 gets the same
+# answer by enumerating its stdlib path because `sys.stdlib_module_names` was
+# added in 3.10) or
 # (b) a local module in those same directories (derived from the .py filenames,
 # e.g. _http, robots). Anything else — numpy, requests, yaml, or a brand-new
 # package no denylist has heard of — fails the build, naming file and module.
@@ -24,8 +26,43 @@ for pat in "scripts/*.py" "scripts/connectors/*.py" "scripts/adapters/*.py" "tes
   compgen -G "$pat" > /dev/null || { echo "MOAT GUARD MISCONFIGURED — no files match '$pat'"; exit 1; }
 done
 
-# (a) Python stdlib module names, straight from the interpreter (no hardcoded list).
-STDLIB="$(python3 -c "import sys;print('\n'.join(sorted(sys.stdlib_module_names)))")"
+# (a) Python stdlib module names, straight from the interpreter (no hardcoded
+# list). The repository advertises Python >=3.9, so do not assume the 3.10+
+# `sys.stdlib_module_names` convenience set exists.
+STDLIB="$(python3 -c '
+import importlib.machinery
+from pathlib import Path
+import sys
+import sysconfig
+
+names = set(sys.builtin_module_names)
+declared = getattr(sys, "stdlib_module_names", None)
+if declared is not None:
+    names.update(declared)
+else:
+    root = Path(sysconfig.get_path("stdlib"))
+    suffixes = sorted(
+        set(importlib.machinery.all_suffixes()), key=len, reverse=True
+    )
+    for directory in (root, root / "lib-dynload"):
+        if not directory.is_dir():
+            continue
+        for entry in directory.iterdir():
+            if entry.name in {"site-packages", "dist-packages", "__pycache__"}:
+                continue
+            if directory == root and entry.is_dir() and entry.name.isidentifier():
+                names.add(entry.name)
+                continue
+            if not entry.is_file():
+                continue
+            for suffix in suffixes:
+                if entry.name.endswith(suffix):
+                    candidate = entry.name[:-len(suffix)]
+                    if candidate.isidentifier():
+                        names.add(candidate)
+                    break
+print("\n".join(sorted(names)))
+')"
 
 # (b) The repo's own local modules: one name per .py file in the checked dirs.
 LOCAL=""

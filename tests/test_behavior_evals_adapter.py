@@ -14,7 +14,9 @@ import io
 import json
 import os
 from pathlib import Path
+import shlex
 import subprocess
+import sys
 import tempfile
 import textwrap
 import unittest
@@ -23,6 +25,11 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 CASE_ID = "routing-outreach-vs-contract-helper-outreach-manager-001"
+
+
+def python_command(script):
+    """Bind fixtures to the same already-isolated interpreter as the runner."""
+    return shlex.join([sys.executable, str(script)])
 
 PASS_ADAPTER = """\
 import json, sys
@@ -104,6 +111,77 @@ for line in sys.stdin:
             "started_at": "2026-07-19T10:00:00Z", "ended_at": "2026-07-19T10:00:01Z",
             "latency_ms": 1000
         },
+        "assertions": assertions, "failures": []
+    }))
+"""
+
+PASS_V3_ADAPTER = """\
+import hashlib, json, sys
+for line in sys.stdin:
+    if not line.strip():
+        continue
+    request = json.loads(line)
+    judge = request["judge_contract"]
+    assertions = []
+    for index, _ in enumerate(judge["assertions"], 1):
+        assertions.append({"id": "expected-%d" % index, "kind": "expected", "verdict": "met", "evidence": "observed"})
+    for index, _ in enumerate(judge["must_not"], 1):
+        assertions.append({"id": "forbidden-%d" % index, "kind": "forbidden", "verdict": "not-observed", "evidence": "not observed"})
+    candidate_sha256 = "3" * 64
+    judge_attempts = [{
+        "attempt": 1, "response_sha256": "4" * 64, "size_bytes": 1,
+        "disposition": "accepted", "diagnostic_code": None,
+    }]
+    response_sha256 = hashlib.sha256(json.dumps({
+        "candidate_response_sha256": candidate_sha256,
+        "judge_attempts": judge_attempts,
+    }, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    execution = request["execution"]
+    assembly = execution["assembly_binding"]
+    context = {
+        "prompt_profile": execution["prompt_profile"],
+        "host_profile": execution["host_profile"],
+        "toolset_id": execution["toolset_id"],
+        "toolset_sha256": execution["toolset_sha256"],
+        "candidate_context_sha256": "5" * 64,
+        "candidate_sources_sha256": (
+            assembly["model_resources_sha256"] if assembly is not None else "7" * 64
+        ),
+        "assembly_sha256": None, "assembly_signature": None, "context_signature": None,
+        "host_catalog_sha256": None, "prompt_policy_sha256": None,
+        "context_modules_sha256": None,
+        "capsule_index_sha256": request["routing_index"]["capsule_index"]["sha256"],
+        "model_body_bytes": None, "model_reduction_ratio": None,
+        "model_resources_sha256": None,
+    }
+    if assembly is not None:
+        context.update({key: value for key, value in assembly.items() if key != "model_resources"})
+    print(json.dumps({
+        "kind": "behavior-eval-result", "protocol_version": "3.0",
+        "case_id": request["case"]["id"], "request_sha256": request["request_sha256"],
+        "outcome": "passed",
+        "routing": {
+            "selected_skill": judge["expected_route"], "expected_skill": judge["expected_route"],
+            "correct": True, "routing_index_sha256": request["routing_index"]["index_sha256"],
+            "routing_response_sha256": "6" * 64,
+        },
+        "execution_provenance": {
+            "execution_mode": "real", "adapter_name": "fixture-adapter", "adapter_version": "3.0.0",
+            "host_name": "fixture-host", "host_version": "1.0.0", "model_provider": "fixture",
+            "model_id": execution["model_id"], "judge_model_id": execution["judge_model_id"],
+            "model_revision": None, "judge_model_provider": "fixture",
+            "judge_model_revision": None,
+            "adapter_implementation_sha256": hashlib.sha256(open(__file__, "rb").read()).hexdigest(),
+            "prompt_template_version": "3.0.0", "prompt_template_sha256": "1" * 64,
+            "parameters_sha256": "2" * 64, "candidate_response_sha256": candidate_sha256,
+            "judge_response_sha256": "4" * 64, "judge_attempts": judge_attempts,
+            "response_sha256": response_sha256,
+            "started_at": "2026-08-01T00:00:00Z", "ended_at": "2026-08-01T00:00:01Z",
+            "latency_ms": 1000
+        },
+        "provider_metrics": {"input_tokens": None, "output_tokens": None, "total_tokens": None, "latency_ms": None, "tool_calls": None},
+        "context_binding": context,
+        "stage_latency_ms": {"routing_ms": 100, "execution_ms": 500, "judge_ms": 400},
         "assertions": assertions, "failures": []
     }))
 """
@@ -214,7 +292,7 @@ class AdapterTests(unittest.TestCase):
             script = Path(tmp) / "adapter.py"
             script.write_text(textwrap.dedent(source), encoding="utf-8")
             return self.module.run_adapter(
-                "python3 %s" % script, {CASE_ID}, 60)
+                python_command(script), {CASE_ID}, 60)
 
     @staticmethod
     def v2_selection(count=1):
@@ -252,8 +330,29 @@ class AdapterTests(unittest.TestCase):
             script = Path(tmp) / "adapter.py"
             script.write_text(textwrap.dedent(source), encoding="utf-8")
             return self.module.run_adapter_v2(
-                "python3 %s" % script, self.v2_selection(), 60,
+                python_command(script), self.v2_selection(), 60,
             )
+
+    def run_v3_with(self, source, *, count=1, evidence_run_id=None, evidence_root=None):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        script = Path(temporary.name) / "adapter.py"
+        script.write_text(textwrap.dedent(source), encoding="utf-8")
+        return self.module.run_adapter_v3(
+            python_command(script), self.v2_selection(count), 60,
+            host_profile="claude-code-plugin-host",
+            model_id="fixture-model", judge_model_id="fixture-judge",
+            evidence_run_id=evidence_run_id,
+            evidence_root=(ROOT if evidence_root is None else evidence_root),
+        )
+
+    def test_fixture_commands_bind_the_current_isolated_interpreter(self):
+        command = shlex.split(python_command("fixture adapter.py"))
+        self.assertEqual(command, [sys.executable, "fixture adapter.py"])
+        self.assertEqual(
+            Path(command[0]).resolve(strict=True),
+            Path(self.module.sys.executable).resolve(strict=True),
+        )
 
     def test_passing_adapter_returns_no_failures(self):
         self.assertEqual([], self.run_with(PASS_ADAPTER))
@@ -266,7 +365,7 @@ class AdapterTests(unittest.TestCase):
                 0,
                 self.module.main([
                     "--adapter-only",
-                    "--adapter-command", "python3 %s" % script,
+                    "--adapter-command", python_command(script),
                     "--case", CASE_ID,
                 ]),
             )
@@ -297,6 +396,44 @@ class AdapterTests(unittest.TestCase):
 
     def test_v2_passing_adapter_carries_real_execution_and_case_provenance(self):
         self.assertEqual([], self.run_v2_with(PASS_V2_ADAPTER))
+
+    def test_v3_passing_adapter_runs_official_batch_path(self):
+        self.assertEqual([], self.run_v3_with(PASS_V3_ADAPTER, count=2))
+
+    def test_v3_evidence_manifest_binds_protocol_and_schema(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            evidence_root = Path(tmp) / "evidence-root"
+            evidence_root.mkdir()
+            run_id = "123e4567-e89b-42d3-a456-426614174099"
+            self.assertEqual([], self.run_v3_with(
+                PASS_V3_ADAPTER, count=2, evidence_run_id=run_id,
+                evidence_root=evidence_root,
+            ))
+            evidence = evidence_root / "memory" / "runs" / run_id / "semantic-eval"
+            manifest = json.loads((evidence / "manifest.json").read_text(encoding="utf-8"))
+            completion = json.loads((evidence / "completion.json").read_text(encoding="utf-8"))
+            self.assertEqual("3.0", manifest["protocol_version"])
+            self.assertEqual("evals/behavior-adapter-v3.schema.json", manifest["protocol_schema"]["ref"])
+            self.assertEqual(
+                hashlib.sha256((ROOT / "evals/behavior-adapter-v3.schema.json").read_bytes()).hexdigest(),
+                manifest["protocol_schema"]["sha256"],
+            )
+            self.assertTrue(completion["complete"])
+            self.assertEqual(2, completion["request_count"])
+
+    def test_v3_cli_dispatches_to_official_entry_point(self):
+        with mock.patch.object(self.module, "run_adapter_v3", return_value=[]) as run:
+            code = self.module.main([
+                "--adapter-only", "--adapter-protocol", "3",
+                "--case", CASE_ID,
+                "--adapter-command", "python3 scripts/adapters/codex-behavior-adapter.py",
+                "--adapter-implementation-ref", "scripts/adapters/codex-behavior-adapter.py",
+                "--evidence-run-id", "123e4567-e89b-42d3-a456-426614174098",
+                "--host-profile", "claude-code-plugin-host",
+                "--model-id", "fixture-model", "--judge-model-id", "fixture-judge",
+            ])
+        self.assertEqual(0, code)
+        run.assert_called_once()
 
     def test_v2_auditor_request_expands_every_bound_prompt_source(self):
         selection = self.module.select_semantic_cases(
@@ -556,7 +693,7 @@ class AdapterTests(unittest.TestCase):
             self.assertEqual(
                 [],
                 self.module.run_adapter_v2(
-                    "python3 %s" % script, selection, 60, batch_size=113,
+                    python_command(script), selection, 60, batch_size=113,
                     evidence_run_id=run_id, evidence_root=evidence_root,
                 ),
             )
@@ -572,6 +709,23 @@ class AdapterTests(unittest.TestCase):
             self.assertEqual(
                 hashlib.sha256(script.read_bytes()).hexdigest(),
                 manifest["adapter_command_identity"]["implementation"]["sha256"],
+            )
+            self.assertEqual(
+                selection["provenance"], manifest["selection_provenance"]
+            )
+            self.assertEqual(
+                self.module.sha256_json({
+                    "profile": selection["profile"],
+                    "case_ids": selection["case_ids"],
+                    "provenance": selection["provenance"],
+                }),
+                manifest["selection_sha256"],
+            )
+            self.assertEqual(
+                self.module.sha256_json(
+                    manifest["adapter_command_identity"]["logical_argv"]
+                ),
+                manifest["adapter_command_sha256"],
             )
             self.assertEqual(
                 hashlib.sha256((ROOT / "scripts/run-behavior-evals.py").read_bytes()).hexdigest(),
@@ -600,7 +754,7 @@ class AdapterTests(unittest.TestCase):
             )
             script = base / "adapter.py"
             script.write_text(textwrap.dedent(source), encoding="utf-8")
-            command = "python3 %s" % script
+            command = python_command(script)
             run_id = "123e4567-e89b-42d3-a456-426614174001"
             selection = self.v2_selection(3)
             with self.assertRaises(self.module.BehaviorEvalError) as ctx:
@@ -640,7 +794,9 @@ class AdapterTests(unittest.TestCase):
             with self.assertRaises(SystemExit) as ctx:
                 self.module.main([
                     "--adapter-only", "--adapter-protocol", "2",
-                    "--adapter-command", "python3 scripts/adapters/codex-behavior-adapter.py",
+                    "--adapter-command", python_command(
+                        "scripts/adapters/codex-behavior-adapter.py"
+                    ),
                     "--evidence-run-id", "123e4567-e89b-42d3-a456-426614174002",
                 ])
         self.assertEqual(2, ctx.exception.code)
@@ -669,6 +825,7 @@ class AdapterTests(unittest.TestCase):
             implementation_ref="scripts/adapters/codex-behavior-adapter.py",
         )
         self.assertEqual(1, identity["implementation"]["argv_index"])
+        self.assertEqual(command, identity["logical_argv"])
         self.assertEqual(
             "isolated-staged-current-python-script",
             identity["execution_binding"]["kind"],
@@ -752,7 +909,6 @@ class AdapterTests(unittest.TestCase):
             project = Path(tmp) / "project"
             adapter = project / self.module.OFFICIAL_PROJECT_ADAPTER_REF
             candidate = project / self.module.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES[0]
-            judge = project / self.module.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES[1]
             adapter.parent.mkdir(parents=True)
             candidate.parent.mkdir(parents=True, exist_ok=True)
             adapter.write_text(
@@ -763,8 +919,14 @@ class AdapterTests(unittest.TestCase):
                 ),
                 encoding="utf-8",
             )
-            candidate.write_text("bound-schema", encoding="utf-8")
-            judge.write_text("judge-schema", encoding="utf-8")
+            for index, dependency in enumerate(
+                    self.module.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES):
+                dependency_path = project / dependency
+                dependency_path.parent.mkdir(parents=True, exist_ok=True)
+                dependency_path.write_text(
+                    "bound-schema" if index == 0 else "bound-dependency-%d" % index,
+                    encoding="utf-8",
+                )
             with mock.patch.object(self.module, "ROOT", project):
                 command, identity, snapshots = self.module._bind_adapter_command_details(
                     [self.module.sys.executable, self.module.OFFICIAL_PROJECT_ADAPTER_REF],

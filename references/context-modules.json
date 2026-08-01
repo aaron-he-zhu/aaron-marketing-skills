@@ -1,0 +1,352 @@
+{
+  "$schema": "./context-modules.schema.json",
+  "consumer_order": [
+    "controller",
+    "model",
+    "tool"
+  ],
+  "exclusive_groups": {
+    "model-policy-representation": {
+      "consumer": "model",
+      "selection": "exactly-one-primary-per-applicable-host-and-prompt-profile"
+    },
+    "model-skill-representation": {
+      "consumer": "model",
+      "selection": "exactly-one-primary-per-applicable-host-and-prompt-profile"
+    }
+  },
+  "host_profile_order": [
+    "standalone-skill-host",
+    "generic-shared-root-host",
+    "claude-code-plugin-host"
+  ],
+  "load_policy_order": [
+    "always",
+    "activation",
+    "conditional",
+    "lookup-only",
+    "fallback"
+  ],
+  "modules": [
+    {
+      "condition_code": null,
+      "consumer": "controller",
+      "exclusive_group": null,
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "activation",
+      "materialization": "body",
+      "module_id": "controller-machine-contract",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "machine-contract"
+    },
+    {
+      "condition_code": null,
+      "consumer": "controller",
+      "exclusive_group": null,
+      "host_profiles": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "activation",
+      "materialization": "metadata",
+      "module_id": "controller-skill-identity",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "skill-definition"
+    },
+    {
+      "condition_code": null,
+      "consumer": "controller",
+      "exclusive_group": null,
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "always",
+      "materialization": "body",
+      "module_id": "controller-shared-contract",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "shared-skill-contract"
+    },
+    {
+      "condition_code": "audit-or-release-verification",
+      "consumer": "controller",
+      "exclusive_group": null,
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "lookup-only",
+      "materialization": "metadata",
+      "module_id": "controller-authored-reference-index",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "authored-reference"
+    },
+    {
+      "condition_code": null,
+      "consumer": "controller",
+      "exclusive_group": null,
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "activation",
+      "materialization": "metadata",
+      "module_id": "controller-capsule-provenance",
+      "prompt_profiles": [
+        "lean"
+      ],
+      "source_role": "skill-capsule"
+    },
+    {
+      "condition_code": null,
+      "consumer": "model",
+      "exclusive_group": "model-skill-representation",
+      "host_profiles": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "activation",
+      "materialization": "body",
+      "module_id": "model-skill-explicit",
+      "prompt_profiles": [
+        "explicit"
+      ],
+      "source_role": "skill-definition"
+    },
+    {
+      "condition_code": null,
+      "consumer": "model",
+      "exclusive_group": "model-skill-representation",
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "activation",
+      "materialization": "body",
+      "module_id": "model-skill-balanced-full",
+      "prompt_profiles": [
+        "balanced"
+      ],
+      "source_role": "skill-definition"
+    },
+    {
+      "condition_code": null,
+      "consumer": "model",
+      "exclusive_group": "model-skill-representation",
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "activation",
+      "materialization": "body",
+      "module_id": "model-skill-capsule",
+      "prompt_profiles": [
+        "lean"
+      ],
+      "source_role": "skill-capsule"
+    },
+    {
+      "condition_code": null,
+      "consumer": "model",
+      "exclusive_group": "model-policy-representation",
+      "host_profiles": [
+        "standalone-skill-host"
+      ],
+      "load_policy": "always",
+      "materialization": "body",
+      "module_id": "model-policy-standalone-embedded",
+      "prompt_profiles": [
+        "explicit"
+      ],
+      "source_role": "skill-definition"
+    },
+    {
+      "condition_code": null,
+      "consumer": "model",
+      "exclusive_group": "model-policy-representation",
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "always",
+      "materialization": "body",
+      "module_id": "model-policy-explicit",
+      "prompt_profiles": [
+        "explicit"
+      ],
+      "source_role": "shared-skill-contract"
+    },
+    {
+      "condition_code": null,
+      "consumer": "model",
+      "exclusive_group": "model-policy-representation",
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "always",
+      "materialization": "body",
+      "module_id": "model-policy-kernel",
+      "prompt_profiles": [
+        "balanced",
+        "lean"
+      ],
+      "source_role": "policy-kernel"
+    },
+    {
+      "condition_code": "declared-runtime-read",
+      "consumer": "model",
+      "exclusive_group": null,
+      "host_profiles": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "conditional",
+      "materialization": "body",
+      "module_id": "model-runtime-read",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "explicit-runtime-read"
+    },
+    {
+      "condition_code": "model-requested-reference",
+      "consumer": "model",
+      "exclusive_group": null,
+      "host_profiles": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "lookup-only",
+      "materialization": "on-demand",
+      "module_id": "model-authored-reference",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "authored-reference"
+    },
+    {
+      "condition_code": "evidence-relevant-to-active-step",
+      "consumer": "model",
+      "exclusive_group": null,
+      "host_profiles": [
+        "standalone-skill-host",
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "conditional",
+      "materialization": "body",
+      "module_id": "model-project-evidence",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "project-evidence"
+    },
+    {
+      "condition_code": "auto-route-selected",
+      "consumer": "model",
+      "exclusive_group": null,
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "conditional",
+      "materialization": "body",
+      "module_id": "model-routing-shard",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "routing-shard"
+    },
+    {
+      "condition_code": "profile-downgraded-to-explicit",
+      "consumer": "model",
+      "exclusive_group": null,
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "fallback",
+      "materialization": "body",
+      "module_id": "model-full-source-safe-fallback",
+      "prompt_profiles": [
+        "balanced",
+        "lean"
+      ],
+      "source_role": "skill-definition"
+    },
+    {
+      "condition_code": "connector-discovery-requested",
+      "consumer": "tool",
+      "exclusive_group": null,
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "lookup-only",
+      "materialization": "on-demand",
+      "module_id": "tool-connector-catalog",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "connector-catalog"
+    },
+    {
+      "condition_code": "connector-invoked",
+      "consumer": "tool",
+      "exclusive_group": null,
+      "host_profiles": [
+        "generic-shared-root-host",
+        "claude-code-plugin-host"
+      ],
+      "load_policy": "conditional",
+      "materialization": "on-demand",
+      "module_id": "tool-connector-implementation",
+      "prompt_profiles": [
+        "explicit",
+        "balanced",
+        "lean"
+      ],
+      "source_role": "connector-implementation"
+    }
+  ],
+  "prompt_profile_order": [
+    "explicit",
+    "balanced",
+    "lean"
+  ],
+  "schema_version": "1.0"
+}

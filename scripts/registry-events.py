@@ -123,7 +123,8 @@ def _load_profile_runtime():
     if spec is None or spec.loader is None:
         raise RegistryError("profile runtime cannot be loaded: %s" % path)
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    source = path.read_bytes()
+    exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
     return module
 
 

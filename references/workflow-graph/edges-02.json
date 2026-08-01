@@ -266,7 +266,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:122",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:130",
       "condition_text": "Brief mismatch: brief-generator",
       "documentation_required": true,
       "exception": {
@@ -298,7 +298,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:125",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:133",
       "condition_text": "Approved asset amplification: content-amplifier",
       "documentation_required": true,
       "exception": null,
@@ -326,7 +326,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:124",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:132",
       "condition_text": "Rights/terms: contract-helper",
       "documentation_required": true,
       "exception": null,
@@ -354,7 +354,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:123",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:131",
       "condition_text": "Claim fix: offer-claims-registry",
       "documentation_required": true,
       "exception": null,
@@ -385,7 +385,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/creator-registry/SKILL.md:78",
+      "condition_source": "protocol/creator-registry/SKILL.md:85",
       "condition_text": "Terms/rights: contract-helper",
       "documentation_required": true,
       "exception": null,
@@ -414,7 +414,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/creator-registry/SKILL.md:77",
+      "condition_source": "protocol/creator-registry/SKILL.md:84",
       "condition_text": "New fit decision: fit-scorer",
       "documentation_required": true,
       "exception": null,
@@ -443,7 +443,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/creator-registry/SKILL.md:80",
+      "condition_source": "protocol/creator-registry/SKILL.md:87",
       "condition_text": "Archive/erase: memory-management",
       "documentation_required": true,
       "exception": null,
@@ -473,7 +473,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/creator-registry/SKILL.md:79",
+      "condition_source": "protocol/creator-registry/SKILL.md:86",
       "condition_text": "Re-engagement: outreach-manager",
       "documentation_required": true,
       "exception": null,
@@ -591,7 +591,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "social/observe/dark-social-attributor/SKILL.md:85",
+      "condition_source": "social/observe/dark-social-attributor/SKILL.md:91",
       "condition_text": "If paid-platform conversion claims disagree with analytics: attribution-reconciler — that reconciliation is its lane, not this skill's.",
       "documentation_required": true,
       "exception": null,
@@ -621,7 +621,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "social/observe/dark-social-attributor/SKILL.md:84",
+      "condition_source": "social/observe/dark-social-attributor/SKILL.md:90",
       "condition_text": "Primary: social-measurement-loop — write the declared method, labels, and caveats into the metric dictionary so every future readout inherits them.",
       "documentation_required": true,
       "exception": null,
@@ -649,7 +649,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "social/observe/dark-social-attributor/SKILL.md:86",
+      "condition_source": "social/observe/dark-social-attributor/SKILL.md:92",
       "condition_text": "If the branded-lift read shows a spike with no known cause: social-pulse-monitor — chase the mention source before attributing it to sharing.",
       "documentation_required": true,
       "exception": null,
@@ -797,7 +797,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:155",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:164",
       "condition_text": "Audit representative content: content-quality-auditor",
       "documentation_required": true,
       "exception": {
@@ -830,7 +830,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:153",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:162",
       "condition_text": "Repair entity state: entity-registry",
       "documentation_required": true,
       "exception": null,
@@ -861,7 +861,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:152",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:161",
       "condition_text": "Investigate links: offsite-signal-analyzer",
       "documentation_required": true,
       "exception": null,
@@ -889,7 +889,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:154",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:163",
       "condition_text": "Verify technical/index state: technical-seo-checker",
       "documentation_required": true,
       "exception": {

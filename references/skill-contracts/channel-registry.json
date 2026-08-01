@@ -11,7 +11,7 @@
           "end_char": 120,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 311,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 122
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "protocol/channel-registry/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713"
+      "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd"
     }
   },
   "context_hints": {
@@ -48,28 +48,28 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
-        "source_line": 55
+        "source_line": 62
       },
       {
         "path": "references/echo-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
-        "source_line": 53
+        "source_line": 60
       },
       {
         "path": "references/registry-event-protocol.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
-        "source_line": 35
+        "source_line": 37
       },
       {
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
-        "source_line": 35
+        "source_line": 38
       }
     ],
     "project_paths": [
@@ -96,7 +96,7 @@
           "end_char": 110,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -114,7 +114,7 @@
           "end_char": 215,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 111
         },
@@ -132,7 +132,7 @@
           "end_char": 322,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 216
         },
@@ -150,7 +150,7 @@
           "end_char": 424,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 323
         },
@@ -165,7 +165,7 @@
     "summary_ref": {
       "path": "protocol/channel-registry/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713"
+      "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -181,8 +181,8 @@
     "name": "channel-registry",
     "path": "protocol/channel-registry/SKILL.md",
     "phase": "protocol",
-    "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
-    "version": "19.0.0"
+    "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<channel or permission aggregate-id, transition, or proposal review>",
@@ -196,7 +196,7 @@
           "end_char": 81,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -208,7 +208,7 @@
     "source": {
       "path": "protocol/channel-registry/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713"
+      "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd"
     }
   },
   "output_contract": {
@@ -223,7 +223,7 @@
           "end_char": 43,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
           "end_char": 104,
           "path": "protocol/channel-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713",
+          "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd",
           "span_basis": "field-text",
           "start_char": 45
         },
@@ -250,7 +250,7 @@
     "source": {
       "path": "protocol/channel-registry/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713"
+      "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd"
     },
     "summary": "channel events through `registry-events.py`; dossiers and standing Markdown files are regenerated views.",
     "summary_source": "writes-fallback",
@@ -261,12 +261,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -275,7 +275,7 @@
     "source": {
       "path": "protocol/channel-registry/SKILL.md",
       "section": "frontmatter",
-      "sha256": "c7c4af6835c3155137ec2b3f7f6d146d0c3b8e93edb26df4bb1b4a513d996713"
+      "sha256": "260781c110e5b8ed9819932bc6a4d47b51efb776bcf18a72c726148b71dd49cd"
     },
     "trigger_phrases": [
       "Use when recording/querying channel handle/state/governance/cadence/voice pointers, UGC permissions, advocate opt-in, or accepting pending social activity/incident proposals."

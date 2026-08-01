@@ -8,613 +8,613 @@
   "contracts": [
     {
       "contract_ref": "references/skill-contracts/narrative-baseline-mapper.json",
-      "contract_sha256": "f47a539b38e9f2bee1a697cb34e633c48567a24666a896ca7b7fae03491d94ec",
+      "contract_sha256": "3f2a976bf873bad5200caea342c6499c9931389154771f4047e2cea626066ebd",
       "skill": "narrative-baseline-mapper"
     },
     {
       "contract_ref": "references/skill-contracts/category-narrative-mapper.json",
-      "contract_sha256": "acc4dfab82c33da419625c11b7f863d4274373113f794589a10b63f50a8538fe",
+      "contract_sha256": "ec3905c9f45ee646eed04c31df79dfa33100bf10ab538a060adf5b0745b65825",
       "skill": "category-narrative-mapper"
     },
     {
       "contract_ref": "references/skill-contracts/audience-belief-mapper.json",
-      "contract_sha256": "694215bd5ef9c1a8d1a5ecc6f5a0f8f44840156c0e50ac83d755bec5e94a5f85",
+      "contract_sha256": "90e8b9925dca6157d374f02bd11fd1292be71812033a83d8d9dcffc984b94998",
       "skill": "audience-belief-mapper"
     },
     {
       "contract_ref": "references/skill-contracts/positioning-truth-tracer.json",
-      "contract_sha256": "d7e8184371d88fb3115aea52bbef408271df04f04007d839e6ac71c783f0587e",
+      "contract_sha256": "510cca788ba29c944d8f3262109e4536f6c66d00f2ae639ea8aa8c0de143504d",
       "skill": "positioning-truth-tracer"
     },
     {
       "contract_ref": "references/skill-contracts/strategic-narrative-designer.json",
-      "contract_sha256": "76ec6f1ea7f6d5161010a8339d50169dd308006f94f64edb18833a780f265b3d",
+      "contract_sha256": "7f3ee5fc60f88a10000ed6a7aacc114926c7e3e9e35ce47903d6db8cddabb9a5",
       "skill": "strategic-narrative-designer"
     },
     {
       "contract_ref": "references/skill-contracts/message-system-architect.json",
-      "contract_sha256": "5f59a7950afc4c2840f77157775a10d0c9d16ec45120d1f7d4d0e1e0396cd425",
+      "contract_sha256": "23f48cdbaf637ec7e94280863eaa4072c19f3c82015b31bc13f6522f1cd868f8",
       "skill": "message-system-architect"
     },
     {
       "contract_ref": "references/skill-contracts/brand-language-codifier.json",
-      "contract_sha256": "0f3f7ecc76f6dc7820715e0cfe03b678de50e08b3650ea587c7a40e3ef751452",
+      "contract_sha256": "97ff29e985dbb9b8b4a13319c016109aa89c85f5ebd6b49acd7c411635e36884",
       "skill": "brand-language-codifier"
     },
     {
       "contract_ref": "references/skill-contracts/story-bank-builder.json",
-      "contract_sha256": "105e2c8737211afdba8d174c82f7eb3da338b8012415214e6a4693fd78a6dea4",
+      "contract_sha256": "5661a43a4e1c4201de97cab3d25ee90b781d5f4b938e406b68b9c18b4cfe6103",
       "skill": "story-bank-builder"
     },
     {
       "contract_ref": "references/skill-contracts/narrative-cascade-planner.json",
-      "contract_sha256": "ae23dbcff817811a8af4e8a06a0cdffbea1e730c6d9ed7211888e57a99a5d8df",
+      "contract_sha256": "1332ff5cddf30fc578aba908615f3d563d4d10bf79d0a799a88502948665ca67",
       "skill": "narrative-cascade-planner"
     },
     {
       "contract_ref": "references/skill-contracts/pitch-narrative-builder.json",
-      "contract_sha256": "30b539a8322851c05ae63de587e76e8e395adeba91b4f9e3a30de153cbf675ab",
+      "contract_sha256": "8a93c4abd941c7110d7fe1a9437b382226ad6025a670c211fdd01263375aa8e6",
       "skill": "pitch-narrative-builder"
     },
     {
       "contract_ref": "references/skill-contracts/narrative-enablement-kit.json",
-      "contract_sha256": "cd86def1d421a38dca1b03b587893a6051bcae5c70db80347cc1021a2664b1a8",
+      "contract_sha256": "c09e37231cfe435ac3f783924cbd3e03d5522e7456caa183b9ef30ad09ed7edd",
       "skill": "narrative-enablement-kit"
     },
     {
       "contract_ref": "references/skill-contracts/proof-point-packager.json",
-      "contract_sha256": "87006cd2bdd6aa89b4673b9f1aebf40b46814ae17a05278d46c2be1e6316e04d",
+      "contract_sha256": "7b16d5d9c6e5b900c5a826fb1d31c78eea8014d9ea7e3b521aaaf3b68df18e53",
       "skill": "proof-point-packager"
     },
     {
       "contract_ref": "references/skill-contracts/narrative-quality-auditor.json",
-      "contract_sha256": "29cad1bacc2b6898f6b8b7e8252df8d52d1c31d727401366e2ea5947373dda7a",
+      "contract_sha256": "f1f05c30eb78ec98d73814e733f368a1557b5ecae988f20925884c54d24575a6",
       "skill": "narrative-quality-auditor"
     },
     {
       "contract_ref": "references/skill-contracts/message-test-designer.json",
-      "contract_sha256": "a852889afabd41926b533d2721f802a7593e976d9dd5d2de9a736c91b386536a",
+      "contract_sha256": "f6a94bd8b00adfd2289c4e97b000b416cc987c0c67bab59efacccb0f52bb9495",
       "skill": "message-test-designer"
     },
     {
       "contract_ref": "references/skill-contracts/narrative-resonance-monitor.json",
-      "contract_sha256": "9f28e0b1f22f9d61b2a56f4055166fdc59bdbb4b62c28305b8187c1972e8b6a9",
+      "contract_sha256": "c2ff15a98daf67663bd2757ebf444a57121d21ea20d6ec05142eb2ceba586dc5",
       "skill": "narrative-resonance-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/narrative-drift-monitor.json",
-      "contract_sha256": "f8b7c95a0ac8ab721c485a782f2920fca1ccc5d789d20e43b09610589ad51411",
+      "contract_sha256": "2f2cea20d13c652187f50d936b8dac5d1100d3d8afccecef8517d37902bd4247",
       "skill": "narrative-drift-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/keyword-research.json",
-      "contract_sha256": "3976d4abcd16e4ee3aa40732111431be2d1405a65da60e36d4e1826fdb49e9de",
+      "contract_sha256": "1ce46c187786eaa511a8925daa5acf167a6c461efc368d2c52339299c3f341b0",
       "skill": "keyword-research"
     },
     {
       "contract_ref": "references/skill-contracts/competitor-analysis.json",
-      "contract_sha256": "627fea14ae10ebbd9981c29fa7be4e27cb307596700b186693e6aa34a478faab",
+      "contract_sha256": "d1969f0f63fdf47122d3cff67abc5908e350a09241d8b9f51bc1898acb66b8d9",
       "skill": "competitor-analysis"
     },
     {
       "contract_ref": "references/skill-contracts/serp-analysis.json",
-      "contract_sha256": "8dec3dd8eff4f59b8d22fd1f91af2e1aebe8592952500d43a2fe75f74760f625",
+      "contract_sha256": "dd2fb60bc538b38059600e5ee3c73bc44695d2b1792216efd37bb49a3338e41c",
       "skill": "serp-analysis"
     },
     {
       "contract_ref": "references/skill-contracts/content-gap-analysis.json",
-      "contract_sha256": "2e1f0fce788a52bbfc4f67c71e39cea0415ecf756514d68e57c65201155b9e31",
+      "contract_sha256": "7ae4a729954858677fa1015614611afe2bc23a243863c7bcb54354b1179ffe12",
       "skill": "content-gap-analysis"
     },
     {
       "contract_ref": "references/skill-contracts/content-writer.json",
-      "contract_sha256": "f04ea9b72ba174a5444b79f525dd0e10172e4b19f8b6ed308de8d2f0298f9282",
+      "contract_sha256": "e31035f7443fe222faef7332bb3d7cfc367c2b5185a4466127d453fa1f1f0ad0",
       "skill": "content-writer"
     },
     {
       "contract_ref": "references/skill-contracts/geo-content-optimizer.json",
-      "contract_sha256": "9a6043ba345ded27eb9ba045993837125c3d60dd20090c57cd8e36cfd8449e80",
+      "contract_sha256": "a0ce427d9b860ddbb1e37690aab561d03474587a27a7045956755336b33f7532",
       "skill": "geo-content-optimizer"
     },
     {
       "contract_ref": "references/skill-contracts/serp-markup-builder.json",
-      "contract_sha256": "fadfcb149189330bca0679aeaf690efbe35d99c58cdfdb1bc2603639fbe8559b",
+      "contract_sha256": "9ae69287baf85423143e5ed04540f1d12e9330fe5404bcb23433e0044663acd2",
       "skill": "serp-markup-builder"
     },
     {
       "contract_ref": "references/skill-contracts/page-play-builder.json",
-      "contract_sha256": "e13f860755eae3bc4afe15eb84458ddac599fdb128106f953a4bd47373059fa3",
+      "contract_sha256": "42a8b2f23f1327db9de4f21b10cf4a9a59a39aefab4771bf1f12b26bfe84c19e",
       "skill": "page-play-builder"
     },
     {
       "contract_ref": "references/skill-contracts/content-quality-auditor.json",
-      "contract_sha256": "fa8ae9110b113e7a7509f7a928a86bb7992c9dec062a00e2e84d710ce9812e11",
+      "contract_sha256": "8e492de25cfacd8b5aa01f468dcf042d83c5f71bf7e4500c5d7ef3c6d3337aa8",
       "skill": "content-quality-auditor"
     },
     {
       "contract_ref": "references/skill-contracts/technical-seo-checker.json",
-      "contract_sha256": "6e6d50c9ec2ecd89867ff751a4b9acef40048949958c07275e38992c057baf1a",
+      "contract_sha256": "6b8fb23adf6e3db67ed1edb4b235c5af502058660522dd773002cbf9b9cc158c",
       "skill": "technical-seo-checker"
     },
     {
       "contract_ref": "references/skill-contracts/on-page-seo-checker.json",
-      "contract_sha256": "b0104906d44a34b57ee646a71b68dd20ca652dab37b4ca6c8e2bb316c7700c45",
+      "contract_sha256": "c9ea591cfbbd2cb4c3a4476b5f0e891dcf210c673c5e41a839f89a9d4b959cb7",
       "skill": "on-page-seo-checker"
     },
     {
       "contract_ref": "references/skill-contracts/site-structure-optimizer.json",
-      "contract_sha256": "80b772900d05e1d052ce9a756f60fa42352eeabb49faae16575931bea52a0340",
+      "contract_sha256": "281f258d8688a289cea743f9c27989900bafcf624665107a41e767f852c1a86d",
       "skill": "site-structure-optimizer"
     },
     {
       "contract_ref": "references/skill-contracts/domain-authority-auditor.json",
-      "contract_sha256": "3674c204325331ead54542af9cc4f206b0651369f84c7852d4479f6e36ae8c7c",
+      "contract_sha256": "0869862f68c26497181e0fd5a283f007db449977dfd685514659ebb03433ddcf",
       "skill": "domain-authority-auditor"
     },
     {
       "contract_ref": "references/skill-contracts/rank-tracker.json",
-      "contract_sha256": "139262d9ca118e6b08489f9b585e303081436aa060a95d3e6d1ec38529c3c872",
+      "contract_sha256": "b15795b76210b7193637d59c9b830d6fe3087cffa87f70c82e288c7a2f693777",
       "skill": "rank-tracker"
     },
     {
       "contract_ref": "references/skill-contracts/performance-monitor.json",
-      "contract_sha256": "e9e126285d932e072be6c5f5aa5a90843e841cf276e65da473e1fec3a0fa58dd",
+      "contract_sha256": "23bc45990c7e59153631d1c949eadacaf9ead99dad952d01b0ccc097f2792915",
       "skill": "performance-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/offsite-signal-analyzer.json",
-      "contract_sha256": "e8cef1485c5832986bb274e2a6960db21591312cf9bea1c71480499ca73ea2ba",
+      "contract_sha256": "1fc3776339473552c94c5febf3ccfd1842a3a7bb964c602a4e4ef8852ebf39d7",
       "skill": "offsite-signal-analyzer"
     },
     {
       "contract_ref": "references/skill-contracts/channel-portfolio-planner.json",
-      "contract_sha256": "c50ddd6ffd1b7285cbdafc265f5bbdc608a84cfacc8d1362ce81f8232e9ddd21",
+      "contract_sha256": "4170220724acfe5debe34e57f370f841b10b69ee29c296c30c7fc55d28793e4d",
       "skill": "channel-portfolio-planner"
     },
     {
       "contract_ref": "references/skill-contracts/voice-dossier-builder.json",
-      "contract_sha256": "155c83808b9f2ce270a36af85f143d6050cbd933814f0b007d7dce463fd6001a",
+      "contract_sha256": "c6d42b40d752396ef9b8d5bc0a68d2b02e13ce4aaacae8422dcc23dc56f2eeaa",
       "skill": "voice-dossier-builder"
     },
     {
       "contract_ref": "references/skill-contracts/platform-norm-profiler.json",
-      "contract_sha256": "4ec28a1163b1cdc901d78164ab2c04af5b2456260ed16bda5275c55edf652978",
+      "contract_sha256": "29663f3272f56c0c0c4c287fe02b56dc4c69c40ce5be3bc2107982e177d55f31",
       "skill": "platform-norm-profiler"
     },
     {
       "contract_ref": "references/skill-contracts/participation-warmup-planner.json",
-      "contract_sha256": "7b71c7873648b021ba8a8ee9eae3d77715c504b042604a63f767ead433f0b943",
+      "contract_sha256": "50c98ed2d0d81270c92e29b7484d9b2947bfa25e46f7babb8c90b17aee725dca",
       "skill": "participation-warmup-planner"
     },
     {
       "contract_ref": "references/skill-contracts/social-calendar-builder.json",
-      "contract_sha256": "dd28faa78e94ddfacf551e096ffa7179bc909c00d95348a20eb5c2e84807de64",
+      "contract_sha256": "ff6e76af70d78d14c8b92f22d44348eab8b4c3ba1cf174d680fcfdd8c9cec8d7",
       "skill": "social-calendar-builder"
     },
     {
       "contract_ref": "references/skill-contracts/social-creative-builder.json",
-      "contract_sha256": "3e8023e994d4e568a8b0577d52ae484ea0d0e30e89e772ce1363b11d9e39b756",
+      "contract_sha256": "91b0654273b6296a32ab1eff6cb5cd39567bf0a0df3d00f0b6961ad7d7c88e1b",
       "skill": "social-creative-builder"
     },
     {
       "contract_ref": "references/skill-contracts/short-video-scripter.json",
-      "contract_sha256": "2eea92715c904c9558fb2e66011180e33357197f14cd7ad8e45d9dc8c531bc66",
+      "contract_sha256": "60510f70fec81c5ba7bc0188e740978c3dbf232abeb4272a7023ac268507bb71",
       "skill": "short-video-scripter"
     },
     {
       "contract_ref": "references/skill-contracts/advocacy-program-designer.json",
-      "contract_sha256": "465840cb54a108f45d7b903a46fe3162de0365a2dca0487af7647a1ac3e58e8e",
+      "contract_sha256": "9c5368e867178bebdb950c3a3280bf013666de303fd83e5f6bfa812d20448cfd",
       "skill": "advocacy-program-designer"
     },
     {
       "contract_ref": "references/skill-contracts/social-quality-auditor.json",
-      "contract_sha256": "46bfb7e553281837edfe26e5b62e452791d6a51a8472b22aed4fae2e1c17bae2",
+      "contract_sha256": "2607e2c2af843f991ce501ae6af87f1dff291b3dbf502acbe20fadf7a88cd908",
       "skill": "social-quality-auditor"
     },
     {
       "contract_ref": "references/skill-contracts/engagement-inbox-manager.json",
-      "contract_sha256": "16680e80fd9b904205600beea7f34363d14dedbb2a2a06efdc07478b07da3d52",
+      "contract_sha256": "3b2c5e0b8b3c5da243d4aeaed7546b828265cf3b7bffc44dfeff67af99329b46",
       "skill": "engagement-inbox-manager"
     },
     {
       "contract_ref": "references/skill-contracts/social-selling-planner.json",
-      "contract_sha256": "7cccbf8d3032893bb112e33a939ab1429d7ebc74f66df72ca5c0c544655ea43f",
+      "contract_sha256": "3b69f3e78d451531088cf08add9a2ce8de6e1b849a0597fa7f6e5d041a754635",
       "skill": "social-selling-planner"
     },
     {
       "contract_ref": "references/skill-contracts/crisis-response-planner.json",
-      "contract_sha256": "6e9bb91f0870077b6d7052a47b6000faf99e45a61500017caba838753ae2d286",
+      "contract_sha256": "86db9e2d51b1d5f12009e57f0db7c9c0ec07327ac889242d7269938b3b12a0f0",
       "skill": "crisis-response-planner"
     },
     {
       "contract_ref": "references/skill-contracts/social-pulse-monitor.json",
-      "contract_sha256": "caabc8036961fe06057133c79fc35c245a7f6732633b78cd0acf91b3efa28526",
+      "contract_sha256": "381656ee78349867d59c3eda3a056446750c36ccb8e210cace35b24a0473fb76",
       "skill": "social-pulse-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/share-of-voice-tracker.json",
-      "contract_sha256": "7b2c30417f0e60ad4f73a887829077a026278c4b97ffad9da560d73aa65a6c0f",
+      "contract_sha256": "049dde8c4bd37ef610076fa8f9e2aea52a6762fb2b490dca3aed50c2021cf3dd",
       "skill": "share-of-voice-tracker"
     },
     {
       "contract_ref": "references/skill-contracts/dark-social-attributor.json",
-      "contract_sha256": "aab3ab9b609d5e3c4aec42e90ea8f674a0b38104da42967665005fd3b9b3cbab",
+      "contract_sha256": "94bffbdc3a58d8aa08090909fbdae13cdab9ba7a976b04a8fffaee53bf13689a",
       "skill": "dark-social-attributor"
     },
     {
       "contract_ref": "references/skill-contracts/social-measurement-loop.json",
-      "contract_sha256": "7d37902d296e48e20468cd3384677d0ff244cb6cd79e13e1d36c8dfb83b2632d",
+      "contract_sha256": "5f2965f230fcfa139cad5313408b7de62c1e391fe5ca5b04e50ffc52470ebd19",
       "skill": "social-measurement-loop"
     },
     {
       "contract_ref": "references/skill-contracts/deliverability-qa.json",
-      "contract_sha256": "3f83ab4c4ffc7b36ee6434eb41c8bc944af98d050d54371b780f154c3d2466e6",
+      "contract_sha256": "4a854cb5bbbb0d9fa844be55a807c537d77f49b152f8f4158c484db824bc1872",
       "skill": "deliverability-qa"
     },
     {
       "contract_ref": "references/skill-contracts/list-segment-builder.json",
-      "contract_sha256": "6c6dda34eaf9b06c52c06af7fd0427568e3e5e0ae854c0f5ece7564976b070a8",
+      "contract_sha256": "6c8bfd2b736de796b5bfbd1f420a73ae5e2974da7645c6a9cdb2105a05bfc1c2",
       "skill": "list-segment-builder"
     },
     {
       "contract_ref": "references/skill-contracts/list-growth-designer.json",
-      "contract_sha256": "40800bc243334d453510961107bba79f1c2cfd0771efce2660d356bc53dfc940",
+      "contract_sha256": "02bdfe7e46404738e7de67448b197ddec6ea91a67e1eb75465ac0deac70ed8d2",
       "skill": "list-growth-designer"
     },
     {
       "contract_ref": "references/skill-contracts/list-hygiene-monitor.json",
-      "contract_sha256": "2c4349dcb429814e0baa3a6783ada4e58180c673b8bcf532587551709f654d74",
+      "contract_sha256": "0a79e9ee0fc15864ac639861924c65de7c4baebc400b74dcfbca196173ac5452",
       "skill": "list-hygiene-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/email-creative-builder.json",
-      "contract_sha256": "6c84f6efec0e573ecb9b9111379bdfd40b26551e86307a1ce461a8cb412848ae",
+      "contract_sha256": "35e6eb88f406632e8f6ee6a36eece22ed102887dc90174fb694f28ebb3c4a410",
       "skill": "email-creative-builder"
     },
     {
       "contract_ref": "references/skill-contracts/subject-line-lab.json",
-      "contract_sha256": "4a328c5a79083a897caf1611df6e2978148a50fe9f999e14151164ca9dcbfb88",
+      "contract_sha256": "77e7603adda3496769719a6676bd420379fc1974270f5005fba72367f2ecef1b",
       "skill": "subject-line-lab"
     },
     {
       "contract_ref": "references/skill-contracts/email-render-builder.json",
-      "contract_sha256": "a2ddc2a50250f6482623ac0ad97436927ab8ddc7c5cf89fce08e41e4b28a2139",
+      "contract_sha256": "ac7f291568be05c4a4f96d227f4152e2dad3621383935ce8758f413bbc1b9b73",
       "skill": "email-render-builder"
     },
     {
       "contract_ref": "references/skill-contracts/dynamic-content-personalizer.json",
-      "contract_sha256": "15c64daf9ea3296e707fa267a510c8c778ce08c5ed7d015e5a7b080d07198934",
+      "contract_sha256": "b859c17906922256bf561b5e1b2bb64a9279fe9f4ddeeaf20d48c8541bfabc2b",
       "skill": "dynamic-content-personalizer"
     },
     {
       "contract_ref": "references/skill-contracts/email-sequence-designer.json",
-      "contract_sha256": "a404f8c6c94b51a881873b70026e45113bdfbfad576f7ffeb7cf15c0baf14777",
+      "contract_sha256": "ca6abd2ccfe32a135f8a009c21f6a7ced1a9d3290d6d44a8634981b8b9d54936",
       "skill": "email-sequence-designer"
     },
     {
       "contract_ref": "references/skill-contracts/newsletter-monetization-planner.json",
-      "contract_sha256": "34a7c18139e09018018770eee06744eb5e760892e1efbff4cc2d9530678f4806",
+      "contract_sha256": "4e98484d5d99bff410d61fd5f37e7b75c9036d3a2715ed3b33b23b713298bf44",
       "skill": "newsletter-monetization-planner"
     },
     {
       "contract_ref": "references/skill-contracts/preference-frequency-manager.json",
-      "contract_sha256": "7c668f32ea2748342b252387b6e4400b4f07f5052ca88fa6ea0550bcef39a13d",
+      "contract_sha256": "9e0384cd5bf485faaf0ecb90672f7ebdc4b4985b176a8f88fa44f82b6b5d56bc",
       "skill": "preference-frequency-manager"
     },
     {
       "contract_ref": "references/skill-contracts/reactivation-specialist.json",
-      "contract_sha256": "a05fcc5e703d43ecfd447756282bfbe2f0b6b576f01d05450e3b561674f18c5f",
+      "contract_sha256": "8da5b369e15f86a77cb1b8db60dcd30938a92c3e6c56a661ca4afe2e22b3b54c",
       "skill": "reactivation-specialist"
     },
     {
       "contract_ref": "references/skill-contracts/email-quality-auditor.json",
-      "contract_sha256": "42801014c142b7819d663df13a400ab504ace7ca7a5f30f65d5364354398165b",
+      "contract_sha256": "959e1037a067ba03a2b6d2fd5f00b57fd9794b041dc4aae092db9d491d012f29",
       "skill": "email-quality-auditor"
     },
     {
       "contract_ref": "references/skill-contracts/send-experiment-designer.json",
-      "contract_sha256": "80f532727c8905d8500a3281b2a10213705472c6ef29af82bd80337192f59d26",
+      "contract_sha256": "06188862abca1ea3d9ae0e5a541dfd013d28dfe3f6c435329d0dcbf21575fb59",
       "skill": "send-experiment-designer"
     },
     {
       "contract_ref": "references/skill-contracts/inbox-placement-monitor.json",
-      "contract_sha256": "e6d785c261595db75f6ef64355d9283dbe5cf64be877e7c655bca16f5fa095f5",
+      "contract_sha256": "c24f27ea591083446515225136e6decb034b6d5613af450d8b40f3be8c360031",
       "skill": "inbox-placement-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/cold-outbound-sequencer.json",
-      "contract_sha256": "070e3138b7ad98ad99e85f5c4c85592edb4b289921742a5fd4c97e7a442844c9",
+      "contract_sha256": "e7d7bd1bf3adf32c737ec2d5915b8c0dbb6a685dfcf1442e237019f57168dfcb",
       "skill": "cold-outbound-sequencer"
     },
     {
       "contract_ref": "references/skill-contracts/campaign-architect.json",
-      "contract_sha256": "f9e9af035a94ba9cccef9e5536d3acf4299ac76add33b327cce684d15913d64e",
+      "contract_sha256": "11b2e3d7a20f91a476ee19d11f1cd912fd91f661564aa71c0a4918630e8daf59",
       "skill": "campaign-architect"
     },
     {
       "contract_ref": "references/skill-contracts/audience-segment-builder.json",
-      "contract_sha256": "2871258e7598ebc9ebd9bcaabb1eb02b45b091b1652248434a9ce5c80cb07838",
+      "contract_sha256": "c11c45c98e1b6b331919088883ca958ef23af5690e2f3dc13b65f8558a1381d4",
       "skill": "audience-segment-builder"
     },
     {
       "contract_ref": "references/skill-contracts/search-term-miner.json",
-      "contract_sha256": "550be51c8f26b4035b27aaa36fc5717c92607899ab018f372707507d4899f28a",
+      "contract_sha256": "f689e36ce2f87c4087296c012bed5cf1bf989055334cdbb569afbe2f2cce810c",
       "skill": "search-term-miner"
     },
     {
       "contract_ref": "references/skill-contracts/product-feed-optimizer.json",
-      "contract_sha256": "d54a47b75ebc4183b8dadffb65cae18b84d782afa38d7be725c412c0acadc080",
+      "contract_sha256": "39cc4b65779227c0162b1d6b886329ec69918b7133051b54ad29e0d1d198de49",
       "skill": "product-feed-optimizer"
     },
     {
       "contract_ref": "references/skill-contracts/ad-creative-builder.json",
-      "contract_sha256": "2601ae99a4acc7ec9ccab33dcf3a2e178f1aac3b85d9021558870a6c189df547",
+      "contract_sha256": "69d3736f55266bb2c48eae70b03413a992fdcbda611b272a0ee31290ddcbc439",
       "skill": "ad-creative-builder"
     },
     {
       "contract_ref": "references/skill-contracts/ad-test-designer.json",
-      "contract_sha256": "730d623a686ec733dee121baa1f7b0df14a968b51a9cb3b90cb77b4a33c905d4",
+      "contract_sha256": "85b5bd19d47ccdd7cccdfdd67c3b623cb7182121e039ffe6728e02757516a5f4",
       "skill": "ad-test-designer"
     },
     {
       "contract_ref": "references/skill-contracts/bid-strategy-planner.json",
-      "contract_sha256": "1e5afa9bcc4428766bf715b28a42a8a0300fc6b8f8c0813e6ab7a1cc4786430e",
+      "contract_sha256": "28d4a9ab0daa1c313f984c707e207ecd2a77fddc7a8f8e0248a64e23d887581e",
       "skill": "bid-strategy-planner"
     },
     {
       "contract_ref": "references/skill-contracts/landing-experience-checker.json",
-      "contract_sha256": "ff9663ec858d9446ed0d0a5e1b0848bddbf1ae95d64308ff41bd4fe04bfcf783",
+      "contract_sha256": "7b88d8a609415c4f1898fd8ef3f9a75cc657320ca86bd2a2692760a69fb037b9",
       "skill": "landing-experience-checker"
     },
     {
       "contract_ref": "references/skill-contracts/ad-account-auditor.json",
-      "contract_sha256": "a8ac8ce2a0bb08074e00080be2cf89379b44726ef2e4d8723df72994d7ebed17",
+      "contract_sha256": "4039327477bff03d432602c17a2a1129d44ab0e7ad5b053850fa588155e64a9b",
       "skill": "ad-account-auditor"
     },
     {
       "contract_ref": "references/skill-contracts/conversion-signal-qa.json",
-      "contract_sha256": "da775c001766d55a211872bdb3af38c55df92828c0972e8cfd72f51dfc06d6a6",
+      "contract_sha256": "223220ab3a312c9be6d522b08712c36db8e7021e0197a162ec1d06b2b2f70a7a",
       "skill": "conversion-signal-qa"
     },
     {
       "contract_ref": "references/skill-contracts/placement-exclusion-manager.json",
-      "contract_sha256": "aa73c9de2c4b989e213edd584e52d29718973272edb0f42e7ffc0e8a744d4088",
+      "contract_sha256": "95991f4c0a056678f9345f781dc210dc71627ff110c852e148c4de045b9a0ca0",
       "skill": "placement-exclusion-manager"
     },
     {
       "contract_ref": "references/skill-contracts/conversion-value-mapper.json",
-      "contract_sha256": "4b68b424f5ce764b1509351a5096de50136ab2b76da31de1b1861428cc6a88fc",
+      "contract_sha256": "adf8ee1653629d1a56732293574d3aaccdc57449dd1eb0c6ab8d5c7fdd1baa56",
       "skill": "conversion-value-mapper"
     },
     {
       "contract_ref": "references/skill-contracts/paid-measurement-loop.json",
-      "contract_sha256": "6bdef90372b1b43a9d0cdff01cd9c5665c9b7a605e03c16aca33e4a80ce0d43c",
+      "contract_sha256": "d3685eac8d34ce104175e676907a3edad46637efca4567731d8b51fdd318e779",
       "skill": "paid-measurement-loop"
     },
     {
       "contract_ref": "references/skill-contracts/attribution-reconciler.json",
-      "contract_sha256": "886ec140d718cd0f9d69f38420bfbcaefdb7c288386f49dd1f94e9efd3e6a8b6",
+      "contract_sha256": "61e892ba230db79f2726f5205e8d3ef9f89101e864ee4f735adffadde9cdd9ed",
       "skill": "attribution-reconciler"
     },
     {
       "contract_ref": "references/skill-contracts/budget-pacing-monitor.json",
-      "contract_sha256": "4afc54cb5148b3ae1f85e4042101cb1ab8e779fc7213098deed4d2a1ca804015",
+      "contract_sha256": "77ad22b734569871d213d03798d276589f651e86b9a7c0279027a8fabafb3218",
       "skill": "budget-pacing-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/fatigue-frequency-manager.json",
-      "contract_sha256": "f49c131eb04968e18edba3db53be8bc0511a1d74ec5dba56ef8dde6b2732e575",
+      "contract_sha256": "6e3ab7d70639c056b5f66fcef64729d5371e1d0053785a637d66c499d76af93e",
       "skill": "fatigue-frequency-manager"
     },
     {
       "contract_ref": "references/skill-contracts/audience-mapper.json",
-      "contract_sha256": "787bd19f907f7ec645d3dfae8869438f977a2eb43db0b20e97e240408f491e8f",
+      "contract_sha256": "66bf586007569255b0bd0bf26217ad8571fd2cfe9d93339b5587eba334332917",
       "skill": "audience-mapper"
     },
     {
       "contract_ref": "references/skill-contracts/trend-spotter.json",
-      "contract_sha256": "6af4974344e2fa40e610556bde93bcfa3496a507a2ed5586f161ee4012a45ee6",
+      "contract_sha256": "c25459fb43a5701819626d118fb94330e10927217145803cf719eea19631a05d",
       "skill": "trend-spotter"
     },
     {
       "contract_ref": "references/skill-contracts/influencer-discovery.json",
-      "contract_sha256": "955aba12965d993d6cd19d4e77b9aaea7cc9e6090cd4a51b92d5c11dad428b3e",
+      "contract_sha256": "faf8354cc04589bbaee96e3886b6b385a9d6a94831a3bd65c6351239b7003e55",
       "skill": "influencer-discovery"
     },
     {
       "contract_ref": "references/skill-contracts/fit-scorer.json",
-      "contract_sha256": "a575510051be5377a7d6ae6a70754921ddd6ca1b23ef0bc3cdbdce43cc354bc2",
+      "contract_sha256": "a28764a9642fd484b4b7912e21d1f23fff2b1c280f0b80099f622b1689d9ed6a",
       "skill": "fit-scorer"
     },
     {
       "contract_ref": "references/skill-contracts/competitor-tracker.json",
-      "contract_sha256": "3b41edfc9db7c0ae9c967140eee6839ca5beeeab3da4e38b98722da47c17d3a3",
+      "contract_sha256": "c3933b18907a9f6f2faa02dcc45bea51524b4fea2929a6c455729a6f4eb10ce8",
       "skill": "competitor-tracker"
     },
     {
       "contract_ref": "references/skill-contracts/campaign-planner.json",
-      "contract_sha256": "933500308228be5a4fe1099defd9e7cc3dba96bc4f9eb6b9e5bb964a87de5b2f",
+      "contract_sha256": "3eb58bb4b73834dc79d65389bcdf7742ccb7e027a6eeae108686124520f94f96",
       "skill": "campaign-planner"
     },
     {
       "contract_ref": "references/skill-contracts/brief-generator.json",
-      "contract_sha256": "8d2c08fb2c800e10afbf85a3e6072b81034d9d64834b44b8e88f9c1043435224",
+      "contract_sha256": "f00f2422a55ba2231167572ddccbbc99eaaf83431d79b34d809a2bdda1474e8a",
       "skill": "brief-generator"
     },
     {
       "contract_ref": "references/skill-contracts/budget-optimizer.json",
-      "contract_sha256": "7f0418266227673a08f8fd8cbbc8ecc737cbe24db1dd165daeb590713ec3cf90",
+      "contract_sha256": "8c563766ced10d934c44cb22599607bc13b0fa0aee80029ba6e0cad2c6644e87",
       "skill": "budget-optimizer"
     },
     {
       "contract_ref": "references/skill-contracts/outreach-manager.json",
-      "contract_sha256": "7a81d307fa75fbccd0ff447f3630d9bd1d28a792b6e809cd865a408ca40bdf77",
+      "contract_sha256": "66defdd355b73d00ac1d0da5817aa30de1ebc22e5c9470bc032c02e9ad1b5c37",
       "skill": "outreach-manager"
     },
     {
       "contract_ref": "references/skill-contracts/creator-content-auditor.json",
-      "contract_sha256": "767cc433268624c9442dbaa19c642d4d5d4123994beeb8dbbc501441e9662cdd",
+      "contract_sha256": "abb059d0264cd2031d530d1f00a1daaa3082d058490bba07a0dd7fb50610ce4c",
       "skill": "creator-content-auditor"
     },
     {
       "contract_ref": "references/skill-contracts/contract-helper.json",
-      "contract_sha256": "9021a05a8ddf3a600dc3ec23c226480ef79f8d0dcfeb19ba7c20cc8c994018fd",
+      "contract_sha256": "4d25c976c5287f54d431ab0c678988747b62b8e3178db3ca2cc0e376a80c046d",
       "skill": "contract-helper"
     },
     {
       "contract_ref": "references/skill-contracts/content-amplifier.json",
-      "contract_sha256": "37e783c77e6546940ee31140c0cc4142d22df8f2a5ef90acbdde870294a3dcff",
+      "contract_sha256": "f7e1736ef6abe7fcdab8d157f4647b5ddec8671b006ad1579bf1556e50b8ca9f",
       "skill": "content-amplifier"
     },
     {
       "contract_ref": "references/skill-contracts/landing-optimizer.json",
-      "contract_sha256": "0f3fc7a687fca0512c69461c526617c5ba4b349950bbad1dd3a43d8f5184af92",
+      "contract_sha256": "bd750f5a5bf69cb8739a78f8f5594504a6f13acb7043b79eb37057643b81083b",
       "skill": "landing-optimizer"
     },
     {
       "contract_ref": "references/skill-contracts/performance-analyzer.json",
-      "contract_sha256": "b676cc2299cea4807e8e9369a52ec35dd82f61f2ee984776497b073294c1dd10",
+      "contract_sha256": "2a7c566ebf844b8f4374535b6f7ca70ef001c86ee66d943fe0174993f30bee1b",
       "skill": "performance-analyzer"
     },
     {
       "contract_ref": "references/skill-contracts/roi-calculator.json",
-      "contract_sha256": "bf71ce4eb800a40693460dd88c306a62bcaf1c42504c3d2c0ef13b71382ae979",
+      "contract_sha256": "e92edc1edd56766504830cbd53c2ef0832314305898d27b6a9fcc752b672c667",
       "skill": "roi-calculator"
     },
     {
       "contract_ref": "references/skill-contracts/report-generator.json",
-      "contract_sha256": "bb18160b1e47494e52ac2b060a11c36c315cc7ce80011b84494e7128e06dbedf",
+      "contract_sha256": "00ac0b0235ec9118efd64cbc18ec54e958b535a0b45b33e100b673126b02dc43",
       "skill": "report-generator"
     },
     {
       "contract_ref": "references/skill-contracts/positioning-mapper.json",
-      "contract_sha256": "abf8978e1e928cc34eb004504726da0708ecfe0f8737d29b0d2514a2b189d60a",
+      "contract_sha256": "b4cc1c3c43a6427e7be3e726d0527a1cf0270a5e3e4f2f716ba759d47348a927",
       "skill": "positioning-mapper"
     },
     {
       "contract_ref": "references/skill-contracts/launch-tier-planner.json",
-      "contract_sha256": "b9996041592768d4e04f49272e6e06cf513ead603e3dda2f6b3705e36392dffa",
+      "contract_sha256": "1485f15e4b6f5f514ab2c1b78af3425377dc811ccd8df193ab576b1e9724b3dc",
       "skill": "launch-tier-planner"
     },
     {
       "contract_ref": "references/skill-contracts/launch-window-planner.json",
-      "contract_sha256": "1742943cd7391d46d76626d38035e618c08075c895912c97b3e5dd81f409a93f",
+      "contract_sha256": "16ace5c7f829d871470a2e1ec1a710da6f07688880ddfad61e4f0fffc21a2166",
       "skill": "launch-window-planner"
     },
     {
       "contract_ref": "references/skill-contracts/early-access-designer.json",
-      "contract_sha256": "c03a9c819cbd3faafe841b55ac4482ce747003619a509b9e351d45aaeb68a4eb",
+      "contract_sha256": "7a89059f62fc5b63d917d6f69ea959eb20f3b10ba93fb0fd9f40fe0ccf6f2967",
       "skill": "early-access-designer"
     },
     {
       "contract_ref": "references/skill-contracts/message-house-builder.json",
-      "contract_sha256": "e600a2c4f627183b723ff254e6c29722d679c3bbe10de4c6ec7b9cfdfacfe390",
+      "contract_sha256": "c68c6c4c56d00d4c126f2d95e18a250eebd0613fd0d5c4ad3f990f5d12e1b678",
       "skill": "message-house-builder"
     },
     {
       "contract_ref": "references/skill-contracts/launch-asset-packager.json",
-      "contract_sha256": "807e75e60ae039e0919e87faeab47e61e80a4405b2fff266f9e59b742978e7f9",
+      "contract_sha256": "ef81bcd02973c2b89ff34a6bea6cba6ac59066407f8228a1d0c68b4ae97f152f",
       "skill": "launch-asset-packager"
     },
     {
       "contract_ref": "references/skill-contracts/pricing-packaging-planner.json",
-      "contract_sha256": "86581616c25dcfad340164363456fcda1cbf15b3abb469dfbfeb2d32854f05a4",
+      "contract_sha256": "3b2ee8b801710e4dbcfe2aab22d340edbb6cff28b4653b04efc14109ed7185ad",
       "skill": "pricing-packaging-planner"
     },
     {
       "contract_ref": "references/skill-contracts/sales-enablement-kit.json",
-      "contract_sha256": "790eeec7031bfcfcf8b2da371f1c2eb7bb804a09643b18e006ad2815283ad3d7",
+      "contract_sha256": "8b5543719466bb31ea0c0466e5d64a60315bddaa63713870b645496b59ee2859",
       "skill": "sales-enablement-kit"
     },
     {
       "contract_ref": "references/skill-contracts/launch-readiness-auditor.json",
-      "contract_sha256": "898d21bc8c198dedcdf0a1f18f2027e806601cabae7f9618e5b90e93b9e6effb",
+      "contract_sha256": "77077c5ccbf4700b19167ce2a90f890c547add523e35e5e51d63a3cab552f4ac",
       "skill": "launch-readiness-auditor"
     },
     {
       "contract_ref": "references/skill-contracts/launch-day-conductor.json",
-      "contract_sha256": "c5e65bcb29f95849bdaa646d5fc98e0d1e016f76db38e48608061f33c748ee25",
+      "contract_sha256": "5f03c77a640ddd43da98fe9f81ef7ee3fc98dfb172d639922f0f206dd4a4343a",
       "skill": "launch-day-conductor"
     },
     {
       "contract_ref": "references/skill-contracts/community-launch-runner.json",
-      "contract_sha256": "cc4c8291587f88bc26129ad14aa8b80d9d5fa0c9ca297d5ee31055ff61bd37a9",
+      "contract_sha256": "9684717fa2330b06265bfbd3a2008448e19c598825883f14824b65c9c15ee430",
       "skill": "community-launch-runner"
     },
     {
       "contract_ref": "references/skill-contracts/press-media-relations.json",
-      "contract_sha256": "60e79c7847c985907102ee2a87df7c09d87acdb6f9019c16ce9c3b29ca5adabf",
+      "contract_sha256": "2ed859e0d8f5b212364f79ef939cc4804af3e80b17d3f93465ee5013b616dab8",
       "skill": "press-media-relations"
     },
     {
       "contract_ref": "references/skill-contracts/launch-monitor.json",
-      "contract_sha256": "84383e5cca6cdc6c9aa07b87c26771cc707e8727895ebd488f798aa332ad7f50",
+      "contract_sha256": "31092635dbebfe908dabd827902c1b8b1d5fa29c61e6ecbe75512f4da0f63357",
       "skill": "launch-monitor"
     },
     {
       "contract_ref": "references/skill-contracts/launch-feedback-synthesizer.json",
-      "contract_sha256": "deb6c2cf7388699c14f8445d365e8304b0a522fb1cac16752257fffd06838400",
+      "contract_sha256": "5f4a5515e8a67f0ef2045b5979637b591b66f01b0dae2030da78e3858370db3e",
       "skill": "launch-feedback-synthesizer"
     },
     {
       "contract_ref": "references/skill-contracts/launch-retro-analyzer.json",
-      "contract_sha256": "fc77465e5eff029dec579a09c0a9fc44688840445c0144ce71d9346f9f14d035",
+      "contract_sha256": "8ebf167e12dd7ce7ffa85981810dcc0ead14d332f464b16364d2202f07380b26",
       "skill": "launch-retro-analyzer"
     },
     {
       "contract_ref": "references/skill-contracts/momentum-planner.json",
-      "contract_sha256": "c888b3f0fcaa574df75385c75d9af64ba9800244a81ee62103780ce3477ae54b",
+      "contract_sha256": "ed102d42eb26f826df3692ae2dad31476b62f58d0a52b322949aab20746637bb",
       "skill": "momentum-planner"
     },
     {
       "contract_ref": "references/skill-contracts/entity-registry.json",
-      "contract_sha256": "4967bdd990a42617bdf618e97aa00016345b5c0c0cf98c528d40a06c2a92264a",
+      "contract_sha256": "23fa8722aff25889cd23b61af89bd8420645249c16e9bbcb5d63ef56e2580e26",
       "skill": "entity-registry"
     },
     {
       "contract_ref": "references/skill-contracts/creator-registry.json",
-      "contract_sha256": "556b0cfebc8fc440bcf4a38a9e1039def39809d5a5ef51f54abb84085482a0ac",
+      "contract_sha256": "1c604d1b90ba2c5ab699f82a17527dbfc53587a9b5588663e7476697e5c697b1",
       "skill": "creator-registry"
     },
     {
       "contract_ref": "references/skill-contracts/offer-claims-registry.json",
-      "contract_sha256": "97878b41561e0fa3c2bb09ee0d68b88c33170521a17f626428eb7fd63bcb0ef7",
+      "contract_sha256": "436dc01bb39b11b5fde21df350b52f72ef0903b1f1ad6cfd29ceffaad0fa5b94",
       "skill": "offer-claims-registry"
     },
     {
       "contract_ref": "references/skill-contracts/consent-registry.json",
-      "contract_sha256": "dbf663d7cb06a11ddf1bcfb55bbb61a36cfae4b870640249aba92e705307c9f0",
+      "contract_sha256": "163af0095d905a58d2559d9b07131a4fa7c73db052d92b4fb1da58152bcbd76b",
       "skill": "consent-registry"
     },
     {
       "contract_ref": "references/skill-contracts/launch-registry.json",
-      "contract_sha256": "cfa916d30d4ed7f99d5721ca069aad9c574c45b7f9bdd048563582c5a97d37d0",
+      "contract_sha256": "7c51039e7d4f4ec667ec94dce208de01fd95b85c40e76d2944f5145c1fd50aa3",
       "skill": "launch-registry"
     },
     {
       "contract_ref": "references/skill-contracts/channel-registry.json",
-      "contract_sha256": "6cf141dc780f449e751a285f0a4f00f818430ddd080d3a2b38965ce8071f9db9",
+      "contract_sha256": "fa7c06a4704ba988665c72dde189ad67715dd96904898fda5bdc44de81129b46",
       "skill": "channel-registry"
     },
     {
       "contract_ref": "references/skill-contracts/narrative-registry.json",
-      "contract_sha256": "32f2206cc92d35765501a949a56adcda98a68178f702c62adbf1d256a0876c47",
+      "contract_sha256": "f27783c85baf5b5e7c6a44a970a23390e4e661cc55793031cecb22d1add2620e",
       "skill": "narrative-registry"
     },
     {
       "contract_ref": "references/skill-contracts/memory-management.json",
-      "contract_sha256": "08e5a8aecd3f9d3a6fefe7c975eb3d86b788bf35fac474233197bfbcb8771936",
+      "contract_sha256": "9a6dde857d2c226f1ac98cd149f9a0250d14b42e4b33c1feddaa979b6c5c3dab",
       "skill": "memory-management"
     }
   ],
   "schema_version": "1.0",
   "shared_contract": {
     "path": "references/skill-contract.md",
-    "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+    "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
   },
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-    "version": "19.0.0"
+    "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+    "version": "19.1.0"
   }
 }

@@ -316,7 +316,7 @@ class ContextResolverTests(unittest.TestCase):
             )
             for index, shard in enumerate(shards)
         ]
-        with self.assertRaisesRegex(resolver.ContextResolutionError, "one to three"):
+        with self.assertRaisesRegex(resolver.ContextResolutionError, "at most three"):
             resolver.validate_request(too_many)
 
         cross_only = copy.deepcopy(valid)
@@ -679,7 +679,14 @@ class ContextResolverTests(unittest.TestCase):
             self.assertIsNone(re.fullmatch(safe_path, "source/"))
             self.assertIsNone(re.fullmatch(uuid_pattern, "00000000-0000-4000-0000-000000000000"))
             auto_rule = schema["$defs"]["route"]["allOf"][0]["then"]["properties"]["scenario_shards"]
-            self.assertEqual((1, 2), (auto_rule["minContains"], auto_rule["maxContains"]))
+            self.assertEqual(3, auto_rule["maxItems"])
+            self.assertEqual(2, len(auto_rule["anyOf"]))
+            empty, routed = auto_rule["anyOf"]
+            self.assertEqual(0, empty["maxItems"])
+            self.assertEqual(1, routed["minItems"])
+            self.assertEqual(
+                (1, 2), (routed["minContains"], routed["maxContains"])
+            )
 
         resolver.validate_uuid("01890f3e-7b2d-7cc0-98c4-dc0c0c07398f", "uuid-v7")
         with self.assertRaisesRegex(resolver.ContextResolutionError, "RFC UUID"):

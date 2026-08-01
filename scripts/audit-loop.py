@@ -40,7 +40,8 @@ def _load_module(name, path):
     if specification is None or specification.loader is None:
         raise RuntimeError("cannot load runtime module: %s" % path)
     module = importlib.util.module_from_spec(specification)
-    specification.loader.exec_module(module)
+    source = path.read_bytes()
+    exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
     return module
 
 

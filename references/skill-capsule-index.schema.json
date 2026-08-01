@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/skill-capsule-index.schema.json",
+  "title": "Aaron skill capsule index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "capsule_count",
+    "capsule_schema",
+    "policy_kernel",
+    "source_contract_index",
+    "capsules"
+  ],
+  "properties": {
+    "$schema": {"const": "../skill-capsule-index.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "capsule_count": {"const": 120},
+    "capsule_schema": {"$ref": "#/$defs/fileRef"},
+    "policy_kernel": {"$ref": "#/$defs/fileRef"},
+    "source_contract_index": {"$ref": "#/$defs/fileRef"},
+    "capsules": {
+      "type": "array",
+      "minItems": 120,
+      "maxItems": 120,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["skill", "capsule_ref", "capsule_sha256", "model_bytes"],
+        "properties": {
+          "skill": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+          "capsule_ref": {"type": "string", "pattern": "^references/skill-capsules/[a-z0-9][a-z0-9-]*\\.json$"},
+          "capsule_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "model_bytes": {"type": "integer", "minimum": 1, "maximum": 100000}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "fileRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"type": "string", "minLength": 1, "maxLength": 512},
+        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

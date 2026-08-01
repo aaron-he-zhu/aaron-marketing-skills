@@ -17,8 +17,8 @@ GENERATOR = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(GENERATOR)
 
 
-def case_lines(text: str) -> list[str]:
-    return [line for line in text.splitlines() if line.startswith("- {id:")]
+def runtime_case_lines(text: str) -> list[str]:
+    return [line for line in text.splitlines() if line.startswith("- {")]
 
 
 class AutoRoutingShardTests(unittest.TestCase):
@@ -36,22 +36,41 @@ class AutoRoutingShardTests(unittest.TestCase):
         catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
 
     def test_authoritative_source_partitions_all_88_cases_once(self):
-        order, _bodies, ids = GENERATOR.parse_source(ROOT)
+        order, _bodies, ids, runtime_cases = GENERATOR.parse_source(ROOT)
         catalog = json.loads((ROOT / GENERATOR.CATALOG_REL).read_text(encoding="utf-8"))
         self.assertEqual(set(catalog["disciplines"]) | {"cross-discipline"}, set(order))
         flattened = [case_id for shard in order for case_id in ids[shard]]
         self.assertEqual(88, len(flattened))
         self.assertEqual(88, len(set(flattened)))
+        self.assertEqual(88, sum(len(runtime_cases[shard]) for shard in order))
 
     def test_generated_projection_is_current(self):
         self.assertEqual([], GENERATOR.check_outputs(ROOT))
 
-    def test_generated_shards_preserve_source_case_lines_exactly(self):
-        order, bodies, _ids = GENERATOR.parse_source(ROOT)
+    def test_generated_shards_project_only_runtime_route_fields(self):
+        order, _bodies, _ids, runtime_cases = GENERATOR.parse_source(ROOT)
         outputs = GENERATOR.render_outputs(ROOT)
         for shard in order:
             relative = GENERATOR.SHARD_DIR_REL / (shard + ".md")
-            self.assertEqual(case_lines(bodies[shard]), case_lines(outputs[relative]), shard)
+            rendered = [
+                json.loads(line[2:]) for line in runtime_case_lines(outputs[relative])
+            ]
+            self.assertEqual(runtime_cases[shard], rendered, shard)
+            for case in rendered:
+                self.assertEqual(set(GENERATOR.RUNTIME_FIELDS), set(case))
+                self.assertNotIn("expected_behavior", case)
+                self.assertNotIn("failure_modes", case)
+                self.assertNotIn("input_summary", case)
+
+    def test_runtime_projection_is_materially_smaller_than_authoritative_cases(self):
+        order, bodies, _ids, _runtime_cases = GENERATOR.parse_source(ROOT)
+        outputs = GENERATOR.render_outputs(ROOT)
+        source_bytes = sum(len(bodies[shard].encode("utf-8")) for shard in order)
+        runtime_bytes = sum(
+            len(outputs[GENERATOR.SHARD_DIR_REL / (shard + ".md")].encode("utf-8"))
+            for shard in order
+        )
+        self.assertLess(runtime_bytes, source_bytes * 0.60)
 
     def test_runtime_outputs_never_link_to_authoritative_eval_source(self):
         outputs = GENERATOR.render_outputs(ROOT)

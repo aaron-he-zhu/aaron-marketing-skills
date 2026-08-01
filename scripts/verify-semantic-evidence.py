@@ -127,7 +127,8 @@ def stable_bytes(runtime, path, maximum, label):
 def _manifest_shape(manifest):
     required = {
         "schema_version", "kind", "protocol_version", "run_id", "profile",
-        "request_count", "request_stream_sha256", "selection_sha256",
+        "request_count", "request_stream_sha256", "selection_provenance",
+        "selection_sha256",
         "adapter_command_sha256", "adapter_command_identity", "runner",
         "protocol_schema", "required_execution_mode",
     }
@@ -142,9 +143,16 @@ def _manifest_shape(manifest):
 
 def _project_adapter_current(runner, identity, policy):
     if not isinstance(identity, dict) or set(identity) != {
-            "executable_sha256", "executable_size_bytes", "implementation",
-            "execution_binding", "runtime_dependencies", "staged_runtime"}:
+            "logical_argv", "executable_sha256", "executable_size_bytes",
+            "implementation", "execution_binding", "runtime_dependencies",
+            "staged_runtime"}:
         raise EvidenceError("adapter command identity is invalid")
+    logical_argv = identity["logical_argv"]
+    if (
+            not isinstance(logical_argv, list) or not logical_argv
+            or any(not isinstance(argument, str) or "\x00" in argument
+                   for argument in logical_argv)):
+        raise EvidenceError("adapter command exact logical argv is invalid")
     implementation = identity["implementation"]
     if not isinstance(implementation, dict) or set(implementation) != {
             "ref", "sha256", "size_bytes", "argv_index"}:
@@ -185,7 +193,10 @@ def _project_adapter_current(runner, identity, policy):
     if (
             (policy["require_isolated_project_adapter"] and binding != expected_binding)
             or identity["executable_sha256"] != python_identity["sha256"]
-            or identity["executable_size_bytes"] != python_identity["size_bytes"]):
+            or identity["executable_size_bytes"] != python_identity["size_bytes"]
+            or len(logical_argv) < 2
+            or logical_argv[0] != str(current_python)
+            or Path(logical_argv[1]).resolve() != (runner.ROOT / reference).resolve()):
         raise EvidenceError(
             "project adapter was not executed by the isolated current Python runtime"
         )
@@ -317,6 +328,7 @@ def verify_evidence(evidence_root, run_id, policy=None, now=None, runner=None):
     if policy["require_current_case_selection"] and (
             manifest["request_count"] != len(requests)
             or manifest["request_stream_sha256"] != request_hash
+            or manifest["selection_provenance"] != selection["provenance"]
             or manifest["selection_sha256"] != expected_selection_hash):
         raise EvidenceError("semantic evidence does not bind the current case selection and sources")
 
@@ -340,6 +352,13 @@ def verify_evidence(evidence_root, run_id, policy=None, now=None, runner=None):
     identity = manifest.get("adapter_command_identity")
     if not isinstance(identity, dict) or not isinstance(identity.get("implementation"), dict):
         raise EvidenceError("semantic adapter command identity is invalid")
+    logical_argv = identity.get("logical_argv")
+    if (
+            not isinstance(logical_argv, list) or not logical_argv
+            or any(not isinstance(argument, str) or "\x00" in argument
+                   for argument in logical_argv)
+            or manifest["adapter_command_sha256"] != runner.sha256_json(logical_argv)):
+        raise EvidenceError("semantic adapter command digest is not identity-bound")
     implementation = identity["implementation"]
     implementation_sha256 = implementation.get("sha256")
     if policy["require_project_adapter"]:

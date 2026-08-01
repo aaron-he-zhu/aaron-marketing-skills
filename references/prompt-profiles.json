@@ -1,0 +1,87 @@
+{
+  "$schema": "./prompt-profiles.schema.json",
+  "always_on_overlays": [
+    "consent",
+    "claims",
+    "pii-secrets",
+    "external-mutation",
+    "audit-verdict",
+    "release-provenance"
+  ],
+  "certification_policy": {
+    "maximum_age_days": 90,
+    "maximum_quality_pass_rate_regression": 0.02,
+    "maximum_routing_accuracy_regression": 0.01,
+    "maximum_safety_regressions": 0,
+    "minimum_candidate_quality_pass_rate": 0.9,
+    "minimum_candidate_routing_accuracy": 0.95,
+    "minimum_cases": 40,
+    "minimum_control_quality_pass_rate": 0.9,
+    "minimum_control_routing_accuracy": 0.95,
+    "minimum_repeats": 3,
+    "minimum_coverage_strata": 8,
+    "protocol_version": "3.0"
+  },
+  "certified_bindings": [],
+  "default_profile": "explicit",
+  "host_defaults": {
+    "claude-code-plugin-host": "explicit",
+    "generic-shared-root-host": "explicit",
+    "standalone-skill-host": "explicit"
+  },
+  "profile_order": [
+    "explicit",
+    "balanced",
+    "lean"
+  ],
+  "profiles": {
+    "balanced": {
+      "example_budget": 4,
+      "rank": 1,
+      "rationale_detail": "decision-only",
+      "reminder_density": "boundary-only",
+      "requires_certification": true,
+      "target_model_context_reduction": {
+        "maximum_percent": 45,
+        "minimum_percent": 20
+      },
+      "template_detail": "expanded",
+      "workflow_detail": "full"
+    },
+    "explicit": {
+      "example_budget": 4,
+      "rank": 0,
+      "rationale_detail": "full",
+      "reminder_density": "repeated",
+      "requires_certification": false,
+      "target_model_context_reduction": {
+        "maximum_percent": 0,
+        "minimum_percent": 0
+      },
+      "template_detail": "expanded",
+      "workflow_detail": "full"
+    },
+    "lean": {
+      "example_budget": 0,
+      "rank": 2,
+      "rationale_detail": "omitted",
+      "reminder_density": "once",
+      "requires_certification": true,
+      "target_model_context_reduction": {
+        "maximum_percent": 70,
+        "minimum_percent": 45
+      },
+      "template_detail": "schema-only",
+      "workflow_detail": "minimum"
+    }
+  },
+  "reducible_dimensions": [
+    "workflow-detail",
+    "examples",
+    "templates",
+    "rationale",
+    "reminders"
+  ],
+  "schema_version": "1.0",
+  "unknown_model_profile": "explicit"
+}

@@ -4,13 +4,13 @@ slug: aaron-campaign-architect
 displayName: "Campaign Architect · 付费广告账户结构"
 summary: "付费广告账户结构/广告系列规划/否定关键词"
 description: 'Use when the user asks to "plan my paid account structure", "pick Search vs PMax", "lay out ad groups / asset groups", or "audit paid-vs-organic cannibalization"; designs campaign-type selection, ad-group/asset-group layout, targeting + match types, negative/exclusion hygiene, and a paid↔organic overlap audit, and scores the ROAS A (Audience) dimension + structure. Not for computing the final RQS — use ad-account-auditor; not for budget split — use budget-optimizer; not for organic site architecture — use site-structure-optimizer. 付费广告账户结构/广告系列规划/否定关键词'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when designing or restructuring a paid-ads account before launch: choosing campaign types (Search/PMax/broad), grouping ad groups or asset groups, setting targeting and match types, building negative-keyword and exclusion lists, or checking whether paid and organic are bidding against the same intent."
 argument-hint: "<account/campaign goal> [platforms] [target keywords or themes]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "ad", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "research"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "ad", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "research"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Campaign Architect

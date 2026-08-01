@@ -42,16 +42,21 @@ PROTOCOL_DISCIPLINES = {
 }
 AUTHORITY_RANK = {"canonical": 0, "approved": 1, "working": 2, "untrusted": 3}
 REQUIREMENT_RANK = {"required": 0, "optional": 1, "forbidden": 2}
+AUDITOR_EXCLUSIVE_GROUP = "auditor-runtime-chain"
 
 
 def _load_resolver():
+    path = ROOT / "scripts" / "context-resolver.py"
     specification = importlib.util.spec_from_file_location(
-        "aaron_context_resolver", ROOT / "scripts" / "context-resolver.py"
+        "aaron_context_resolver", path
     )
     if specification is None or specification.loader is None:
         raise RuntimeError("cannot load context resolver")
     module = importlib.util.module_from_spec(specification)
-    specification.loader.exec_module(module)
+    # Compile in memory so executing a manifest-closed distribution never adds
+    # a platform-specific ``scripts/__pycache__`` payload.
+    source = path.read_bytes()
+    exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
     return module
 
 
@@ -374,7 +379,8 @@ def _resource_id(scope, path):
 
 
 def _candidate(scope, path, role, requirement, authority, observed_at, priority,
-               reason_code, sensitivity, expected_sha256):
+               reason_code, sensitivity, expected_sha256, *,
+               load_policy="conditional", exclusive_group=None, condition_code=None):
     return {
         "resource_id": _resource_id(scope, path),
         "scope": scope,
@@ -389,6 +395,9 @@ def _candidate(scope, path, role, requirement, authority, observed_at, priority,
         "sensitivity": sensitivity,
         "expected_sha256": expected_sha256,
         "conflict_group": None,
+        "load_policy": load_policy,
+        "exclusive_group": exclusive_group,
+        "condition_code": condition_code,
         "supersedes": [],
     }
 
@@ -471,8 +480,11 @@ def _enumerate_prefix(project_root, relative, remaining):
     return "enumerated", sorted(discovered)
 
 
-def _bundle_reference_candidates(bundle_root, contract, observed_at):
+def _bundle_reference_candidates(bundle_root, contract, observed_at, auditor=None):
     result = []
+    fallback_path = None
+    if auditor is not None:
+        fallback_path = "%s/references/auditor-runtime.md" % auditor["path"]
     for offset, reference in enumerate(contract["context_hints"]["bundle_references"]):
         label = "bundle_references[%d]" % offset
         _exact(reference, {"path", "sha256", "requirement", "reason_code", "source_line"}, label)
@@ -483,12 +495,105 @@ def _bundle_reference_candidates(bundle_root, contract, observed_at):
         raw = _read(bundle_root, reference["path"])
         if _sha256(raw) != reference["sha256"]:
             raise ContextPlanError("%s differs from its recorded hash" % label)
+        exclusive_group = None
+        condition_code = None
+        load_policy = "activation" if reference["requirement"] == "required" else "conditional"
+        if fallback_path is not None and reference["path"] == fallback_path:
+            exclusive_group = AUDITOR_EXCLUSIVE_GROUP
+            condition_code = "standalone-skill"
+            load_policy = "fallback"
+        elif auditor is not None and reference["path"].startswith("references/"):
+            exclusive_group = AUDITOR_EXCLUSIVE_GROUP
+            condition_code = "repository-or-plugin"
         result.append(_candidate(
             "bundle", reference["path"], "skill-reference", reference["requirement"],
             "approved", observed_at, 85 if reference["requirement"] == "required" else 50,
             reference["reason_code"], "public", reference["sha256"],
+            load_policy=load_policy, exclusive_group=exclusive_group,
+            condition_code=condition_code,
         ))
+    if auditor is not None:
+        branches = {
+            candidate["condition_code"] for candidate in result
+            if candidate["exclusive_group"] == AUDITOR_EXCLUSIVE_GROUP
+        }
+        if branches != {"repository-or-plugin", "standalone-skill"}:
+            raise ContextPlanError(
+                "auditor context must declare repository/plugin and standalone runtime branches"
+            )
     return result
+
+
+def _auditor_spec(bundle_root, skill):
+    catalog, _raw = _load_json(bundle_root, CATALOG_REF, "system catalog")
+    matches = [
+        auditor for auditor in catalog.get("auditors", [])
+        if auditor.get("skill") == skill
+    ]
+    if len(matches) > 1:
+        raise ContextPlanError("system catalog contains duplicate auditor: %s" % skill)
+    return matches[0] if matches else None
+
+
+def _condition_applies(candidate, distribution_profile):
+    condition = candidate.get("condition_code")
+    if condition is None:
+        return True
+    if condition == "repository-or-plugin":
+        return distribution_profile in {"repository", "plugin"}
+    if condition == "standalone-skill":
+        return distribution_profile == "standalone-skill"
+    raise ContextPlanError("unsupported context condition: %s" % condition)
+
+
+def _planned_bundle_candidates(
+        bundle_root, contract, entry, index, observed_at, *, command,
+        post_route, distribution_profile, auditor=None):
+    """Rebuild the exact bundle closure from current authoritative sources."""
+    if not isinstance(post_route, bool):
+        raise ContextPlanError("post_route must be boolean")
+    if distribution_profile not in resolver.DISTRIBUTION_PROFILES:
+        raise ContextPlanError("distribution_profile is unsupported")
+    if command not in resolver.COMMANDS:
+        raise ContextPlanError("command is unsupported")
+
+    candidates = {}
+    bases = (
+        (contract["identity"]["path"], "skill-definition", "required", 100,
+         "machine-contract-skill", contract["identity"]["sha256"], "always"),
+        (entry["contract_ref"], "skill-contract", "required", 99,
+         "machine-contract", entry["contract_sha256"], "always"),
+        (SHARED_CONTRACT_REF, "shared-contract", "required", 90,
+         "shared-skill-contract", index["shared_contract"]["sha256"], "activation"),
+    )
+    for path, role, requirement, priority, reason, digest, load_policy in bases:
+        _merge_candidate(candidates, _candidate(
+            "bundle", path, role, requirement, "approved", observed_at,
+            priority, reason, "public", digest, load_policy=load_policy,
+        ))
+    for candidate in _bundle_reference_candidates(
+            bundle_root, contract, observed_at, auditor=auditor):
+        _merge_candidate(candidates, candidate)
+
+    shards = []
+    if command == "auto" and not post_route:
+        shards = ["references/auto-routing/%s.md" % _primary_discipline(contract)]
+    for shard in shards:
+        raw = _read(bundle_root, shard)
+        _merge_candidate(candidates, _candidate(
+            "bundle", shard, "routing-scenario", "required", "approved",
+            observed_at, 100, "auto-routing-shard", "public", _sha256(raw),
+            load_policy="activation",
+        ))
+
+    # Validate every closed condition against the selected planner profile,
+    # while retaining both declared auditor branches in the candidate set.
+    for candidate in candidates.values():
+        _condition_applies(candidate, distribution_profile)
+    return sorted(
+        candidates.values(),
+        key=lambda item: (item["scope"], item["path"], item["resource_id"]),
+    ), shards
 
 
 def _project_candidates(project_root, contract, observed_at, prefix_file_limit):
@@ -548,7 +653,8 @@ def build_request(
         *, skill, run_id, turn_id, as_of, project_root, bundle_root=ROOT, command=None,
         reason_code="machine-contract-plan",
         max_tokens=65_536, bytes_per_token=4, max_resources=128,
-        max_sensitivity="confidential", prefix_file_limit=128, registry_offsets=None):
+        max_sensitivity="confidential", prefix_file_limit=128, registry_offsets=None,
+        distribution_profile="repository", post_route=False):
     """Return a deterministic, resolver-valid request; do not write any files."""
     bundle_root = resolver.normalized_root(bundle_root, "bundle root")
     project_root = resolver.normalized_root(project_root, "project root")
@@ -565,39 +671,27 @@ def build_request(
     prefix_file_limit = resolver.validate_int(prefix_file_limit, "prefix_file_limit", 1, 256)
     if max_sensitivity not in resolver.SENSITIVITIES:
         raise ContextPlanError("max_sensitivity is unsupported")
+    if distribution_profile not in resolver.DISTRIBUTION_PROFILES:
+        raise ContextPlanError("distribution_profile is unsupported")
+    if not isinstance(post_route, bool):
+        raise ContextPlanError("post_route must be boolean")
 
     contract, contract_raw, entry, index, index_raw = _load_contract(bundle_root, skill)
+    auditor = _auditor_spec(bundle_root, skill)
     primary = _primary_discipline(contract)
     if command is None:
         command = "auto" if contract["identity"]["discipline"] == "protocol" else primary
     if command not in resolver.COMMANDS:
         raise ContextPlanError("command is unsupported")
-    shards = []
-    if command == "auto":
-        shards = ["references/auto-routing/%s.md" % primary]
-
-    candidates = {}
-    bases = (
-        (contract["identity"]["path"], "skill-definition", "required", 100,
-         "machine-contract-skill", contract["identity"]["sha256"]),
-        (entry["contract_ref"], "skill-contract", "required", 99,
-         "machine-contract", entry["contract_sha256"]),
-        (SHARED_CONTRACT_REF, "shared-contract", "required", 90,
-         "shared-skill-contract", index["shared_contract"]["sha256"]),
+    bundle_candidates, shards = _planned_bundle_candidates(
+        bundle_root, contract, entry, index, as_of, command=command,
+        post_route=post_route, distribution_profile=distribution_profile,
+        auditor=auditor,
     )
-    for path, role, requirement, priority, reason, digest in bases:
-        _merge_candidate(candidates, _candidate(
-            "bundle", path, role, requirement, "approved", as_of, priority,
-            reason, "public", digest,
-        ))
-    for candidate in _bundle_reference_candidates(bundle_root, contract, as_of):
-        _merge_candidate(candidates, candidate)
-    for shard in shards:
-        raw = _read(bundle_root, shard)
-        _merge_candidate(candidates, _candidate(
-            "bundle", shard, "routing-scenario", "required", "approved", as_of,
-            100, "auto-routing-shard", "public", _sha256(raw),
-        ))
+    candidates = {
+        (candidate["scope"], candidate["path"]): candidate
+        for candidate in bundle_candidates
+    }
     project_candidates, prefix_outcomes = _project_candidates(
         project_root, contract, as_of, prefix_file_limit
     )
@@ -610,7 +704,8 @@ def build_request(
         raise ContextPlanError("discovered candidate set exceeds resolver maximum")
     required_bytes = 0
     for candidate in candidate_list:
-        if candidate["requirement"] != "required":
+        if (candidate["requirement"] != "required"
+                or not _condition_applies(candidate, distribution_profile)):
             continue
         raw = _read(bundle_root if candidate["scope"] == "bundle" else project_root,
                     candidate["path"])
@@ -621,7 +716,9 @@ def build_request(
             % (required_bytes, max_bytes)
         )
     required_resources = sum(
-        candidate["requirement"] == "required" for candidate in candidate_list
+        candidate["requirement"] == "required"
+        and _condition_applies(candidate, distribution_profile)
+        for candidate in candidate_list
     )
     if required_resources > max_resources:
         raise ContextPlanError(
@@ -651,14 +748,16 @@ def build_request(
             "max_inspection_bytes": min(resolver.MAX_INSPECTION_BYTES, max_bytes * 2),
         },
         "planner": {
-            "planner_version": "1.0",
-            "generator": "context-plan-v1",
+            "planner_version": "1.1",
+            "generator": "context-plan-v1.1",
+            "post_route": post_route,
             "skill_contract": {"path": entry["contract_ref"], "sha256": _sha256(contract_raw)},
             "contract_index": {"path": INDEX_REF, "sha256": _sha256(index_raw)},
             "system_catalog": {
                 "path": index["source_catalog"]["path"],
                 "sha256": index["source_catalog"]["sha256"],
             },
+            "distribution_profile": distribution_profile,
             "candidate_discovery": {
                 "mode": "closed-machine-contract",
                 "hints_sha256": _json_hash(contract["context_hints"]),
@@ -686,8 +785,9 @@ def build_request(
     return request
 
 
-def validate_planned_request(request, *, bundle_root=ROOT, project_root=None,
-                             resolve_sources=False):
+def validate_planned_request(
+        request, *, bundle_root=ROOT, project_root=None, resolve_sources=False,
+        _skip_resolve=False):
     """Validate planner semantics and pinned provenance; optionally read all sources."""
     bundle_root = resolver.normalized_root(bundle_root, "bundle root")
     resolver.validate_request(request)
@@ -696,7 +796,7 @@ def validate_planned_request(request, *, bundle_root=ROOT, project_root=None,
     planner = request["planner"]
     for field in ("skill_contract", "contract_index", "system_catalog"):
         _verify_live_ref(bundle_root, planner[field], "planner." + field)
-    contract, contract_raw, entry, _index, _index_raw = _load_contract(
+    contract, contract_raw, entry, index, _index_raw = _load_contract(
         bundle_root, request["route"]["target_skill"]
     )
     if planner["skill_contract"] != {
@@ -713,6 +813,26 @@ def validate_planned_request(request, *, bundle_root=ROOT, project_root=None,
     if [item["path"] for item in outcomes] != expected_prefixes:
         raise ContextPlanError("planner prefix outcomes do not cover contract prefix hints")
     resolver.validate_route_against_catalog(request, bundle_root)
+    auditor = _auditor_spec(bundle_root, request["route"]["target_skill"])
+    expected_bundle, expected_shards = _planned_bundle_candidates(
+        bundle_root, contract, entry, index, request["as_of"],
+        command=request["route"]["command"],
+        post_route=planner["post_route"],
+        distribution_profile=planner["distribution_profile"],
+        auditor=auditor,
+    )
+    if request["route"]["scenario_shards"] != expected_shards:
+        raise ContextPlanError(
+            "planned route shards differ from the current route stage"
+        )
+    planned_bundle = [
+        candidate for candidate in request["candidates"]
+        if candidate["scope"] == "bundle"
+    ]
+    if expected_bundle != planned_bundle:
+        raise ContextPlanError(
+            "bundle candidate closure differs from current machine contract"
+        )
     if resolve_sources:
         if project_root is None:
             raise ContextPlanError("project_root is required to validate candidate sources")
@@ -732,7 +852,21 @@ def validate_planned_request(request, *, bundle_root=ROOT, project_root=None,
         ]
         if expected_project != planned_project:
             raise ContextPlanError("project candidate discovery differs from planned candidates")
-        resolver.resolve_context(request, bundle_root, project_root)
+        expected_candidates = sorted(
+            [*expected_bundle, *expected_project],
+            key=lambda item: (item["scope"], item["path"], item["resource_id"]),
+        )
+        if request["candidates"] != expected_candidates:
+            raise ContextPlanError(
+                "complete candidate closure differs from current planner discovery"
+            )
+        if planner["candidate_discovery"]["candidate_set_sha256"] != _json_hash(
+                expected_candidates):
+            raise ContextPlanError(
+                "planner candidate_set_sha256 differs from current candidate closure"
+            )
+        if not _skip_resolve:
+            resolver.resolve_context(request, bundle_root, project_root)
     return request
 
 
@@ -792,6 +926,15 @@ def main(argv=None):
     plan.add_argument("--max-sensitivity", choices=sorted(resolver.SENSITIVITIES),
                       default="confidential")
     plan.add_argument("--prefix-file-limit", type=int, default=128)
+    plan.add_argument(
+        "--distribution-profile", choices=sorted(resolver.DISTRIBUTION_PROFILES),
+        default="repository",
+        help="select repository/plugin policy sources or the standalone auditor fallback",
+    )
+    plan.add_argument(
+        "--post-route", action="store_true",
+        help="assemble a selected protocol Skill without its routing-only shard",
+    )
     plan.add_argument("--registry-offset", action="append", default=[], metavar="NAME=INTEGER")
     plan.add_argument("--output", required=True)
 
@@ -810,6 +953,8 @@ def main(argv=None):
                 max_resources=args.max_resources, max_sensitivity=args.max_sensitivity,
                 prefix_file_limit=args.prefix_file_limit,
                 registry_offsets=_parse_offsets(args.registry_offset),
+                distribution_profile=args.distribution_profile,
+                post_route=args.post_route,
             )
             _write_json(args.output, request)
             print("wrote context request with %d explicit candidates" % len(request["candidates"]))

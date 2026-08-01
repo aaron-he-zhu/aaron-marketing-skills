@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "description": "Regression guardrails are deliberately looser than the optimization targets. Tighten the guards only after a measured paired baseline is accepted; do not turn the target into a release gate before quality/routing non-inferiority is established.",
+  "guardrails": {
+    "max_required_bytes": 190000,
+    "max_required_budget_share": 0.72,
+    "max_p50_selected_bytes": 150000,
+    "max_description_plus_when_to_use_bytes": 130000
+  },
+  "targets": {
+    "min_project_evidence_reserve_share": 0.3,
+    "max_normal_initial_model_visible_bytes": 35000,
+    "max_auto_router_assembly_bytes": 50000,
+    "description_corpus_reduction_share": 0.4,
+    "note": "Targets require semantic, blind-routing, and safety non-inferiority; byte reduction alone is not acceptance."
+  }
+}

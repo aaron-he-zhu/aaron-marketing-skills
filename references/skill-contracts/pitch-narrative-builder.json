@@ -11,7 +11,7 @@
           "end_char": 64,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 169,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 66
         },
@@ -41,7 +41,7 @@
           "end_char": 211,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 171
         },
@@ -56,7 +56,7 @@
           "end_char": 333,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 213
         },
@@ -68,15 +68,15 @@
     "source": {
       "path": "narrative/land/pitch-narrative-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba"
+      "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 38
       },
@@ -98,7 +98,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 34
       },
       {
@@ -141,7 +141,7 @@
           "end_char": 166,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -159,7 +159,7 @@
           "end_char": 355,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 167
         },
@@ -177,7 +177,7 @@
           "end_char": 584,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 356
         },
@@ -195,7 +195,7 @@
           "end_char": 993,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 586
         },
@@ -208,7 +208,7 @@
     "summary_ref": {
       "path": "narrative/land/pitch-narrative-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba"
+      "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -223,8 +223,8 @@
     "name": "pitch-narrative-builder",
     "path": "narrative/land/pitch-narrative-builder/SKILL.md",
     "phase": "land",
-    "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
-    "version": "19.0.0"
+    "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<company / product> [audience: investors|sales|both] [canon path] [story bank path]",
@@ -238,7 +238,7 @@
           "end_char": 205,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -253,7 +253,7 @@
           "end_char": 292,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 207
         },
@@ -268,7 +268,7 @@
           "end_char": 398,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 294
         },
@@ -283,7 +283,7 @@
           "end_char": 470,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 400
         },
@@ -298,7 +298,7 @@
           "end_char": 529,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 472
         },
@@ -310,7 +310,7 @@
     "source": {
       "path": "narrative/land/pitch-narrative-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba"
+      "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268"
     }
   },
   "output_contract": {
@@ -325,7 +325,7 @@
           "end_char": 87,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -341,7 +341,7 @@
           "end_char": 368,
           "path": "narrative/land/pitch-narrative-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba",
+          "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268",
           "span_basis": "field-text",
           "start_char": 89
         },
@@ -352,7 +352,7 @@
     "source": {
       "path": "narrative/land/pitch-narrative-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba"
+      "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268"
     },
     "summary": "a pitch narrative for the requested audience (sales / fundraising / both) — the five-beat arc (problem → shift → product-as-hero → proof → ask), a slide-beat outline mapping each beat to one or more slides, the claim ID each proof beat rests on (or `[needs source]`), a per-audience ask variant (fundraising: raise/use-of-funds framing; sales: next-step framing), a list of proof beats with no approved claim, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -363,12 +363,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -377,7 +377,7 @@
     "source": {
       "path": "narrative/land/pitch-narrative-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "ea55752c85dcc1dc1f17327210b7211bf150c2fade7770ec64e3cb06d481d1ba"
+      "sha256": "0725bfdd1c4c0db26762473f6068b2974637543420441ad54a0283bb95ee2268"
     },
     "trigger_phrases": [
       "build our pitch deck narrative",

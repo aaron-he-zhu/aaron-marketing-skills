@@ -225,7 +225,8 @@
           "HOST_TIMEOUT", "HOST_RATE_LIMIT", "HOST_AUTH", "HOST_UNAVAILABLE",
           "HOST_CONTEXT_LIMIT", "HOST_REFUSAL", "HOST_TOOL_ERROR",
           "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE",
-          "ADAPTER_PROVENANCE", "EVALUATOR_INCONCLUSIVE"
+          "ADAPTER_PROVENANCE", "ADAPTER_CONTEXT_ASSEMBLY_MISMATCH",
+          "EVALUATOR_INCONCLUSIVE"
         ]},
         "class": {"enum": ["prompt", "routing", "context", "tool", "permission", "artifact", "loop", "host", "adapter", "unknown"]},
         "retryable": {"type": "boolean"},
@@ -280,7 +281,8 @@
           }},
           {"properties": {
             "code": {"enum": [
-              "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE", "ADAPTER_PROVENANCE"
+              "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE",
+              "ADAPTER_PROVENANCE", "ADAPTER_CONTEXT_ASSEMBLY_MISMATCH"
             ]},
             "class": {"const": "adapter"}
           }},
@@ -373,7 +375,8 @@
           "then": {"properties": {
             "failures": {"minItems": 1, "items": {"properties": {
               "code": {"enum": [
-                "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE", "ADAPTER_PROVENANCE"
+                "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE",
+                "ADAPTER_PROVENANCE", "ADAPTER_CONTEXT_ASSEMBLY_MISMATCH"
               ]},
               "class": {"const": "adapter"}
             }}},

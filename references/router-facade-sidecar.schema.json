@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/router-facade-sidecar.schema.json",
+  "title": "Aaron generic-host router facade sidecar",
+  "description": "A generated, non-canonical partition of all 120 business skills into eight generic-host router facades. Facades are distribution helpers and never business-skill catalog entries.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "kind",
+    "generator",
+    "host_profile",
+    "host_profile_sha256",
+    "routing_surface",
+    "reference_surface",
+    "connector_surface",
+    "catalog",
+    "canonical_business_skill_count",
+    "facade_count",
+    "coverage_sha256",
+    "facades"
+  ],
+  "properties": {
+    "$schema": {"const": "../references/router-facade-sidecar.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "kind": {"const": "router-facade-sidecar"},
+    "generator": {"const": "generate-router-facades-v1"},
+    "host_profile": {"const": "generic-shared-root-host"},
+    "host_profile_sha256": {"$ref": "#/$defs/sha256"},
+    "routing_surface": {"const": "router-skills"},
+    "reference_surface": {"const": "shared-root"},
+    "connector_surface": {"const": "sidecar"},
+    "catalog": {"$ref": "#/$defs/catalog"},
+    "canonical_business_skill_count": {"const": 120},
+    "facade_count": {"const": 8},
+    "coverage_sha256": {"$ref": "#/$defs/sha256"},
+    "facades": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {"$ref": "#/$defs/facade"}
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "safeId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "catalog": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "architecture_version"],
+      "properties": {
+        "path": {"const": "references/system-catalog.json"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "architecture_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "phase", "skill_sha256"],
+      "properties": {
+        "name": {"$ref": "#/$defs/safeId"},
+        "path": {
+          "allOf": [
+            {"$ref": "#/$defs/safePath"},
+            {"pattern": "/SKILL\\.md$"}
+          ]
+        },
+        "phase": {"$ref": "#/$defs/safeId"},
+        "skill_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "facade": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "discipline",
+        "display_name",
+        "path",
+        "sha256",
+        "phase_order",
+        "target_count",
+        "targets"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^router:[a-z][a-z0-9-]*$"},
+        "name": {
+          "type": "string",
+          "pattern": "^aaron-marketing-[a-z][a-z0-9-]*-router$"
+        },
+        "discipline": {
+          "enum": [
+            "narrative",
+            "seo-geo",
+            "social",
+            "email",
+            "ad",
+            "influencer",
+            "launch",
+            "protocol"
+          ]
+        },
+        "display_name": {"type": "string", "minLength": 1, "maxLength": 120},
+        "path": {
+          "type": "string",
+          "pattern": "^router-facades/[a-z][a-z0-9-]*/SKILL\\.md$"
+        },
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "phase_order": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/safeId"}
+        },
+        "target_count": {"type": "integer", "minimum": 1, "maximum": 16},
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "items": {"$ref": "#/$defs/target"}
+        }
+      }
+    }
+  }
+}

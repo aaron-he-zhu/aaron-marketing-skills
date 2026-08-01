@@ -4,13 +4,13 @@ slug: aaron-launch-tier-planner
 displayName: "Launch Tier Planner · 发布分级规划"
 summary: "发布分级/发布类型/风险登记册/kill criteria"
 description: 'Use when the user asks to "plan my launch tier", "how big should this launch be", or "build a launch risk register with kill criteria"; produces a tier decision (Tier 1 flagship all-channel / Tier 2 targeted / Tier 3 changelog-level), a launch-type declaration (new-product / feature / relaunch / partnership with co-marketing split), an effort calibration matrix (tier to channel intensity and asset scope), D0/W1/M1 KPI targets (labeled Estimated), a risk register (likelihood x blast-radius, owners, mitigations, kill criteria / rollback thresholds), and a T-8w to T+4w timeline skeleton. Not for picking the launch date or window — use launch-window-planner; not for creator-channel launch campaigns — use campaign-planner. 发布分级/发布类型/风险登记册/kill criteria'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when deciding how big a launch should be and what kind it is: choosing Tier 1 / 2 / 3, declaring the launch type (new-product, feature, relaunch, partnership), calibrating effort per tier, setting D0/W1/M1 KPI targets, and building the risk register with kill criteria and rollback thresholds plus a T-8w to T+4w timeline skeleton. The sizing layer above the date choice (launch-window-planner) and the day-of runbook (launch-day-conductor)."
 argument-hint: "<product / feature / launch scope> [audience impact] [revenue linkage]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "research"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "launch", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "research"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Launch Tier Planner

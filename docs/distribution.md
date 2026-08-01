@@ -22,6 +22,83 @@ the closed config/environment/runtime surfaces in
 [`references/capability-profiles.md`](../references/capability-profiles.md).
 Neither changes the eight-command grammar.
 
+The standalone manifest names only capabilities physically supported by the
+one-folder payload: `authored-workflows`, `inline-delivery`, and
+`canonical-state-read`. It does not claim `deterministic-scoring`, audit
+persistence, or context planning. Auditor folders include a complete typed
+observation fallback, but without the root scorer and validator they must return
+`NOT_SCORED/UNDECIDED` and cannot persist under `memory/audits/`.
+
+## Host capability projections
+
+The physical `lite|pro|governed` profile and the host capability profile are
+orthogonal. The former bounds which deterministic runtimes are present; the
+latter selects how the installed host discovers routes, references, and
+connectors. The typed source is
+[`host-capability-profiles.json`](../references/host-capability-profiles.json).
+
+| Host profile | Compatible payload | Routing surface | Generated routing files |
+|---|---|---|---|
+| `claude-code-plugin-host` | plugin/repository | eight slash commands | none; `commands/` remains authoritative |
+| `generic-shared-root-host` | plugin/repository | eight router-skill facades | `router-facades/<discipline>/SKILL.md` plus a typed sidecar manifest |
+| `standalone-skill-host` | one-folder standalone skill | direct skill invocation | none |
+
+Every plugin host projection, at every physical profile, ships the typed host,
+prompt, and context-module catalogs, `context-profile-resolver.py`, and the
+compact `policy-kernel.md`. This is model/control-plane support data, not a
+second Skill inventory. A one-folder standalone distribution deliberately does
+not acquire those root files: its complete `SKILL.md` remains the embedded
+explicit-policy representation, and its direct-skill semantics stay intact.
+
+The Governed physical profile additionally ships the generated
+`references/skill-capsules/` tree (120 per-skill capsules plus its index) and
+both capsule schemas. It also ships `context-assembly.py` and
+`context-assembly.schema.json`, which project a verified manifest into separate
+controller, model, tool, and deferred resource sets. The resolver selects a
+capsule only for the typed lean prompt representation; balanced keeps the
+complete business Skill while replacing repeated shared policy with the kernel,
+and explicit keeps both complete representations. Capsules are
+reference/control artifacts, never `SKILL.md` files: they are absent from every
+Skill catalog and do not change the canonical count of 120. Lite and Pro omit
+the capsule tree and the assembly runtime. Compact-profile certificates remain
+evaluation artifacts only: because the package does not yet carry complete
+paired evidence for trusted revalidation or a signed release attestation, every
+distribution build and manifest verification rejects non-empty
+`certified_bindings`. Production therefore remains `explicit`-only.
+
+Build an explicit generic-host projection with:
+
+```bash
+python3 scripts/build-distribution.py \
+  --plugin --profile lite \
+  --host-profile generic-shared-root-host \
+  --output /private/path/aaron-generic-host
+```
+
+The generic projection removes the unsupported command tree and sets
+`.claude-plugin/plugin.json.commands` to an empty list while preserving its
+exact 120 canonical business-skill declarations. It then generates eight
+non-canonical routing helpers: Narrative, SEO/GEO, Social, Email, Paid Ads,
+Influencer, Launch, and Protocol. There is deliberately no overlapping `auto`
+facade: these eight groups partition all 120 targets exactly once. A
+cross-discipline or ambiguous request stops with candidates for user selection.
+
+[`router-facade-sidecar.schema.json`](../references/router-facade-sidecar.schema.json)
+defines `router-facades/sidecar-manifest.json`. The sidecar binds the selected
+host-profile digest, system-catalog digest, all eight generated facade hashes,
+and all 120 target names, paths, phases, and source hashes. The distribution
+manifest binds the sidecar again. A missing, duplicate, unknown, stale, or
+multiply covered target fails the build. Facades carry
+`metadata.class: router` and `canonical_business_skill: false`; they are not
+added to `system-catalog.json`, `.claude-plugin/plugin.json.skills`,
+`skills.sh.json`, registry publication queues, or the canonical 120 count.
+
+Omitting `--host-profile` preserves existing behavior: plugin builds select
+`claude-code-plugin-host`; `--skill` builds select `standalone-skill-host`.
+An incompatible combination fails closed. Manifest 1.2 records the selected
+host profile and surfaces; read-only verification remains compatible with
+legacy manifest 1.0 and physical-profile manifest 1.1.
+
 Build the complete release-asset set with one command. The builder exports the
 exact Git object into a private directory, builds all three profiles from that
 export, creates canonical archives, safely unpacks each archive, and verifies
@@ -32,8 +109,8 @@ python3 scripts/build-release-assets.py \
   --source-repo /path/to/aaron-marketing-skills \
   --source-repository aaron-he-zhu/aaron-marketing-skills \
   --source-commit <exact-40-hex-release-commit> \
-  --version 19.0.0 \
-  --output /private/path/v19.0.0-release-assets
+  --version 19.1.0 \
+  --output /private/path/v19.1.0-release-assets
 ```
 
 Bare `--plugin` is a deprecated Governed-ceiling alias through v20; release
@@ -52,7 +129,7 @@ Verify an existing payload without rebuilding it with
 The manifest also binds `profile`, `capability_ceiling`, resolved capabilities,
 the catalog and profile-definition hashes, package budget, and optional pinned
 repository/commit provenance. `build-release-assets.py` emits fixed
-`aaron-marketing-skills-19.0.0-{lite,pro,governed}.tar.gz` names for v19,
+`aaron-marketing-skills-19.1.0-{lite,pro,governed}.tar.gz` names for v19.1,
 `SHA256SUMS`, and the machine-readable `release-assets.json` ledger defined by
 [`release-assets.schema.json`](../references/release-assets.schema.json).
 Archive paths are sorted under a fixed root; timestamps and owner fields are
@@ -183,7 +260,7 @@ frozen tree as the release candidate. Issue the private engineering receipt
 against that exact clean commit:
 
 ```bash
-RC_NAME="19.0.0-rc.1"
+RC_NAME="19.1.0-rc.1"
 python3 scripts/issue-engineering-release-receipt.py \
   --root "$PWD" \
   --semantic-evidence-run-id "<fresh-current-source-run-uuid>" \
@@ -210,7 +287,7 @@ export AARON_RELEASE_MATURITY_REPORT="/private/path/v19-engineering-maturity-rep
 export AARON_RELEASE_EVIDENCE_ROOT="/absolute/private/project-root"
 python3 scripts/verify-release-receipt.py "$AARON_RELEASE_RECEIPT" \
   --source-commit "$(git rev-parse --verify 'HEAD^{commit}')" \
-  --release-version 19.0.0 \
+  --release-version 19.1.0 \
   --required-gate engineering-validation-v19 \
   --maturity-report "$AARON_RELEASE_MATURITY_REPORT" \
   --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT"
@@ -244,7 +321,7 @@ rules and verify it separately:
 
 ```bash
 RELEASE_COMMIT="<exact-40-hex-v19-release-commit>"
-RC_NAME="19.0.0-rc.1"
+RC_NAME="19.1.0-rc.1"
 python3 scripts/verify-profile-outcomes.py \
   /private/path/v19-governed-promotion-outcomes.json \
   --stage governed-promotion \
@@ -271,9 +348,9 @@ package.
 Validated end-to-end at v18.0.0 (2026-07-13/14). Every step is resumable: a killed
 session loses at most one in-flight skill — re-run the same command.
 
-1. **Gate**: pass the exact-RC current-source real-provider engineering-maturity gate, retain the original raw evidence root, issue the private maturity report plus engineering release receipt, pass release validation and the exact 120/120 version check, and build two byte-identical release-asset sets against one RC commit.
-2. **Push**: clean tree → refresh/rebase deliberately → push the exact RC ref → run release validation for that ref/commit → integrate through the reviewed default-branch path without changing the RC tree. The RC commit must be reachable from refreshed `origin/main`.
-3. **Release**: preview with `python3 scripts/create-github-release.py`, then run `python3 scripts/create-github-release.py --live --receipt "$AARON_RELEASE_RECEIPT" --maturity-report "$AARON_RELEASE_MATURITY_REPORT" --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT" --asset-dir /private/path/v19.0.0-release-assets`. The owner-run command rapidly revalidates the private three-part evidence bundle and original semantic chain, then rechecks the exact five assets, green release workflow, clean/main-reachable source, annotated tag, `VERSIONS.md` notes, and downloaded GitHub assets. It never uploads the private inputs, resumes a same-commit tag safely, and treats an existing release as read-only; it never moves a tag or replaces assets.
+1. **Gate**: refresh/rebase deliberately, freeze one clean RC commit, pass the exact 120/120 version and complete local validation gates, run the current-source real-provider engineering-maturity gate, retain the original raw evidence root, issue the private maturity report plus engineering release receipt, and build two byte-identical release-asset sets against that exact commit.
+2. **Push and remote validation**: push the exact RC ref → require its ordinary PR CI → owner-dispatch release validation for that already-pushed ref/commit → integrate through the reviewed default-branch path without changing the RC tree. The release-validation workflow rejects a missing or differently resolved remote ref. The RC commit must remain reachable from refreshed `origin/main`; do not squash or rebase it during integration.
+3. **Release**: preview with `python3 scripts/create-github-release.py`, then run `python3 scripts/create-github-release.py --live --receipt "$AARON_RELEASE_RECEIPT" --maturity-report "$AARON_RELEASE_MATURITY_REPORT" --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT" --asset-dir /private/path/v19.1.0-release-assets`. The owner-run command rapidly revalidates the private three-part evidence bundle and original semantic chain, then rechecks the exact five assets, green release workflow, clean/main-reachable source, annotated tag, `VERSIONS.md` notes, and downloaded GitHub assets. It never uploads the private inputs, resumes a same-commit tag safely, and treats an existing release as read-only; it never moves a tag or replaces assets.
 4. **About**: `bash scripts/sync-about.sh` → review → `--live` — projects `.github/repo-about.json` onto the GitHub sidebar. *This step was silently skipped at v18.0.0 and the About kept advertising the previous release's framework names — it is part of the ritual, not an extra.*
 5. **Family prerequisites** (only when the release renamed/reshaped a family repo): rename the mirror first, then manually reconcile any `ids`-mode mirror's content (README + standard file + CHANGELOG + CITATION) — `ids` targets are verify-only and never auto-pushed.
 6. **Family**: `bash scripts/sync-family.sh` → review → `--live` → re-run the dry-run until all 15 report ✓.

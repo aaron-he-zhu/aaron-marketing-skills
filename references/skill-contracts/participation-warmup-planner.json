@@ -11,7 +11,7 @@
           "end_char": 200,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 269,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 202
         },
@@ -41,7 +41,7 @@
           "end_char": 427,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 271
         },
@@ -53,15 +53,15 @@
     "source": {
       "path": "social/explore/participation-warmup-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+      "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 38
       },
@@ -83,7 +83,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 34
       },
       {
@@ -126,7 +126,7 @@
           "end_char": 181,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -144,7 +144,7 @@
           "end_char": 239,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 183
         },
@@ -160,7 +160,7 @@
           "end_char": 378,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 240
         },
@@ -178,7 +178,7 @@
           "end_char": 429,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 380
         },
@@ -194,7 +194,7 @@
           "end_char": 655,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 430
         },
@@ -212,7 +212,7 @@
           "end_char": 1012,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 657
         },
@@ -225,7 +225,7 @@
     "summary_ref": {
       "path": "social/explore/participation-warmup-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+      "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -240,8 +240,8 @@
     "name": "participation-warmup-planner",
     "path": "social/explore/participation-warmup-planner/SKILL.md",
     "phase": "explore",
-    "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
-    "version": "19.0.0"
+    "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<community list or owned space> [target promotion window] [existing account history]",
@@ -255,7 +255,7 @@
           "end_char": 154,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -270,7 +270,7 @@
           "end_char": 266,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 156
         },
@@ -285,7 +285,7 @@
           "end_char": 329,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 268
         },
@@ -300,7 +300,7 @@
           "end_char": 455,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 331
         },
@@ -315,7 +315,7 @@
           "end_char": 578,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 457
         },
@@ -327,7 +327,7 @@
     "source": {
       "path": "social/explore/participation-warmup-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+      "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13"
     }
   },
   "output_contract": {
@@ -342,7 +342,7 @@
           "end_char": 65,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -358,7 +358,7 @@
           "end_char": 354,
           "path": "social/explore/participation-warmup-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971",
+          "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13",
           "span_basis": "field-text",
           "start_char": 67
         },
@@ -369,7 +369,7 @@
     "source": {
       "path": "social/explore/participation-warmup-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+      "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13"
     },
     "summary": "a per-community warming plan — account-history/tenure expectations (every threshold Estimated with a named source), a give-before-ask ledger spec, an etiquette + rule digest with last-verified dates, a human-executed weekly participation cadence, and testable warming → active graduation criteria — plus the owned-community variant (entry paths, incentives, lifecycle stages, exit hygiene) where the user runs their own space, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -380,12 +380,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -394,7 +394,7 @@
     "source": {
       "path": "social/explore/participation-warmup-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "081173b2b008b1e68bff1cc9d39cb7f4e3ba31fbc2bbd5d5fc8e319592d7c971"
+      "sha256": "0e00e47af4355044e326d3f10bd828fb11bcb68e4de6bb46930e288177eabb13"
     },
     "trigger_phrases": [
       "design entry incentives and member lifecycle for our own Discord",

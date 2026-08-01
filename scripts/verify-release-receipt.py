@@ -25,8 +25,8 @@ TIMESTAMP_RE = re.compile(
     r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$"
 )
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
-RC_RE = re.compile(r"^(?P<version>19\.0\.0)-rc\.[1-9][0-9]*$")
-RELEASE_VERSION = "19.0.0"
+RC_RE = re.compile(r"^(?P<version>19\.(?:0|1)\.0)-rc\.[1-9][0-9]*$")
+SUPPORTED_RELEASE_VERSIONS = frozenset({"19.0.0", "19.1.0"})
 MAX_RECEIPT_BYTES = 1024 * 1024
 PROFILE_TOP_KEYS = {
     "schema_version",
@@ -1470,8 +1470,10 @@ def validate_receipt(
     digest(expected_commit, SHA1_RE, "expected source commit")
     if not SEMVER_RE.fullmatch(expected_version):
         raise ReceiptError("expected release version must be numeric semver")
-    if expected_version != RELEASE_VERSION:
-        raise ReceiptError("expected release version is not supported by the v19 gate")
+    if expected_version not in SUPPORTED_RELEASE_VERSIONS:
+        raise ReceiptError(
+            "expected release version is not supported by the v19 gate"
+        )
     if not isinstance(receipt, dict):
         raise ReceiptError("receipt must be an object")
     gate = receipt.get("gate")

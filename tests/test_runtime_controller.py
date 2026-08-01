@@ -273,7 +273,9 @@ class RuntimeControllerTests(unittest.TestCase):
         session.write_text("{}\n", encoding="utf-8")
         self.assertTrue(controller.resume_run(self.project, request["run_id"])["resumable"])
         projection.write_text('{"changed":true}\n', encoding="utf-8")
-        with self.assertRaisesRegex(controller.runtime.RunEventError, "source no longer matches"):
+        with self.assertRaisesRegex(
+                controller.runtime.RunEventError,
+                "project candidate discovery differs from planned candidates"):
             controller.resume_run(self.project, request["run_id"])
 
     def test_success_rejects_open_tool_and_start_failure_is_typed(self):

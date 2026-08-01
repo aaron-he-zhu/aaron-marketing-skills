@@ -1,0 +1,328 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/evals/behavior-adapter-v3.schema.json",
+  "title": "Blind-discovery semantic behavior adapter protocol v3",
+  "description": "The candidate first selects from a complete 120-skill index. Expected routes, assertions, must-not criteria, and target-derived sources are judge-only and cannot enter either candidate prompt before discovery.",
+  "oneOf": [
+    {"$ref": "#/$defs/request"},
+    {"$ref": "#/$defs/result"}
+  ],
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "safeRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safeRef"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "version": {"type": "string", "minLength": 1, "maxLength": 128}
+      }
+    },
+    "publicCase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "type", "case_provenance", "evidence_binding", "scenario",
+        "input_summary", "source_ref", "source_line", "case_sha256",
+        "source_group"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/safeId"},
+        "type": {"const": "eval-case"},
+        "case_provenance": {"enum": ["simulated", "real"]},
+        "evidence_binding": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "behavior-adapter-v2.schema.json#/$defs/sourceRef"}
+          ]
+        },
+        "scenario": {"type": "string", "minLength": 1, "maxLength": 16000},
+        "input_summary": {"type": "string", "minLength": 1, "maxLength": 16000},
+        "source_ref": {"$ref": "#/$defs/safeRef"},
+        "source_line": {"type": "integer", "minimum": 1},
+        "case_sha256": {"$ref": "#/$defs/sha256"},
+        "source_group": {"enum": ["authored", "auto-routing", "derived-auditor"]}
+      }
+    },
+    "routingEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "skill", "discipline", "phase", "description", "boundary", "version",
+        "skill_ref", "skill_sha256", "contract_ref", "contract_sha256"
+      ],
+      "properties": {
+        "skill": {"$ref": "#/$defs/safeId"},
+        "discipline": {"$ref": "#/$defs/safeId"},
+        "phase": {"$ref": "#/$defs/safeId"},
+        "description": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "boundary": {"type": "string", "minLength": 1, "maxLength": 1024},
+        "version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "skill_ref": {"$ref": "#/$defs/safeRef"},
+        "skill_sha256": {"$ref": "#/$defs/sha256"},
+        "contract_ref": {"$ref": "#/$defs/safeRef"},
+        "contract_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "routingIndex": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_ref", "catalog_sha256", "system_catalog", "shared_contract",
+        "capsule_index", "entry_count", "entries", "index_sha256"
+      ],
+      "properties": {
+        "catalog_ref": {"const": "references/skill-contracts/index.json"},
+        "catalog_sha256": {"$ref": "#/$defs/sha256"},
+        "system_catalog": {"$ref": "#/$defs/sourceBinding"},
+        "shared_contract": {"$ref": "#/$defs/sourceBinding"},
+        "capsule_index": {"$ref": "#/$defs/sourceBinding"},
+        "entry_count": {"const": 120},
+        "entries": {
+          "type": "array", "minItems": 120, "maxItems": 120,
+          "items": {"$ref": "#/$defs/routingEntry"}
+        },
+        "index_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "assemblyBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assembly_sha256", "assembly_signature", "context_signature", "host_catalog_sha256",
+        "prompt_policy_sha256", "context_modules_sha256", "model_body_bytes",
+        "model_reduction_ratio", "model_resources", "model_resources_sha256"
+      ],
+      "properties": {
+        "assembly_sha256": {"$ref": "#/$defs/sha256"},
+        "assembly_signature": {"$ref": "#/$defs/sha256"},
+        "context_signature": {"$ref": "#/$defs/sha256"},
+        "host_catalog_sha256": {"$ref": "#/$defs/sha256"},
+        "prompt_policy_sha256": {"$ref": "#/$defs/sha256"},
+        "context_modules_sha256": {"$ref": "#/$defs/sha256"},
+        "model_body_bytes": {"type": "integer", "minimum": 0},
+        "model_reduction_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "model_resources": {
+          "type": "array", "minItems": 1, "maxItems": 128,
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["ref", "sha256", "bytes", "role"],
+            "properties": {
+              "ref": {"$ref": "#/$defs/safeRef"},
+              "sha256": {"$ref": "#/$defs/sha256"},
+              "bytes": {"type": "integer", "minimum": 0},
+              "role": {"$ref": "#/$defs/safeId"}
+            }
+          }
+        },
+        "model_resources_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "executionRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "host_profile", "model_id", "judge_model_id", "prompt_profile",
+        "evaluation_only", "toolset_id", "toolset_sha256", "assembly_binding"
+      ],
+      "properties": {
+        "host_profile": {"$ref": "#/$defs/safeId"},
+        "model_id": {"$ref": "#/$defs/safeId"},
+        "judge_model_id": {"$ref": "#/$defs/safeId"},
+        "prompt_profile": {"enum": ["explicit", "balanced", "lean"]},
+        "evaluation_only": {"type": "boolean"},
+        "toolset_id": {"$ref": "#/$defs/safeId"},
+        "toolset_sha256": {"$ref": "#/$defs/sha256"},
+        "assembly_binding": {
+          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/assemblyBinding"}]
+        }
+      },
+      "allOf": [{
+        "if": {"properties": {"prompt_profile": {"enum": ["balanced", "lean"]}}},
+        "then": {"properties": {"evaluation_only": {"const": true}}}
+      }]
+    },
+    "judgeContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expected_route", "assertions", "must_not"],
+      "properties": {
+        "expected_route": {"$ref": "#/$defs/safeId"},
+        "assertions": {
+          "type": "array", "minItems": 1, "maxItems": 64,
+          "items": {"type": "string", "minLength": 1, "maxLength": 4000}
+        },
+        "must_not": {
+          "type": "array", "minItems": 1, "maxItems": 64,
+          "items": {"type": "string", "minLength": 1, "maxLength": 4000}
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind", "protocol_version", "request_sha256", "case", "selection",
+        "routing_index", "execution", "judge_contract"
+      ],
+      "properties": {
+        "kind": {"const": "behavior-eval-request"},
+        "protocol_version": {"const": "3.0"},
+        "request_sha256": {"$ref": "#/$defs/sha256"},
+        "case": {"$ref": "#/$defs/publicCase"},
+        "selection": {"$ref": "behavior-adapter-v2.schema.json#/$defs/request/properties/selection"},
+        "routing_index": {"$ref": "#/$defs/routingIndex"},
+        "execution": {"$ref": "#/$defs/executionRequest"},
+        "judge_contract": {"$ref": "#/$defs/judgeContract"}
+      }
+    },
+    "routingResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selected_skill", "expected_skill", "correct", "routing_index_sha256",
+        "routing_response_sha256"
+      ],
+      "properties": {
+        "selected_skill": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]},
+        "expected_skill": {"$ref": "#/$defs/safeId"},
+        "correct": {"oneOf": [{"type": "null"}, {"type": "boolean"}]},
+        "routing_index_sha256": {"$ref": "#/$defs/sha256"},
+        "routing_response_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "executionProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "execution_mode", "adapter_name", "adapter_version", "host_name", "host_version",
+        "model_provider", "model_id", "model_revision", "judge_model_provider",
+        "judge_model_id", "judge_model_revision", "prompt_template_version",
+        "adapter_implementation_sha256", "prompt_template_sha256", "parameters_sha256",
+        "candidate_response_sha256", "judge_response_sha256", "judge_attempts",
+        "response_sha256", "started_at", "ended_at", "latency_ms"
+      ],
+      "properties": {
+        "execution_mode": {"enum": ["real", "simulated"]},
+        "adapter_name": {"$ref": "behavior-adapter-v2.schema.json#/$defs/safeId"},
+        "adapter_version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "host_name": {"$ref": "behavior-adapter-v2.schema.json#/$defs/safeId"},
+        "host_version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "model_provider": {"$ref": "behavior-adapter-v2.schema.json#/$defs/safeId"},
+        "model_id": {"type": "string", "minLength": 1, "maxLength": 256},
+        "model_revision": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 256}]},
+        "judge_model_provider": {"$ref": "behavior-adapter-v2.schema.json#/$defs/safeId"},
+        "judge_model_id": {"type": "string", "minLength": 1, "maxLength": 256},
+        "judge_model_revision": {"oneOf": [{"type": "null"}, {"type": "string", "minLength": 1, "maxLength": 256}]},
+        "adapter_implementation_sha256": {"$ref": "#/$defs/sha256"},
+        "prompt_template_version": {"type": "string", "minLength": 1, "maxLength": 128},
+        "prompt_template_sha256": {"$ref": "#/$defs/sha256"},
+        "parameters_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_response_sha256": {"$ref": "#/$defs/sha256"},
+        "judge_response_sha256": {"$ref": "#/$defs/sha256"},
+        "judge_attempts": {
+          "type": "array", "minItems": 0, "maxItems": 2,
+          "items": {"$ref": "behavior-adapter-v2.schema.json#/$defs/judgeAttempt"}
+        },
+        "response_sha256": {"$ref": "#/$defs/sha256"},
+        "started_at": {"type": "string", "format": "date-time"},
+        "ended_at": {"type": "string", "format": "date-time"},
+        "latency_ms": {"type": "integer", "minimum": 0, "maximum": 86400000}
+      }
+    },
+    "providerMetrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_tokens", "output_tokens", "total_tokens", "latency_ms", "tool_calls"],
+      "properties": {
+        "input_tokens": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+        "output_tokens": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+        "total_tokens": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+        "latency_ms": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+        "tool_calls": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]}
+      }
+    },
+    "contextResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "prompt_profile", "host_profile", "toolset_id", "toolset_sha256",
+        "candidate_context_sha256", "candidate_sources_sha256", "assembly_sha256",
+        "assembly_signature", "context_signature",
+        "host_catalog_sha256", "prompt_policy_sha256", "context_modules_sha256",
+        "capsule_index_sha256", "model_body_bytes", "model_reduction_ratio",
+        "model_resources_sha256"
+      ],
+      "properties": {
+        "prompt_profile": {"enum": ["explicit", "balanced", "lean"]},
+        "host_profile": {"$ref": "#/$defs/safeId"},
+        "toolset_id": {"$ref": "#/$defs/safeId"},
+        "toolset_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_context_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_sources_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "assembly_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "assembly_signature": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "context_signature": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "host_catalog_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "prompt_policy_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "context_modules_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]},
+        "capsule_index_sha256": {"$ref": "#/$defs/sha256"},
+        "model_body_bytes": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+        "model_reduction_ratio": {"oneOf": [{"type": "null"}, {"type": "number", "minimum": 0, "maximum": 1}]},
+        "model_resources_sha256": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/sha256"}]}
+      }
+    },
+    "stageLatency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["routing_ms", "execution_ms", "judge_ms"],
+      "properties": {
+        "routing_ms": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+        "execution_ms": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]},
+        "judge_ms": {"oneOf": [{"type": "null"}, {"type": "integer", "minimum": 0}]}
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind", "protocol_version", "case_id", "request_sha256", "outcome",
+        "routing", "execution_provenance", "provider_metrics", "context_binding",
+        "stage_latency_ms", "assertions", "failures"
+      ],
+      "properties": {
+        "kind": {"const": "behavior-eval-result"},
+        "protocol_version": {"const": "3.0"},
+        "case_id": {"$ref": "#/$defs/safeId"},
+        "request_sha256": {"$ref": "#/$defs/sha256"},
+        "outcome": {"enum": ["passed", "behavior-failed", "inconclusive", "host-failed", "adapter-failed"]},
+        "routing": {"$ref": "#/$defs/routingResult"},
+        "execution_provenance": {"$ref": "#/$defs/executionProvenance"},
+        "provider_metrics": {"$ref": "#/$defs/providerMetrics"},
+        "context_binding": {"$ref": "#/$defs/contextResult"},
+        "stage_latency_ms": {"$ref": "#/$defs/stageLatency"},
+        "assertions": {
+          "type": "array", "maxItems": 128,
+          "items": {"$ref": "behavior-adapter-v2.schema.json#/$defs/assertion"}
+        },
+        "failures": {
+          "type": "array", "maxItems": 64,
+          "items": {"$ref": "behavior-adapter-v2.schema.json#/$defs/failure"}
+        }
+      }
+    }
+  }
+}

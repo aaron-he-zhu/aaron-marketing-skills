@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/skill-capsule.schema.json",
+  "title": "Aaron model-facing skill capsule",
+  "description": "A compact, source-anchored model projection. Controllers retain the full Skill, machine contract, schemas, and authoritative policy; this capsule removes standard repeated harness prose while preserving routing, operational instructions, authority-adjacent controls, completion, runtime reads, and handoff behavior.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "capsule_id",
+    "identity",
+    "routing",
+    "execution",
+    "runtime_reads",
+    "handoff",
+    "policy",
+    "provenance"
+  ],
+  "properties": {
+    "$schema": {"const": "../skill-capsule.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "capsule_id": {"type": "string", "pattern": "^skill-capsule:[a-z0-9][a-z0-9-]*$"},
+    "identity": {"$ref": "#/$defs/identity"},
+    "routing": {"$ref": "#/$defs/routing"},
+    "execution": {"$ref": "#/$defs/execution"},
+    "runtime_reads": {
+      "type": "array",
+      "maxItems": 64,
+      "items": {"$ref": "#/$defs/fileRef"}
+    },
+    "handoff": {"$ref": "#/$defs/handoff"},
+    "policy": {"$ref": "#/$defs/policy"},
+    "provenance": {"$ref": "#/$defs/provenance"}
+  },
+  "$defs": {
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "safePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*\\/$)[A-Za-z0-9][A-Za-z0-9._:/-]*$"
+    },
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "semver": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
+    "nonEmptyText": {"type": "string", "minLength": 1, "maxLength": 50000},
+    "fileRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "discipline", "phase", "class"],
+      "properties": {
+        "name": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+        "version": {"$ref": "#/$defs/semver"},
+        "discipline": {"enum": ["narrative", "seo-geo", "social", "email", "ad", "influencer", "launch", "protocol"]},
+        "phase": {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"},
+        "class": {"oneOf": [{"type": "null"}, {"type": "string", "pattern": "^[a-z][a-z0-9-]*$"}]}
+      }
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["argument_hint", "boundary"],
+      "properties": {
+        "argument_hint": {"$ref": "#/$defs/nonEmptyText"},
+        "boundary": {"$ref": "#/$defs/nonEmptyText"}
+      }
+    },
+    "writeClause": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "side_effect", "permission_posture"],
+      "properties": {
+        "kind": {"enum": ["project-artifact", "registry-event", "external-action", "mixed", "unclassified"]},
+        "side_effect": {"enum": ["project-write", "registry-proposal", "external-mutation", "mixed", "unclassified"]},
+        "permission_posture": {"enum": ["permission-required", "prohibited", "unclassified"]}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reads",
+        "writes",
+        "write_controls",
+        "done_when",
+        "operational_markdown"
+      ],
+      "properties": {
+        "reads": {"$ref": "#/$defs/nonEmptyText"},
+        "writes": {"$ref": "#/$defs/nonEmptyText"},
+        "write_controls": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {"$ref": "#/$defs/writeClause"}
+        },
+        "done_when": {"$ref": "#/$defs/nonEmptyText"},
+        "operational_markdown": {"$ref": "#/$defs/nonEmptyText"}
+      }
+    },
+    "handoffItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "condition", "target_skills", "text"],
+      "properties": {
+        "kind": {"enum": ["primary", "conditional", "outcome", "termination", "unclassified"]},
+        "condition": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/nonEmptyText"}]},
+        "target_skills": {
+          "type": "array",
+          "maxItems": 120,
+          "uniqueItems": true,
+          "items": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"}
+        },
+        "text": {"$ref": "#/$defs/nonEmptyText"}
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["items"],
+      "properties": {
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 128,
+          "items": {"$ref": "#/$defs/handoffItem"}
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kernel", "always_on_overlays"],
+      "properties": {
+        "kernel": {"$ref": "#/$defs/fileRef"},
+        "always_on_overlays": {
+          "const": [
+            "consent",
+            "claims",
+            "pii-secrets",
+            "external-mutation",
+            "audit-verdict",
+            "release-provenance"
+          ]
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generator", "source", "machine_contract"],
+      "properties": {
+        "generator": {"const": "generate-skill-capsules-v1"},
+        "source": {"$ref": "#/$defs/fileRef"},
+        "machine_contract": {"$ref": "#/$defs/fileRef"}
+      }
+    }
+  }
+}

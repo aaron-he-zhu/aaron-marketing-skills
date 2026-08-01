@@ -3,18 +3,19 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.0.0
+- **Catalog version:** 19.1.0
 - **Framework:** ROAS
 - **Auditor:** ad-account-auditor
-- **Source digest:** `sha256:feab7466c35ec4300764147dc87dc7a94f05314831b63e94ba19d33e0417f6e0`
+- **Complete item definitions:** 20
+- **Source digest:** `sha256:46e4f0207b7566416ed3bf8e42085e4b53ed798c0b1aa3067e8217434cd49c06`
 
-This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
+This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
 ## Typed Framework Snapshot
 
 ```json
 {
-  "catalog_version": "19.0.0",
+  "catalog_version": "19.1.0",
   "frameworks": {
     "ROAS": {
       "construct": "incremental paid-media contribution and operating quality under declared business constraints",
@@ -84,6 +85,181 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
         "R2": {
           "unknown_policy": "needs-input",
           "veto": true
+        }
+      },
+      "items": {
+        "A1": {
+          "criterion": "Brand and placement safety are verified from placement evidence.",
+          "dimension": "A",
+          "name": null,
+          "policy": {
+            "unknown_policy": "needs-input",
+            "veto": true
+          },
+          "qualified_id": "ROAS-A1",
+          "veto": true
+        },
+        "A2": {
+          "criterion": "Targeting and query/audience intent fit.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-A2",
+          "veto": false
+        },
+        "A3": {
+          "criterion": "Negative keywords, exclusions, and suppression controls are maintained.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-A3",
+          "veto": false
+        },
+        "A4": {
+          "criterion": "Account structure supports the objective without avoidable overlap.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-A4",
+          "veto": false
+        },
+        "A5": {
+          "criterion": "Reach, overlap, and audience saturation are measured.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-A5",
+          "veto": false
+        },
+        "O1": {
+          "criterion": "Claims and required disclosures are substantiated.",
+          "dimension": "O",
+          "name": null,
+          "policy": {
+            "veto": true
+          },
+          "qualified_id": "ROAS-O1",
+          "veto": true
+        },
+        "O2": {
+          "criterion": "Platform policy and restricted-category requirements are satisfied.",
+          "dimension": "O",
+          "name": null,
+          "policy": {
+            "veto": true
+          },
+          "qualified_id": "ROAS-O2",
+          "veto": true
+        },
+        "O3": {
+          "criterion": "Economics, eligibility, terms, and availability are explicit.",
+          "dimension": "O",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-O3",
+          "veto": false
+        },
+        "O4": {
+          "criterion": "Ad-to-landing message and intent match.",
+          "dimension": "O",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-O4",
+          "veto": false
+        },
+        "O5": {
+          "criterion": "Hook, format, accessibility, and fatigue state fit the placement.",
+          "dimension": "O",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-O5",
+          "veto": false
+        },
+        "R1": {
+          "criterion": "Conversion instrumentation is verified against an own-data truth set.",
+          "dimension": "R",
+          "name": null,
+          "policy": {
+            "unknown_policy": "needs-input",
+            "veto": true
+          },
+          "qualified_id": "ROAS-R1",
+          "veto": true
+        },
+        "R2": {
+          "criterion": "Cross-platform attribution is deduplicated; windows and currency are normalized.",
+          "dimension": "R",
+          "name": null,
+          "policy": {
+            "unknown_policy": "needs-input",
+            "veto": true
+          },
+          "qualified_id": "ROAS-R2",
+          "veto": true
+        },
+        "R3": {
+          "criterion": "Incremental contribution or profit is measured against the declared target/control.",
+          "dimension": "R",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-R3",
+          "veto": false
+        },
+        "R4": {
+          "criterion": "CAC/CPA and payback satisfy the declared business constraint.",
+          "dimension": "R",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-R4",
+          "veto": false
+        },
+        "R5": {
+          "criterion": "Marginal return is read after conversion lag with uncertainty stated.",
+          "dimension": "R",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-R5",
+          "veto": false
+        },
+        "S1": {
+          "criterion": "Budget pacing remains within the declared plan and constraints.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-S1",
+          "veto": false
+        },
+        "S2": {
+          "criterion": "Bid strategy and learning-state changes are governed.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-S2",
+          "veto": false
+        },
+        "S3": {
+          "criterion": "Marginal CPC/CPM/CTR/CVR efficiency uses a normalized window.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-S3",
+          "veto": false
+        },
+        "S4": {
+          "criterion": "Frequency and creative decay are separated from audience saturation.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-S4",
+          "veto": false
+        },
+        "S5": {
+          "criterion": "Paid/organic and cross-campaign cannibalization are assessed.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "ROAS-S5",
+          "veto": false
         }
       },
       "profiles": {
@@ -205,6 +381,31 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
       "na"
     ],
     "veto_ceiling": 59
+  },
+  "standalone_observation_contract": {
+    "evidence_types": [
+      "measured",
+      "user-provided",
+      "calculated",
+      "estimated",
+      "proxy"
+    ],
+    "item_states": [
+      "pass",
+      "partial",
+      "fail",
+      "unknown",
+      "na"
+    ],
+    "result": {
+      "score_confidence": "not_scored",
+      "score_state": "NOT_SCORED",
+      "status": [
+        "NEEDS_INPUT",
+        "BLOCKED"
+      ],
+      "verdict": "UNDECIDED"
+    }
   }
 }
 ```
@@ -218,7 +419,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 5. Do not write under `memory/audits/`, mutate registries, or claim a publish/ship decision. Offer the observation set for later execution in a full plugin or repository install.
 6. Do not search parent directories, accept an unverified runtime root, download repository files, or hand-calculate a substitute score.
 
-The source digest binds this compact fallback to the authoritative runbook, scoring semantics, framework benchmark, run schema, and artifact schema without copying those maintenance sources into every standalone bundle.
+The complete item definitions above are compiled from the authoritative benchmark. The source digest binds this compact fallback to the runbook, scoring semantics, benchmark, run schema, and artifact schema; those maintenance documents remain repository-only and are not misrepresented as separately bundled files.
 
 ---
 

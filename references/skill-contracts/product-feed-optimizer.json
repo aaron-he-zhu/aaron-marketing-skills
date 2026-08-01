@@ -11,7 +11,7 @@
           "end_char": 59,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 161,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 61
         },
@@ -41,7 +41,7 @@
           "end_char": 214,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 163
         },
@@ -56,7 +56,7 @@
           "end_char": 302,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 216
         },
@@ -71,7 +71,7 @@
           "end_char": 389,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 304
         },
@@ -86,7 +86,7 @@
           "end_char": 464,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 391
         },
@@ -98,15 +98,15 @@
     "source": {
       "path": "ad/research/product-feed-optimizer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521"
+      "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 36
       },
@@ -142,7 +142,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 32
       }
     ],
@@ -178,7 +178,7 @@
           "end_char": 165,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -196,7 +196,7 @@
           "end_char": 450,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 166
         },
@@ -214,7 +214,7 @@
           "end_char": 666,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 451
         },
@@ -232,7 +232,7 @@
           "end_char": 932,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 667
         },
@@ -245,7 +245,7 @@
     "summary_ref": {
       "path": "ad/research/product-feed-optimizer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521"
+      "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -260,8 +260,8 @@
     "name": "product-feed-optimizer",
     "path": "ad/research/product-feed-optimizer/SKILL.md",
     "phase": "research",
-    "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
-    "version": "19.0.0"
+    "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<product-feed export (TSV/CSV/XML) or Merchant Center diagnostics> [goal: DR|prospecting] [platforms]",
@@ -275,7 +275,7 @@
           "end_char": 370,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -290,7 +290,7 @@
           "end_char": 586,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 372
         },
@@ -302,7 +302,7 @@
     "source": {
       "path": "ad/research/product-feed-optimizer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521"
+      "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b"
     }
   },
   "output_contract": {
@@ -317,7 +317,7 @@
           "end_char": 99,
           "path": "ad/research/product-feed-optimizer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521",
+          "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -328,7 +328,7 @@
     "source": {
       "path": "ad/research/product-feed-optimizer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521"
+      "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b"
     },
     "summary": "a feed remediation package — (1) a",
     "summary_source": "expected-output",
@@ -339,12 +339,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -353,7 +353,7 @@
     "source": {
       "path": "ad/research/product-feed-optimizer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "5634f06092093a39f2777b0d6505eac59450dcede50c6ceb95cdabfe81574521"
+      "sha256": "e5e4e7401353f59210d57dd2b820b58ed05c733420c4451def74c7376d51da6b"
     },
     "trigger_phrases": [
       "build feed-driven PMax asset groups",

@@ -11,7 +11,7 @@
           "end_char": 75,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 113,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 77
         },
@@ -41,7 +41,7 @@
           "end_char": 177,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 115
         },
@@ -56,7 +56,7 @@
           "end_char": 260,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 179
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0"
+      "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f"
     }
   },
   "context_hints": {
@@ -82,8 +82,8 @@
       },
       {
         "path": "references/echo-benchmark.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
         "source_line": 4
       },
@@ -91,7 +91,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 34
       }
     ],
@@ -127,7 +127,7 @@
           "end_char": 186,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -145,7 +145,7 @@
           "end_char": 380,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 187
         },
@@ -163,7 +163,7 @@
           "end_char": 579,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 381
         },
@@ -181,7 +181,7 @@
           "end_char": 932,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 581
         },
@@ -194,7 +194,7 @@
     "summary_ref": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0"
+      "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -209,8 +209,8 @@
     "name": "advocacy-program-designer",
     "path": "social/craft/advocacy-program-designer/SKILL.md",
     "phase": "craft",
-    "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
-    "version": "19.0.0"
+    "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<opt-in | assigned> [advocate list / team size] [platforms]",
@@ -224,7 +224,7 @@
           "end_char": 85,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
           "end_char": 255,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 87
         },
@@ -254,7 +254,7 @@
           "end_char": 302,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 257
         },
@@ -269,7 +269,7 @@
           "end_char": 397,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 304
         },
@@ -281,7 +281,7 @@
     "source": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0"
+      "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f"
     }
   },
   "output_contract": {
@@ -296,7 +296,7 @@
           "end_char": 68,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -312,7 +312,7 @@
           "end_char": 281,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 70
         },
@@ -328,7 +328,7 @@
           "end_char": 451,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0",
+          "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f",
           "span_basis": "field-text",
           "start_char": 283
         },
@@ -339,7 +339,7 @@
     "source": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0"
+      "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f"
     },
     "summary": "an advocacy program blueprint — mode decision (with assigned-mode risks flagged), voluntary opt-in roster spec, share kits with mandatory per-person variation, staggered human posting windows with anti-pod guardrails, per-person disclosure lines, and a Slack/Teams distribution spec — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -350,12 +350,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -364,7 +364,7 @@
     "source": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "fd95b8dccbaf83cfb0e126b7979ac9fe45e5d7d81fbfea4a8218f530c22a2ce0"
+      "sha256": "f8365c06d084beb5537a7e0c9940fee8e5666790fb4a4083c019023e0d34ef2f"
     },
     "trigger_phrases": [
       "build a share kit for the team",

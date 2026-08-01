@@ -11,7 +11,7 @@
           "end_char": 205,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 249,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 207
         },
@@ -41,7 +41,7 @@
           "end_char": 320,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 251
         },
@@ -53,15 +53,15 @@
     "source": {
       "path": "social/explore/platform-norm-profiler/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e"
+      "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e"
     }
   },
   "context_hints": {
     "bundle_references": [
       {
         "path": "CONNECTORS.md",
-        "reason_code": "explicit-runtime-read",
-        "requirement": "required",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
         "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
         "source_line": 38
       },
@@ -83,7 +83,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 34
       }
     ],
@@ -111,7 +111,7 @@
           "end_char": 192,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -129,7 +129,7 @@
           "end_char": 393,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 193
         },
@@ -147,7 +147,7 @@
           "end_char": 584,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 394
         },
@@ -165,7 +165,7 @@
           "end_char": 959,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 586
         },
@@ -178,7 +178,7 @@
     "summary_ref": {
       "path": "social/explore/platform-norm-profiler/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e"
+      "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -193,8 +193,8 @@
     "name": "platform-norm-profiler",
     "path": "social/explore/platform-norm-profiler/SKILL.md",
     "phase": "explore",
-    "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
-    "version": "19.0.0"
+    "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<platform(s) or 'staleness sweep'> [rows to verify]",
@@ -208,7 +208,7 @@
           "end_char": 235,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -223,7 +223,7 @@
           "end_char": 334,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 237
         },
@@ -238,7 +238,7 @@
           "end_char": 495,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 336
         },
@@ -253,7 +253,7 @@
           "end_char": 578,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 497
         },
@@ -265,7 +265,7 @@
     "source": {
       "path": "social/explore/platform-norm-profiler/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e"
+      "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e"
     }
   },
   "output_contract": {
@@ -280,7 +280,7 @@
           "end_char": 114,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -296,7 +296,7 @@
           "end_char": 202,
           "path": "social/explore/platform-norm-profiler/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e",
+          "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e",
           "span_basis": "field-text",
           "start_char": 116
         },
@@ -307,7 +307,7 @@
     "source": {
       "path": "social/explore/platform-norm-profiler/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e"
+      "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e"
     },
     "summary": "added or refreshed organic-engagement sections in the in-scope cards under `references/platforms/` (each row: value + label + source + last-verified + review-by dates), a staleness report over the cards touched, rule-snapshot pointer candidates for the active channels, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -318,12 +318,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -332,7 +332,7 @@
     "source": {
       "path": "social/explore/platform-norm-profiler/SKILL.md",
       "section": "frontmatter",
-      "sha256": "e4528111ee7f43835be78c39d83462c535e3d1f265dec35120c30ba4b9e24e1e"
+      "sha256": "bd690492aa03020910af07a925b2d83eb2af2ce744f090ae196405771e8f784e"
     },
     "trigger_phrases": [
       "build the norm card for this platform",

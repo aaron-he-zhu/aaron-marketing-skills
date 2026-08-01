@@ -11,7 +11,7 @@
           "end_char": 217,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877"
+      "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb"
     }
   },
   "context_hints": {
@@ -74,7 +74,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 31
       }
     ],
@@ -110,7 +110,7 @@
           "end_char": 154,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -128,7 +128,7 @@
           "end_char": 425,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 155
         },
@@ -146,7 +146,7 @@
           "end_char": 639,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 426
         },
@@ -164,7 +164,7 @@
           "end_char": 765,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 640
         },
@@ -180,7 +180,7 @@
           "end_char": 811,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 767
         },
@@ -193,7 +193,7 @@
     "summary_ref": {
       "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877"
+      "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -208,8 +208,8 @@
     "name": "ad-creative-builder",
     "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
     "phase": "orchestrate",
-    "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
-    "version": "19.0.0"
+    "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<product/offer> <destination URL> [platform: google|meta|...]",
@@ -223,7 +223,7 @@
           "end_char": 172,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -235,7 +235,7 @@
     "source": {
       "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877"
+      "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb"
     }
   },
   "output_contract": {
@@ -250,7 +250,7 @@
           "end_char": 64,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -266,7 +266,7 @@
           "end_char": 159,
           "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877",
+          "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb",
           "span_basis": "field-text",
           "start_char": 66
         },
@@ -277,7 +277,7 @@
     "source": {
       "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877"
+      "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb"
     },
     "summary": "a ready-to-import creative set (RSA headlines/descriptions, hooks, angle matrix) with a per-unit message-match note to the destination URL, plus the standard handoff summary for `memory/ad/ad-creative-builder/`.",
     "summary_source": "expected-output",
@@ -288,12 +288,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -302,7 +302,7 @@
     "source": {
       "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "9cef261ca0187f4a42f29ed49843ed2136491031a699fbc8b8272220f6fcf877"
+      "sha256": "efd899fc83fec4057cb74a604c29598089610aa61f6ded150136eec39bbe70bb"
     },
     "trigger_phrases": [
       "build ad creative at volume",

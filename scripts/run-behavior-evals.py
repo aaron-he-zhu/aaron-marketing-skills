@@ -34,9 +34,11 @@ SUITES_PATH = ROOT / "evals" / "deterministic-suites.json"
 PROFILES_PATH = ROOT / "evals" / "behavior-profiles.json"
 RUN_EVENTS_PATH = ROOT / "scripts" / "run-events.py"
 PROTOCOL_SCHEMA_REF = "evals/behavior-adapter-v2.schema.json"
+PROTOCOL_V3_SCHEMA_REF = "evals/behavior-adapter-v3.schema.json"
 OFFICIAL_PROJECT_ADAPTER_REF = "scripts/adapters/codex-behavior-adapter.py"
 OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES = (
     "evals/codex-behavior-candidate-output.schema.json",
+    "evals/codex-behavior-routing-output.schema.json",
     "evals/codex-behavior-model-output.schema.json",
 )
 OFFICIAL_ADAPTER_PYTHON_FLAGS = ("-I", "-S")
@@ -61,6 +63,25 @@ V2_RESULT_KEYS = {
     "kind", "protocol_version", "case_id", "request_sha256", "outcome",
     "execution_provenance", "assertions", "failures",
 }
+V3_RESULT_KEYS = V2_RESULT_KEYS | {
+    "routing", "provider_metrics", "context_binding", "stage_latency_ms",
+}
+V3_ROUTING_KEYS = {
+    "selected_skill", "expected_skill", "correct", "routing_index_sha256",
+    "routing_response_sha256",
+}
+V3_PROVIDER_METRIC_KEYS = {
+    "input_tokens", "output_tokens", "total_tokens", "latency_ms", "tool_calls",
+}
+V3_CONTEXT_BINDING_KEYS = {
+    "prompt_profile", "host_profile", "toolset_id", "toolset_sha256",
+    "candidate_context_sha256", "candidate_sources_sha256", "assembly_sha256",
+    "assembly_signature", "context_signature",
+    "host_catalog_sha256", "prompt_policy_sha256", "context_modules_sha256",
+    "capsule_index_sha256", "model_body_bytes", "model_reduction_ratio",
+    "model_resources_sha256",
+}
+V3_STAGE_LATENCY_KEYS = {"routing_ms", "execution_ms", "judge_ms"}
 EXECUTION_KEYS = {
     "execution_mode", "adapter_name", "adapter_version", "host_name", "host_version",
     "model_provider", "model_id", "judge_model_id", "model_revision", "prompt_template_version",
@@ -68,6 +89,9 @@ EXECUTION_KEYS = {
     "candidate_response_sha256",
     "judge_response_sha256", "judge_attempts", "response_sha256",
     "started_at", "ended_at", "latency_ms",
+}
+V3_EXECUTION_KEYS = EXECUTION_KEYS | {
+    "judge_model_provider", "judge_model_revision",
 }
 JUDGE_ATTEMPT_KEYS = {
     "attempt", "response_sha256", "size_bytes", "disposition", "diagnostic_code",
@@ -97,6 +121,7 @@ HOST_FAILURE_CODES = {
 }
 ADAPTER_FAILURE_CODES = {
     "ADAPTER_PROTOCOL", "ADAPTER_CRASH", "ADAPTER_COVERAGE", "ADAPTER_PROVENANCE",
+    "ADAPTER_CONTEXT_ASSEMBLY_MISMATCH",
 }
 INCONCLUSIVE_FAILURE_CODES = {"EVALUATOR_INCONCLUSIVE"}
 INFRA_FAILURE_CODES = HOST_FAILURE_CODES | ADAPTER_FAILURE_CODES | INCONCLUSIVE_FAILURE_CODES
@@ -123,10 +148,12 @@ FAILURE_CODE_CLASS = {
     "ADAPTER_CRASH": "adapter",
     "ADAPTER_COVERAGE": "adapter",
     "ADAPTER_PROVENANCE": "adapter",
+    "ADAPTER_CONTEXT_ASSEMBLY_MISMATCH": "adapter",
     "EVALUATOR_INCONCLUSIVE": "unknown",
 }
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SAFE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$")
+MODEL_STYLE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:/-]{0,255}$")
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$")
 PROTOCOL_ROUTING_COMMAND = {
     "channel-registry": "social",
@@ -441,6 +468,7 @@ def load_skill_machine_contracts():
             raise BehaviorEvalError("skill machine contract hash drift: %s" % contract_ref)
         identity = contract.get("identity")
         context_hints = contract.get("context_hints")
+        routing_contract = contract.get("routing_contract")
         expected_identity = skill_identity(skill)
         if (
                 contract.get("schema_version") != "1.0"
@@ -451,8 +479,14 @@ def load_skill_machine_contracts():
                 or identity.get("version") != expected_identity["version"]
                 or identity.get("sha256") != expected_identity["skill_sha256"]
                 or not isinstance(identity.get("discipline"), str)
+                or not isinstance(identity.get("phase"), str)
                 or not isinstance(context_hints, dict)
-                or not isinstance(context_hints.get("bundle_references"), list)):
+                or not isinstance(context_hints.get("bundle_references"), list)
+                or not isinstance(routing_contract, dict)
+                or not isinstance(routing_contract.get("description"), str)
+                or not routing_contract["description"].strip()
+                or not isinstance(routing_contract.get("boundary"), str)
+                or not routing_contract["boundary"].strip()):
             raise BehaviorEvalError("skill machine contract identity is invalid: %s" % contract_ref)
 
         sources = [
@@ -488,6 +522,12 @@ def load_skill_machine_contracts():
             "contract_sha256": digest,
             "source_refs": _merge_source_refs(sources),
             "discipline": identity["discipline"],
+            "phase": identity["phase"],
+            "version": identity["version"],
+            "skill_ref": identity["path"],
+            "skill_sha256": identity["sha256"],
+            "description": routing_contract["description"],
+            "boundary": routing_contract["boundary"],
         }
         seen_refs.add(contract_ref)
     if len(result) != index["contract_count"]:
@@ -756,6 +796,141 @@ def build_v2_requests(cases, profile, selection_reasons):
     return requests
 
 
+def build_v3_routing_index(machine_contracts=None):
+    """Build one closed, target-neutral discovery index over all 120 skills.
+
+    Every entry has the same fields.  The SUT routing stage receives only the
+    public routing fields; source paths and hashes remain host-side lookup data
+    until the model has selected a skill.  Because the index is a complete
+    partition, no target-specific row, ordering, or source path is injected.
+    """
+    if machine_contracts is None:
+        machine_contracts = load_skill_machine_contracts()
+    index, index_sha256 = load_project_json(MACHINE_CONTRACT_INDEX_REF)
+    entries = []
+    for item in index["contracts"]:
+        skill = item["skill"]
+        contract = machine_contracts.get(skill)
+        if contract is None:
+            raise BehaviorEvalError("blind routing index is missing skill %s" % skill)
+        entries.append({
+            "skill": skill,
+            "discipline": contract["discipline"],
+            "phase": contract["phase"],
+            "description": contract["description"],
+            "boundary": contract["boundary"],
+            "version": contract["version"],
+            "skill_ref": contract["skill_ref"],
+            "skill_sha256": contract["skill_sha256"],
+            "contract_ref": contract["contract_ref"],
+            "contract_sha256": contract["contract_sha256"],
+        })
+    if len(entries) != 120 or len({item["skill"] for item in entries}) != 120:
+        raise BehaviorEvalError("blind routing index must cover 120 unique skills")
+    value = {
+        "catalog_ref": MACHINE_CONTRACT_INDEX_REF,
+        "catalog_sha256": index_sha256,
+        "system_catalog": dict(index["source_catalog"]),
+        "shared_contract": dict(index["shared_contract"]),
+        "capsule_index": {
+            "path": "references/skill-capsules/index.json",
+            "sha256": hashlib.sha256(
+                project_bytes("references/skill-capsules/index.json")
+            ).hexdigest(),
+        },
+        "entry_count": 120,
+        "entries": entries,
+    }
+    value["index_sha256"] = sha256_json(value)
+    return value
+
+
+def build_v3_requests(
+        cases, profile, selection_reasons, *, host_profile,
+        model_id, judge_model_id, prompt_profile="explicit",
+        toolset_id="read-only-no-tools-v1", toolset_sha256=None,
+        evaluation_only=False, assembly_bindings=None):
+    """Build protocol-v3 blind-discovery requests.
+
+    Expected routes and behavior assertions live only in ``judge_contract``.
+    Adapter code is responsible for constructing candidate prompts from the
+    public case and complete routing index without serializing that contract.
+    """
+    if prompt_profile not in {"explicit", "balanced", "lean"}:
+        raise BehaviorEvalError("adapter v3 prompt_profile is unsupported")
+    if prompt_profile != "explicit" and not evaluation_only:
+        raise BehaviorEvalError("uncertified compact profiles are evaluation-only")
+    for label, value in (
+            ("host_profile", host_profile), ("model_id", model_id),
+            ("judge_model_id", judge_model_id), ("toolset_id", toolset_id)):
+        pattern = MODEL_STYLE_ID_RE if label in {"model_id", "judge_model_id"} else SAFE_ID_RE
+        if not isinstance(value, str) or not pattern.fullmatch(value):
+            raise BehaviorEvalError("adapter v3 %s must be a safe ID" % label)
+    if model_id == judge_model_id:
+        raise BehaviorEvalError(
+            "adapter v3 requires an independent judge_model_id distinct from model_id"
+        )
+    if toolset_sha256 is None:
+        toolset_sha256 = sha256_json({"toolset_id": toolset_id})
+    if not isinstance(toolset_sha256, str) or not SHA256_RE.fullmatch(toolset_sha256):
+        raise BehaviorEvalError("adapter v3 toolset_sha256 must be SHA-256")
+    assembly_bindings = {} if assembly_bindings is None else assembly_bindings
+    if not isinstance(assembly_bindings, dict):
+        raise BehaviorEvalError("adapter v3 assembly_bindings must be an object")
+    for case_id, binding in assembly_bindings.items():
+        if not isinstance(case_id, str) or not SAFE_ID_RE.fullmatch(case_id):
+            raise BehaviorEvalError("adapter v3 assembly binding case ID is invalid")
+        validate_v3_assembly_binding(binding)
+
+    machine_contracts = load_skill_machine_contracts()
+    routing_index = build_v3_routing_index(machine_contracts)
+    required_case_keys = {
+        "id", "type", "case_provenance", "evidence_binding", "target_skill", "scenario",
+        "input_summary", "expected_behavior", "failure_modes", "source_ref",
+        "source_line", "case_sha256", "source_group",
+    }
+    requests = []
+    for case in cases:
+        exact_object(case, required_case_keys, "semantic case")
+        target_contract = machine_contracts.get(case["target_skill"])
+        if target_contract is None:
+            raise BehaviorEvalError("semantic case has no current skill machine contract")
+        reasons = selection_reasons.get(case["id"], ["profile:%s" % profile])
+        if not isinstance(reasons, list) or not reasons:
+            raise BehaviorEvalError("semantic case selection reasons are missing")
+        public_case = {
+            key: case[key] for key in (
+                "id", "type", "case_provenance", "evidence_binding", "scenario",
+                "input_summary", "source_ref", "source_line", "case_sha256", "source_group",
+            )
+        }
+        request = {
+            "kind": "behavior-eval-request",
+            "protocol_version": "3.0",
+            "case": public_case,
+            "selection": {"profile": profile, "reasons": sorted(set(reasons))},
+            "routing_index": routing_index,
+            "execution": {
+                "host_profile": host_profile,
+                "model_id": model_id,
+                "judge_model_id": judge_model_id,
+                "prompt_profile": prompt_profile,
+                "evaluation_only": bool(evaluation_only),
+                "toolset_id": toolset_id,
+                "toolset_sha256": toolset_sha256,
+                "assembly_binding": assembly_bindings.get(case["id"]),
+            },
+            "judge_contract": {
+                "expected_route": case["target_skill"],
+                "assertions": list(case["expected_behavior"]),
+                "must_not": list(case["failure_modes"]),
+            },
+        }
+        request["request_sha256"] = sha256_json(request)
+        requests.append(request)
+    return requests
+
+
 def validate_v2_request_hash(request):
     if not isinstance(request, dict) or not isinstance(request.get("request_sha256"), str):
         raise BehaviorEvalError("adapter v2 request has no request_sha256")
@@ -763,7 +938,80 @@ def validate_v2_request_hash(request):
     recorded = payload.pop("request_sha256")
     if recorded != sha256_json(payload):
         raise BehaviorEvalError("adapter v2 request_sha256 does not match canonical request")
+
+
+def validate_v3_request_hash(request):
+    if not isinstance(request, dict) or not isinstance(request.get("request_sha256"), str):
+        raise BehaviorEvalError("adapter v3 request has no request_sha256")
+    if request.get("kind") != "behavior-eval-request" or request.get(
+            "protocol_version") != "3.0":
+        raise BehaviorEvalError("adapter v3 request identity is invalid")
+    execution = request.get("execution")
+    if not isinstance(execution, dict):
+        raise BehaviorEvalError("adapter v3 request execution is invalid")
+    if execution.get("model_id") == execution.get("judge_model_id"):
+        raise BehaviorEvalError(
+            "adapter v3 requires an independent judge_model_id distinct from model_id"
+        )
+    payload = dict(request)
+    recorded = payload.pop("request_sha256")
+    if recorded != sha256_json(payload):
+        raise BehaviorEvalError("adapter v3 request_sha256 does not match canonical request")
     return request
+
+
+def validate_v3_assembly_binding(binding):
+    keys = {
+        "assembly_sha256", "assembly_signature", "context_signature",
+        "host_catalog_sha256", "prompt_policy_sha256", "context_modules_sha256",
+        "model_body_bytes", "model_reduction_ratio", "model_resources",
+        "model_resources_sha256",
+    }
+    exact_object(binding, keys, "adapter v3 request assembly_binding")
+    for key in (
+            "assembly_sha256", "assembly_signature", "context_signature",
+            "host_catalog_sha256", "prompt_policy_sha256", "context_modules_sha256",
+            "model_resources_sha256"):
+        if not isinstance(binding[key], str) or not SHA256_RE.fullmatch(binding[key]):
+            raise BehaviorEvalError("adapter v3 assembly binding %s is invalid" % key)
+    resources = binding["model_resources"]
+    if not isinstance(resources, list) or not 1 <= len(resources) <= 128:
+        raise BehaviorEvalError("adapter v3 model resource projection is not bounded")
+    seen = set()
+    for position, resource in enumerate(resources):
+        exact_object(resource, {"ref", "sha256", "bytes", "role"},
+                     "adapter v3 model_resources[%d]" % position)
+        ref = resource["ref"]
+        path = Path(ref) if isinstance(ref, str) else None
+        if (
+                path is None or path.is_absolute() or "\\" in ref or "//" in ref
+                or ref.endswith("/") or any(part in {"", ".", ".."} for part in path.parts)):
+            raise BehaviorEvalError("adapter v3 model resource ref is unsafe")
+        if ref in seen:
+            raise BehaviorEvalError("adapter v3 model resource refs are not unique")
+        seen.add(ref)
+        if not isinstance(resource["sha256"], str) or not SHA256_RE.fullmatch(
+                resource["sha256"]):
+            raise BehaviorEvalError("adapter v3 model resource hash is invalid")
+        if (
+                not isinstance(resource["bytes"], int) or isinstance(resource["bytes"], bool)
+                or resource["bytes"] < 0):
+            raise BehaviorEvalError("adapter v3 model resource bytes are invalid")
+        if not isinstance(resource["role"], str) or not SAFE_ID_RE.fullmatch(resource["role"]):
+            raise BehaviorEvalError("adapter v3 model resource role is invalid")
+    if resources != sorted(resources, key=lambda item: (item["ref"], item["role"])):
+        raise BehaviorEvalError("adapter v3 model resources are not in canonical order")
+    if binding["model_resources_sha256"] != sha256_json(resources):
+        raise BehaviorEvalError("adapter v3 model resource hash does not bind its projection")
+    if (
+            not isinstance(binding["model_body_bytes"], int)
+            or isinstance(binding["model_body_bytes"], bool)
+            or binding["model_body_bytes"] != sum(item["bytes"] for item in resources)):
+        raise BehaviorEvalError("adapter v3 model_body_bytes differs from model resources")
+    ratio = binding["model_reduction_ratio"]
+    if isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or not 0 <= ratio <= 1:
+        raise BehaviorEvalError("adapter v3 model reduction ratio is invalid")
+    return binding
 
 
 def validate_adapter_result(value):
@@ -985,6 +1233,224 @@ def validate_v2_adapter_result(
     return value
 
 
+def validate_v3_adapter_result(
+        value, request, required_execution_mode="real",
+        expected_adapter_implementation_sha256=None):
+    """Validate v3 while reusing the mature v2 judge/provenance invariants."""
+    exact_object(value, V3_RESULT_KEYS, "adapter v3 result")
+    if value["kind"] != "behavior-eval-result" or value["protocol_version"] != "3.0":
+        raise BehaviorEvalError("adapter v3 result kind/protocol_version is invalid")
+    validate_v3_request_hash(request)
+
+    v3_execution = exact_object(
+        value["execution_provenance"], V3_EXECUTION_KEYS,
+        "adapter v3 execution_provenance",
+    )
+    if (
+            not isinstance(v3_execution["judge_model_provider"], str)
+            or not SAFE_ID_RE.fullmatch(v3_execution["judge_model_provider"])):
+        raise BehaviorEvalError(
+            "execution_provenance.judge_model_provider must be a safe ID"
+        )
+    if v3_execution["judge_model_revision"] is not None:
+        nonempty_string(
+            v3_execution["judge_model_revision"],
+            "execution_provenance.judge_model_revision", 256,
+        )
+    if v3_execution["model_id"] == v3_execution["judge_model_id"]:
+        raise BehaviorEvalError(
+            "adapter v3 result does not use an independent judge model"
+        )
+    if (
+            v3_execution["model_provider"]
+            == v3_execution["judge_model_provider"]
+            and v3_execution["model_revision"] is not None
+            and v3_execution["model_revision"]
+            == v3_execution["judge_model_revision"]):
+        raise BehaviorEvalError(
+            "adapter v3 SUT and judge resolve to the same immutable provider revision"
+        )
+
+    routing = exact_object(value["routing"], V3_ROUTING_KEYS, "adapter v3 routing")
+    expected_skill = request["judge_contract"]["expected_route"]
+    if routing["expected_skill"] != expected_skill:
+        raise BehaviorEvalError("adapter v3 routing expected_skill does not match judge contract")
+    selected_skill = routing["selected_skill"]
+    if selected_skill is not None and (
+            not isinstance(selected_skill, str) or not SAFE_ID_RE.fullmatch(selected_skill)):
+        raise BehaviorEvalError("adapter v3 routing selected_skill is invalid")
+    if routing["correct"] is not None and not isinstance(routing["correct"], bool):
+        raise BehaviorEvalError("adapter v3 routing correct must be boolean or null")
+    if routing["correct"] is not None and routing["correct"] is not (
+            selected_skill == expected_skill):
+        raise BehaviorEvalError("adapter v3 routing correctness does not match route identity")
+    if routing["routing_index_sha256"] != request["routing_index"]["index_sha256"]:
+        raise BehaviorEvalError("adapter v3 routing index hash does not match request")
+    if not isinstance(routing["routing_response_sha256"], str) or not SHA256_RE.fullmatch(
+            routing["routing_response_sha256"]):
+        raise BehaviorEvalError("adapter v3 routing response hash must be SHA-256")
+
+    provider = exact_object(
+        value["provider_metrics"], V3_PROVIDER_METRIC_KEYS, "adapter v3 provider_metrics",
+    )
+    for key, item in provider.items():
+        if item is not None and (
+                not isinstance(item, int) or isinstance(item, bool) or item < 0):
+            raise BehaviorEvalError(
+                "adapter v3 provider_metrics.%s must be a non-negative integer or null" % key
+            )
+    if all(provider[key] is not None for key in ("input_tokens", "output_tokens", "total_tokens")):
+        if provider["total_tokens"] != provider["input_tokens"] + provider["output_tokens"]:
+            raise BehaviorEvalError("adapter v3 provider token totals are inconsistent")
+
+    stage = exact_object(
+        value["stage_latency_ms"], V3_STAGE_LATENCY_KEYS, "adapter v3 stage_latency_ms",
+    )
+    for key, item in stage.items():
+        if item is not None and (
+                not isinstance(item, int) or isinstance(item, bool) or not 0 <= item <= 86_400_000):
+            raise BehaviorEvalError("adapter v3 stage latency %s is invalid" % key)
+
+    context = exact_object(
+        value["context_binding"], V3_CONTEXT_BINDING_KEYS, "adapter v3 context_binding",
+    )
+    execution_request = request["execution"]
+    for key in ("prompt_profile", "host_profile", "toolset_id", "toolset_sha256"):
+        if context[key] != execution_request[key]:
+            raise BehaviorEvalError("adapter v3 context binding %s differs from request" % key)
+    if not isinstance(context["candidate_context_sha256"], str) or not SHA256_RE.fullmatch(
+            context["candidate_context_sha256"]):
+        raise BehaviorEvalError("adapter v3 candidate context hash is invalid")
+    for key in (
+            "candidate_sources_sha256", "assembly_sha256", "assembly_signature",
+            "context_signature", "host_catalog_sha256", "prompt_policy_sha256",
+            "context_modules_sha256", "capsule_index_sha256", "model_resources_sha256"):
+        item = context[key]
+        if item is not None and (not isinstance(item, str) or not SHA256_RE.fullmatch(item)):
+            raise BehaviorEvalError("adapter v3 context binding %s is invalid" % key)
+    if context["model_body_bytes"] is not None and (
+            not isinstance(context["model_body_bytes"], int)
+            or isinstance(context["model_body_bytes"], bool)
+            or context["model_body_bytes"] < 0):
+        raise BehaviorEvalError("adapter v3 context model_body_bytes is invalid")
+    ratio = context["model_reduction_ratio"]
+    if ratio is not None and (
+            isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or not 0 <= ratio <= 1):
+        raise BehaviorEvalError("adapter v3 context model_reduction_ratio is invalid")
+    binding = execution_request["assembly_binding"]
+    echo_keys = {
+        "assembly_sha256", "assembly_signature", "context_signature", "host_catalog_sha256",
+        "prompt_policy_sha256", "context_modules_sha256", "model_body_bytes",
+        "model_reduction_ratio", "model_resources_sha256",
+    }
+    if binding is None:
+        if any(context[key] is not None for key in echo_keys):
+            raise BehaviorEvalError("adapter v3 returned an unrequested assembly binding")
+    else:
+        validate_v3_assembly_binding(binding)
+        if any(context[key] != binding[key] for key in echo_keys):
+            raise BehaviorEvalError("adapter v3 context assembly binding differs from request")
+        if (
+                context["candidate_sources_sha256"] is not None
+                and context["candidate_sources_sha256"] != binding["model_resources_sha256"]):
+            mismatch_codes = {
+                item["code"] for item in value["failures"] if isinstance(item, dict)
+            }
+            if mismatch_codes != {"ADAPTER_CONTEXT_ASSEMBLY_MISMATCH"}:
+                raise BehaviorEvalError(
+                    "adapter v3 candidate sources differ without a closed mismatch failure"
+                )
+    if context["capsule_index_sha256"] != request["routing_index"]["capsule_index"][
+            "sha256"]:
+        raise BehaviorEvalError("adapter v3 capsule index binding differs from request")
+
+    synthetic_case = {
+        "id": request["case"]["id"],
+        "expected_behavior": request["judge_contract"]["assertions"],
+        "failure_modes": request["judge_contract"]["must_not"],
+    }
+    synthetic_request = {
+        "case": synthetic_case,
+        "request_sha256": request["request_sha256"],
+    }
+    synthetic_result = {
+        key: value[key] for key in V2_RESULT_KEYS
+    }
+    synthetic_result["protocol_version"] = "2.0"
+    synthetic_result["execution_provenance"] = {
+        key: v3_execution[key] for key in EXECUTION_KEYS
+    }
+    # A wrong selected skill is a deterministic route-only terminal: no
+    # candidate or model-judge call is made, so its provenance correctly has
+    # no accepted judge attempt.  Reuse v2 to validate that no-judge ledger as
+    # an infrastructure-shaped synthetic envelope; v3 routing/failure
+    # semantics are checked explicitly below.
+    if value["outcome"] == "behavior-failed" and routing["correct"] is False:
+        synthetic_result["outcome"] = "adapter-failed"
+        synthetic_result["assertions"] = [
+            dict(item, verdict="not-observed") for item in value["assertions"]
+        ]
+        synthetic_result["failures"] = [{
+            "code": "ADAPTER_PROTOCOL",
+            "class": "adapter",
+            "retryable": False,
+            "summary": "Synthetic v2 validation of a v3 route-only terminal.",
+        }]
+    validate_v2_adapter_result(
+        synthetic_result, synthetic_request,
+        required_execution_mode=required_execution_mode,
+        expected_adapter_implementation_sha256=expected_adapter_implementation_sha256,
+    )
+    if value["execution_provenance"]["model_id"] != execution_request["model_id"]:
+        raise BehaviorEvalError("adapter v3 SUT model differs from request")
+    if value["execution_provenance"]["judge_model_id"] != execution_request["judge_model_id"]:
+        raise BehaviorEvalError("adapter v3 judge model differs from request")
+    route_failures = [
+        item for item in value["failures"]
+        if item["code"] == "ROUTING_WRONG_TARGET_OR_ORDER"
+    ]
+    if routing["correct"] is False:
+        if (
+                value["outcome"] != "behavior-failed"
+                or len(value["failures"]) != 1
+                or len(route_failures) != 1
+                or value["execution_provenance"]["judge_attempts"]):
+            raise BehaviorEvalError("wrong v3 route must deterministically fail routing")
+        route_failure = exact_object(
+            route_failures[0], FAILURE_KEYS, "adapter v3 route-only failure",
+        )
+        if (
+                route_failure["class"] != "routing"
+                or route_failure["retryable"] is not False):
+            raise BehaviorEvalError("adapter v3 route-only failure taxonomy is invalid")
+        nonempty_string(route_failure["summary"], "adapter v3 route-only failure summary", 2000)
+    if value["outcome"] in TERMINAL_EVAL_OUTCOMES and routing["correct"] is None:
+        raise BehaviorEvalError("terminal adapter v3 outcome requires a routing verdict")
+    if (
+            binding is not None and routing["correct"] is True
+            and value["outcome"] in TERMINAL_EVAL_OUTCOMES
+            and context["candidate_sources_sha256"] != binding["model_resources_sha256"]):
+        raise BehaviorEvalError("terminal v3 candidate lacks verified assembly-equivalent sources")
+    return value
+
+
+def validate_protocol_adapter_result(
+        value, request, required_execution_mode="real",
+        expected_adapter_implementation_sha256=None):
+    protocol = request.get("protocol_version") if isinstance(request, dict) else None
+    if protocol == "2.0":
+        return validate_v2_adapter_result(
+            value, request, required_execution_mode=required_execution_mode,
+            expected_adapter_implementation_sha256=expected_adapter_implementation_sha256,
+        )
+    if protocol == "3.0":
+        return validate_v3_adapter_result(
+            value, request, required_execution_mode=required_execution_mode,
+            expected_adapter_implementation_sha256=expected_adapter_implementation_sha256,
+        )
+    raise BehaviorEvalError("semantic adapter request protocol is unsupported")
+
+
 def run_event_runtime():
     """Load the existing private-run filesystem runtime without creating a package dependency."""
     global _RUN_EVENT_RUNTIME
@@ -1186,6 +1652,12 @@ def _bind_adapter_command_details(command, implementation_ref=None):
                 executable_identity, ref="command-executable", argv_index=0,
             )
     return bound_command, {
+        # ``subprocess.run`` receives an argv vector rather than shell text.
+        # Persist that exact, already-resolved logical vector so evidence
+        # verifiers can recompute adapter_command_sha256 instead of trusting an
+        # otherwise opaque digest.  The execution binding below deterministically
+        # describes the private staging rewrite used by the official adapter.
+        "logical_argv": list(bound_command),
         "executable_sha256": executable_identity["sha256"],
         "executable_size_bytes": executable_identity["size_bytes"],
         "implementation": implementation_identity,
@@ -1316,6 +1788,14 @@ def stage_bound_adapter(command, identity, source_snapshots):
 
 def verify_bound_adapter_command(command, identity):
     """Re-hash the executable and every actual runtime file around each batch."""
+    logical_argv = identity.get("logical_argv")
+    if (
+            not isinstance(logical_argv, list) or not logical_argv
+            or any(not isinstance(argument, str) or "\x00" in argument
+                   for argument in logical_argv)):
+        raise BehaviorEvalError(
+            "ADAPTER_PROVENANCE: exact logical adapter argv is missing"
+        )
     executable_path, executable_identity = _stable_file_digest(
         command[0], 536_870_912, "bound semantic adapter command executable",
     )
@@ -1350,6 +1830,8 @@ def verify_bound_adapter_command(command, identity):
         if (
                 command[1:3] != list(OFFICIAL_ADAPTER_PYTHON_FLAGS)
                 or command[4:6] != ["--project-root", str(ROOT)]
+                or command[0] != logical_argv[0]
+                or command[6:] != logical_argv[2:]
                 or not 0 <= index < len(command)
                 or executable_path != Path(sys.executable).resolve(strict=True)):
             raise BehaviorEvalError("ADAPTER_PROVENANCE: isolated Python bootstrap is invalid")
@@ -1371,6 +1853,10 @@ def verify_bound_adapter_command(command, identity):
                 "staged semantic adapter dependency %s" % dependency["ref"],
             )
         return
+    if command != logical_argv:
+        raise BehaviorEvalError(
+            "ADAPTER_PROVENANCE: executed adapter argv differs from its bound identity"
+        )
     index = source_index
     if not isinstance(index, int) or isinstance(index, bool) or not 0 <= index < len(command):
         raise BehaviorEvalError("ADAPTER_PROVENANCE: adapter implementation binding is invalid")
@@ -1409,7 +1895,7 @@ def _path_entry_exists(path):
 
 
 class SemanticEvidenceStore:
-    """Incremental hash-chained v2 results held under one private run lock."""
+    """Incremental hash-chained v2/v3 results held under one private run lock."""
 
     def __init__(
             self, runtime, root, run_id, requests, results_path, completion_path,
@@ -1466,7 +1952,7 @@ class SemanticEvidenceStore:
             request = self.request_by_id.get(case_id)
             if request is None:
                 raise BehaviorEvalError("semantic evidence contains an unknown case result")
-            validate_v2_adapter_result(
+            validate_protocol_adapter_result(
                 result, request, required_execution_mode=self.required_execution_mode,
                 expected_adapter_implementation_sha256=self.adapter_implementation_sha256,
             )
@@ -1547,7 +2033,7 @@ class SemanticEvidenceStore:
         request = self.request_by_id.get(case_id)
         if request is None:
             raise BehaviorEvalError("cannot persist an unknown semantic case result")
-        validate_v2_adapter_result(
+        validate_protocol_adapter_result(
             result, request, required_execution_mode=self.required_execution_mode,
             expected_adapter_implementation_sha256=self.adapter_implementation_sha256,
         )
@@ -1647,23 +2133,33 @@ def semantic_evidence_session(
     paths.extend(evidence_dir / (".%s.run-tmp" % item.name) for item in (manifest_path, completion_path))
     try:
         runtime.ensure_ignored(root, paths)
+        protocols = {request.get("protocol_version") for request in requests}
+        if len(protocols) != 1 or protocols.pop() not in {"2.0", "3.0"}:
+            raise BehaviorEvalError("semantic evidence requests must use one supported protocol")
+        protocol_version = requests[0]["protocol_version"]
+        protocol_ref = (
+            PROTOCOL_SCHEMA_REF if protocol_version == "2.0" else PROTOCOL_V3_SCHEMA_REF
+        )
         request_bytes = b"".join(
             (canonical_json(request) + "\n").encode("utf-8") for request in requests
         )
         manifest = {
             "schema_version": "1.0",
             "kind": "semantic-eval-evidence",
-            "protocol_version": "2.0",
+            "protocol_version": protocol_version,
             "run_id": run_id,
             "profile": selection["profile"],
             "request_count": len(requests),
             "request_stream_sha256": hashlib.sha256(request_bytes).hexdigest(),
+            "selection_provenance": selection["provenance"],
             "selection_sha256": sha256_json({
                 "profile": selection["profile"],
                 "case_ids": [request["case"]["id"] for request in requests],
                 "provenance": selection["provenance"],
             }),
-            "adapter_command_sha256": sha256_json(command),
+            "adapter_command_sha256": sha256_json(
+                command_identity["logical_argv"]
+            ),
             "adapter_command_identity": command_identity,
             "runner": {
                 "ref": "scripts/run-behavior-evals.py",
@@ -1672,8 +2168,8 @@ def semantic_evidence_session(
                 ).hexdigest(),
             },
             "protocol_schema": {
-                "ref": PROTOCOL_SCHEMA_REF,
-                "sha256": hashlib.sha256(project_bytes(PROTOCOL_SCHEMA_REF)).hexdigest(),
+                "ref": protocol_ref,
+                "sha256": hashlib.sha256(project_bytes(protocol_ref)).hexdigest(),
             },
             "required_execution_mode": required_execution_mode,
         }
@@ -1687,7 +2183,7 @@ def semantic_evidence_session(
                 if canonical_json(installed_manifest) != canonical_json(manifest):
                     raise BehaviorEvalError("semantic evidence manifest does not match this run")
                 installed_requests = _stable_evidence_bytes(
-                    runtime, requests_path, 32_000_000, "semantic evidence requests",
+                    runtime, requests_path, 160_000_000, "semantic evidence requests",
                 )
                 if installed_requests != request_bytes:
                     raise BehaviorEvalError("semantic evidence requests do not match this run")
@@ -1782,6 +2278,8 @@ def run_adapter_v2(
     resume_evidence=False,
     evidence_root=ROOT,
     adapter_implementation_ref=None,
+    _protocol_version="2.0",
+    _v3_options=None,
 ):
     try:
         command = shlex.split(command_text)
@@ -1794,13 +2292,24 @@ def run_adapter_v2(
     )
     cases = selection["cases"]
     profile = selection["profile"]
-    requests = build_v2_requests(cases, profile, selection["selection_reasons"])
-    for request in requests:
-        validate_v2_request_hash(request)
+    if _protocol_version == "2.0":
+        requests = build_v2_requests(cases, profile, selection["selection_reasons"])
+        for request in requests:
+            validate_v2_request_hash(request)
+    elif _protocol_version == "3.0":
+        if not isinstance(_v3_options, dict):
+            raise BehaviorEvalError("adapter v3 execution options are missing")
+        requests = build_v3_requests(
+            cases, profile, selection["selection_reasons"], **_v3_options
+        )
+        for request in requests:
+            validate_v3_request_hash(request)
+    else:
+        raise BehaviorEvalError("semantic adapter protocol is unsupported")
     if batch_size is None:
         batch_size = len(requests) or 1
     if not isinstance(batch_size, int) or isinstance(batch_size, bool) or not 1 <= batch_size <= 1000:
-        raise BehaviorEvalError("adapter v2 batch_size must be 1..1000")
+        raise BehaviorEvalError("adapter batch_size must be 1..1000")
     with contextlib.ExitStack() as stack:
         command, adapter_environment, adapter_cwd = stack.enter_context(
             stage_bound_adapter(logical_command, command_identity, source_snapshots)
@@ -1813,8 +2322,8 @@ def run_adapter_v2(
         pending = evidence.pending_requests() if evidence else requests
         batch_count = (len(pending) + batch_size - 1) // batch_size
         print(
-            "RUN   semantic-adapter-v2[%s]: %d case(s), %d pending, %d batch(es)"
-            % (profile, len(requests), len(pending), batch_count)
+            "RUN   semantic-adapter-v%s[%s]: %d case(s), %d pending, %d batch(es)"
+            % (_protocol_version[0], profile, len(requests), len(pending), batch_count)
         )
         outputs = []
         for batch_number, start in enumerate(range(0, len(pending), batch_size), 1):
@@ -1880,7 +2389,7 @@ def run_adapter_v2(
                         "ADAPTER_COVERAGE: adapter batch %d returned unknown ID %s"
                         % (batch_number, case_id)
                     )
-                validate_v2_adapter_result(
+                validate_protocol_adapter_result(
                     value, request_by_id[case_id], required_execution_mode=required_execution_mode,
                     expected_adapter_implementation_sha256=(
                         command_identity["implementation"]["sha256"]
@@ -1928,16 +2437,48 @@ def run_adapter_v2(
         provenance_counts[status] = provenance_counts.get(status, 0) + 1
     if behavior_failed or inconclusive or host_failed or adapter_failed:
         return [
-            "semantic adapter v2 failed: behavior=%d inconclusive=%d host=%d adapter=%d total=%d"
-            % (len(behavior_failed), len(inconclusive), len(host_failed),
+            "semantic adapter v%s failed: behavior=%d inconclusive=%d host=%d adapter=%d total=%d"
+            % (_protocol_version[0], len(behavior_failed), len(inconclusive), len(host_failed),
                len(adapter_failed), len(outputs))
         ]
     print(
-        "PASS  semantic-adapter-v2: %d/%d execution=%s case_provenance=%s"
-        % (len(outputs), len(requests), required_execution_mode,
+        "PASS  semantic-adapter-v%s: %d/%d execution=%s case_provenance=%s"
+        % (_protocol_version[0], len(outputs), len(requests), required_execution_mode,
            ",".join("%s:%d" % item for item in sorted(provenance_counts.items())))
     )
     return []
+
+
+def run_adapter_v3(
+        command_text, selection, timeout, *, host_profile, model_id, judge_model_id,
+        prompt_profile="explicit", evaluation_only=False,
+        toolset_id="read-only-no-tools-v1", toolset_sha256=None,
+        required_execution_mode="real", batch_size=None, evidence_run_id=None,
+        resume_evidence=False, evidence_root=ROOT, adapter_implementation_ref=None,
+        assembly_bindings=None):
+    """Official protocol-v3 entry point using the same staged/evidence runtime as v2."""
+    return run_adapter_v2(
+        command_text,
+        selection,
+        timeout,
+        required_execution_mode=required_execution_mode,
+        batch_size=batch_size,
+        evidence_run_id=evidence_run_id,
+        resume_evidence=resume_evidence,
+        evidence_root=evidence_root,
+        adapter_implementation_ref=adapter_implementation_ref,
+        _protocol_version="3.0",
+        _v3_options={
+            "host_profile": host_profile,
+            "model_id": model_id,
+            "judge_model_id": judge_model_id,
+            "prompt_profile": prompt_profile,
+            "toolset_id": toolset_id,
+            "toolset_sha256": toolset_sha256,
+            "evaluation_only": evaluation_only,
+            "assembly_bindings": assembly_bindings,
+        },
+    )
 
 
 def run_adapter(command_text, filters, timeout):
@@ -2022,6 +2563,28 @@ def emit_semantic_plan(selection, destination):
         raise BehaviorEvalError("cannot write semantic plan %s: %s" % (destination, exc)) from exc
 
 
+def load_v3_assembly_bindings(path):
+    """Load a bounded host-side case-to-assembly map for protocol-v3 execution."""
+    source = Path(path)
+    try:
+        status = source.lstat()
+        if source.is_symlink() or not source.is_file() or status.st_nlink != 1:
+            raise OSError("not a single-link regular file")
+        if status.st_size > 16_000_000:
+            raise OSError("file exceeds 16000000 bytes")
+        raw = source.read_bytes()
+    except OSError as exc:
+        raise BehaviorEvalError("cannot read v3 assembly bindings: %s" % exc) from exc
+    value = strict_json_loads(raw, "v3 assembly bindings")
+    if not isinstance(value, dict):
+        raise BehaviorEvalError("v3 assembly bindings must be a case-keyed object")
+    for case_id, binding in value.items():
+        if not isinstance(case_id, str) or not SAFE_ID_RE.fullmatch(case_id):
+            raise BehaviorEvalError("v3 assembly binding case ID is invalid")
+        validate_v3_assembly_binding(binding)
+    return value
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", action="append", default=[], help="Run only this deterministic suite ID.")
@@ -2029,13 +2592,35 @@ def main(argv=None):
     parser.add_argument(
         "--adapter-implementation-ref",
         help=(
-            "Project-relative protocol-v2 adapter implementation present in "
+            "Project-relative protocol-v2/v3 adapter implementation present in "
             "--adapter-command; its exact bytes are bound to evidence."
         ),
     )
     parser.add_argument(
-        "--adapter-protocol", choices=("1", "2"),
+        "--adapter-protocol", choices=("1", "2", "3"),
         help="Semantic adapter protocol. Existing adapter commands default to v1; plan output implies v2.",
+    )
+    parser.add_argument("--host-profile", help="Protocol-v3 host capability profile identity.")
+    parser.add_argument("--model-id", help="Protocol-v3 SUT model identity; must match the adapter.")
+    parser.add_argument(
+        "--judge-model-id", help="Protocol-v3 judge model identity; must match the adapter."
+    )
+    parser.add_argument(
+        "--prompt-profile", choices=("explicit", "balanced", "lean"), default="explicit",
+        help="Protocol-v3 model prompt representation (compact profiles remain evaluation-only).",
+    )
+    parser.add_argument(
+        "--evaluation-only", action="store_true",
+        help="Mark a protocol-v3 compact profile as non-deployable evaluation traffic.",
+    )
+    parser.add_argument("--toolset-id", default="read-only-no-tools-v1")
+    parser.add_argument("--toolset-sha256")
+    parser.add_argument(
+        "--assembly-bindings-json",
+        help=(
+            "Protocol-v3 host-side JSON map from selected case IDs to exact "
+            "context assembly bindings. Required for release-grade arm evidence."
+        ),
     )
     parser.add_argument("--adapter-only", action="store_true", help="Skip deterministic suites.")
     parser.add_argument("--case", action="append", default=[], help="Adapter case ID or target-skill filter.")
@@ -2058,15 +2643,15 @@ def main(argv=None):
     parser.add_argument("--adapter-timeout", type=int, default=1800)
     parser.add_argument(
         "--adapter-batch-size", type=int, default=25,
-        help="Protocol-v2 cases per adapter subprocess; timeout applies to each batch.",
+        help="Protocol-v2/v3 cases per adapter subprocess; timeout applies to each batch.",
     )
     parser.add_argument(
         "--evidence-run-id",
-        help="Canonical UUID under ignored memory/runs/ for protocol-v2 request/result evidence.",
+        help="Canonical UUID under ignored memory/runs/ for protocol-v2/v3 request/result evidence.",
     )
     parser.add_argument(
         "--resume-evidence", action="store_true",
-        help="Resume the exact protocol-v2 request set recorded by --evidence-run-id.",
+        help="Resume the exact protocol-v2/v3 request set recorded by --evidence-run-id.",
     )
     args = parser.parse_args(argv)
     if args.adapter_only and not (args.adapter_command or args.plan_json or args.list_cases):
@@ -2078,7 +2663,7 @@ def main(argv=None):
     )
     profile = args.profile or "smoke"
     if args.adapter_command and args.adapter_protocol is None and args.profile is not None:
-        parser.error("--profile with an adapter requires explicit --adapter-protocol 2")
+        parser.error("--profile with an adapter requires explicit --adapter-protocol 2 or 3")
     if (args.changed_from or args.changed_file) and profile != "change-aware":
         parser.error("--changed-from/--changed-file require --profile change-aware")
     if args.changed_from and args.changed_file:
@@ -2087,26 +2672,44 @@ def main(argv=None):
         parser.error("semantic plan output uses adapter protocol v2 cases")
     if args.resume_evidence and not args.evidence_run_id:
         parser.error("--resume-evidence requires --evidence-run-id")
-    if args.adapter_command and adapter_protocol == "2" and not args.evidence_run_id:
-        parser.error("protocol-v2 adapter execution requires --evidence-run-id")
-    if args.adapter_command and adapter_protocol == "2" and not args.adapter_implementation_ref:
-        parser.error("protocol-v2 adapter execution requires --adapter-implementation-ref")
+    if args.adapter_command and adapter_protocol in {"2", "3"} and not args.evidence_run_id:
+        parser.error("protocol-v2/v3 adapter execution requires --evidence-run-id")
+    if args.adapter_command and adapter_protocol in {"2", "3"} and not args.adapter_implementation_ref:
+        parser.error("protocol-v2/v3 adapter execution requires --adapter-implementation-ref")
     if args.adapter_implementation_ref and not (
-            args.adapter_command and adapter_protocol == "2"):
-        parser.error("--adapter-implementation-ref requires a protocol-v2 adapter execution")
+            args.adapter_command and adapter_protocol in {"2", "3"}):
+        parser.error("--adapter-implementation-ref requires a protocol-v2/v3 adapter execution")
     if (args.evidence_run_id or args.resume_evidence) and not (
-            args.adapter_command and adapter_protocol == "2"):
-        parser.error("semantic evidence options require a protocol-v2 adapter execution")
+            args.adapter_command and adapter_protocol in {"2", "3"}):
+        parser.error("semantic evidence options require a protocol-v2/v3 adapter execution")
+    if adapter_protocol == "3" and args.adapter_command and not all((
+            args.host_profile, args.model_id, args.judge_model_id)):
+        parser.error("protocol-v3 execution requires --host-profile, --model-id, and --judge-model-id")
+    if adapter_protocol != "3" and (
+            args.host_profile or args.model_id or args.judge_model_id
+            or args.prompt_profile != "explicit" or args.evaluation_only
+            or args.toolset_sha256 or args.assembly_bindings_json):
+        parser.error("prompt/host/model/toolset v3 options require --adapter-protocol 3")
+    if args.assembly_bindings_json and not args.adapter_command:
+        parser.error("--assembly-bindings-json requires protocol-v3 adapter execution")
+    if args.prompt_profile in {"balanced", "lean"} and not args.evaluation_only:
+        parser.error("balanced/lean protocol-v3 profiles require --evaluation-only")
+    if args.evaluation_only and args.prompt_profile == "explicit":
+        parser.error("--evaluation-only is only for balanced/lean prompt profiles")
     if not 1 <= args.adapter_timeout <= 7200:
         parser.error("--adapter-timeout must be 1..7200 seconds")
     if not 1 <= args.adapter_batch_size <= 1000:
         parser.error("--adapter-batch-size must be 1..1000")
     failures = []
     try:
+        assembly_bindings = (
+            load_v3_assembly_bindings(args.assembly_bindings_json)
+            if args.assembly_bindings_json else None
+        )
         if not args.adapter_only:
             failures.extend(run_deterministic(set(args.suite)))
         selection = None
-        if adapter_protocol == "2" and (
+        if adapter_protocol in {"2", "3"} and (
                 args.adapter_command or args.plan_json or args.list_cases):
             selection = select_semantic_cases(
                 profile,
@@ -2121,7 +2724,7 @@ def main(argv=None):
                 failures.extend(
                     run_adapter_v1(args.adapter_command, set(args.case), args.adapter_timeout)
                 )
-            else:
+            elif adapter_protocol == "2":
                 failures.extend(
                     run_adapter_v2(
                         args.adapter_command,
@@ -2131,6 +2734,26 @@ def main(argv=None):
                         evidence_run_id=args.evidence_run_id,
                         resume_evidence=args.resume_evidence,
                         adapter_implementation_ref=args.adapter_implementation_ref,
+                    )
+                )
+            else:
+                failures.extend(
+                    run_adapter_v3(
+                        args.adapter_command,
+                        selection,
+                        args.adapter_timeout,
+                        host_profile=args.host_profile,
+                        model_id=args.model_id,
+                        judge_model_id=args.judge_model_id,
+                        prompt_profile=args.prompt_profile,
+                        evaluation_only=args.evaluation_only,
+                        toolset_id=args.toolset_id,
+                        toolset_sha256=args.toolset_sha256,
+                        batch_size=args.adapter_batch_size,
+                        evidence_run_id=args.evidence_run_id,
+                        resume_evidence=args.resume_evidence,
+                        adapter_implementation_ref=args.adapter_implementation_ref,
+                        assembly_bindings=assembly_bindings,
                     )
                 )
     except BehaviorEvalError as exc:

@@ -35,11 +35,14 @@
       "const": true
     },
     "release_version": {
-      "const": "19.0.0"
+      "enum": [
+        "19.0.0",
+        "19.1.0"
+      ]
     },
     "release_candidate": {
       "type": "string",
-      "pattern": "^19\\.0\\.0-rc\\.[1-9][0-9]*$"
+      "pattern": "^19\\.(?:0|1)\\.0-rc\\.[1-9][0-9]*$"
     },
     "source_commit": {
       "$ref": "#/$defs/sha1"

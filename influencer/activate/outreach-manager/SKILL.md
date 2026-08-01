@@ -4,13 +4,13 @@ slug: outreach-manager
 displayName: "Outreach Manager · 建联外联管理"
 summary: "红人及媒体建联:分层触达序列、跟进节奏与回复率优化"
 description: 'Use when the user asks to "write influencer outreach", "follow up with a creator", "pitch a journalist, hunter, or launch partner", or "negotiate partnership terms"; produces personalized pitches, multi-touch follow-up sequences, negotiation scripts with objection handling, and a status pipeline tracker — the shared outreach mechanics engine for creator, media/analyst, launch-partner, and social-selling / advocate-recruitment targets. Not for finalizing signed agreements — use contract-helper; not for media-list tiering, embargo terms, or press-release structure — use press-media-relations. 达人邀约建联/合作谈判话术'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Activate the skill when the user wants to contact a creator, journalist, analyst, hunter, or launch partner; draft or personalize a pitch message; build a follow-up cadence for non-responders; re-engage a past partner; negotiate rate or scope; handle pricing objections; or track outreach status across a target list. For media targets the list/angle/embargo artifact comes from press-media-relations — this skill executes the pitch mechanics."
 argument-hint: "<influencer handle or list> [platform] [budget]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "influencer", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "activate"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "influencer", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "activate"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Outreach Manager
@@ -57,11 +57,13 @@ Where a connector could speed up the work, use these `~~` placeholders:
 - `~~CRM` — sync pipeline status, last-contact dates, and next actions.
 - `~~email/DM tool` — schedule and send the follow-up cadence.
 
-See [CONNECTORS.md](../../../CONNECTORS.md) for the free/keyless recipe per category. No integration is required; when one is absent, ask the user for the inputs directly.
+See [CONNECTORS.md](../../../CONNECTORS.md) for the free/keyless recipe per category. No integration is required; when one is absent, ask the user for the inputs directly. Missing target or campaign details do not block a reversible draft: use explicit bracketed placeholders, generalize any unverified personalization, and identify the smallest inputs needed to finish it.
 
 ## Instructions
 
 When a user requests outreach help, run these steps. Each step has a fill-in template in [references/templates.md](references/templates.md) — copy the matching block and replace the placeholders. Apply the hard copy rules in [references/cold-copy-rules.md](references/cold-copy-rules.md) before any message ships.
+
+**Draft/send boundary**: drafting is reversible; sending or scheduling is an external side effect. Even when the shortlist or personalization facts are missing, produce an inline first-touch draft labeled `DRAFT — NOT SENT` with explicit placeholders and no invented facts, then state what is still needed for personalization. Never stop with only an input request when a safe placeholder draft can be produced. Do not send or schedule anything until the user explicitly approves the exact recipients, channel, and message or cadence.
 
 1. **Gather outreach context** — capture campaign/product context, target handle(s), platform, followers, niche, compensation type, budget, deliverables, and timeline. Load the `memory/creators/<handle-slug>.md` roster record first when it exists — re-engaging a rostered creator starts from the confirmed contact path and last agreed rate, not a cold pitch. Template: [Step 1](references/templates.md#step-1--outreach-parameters).
 2. **Create personalized outreach** — list personalization points (recent content, style, audience, values, past partners), then write the primary message plus a DM-friendly short version and a formal email/management version. Template: [Step 2](references/templates.md#step-2--personalized-outreach). *Media/analyst/hunter targets*: personalize on beat and recent coverage, lead with the story angle (not a compensation offer), carry the embargo terms verbatim from the press-media-relations artifact, and never invent quotes or data — claims come from the approved message house.

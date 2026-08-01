@@ -4,7 +4,7 @@
   "edges": [
     {
       "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:119",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:127",
       "condition_text": "Truth repair: positioning-truth-tracer",
       "documentation_required": true,
       "exception": {
@@ -36,7 +36,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "protocol/narrative-registry/SKILL.md:77",
+      "condition_source": "protocol/narrative-registry/SKILL.md:84",
       "condition_text": "Author system: message-system-architect",
       "documentation_required": true,
       "exception": null,
@@ -65,7 +65,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/narrative-registry/SKILL.md:79",
+      "condition_source": "protocol/narrative-registry/SKILL.md:86",
       "condition_text": "Cascade: narrative-cascade-planner",
       "documentation_required": true,
       "exception": null,
@@ -94,7 +94,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "protocol/narrative-registry/SKILL.md:80",
+      "condition_source": "protocol/narrative-registry/SKILL.md:87",
       "condition_text": "Audit profile: narrative-quality-auditor",
       "documentation_required": true,
       "exception": null,
@@ -124,7 +124,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/narrative-registry/SKILL.md:78",
+      "condition_source": "protocol/narrative-registry/SKILL.md:85",
       "condition_text": "Verify truth: positioning-truth-tracer",
       "documentation_required": true,
       "exception": null,
@@ -363,7 +363,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "protocol/offer-claims-registry/SKILL.md:72",
+      "condition_source": "protocol/offer-claims-registry/SKILL.md:79",
       "condition_text": "Paid use audit: ad-account-auditor",
       "documentation_required": true,
       "exception": null,
@@ -393,7 +393,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "protocol/offer-claims-registry/SKILL.md:73",
+      "condition_source": "protocol/offer-claims-registry/SKILL.md:80",
       "condition_text": "Creator asset audit: creator-content-auditor",
       "documentation_required": true,
       "exception": null,
@@ -423,7 +423,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/offer-claims-registry/SKILL.md:75",
+      "condition_source": "protocol/offer-claims-registry/SKILL.md:82",
       "condition_text": "Archive/erase: memory-management",
       "documentation_required": true,
       "exception": null,
@@ -453,7 +453,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/offer-claims-registry/SKILL.md:74",
+      "condition_source": "protocol/offer-claims-registry/SKILL.md:81",
       "condition_text": "Narrative proof: proof-point-packager",
       "documentation_required": true,
       "exception": null,
@@ -660,7 +660,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/activate/outreach-manager/SKILL.md:107",
+      "condition_source": "influencer/activate/outreach-manager/SKILL.md:109",
       "condition_text": "Alternate: brief-generator — send a full campaign brief to a creator who asked for more detail.",
       "documentation_required": true,
       "exception": {
@@ -692,7 +692,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/activate/outreach-manager/SKILL.md:106",
+      "condition_source": "influencer/activate/outreach-manager/SKILL.md:108",
       "condition_text": "Alternate: contract-helper — finalize agreed terms into a partnership agreement.",
       "documentation_required": true,
       "exception": null,
@@ -720,7 +720,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "influencer/activate/outreach-manager/SKILL.md:105",
+      "condition_source": "influencer/activate/outreach-manager/SKILL.md:107",
       "condition_text": "Primary: creator-content-auditor — once a partner is confirmed and creates content, review the draft against the brief before it ships.",
       "documentation_required": true,
       "exception": null,

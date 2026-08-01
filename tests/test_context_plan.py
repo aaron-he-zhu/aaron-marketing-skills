@@ -116,6 +116,15 @@ class ContextPlanTests(unittest.TestCase):
         )
         return bundle
 
+    @staticmethod
+    def rehash_candidates(request):
+        request["candidates"].sort(
+            key=lambda item: (item["scope"], item["path"], item["resource_id"])
+        )
+        request["planner"]["candidate_discovery"]["candidate_set_sha256"] = (
+            resolver.sha256_json(request["candidates"])
+        )
+
     def test_host_independent_output_for_equivalent_projects(self):
         other = self.root / "unrelated-absolute-location"
         other.mkdir()
@@ -135,7 +144,7 @@ class ContextPlanTests(unittest.TestCase):
         index = json.loads((ROOT / planner.INDEX_REF).read_text(encoding="utf-8"))
         requests = [self.request(self.project, entry["skill"]) for entry in index["contracts"]]
         self.assertEqual(len(requests), 120)
-        self.assertTrue(all(request["planner"]["generator"] == "context-plan-v1"
+        self.assertTrue(all(request["planner"]["generator"] == "context-plan-v1.1"
                             for request in requests))
         self.assertTrue(all(request["candidates"] for request in requests))
 
@@ -149,6 +158,27 @@ class ContextPlanTests(unittest.TestCase):
                  if candidate["role"] == "routing-scenario"]
         self.assertEqual(len(shard), 1)
         self.assertEqual(shard[0]["requirement"], "required")
+
+    def test_post_route_protocol_assembly_has_no_answer_shard(self):
+        bundle, _entry, _contract = self.copy_bundle("memory-management")
+        request = self.request(
+            self.project, "memory-management", command="auto", post_route=True,
+            bundle_root=bundle,
+        )
+        self.assertEqual("auto", request["route"]["command"])
+        self.assertEqual([], request["route"]["scenario_shards"])
+        self.assertFalse(
+            any(item["role"] == "routing-scenario" for item in request["candidates"])
+        )
+
+    def test_nonprotocol_auto_without_shard_fails_closed(self):
+        bundle, _entry, _contract = self.copy_bundle("content-writer")
+        with self.assertRaisesRegex(
+                resolver.ContextResolutionError, "discipline is absent"):
+            self.request(
+                self.project, "content-writer", command="auto", post_route=True,
+                bundle_root=bundle,
+            )
 
     def test_explicit_route_reason_is_preserved_and_validated(self):
         request = self.request(self.project, reason_code="user-request")
@@ -263,6 +293,141 @@ class ContextPlanTests(unittest.TestCase):
         with self.assertRaisesRegex(planner.ContextPlanError, "live bundle"):
             planner.validate_planned_request(tampered, bundle_root=ROOT)
 
+    def test_exact_bundle_closure_rejects_rehashed_omission_extra_and_field_tampering(self):
+        bundle, entry, _contract = self.copy_bundle("entity-registry")
+        request = self.request(
+            self.project, "entity-registry", bundle_root=bundle,
+        )
+        required_runtime_reads = {
+            item["path"] for item in request["candidates"]
+            if item["requirement"] == "required"
+            and item["reason_code"] == "explicit-runtime-read"
+        }
+        self.assertTrue({
+            "references/registry-event-protocol.md",
+            "references/runtime-invocation.md",
+            "references/entity-geo-handoff-schema.md",
+        }.issubset(required_runtime_reads))
+        planner.validate_planned_request(
+            request, bundle_root=bundle, project_root=self.project,
+            resolve_sources=True,
+        )
+
+        def omit_runtime(value):
+            value["candidates"] = [
+                item for item in value["candidates"]
+                if item["path"] != "references/runtime-invocation.md"
+            ]
+
+        def add_valid_extra(value):
+            path = json.loads(
+                (bundle / planner.INDEX_REF).read_text(encoding="utf-8")
+            )["contract_schema"]["path"]
+            raw = (bundle / path).read_bytes()
+            value["candidates"].append(planner._candidate(
+                "bundle", path, "skill-reference", "optional", "approved",
+                value["as_of"], 1, "authored-reference", "public",
+                hashlib.sha256(raw).hexdigest(), load_policy="lookup",
+            ))
+
+        def remove_optional_hash(value):
+            item = next(candidate for candidate in value["candidates"] if (
+                candidate["scope"] == "bundle"
+                and candidate["requirement"] == "optional"
+                and candidate["expected_sha256"] is not None
+            ))
+            item["expected_sha256"] = None
+
+        def change_load_policy(value):
+            item = next(candidate for candidate in value["candidates"] if (
+                candidate["path"] == "references/runtime-invocation.md"
+            ))
+            item["load_policy"] = "lookup"
+
+        for label, mutation in (
+                ("required omission", omit_runtime),
+                ("extra valid candidate", add_valid_extra),
+                ("expected hash removal", remove_optional_hash),
+                ("load policy change", change_load_policy)):
+            with self.subTest(label=label):
+                tampered = copy.deepcopy(request)
+                mutation(tampered)
+                self.rehash_candidates(tampered)
+                with self.assertRaisesRegex(
+                        planner.ContextPlanError, "bundle candidate closure"):
+                    planner.validate_planned_request(
+                        tampered, bundle_root=bundle, project_root=self.project,
+                        resolve_sources=True,
+                    )
+
+        direct = copy.deepcopy(request)
+        omit_runtime(direct)
+        self.rehash_candidates(direct)
+        with self.assertRaisesRegex(
+                resolver.ContextResolutionError, "planner candidate closure"):
+            resolver.resolve_context(direct, bundle, self.project)
+
+    def test_exact_auditor_closure_rejects_rehashed_condition_swap(self):
+        bundle, _entry, _contract = self.copy_bundle("narrative-quality-auditor")
+        request = self.request(
+            self.project, "narrative-quality-auditor", bundle_root=bundle,
+        )
+        branches = [
+            item for item in request["candidates"]
+            if item.get("exclusive_group") == planner.AUDITOR_EXCLUSIVE_GROUP
+        ]
+        fallback = next(
+            item for item in branches if item["load_policy"] == "fallback"
+        )
+        root_chain = next(
+            item for item in branches
+            if item["path"] == "references/auditor-runbook.md"
+        )
+        fallback["condition_code"], root_chain["condition_code"] = (
+            root_chain["condition_code"], fallback["condition_code"]
+        )
+        self.rehash_candidates(request)
+        # The generic branch-set shape remains valid; exact machine-contract
+        # reconstruction must still reject the semantic branch swap.
+        resolver.validate_request(request)
+        with self.assertRaisesRegex(
+                resolver.ContextResolutionError, "planner candidate closure"):
+            resolver.resolve_context(request, bundle, self.project)
+
+    def test_post_route_provenance_rejects_rehashed_shard_removal_and_injection(self):
+        bundle, _entry, _contract = self.copy_bundle("memory-management")
+        pre_route = self.request(
+            self.project, "memory-management", bundle_root=bundle,
+            command="auto", post_route=False,
+        )
+        post_route = self.request(
+            self.project, "memory-management", bundle_root=bundle,
+            command="auto", post_route=True,
+        )
+        shard_candidate = next(
+            item for item in pre_route["candidates"]
+            if item["role"] == "routing-scenario"
+        )
+
+        removed = copy.deepcopy(pre_route)
+        removed["route"]["scenario_shards"] = []
+        removed["candidates"] = [
+            item for item in removed["candidates"]
+            if item["role"] != "routing-scenario"
+        ]
+        self.rehash_candidates(removed)
+        with self.assertRaisesRegex(
+                resolver.ContextResolutionError, "post_route"):
+            resolver.resolve_context(removed, bundle, self.project)
+
+        injected = copy.deepcopy(post_route)
+        injected["route"]["scenario_shards"] = [shard_candidate["path"]]
+        injected["candidates"].append(copy.deepcopy(shard_candidate))
+        self.rehash_candidates(injected)
+        with self.assertRaisesRegex(
+                resolver.ContextResolutionError, "post_route"):
+            resolver.resolve_context(injected, bundle, self.project)
+
     def test_resolver_accepts_planner_request_and_embeds_it_without_ledger_write(self):
         request = self.request(self.project)
         before = sorted(path.relative_to(self.project) for path in self.project.rglob("*"))
@@ -270,6 +435,71 @@ class ContextPlanTests(unittest.TestCase):
         after = sorted(path.relative_to(self.project) for path in self.project.rglob("*"))
         self.assertEqual(manifest["request"]["planner"], request["planner"])
         self.assertEqual(before, after)
+
+    def test_all_auditors_select_exactly_one_distribution_runtime_chain(self):
+        catalog = json.loads((ROOT / planner.CATALOG_REF).read_text(encoding="utf-8"))
+        self.assertEqual(8, len(catalog["auditors"]))
+        for auditor in catalog["auditors"]:
+            bundle, _entry, _contract = self.copy_bundle(auditor["skill"])
+            fallback = "%s/references/auditor-runtime.md" % auditor["path"]
+            for profile, expected_branch in (
+                    ("repository", "repository-or-plugin"),
+                    ("plugin", "repository-or-plugin"),
+                    ("standalone-skill", "standalone-skill")):
+                with self.subTest(skill=auditor["skill"], profile=profile):
+                    request = self.request(
+                        self.project, auditor["skill"], distribution_profile=profile,
+                        bundle_root=bundle,
+                    )
+                    self.assertEqual(profile, request["planner"]["distribution_profile"])
+                    branches = [
+                        item for item in request["candidates"]
+                        if item.get("exclusive_group") == planner.AUDITOR_EXCLUSIVE_GROUP
+                    ]
+                    self.assertEqual(
+                        {"repository-or-plugin", "standalone-skill"},
+                        {item["condition_code"] for item in branches},
+                    )
+                    manifest = resolver.resolve_context(request, bundle, self.project)
+                    selected = {item["resource_id"] for item in manifest["resources"]}
+                    omitted = {
+                        item["resource_id"]: item["reason_code"]
+                        for item in manifest["omitted"]
+                    }
+                    selected_branches = {
+                        item["condition_code"] for item in branches
+                        if item["resource_id"] in selected
+                    }
+                    self.assertEqual({expected_branch}, selected_branches)
+                    for item in branches:
+                        if item["condition_code"] != expected_branch:
+                            self.assertEqual(
+                                "condition-not-met", omitted[item["resource_id"]]
+                            )
+                    fallback_candidate = next(
+                        item for item in branches if item["path"] == fallback
+                    )
+                    self.assertEqual("fallback", fallback_candidate["load_policy"])
+                    self.assertEqual(
+                        profile == "standalone-skill",
+                        fallback_candidate["resource_id"] in selected,
+                    )
+
+    def test_incomplete_auditor_exclusive_group_fails_closed(self):
+        bundle, _entry, _contract = self.copy_bundle("narrative-quality-auditor")
+        request = self.request(
+            self.project, "narrative-quality-auditor", bundle_root=bundle,
+        )
+        request["candidates"] = [
+            item for item in request["candidates"]
+            if item.get("condition_code") != "standalone-skill"
+        ]
+        request["planner"]["candidate_discovery"]["candidate_set_sha256"] = (
+            resolver.sha256_json(request["candidates"])
+        )
+        with self.assertRaisesRegex(
+                resolver.ContextResolutionError, "must declare repository/plugin and standalone"):
+            resolver.validate_request(request)
 
     def test_schema_request_shapes_both_expose_optional_planner(self):
         request_schema = json.loads(
@@ -285,6 +515,17 @@ class ContextPlanTests(unittest.TestCase):
             manifest_schema["$defs"]["request"]["properties"]["planner"],
             {"$ref": "#/$defs/planner"},
         )
+        self.assertEqual(
+            {"repository", "plugin", "standalone-skill"},
+            set(request_schema["$defs"]["planner"]["properties"]
+                ["distribution_profile"]["enum"]),
+        )
+        for schema in (request_schema, manifest_schema):
+            planner_schema = schema["$defs"]["planner"]
+            self.assertIn("post_route", planner_schema["required"])
+            self.assertEqual(
+                {"type": "boolean"}, planner_schema["properties"]["post_route"]
+            )
 
 
 if __name__ == "__main__":

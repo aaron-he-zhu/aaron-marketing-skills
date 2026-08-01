@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create or read-only verify the immutable final v19 GitHub release.
+"""Create or read-only verify the immutable current v19 GitHub release.
 
 The default mode is a network-free dry run.  ``--live`` is an owner-only
 operation and requires both an out-of-repository private release receipt and
@@ -23,12 +23,12 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "aaron-he-zhu/aaron-marketing-skills"
-RELEASE_VERSION = "19.0.0"
+RELEASE_VERSION = "19.1.0"
 TAG = "v" + RELEASE_VERSION
 ASSET_NAMES = (
-    "aaron-marketing-skills-19.0.0-lite.tar.gz",
-    "aaron-marketing-skills-19.0.0-pro.tar.gz",
-    "aaron-marketing-skills-19.0.0-governed.tar.gz",
+    "aaron-marketing-skills-%s-lite.tar.gz" % RELEASE_VERSION,
+    "aaron-marketing-skills-%s-pro.tar.gz" % RELEASE_VERSION,
+    "aaron-marketing-skills-%s-governed.tar.gz" % RELEASE_VERSION,
     "SHA256SUMS",
     "release-assets.json",
 )
@@ -318,7 +318,9 @@ def verify_receipt(
     if (
         len(fields) != 3
         or re.fullmatch(r"[0-9a-f]{64}", fields[0]) is None
-        or re.fullmatch(r"19\.0\.0-rc\.[1-9][0-9]*", fields[1]) is None
+        or re.fullmatch(
+            re.escape(version) + r"-rc\.[1-9][0-9]*", fields[1]
+        ) is None
         or fields[2] != commit
     ):
         raise ReleaseError("private release receipt returned a malformed identity")

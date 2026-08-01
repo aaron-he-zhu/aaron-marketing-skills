@@ -54,6 +54,7 @@ python3 scripts/context-plan.py plan \
   --as-of 2026-07-22T12:00:00Z \
   --project-root /path/to/project \
   --reason-code user-request \
+  --distribution-profile repository \
   --max-tokens 65536 \
   --output /path/to/request.json
 
@@ -73,11 +74,23 @@ stay explicit optional candidates with a null expected hash. `/auto` requests
 also contain the required topical routing shard, including a fixed mapping for
 each protocol skill.
 
+`--distribution-profile` is exactly `repository`, `plugin`, or
+`standalone-skill` and is pinned in planner v1.1 provenance. For an auditor,
+the planner emits both typed branches of one `auditor-runtime-chain` exclusive
+group. Repository/plugin root sources use `condition_code:
+repository-or-plugin`; the generated immutable local fallback uses
+`condition_code: standalone-skill`. The resolver selects exactly one branch and
+records the inactive branch as `condition-not-met` without reading it. This
+distribution selector describes physical policy availability only; it does not
+select Lite/Pro/Governed or grant authority.
+
 The caller may supply a safe typed `reason_code`; it is carried unchanged into
 the planned route and later must match the controller's `route_selected` event.
 
-Every candidate states required/optional policy, authority, sensitivity,
-observation time, freshness ceiling, priority, reason, and expected SHA-256.
+Every generated candidate also carries `load_policy`; distribution alternatives
+carry `exclusive_group` and `condition_code`. These fields are closed metadata,
+not prose inference. Every candidate states required/optional policy, authority,
+sensitivity, observation time, freshness ceiling, priority, reason, and expected SHA-256.
 The request's `planner` object pins the selected contract, index, catalog,
 context-hint hash, and complete candidate-set hash. `validate` rechecks those
 pins and asks the resolver to inspect every candidate source.

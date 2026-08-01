@@ -11,7 +11,7 @@
           "end_char": 136,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 314,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 138
         },
@@ -41,7 +41,7 @@
           "end_char": 468,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 316
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "launch/research/early-access-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+      "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3"
     }
   },
   "context_hints": {
@@ -83,7 +83,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 36
       }
     ],
@@ -111,7 +111,7 @@
           "end_char": 240,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -129,7 +129,7 @@
           "end_char": 436,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 241
         },
@@ -147,7 +147,7 @@
           "end_char": 638,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 437
         },
@@ -165,7 +165,7 @@
           "end_char": 1010,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 640
         },
@@ -178,7 +178,7 @@
     "summary_ref": {
       "path": "launch/research/early-access-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+      "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -193,8 +193,8 @@
     "name": "early-access-designer",
     "path": "launch/research/early-access-designer/SKILL.md",
     "phase": "research",
-    "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
-    "version": "19.0.0"
+    "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / current stage / launch goal> [audience] [platform]",
@@ -208,7 +208,7 @@
           "end_char": 53,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -223,7 +223,7 @@
           "end_char": 187,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 55
         },
@@ -238,7 +238,7 @@
           "end_char": 295,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 189
         },
@@ -253,7 +253,7 @@
           "end_char": 443,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 297
         },
@@ -265,7 +265,7 @@
     "source": {
       "path": "launch/research/early-access-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+      "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3"
     }
   },
   "output_contract": {
@@ -280,7 +280,7 @@
           "end_char": 91,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -296,7 +296,7 @@
           "end_char": 449,
           "path": "launch/research/early-access-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae",
+          "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3",
           "span_basis": "field-text",
           "start_char": 93
         },
@@ -307,7 +307,7 @@
     "source": {
       "path": "launch/research/early-access-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+      "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3"
     },
     "summary": "an early-access program design — the waitlist→concept→alpha→beta→GA stage ladder with per-stage purpose and opt-in semantics, quantified graduation criteria per stage, a cohort-gating / invite-throttling plan, tester recruitment + launch-day social-proof prep, a feedback-loop spec, and a referral-mechanics spec — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -318,12 +318,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -332,7 +332,7 @@
     "source": {
       "path": "launch/research/early-access-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "4e074b4e7a2c52c146bf5e0fcc3171d2b36e9a0e91f2edfd4e126ae5a7a46fae"
+      "sha256": "fabbd6cd76ae4672460b71cb23e1ef82d97d70f8aac8ce422ef98b487ff72fa3"
     },
     "trigger_phrases": [
       "define beta graduation criteria",

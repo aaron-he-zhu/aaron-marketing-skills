@@ -4,13 +4,13 @@ slug: site-structure-optimizer
 displayName: "Site Structure Optimizer · 网站架构"
 summary: "网站架构/信息架构/站点地图/内链优化"
 description: 'Use when the user asks to "plan my site structure", "design the page hierarchy / navigation / URL taxonomy", "fix internal linking", or "find orphan pages"; runs two modes — architecture (hierarchy, nav, URL patterns, hub/spoke clusters, Mermaid site maps) and linking (link graph, authority flow, anchor text, orphan disposition, source/target/anchor plan) — and outputs a structure score /100 plus a handoff summary. Not for external backlinks — use offsite-signal-analyzer; not for XML sitemap or indexation issues — use technical-seo-checker. 网站架构/信息架构/站点地图/内链优化'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when planning or restructuring a site (page hierarchy, navigation, URL taxonomy, hub/spoke topic clusters, visual sitemap) OR when fixing internal link structure (orphan pages, anchor-text distribution, authority flow, crawl depth). One skill, two altitudes: architecture designs the structure; linking optimizes the links inside it."
 argument-hint: "[--mode architecture|linking] <domain, sitemap, or page list + site type>"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Site Structure Optimizer

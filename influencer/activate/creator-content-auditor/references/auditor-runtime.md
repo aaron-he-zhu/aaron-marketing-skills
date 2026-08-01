@@ -3,18 +3,19 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.0.0
+- **Catalog version:** 19.1.0
 - **Framework:** STAR
 - **Auditor:** creator-content-auditor
-- **Source digest:** `sha256:cac545f4f4563724c6645a1f0aa807811d870e59444412f251a4fdf46d059789`
+- **Complete item definitions:** 40
+- **Source digest:** `sha256:d10810832a050ddf9e3d2e4a4123c02d4224881b62f16b2472ac1f8cffa7305a`
 
-This immutable bundle is the fail-closed standalone fallback for this auditor. It contains the exact typed framework slice needed to collect observations without inventing rules. Repository/plugin installs use the root policy, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
+This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
 ## Typed Framework Snapshot
 
 ```json
 {
-  "catalog_version": "19.0.0",
+  "catalog_version": "19.1.0",
   "frameworks": {
     "STAR": {
       "construct": "influencer partnership quality across creator suitability, trust and compliance, content appeal, and campaign return",
@@ -161,6 +162,382 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": true
         }
       },
+      "items": {
+        "A1": {
+          "criterion": "The hook earns attention within the platform's first-impression window.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A1",
+          "veto": false
+        },
+        "A10": {
+          "criterion": "Originality — the piece is not a templated re-run of prior sponsorships.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A10",
+          "veto": false
+        },
+        "A2": {
+          "criterion": "Creative quality (production, editing, pacing) meets the platform bar.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A2",
+          "veto": false
+        },
+        "A3": {
+          "criterion": "The brand integration feels native to the creator, not bolted-on.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A3",
+          "veto": false
+        },
+        "A4": {
+          "criterion": "Storytelling and format choice fit the platform's native behavior.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A4",
+          "veto": false
+        },
+        "A5": {
+          "criterion": "Message accuracy — the brief's key message is conveyed without distortion.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A5",
+          "veto": false
+        },
+        "A6": {
+          "criterion": "Audience relevance — the content speaks to the target's beliefs and needs.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A6",
+          "veto": false
+        },
+        "A7": {
+          "criterion": "The call-to-action is present, clear, and matched to the declared goal.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A7",
+          "veto": false
+        },
+        "A8": {
+          "criterion": "On-brand tone, terminology, and visual identity are respected.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A8",
+          "veto": false
+        },
+        "A9": {
+          "criterion": "Accessibility (captions, alt text, legibility) is handled.",
+          "dimension": "A",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-A9",
+          "veto": false
+        },
+        "R1": {
+          "criterion": "Measured ROI/ROAS is read against the declared target.",
+          "dimension": "R",
+          "name": null,
+          "policy": {
+            "applicability": "conditional",
+            "applicable_when": {
+              "assessment_time": "actual"
+            },
+            "unknown_policy": "needs-input"
+          },
+          "qualified_id": "STAR-R1",
+          "veto": false
+        },
+        "R10": {
+          "criterion": "The measurement plan (UTMs, codes, controls) is defined before launch.",
+          "dimension": "R",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-R10",
+          "veto": false
+        },
+        "R2": {
+          "criterion": "CPE/CPM/CPA are benchmarked on a normalized window.",
+          "dimension": "R",
+          "name": null,
+          "policy": {
+            "applicability": "conditional",
+            "applicable_when": {
+              "assessment_time": "actual"
+            },
+            "unknown_policy": "needs-input"
+          },
+          "qualified_id": "STAR-R2",
+          "veto": false
+        },
+        "R3": {
+          "criterion": "Value-for-spend beats the declared alternative-channel baseline.",
+          "dimension": "R",
+          "name": null,
+          "policy": {
+            "applicability": "conditional",
+            "applicable_when": {
+              "assessment_time": "actual"
+            },
+            "unknown_policy": "needs-input"
+          },
+          "qualified_id": "STAR-R3",
+          "veto": false
+        },
+        "R4": {
+          "criterion": "KPI attainment versus the pre-registered target is reported.",
+          "dimension": "R",
+          "name": null,
+          "policy": {
+            "applicability": "conditional",
+            "applicable_when": {
+              "assessment_time": "actual"
+            },
+            "unknown_policy": "needs-input"
+          },
+          "qualified_id": "STAR-R4",
+          "veto": false
+        },
+        "R5": {
+          "criterion": "Conversions and outcomes are attributed with a stated method and rigor.",
+          "dimension": "R",
+          "name": null,
+          "policy": {
+            "applicability": "conditional",
+            "applicable_when": {
+              "assessment_time": "actual"
+            },
+            "fail_flag": "results-unverified",
+            "unknown_policy": "needs-input"
+          },
+          "qualified_id": "STAR-R5",
+          "veto": false
+        },
+        "R6": {
+          "criterion": "Incremental impact is separated from baseline where measurable.",
+          "dimension": "R",
+          "name": null,
+          "policy": {
+            "applicability": "conditional",
+            "applicable_when": {
+              "assessment_time": "actual"
+            },
+            "unknown_policy": "needs-input"
+          },
+          "qualified_id": "STAR-R6",
+          "veto": false
+        },
+        "R7": {
+          "criterion": "Creator-mix and channel choices fit the goal (orchestration, knowable at plan time).",
+          "dimension": "R",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-R7",
+          "veto": false
+        },
+        "R8": {
+          "criterion": "Budget split and timing across creators and phases are justified.",
+          "dimension": "R",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-R8",
+          "veto": false
+        },
+        "R9": {
+          "criterion": "The deliverable schedule and cadence match the campaign window.",
+          "dimension": "R",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-R9",
+          "veto": false
+        },
+        "S1": {
+          "criterion": "Audience composition, geography, and language match the target within a stated window.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-S1",
+          "veto": false
+        },
+        "S10": {
+          "criterion": "Commercial saturation and disclosed category history are transparent and acceptable.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-S10",
+          "veto": false
+        },
+        "S2": {
+          "criterion": "Real-follower rate is at/above the tier x platform x niche benchmark.",
+          "dimension": "S",
+          "name": null,
+          "policy": {
+            "unknown_policy": "needs-input",
+            "veto": true
+          },
+          "qualified_id": "STAR-S2",
+          "veto": true
+        },
+        "S3": {
+          "criterion": "Follower growth is organic and stable, with no purchase or spike anomalies.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-S3",
+          "veto": false
+        },
+        "S4": {
+          "criterion": "Typical reach reliability across recent posts is benchmarked, not cherry-picked.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-S4",
+          "veto": false
+        },
+        "S5": {
+          "criterion": "Engagement rate meets the niche median for the creator's tier and platform.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-S5",
+          "veto": false
+        },
+        "S6": {
+          "criterion": "Engagement is authentic, not pod-coordinated or bought.",
+          "dimension": "S",
+          "name": null,
+          "policy": {
+            "unknown_policy": "needs-input",
+            "veto": true
+          },
+          "qualified_id": "STAR-S6",
+          "veto": true
+        },
+        "S7": {
+          "criterion": "Repeat audience action (saves/shares/returns) shows durable influence, not campaign conversion.",
+          "dimension": "S",
+          "name": null,
+          "policy": {
+            "definition": "durable repeat-audience influence; campaign conversion is scored in R"
+          },
+          "qualified_id": "STAR-S7",
+          "veto": false
+        },
+        "S8": {
+          "criterion": "Brand/category fit and audience-brand overlap are evidenced, independent of any single deal.",
+          "dimension": "S",
+          "name": null,
+          "policy": {
+            "definition": "brand-independent fit; a specific brand conflict is scored in R7 orchestration"
+          },
+          "qualified_id": "STAR-S8",
+          "veto": false
+        },
+        "S9": {
+          "criterion": "Creator reliability, professionalism, and delivery history support the partnership.",
+          "dimension": "S",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-S9",
+          "veto": false
+        },
+        "T1": {
+          "criterion": "Required FTC/ASA disclosure is present, clear, and conspicuous on sponsored content.",
+          "dimension": "T",
+          "name": null,
+          "policy": {
+            "veto": true
+          },
+          "qualified_id": "STAR-T1",
+          "veto": true
+        },
+        "T10": {
+          "criterion": "Rights, usage, whitelisting, and exclusivity terms are represented truthfully.",
+          "dimension": "T",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-T10",
+          "veto": false
+        },
+        "T2": {
+          "criterion": "Every material claim in the deliverable is truthful and substantiated.",
+          "dimension": "T",
+          "name": null,
+          "policy": {
+            "veto": true
+          },
+          "qualified_id": "STAR-T2",
+          "veto": true
+        },
+        "T3": {
+          "criterion": "No disqualifying brand-safety evidence exists under the declared policy and window.",
+          "dimension": "T",
+          "name": null,
+          "policy": {
+            "unknown_policy": "needs-input",
+            "veto": true
+          },
+          "qualified_id": "STAR-T3",
+          "veto": true
+        },
+        "T4": {
+          "criterion": "Disclosure meets platform-specific tool and caption placement requirements.",
+          "dimension": "T",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-T4",
+          "veto": false
+        },
+        "T5": {
+          "criterion": "Prohibited or restricted-category rules for the product are satisfied.",
+          "dimension": "T",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-T5",
+          "veto": false
+        },
+        "T6": {
+          "criterion": "Prior disclosure and compliance history shows no unresolved violations.",
+          "dimension": "T",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-T6",
+          "veto": false
+        },
+        "T7": {
+          "criterion": "The material connection (gifting/affiliate/paid) is accurately represented to the audience.",
+          "dimension": "T",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-T7",
+          "veto": false
+        },
+        "T8": {
+          "criterion": "Comparative or performance claims carry evidence at the point of claim.",
+          "dimension": "T",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-T8",
+          "veto": false
+        },
+        "T9": {
+          "criterion": "Sensitive-audience, health, financial, and age-gating requirements are met where applicable.",
+          "dimension": "T",
+          "name": null,
+          "policy": {},
+          "qualified_id": "STAR-T9",
+          "veto": false
+        }
+      },
       "profiles": {
         "awareness": {
           "context_equals": {
@@ -290,6 +667,31 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
       "na"
     ],
     "veto_ceiling": 59
+  },
+  "standalone_observation_contract": {
+    "evidence_types": [
+      "measured",
+      "user-provided",
+      "calculated",
+      "estimated",
+      "proxy"
+    ],
+    "item_states": [
+      "pass",
+      "partial",
+      "fail",
+      "unknown",
+      "na"
+    ],
+    "result": {
+      "score_confidence": "not_scored",
+      "score_state": "NOT_SCORED",
+      "status": [
+        "NEEDS_INPUT",
+        "BLOCKED"
+      ],
+      "verdict": "UNDECIDED"
+    }
   }
 }
 ```
@@ -303,7 +705,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 5. Do not write under `memory/audits/`, mutate registries, or claim a publish/ship decision. Offer the observation set for later execution in a full plugin or repository install.
 6. Do not search parent directories, accept an unverified runtime root, download repository files, or hand-calculate a substitute score.
 
-The source digest binds this compact fallback to the authoritative runbook, scoring semantics, framework benchmark, run schema, and artifact schema without copying those maintenance sources into every standalone bundle.
+The complete item definitions above are compiled from the authoritative benchmark. The source digest binds this compact fallback to the runbook, scoring semantics, benchmark, run schema, and artifact schema; those maintenance documents remain repository-only and are not misrepresented as separately bundled files.
 
 ---
 

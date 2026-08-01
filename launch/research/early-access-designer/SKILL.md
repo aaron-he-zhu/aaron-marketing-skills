@@ -4,13 +4,13 @@ slug: aaron-early-access-designer
 displayName: "Early Access Designer · 抢先体验设计"
 summary: "waitlist/内测阶梯/毕业标准/反馈闭环"
 description: 'Use when the user asks to "design an early access program", "set up a waitlist and beta stages", or "define beta graduation criteria"; produces a waitlist→concept→alpha→beta→GA stage ladder with per-stage purpose and opt-in semantics, quantified graduation criteria per stage (labeled Estimated), a cohort-gating and invite-throttling plan, tester recruitment with launch-day social-proof prep, a feedback-loop spec where every status change notifies its subscribers, and a referral-loop mechanism spec (invite codes, anti-abuse). Not for waitlist acquisition strategy or the capture-flow spec — use list-growth-designer; not for the canonical stage record — use launch-registry. waitlist/内测阶梯/抢先体验/毕业标准/反馈闭环'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when designing how a product moves from waitlist to GA: the stage ladder (waitlist / concept / alpha / beta / GA), per-stage graduation criteria, cohort gating and invite throttling, tester recruitment and launch-day social-proof prep, the tester feedback loop, and referral invite mechanics. The upstream of the RAMP R1 stage-truth veto — stage definitions are submitted to launch-registry as candidates."
 argument-hint: "<product / current stage / launch goal> [audience] [platform]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "launch", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "research"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "launch", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "research"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Early Access Designer

@@ -11,7 +11,7 @@
           "end_char": 140,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 180,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 142
         },
@@ -41,7 +41,7 @@
           "end_char": 338,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 182
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "protocol/launch-registry/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5"
+      "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7"
     }
   },
   "context_hints": {
@@ -63,35 +63,35 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
-        "source_line": 54
+        "source_line": 61
       },
       {
         "path": "references/ramp-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
-        "source_line": 52
+        "source_line": 59
       },
       {
         "path": "references/registry-event-protocol.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
-        "source_line": 34
+        "source_line": 36
       },
       {
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
         "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
-        "source_line": 34
+        "source_line": 37
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
-        "source_line": 53
+        "source_line": 60
       }
     ],
     "project_paths": [
@@ -118,7 +118,7 @@
           "end_char": 95,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -136,7 +136,7 @@
           "end_char": 192,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 96
         },
@@ -154,7 +154,7 @@
           "end_char": 297,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 193
         },
@@ -172,7 +172,7 @@
           "end_char": 402,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 298
         },
@@ -187,7 +187,7 @@
     "summary_ref": {
       "path": "protocol/launch-registry/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5"
+      "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -203,8 +203,8 @@
     "name": "launch-registry",
     "path": "protocol/launch-registry/SKILL.md",
     "phase": "protocol",
-    "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
-    "version": "19.0.0"
+    "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
+    "version": "19.1.0"
   },
   "input_contract": {
     "argument_hint": "<launch aggregate-id, transition, or pending-proposal review>",
@@ -218,7 +218,7 @@
           "end_char": 97,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -230,7 +230,7 @@
     "source": {
       "path": "protocol/launch-registry/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5"
+      "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7"
     }
   },
   "output_contract": {
@@ -245,7 +245,7 @@
           "end_char": 41,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -261,7 +261,7 @@
           "end_char": 103,
           "path": "protocol/launch-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5",
+          "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7",
           "span_basis": "field-text",
           "start_char": 43
         },
@@ -272,7 +272,7 @@
     "source": {
       "path": "protocol/launch-registry/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5"
+      "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7"
     },
     "summary": "owner events through `registry-events.py`; per-launch dossiers and `calendar.md` are regenerated views.",
     "summary_source": "writes-fallback",
@@ -283,12 +283,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "6f0256cf52710f2916ecebaea0f3110c9313099ec4a69a11cac72ba9b2f3b940",
-      "version": "19.0.0"
+      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
+      "version": "19.1.0"
     }
   },
   "routing_contract": {
@@ -297,7 +297,7 @@
     "source": {
       "path": "protocol/launch-registry/SKILL.md",
       "section": "frontmatter",
-      "sha256": "0640fb744227019390d2c59c06c43bcd26086f21236a51b8908267575b12e2c5"
+      "sha256": "7c3ef1fe9a7afcb7bf047acd9fe3d40a53734428f8b82e0c0183fc84cede0af7"
     },
     "trigger_phrases": [
       "log this launch"

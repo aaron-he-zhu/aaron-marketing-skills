@@ -4,13 +4,13 @@ slug: aaron-channel-portfolio-planner
 displayName: "Channel Portfolio Planner · 渠道组合规划"
 summary: "受众优先选社媒渠道/平台能力匹配矩阵/节奏预算体检/ECHO目标列声明"
 description: 'Use when the user asks to "pick which social channels to run", "should we be on X platform or 小红书", or "plan our organic social channel portfolio"; produces an audience/objective-first portfolio with capability/access matrix, cadence-budget reality check, declared ECHO operating profile, boundary routing, and proposed-state registry events. Not for recording canonical channel facts — use channel-registry. 社媒渠道选择/渠道组合规划/平台能力矩阵/自然社媒'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when choosing organic social channels before posting exists: match platform capabilities/access to audience and objective, declare the relevant ECHO program-maturity profile, size cadence against staffing, and route paid/creator/launch/email work to its owner. Not the channel fact record or voice dossier."
 argument-hint: "<objective + audience evidence> [candidate platforms] [staffing hours/week]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "social", "phase": "explore", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "explore"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "social", "phase": "explore", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "explore"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Channel Portfolio Planner

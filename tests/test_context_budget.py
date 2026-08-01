@@ -52,7 +52,8 @@ body
 
 def build_fixture(tmp, skill_name="fixture-auditor", body_lines=10,
                   benchmark="fixture-benchmark.md", benchmark_bytes=1000,
-                  hot_lines=5, missing_hot=False, extra_skills=()):
+                  hot_lines=5, missing_hot=False, extra_skills=(),
+                  claude_bytes=100, capsule_model_bytes=1000):
     root = Path(tmp)
     (root / ".claude-plugin").mkdir(parents=True)
     skills = ["fixture/discipline/%s" % skill_name] + [
@@ -72,6 +73,16 @@ def build_fixture(tmp, skill_name="fixture-auditor", body_lines=10,
     for name, size in (("auditor-runbook.md", 500), ("scoring-semantics.md", 400),
                        ("framework-catalog.json", 300), (benchmark, benchmark_bytes)):
         (refs / name).write_text("x" * size, encoding="utf-8")
+    capsules = refs / "skill-capsules"
+    capsules.mkdir()
+    (capsules / "index.json").write_text(json.dumps({
+        "capsules": [
+            {"skill": "fixture-%03d" % index, "model_bytes": capsule_model_bytes}
+            for index in range(120)
+        ]
+    }), encoding="utf-8")
+    (root / "CLAUDE.md").write_text("c" * claude_bytes, encoding="utf-8")
+    (root / "AGENTS.md").write_text("agent context\n", encoding="utf-8")
     if not missing_hot:
         hot = root / "memory" / "templates"
         hot.mkdir(parents=True)
@@ -180,6 +191,18 @@ class ContextBudgetTest(unittest.TestCase):
             add_auto_profile(root, [20_000, 10_000, 5_000])
             result = run_guard(root)
             self.assertEqual(result.returncode, 0, result.stdout)
+
+    def test_oversized_root_navigation_context_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = run_guard(build_fixture(tmp, claude_bytes=20_000))
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("navigation-context budget", result.stdout)
+
+    def test_oversized_model_capsule_fails(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            result = run_guard(build_fixture(tmp, capsule_model_bytes=30_000))
+            self.assertEqual(result.returncode, 1)
+            self.assertIn("model context", result.stdout)
 
 
 if __name__ == "__main__":

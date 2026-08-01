@@ -4,13 +4,13 @@ slug: aaron-strategic-narrative-designer
 displayName: "Strategic Narrative Designer · 战略叙事设计"
 summary: "变革叙事弧/旧世界到应许之地/五段结构"
 description: 'Use when the user asks to "design our change narrative", "build the old-world-to-new-game story arc", or "frame the shift our category is undergoing"; produces a Raskin-style strategic narrative arc — old world → the undeniable shift → winners vs losers under the new rules → the promised land → proof the promised land is real — derived from the positioning truth set and the belief/objection map, feeding the TALE Architecture arc sub-item. Every proof beat is labeled Measured / User-provided / [needs source] and this skill never adjudicates a claim. Not for the message house hierarchy — use message-system-architect; not for the pitch deck narrative — use pitch-narrative-builder; not for claim substantiation — use offer-claims-registry. 变革叙事弧/旧世界/应许之地/战略叙事结构'
-version: "19.0.0"
+version: "19.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when building the durable strategic narrative arc before the message house exists: naming the old world and its assumptions, the undeniable shift, the winners and losers under the new rules, the promised land, and the proof it is real. The first Architect move of the TALE loop, taking the positioning truth set and belief map as upstream and handing the arc to message-system-architect. Not the message-house hierarchy itself and not the pitch deck."
 argument-hint: "<product / brand> [positioning truth set path] [belief map path]"
-metadata: {"author": "aaron-he-zhu", "version": "19.0.0", "discipline": "narrative", "phase": "architect", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "architect"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "narrative", "phase": "architect", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "architect"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Strategic Narrative Designer

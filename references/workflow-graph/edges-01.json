@@ -297,7 +297,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/channel-registry/SKILL.md:73",
+      "condition_source": "protocol/channel-registry/SKILL.md:80",
       "condition_text": "Portfolio decision: channel-portfolio-planner",
       "documentation_required": true,
       "exception": null,
@@ -326,7 +326,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/channel-registry/SKILL.md:75",
+      "condition_source": "protocol/channel-registry/SKILL.md:82",
       "condition_text": "UGC permission work: engagement-inbox-manager",
       "documentation_required": true,
       "exception": null,
@@ -355,7 +355,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/channel-registry/SKILL.md:74",
+      "condition_source": "protocol/channel-registry/SKILL.md:81",
       "condition_text": "Warmup: participation-warmup-planner",
       "documentation_required": true,
       "exception": null,
@@ -384,7 +384,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "protocol/channel-registry/SKILL.md:76",
+      "condition_source": "protocol/channel-registry/SKILL.md:83",
       "condition_text": "Asset/program gate: social-quality-auditor",
       "documentation_required": true,
       "exception": null,
@@ -798,7 +798,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/consent-registry/SKILL.md:78",
+      "condition_source": "protocol/consent-registry/SKILL.md:85",
       "condition_text": "Deliverability incident: deliverability-qa",
       "documentation_required": true,
       "exception": null,
@@ -827,7 +827,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "protocol/consent-registry/SKILL.md:77",
+      "condition_source": "protocol/consent-registry/SKILL.md:84",
       "condition_text": "Audit SEND: email-quality-auditor",
       "documentation_required": true,
       "exception": null,
@@ -857,7 +857,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "protocol/consent-registry/SKILL.md:76",
+      "condition_source": "protocol/consent-registry/SKILL.md:83",
       "condition_text": "Apply exclusions: list-segment-builder",
       "documentation_required": true,
       "exception": null,
@@ -886,7 +886,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "protocol/consent-registry/SKILL.md:79",
+      "condition_source": "protocol/consent-registry/SKILL.md:86",
       "condition_text": "Erase/archive: memory-management",
       "documentation_required": true,
       "exception": null,
@@ -1061,7 +1061,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:172",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:181",
       "condition_text": "FIX content: content-writer",
       "documentation_required": true,
       "exception": {
@@ -1093,7 +1093,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:175",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:184",
       "condition_text": "Add domain context: domain-authority-auditor",
       "documentation_required": true,
       "exception": null,
@@ -1123,7 +1123,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:174",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:183",
       "condition_text": "Resolve claims: offer-claims-registry",
       "documentation_required": true,
       "exception": null,
@@ -1154,7 +1154,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:173",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:182",
       "condition_text": "FIX technical evidence: technical-seo-checker",
       "documentation_required": true,
       "exception": null,
