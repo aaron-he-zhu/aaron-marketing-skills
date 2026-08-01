@@ -83,7 +83,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d",
+        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
         "source_line": 34
       }
     ],
@@ -339,7 +339,7 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "b288a61a54ff7959a4f55a8b69d7603a8ebe85b321034f1737ef4d36b06ee66d"
+      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",

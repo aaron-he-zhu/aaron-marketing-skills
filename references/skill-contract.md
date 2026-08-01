@@ -74,6 +74,12 @@ Global default termination rule applies to every Next Best Skill block:
   do not replace it with `none`;
 - follow only one unambiguous next skill whose required inputs are present;
 - stop on missing authority, a material fork, unresolved safety gate, or external side effect;
+- report `status` for the user-requested chain, not only the last skill that
+  finished: when an otherwise-requested automatic successor cannot start
+  because required authority, evidence, or a choice is missing, use
+  `NEEDS_INPUT`; when a named non-blocking limitation ends the chain without
+  required input, use `DONE_WITH_CONCERNS`; use `DONE` only when no requested
+  continuation remains;
 - when the visited-set check detects a loop, name the skipped skill in
   `open_loops` and explicitly offer the user a rerun decision that requires new
   scope or evidence; requesting missing inputs alone is not that decision;

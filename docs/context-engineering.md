@@ -53,12 +53,12 @@ All repository measurements below are UTF-8 bytes, not estimated tokens. Provide
 | Aggregate required-reference bytes across 120 Skills | 2,809,014 B | 817,601 B | −70.9% |
 | Accidental required `CONNECTORS.md` references | 30 | 0 | −100% |
 | Worst valid `/auto` static assembly | 83,385 B | 48,199 B | −42.2% |
-| Model-visible explicit aggregate: Skill + shared contract, all 120 | 3,417,045 B | 1,479,515 B with capsule + kernel | −56.7% |
-| Model-visible explicit median | 28,961 B | 12,331.5 B (~12,332 B) with capsule + kernel | −57.4% |
-| All-selected fixed representation aggregate: Skill + controller-only machine contract + shared contract, all 120 | 5,400,688 B | 1,479,515 B with capsule + kernel | −72.6% |
-| All-selected fixed representation median | 47,097 B | 12,331.5 B (~12,332 B) with capsule + kernel | −73.8% |
+| Model-visible explicit aggregate: Skill + shared contract, all 120 | 3,464,685 B | 1,479,515 B with capsule + kernel | −57.3% |
+| Model-visible explicit median | 29,358 B | 12,331.5 B (~12,332 B) with capsule + kernel | −58.0% |
+| All-selected fixed representation aggregate: Skill + controller-only machine contract + shared contract, all 120 | 5,448,328 B | 1,479,515 B with capsule + kernel | −72.8% |
+| All-selected fixed representation median | 47,494 B | 12,331.5 B (~12,332 B) with capsule + kernel | −74.0% |
 
-The first two capsule rows are the primary deterministic **model-visible representation** comparison: explicit `Skill + shared contract` bytes versus lean `capsule + kernel` bytes. They are not token or cost measurements, and lean remains unavailable for deployment. The final two rows measure **consumer reclassification** from the former all-selected fixed representation: the machine contract is now controller-only, so the larger 72.6%/73.8% deltas are architectural projection reductions, not model-context savings. Neither comparison is a deployed quality claim; compact prompt profiles remain unavailable until paired evaluation evidence is promoted through a trusted release-attestation path.
+The first two capsule rows are the primary deterministic **model-visible representation** comparison: explicit `Skill + shared contract` bytes versus lean `capsule + kernel` bytes. They are not token or cost measurements, and lean remains unavailable for deployment. The final two rows measure **consumer reclassification** from the former all-selected fixed representation: the machine contract is now controller-only, so the larger 72.8%/74.0% deltas are architectural projection reductions, not model-context savings. Neither comparison is a deployed quality claim; compact prompt profiles remain unavailable until paired evaluation evidence is promoted through a trusted release-attestation path.
 
 The stabilized real-manifest baseline (120 Skills × direct/auto routes) is:
 
