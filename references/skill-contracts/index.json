@@ -448,7 +448,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/outreach-manager.json",
-      "contract_sha256": "7f8baeb5f275fb7bbd74be6ae3ec876246e600bd4898b91d7113c32b63003a63",
+      "contract_sha256": "66defdd355b73d00ac1d0da5817aa30de1ebc22e5c9470bc032c02e9ad1b5c37",
       "skill": "outreach-manager"
     },
     {

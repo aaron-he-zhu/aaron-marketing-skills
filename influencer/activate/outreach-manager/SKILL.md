@@ -57,11 +57,13 @@ Where a connector could speed up the work, use these `~~` placeholders:
 - `~~CRM` — sync pipeline status, last-contact dates, and next actions.
 - `~~email/DM tool` — schedule and send the follow-up cadence.
 
-See [CONNECTORS.md](../../../CONNECTORS.md) for the free/keyless recipe per category. No integration is required; when one is absent, ask the user for the inputs directly.
+See [CONNECTORS.md](../../../CONNECTORS.md) for the free/keyless recipe per category. No integration is required; when one is absent, ask the user for the inputs directly. Missing target or campaign details do not block a reversible draft: use explicit bracketed placeholders, generalize any unverified personalization, and identify the smallest inputs needed to finish it.
 
 ## Instructions
 
 When a user requests outreach help, run these steps. Each step has a fill-in template in [references/templates.md](references/templates.md) — copy the matching block and replace the placeholders. Apply the hard copy rules in [references/cold-copy-rules.md](references/cold-copy-rules.md) before any message ships.
+
+**Draft/send boundary**: drafting is reversible; sending or scheduling is an external side effect. Even when the shortlist or personalization facts are missing, produce an inline first-touch draft labeled `DRAFT — NOT SENT` with explicit placeholders and no invented facts, then state what is still needed for personalization. Never stop with only an input request when a safe placeholder draft can be produced. Do not send or schedule anything until the user explicitly approves the exact recipients, channel, and message or cadence.
 
 1. **Gather outreach context** — capture campaign/product context, target handle(s), platform, followers, niche, compensation type, budget, deliverables, and timeline. Load the `memory/creators/<handle-slug>.md` roster record first when it exists — re-engaging a rostered creator starts from the confirmed contact path and last agreed rate, not a cold pitch. Template: [Step 1](references/templates.md#step-1--outreach-parameters).
 2. **Create personalized outreach** — list personalization points (recent content, style, audience, values, past partners), then write the primary message plus a DM-friendly short version and a formal email/management version. Template: [Step 2](references/templates.md#step-2--personalized-outreach). *Media/analyst/hunter targets*: personalize on beat and recent coverage, lead with the story angle (not a compensation offer), carry the embargo terms verbatim from the press-media-relations artifact, and never invent quotes or data — claims come from the approved message house.

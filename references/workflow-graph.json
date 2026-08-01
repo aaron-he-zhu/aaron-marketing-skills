@@ -5,7 +5,7 @@
     "node_source": "references/system-catalog.json",
     "node_source_sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
     "source": "references/workflow-graph.source.json",
-    "source_sha256": "a984ff993320811dc39ec060502cd61dc311121c9fbc4856676b148069a4776d"
+    "source_sha256": "36d7cbfde016ff1db867cb7ae778fd9516baca0ebce17d02ab29c433e7293b77"
   },
   "automatic_handoff_policy": {
     "ambiguity_stop": true,
@@ -73,7 +73,7 @@
       "id": "edges-06",
       "last_edge_id": "pitch-narrative-builder--narrative-enablement-kit",
       "ref": "references/workflow-graph/edges-06.json",
-      "sha256": "1eecad8a23eed86bc6e630d220d33f1c50a075e1d93ef99fc807a162835f915f"
+      "sha256": "18a1fd76112bf2a8140088408331f3796eb21b7dc0f0ae3febcffefa59a7f945"
     },
     {
       "edge_count": 40,
@@ -100,7 +100,7 @@
       "sha256": "2ab40d1ab59f1c161a205992e922cd05460a4dc91f3a6b47ea62ff4a961faf48"
     }
   ],
-  "graph_sha256": "d8b092e27cf9f76c643cc12dbfa164b2b5e45691c3ffe1e8bf043835a67ba2e6",
+  "graph_sha256": "5313dd3635b163061ca84957c3cc9a1cd49ce2bf883fd7494b2afcea4d9b9990",
   "nodes": [
     {
       "discipline": "narrative",
