@@ -2201,10 +2201,21 @@ def _host_failure_code(completed) -> Tuple[str, bool, str]:
             "ADAPTER_PROTOCOL", False,
             "Codex rejected the bundled structured-output schema before evaluation.",
         )
-    if any(marker in diagnostic for marker in ("unauthorized", "authentication", "not logged in", "api key", "401")):
+    # Check capacity failures before authentication: stdout can echo candidate
+    # context that happens to mention an API key, while stderr carries the real
+    # host error.  ChatGPT-backed Codex reports exhausted weekly capacity as a
+    # "usage limit" with a "purchase more credits" recovery path rather than a
+    # conventional 429 or quota string.
+    if any(marker in diagnostic for marker in (
+            "rate limit", "rate-limit", "too many requests", "429", "quota",
+            "usage limit", "purchase more credits")):
+        return (
+            "HOST_RATE_LIMIT", True,
+            "Codex CLI rate or usage limiting prevented a behavior result.",
+        )
+    if any(marker in diagnostic for marker in (
+            "unauthorized", "authentication", "not logged in", "api key", "401")):
         return "HOST_AUTH", False, "Codex CLI authentication failed before a behavior result was produced."
-    if any(marker in diagnostic for marker in ("rate limit", "rate-limit", "too many requests", "429", "quota")):
-        return "HOST_RATE_LIMIT", True, "Codex CLI rate limiting prevented a behavior result."
     if any(marker in diagnostic for marker in ("context window", "context length", "too many tokens")):
         return "HOST_CONTEXT_LIMIT", False, "Codex CLI could not fit the behavior case in model context."
     return "HOST_TOOL_ERROR", True, "Codex CLI exited before a behavior result was produced."

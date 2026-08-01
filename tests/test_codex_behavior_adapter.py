@@ -736,6 +736,20 @@ class CodexBehaviorAdapterTests(unittest.TestCase):
             self.module._host_failure_code(completed),
         )
 
+    def test_usage_limit_wins_over_incidental_auth_language(self):
+        completed = subprocess.CompletedProcess(
+            ["codex"], 1,
+            "The candidate context mentions an API key.",
+            "You've hit your usage limit. Purchase more credits or try again later.",
+        )
+        self.assertEqual(
+            (
+                "HOST_RATE_LIMIT", True,
+                "Codex CLI rate or usage limiting prevented a behavior result.",
+            ),
+            self.module._host_failure_code(completed),
+        )
+
     def test_parallel_workers_preserve_request_order_and_partition_isolation(self):
         requests = self._requests(6)
         config = self.module.AdapterConfig(
