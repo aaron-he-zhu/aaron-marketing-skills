@@ -980,6 +980,10 @@ print("fixture footer **T1** **S1**")
             self.assertNotIn("EVIL WORKTREE BODY", roas)
             self.assertIn("umbrella=v1.2.3", roas)
             self.assertIn("pinned-ad-skill", ad_list)
+            self.assertIn(
+                "blob/main/ad/phase/pinned-ad-skill/SKILL.md", ad_list,
+            )
+            self.assertNotIn("/tree/main/", ad_list)
             self.assertNotIn("evil-worktree-ad-skill", ad_list)
             self.assertNotIn("umbrella=v9.9.9", ad_list)
             self.assertIn("pinned commit export", result.stdout)

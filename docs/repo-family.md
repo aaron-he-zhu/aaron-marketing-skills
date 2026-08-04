@@ -37,7 +37,7 @@ Freshness is self-documenting: every `body`/`list` mirror carries its synced umb
 
 - **`body`** — the mirror README's framework body between `<!-- SYNC:BEGIN -->` / `<!-- SYNC:END -->` markers is regenerated verbatim from the source file, with relative `references/` links rewritten to absolute umbrella URLs. Full-fidelity mirror.
 - **`ids`** — every framework item ID the source file references (bold or table-row, e.g. `T04`, `A2`) must exist in the published standard's ID set; the repo keeps its own standalone packaging and prose (these three predate this policy, and the umbrella file may be a compact summary of the full standard). ID drift is *reported* for manual reconciliation, never auto-pushed.
-- **`list`** — the skill list between SYNC markers is regenerated from `plugin.json`.
+- **`list`** — the skill list between SYNC markers is regenerated from `plugin.json`. Each item links directly to the skill's crawlable `blob/main/.../SKILL.md` page rather than its `tree/main/` directory.
 
 ## How sync runs
 
