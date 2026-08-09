@@ -75,6 +75,7 @@ jobs:
           set -euo pipefail
           bash scripts/check-versions.sh --release-all-current
           python3 scripts/generate-release-surfaces.py --check
+          python3 scripts/check-agent-plugins-standard.py --online
 
       - name: Fixed security and repository guards
         run: |
@@ -184,6 +185,7 @@ jobs:
             "aaron-marketing-skills-$version-lite.tar.gz" \
             "aaron-marketing-skills-$version-pro.tar.gz" \
             "aaron-marketing-skills-$version-governed.tar.gz" \
+            "aaron-marketing-skills-$version-agent-plugin-v1-lite.tar.gz" \
             SHA256SUMS \
             release-assets.json
           do
@@ -209,11 +211,11 @@ jobs:
             echo "### Required owner-local gate"
             echo
             echo 'This workflow deliberately does **not** receive or upload the private engineering-maturity report, release receipt, or raw semantic-evidence chain.'
-            echo 'Before tagging, the owner must run `python3 scripts/issue-engineering-release-receipt.py --semantic-evidence-run-id <fresh-current-source-run-uuid> --evidence-root <private-project-root> --release-candidate 19.1.0-rc.N --owner-authorization release-v19-without-real-project-outcomes --maturity-report-output <private-new-report-path> --output <private-new-receipt-path>` against this exact clean RC commit to issue the private `engineering-validation-v19` receipt.'
+            echo 'Before tagging, the owner must run `python3 scripts/issue-engineering-release-receipt.py --semantic-evidence-run-id <fresh-current-source-run-uuid> --evidence-root <private-project-root> --release-candidate 19.2.0-rc.N --owner-authorization release-v19-without-real-project-outcomes --maturity-report-output <private-new-report-path> --output <private-new-receipt-path>` against this exact clean RC commit to issue the private `engineering-validation-v19` receipt.'
             echo 'The issuer directly runs the five-dimension maturity audit and, in the same invocation, writes the private mode-0600 report plus a receipt that hashes those exact report bytes.'
-            echo 'Owner-local preflight must then run `python3 scripts/verify-release-receipt.py <private-receipt> --source-commit "${{ steps.provenance.outputs.source_commit }}" --release-version 19.1.0 --required-gate engineering-validation-v19 --maturity-report <private-report> --evidence-root <absolute-evidence-root>`; this rapidly reruns the current verifier over the original semantic chain.'
+            echo 'Owner-local preflight must then run `python3 scripts/verify-release-receipt.py <private-receipt> --source-commit "${{ steps.provenance.outputs.source_commit }}" --release-version 19.2.0 --required-gate engineering-validation-v19 --maturity-report <private-report> --evidence-root <absolute-evidence-root>`; this rapidly reruns the current verifier over the original semantic chain.'
             echo 'The evidence root may be outside the repository, or the absolute repository root only when the bound `memory/runs/<run-id>` directory is Git-ignored and wholly untracked.'
-            echo 'Final creation requires `python3 scripts/create-github-release.py --live --receipt <private-receipt> --maturity-report <private-report> --evidence-root <absolute-evidence-root> --asset-dir <verified-five-asset-directory>`. Live publishers require `AARON_RELEASE_RECEIPT`, `AARON_RELEASE_MATURITY_REPORT`, and `AARON_RELEASE_EVIDENCE_ROOT`; none of these private inputs is uploaded.'
+            echo 'Final creation requires `python3 scripts/create-github-release.py --live --receipt <private-receipt> --maturity-report <private-report> --evidence-root <absolute-evidence-root> --asset-dir <verified-six-asset-directory>`. Live publishers require `AARON_RELEASE_RECEIPT`, `AARON_RELEASE_MATURITY_REPORT`, and `AARON_RELEASE_EVIDENCE_ROOT`; none of these private inputs is uploaded.'
             echo 'Issuance and final Release creation keep the strict 24-hour freshness gate. Only after that immutable final Release exists may publisher entrypoints internally use post-release continuation, still bounded by the committed semantic policy (currently 30 days) and still revalidating every private proof/source hash.'
             echo 'The provider run invokes real models over simulated semantic fixtures: it is engineering evidence, not real-project outcome evidence.'
             echo 'Real-project outcomes remain unvalidated until the post-release 14 pilot + 70 paired + 28 shadow `governed-promotion` cohort passes. Lite remains the default; Governed capability availability does not validate Governed outcomes or Governed-by-default.'

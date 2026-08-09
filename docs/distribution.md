@@ -5,14 +5,16 @@ is **owner-run, dry-run by default, and driven by the repo's committed state** �
 no hardcoded queues, no guessing. The single source of truth for "are we fully
 distributed?" is `scripts/registry-status.sh`.
 
-The release has three physical plugin archives. Each contains the same 120
-skills and eight commands; only the runtime ceiling changes:
+The release has four physical archives. The three Claude-oriented plugin
+archives contain the same 120 skills and eight commands with different runtime
+ceilings. The fourth is a strict, static Agent Plugins v1 projection:
 
 | Archive | Physical ceiling | Fresh-project effective profile |
 |---|---|---|
 | Lite | authored workflows, routing, scoring, inline delivery, canonical reads | Lite |
 | Pro | Lite plus connectors and saved audits | Lite until Pro is explicitly selected |
 | Governed | Pro plus state writes, run/context/controller and workflow/audit loops | Lite until Pro or Governed is explicitly selected |
+| Agent Plugins v1 Portable Lite | 120 strict static Agent Skills plus their reachable static references; no commands, hooks, connectors, runtime, or `mcp.json` | Portable Lite static workflows only |
 
 The Governed archive is therefore the backward-compatible **bundle-plugin**
 payload without being an opt-in to Governed behavior. A standalone one-folder
@@ -21,6 +23,14 @@ absent. Package selection is an installer/admin control; logical selection uses
 the closed config/environment/runtime surfaces in
 [`references/capability-profiles.md`](../references/capability-profiles.md).
 Neither changes the eight-command grammar.
+
+Portable Lite is additive and does not change that capability lattice. The
+repository root is its authoring source, **not** an Agent Plugins install root.
+The release builder generates the required flat `skills/<name>/` package and
+strict frontmatter without adding a committed mirror. Install the extracted
+`aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` directory; see the
+exact [Agent Plugins v1 package and capability
+boundary](agent-plugins-v1.md).
 
 The standalone manifest names only capabilities physically supported by the
 one-folder payload: `authored-workflows`, `inline-delivery`, and
@@ -42,6 +52,7 @@ connectors. The typed source is
 | `claude-code-plugin-host` | plugin/repository | eight slash commands | none; `commands/` remains authoritative |
 | `generic-shared-root-host` | plugin/repository | eight router-skill facades | `router-facades/<discipline>/SKILL.md` plus a typed sidecar manifest |
 | `standalone-skill-host` | one-folder standalone skill | direct skill invocation | none |
+| `agent-plugins-v1` | Portable Lite Agent Plugin | direct Skill discovery | exactly 120 immediate `skills/<name>/SKILL.md` directories |
 
 Every plugin host projection, at every physical profile, ships the typed host,
 prompt, and context-module catalogs, `context-profile-resolver.py`, and the
@@ -100,18 +111,41 @@ host profile and surfaces; read-only verification remains compatible with
 legacy manifest 1.0 and physical-profile manifest 1.1.
 
 Build the complete release-asset set with one command. The builder exports the
-exact Git object into a private directory, builds all three profiles from that
-export, creates canonical archives, safely unpacks each archive, and verifies
-its manifest/profile/provenance before installing the output directory:
+exact Git object into a private directory, builds all three runtime profiles
+plus the Portable Lite projection from that export, creates four canonical
+archives, safely unpacks each archive, and verifies its
+manifest/profile/provenance before installing the output directory:
 
 ```bash
 python3 scripts/build-release-assets.py \
   --source-repo /path/to/aaron-marketing-skills \
   --source-repository aaron-he-zhu/aaron-marketing-skills \
   --source-commit <exact-40-hex-release-commit> \
-  --version 19.1.0 \
-  --output /private/path/v19.1.0-release-assets
+  --version 19.2.0 \
+  --output /private/path/v19.2.0-release-assets
 ```
+
+Build and strictly validate the standalone Agent Plugins projection during
+development with:
+
+```bash
+python3 scripts/build-distribution.py \
+  --agent-plugin --profile portable-lite \
+  --output /private/path/aaron-agent-plugin
+python3 scripts/validate-agent-plugin.py \
+  /private/path/aaron-agent-plugin
+python3 scripts/build-distribution.py \
+  --verify-manifest /private/path/aaron-agent-plugin \
+  --profile portable-lite
+```
+
+The dedicated validator checks `plugin.json`, all 120 strict Skills and links,
+filesystem containment, forbidden executable/MCP surfaces, the projection, and
+the complete distribution manifest. The last command independently rechecks
+the manifest and expected profile; add `--source-repository owner/repo` and
+`--source-commit <40-or-64-hex-object-id>` for an exact provenance match. Build
+only into an untracked output directory outside the repository. Never commit a
+generated root `skills/` mirror.
 
 Bare `--plugin` is a deprecated Governed-ceiling alias through v20; release
 automation must use `--profile`. The `publish-package.sh --from-build` channel
@@ -128,22 +162,25 @@ Verify an existing payload without rebuilding it with
 
 The manifest also binds `profile`, `capability_ceiling`, resolved capabilities,
 the catalog and profile-definition hashes, package budget, and optional pinned
-repository/commit provenance. `build-release-assets.py` emits fixed
-`aaron-marketing-skills-19.1.0-{lite,pro,governed}.tar.gz` names for v19.1,
-`SHA256SUMS`, and the machine-readable `release-assets.json` ledger defined by
+repository/commit provenance. `build-release-assets.py` emits the fixed
+`aaron-marketing-skills-19.2.0-{lite,pro,governed}.tar.gz` runtime archives,
+`aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz`, `SHA256SUMS`, and
+the machine-readable `release-assets.json` ledger defined by
 [`release-assets.schema.json`](../references/release-assets.schema.json).
 Archive paths are sorted under a fixed root; timestamps and owner fields are
 zeroed; modes are normalized; and the gzip header has a zero timestamp plus a
 stable OS byte. Links, special files, path traversal, unexpected output files,
 and a payload that differs from a fresh build of the exact source commit all
-fail closed. The checksum file covers the three archives; the ledger records
+fail closed. The checksum file covers all four archives; the ledger records
 their bytes, digests, distribution-manifest digests, profile-definition
 digests, and source identity.
 
 For a release candidate, run the one command twice into two new directories and
-require all five files to be byte-identical. Existing output is verified
+require all six files to be byte-identical: four archives, `SHA256SUMS`, and
+`release-assets.json`. Existing output is verified
 read-only with the same exact source identity by replacing `--output <dir>` with
-`--verify <dir>`. Never repackage one profile by deleting files from another.
+`--verify <dir>`. Never repackage one profile or projection by deleting files
+from another.
 
 To stay inside the Governed hard ceiling, that archive replaces the verbose
 `references/skill-contracts/` tree with the deterministic
@@ -159,7 +196,7 @@ Every release-time **live** mutation entrypoint (`publish-clawhub.sh`,
 successfully refreshes `origin/main`, and proves HEAD is reachable from it.
 For v19 and later it also validates the private engineering receipt together
 with its exact maturity report and original raw semantic-evidence chain,
-immutable final tag, non-draft GitHub Release, exact five downloaded release
+immutable final tag, non-draft GitHub Release, exact six downloaded release
 assets, and a successful owner-run release-validation workflow on the same
 commit. These private inputs are read locally and never uploaded. The
 registry parent passes a commit/receipt-bound gate token to its children so this
@@ -167,7 +204,7 @@ expensive read-only verification runs once without weakening direct
 per-publisher calls.
 Receipt issuance and `create-github-release.py --live` always enforce the
 24-hour current-freshness gate. A later publisher resume first proves the
-immutable final tag, non-draft Release, exact five downloaded assets, and owner
+immutable final tag, non-draft Release, exact six downloaded assets, and owner
 workflow, and only then internally selects the explicit
 `--post-release-continuation` verifier mode. That mode relaxes only the
 wall-clock-since-issuance check: issuance-time 24-hour freshness plus every
@@ -254,13 +291,14 @@ bash scripts/check-versions.sh --release-all-current
 ```
 
 Run the full release validation, current-source real-provider engineering
-maturity gate, and the two-build comparison for Lite, Pro, and Governed. Re-run
+maturity gate, and the two-build comparison for Lite, Pro, Governed, and Agent
+Plugins v1 Portable Lite. Re-run
 all generator `--write` commands and require a zero diff, then commit that
 frozen tree as the release candidate. Issue the private engineering receipt
 against that exact clean commit:
 
 ```bash
-RC_NAME="19.1.0-rc.1"
+RC_NAME="19.2.0-rc.1"
 python3 scripts/issue-engineering-release-receipt.py \
   --root "$PWD" \
   --semantic-evidence-run-id "<fresh-current-source-run-uuid>" \
@@ -287,7 +325,7 @@ export AARON_RELEASE_MATURITY_REPORT="/private/path/v19-engineering-maturity-rep
 export AARON_RELEASE_EVIDENCE_ROOT="/absolute/private/project-root"
 python3 scripts/verify-release-receipt.py "$AARON_RELEASE_RECEIPT" \
   --source-commit "$(git rev-parse --verify 'HEAD^{commit}')" \
-  --release-version 19.1.0 \
+  --release-version 19.2.0 \
   --required-gate engineering-validation-v19 \
   --maturity-report "$AARON_RELEASE_MATURITY_REPORT" \
   --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT"
@@ -321,7 +359,7 @@ rules and verify it separately:
 
 ```bash
 RELEASE_COMMIT="<exact-40-hex-v19-release-commit>"
-RC_NAME="19.1.0-rc.1"
+RC_NAME="19.2.0-rc.1"
 python3 scripts/verify-profile-outcomes.py \
   /private/path/v19-governed-promotion-outcomes.json \
   --stage governed-promotion \
@@ -350,13 +388,13 @@ session loses at most one in-flight skill — re-run the same command.
 
 1. **Gate**: refresh/rebase deliberately, freeze one clean RC commit, pass the exact 120/120 version and complete local validation gates, run the current-source real-provider engineering-maturity gate, retain the original raw evidence root, issue the private maturity report plus engineering release receipt, and build two byte-identical release-asset sets against that exact commit.
 2. **Push and remote validation**: push the exact RC ref → require its ordinary PR CI → owner-dispatch release validation for that already-pushed ref/commit → integrate through the reviewed default-branch path without changing the RC tree. The release-validation workflow rejects a missing or differently resolved remote ref. The RC commit must remain reachable from refreshed `origin/main`; do not squash or rebase it during integration.
-3. **Release**: preview with `python3 scripts/create-github-release.py`, then run `python3 scripts/create-github-release.py --live --receipt "$AARON_RELEASE_RECEIPT" --maturity-report "$AARON_RELEASE_MATURITY_REPORT" --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT" --asset-dir /private/path/v19.1.0-release-assets`. The owner-run command rapidly revalidates the private three-part evidence bundle and original semantic chain, then rechecks the exact five assets, green release workflow, clean/main-reachable source, annotated tag, `VERSIONS.md` notes, and downloaded GitHub assets. It never uploads the private inputs, resumes a same-commit tag safely, and treats an existing release as read-only; it never moves a tag or replaces assets.
+3. **Release**: preview with `python3 scripts/create-github-release.py`, then run `python3 scripts/create-github-release.py --live --receipt "$AARON_RELEASE_RECEIPT" --maturity-report "$AARON_RELEASE_MATURITY_REPORT" --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT" --asset-dir /private/path/v19.2.0-release-assets`. The owner-run command rapidly revalidates the private three-part evidence bundle and original semantic chain, then rechecks the exact six assets, green release workflow, clean/main-reachable source, annotated tag, `VERSIONS.md` notes, and downloaded GitHub assets. It never uploads the private inputs, resumes a same-commit tag safely, and treats an existing release as read-only; it never moves a tag or replaces assets.
 4. **About**: `bash scripts/sync-about.sh` → review → `--live` — projects `.github/repo-about.json` onto the GitHub sidebar. *This step was silently skipped at v18.0.0 and the About kept advertising the previous release's framework names — it is part of the ritual, not an extra.*
 5. **Family prerequisites** (only when the release renamed/reshaped a family repo): rename the mirror first, then manually reconcile any `ids`-mode mirror's content (README + standard file + CHANGELOG + CITATION) — `ids` targets are verify-only and never auto-pushed.
 6. **Family**: `bash scripts/sync-family.sh` → review → `--live` → re-run the dry-run until all 15 report ✓.
 7. **Package**: `bash scripts/publish-package.sh --from-build` → review → `bash scripts/publish-package.sh --from-build --live`. This publishes the Governed-ceiling package whose fresh logical default remains Lite. On a transport error after upload the script accepts success only when `package inspect --json` returns the exact source repository/commit and the remotely served distribution manifest has the attempted build's `files_sha256`; an older CLI without those fields fails closed.
 8. **Registries**: `bash scripts/registry-status.sh` (parallel by default, ~2–4 min) → `bash scripts/publish-registries.sh` → review → `bash scripts/publish-registries.sh --live --parallel` — publishes **only the behind-set**; the two platforms run concurrently. **Exit 8 = SkillHub quota deferrals** (see the quota box below): finish the remainder the next day with `bash scripts/publish-registries.sh --live skillhub`.
-9. **Verify**: `bash scripts/registry-status.sh --require-current` — canonical 120/120 current on both + package current, with a non-zero exit on any drift — plus the release page, three asset manifests, About sidebar, 15 family targets, and installed-profile diagnostics.
+9. **Verify**: `bash scripts/registry-status.sh --require-current` — canonical 120/120 current on both + package current, with a non-zero exit on any drift — plus the release page, four archive manifests (including the strict 120/120 Portable Lite projection), About sidebar, 15 family targets, and installed-profile diagnostics. Client UI/install smokes remain candidate-release acceptance until recorded in [`agent-compatibility.md`](agent-compatibility.md).
 
 ## Rollback and interrupted rollout
 
@@ -370,7 +408,8 @@ nonterminal runs must be closed by the pre-v19 runtime; v19 returns
 Use this decision order:
 
 1. **Before tag/release** — stop, fix the RC, rerun current-source provider and
-   maturity validation, rebuild all three profiles twice, retain the new raw
+   maturity validation, rebuild all three runtime profiles plus Portable Lite
+   twice, retain the new raw
    evidence root, issue a fresh private maturity report and engineering release
    receipt, and create a new RC commit.
 2. **After release but before live distribution** — pause all live scripts.
@@ -389,7 +428,7 @@ Use this decision order:
 If one registry is quota-deferred, the release is only partially distributed.
 Report that state explicitly and resume after the window rolls; do not call the
 release fully distributed until `registry-status.sh`, the package, About, family
-repos, and all five release assets agree.
+repos, and all six release assets agree.
 
 > **SkillHub quota (measured, v18.0.0)**: ~**100 publishes per 24h rolling window,
 > account-wide**. Past it, every skill returns 发布频率过高 and *retries keep the

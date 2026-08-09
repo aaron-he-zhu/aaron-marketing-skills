@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.1.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.2.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -97,12 +97,15 @@
 |------|------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` 然后 `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ 宿主](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
+| **Agent Plugins v1 客户端 · Portable Lite** | 从 [v19.2.0 Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v19.2.0)下载 `aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz`，解压后安装其中的插件目录 |
 | **[SkillHub.cn](https://skillhub.cn)(中文社区)** | `skillhub install <frontmatter-slug>`(如 `keyword-research`) |
 | **任意宿主** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
 在 Claude Code 中，`marketplace add` 只是注册目录——还需运行 `/plugin install aaron-marketing@aaron`（或在 `/plugin` 中选择）才能真正启用技能与命令。通用宿主单技能安装：`npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research`。可在 [skills.sh 注册表](https://skills.sh/aaron-he-zhu/aaron-marketing-skills)浏览本技能库。各宿主的技能目录、frontmatter 兼容细节、以及脱离插件安装时的降级行为见 [docs/agent-compatibility.md](agent-compatibility.md)（2026-07 实测 120/120 可安装）。
 
 安装插件**不会**往你的 `/mcp` 列表添加任何东西——MCP 目录位于 [`docs/mcp-catalog.json`](mcp-catalog.json)，刻意放在 Claude Code 会自动注册的插件根 `.mcp.json` 路径之外，仅作复制粘贴参考（见[连接器与层级](#连接器与层级)）。
+
+仓库根目录是创作单一事实源，**不是** Agent Plugins v1 的标准安装根。请使用上述 Release 资产；它把 **120/120 个严格 Agent Skills** 投影为扁平的 `skills/<name>/`，且不含 `mcp.json`、命令、hooks、连接器或仓库运行时。现有客户端兼容层继续保留；详见 [Portable Lite 包结构与能力边界](agent-plugins-v1.md)。
 
 ---
 
@@ -680,7 +683,7 @@ docs/            # 本地化 README(zh)
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— 撰写规则、贡献清单，以及权威的 10 个追踪面清单。
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`19.1.0`）。
+- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`19.2.0`）。
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— 安全、隐私、社区政策。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— 面向 Agent 的本仓库上下文。

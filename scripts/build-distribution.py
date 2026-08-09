@@ -23,6 +23,7 @@ HOST_CAPABILITY_CATALOG = ROOT / "references" / "host-capability-profiles.json"
 MANIFEST = ROOT / "references" / "distribution-files.json"
 ROUTER_FACADE_GENERATOR = ROOT / "scripts" / "generate-router-facades.py"
 CONTEXT_PROFILE_RESOLVER = ROOT / "scripts" / "context-profile-resolver.py"
+AGENT_PLUGIN_BUILDER = ROOT / "scripts" / "agent_plugin_builder.py"
 ROUTER_FACADE_SIDECAR = "router-facades/sidecar-manifest.json"
 PROMPT_PROFILES_REF = "references/prompt-profiles.json"
 PROMPT_EVIDENCE_PREFIX = "references/prompt-profile-evidence/"
@@ -38,6 +39,7 @@ MANIFEST_SCHEMA_VERSION = "1.2"
 PROFILE_MANIFEST_SCHEMA_VERSION = "1.1"
 LEGACY_MANIFEST_SCHEMA_VERSION = "1.0"
 PROFILE_NAMES = ("lite", "pro", "governed")
+AGENT_PLUGIN_PROFILE_NAMES = ("portable-lite",)
 HOST_PROFILE_NAMES = (
     "standalone-skill-host",
     "generic-shared-root-host",
@@ -223,6 +225,7 @@ def load_json(path):
 
 _ROUTER_FACADE_MODULE = None
 _CONTEXT_PROFILE_MODULE = None
+_AGENT_PLUGIN_MODULE = None
 
 
 def router_facade_module():
@@ -259,6 +262,55 @@ def context_profile_module():
     specification.loader.exec_module(module)
     _CONTEXT_PROFILE_MODULE = module
     return module
+
+
+def agent_plugin_module():
+    global _AGENT_PLUGIN_MODULE
+    if _AGENT_PLUGIN_MODULE is not None:
+        return _AGENT_PLUGIN_MODULE
+    source, _ = validate_source_node(
+        AGENT_PLUGIN_BUILDER.relative_to(ROOT), allow_directory=False
+    )
+    specification = importlib.util.spec_from_file_location(
+        "distribution_agent_plugin", source
+    )
+    if specification is None or specification.loader is None:
+        raise DistributionError("cannot load Agent Plugins projection builder")
+    module = importlib.util.module_from_spec(specification)
+    specification.loader.exec_module(module)
+    _AGENT_PLUGIN_MODULE = module
+    return module
+
+
+def build_agent_plugin_distribution(
+        destination, source_repository=None, source_commit=None):
+    module = agent_plugin_module()
+    try:
+        return module.build_agent_plugin(
+            destination,
+            source_root=ROOT,
+            source_repository=source_repository,
+            source_commit=source_commit,
+        )
+    except module.AgentPluginError as exc:
+        raise DistributionError(str(exc)) from exc
+
+
+def verify_agent_plugin_distribution(
+        destination, source_repository=None, source_commit=None,
+        expected_profile=None, expected_host_profile=None):
+    module = agent_plugin_module()
+    try:
+        return module.verify_agent_plugin_distribution(
+            destination,
+            expected_repository=source_repository,
+            expected_commit=source_commit,
+            expected_profile=expected_profile,
+            expected_host_profile=expected_host_profile,
+            source_root=ROOT,
+        )
+    except module.AgentPluginError as exc:
+        raise DistributionError(str(exc)) from exc
 
 
 def resolve_host_profile(host_catalog, requested, distribution_kind):
@@ -1601,6 +1653,10 @@ def main(argv=None):
     parser.add_argument("--output", type=Path)
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--plugin", action="store_true")
+    group.add_argument(
+        "--agent-plugin", action="store_true",
+        help="Build the generated Agent Plugins v1 Portable Lite projection.",
+    )
     group.add_argument("--skill", metavar="DISCIPLINE/PHASE/SKILL")
     group.add_argument(
         "--verify-manifest", type=Path, metavar="DISTRIBUTION",
@@ -1613,12 +1669,13 @@ def main(argv=None):
              "(slug/displayName/summary) from shipped SKILL.md files.",
     )
     parser.add_argument(
-        "--profile", choices=PROFILE_NAMES,
-        help="Plugin capability profile. Bare --plugin remains a governed alias "
-             "with a deprecation warning through v20.",
+        "--profile", choices=PROFILE_NAMES + AGENT_PLUGIN_PROFILE_NAMES,
+        help="Distribution capability profile. Bare --plugin remains a governed "
+             "alias with a deprecation warning through v20; --agent-plugin "
+             "requires portable-lite.",
     )
     parser.add_argument(
-        "--host-profile", choices=HOST_PROFILE_NAMES,
+        "--host-profile", choices=HOST_PROFILE_NAMES + ("agent-plugins-v1",),
         help="Host capability projection. Plugin builds default to "
              "claude-code-plugin-host; one-skill builds default to "
              "standalone-skill-host.",
@@ -1638,11 +1695,29 @@ def main(argv=None):
                 raise DistributionError(
                     "--verify-manifest cannot be combined with build options"
                 )
-            verified = verify_distribution_manifest(
-                args.verify_manifest, args.source_repository, args.source_commit,
-                expected_profile=args.profile,
-                expected_host_profile=args.host_profile,
-            )
+            if agent_plugin_module().distribution_kind(
+                    args.verify_manifest) == "agent-plugin":
+                verified = verify_agent_plugin_distribution(
+                    args.verify_manifest,
+                    args.source_repository,
+                    args.source_commit,
+                    expected_profile=args.profile,
+                    expected_host_profile=args.host_profile,
+                )
+            else:
+                if args.profile in AGENT_PLUGIN_PROFILE_NAMES:
+                    raise DistributionError(
+                        "portable-lite applies only to agent-plugin distributions"
+                    )
+                if args.host_profile == "agent-plugins-v1":
+                    raise DistributionError(
+                        "agent-plugins-v1 applies only to agent-plugin distributions"
+                    )
+                verified = verify_distribution_manifest(
+                    args.verify_manifest, args.source_repository, args.source_commit,
+                    expected_profile=args.profile,
+                    expected_host_profile=args.host_profile,
+                )
             print(
                 "verified %s distribution: %d files, manifest sha256:%s"
                 % (verified["kind"], len(verified["files"]), verified["files_sha256"])
@@ -1650,13 +1725,34 @@ def main(argv=None):
             return 0
         if args.output is None:
             raise DistributionError("--output is required when building a distribution")
-        catalog = load_json(CATALOG)
-        distribution = load_json(MANIFEST)
-        host_catalog = load_json(HOST_CAPABILITY_CATALOG)
         prepare_destination(args.output)
         if args.slim_frontmatter and not args.plugin:
             raise DistributionError("--slim-frontmatter applies to --plugin builds only")
-        if args.plugin:
+        if args.agent_plugin:
+            if args.profile != "portable-lite":
+                raise DistributionError(
+                    "--agent-plugin requires --profile portable-lite"
+                )
+            if args.host_profile not in (None, "agent-plugins-v1"):
+                raise DistributionError(
+                    "--agent-plugin host profile is fixed to agent-plugins-v1"
+                )
+            written = build_agent_plugin_distribution(
+                args.output, args.source_repository, args.source_commit,
+            )
+            kind = "agent-plugin"
+        elif args.plugin:
+            if args.profile in AGENT_PLUGIN_PROFILE_NAMES:
+                raise DistributionError(
+                    "portable-lite applies only to --agent-plugin builds"
+                )
+            if args.host_profile == "agent-plugins-v1":
+                raise DistributionError(
+                    "agent-plugins-v1 applies only to --agent-plugin builds"
+                )
+            catalog = load_json(CATALOG)
+            distribution = load_json(MANIFEST)
+            host_catalog = load_json(HOST_CAPABILITY_CATALOG)
             selected_profile = args.profile
             if selected_profile is None:
                 selected_profile = "governed"
@@ -1676,6 +1772,13 @@ def main(argv=None):
         else:
             if args.profile is not None:
                 raise DistributionError("--profile applies to --plugin builds only")
+            if args.host_profile == "agent-plugins-v1":
+                raise DistributionError(
+                    "agent-plugins-v1 applies only to --agent-plugin builds"
+                )
+            catalog = load_json(CATALOG)
+            distribution = load_json(MANIFEST)
+            host_catalog = load_json(HOST_CAPABILITY_CATALOG)
             selected_host_profile = args.host_profile or "standalone-skill-host"
             host_profile = resolve_host_profile(
                 host_catalog, selected_host_profile, "standalone-skill"
@@ -1683,15 +1786,16 @@ def main(argv=None):
             build_standalone(args.output, catalog, args.skill)
             kind = "standalone-skill"
             profile = standalone_profile(distribution)
-        written = write_distribution_manifest(
-            args.output, kind, profile, host_profile,
-            args.source_repository, args.source_commit,
-        )
-        verify_distribution_manifest(
-            args.output,
-            expected_profile=profile["profile"],
-            expected_host_profile=host_profile["profile"],
-        )
+        if kind != "agent-plugin":
+            written = write_distribution_manifest(
+                args.output, kind, profile, host_profile,
+                args.source_repository, args.source_commit,
+            )
+            verify_distribution_manifest(
+                args.output,
+                expected_profile=profile["profile"],
+                expected_host_profile=host_profile["profile"],
+            )
     except DistributionError as exc:
         print("error: %s" % exc, file=sys.stderr)
         return 1

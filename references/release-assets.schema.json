@@ -15,7 +15,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": "1.0"
+      "const": "1.1"
     },
     "product": {
       "const": "aaron-marketing-skills"
@@ -108,8 +108,8 @@
     },
     "assets": {
       "type": "array",
-      "minItems": 3,
-      "maxItems": 3,
+      "minItems": 4,
+      "maxItems": 4,
       "prefixItems": [
         {
           "$ref": "#/$defs/liteAsset"
@@ -119,6 +119,9 @@
         },
         {
           "$ref": "#/$defs/governedAsset"
+        },
+        {
+          "$ref": "#/$defs/agentPluginV1LiteAsset"
         }
       ],
       "items": false
@@ -142,11 +145,11 @@
         },
         "covers": {
           "type": "array",
-          "minItems": 3,
-          "maxItems": 3,
+          "minItems": 4,
+          "maxItems": 4,
           "items": {
             "type": "string",
-            "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed)\\.tar\\.gz$"
+            "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed|agent-plugin-v1-lite)\\.tar\\.gz$"
           },
           "uniqueItems": true
         },
@@ -169,7 +172,9 @@
       "type": "object",
       "additionalProperties": false,
       "required": [
+        "kind",
         "profile",
+        "host_profile",
         "filename",
         "archive_root",
         "bytes",
@@ -180,20 +185,33 @@
         "capability_ceiling"
       ],
       "properties": {
+        "kind": {
+          "enum": [
+            "plugin",
+            "agent-plugin"
+          ]
+        },
         "profile": {
           "enum": [
             "lite",
             "pro",
-            "governed"
+            "governed",
+            "portable-lite"
+          ]
+        },
+        "host_profile": {
+          "enum": [
+            "claude-code-plugin-host",
+            "agent-plugins-v1"
           ]
         },
         "filename": {
           "type": "string",
-          "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed)\\.tar\\.gz$"
+          "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed|agent-plugin-v1-lite)\\.tar\\.gz$"
         },
         "archive_root": {
           "type": "string",
-          "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed)$"
+          "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-(?:lite|pro|governed|agent-plugin-v1-lite)$"
         },
         "bytes": {
           "type": "integer",
@@ -215,7 +233,8 @@
           "enum": [
             "lite",
             "pro",
-            "governed"
+            "governed",
+            "portable-lite"
           ]
         }
       }
@@ -227,8 +246,20 @@
         },
         {
           "properties": {
+            "kind": {
+              "const": "plugin"
+            },
             "profile": {
               "const": "lite"
+            },
+            "host_profile": {
+              "const": "claude-code-plugin-host"
+            },
+            "filename": {
+              "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-lite\\.tar\\.gz$"
+            },
+            "archive_root": {
+              "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-lite$"
             },
             "capability_ceiling": {
               "const": "lite"
@@ -244,8 +275,20 @@
         },
         {
           "properties": {
+            "kind": {
+              "const": "plugin"
+            },
             "profile": {
               "const": "pro"
+            },
+            "host_profile": {
+              "const": "claude-code-plugin-host"
+            },
+            "filename": {
+              "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-pro\\.tar\\.gz$"
+            },
+            "archive_root": {
+              "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-pro$"
             },
             "capability_ceiling": {
               "const": "pro"
@@ -261,11 +304,52 @@
         },
         {
           "properties": {
+            "kind": {
+              "const": "plugin"
+            },
             "profile": {
               "const": "governed"
             },
+            "host_profile": {
+              "const": "claude-code-plugin-host"
+            },
+            "filename": {
+              "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-governed\\.tar\\.gz$"
+            },
+            "archive_root": {
+              "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-governed$"
+            },
             "capability_ceiling": {
               "const": "governed"
+            }
+          }
+        }
+      ]
+    },
+    "agentPluginV1LiteAsset": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/asset"
+        },
+        {
+          "properties": {
+            "kind": {
+              "const": "agent-plugin"
+            },
+            "profile": {
+              "const": "portable-lite"
+            },
+            "host_profile": {
+              "const": "agent-plugins-v1"
+            },
+            "filename": {
+              "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-agent-plugin-v1-lite\\.tar\\.gz$"
+            },
+            "archive_root": {
+              "pattern": "^aaron-marketing-skills-[0-9]+\\.[0-9]+\\.[0-9]+-agent-plugin-v1-lite$"
+            },
+            "capability_ceiling": {
+              "const": "portable-lite"
             }
           }
         }

@@ -6,12 +6,13 @@ Guidelines for AI agents working in this repository. For full runtime context, s
 
 - **Name**: aaron-marketing-skills — 120 skills (16 × 7 disciplines + 8 protocol), 7 disciplines + a protocol layer, 8 commands, shared references
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **Current bundle**: 19.1.0
+- **Current bundle**: 19.2.0
 <!-- GENERATED:END release-surface:current-bundle -->
 - **Repository**: https://github.com/aaron-he-zhu/aaron-marketing-skills
 - **Author**: Aaron He Zhu | **License**: Apache 2.0
 - **Specs**: [Agent Skills](https://agentskills.io/specification.md)
 - **Cross-agent compatibility**: all 120 skills install on the 70+ SKILL.md hosts served by `npx skills` (which reads the skill declarations from `.claude-plugin/plugin.json` — no mirror directory needed, never add one). Per-agent matrix + degradation rules: [docs/agent-compatibility.md](docs/agent-compatibility.md); CI enforces the discovery count. New/renamed skills must also be added to a grouping in the repo-root `skills.sh.json` (lays out the [skills.sh page](https://skills.sh/aaron-he-zhu/aaron-marketing-skills); CI-enforced coverage).
+- **Agent Plugins v1**: the repository root is the authoring SSOT, not a standard install root. Release automation generates a separate Portable Lite archive with flat `skills/<name>/` paths, 120/120 strict Agent Skills, and no `mcp.json`, commands, hooks, connectors, or repository runtime. Never add or commit a generated root `skills/` mirror. Existing Claude, `npx skills`, registry, and host-extension layers remain canonical for their clients. See [docs/agent-plugins-v1.md](docs/agent-plugins-v1.md).
 Content-first repository: skills and commands are Markdown; Claude Code hooks use a small Bash runner; zero-dependency Python-stdlib code provides connectors, typed scoring, deterministic context manifests, canonical registry events, non-authoritative operational run events, artifact validation, and CI guards (no pip dependencies). Network mutations are limited to dry-run-by-default `resend.py` and `indexpush.py`, both requiring `--live`. The authoritative topology is [`references/system-catalog.json`](references/system-catalog.json); its generated human view is [`docs/system-architecture.md`](docs/system-architecture.md).
 
 Install instructions live in [README.md](README.md). Keep this file focused on authoring and maintenance rules.
@@ -41,7 +42,13 @@ The strata are the system; the 4×4 shape is how each workflow is drawn. Each di
 | `version` | Yes | Semver string. Must match `metadata.version` and the row in `VERSIONS.md`. |
 | `description` | Yes | 1-1024 chars. Include: what it does, trigger phrases, scope boundaries. Optimized for `npx skills find`. |
 
-### Repo-Required / Spec-Optional Frontmatter
+### Canonical-source Repo-Required / Spec-Optional Frontmatter
+
+The fields below belong in the canonical discipline/phase source and its
+existing compatibility channels. The generated Agent Plugins v1 Portable Lite
+copy keeps only the pinned Agent Skills field set and normalizes `metadata` to a
+string-to-string map; do not weaken the canonical source to imitate that strict
+projection.
 
 | Field | Purpose |
 |-------|---------|

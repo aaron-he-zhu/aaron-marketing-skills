@@ -11,7 +11,7 @@
           "end_char": 142,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf",
+          "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf"
+      "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40"
     }
   },
   "context_hints": {
@@ -39,7 +39,7 @@
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "dc3b8367bbb87a1626d77f74f92a801871edd8b5230aae2f0e09d5cf017b823e",
+        "sha256": "939e773559545a0ac5870e2f97f4619bb51e5b45d32b4039bd3b59ad10afac1c",
         "source_line": 29
       },
       {
@@ -53,7 +53,7 @@
         "path": "references/framework-catalog.json",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "a9cfcadb344bb93df24ddbb4df60425f55e33ba14d340a04eea4c34fdc129e17",
+        "sha256": "42275869d98be20f96ba492339447619a6a52a6954288f120035ad6dc27145bf",
         "source_line": 32
       },
       {
@@ -81,7 +81,7 @@
         "path": "seo-geo/tune/content-quality-auditor/references/auditor-runtime.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "22111ebba99a0fafa56ebb2b5bb36cc2820a2119288a9d55ca78c88d9ceaa7e4",
+        "sha256": "277fe79fbdb834980cd52fda31cceffcd927eaaae319844f56d5edb66b28357a",
         "source_line": 34
       },
       {
@@ -114,7 +114,7 @@
           "end_char": 76,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf",
+          "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -132,7 +132,7 @@
           "end_char": 173,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf",
+          "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
           "span_basis": "field-text",
           "start_char": 77
         },
@@ -150,7 +150,7 @@
           "end_char": 269,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf",
+          "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
           "span_basis": "field-text",
           "start_char": 174
         },
@@ -168,7 +168,7 @@
           "end_char": 372,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf",
+          "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
           "span_basis": "field-text",
           "start_char": 270
         },
@@ -199,8 +199,8 @@
     "name": "content-quality-auditor",
     "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
     "phase": "tune",
-    "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf",
-    "version": "19.1.0"
+    "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<URL or paste content> [content type] [market]",
@@ -214,7 +214,7 @@
           "end_char": 44,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf",
+          "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -226,7 +226,7 @@
     "source": {
       "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf"
+      "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40"
     }
   },
   "output_contract": {
@@ -241,7 +241,7 @@
           "end_char": 32,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf",
+          "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -252,7 +252,7 @@
     "source": {
       "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf"
+      "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40"
     },
     "summary": "only a permissioned v3 artifact.",
     "summary_source": "writes-fallback",
@@ -267,8 +267,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -277,7 +277,7 @@
     "source": {
       "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "9f05afcda7503ca2c238bbad6c9ca9a61265e2e1a9b27805e3a110c156c0f0cf"
+      "sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40"
     },
     "trigger_phrases": [
       "Use when auditing content quality before publishing. Runs a typed CORE-EEAT 80-item profile with explicit evidence gaps and veto checks. Also when the user asks for E-E-A-T analysis or publish readiness."

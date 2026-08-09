@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/agent-plugin-portable-profile.schema.json",
+  "title": "Agent Plugins v1 Portable Lite capability profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "profile",
+    "host_profile",
+    "capabilities",
+    "excluded_capabilities",
+    "routing_surface",
+    "reference_surface",
+    "connector_surface",
+    "mcp_policy",
+    "frontmatter_policy_version",
+    "package_ceiling"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "./agent-plugin-portable-profile.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "profile": {
+      "const": "portable-lite"
+    },
+    "host_profile": {
+      "const": "agent-plugins-v1"
+    },
+    "capabilities": {
+      "const": [
+        "authored-workflows",
+        "inline-delivery",
+        "canonical-state-read",
+        "static-reference-access"
+      ]
+    },
+    "excluded_capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/safeId"
+      }
+    },
+    "routing_surface": {
+      "const": "direct-skill"
+    },
+    "reference_surface": {
+      "const": "packaged-static-closure"
+    },
+    "connector_surface": {
+      "const": "none"
+    },
+    "mcp_policy": {
+      "const": "absent"
+    },
+    "frontmatter_policy_version": {
+      "const": "1.0"
+    },
+    "package_ceiling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_files",
+        "max_bytes"
+      ],
+      "properties": {
+        "max_files": {
+          "type": "integer",
+          "minimum": 120,
+          "maximum": 1000
+        },
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 1000000,
+          "maximum": 10000000
+        }
+      }
+    }
+  },
+  "$defs": {
+    "safeId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[a-z][a-z0-9-]*$"
+    }
+  }
+}

@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.1.0
+- **Catalog version:** 19.2.0
 - **Framework:** SEND
 - **Auditor:** email-quality-auditor
 - **Complete item definitions:** 20
-- **Source digest:** `sha256:90b63768703f476453299b0a9e17bc90ff015fdd079f63c81349010e4aa0291a`
+- **Source digest:** `sha256:79d30129a29031d15abb3a7f1cd43e7db1c62abce8e16813fe73ccbf392f5f87`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "19.1.0",
+  "catalog_version": "19.2.0",
   "frameworks": {
     "SEND": {
       "construct": "email program integrity, engagement, lifecycle fit, and declared business outcome",

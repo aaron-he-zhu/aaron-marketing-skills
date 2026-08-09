@@ -11,7 +11,7 @@
           "end_char": 124,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 180,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 126
         },
@@ -41,7 +41,7 @@
           "end_char": 205,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 182
         },
@@ -56,7 +56,7 @@
           "end_char": 348,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 207
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8"
+      "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7"
     }
   },
   "context_hints": {
@@ -77,14 +77,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 44
       },
       {
@@ -141,7 +141,7 @@
           "end_char": 156,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -159,7 +159,7 @@
           "end_char": 336,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 157
         },
@@ -177,7 +177,7 @@
           "end_char": 543,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 337
         },
@@ -195,7 +195,7 @@
           "end_char": 886,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 545
         },
@@ -208,7 +208,7 @@
     "summary_ref": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8"
+      "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -223,8 +223,8 @@
     "name": "social-measurement-loop",
     "path": "social/observe/social-measurement-loop/SKILL.md",
     "phase": "observe",
-    "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
-    "version": "19.1.0"
+    "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<period, e.g. 'week of 2026-06-29'> [channels] [exports]",
@@ -238,7 +238,7 @@
           "end_char": 156,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -253,7 +253,7 @@
           "end_char": 202,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 158
         },
@@ -268,7 +268,7 @@
           "end_char": 391,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 204
         },
@@ -283,7 +283,7 @@
           "end_char": 475,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 393
         },
@@ -298,7 +298,7 @@
           "end_char": 539,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 477
         },
@@ -310,7 +310,7 @@
     "source": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8"
+      "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7"
     }
   },
   "output_contract": {
@@ -325,7 +325,7 @@
           "end_char": 55,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -341,7 +341,7 @@
           "end_char": 212,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8",
+          "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7",
           "span_basis": "field-text",
           "start_char": 57
         },
@@ -352,7 +352,7 @@
     "source": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8"
+      "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7"
     },
     "summary": "the period readout — the metric dictionary (each rate with named numerator, denominator, and lock status), median per-post rollups split organic vs boosted per channel, best/worst performers with one hypothesis each, EMV exec-translation only if requested (labeled Estimated, outside every score), the community-health readout where an owned community exists, and an explicit keep/stop/try write-back list — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -367,8 +367,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -377,7 +377,7 @@
     "source": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "frontmatter",
-      "sha256": "a7aed05000d7351bfe2926320769f72766f79d772e47a5314939a5412e77d4a8"
+      "sha256": "c408fb395230f38c644e3da63304913474622faf1c74dd72e4b5cab8a55e84d7"
     },
     "trigger_phrases": [
       "run the weekly social readout",

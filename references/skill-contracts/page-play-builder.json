@@ -11,7 +11,7 @@
           "end_char": 200,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "seo-geo/implement/page-play-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314"
+      "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c"
     }
   },
   "context_hints": {
@@ -32,14 +32,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 61
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 61
       },
       {
@@ -107,7 +107,7 @@
           "end_char": 76,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -123,7 +123,7 @@
           "end_char": 198,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 78
         },
@@ -139,7 +139,7 @@
           "end_char": 214,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 200
         },
@@ -155,7 +155,7 @@
           "end_char": 235,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 216
         },
@@ -171,7 +171,7 @@
           "end_char": 422,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 237
         },
@@ -189,7 +189,7 @@
           "end_char": 721,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 423
         },
@@ -208,7 +208,7 @@
           "end_char": 882,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 722
         },
@@ -226,7 +226,7 @@
           "end_char": 1026,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 883
         },
@@ -244,7 +244,7 @@
           "end_char": 1137,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 1028
         },
@@ -257,7 +257,7 @@
     "summary_ref": {
       "path": "seo-geo/implement/page-play-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314"
+      "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -273,8 +273,8 @@
     "name": "page-play-builder",
     "path": "seo-geo/implement/page-play-builder/SKILL.md",
     "phase": "implement",
-    "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
-    "version": "19.1.0"
+    "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<mode: programmatic|parasite|comparison|local> <primary input> [dataset / competitor / platforms / location]",
@@ -288,7 +288,7 @@
           "end_char": 242,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -300,7 +300,7 @@
     "source": {
       "path": "seo-geo/implement/page-play-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314"
+      "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c"
     }
   },
   "output_contract": {
@@ -315,7 +315,7 @@
           "end_char": 129,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -331,7 +331,7 @@
           "end_char": 179,
           "path": "seo-geo/implement/page-play-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314",
+          "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c",
           "span_basis": "field-text",
           "start_char": 131
         },
@@ -342,7 +342,7 @@
     "source": {
       "path": "seo-geo/implement/page-play-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314"
+      "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c"
     },
     "summary": "the deliverable for the selected mode (a page-system plan / a platform plan / a comparison page / a local-SEO pack), each carrying its own guardrail verdict, plus the standard handoff summary written to `memory/content/`.",
     "summary_source": "expected-output",
@@ -357,8 +357,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -367,7 +367,7 @@
     "source": {
       "path": "seo-geo/implement/page-play-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "b2a9963d7a9092d0115d6c90e8d85b568bc7fbbc3ff1e8d9337fa6672cea5314"
+      "sha256": "46c55c7f869e42b0d745b024b8c3c6881f3b16598c9a523fccba3f481bb2619c"
     },
     "trigger_phrases": [
       "borrow domain authority",

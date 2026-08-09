@@ -100,7 +100,7 @@ jobs:
               raise SystemExit("smoke semantic plan must contain exactly 24 cases")
           PY
 
-      - name: Reproducible Lite, Pro, and Governed builds
+      - name: Reproducible legacy and Agent Plugins builds
         run: |
           set -euo pipefail
           build_root="$(mktemp -d "$RUNNER_TEMP/profile-builds.XXXXXX")"
@@ -113,6 +113,16 @@ jobs:
             python3 scripts/build-distribution.py --verify-manifest "$second"
             cmp "$first/distribution-manifest.json" "$second/distribution-manifest.json"
           done
+          first="$build_root/agent-plugin-v1-lite-first"
+          second="$build_root/agent-plugin-v1-lite-second"
+          python3 scripts/build-distribution.py --output "$first" --agent-plugin --profile portable-lite
+          python3 scripts/build-distribution.py --output "$second" --agent-plugin --profile portable-lite
+          python3 scripts/build-distribution.py --verify-manifest "$first" --profile portable-lite
+          python3 scripts/build-distribution.py --verify-manifest "$second" --profile portable-lite
+          python3 scripts/validate-agent-plugin.py "$first"
+          python3 scripts/validate-agent-plugin.py "$second"
+          cmp "$first/distribution-manifest.json" "$second/distribution-manifest.json"
+          cmp "$first/agent-plugin-projection.json" "$second/agent-plugin-projection.json"
 
       - name: Root references/ blob-main guard
         run: |

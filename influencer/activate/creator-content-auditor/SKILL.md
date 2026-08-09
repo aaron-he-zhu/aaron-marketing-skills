@@ -4,14 +4,14 @@ slug: creator-content-auditor
 displayName: "Creator Content Auditor · 创作者内容审计"
 summary: "STAR 门：适配/信任/吸引力/回报四维的门控判定，判 FTC 披露与声明真实否决，输出 SQS 与创作者修改反馈"
 description: 'Use when the user asks to "review this influencer content" or "check if this post meets brand guidelines"; runs the typed STAR pre-publish gate, scores Trust and Appeal on the deliverable, folds in the creator Suitability read, computes the profile-weighted SQS, checks the disclosure/claim/brand-safety and fraud/fake-engagement vetoes, and writes constructive revision feedback. Not for drafting the brief — use brief-generator; not for partnership terms — use contract-helper. 达人内容审核/发布前质检'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Activate when an influencer content submission needs a pre-publish gate against the brief, approved claims, disclosure obligations, platform requirements, and the STAR criteria — and a go/no-go SQS."
 argument-hint: "<content submission or link> <platform> <campaign goal>"
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "influencer", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "activate"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "influencer", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "activate"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Creator Content Auditor

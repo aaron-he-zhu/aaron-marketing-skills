@@ -11,7 +11,7 @@
           "end_char": 256,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 375,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 258
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d"
+      "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961"
     }
   },
   "context_hints": {
@@ -47,14 +47,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 44
       },
       {
@@ -112,7 +112,7 @@
           "end_char": 173,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -130,7 +130,7 @@
           "end_char": 421,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 174
         },
@@ -149,7 +149,7 @@
           "end_char": 620,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 422
         },
@@ -167,7 +167,7 @@
           "end_char": 967,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 622
         },
@@ -180,7 +180,7 @@
     "summary_ref": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d"
+      "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -196,8 +196,8 @@
     "name": "message-test-designer",
     "path": "narrative/evaluate/message-test-designer/SKILL.md",
     "phase": "evaluate",
-    "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
-    "version": "19.1.0"
+    "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<message / tagline / surface> [target panel] [candidate variants]",
@@ -211,7 +211,7 @@
           "end_char": 192,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -226,7 +226,7 @@
           "end_char": 320,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 194
         },
@@ -241,7 +241,7 @@
           "end_char": 393,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 322
         },
@@ -253,7 +253,7 @@
     "source": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d"
+      "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961"
     }
   },
   "output_contract": {
@@ -268,7 +268,7 @@
           "end_char": 65,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -284,7 +284,7 @@
           "end_char": 295,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d",
+          "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961",
           "span_basis": "field-text",
           "start_char": 67
         },
@@ -295,7 +295,7 @@
     "source": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d"
+      "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961"
     },
     "summary": "a message-test design spec — the hypothesis (what \"lands\" means, stated measurably), the target panel and recruit criteria, the chosen protocol (comprehension / 5-second recall / message-market-fit), the stimulus set drawn verbatim from the canon with any unverifiable claim marked `[needs source]`, success thresholds, the sample-size / panel-size note (labeled Estimated with its assumption), the stop/revise decision rule, and the standard handoff summary naming the execution builder.",
     "summary_source": "expected-output",
@@ -310,8 +310,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -320,7 +320,7 @@
     "source": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "09fb57db9fb08676f65638036eed6e5ca4ff8786fab8d5a7431731b34a91530d"
+      "sha256": "34b9b97147bfc38b2a8f214e07a2ea403a00392d93cc3bf99018401e4acb1961"
     },
     "trigger_phrases": [
       "design a message-market-fit panel",

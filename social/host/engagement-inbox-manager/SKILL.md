@@ -4,13 +4,13 @@ slug: aaron-engagement-inbox-manager
 displayName: "Engagement Inbox Manager · 互动收件箱管理"
 summary: "评论私信提及分诊/语域识别/回复草稿分级/UGC授权收集/升级矩阵"
 description: 'Use when the user asks to "triage our comments, DMs, and mentions", "draft replies to this thread", "can we repost this fan post", or "set up inbox SLAs and an escalation path"; produces a ranked triage queue with register detection (sincere / ironic / performative / parasocial, sentiment-inversion table included — "this is so bad" under a comedy register is praise), a commenter taxonomy (troll monitor-only / rager / misguided / unhappy-customer / advocate) with a response-tier ladder and per-channel SLAs, an escalation matrix ending at the crisis path, a moderation ladder plus house rules for owned spaces, and a UGC curation-and-rights mode whose dated permission entries route to the channel registry — every reply is a ranked DRAFT a human posts; nothing is ever auto-sent. Not for launch-window feedback triage — use launch-feedback-synthesizer. 评论私信提及分诊/语域识别/回复草稿/UGC授权'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when running the always-on social inbox: triaging an exported comment/DM/mention batch, reading the register (sincere/ironic/performative/parasocial) before any sentiment call, classifying commenters (troll/rager/misguided/unhappy-customer/advocate) into response tiers with per-channel SLAs, drafting ranked replies for a human to post, maintaining the escalation matrix and owned-space house rules, or collecting UGC repost permissions with evidence links. Not launch-window feedback triage (launch-feedback-synthesizer), not the crisis severity ladder itself (crisis-response-planner), and never an auto-reply or DM automation tool."
 argument-hint: "<channel + exported comment/DM/mention batch> [--slas | --house-rules | --ugc-rights]"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Engagement Inbox Manager

@@ -4,6 +4,14 @@ All 120 skills follow the [Agent Skills](https://agentskills.io) open standard (
 
 **Verified 2026-07** (end-to-end): `npx skills add` discovers and installs **120/120** skills from both a local clone and the GitHub remote. The installer reads the skill declarations straight from `.claude-plugin/plugin.json` / `.claude-plugin/marketplace.json` — an official installer feature for Claude Code plugin repos — so the discipline-folder layout (`seo-geo/<phase>/<skill>/`) needs no mirror directory.
 
+**Agent Plugins v1 baseline reviewed 2026-08-09** (offline package contract):
+the release-only Portable Lite projection validates **120/120 strict Agent
+Skills** under the pinned Agent Plugins 1.0.0 and Agent Skills baselines. This
+is not a claim that every client has completed an install/UI smoke test. The
+client checks below remain candidate-release acceptance until their evidence is
+recorded. See the exact [package structure, provenance, and capability
+boundary](agent-plugins-v1.md).
+
 ## Install
 
 | Route | Command | Serves |
@@ -13,8 +21,37 @@ All 120 skills follow the [Agent Skills](https://agentskills.io) open standard (
 | **Any other agent** (global) | `npx skills add aaron-he-zhu/aaron-marketing-skills -g` | same, user-wide |
 | **Single skill** | `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research` | one skill folder |
 | **Force one agent** | `… -a codex` / `-a cursor` / `-a opencode` … | one host only |
+| **Agent Plugins v1 · Portable Lite** | Download `aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` from the [v19.2.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v19.2.0), unpack it, and select the extracted plugin directory in the client | 120 strict static Skills; no `mcp.json`, commands, hooks, connectors, or repository runtime |
 
 `npx skills` auto-detects which agents are installed and symlinks each skill into the right directories (canonical copy in `.agents/skills/`, per-agent symlinks). Use `--copy` where symlinks are unsupported, `npx skills update` to pull new versions, `npx skills remove` to uninstall.
+
+The repository root is the authoring SSOT, **not** an Agent Plugins v1 install
+root: its canonical Skills live under discipline/phase paths and retain the
+existing client-specific metadata. Install the extracted release asset instead;
+its immediate `skills/<name>/` children are the strict portable projection. The
+existing Claude, `npx skills`, SkillHub, ClawHub, OpenClaw, and Hermes routes are
+unchanged.
+
+### Agent Plugins v1 candidate client acceptance
+
+As of 2026-08-09, the upstream [Agent Plugins compatible-client
+list](https://agent-plugins.org/compatible-clients) names the clients below. Repository validation
+proves package shape, strict Skill frontmatter, contained links, forbidden
+runtime surfaces, and file/projection hashes; it does not substitute for a
+client smoke test.
+
+| Client listed upstream | Candidate-release smoke | Required evidence before marking verified |
+|---|---|---|
+| VS Code | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
+| Cursor | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
+| GitHub Copilot | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
+| ChatGPT / Codex | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
+| Kiro | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
+
+Record the client version, OS, archive SHA-256, discovery count, invocation
+result, and MCP-registration observation when each smoke is run. Until then,
+describe Portable Lite as schema- and repository-validator-conformant, not as
+client-verified.
 
 ## skills.sh registry
 
@@ -102,6 +139,14 @@ Every `SKILL.md` carries `name` (matches its directory, spec rule), `description
 `metadata` is always a **single-line strict-JSON object** (valid YAML flow mapping, so every spec parser reads it identically). This is deliberate: OpenClaw's frontmatter parser reads single-line keys only — a YAML block map under `metadata:` is invisible to it. The object carries the repo's own keys (`author`, `version`, `discipline`, `phase`, `geo-relevance`) plus two documented host extensions on every skill: `metadata.hermes` (`tags`/`category` for Hermes browse/filter) and `metadata.openclaw` (`emoji`/`homepage` for the OpenClaw macOS UI). The validator fails block-map metadata, so the guarantee holds for future skills.
 
 One hard rule the ecosystem enforces silently: frontmatter must be **valid YAML**. In single-quoted scalars an apostrophe must be doubled (`designer''s`) — one unescaped apostrophe made a skill invisible to every spec parser until v12.7.0. `scripts/validate-skill.sh` now checks for this class, and CI asserts the installer still discovers the full declared count.
+
+Portable Lite is a generated strict projection, not a copy of that extended
+frontmatter. It keeps only fields accepted by the pinned Agent Skills baseline,
+normalizes generic `metadata` to a string-to-string map, and omits source
+`compatibility`, `allowed-tools`, registry/client card fields, and the
+Hermes/OpenClaw metadata objects. The canonical source keeps those declarations
+for the compatibility channels that use them; Portable Lite grants no host-tool
+preapproval.
 
 ## What degrades outside the Claude Code plugin
 

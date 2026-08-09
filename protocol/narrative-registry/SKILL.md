@@ -4,13 +4,13 @@ slug: aaron-narrative-registry
 displayName: "Narrative Registry · 品牌叙事台账"
 summary: "品牌叙事 canon/版本史/语气与命名唯一真相"
 description: 'Use when the user asks to record/query the brand narrative canon, tagline, message hierarchy, voice/naming rules, or a canon re-version; curates complete versioned canon events through the append-only narrative stream and derived views. Not for TALE scoring — use narrative-quality-auditor; not for authoring the system — use message-system-architect. 品牌叙事台账/canon 记录/语气与命名规范'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when recording/querying a brand's canonical positioning, narrative, message hierarchy, proof/claim pointers, voice/naming rules, conditional boilerplates, or accepting/rejecting a complete canon-version proposal."
 argument-hint: "<brand aggregate-id, canon version, or pending-proposal review>"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Narrative Registry

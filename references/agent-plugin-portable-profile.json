@@ -1,0 +1,41 @@
+{
+  "$schema": "./agent-plugin-portable-profile.schema.json",
+  "schema_version": "1.0",
+  "profile": "portable-lite",
+  "host_profile": "agent-plugins-v1",
+  "capabilities": [
+    "authored-workflows",
+    "inline-delivery",
+    "canonical-state-read",
+    "static-reference-access"
+  ],
+  "excluded_capabilities": [
+    "slash-commands",
+    "prewrite-hooks",
+    "local-runtime-scripts",
+    "deterministic-scoring",
+    "connector-sidecars",
+    "native-plugin-connectors",
+    "host-tool-preapproval",
+    "audit-persistence",
+    "persistent-project-memory",
+    "working-memory-write",
+    "registry-write",
+    "run-evidence",
+    "context-planning",
+    "runtime-controller",
+    "workflow-execution",
+    "workflow-loop",
+    "audit-loop",
+    "owner-capability"
+  ],
+  "routing_surface": "direct-skill",
+  "reference_surface": "packaged-static-closure",
+  "connector_surface": "none",
+  "mcp_policy": "absent",
+  "frontmatter_policy_version": "1.0",
+  "package_ceiling": {
+    "max_files": 400,
+    "max_bytes": 4000000
+  }
+}

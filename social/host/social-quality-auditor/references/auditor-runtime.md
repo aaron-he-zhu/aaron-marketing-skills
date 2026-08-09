@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.1.0
+- **Catalog version:** 19.2.0
 - **Framework:** ECHO
 - **Auditor:** social-quality-auditor
 - **Complete item definitions:** 40
-- **Source digest:** `sha256:c91eb6ac766939f62c989bcf7ce64e5a38872a6b4277f355af1995aacc0c93c8`
+- **Source digest:** `sha256:8aba0e4f0e74fc02dd33bacefd3db89c7e2b9dd4e22188d72898bfda2feaece6`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "19.1.0",
+  "catalog_version": "19.2.0",
   "frameworks": {
     "ECHO": {
       "composite_score": false,

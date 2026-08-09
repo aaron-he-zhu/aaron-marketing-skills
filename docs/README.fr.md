@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.1.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.2.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -97,12 +97,15 @@ Utilisez-la avec Claude Code, n'importe quel host compatible Agent Skills ou un 
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` puis `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ hosts](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
+| **Clients Agent Plugins v1 · Portable Lite** | Téléchargez `aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` depuis la [release v19.2.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v19.2.0), décompressez-le puis installez le répertoire du plugin extrait |
 | **[SkillHub.cn](https://skillhub.cn) (communauté chinoise)** | `skillhub install <frontmatter-slug>` (p. ex. `keyword-research`) |
 | **N'importe quel host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
 Dans Claude Code, `marketplace add` ne fait qu'enregistrer le catalogue — exécutez `/plugin install aaron-marketing@aaron` (ou choisissez-le dans `/plugin`) pour réellement activer les skills et les commandes. Pour tirer un **seul** skill sur un host générique : `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research`. Parcourez le bundle sur le [registre skills.sh](https://skills.sh/aaron-he-zhu/aaron-marketing-skills). Répertoires par agent, particularités du frontmatter et ce qui se dégrade hors du plugin : [docs/agent-compatibility.md](agent-compatibility.md) (vérifié 120/120 installables, 2026-07).
 
 Installer le plugin n'ajoute **rien** à votre liste `/mcp` — le catalogue MCP vit dans [`docs/mcp-catalog.json`](mcp-catalog.json), délibérément hors du chemin `.mcp.json` de la racine du plugin que Claude Code enregistre automatiquement, si bien que c'est une référence à copier-coller uniquement (voir [Connecteurs](#connecteurs--paliers-damélioration)).
+
+La racine du dépôt est la source d'édition, **pas** la racine d'installation standard Agent Plugins v1. Utilisez l'asset de release ci-dessus : il projette **120/120 Agent Skills stricts** dans `skills/<name>/` et n'inclut ni `mcp.json`, ni commandes, hooks, connecteurs ou runtime du dépôt. Les couches de compatibilité existantes sont conservées ; consultez le [paquet Portable Lite et ses limites de capacité](agent-plugins-v1.md).
 
 ---
 
@@ -680,7 +683,7 @@ La dérive d'endpoints en live est échantillonnée séparément par le **manuel
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — règles d'authoring, la checklist de contribution et la liste autoritaire des 10 surfaces de tracking.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** — versions par skill + changelog (bundle actuel : `19.1.0`).
+- **[VERSIONS.md](../VERSIONS.md)** — versions par skill + changelog (bundle actuel : `19.2.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — politique de sécurité, de confidentialité et de communauté.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — contexte côté agent pour ce repo.

@@ -3,7 +3,7 @@
 
 The default mode is a network-free dry run.  ``--live`` is an owner-only
 operation and requires both an out-of-repository private release receipt and
-an out-of-repository directory containing the five deterministic release
+an out-of-repository directory containing the six deterministic release
 assets.
 """
 from __future__ import annotations
@@ -23,12 +23,13 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "aaron-he-zhu/aaron-marketing-skills"
-RELEASE_VERSION = "19.1.0"
+RELEASE_VERSION = "19.2.0"
 TAG = "v" + RELEASE_VERSION
 ASSET_NAMES = (
     "aaron-marketing-skills-%s-lite.tar.gz" % RELEASE_VERSION,
     "aaron-marketing-skills-%s-pro.tar.gz" % RELEASE_VERSION,
     "aaron-marketing-skills-%s-governed.tar.gz" % RELEASE_VERSION,
+    "aaron-marketing-skills-%s-agent-plugin-v1-lite.tar.gz" % RELEASE_VERSION,
     "SHA256SUMS",
     "release-assets.json",
 )
@@ -599,7 +600,7 @@ def validate_release_metadata(
             raise ReleaseError("%s contains an incomplete release asset" % tag)
         names.append(item["name"])
     if len(names) != len(set(names)) or set(names) != set(ASSET_NAMES):
-        raise ReleaseError("%s does not have the exact five release assets" % tag)
+        raise ReleaseError("%s does not have the exact six release assets" % tag)
 
 
 def verify_downloaded_release(
@@ -753,7 +754,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--asset-dir",
         type=Path,
-        help="Out-of-repository five-asset directory (required with --live).",
+        help="Out-of-repository six-asset directory (required with --live).",
     )
     parser.add_argument(
         "--maturity-report",

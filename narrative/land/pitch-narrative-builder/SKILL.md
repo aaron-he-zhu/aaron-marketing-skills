@@ -4,13 +4,13 @@ slug: aaron-pitch-narrative-builder
 displayName: "Pitch Narrative Builder · 路演叙事构建"
 summary: "融资/销售路演叙事：问题→拐点→产品英雄→证据→要点"
 description: 'Use when the user asks to "build our pitch deck narrative", "write a fundraising story", or "structure the sales pitch narrative"; derives from the narrative canon a company pitch/deck narrative — problem → the undeniable shift → product-as-hero → proof → the ask — as a slide-beat outline (one narrative beat per slide, with the claim ID each proof beat rests on), for both a sales pitch and a fundraising deck. Every proof beat is labeled Measured / User-provided / ''[needs source]'' and unverified ones route to the claims candidates. Not for the launch-window battle cards and talk track — use sales-enablement-kit; not for the durable message hierarchy or the arc itself — use message-system-architect / strategic-narrative-designer; not for finished deck visual design — out of scope; not for claim adjudication — use offer-claims-registry. 路演叙事/融资故事/销售 pitch/幻灯节拍'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when deriving a company pitch narrative from an existing narrative canon: the problem → shift → product-as-hero → proof → ask arc rendered as a per-slide beat outline for a sales pitch or a fundraising deck, with each proof beat tied to a claim-ledger ID. The Land-phase expression of the canon in deck form — distinct from launch-window sales-enablement-kit and from the durable arc (strategic-narrative-designer). Not the battle cards, not the message hierarchy, not the finished slide design."
 argument-hint: "<company / product> [audience: investors|sales|both] [canon path] [story bank path]"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "narrative", "phase": "land", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "land"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "narrative", "phase": "land", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "land"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Pitch Narrative Builder

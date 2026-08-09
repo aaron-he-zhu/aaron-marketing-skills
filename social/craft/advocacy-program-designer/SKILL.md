@@ -4,13 +4,13 @@ slug: aaron-advocacy-program-designer
 displayName: "Advocacy Program Designer · 员工倡导计划设计"
 summary: "员工倡导/创始人分享计划/披露合规/反互赞护栏"
 description: 'Use when the user asks to "design an employee advocacy program", "set up founder-led sharing", or "build a share kit for the team"; produces an advocacy program blueprint in two modes — participation-driven opt-in (default) or top-down assigned with its coercion and authenticity risks flagged — with a voluntary opt-in roster spec submitted as channel-registry proposal events, share kits with mandatory per-person variation, staggered human posting windows plus anti-pod guardrails (no coordinated identical reshares, no engagement rings), per-person material-connection disclosure lines per FTC and 《互联网广告管理办法》, and a Slack/Teams distribution spec. Not for paid creator campaigns — use campaign-planner. 员工倡导/创始人IP分享/内部分享计划/披露合规'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when designing an employee-advocacy or founder-led sharing program: choosing opt-in vs assigned mode, speccing the voluntary advocate roster, writing share kits with per-person variation, setting staggered human posting windows and anti-pod guardrails, drafting material-connection disclosure lines, or speccing the Slack/Teams kit distribution. The Craft-phase upstream of the ECHO C2 (disclosure) and H1 (manufactured-engagement) vetoes. Not 1:1 recruitment mechanics (outreach-manager) and not paid creator campaigns (campaign-planner)."
 argument-hint: "<opt-in | assigned> [advocate list / team size] [platforms]"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "social", "phase": "craft", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "craft"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "social", "phase": "craft", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "craft"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Advocacy Program Designer

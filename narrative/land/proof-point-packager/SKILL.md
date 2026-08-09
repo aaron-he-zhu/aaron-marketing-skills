@@ -4,13 +4,13 @@ slug: aaron-proof-point-packager
 displayName: "Proof Point Packager · 证据模块打包"
 summary: "把已核实证据打包成可复用证据模块，贴到主张出现处"
 description: 'Use when the user asks to "package our proof points", "build reusable stat cards and case snippets", or "put proof where each pillar makes its claim"; turns claims-ledger-approved proofs into reusable proof modules — stat cards, case snippets, testimonial blocks, comparison proofs — each pinned to a message-house pillar and the ledger claim ID it substantiates, and flags any pillar making a claim with no approved proof behind it. Never adjudicates a proof: unverified or ledger-absent proofs are marked ''[needs source]'' and routed to the claims candidates. Not for adjudicating or substantiating claims — use offer-claims-registry; not for fabricating a benchmark to fill a gap — a missing proof is flagged, not invented; not for scoring narrative quality — use narrative-quality-auditor. 证据模块/证据卡/客户案例/主张对齐'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when the message house and story bank exist and each pillar's claim needs a reusable proof module placed where the claim is made: packaging ledger-approved stats into stat cards, case material into case snippets, permitted quotes into testimonial blocks, and named-alternative comparisons into comparison proofs. A Land-phase skill that feeds TALE E (proof assets) and L (proof placed where the claim is made). Not claim adjudication and not TALE profile result scoring."
 argument-hint: "<product / brand> [pillar or claim IDs] [proof material paths]"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "narrative", "phase": "land", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "land"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "narrative", "phase": "land", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "land"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Proof Point Packager

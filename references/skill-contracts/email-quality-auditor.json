@@ -11,7 +11,7 @@
           "end_char": 124,
           "path": "email/deliver/email-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
+          "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 326,
           "path": "email/deliver/email-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
+          "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
           "span_basis": "field-text",
           "start_char": 126
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "email/deliver/email-quality-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121"
+      "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d"
     }
   },
   "context_hints": {
@@ -47,14 +47,14 @@
         "path": "email/deliver/email-quality-auditor/references/auditor-runtime.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "c5da85d6007c3f64de07244872e1fa997b65733992835c7d7265a01962726caa",
+        "sha256": "f7e705441ff5c8f6c5d41fdd77d3386d748c1b52db968300b77fd9e603c81839",
         "source_line": 45
       },
       {
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "dc3b8367bbb87a1626d77f74f92a801871edd8b5230aae2f0e09d5cf017b823e",
+        "sha256": "939e773559545a0ac5870e2f97f4619bb51e5b45d32b4039bd3b59ad10afac1c",
         "source_line": 41
       },
       {
@@ -101,7 +101,7 @@
           "end_char": 91,
           "path": "email/deliver/email-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
+          "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -119,7 +119,7 @@
           "end_char": 182,
           "path": "email/deliver/email-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
+          "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
           "span_basis": "field-text",
           "start_char": 92
         },
@@ -137,7 +137,7 @@
           "end_char": 273,
           "path": "email/deliver/email-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
+          "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
           "span_basis": "field-text",
           "start_char": 183
         },
@@ -155,7 +155,7 @@
           "end_char": 356,
           "path": "email/deliver/email-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
+          "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
           "span_basis": "field-text",
           "start_char": 274
         },
@@ -186,8 +186,8 @@
     "name": "email-quality-auditor",
     "path": "email/deliver/email-quality-auditor/SKILL.md",
     "phase": "deliver",
-    "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
-    "version": "19.1.0"
+    "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<ESP/DMARC/outcome evidence> [promotional|retention|cold-outbound|newsletter]",
@@ -201,7 +201,7 @@
           "end_char": 128,
           "path": "email/deliver/email-quality-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
+          "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -213,7 +213,7 @@
     "source": {
       "path": "email/deliver/email-quality-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121"
+      "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d"
     }
   },
   "output_contract": {
@@ -228,7 +228,7 @@
           "end_char": 32,
           "path": "email/deliver/email-quality-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121",
+          "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
     "source": {
       "path": "email/deliver/email-quality-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121"
+      "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d"
     },
     "summary": "only a permissioned v3 artifact.",
     "summary_source": "writes-fallback",
@@ -254,8 +254,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -264,7 +264,7 @@
     "source": {
       "path": "email/deliver/email-quality-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "71d6e0d753729cb8cbd4dab77a3065a5bd3e2edabebb97f15d0e29d4c5248121"
+      "sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d"
     },
     "trigger_phrases": [
       "audit an email program",
