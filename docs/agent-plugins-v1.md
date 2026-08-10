@@ -192,6 +192,9 @@ Agent Plugins version, or cutting a release after either upstream has changed.
 6. Rebuild Portable Lite twice into new output directories, run
    `python3 scripts/validate-agent-plugin.py <output>` on both, and require
    identical projection and distribution manifests before release. Then run the
-   complete repository validation and candidate client smoke-test suite; schema
-   validation alone does not prove path containment or preserved client
-   behavior.
+   complete repository validation. Run every available candidate-client smoke
+   and record its evidence; an unavailable client remains a non-blocking
+   client-verification backlog entry marked `Pending`. A `Pending` row forbids a
+   client-verified claim but does not block release of the schema- and
+   repository-validator-conformant archive. Schema validation alone does not
+   prove path containment or preserved client behavior.

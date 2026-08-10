@@ -4,13 +4,15 @@ All 120 skills follow the [Agent Skills](https://agentskills.io) open standard (
 
 **Verified 2026-07** (end-to-end): `npx skills add` discovers and installs **120/120** skills from both a local clone and the GitHub remote. The installer reads the skill declarations straight from `.claude-plugin/plugin.json` / `.claude-plugin/marketplace.json` — an official installer feature for Claude Code plugin repos — so the discipline-folder layout (`seo-geo/<phase>/<skill>/`) needs no mirror directory.
 
-**Agent Plugins v1 baseline reviewed 2026-08-09** (offline package contract):
+**Agent Plugins v1 baseline reviewed 2026-08-10** (offline package contract):
 the release-only Portable Lite projection validates **120/120 strict Agent
 Skills** under the pinned Agent Plugins 1.0.0 and Agent Skills baselines. This
 is not a claim that every client has completed an install/UI smoke test. The
-client checks below remain candidate-release acceptance until their evidence is
-recorded. See the exact [package structure, provenance, and capability
-boundary](agent-plugins-v1.md).
+client checks below are a non-blocking client-verification backlog: a `Pending`
+row does not block publishing the schema- and repository-validator-conformant
+archive, but it does block any claim that the named client is verified until
+the required evidence is recorded. See the exact [package structure,
+provenance, and capability boundary](agent-plugins-v1.md).
 
 ## Install
 
@@ -32,26 +34,29 @@ its immediate `skills/<name>/` children are the strict portable projection. The
 existing Claude, `npx skills`, SkillHub, ClawHub, OpenClaw, and Hermes routes are
 unchanged.
 
-### Agent Plugins v1 candidate client acceptance
+### Agent Plugins v1 client-verification backlog
 
-As of 2026-08-09, the upstream [Agent Plugins compatible-client
-list](https://agent-plugins.org/compatible-clients) names the clients below. Repository validation
-proves package shape, strict Skill frontmatter, contained links, forbidden
-runtime surfaces, and file/projection hashes; it does not substitute for a
-client smoke test.
+As of 2026-08-10, the upstream [Agent Plugins compatible-client
+list](https://agent-plugins.org/compatible-clients) names the seven clients
+below. Repository validation proves package shape, strict Skill frontmatter,
+contained links, forbidden runtime surfaces, and file/projection hashes; it
+does not substitute for a client smoke test.
 
-| Client listed upstream | Candidate-release smoke | Required evidence before marking verified |
+| Client listed upstream | Client-verification status | Required evidence before marking verified |
 |---|---|---|
 | VS Code | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
 | Cursor | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
 | GitHub Copilot | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
 | ChatGPT / Codex | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
 | Kiro | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
+| Hermes Agent | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
+| OpenClaw | Pending | Import the extracted directory; confirm all 120 Skills are discoverable; invoke one static Skill; confirm no MCP server is registered. |
 
 Record the client version, OS, archive SHA-256, discovery count, invocation
 result, and MCP-registration observation when each smoke is run. Until then,
 describe Portable Lite as schema- and repository-validator-conformant, not as
-client-verified.
+client-verified. A `Pending` row is therefore an explicit claim boundary, not a
+silent release gate.
 
 ## skills.sh registry
 
