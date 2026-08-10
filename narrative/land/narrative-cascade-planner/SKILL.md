@@ -4,13 +4,13 @@ slug: aaron-narrative-cascade-planner
 displayName: "Narrative Cascade Planner · 叙事落地规划"
 summary: "画布落地/逐面消息一致/创意交接简报"
 description: 'Use when the user asks to "plan how our narrative lands on every surface", "write per-surface message-match specs", or "brief each creative builder from the canon"; maps the narrative-registry canon onto every flagship surface (homepage, pricing, store listing, sales deck, social bio, docs, email) as a per-surface message-match spec — what claim, pillar, proof, and objection reframe each surface must carry — and cuts a handoff brief to each discipline''s creative builder (content-writer, ad-creative-builder, email-creative-builder, social-creative-builder, message-house-builder), so the same story lands consistently everywhere. Not for writing the finished surface copy — use each discipline creative builder; not for the tier-scoped launch asset manifest — use launch-asset-packager; not for scoring cross-surface consistency — use narrative-quality-auditor; not for claim adjudication — use offer-claims-registry. 叙事落地/逐面消息一致/创意交接简报/画布传导'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when the narrative-registry canon is on file and the message must now propagate to every owned surface: mapping per-surface message-match specs (which claim, pillar, proof, and objection reframe each of homepage / pricing / store listing / sales deck / social bio / docs / email carries) and cutting a handoff brief to each discipline's creative builder. The first Land-phase move after the canon is sealed, and the upstream of the TALE L1 message-match veto. Not the finished copy itself and not consistency scoring."
 argument-hint: "<product / brand> [surfaces to cover] [target creative builders] [canon path]"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "narrative", "phase": "land", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "land"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "narrative", "phase": "land", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "land"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Narrative Cascade Planner

@@ -48,10 +48,25 @@ security concerns are:
 - **Sensitive local state leakage** — operational memory accidentally force-added to Git, shared, backed up, or synchronized without appropriate controls
 - **WebFetch-injected instructions** — prompt injection via target page HTML/meta/body attempting to manipulate audit outcomes or Artifact Gate validation
 
+### Agent Plugins v1 Portable Lite boundary
+
+The release asset
+`aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` is a generated,
+static Skills package. It contains the 120 strict `SKILL.md` projections and
+only their reachable static references. It does **not** contain commands, hooks,
+connector helpers, controllers, scoring/state runtimes, other executable
+repository scripts, or `mcp.json`. Installing it therefore registers no MCP
+server, starts no process, makes no network request, writes no persistent state,
+and grants no credential, tool, mutation, or execution authority. Any client
+tool use still requires that client's separate configuration and the user's
+request-specific authorization. See the exact [Portable Lite package and
+capability boundary](docs/agent-plugins-v1.md).
+
 ## Security Design Principles
 
 - **Zero third-party dependencies**: all Python runtimes use only the standard library — no PyPI packages to compromise via supply chain attacks
 - **No credential storage**: Skills and connectors never store API keys; `docs/mcp-catalog.json` declares endpoints only, and the optional connector API keys (Open PageRank, PageSpeed, Resend) are read from the user's environment at call time and never written to disk
+- **No portable auto-registration**: Portable Lite has no `mcp.json` and does not ship connector or executable runtime code. The MCP catalog remains documentation for explicit, client-owned opt-in configuration; archive installation alone cannot activate an endpoint
 - **Tool-agnostic placeholders**: Skills reference tools by category (`~~SEO tool`), never by hardcoded API endpoints
 - **Private runtime state by default**: a full clone Git-ignores `memory/**`; plugin-host writes are preflighted against the host worktree, and unignored or force-tracked runtime targets are refused
 - **Metadata-only run evidence**: the opt-in run runtime accepts closed IDs, refs, hashes, and numeric metadata; it rejects raw payload fields and never grants registry or external-action authority

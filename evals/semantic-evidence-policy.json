@@ -14,6 +14,7 @@
   "required_project_adapter_ref": "scripts/adapters/codex-behavior-adapter.py",
   "required_project_adapter_dependencies": [
     "evals/codex-behavior-candidate-output.schema.json",
+    "evals/codex-behavior-routing-output.schema.json",
     "evals/codex-behavior-model-output.schema.json"
   ],
   "require_single_execution_identity": true,

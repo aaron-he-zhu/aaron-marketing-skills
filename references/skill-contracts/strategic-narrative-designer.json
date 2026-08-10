@@ -11,7 +11,7 @@
           "end_char": 101,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 231,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 103
         },
@@ -41,7 +41,7 @@
           "end_char": 312,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 233
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670"
+      "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3"
     }
   },
   "context_hints": {
@@ -62,14 +62,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 42
       },
       {
@@ -135,7 +135,7 @@
           "end_char": 161,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -153,7 +153,7 @@
           "end_char": 378,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 162
         },
@@ -171,7 +171,7 @@
           "end_char": 581,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 379
         },
@@ -189,7 +189,7 @@
           "end_char": 963,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 583
         },
@@ -202,7 +202,7 @@
     "summary_ref": {
       "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670"
+      "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -217,8 +217,8 @@
     "name": "strategic-narrative-designer",
     "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
     "phase": "architect",
-    "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
-    "version": "19.1.0"
+    "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<product / brand> [positioning truth set path] [belief map path]",
@@ -232,7 +232,7 @@
           "end_char": 161,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -247,7 +247,7 @@
           "end_char": 323,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 163
         },
@@ -262,7 +262,7 @@
           "end_char": 395,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 325
         },
@@ -277,7 +277,7 @@
           "end_char": 495,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 397
         },
@@ -289,7 +289,7 @@
     "source": {
       "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670"
+      "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3"
     }
   },
   "output_contract": {
@@ -304,7 +304,7 @@
           "end_char": 59,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -320,7 +320,7 @@
           "end_char": 271,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 61
         },
@@ -336,7 +336,7 @@
           "end_char": 582,
           "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670",
+          "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3",
           "span_basis": "field-text",
           "start_char": 273
         },
@@ -347,7 +347,7 @@
     "source": {
       "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670"
+      "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3"
     },
     "summary": "a five-beat strategic narrative arc — old world (status quo + shaky assumptions), the undeniable shift, winners vs losers under the new rules, the promised land, and proof the promised land is real — each proof beat labeled Measured / User-provided / `[needs source]`, the objection reframes drawn from the belief map, a `[needs source]` list for the ledger, plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -362,8 +362,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -372,7 +372,7 @@
     "source": {
       "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "289608f54f424119b0c1a77293984fe66f91068693fb9850440e5a0484090670"
+      "sha256": "4034d51456837796d0e0321de3cb8a13e062a39b644130dbce478dfe9eb4bad3"
     },
     "trigger_phrases": [
       "build the old-world-to-new-game story arc",

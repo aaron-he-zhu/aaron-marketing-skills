@@ -195,8 +195,8 @@
   ],
   "framework_contract": {
     "catalog_path": "references/framework-catalog.json",
-    "catalog_sha256": "a9cfcadb344bb93df24ddbb4df60425f55e33ba14d340a04eea4c34fdc129e17",
-    "catalog_version": "19.1.0",
+    "catalog_sha256": "42275869d98be20f96ba492339447619a6a52a6954288f120035ad6dc27145bf",
+    "catalog_version": "19.2.0",
     "profiles": [
       "default",
       "content-publisher",
@@ -229,7 +229,7 @@
     "runtime_sources": [
       {
         "path": "references/auditor-runbook.md",
-        "sha256": "dc3b8367bbb87a1626d77f74f92a801871edd8b5230aae2f0e09d5cf017b823e"
+        "sha256": "939e773559545a0ac5870e2f97f4619bb51e5b45d32b4039bd3b59ad10afac1c"
       },
       {
         "path": "references/scoring-semantics.md",
@@ -245,7 +245,7 @@
       },
       {
         "path": "references/audit-artifact.schema.json",
-        "sha256": "91713a72a71561df034ee9da1d84e9a8a1dcba967f0ef3a2de1687c2570376a7"
+        "sha256": "f127b5eb0669daa7c7f37c79f1c619515ed20f1fd87b32a1f5776ebf46444049"
       }
     ],
     "sink": "memory/audits/domain/"
@@ -329,12 +329,12 @@
   "skill": {
     "name": "domain-authority-auditor",
     "path": "seo-geo/evaluate/domain-authority-auditor/SKILL.md",
-    "sha256": "b472e23af90f4f19d6b3ad1e7e318fa33989c57a38fa02cfe5e1b8ec827c92b3",
-    "version": "19.1.0"
+    "sha256": "ff666555653172d62212cd10ec6038c9f7bdeab55205f3ef4d6d1e53ab3a3695",
+    "version": "19.2.0"
   },
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-    "version": "19.1.0"
+    "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+    "version": "19.2.0"
   }
 }

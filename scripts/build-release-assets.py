@@ -21,10 +21,35 @@ import zlib
 
 ROOT = Path(__file__).resolve().parents[1]
 PRODUCT = "aaron-marketing-skills"
-PROFILES = ("lite", "pro", "governed")
+ASSET_SPECS = (
+    {
+        "asset_id": "lite",
+        "kind": "plugin",
+        "profile": "lite",
+        "host_profile": "claude-code-plugin-host",
+    },
+    {
+        "asset_id": "pro",
+        "kind": "plugin",
+        "profile": "pro",
+        "host_profile": "claude-code-plugin-host",
+    },
+    {
+        "asset_id": "governed",
+        "kind": "plugin",
+        "profile": "governed",
+        "host_profile": "claude-code-plugin-host",
+    },
+    {
+        "asset_id": "agent-plugin-v1-lite",
+        "kind": "agent-plugin",
+        "profile": "portable-lite",
+        "host_profile": "agent-plugins-v1",
+    },
+)
 LEDGER_NAME = "release-assets.json"
 CHECKSUM_NAME = "SHA256SUMS"
-LEDGER_SCHEMA_VERSION = "1.0"
+LEDGER_SCHEMA_VERSION = "1.1"
 MAX_GIT_ARCHIVE_BYTES = 64 * 1024 * 1024
 MAX_RELEASE_ARCHIVE_BYTES = 32 * 1024 * 1024
 MAX_RELEASE_TAR_BYTES = 64 * 1024 * 1024
@@ -442,21 +467,31 @@ def _builder(exported_source):
     return path
 
 
+def _agent_plugin_validator(exported_source):
+    path = exported_source / "scripts" / "validate-agent-plugin.py"
+    _checked_regular_bytes(path, "exported Agent Plugins validator")
+    return path
+
+
 def _build_profile(
     exported_source,
-    profile,
+    asset_spec,
     destination,
     repository,
     commit,
 ):
+    if asset_spec["kind"] == "agent-plugin":
+        build_selector = ["--agent-plugin"]
+    else:
+        build_selector = ["--plugin"]
     command = [
         sys.executable,
         str(_builder(exported_source)),
         "--output",
         str(destination),
-        "--plugin",
+        *build_selector,
         "--profile",
-        profile,
+        asset_spec["profile"],
         "--source-repository",
         repository,
         "--source-commit",
@@ -464,14 +499,14 @@ def _build_profile(
     ]
     _run(command, cwd=exported_source)
     _verify_distribution(
-        exported_source, destination, profile, repository, commit
+        exported_source, destination, asset_spec, repository, commit
     )
 
 
 def _verify_distribution(
     exported_source,
     distribution,
-    profile,
+    asset_spec,
     repository,
     commit,
 ):
@@ -482,7 +517,7 @@ def _verify_distribution(
             "--verify-manifest",
             str(distribution),
             "--profile",
-            profile,
+            asset_spec["profile"],
             "--source-repository",
             repository,
             "--source-commit",
@@ -490,6 +525,15 @@ def _verify_distribution(
         ],
         cwd=exported_source,
     )
+    if asset_spec["kind"] == "agent-plugin":
+        _run(
+            [
+                sys.executable,
+                str(_agent_plugin_validator(exported_source)),
+                str(distribution),
+            ],
+            cwd=exported_source,
+        )
 
 
 def _distribution_manifest(distribution):
@@ -644,12 +688,12 @@ def _write_new(path, content, mode=0o644):
         raise ReleaseAssetError("cannot write %s: %s" % (path.name, exc)) from exc
 
 
-def _archive_filename(version, profile):
-    return "%s-%s-%s.tar.gz" % (PRODUCT, version, profile)
+def _archive_filename(version, asset_id):
+    return "%s-%s-%s.tar.gz" % (PRODUCT, version, asset_id)
 
 
-def _archive_root(version, profile):
-    return "%s-%s-%s" % (PRODUCT, version, profile)
+def _archive_root(version, asset_id):
+    return "%s-%s-%s" % (PRODUCT, version, asset_id)
 
 
 def _compare_distributions(expected, actual):
@@ -664,12 +708,13 @@ def _verify_archive(
     exported_source,
     expected_distribution,
     version,
-    profile,
+    asset_spec,
     repository,
     commit,
     temporary_root,
 ):
-    filename = _archive_filename(version, profile)
+    asset_id = asset_spec["asset_id"]
+    filename = _archive_filename(version, asset_id)
     if archive_path.name != filename:
         raise ReleaseAssetError("release archive filename is invalid")
     content = _checked_regular_bytes(
@@ -678,22 +723,24 @@ def _verify_archive(
         max_bytes=MAX_RELEASE_ARCHIVE_BYTES,
     )
     tar_content = _bounded_gzip(content)
-    extraction = temporary_root / ("%s-extracted" % profile)
+    extraction = temporary_root / ("%s-extracted" % asset_id)
     extracted = _extract_tar_bytes(
         tar_content,
         extraction,
-        _archive_root(version, profile),
+        _archive_root(version, asset_id),
         require_release_metadata=True,
     )
     _verify_distribution(
-        exported_source, extracted, profile, repository, commit
+        exported_source, extracted, asset_spec, repository, commit
     )
     _compare_distributions(expected_distribution, extracted)
     manifest_content, manifest = _distribution_manifest(extracted)
     return {
-        "profile": profile,
+        "kind": manifest.get("kind"),
+        "profile": manifest.get("profile"),
+        "host_profile": manifest.get("host_profile"),
         "filename": filename,
-        "archive_root": _archive_root(version, profile),
+        "archive_root": _archive_root(version, asset_id),
         "bytes": len(content),
         "sha256": _sha256(content),
         "distribution_manifest_sha256": _sha256(manifest_content),
@@ -736,9 +783,11 @@ def _ledger(repository, commit, version, assets, checksum_content):
     }
 
 
-def _validate_asset_record(record, version, profile):
+def _validate_asset_record(record, version, asset_spec):
     required = {
+        "kind",
         "profile",
+        "host_profile",
         "filename",
         "archive_root",
         "bytes",
@@ -750,11 +799,14 @@ def _validate_asset_record(record, version, profile):
     }
     if not isinstance(record, dict) or set(record) != required:
         raise ReleaseAssetError("release asset ledger record shape is invalid")
+    asset_id = asset_spec["asset_id"]
     if (
-        record["profile"] != profile
-        or record["capability_ceiling"] != profile
-        or record["filename"] != _archive_filename(version, profile)
-        or record["archive_root"] != _archive_root(version, profile)
+        record["kind"] != asset_spec["kind"]
+        or record["profile"] != asset_spec["profile"]
+        or record["host_profile"] != asset_spec["host_profile"]
+        or record["capability_ceiling"] != asset_spec["profile"]
+        or record["filename"] != _archive_filename(version, asset_id)
+        or record["archive_root"] != _archive_root(version, asset_id)
         or isinstance(record["bytes"], bool)
         or not isinstance(record["bytes"], int)
         or record["bytes"] <= 0
@@ -796,10 +848,10 @@ def _validate_ledger(ledger, repository, commit, version):
     if ledger["archive_policy"] != expected_policy:
         raise ReleaseAssetError("release asset archive policy is invalid")
     assets = ledger["assets"]
-    if not isinstance(assets, list) or len(assets) != len(PROFILES):
-        raise ReleaseAssetError("release asset ledger must contain three profiles")
-    for profile, record in zip(PROFILES, assets):
-        _validate_asset_record(record, version, profile)
+    if not isinstance(assets, list) or len(assets) != len(ASSET_SPECS):
+        raise ReleaseAssetError("release asset ledger must contain four distributions")
+    for asset_spec, record in zip(ASSET_SPECS, assets):
+        _validate_asset_record(record, version, asset_spec)
     checksums = ledger["checksums"]
     if (
         not isinstance(checksums, dict)
@@ -870,11 +922,14 @@ def _verify_output_set(
     expected_names = {
         LEDGER_NAME,
         CHECKSUM_NAME,
-        *(_archive_filename(version, profile) for profile in PROFILES),
+        *(
+            _archive_filename(version, asset_spec["asset_id"])
+            for asset_spec in ASSET_SPECS
+        ),
     }
     if set(entries) != expected_names:
         raise ReleaseAssetError(
-            "release output must contain exactly the three archives, "
+            "release output must contain exactly the four archives, "
             "SHA256SUMS, and release-assets.json"
         )
     ledger_content, ledger = _load_ledger(output)
@@ -895,7 +950,8 @@ def _verify_output_set(
     ):
         raise ReleaseAssetError("release checksum ledger digest is invalid")
     verified = []
-    for profile, record in zip(PROFILES, assets):
+    for asset_spec, record in zip(ASSET_SPECS, assets):
+        asset_id = asset_spec["asset_id"]
         archive_path = output / record["filename"]
         content = _checked_regular_bytes(
             archive_path,
@@ -907,10 +963,10 @@ def _verify_output_set(
                 "release archive does not match its ledger: %s"
                 % record["filename"]
             )
-        expected_distribution = temporary_root / ("%s-expected" % profile)
+        expected_distribution = temporary_root / ("%s-expected" % asset_id)
         _build_profile(
             exported_source,
-            profile,
+            asset_spec,
             expected_distribution,
             repository,
             commit,
@@ -920,7 +976,7 @@ def _verify_output_set(
             exported_source,
             expected_distribution,
             version,
-            profile,
+            asset_spec,
             repository,
             commit,
             temporary_root,
@@ -963,18 +1019,19 @@ def build_release_assets(
         )
         _source_version(exported_source, version)
         assets = []
-        for profile in PROFILES:
-            distribution = temporary / ("%s-distribution" % profile)
+        for asset_spec in ASSET_SPECS:
+            asset_id = asset_spec["asset_id"]
+            distribution = temporary / ("%s-distribution" % asset_id)
             _build_profile(
                 exported_source,
-                profile,
+                asset_spec,
                 distribution,
                 repository,
                 commit,
             )
-            filename = _archive_filename(version, profile)
+            filename = _archive_filename(version, asset_id)
             archive_content = _deterministic_gzip(
-                _tar_bytes(distribution, _archive_root(version, profile))
+                _tar_bytes(distribution, _archive_root(version, asset_id))
             )
             archive_path = stage / filename
             _write_new(archive_path, archive_content)
@@ -984,7 +1041,7 @@ def build_release_assets(
                     exported_source,
                     distribution,
                     version,
-                    profile,
+                    asset_spec,
                     repository,
                     commit,
                     temporary,
@@ -1001,7 +1058,10 @@ def build_release_assets(
         expected = {
             LEDGER_NAME,
             CHECKSUM_NAME,
-            *(_archive_filename(version, profile) for profile in PROFILES),
+            *(
+                _archive_filename(version, asset_spec["asset_id"])
+                for asset_spec in ASSET_SPECS
+            ),
         }
         if set(entries) != expected:
             raise ReleaseAssetError("release asset build produced unexpected files")

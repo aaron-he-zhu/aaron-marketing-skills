@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.1.0
+- **Catalog version:** 19.2.0
 - **Framework:** CORE-EEAT
 - **Auditor:** content-quality-auditor
 - **Complete item definitions:** 80
-- **Source digest:** `sha256:e58089000b64d2955fbb4e7c1e1405838e05c819adefeb3092132dacace4eb01`
+- **Source digest:** `sha256:93c1c1aba364430ebb776df31e720c261a0c1f51616dc17c0a7d228d2b0caae5`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "19.1.0",
+  "catalog_version": "19.2.0",
   "frameworks": {
     "CORE-EEAT": {
       "construct": "content-quality controls for one declared content artifact",

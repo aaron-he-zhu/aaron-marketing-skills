@@ -118,6 +118,13 @@ class SemanticEvidenceVerifierTests(unittest.TestCase):
     def directory(self):
         return self.evidence_root / "memory" / "runs" / self.run_id / "semantic-eval"
 
+    def test_committed_policy_tracks_official_adapter_dependency_closure(self):
+        policy = verifier.load_policy(runner=runner)
+        self.assertEqual(
+            list(runner.OFFICIAL_PROJECT_ADAPTER_DEPENDENCIES),
+            policy["required_project_adapter_dependencies"],
+        )
+
     def test_complete_current_real_evidence_passes(self):
         result = verifier.verify_evidence(
             self.evidence_root, self.run_id, policy=self.policy, runner=runner,

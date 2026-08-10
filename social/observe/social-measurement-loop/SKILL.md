@@ -4,13 +4,13 @@ slug: aaron-social-measurement-loop
 displayName: "Social Measurement Loop · 社媒度量闭环"
 summary: "社媒周度复盘/指标字典/互动率分母锁定/中位数汇总/学习回写"
 description: 'Use when the user asks to "run the weekly social readout", "which denominator does our engagement rate use", or "which posts won this week and what changes next cycle"; produces the organic-social metric dictionary (every rate names its denominator — ERR engagement-by-reach vs ERI by-impressions vs ER-by-follower — locked across periods), median-not-mean per-post rollups with organic and boosted separated, EMV as labeled exec-translation only (never inside any score), an attributed CHAOSS/Orbit-style community-health readout with employees excluded, and the best/worst-performer write-back the next calendar cycle consumes. Not for dollar-ROI math or the ECHO profile result gate verdict — use roi-calculator and social-quality-auditor. 社媒周报/互动率分母/指标字典/复盘回写'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when running the weekly organic-social measurement loop: building or applying the metric dictionary (declared, period-locked denominators on every reported rate), rolling up per-post performance with medians and an organic/boosted split, translating results to EMV for executives (labeled, never scored), running the attributed CHAOSS/Orbit-style community-health readout on an owned community, or compiling the best/worst-performer write-back for the next calendar cycle. Not the dollar-ROI math (roi-calculator) and never the ECHO profile result verdict (social-quality-auditor)."
 argument-hint: "<period, e.g. 'week of 2026-06-29'> [channels] [exports]"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "social", "phase": "observe", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "observe"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "social", "phase": "observe", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "observe"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Social Measurement Loop

@@ -4,7 +4,7 @@ slug: aaron-launch-readiness-auditor
 displayName: "Launch Readiness Auditor · 发布就绪审计"
 summary: "发布就绪审计/RAMP分阶段评估/发布前放行"
 description: 'Use when the user asks to "audit our launch plan", "are we ready to launch", or evaluate launch execution/outcomes; runs one typed RAMP preflight, execution, or outcome profile without mixing time horizons. Not for recording launch state — use launch-registry; not for running launch day — use launch-day-conductor. 发布就绪审计/RAMP分阶段评估/发布前放行'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -12,7 +12,7 @@ when_to_use: "Use for launch-eve readiness, an observed launch-window execution 
 argument-hint: "<launch slug/plan/evidence> [preflight|execution|outcome]"
 allowed-tools: WebFetch
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "launch", "phase": "mobilize", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "mobilize"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "launch", "phase": "mobilize", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "mobilize"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Launch Readiness Auditor

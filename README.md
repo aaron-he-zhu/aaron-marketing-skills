@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.1.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.2.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -99,12 +99,15 @@ Use it with Claude Code, any Agent Skills-compatible host, or a plain `git clone
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` then `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ hosts](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
+| **Agent Plugins v1 clients · Portable Lite** | Download `aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` from the [v19.2.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v19.2.0), unpack it, and install the extracted plugin directory |
 | **[SkillHub.cn](https://skillhub.cn) (中文社区)** | `skillhub install <frontmatter-slug>` (e.g. `aaron-campaign-architect` or legacy unprefixed slugs like `keyword-research`) |
 | **Any host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
 In Claude Code, `marketplace add` only registers the catalog — run `/plugin install aaron-marketing@aaron` (or pick it from `/plugin`) to actually enable the skills and commands. To pull a **single** skill on a generic host: `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research`. Browse the bundle on the [skills.sh registry](https://skills.sh/aaron-he-zhu/aaron-marketing-skills). Per-agent directories, frontmatter quirks, and what degrades outside the plugin: [docs/agent-compatibility.md](docs/agent-compatibility.md) (verified 120/120 installable, 2026-07).
 
 Installing the plugin adds **nothing** to your `/mcp` list — the MCP catalogue lives in [`docs/mcp-catalog.json`](docs/mcp-catalog.json), deliberately outside the plugin-root `.mcp.json` path that Claude Code auto-registers, so it is a copy-paste reference only (see [Connectors](#connectors--enhancement-tiers)).
+
+The repository root is the authoring SSOT, **not** an Agent Plugins v1 install root. Use the release asset above: it projects all **120/120 strict Agent Skills** into flat `skills/<name>/` directories and deliberately contains no `mcp.json`, commands, hooks, connectors, or repository runtime. The existing client packages remain supported; see the exact [Portable Lite package and capability boundary](docs/agent-plugins-v1.md).
 
 ---
 
@@ -696,7 +699,7 @@ docs/            # 9 localized READMEs + contributor docs (connector playbook, a
 .claude-plugin/  # plugin.json + marketplace.json mirror
 ```
 
-This source repository contains both runtime and maintenance assets. User distributions are allowlisted by [`references/distribution-files.json`](references/distribution-files.json) and built with `python3 scripts/build-distribution.py --output <dir> --plugin --profile lite|pro|governed`; tests, evals, CI, generators, and contributor-only documentation are intentionally excluded. A standalone skill build uses `--skill <catalog-path>`, contains only that skill directory, and declares a Lite ceiling. Bare `--plugin` remains a deprecated Governed-ceiling alias through v20; release automation selects the profile explicitly. Every output carries a per-file SHA-256 `distribution-manifest.json`; the builder rejects symlinks, special files, and multiply linked files, and `--verify-manifest <dir>` revalidates the complete payload. Every live release publisher/projector enforces clean, freshly refreshed pushed provenance; per-skill and built-package registry payloads come from a private export of that commit and bind its repository/commit identity into the verified manifest.
+This source repository contains both runtime and maintenance assets. User distributions are allowlisted by [`references/distribution-files.json`](references/distribution-files.json) and built with `python3 scripts/build-distribution.py --output <dir> --plugin --profile lite|pro|governed`; the release-only Agent Plugins projection uses `--agent-plugin --profile portable-lite`. Tests, evals, CI, generators, and contributor-only documentation are intentionally excluded. A standalone skill build uses `--skill <catalog-path>`, contains only that skill directory, and declares a Lite ceiling. Bare `--plugin` remains a deprecated Governed-ceiling alias through v20; release automation selects the profile explicitly. Every output carries a per-file SHA-256 `distribution-manifest.json`; the builder rejects symlinks, special files, and multiply linked files, and `--verify-manifest <dir>` revalidates the complete payload. Never commit a generated root `skills/` mirror: the discipline/phase tree and typed catalog remain the source. Every live release publisher/projector enforces clean, freshly refreshed pushed provenance; per-skill and built-package registry payloads come from a private export of that commit and bind its repository/commit identity into the verified manifest.
 
 ---
 
@@ -724,7 +727,7 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 | `check-versions.sh` | Version-sync guard: system catalog, plugin/marketplace/OpenClaw manifests, root + localized README badges, AGENTS/CLAUDE/VERSIONS, GitHub About, and all 120 skill versions stay aligned. |
 | `tests/test_connectors_local.py` | Offline request-builder/parser tests spanning all 29 bundled connector modules (no network in CI). |
 | `tests/test_distribution_builder.py` | Distribution closure, per-file SHA-256 manifest, tamper detection, and adversarial symlink/hardlink/special-file rejection. |
-| `tests/test_release_assets.py` + `tests/test_create_github_release.py` + `tests/test_final_release_gate.py` | Exact-commit deterministic Lite/Pro/Governed archives, checksum/ledger integrity, private engineering release-receipt binding, immutable tag/Release orchestration, downloaded-asset verification, and live-publisher final-gate enforcement. |
+| `tests/test_release_assets.py` + `tests/test_create_github_release.py` + `tests/test_final_release_gate.py` | Exact-commit deterministic Lite/Pro/Governed plus Agent Plugins v1 Portable Lite archives, four-archive checksum/ledger integrity, private engineering release-receipt binding, immutable tag/Release orchestration, six downloaded-asset verification, and live-publisher final-gate enforcement. |
 | `tests/test_publish_release.py` + `tests/test_publish_state.py` + `tests/test_registry_status.py` | Every live release entrypoint's clean/refreshed/pushed gate, commit-bound canonical registry snapshots/resume state, verified package payloads and remote source/content confirmation, plus dry-run independence. |
 | `tests/test_hook_artifact_gate.sh` | Behavior tests for the hook's Artifact Gate + SessionStart sanitization. |
 | `tests/test_run_events.py` | Operational event-tree/hash-chain, idempotency, concurrency, snapshot/save-point/envelope, privacy, recovery, and unsafe-path regressions. |
@@ -748,7 +751,7 @@ Live endpoint drift is sampled separately by the **manual** [`scripts/connectors
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — authoring rules, the contribution checklist, and the authoritative 10-surface tracking list.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](VERSIONS.md)** — per-skill versions + changelog (current bundle: `19.1.0`).
+- **[VERSIONS.md](VERSIONS.md)** — per-skill versions + changelog (current bundle: `19.2.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](SECURITY.md)** · **[PRIVACY.md](PRIVACY.md)** · **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** — security, privacy, and community policy.
 - **[CLAUDE.md](CLAUDE.md)** / **[AGENTS.md](AGENTS.md)** — agent-facing context for this repo.

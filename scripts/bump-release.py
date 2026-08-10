@@ -37,55 +37,44 @@ VERSION_ROW_RE = re.compile(
 )
 
 CURRENT_SUMMARY = (
-    "**Progressive context disclosure and host-aware harnessing.** The same 120 "
-    "skills, seven "
-    "mandatory 4×4 discipline loops, TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP "
-    "acronyms, eight commands, framework IDs, routes, and state paths remain "
-    "intact. Exact Runtime Reads, generated Skill capsules, a non-reducible policy "
-    "kernel, host capability profiles, and manifest 1.2 separate controller, "
-    "model, tool, and deferred context without weakening deterministic safety "
-    "controls. Protocol v3 adds blind routing and paired compact-profile "
-    "evaluation. The current 700-case corpus is simulated, certified_bindings is "
-    "empty, and the bundled adapter supplies no immutable model revision; "
-    "therefore explicit remains the only deployable prompt profile. No token or "
-    "cost reduction is claimed."
+    "**Agent Plugins v1 Portable Lite delivery.** The same 120 canonical skills, "
+    "seven mandatory 4×4 discipline loops, eight commands, framework IDs, routes, "
+    "and state paths remain intact. A deterministic release-only projection now "
+    "emits a strict Agent Plugins 1.0.0 directory with flat Agent Skills, "
+    "string-valued metadata, rewritten contained links, an explicit Portable Lite "
+    "capability ceiling, and no automatic MCP registration. Existing Claude, "
+    "npx skills, SkillHub, ClawHub, OpenClaw, and Hermes surfaces remain separate "
+    "compatibility channels generated from the same canonical source."
 )
 CHANGELOG_BODY = """\
-### v{version} — Progressive context disclosure and host-aware harnessing ({date})
+### v{version} — Agent Plugins v1 Portable Lite ({date})
 
 All 120 canonical skills align to `{version}` together while the exact 7 ×
 (4 phases × 4 skills) shape, TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP acronym
 symmetry, eight public commands, framework/veto IDs, registry keys, and user
 state paths remain unchanged.
 
-- **Explicit runtime dependencies.** Only an exact closed `### Runtime Reads`
-  section creates required context. Ordinary links stay discoverable instead of
-  becoming accidental activation dependencies. Generated machine contracts and
-  Skill capsules bind those declarations to source hashes.
-- **Progressive disclosure without policy loss.** The runtime separates
-  controller, model, tool, metadata-only, and deferred consumers. A compact
-  policy kernel remains non-reducible; consent, claims, PII, mutation authority,
-  audit integrity, state ownership, and release provenance remain deterministic
-  controls outside optional prose reduction.
-- **Host-aware reproducible delivery.** Lite, Pro, and Governed archives share
-  one canonical Skill inventory. Manifest 1.2 binds the physical capability
-  ceiling, host profile, routing surface, reference surface, and generated
-  sidecar hashes. Legacy manifest 1.0 and profile manifest 1.1 remain accepted
-  for bounded read-only verification.
-- **Evidence-gated prompt profiles.** `explicit` remains the safe deployment
-  default. `balanced` and `lean` are evaluation-only unless an exact
-  host/model/model-revision/toolset binding has current paired evidence, a valid
-  release certificate, and a trusted signed release attestation that can be
-  revalidated. The repository currently carries zero certified compact bindings.
-- **Blind paired evaluation.** Protocol v3 hides target routes and experiment
-  labels from the candidate, loads selected context only after routing, and uses
-  an independent judge. Requests, results, completion streams, assemblies, and
-  selected sources are hash-bound per arm.
-- **Honest measurement boundary.** The current 700-case corpus is simulated and
-  the bundled adapter supplies no immutable model revision, so it cannot certify
-  a compact deployment. Deterministic UTF-8 byte measurements are not presented
-  as tokens or cost, and this release makes no token-savings or cost-savings
-  claim.
+- **Published-package conformance.** A fourth release archive exposes the
+  versioned Agent Plugins 1.0.0 `plugin.json` contract and exactly 120 immediate
+  `skills/<name>/SKILL.md` children. The repository source layout remains the
+  single canonical authoring tree; no committed mirror is introduced.
+- **Strict Agent Skills projection.** Portable frontmatter contains only the
+  standard field set, uses string-valued metadata, and removes platform listing
+  extensions from the generated copy. Source frontmatter remains unchanged for
+  existing registry and client publishers.
+- **Contained static delivery.** Cross-skill and shared-reference links are
+  deterministically rewritten into the package. Client runtimes, hooks,
+  commands, connectors, persistence, and excluded paths degrade to a documented
+  Portable Lite boundary instead of becoming broken or over-claimed behavior.
+- **No implicit MCP authority.** The portable archive deliberately omits
+  `mcp.json`; the 19 documented endpoints remain opt-in client configuration.
+- **Reproducible provenance.** The official Agent Plugins schema, versioned spec
+  identity, Agent Skills baseline, source-to-projection hashes, host profile, and
+  capability ceiling are bound into validation and release manifests.
+- **Compatibility preserved.** The existing Lite, Pro, and Governed archives,
+  Claude commands and hooks, `npx skills`, SkillHub, ClawHub, OpenClaw, and
+  Hermes publication routes remain supported and receive full regression
+  coverage alongside the new portable asset.
 """
 
 

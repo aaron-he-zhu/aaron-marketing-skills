@@ -3,7 +3,7 @@
 This repository ships a **four-layer marketing operating system**: 112 discipline skills, 8 protocol skills, and 8 command entrypoints. This file is a compact navigation and safety map, not a second handbook. The authoritative topology is [`references/system-catalog.json`](references/system-catalog.json); its generated human view is [`docs/system-architecture.md`](docs/system-architecture.md).
 
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-Current bundle version: `19.1.0` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)).
+Current bundle version: `19.2.0` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)).
 <!-- GENERATED:END release-surface:current-bundle -->
 
 ## Start Here
@@ -14,7 +14,7 @@ Current bundle version: `19.1.0` (see [VERSIONS.md](https://github.com/aaron-he-
 - **Shared execution contract:** [`references/skill-contract.md`](references/skill-contract.md)
 - **Compact non-reducible policy:** [`references/policy-kernel.md`](references/policy-kernel.md)
 - **Context architecture and measurements:** [`docs/context-engineering.md`](docs/context-engineering.md)
-- **Distribution/host behavior:** [`docs/distribution.md`](docs/distribution.md) and [`docs/agent-compatibility.md`](docs/agent-compatibility.md)
+- **Distribution/host behavior:** [`docs/distribution.md`](docs/distribution.md), [`docs/agent-compatibility.md`](docs/agent-compatibility.md), and the strict [`Agent Plugins v1 Portable Lite`](docs/agent-plugins-v1.md) projection
 
 Do not preload every linked document. Start with this map, select the smallest route, then load the chosen Skill and only its explicit runtime dependencies. Controllers keep schemas, hashes, permissions, and validation outside model-visible prose.
 
@@ -60,6 +60,13 @@ Use `/aaron-marketing:auto` when the discipline is uncertain. Use an explicit co
 | `/aaron-marketing:launch` | RAMP: research · assemble · mobilize · prove |
 
 Command contracts live under [`commands/`](commands/). Hosts without slash commands use generated router facades; standalone one-Skill packages use direct Skill invocation. Router facades are distribution artifacts, never a mirror business-Skill tree.
+
+The repository root is not an Agent Plugins v1 install root. Release automation
+generates Portable Lite as a separate flat `skills/<name>/` archive with 120/120
+strict static Skills and no `mcp.json`, commands, hooks, connectors, persistence,
+or executable repository runtime. Never commit that generated `skills/` mirror;
+the discipline/phase tree and typed catalog remain authoritative. Existing
+client compatibility layers continue to use their established surfaces.
 
 ## Non-Reducible Runtime Boundaries
 
@@ -116,7 +123,7 @@ Only an exact `### Runtime Reads` block creates a required bundle dependency. Or
 | Change shared policy | Edit [`references/skill-contract.md`](references/skill-contract.md); update the compact kernel only as a faithful projection; rerun safety/eval gates |
 | Change context selection | Update the typed context/request/manifest/module schemas and run context-efficiency plus behavior suites |
 | Add a connector | Follow [`docs/connector-playbook.md`](docs/connector-playbook.md) end to end; keep shipped runtime Python standard-library-only |
-| Change distribution | Update [`references/distribution-files.json`](references/distribution-files.json), host profiles, manifests, ceilings, docs, and isolated supply-chain tests |
+| Change distribution | Update [`references/distribution-files.json`](references/distribution-files.json), host profiles, manifests, ceilings, docs, and isolated supply-chain tests; if Portable Lite is affected, rebuild and run `scripts/validate-agent-plugin.py` without committing its generated `skills/` tree |
 | Change a framework/auditor | Follow [`references/auditor-runbook.md`](references/auditor-runbook.md), regenerate standalone runtimes/prompt contracts, and run golden math |
 | Prepare a release | Follow [`CONTRIBUTING.md §5`](CONTRIBUTING.md#5-validate); semantic evidence and provenance gates fail closed |
 

@@ -11,7 +11,7 @@
           "end_char": 83,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 177,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 85
         },
@@ -41,7 +41,7 @@
           "end_char": 247,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 179
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "social/explore/channel-portfolio-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd"
+      "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904"
     }
   },
   "context_hints": {
@@ -62,14 +62,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 37
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 41
       },
       {
@@ -126,7 +126,7 @@
           "end_char": 176,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -144,7 +144,7 @@
           "end_char": 377,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 177
         },
@@ -162,7 +162,7 @@
           "end_char": 567,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 378
         },
@@ -180,7 +180,7 @@
           "end_char": 926,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 569
         },
@@ -193,7 +193,7 @@
     "summary_ref": {
       "path": "social/explore/channel-portfolio-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd"
+      "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -208,8 +208,8 @@
     "name": "channel-portfolio-planner",
     "path": "social/explore/channel-portfolio-planner/SKILL.md",
     "phase": "explore",
-    "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
-    "version": "19.1.0"
+    "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<objective + audience evidence> [candidate platforms] [staffing hours/week]",
@@ -223,7 +223,7 @@
           "end_char": 47,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -238,7 +238,7 @@
           "end_char": 240,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 49
         },
@@ -253,7 +253,7 @@
           "end_char": 335,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 242
         },
@@ -268,7 +268,7 @@
           "end_char": 401,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 337
         },
@@ -283,7 +283,7 @@
           "end_char": 507,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 403
         },
@@ -295,7 +295,7 @@
     "source": {
       "path": "social/explore/channel-portfolio-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd"
+      "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904"
     }
   },
   "output_contract": {
@@ -310,7 +310,7 @@
           "end_char": 47,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -326,7 +326,7 @@
           "end_char": 155,
           "path": "social/explore/channel-portfolio-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd",
+          "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904",
           "span_basis": "field-text",
           "start_char": 49
         },
@@ -337,7 +337,7 @@
     "source": {
       "path": "social/explore/channel-portfolio-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd"
+      "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904"
     },
     "summary": "a capability/access matrix, cadence-budget reality check, declared ECHO program-maturity profile, primary/secondary/watch tiers, boundary triage, authorized proposed-state events, and the standard handoff.",
     "summary_source": "expected-output",
@@ -352,8 +352,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -362,7 +362,7 @@
     "source": {
       "path": "social/explore/channel-portfolio-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "57b254e840482c21d9fed76e84fa78bdec36fab0ce49858bbe38259ef94b25dd"
+      "sha256": "fd8317c7cf490533feb8d8f10c4b4bfb53cc36f27337ff2e7d41d7a5e0052904"
     },
     "trigger_phrases": [
       "pick which social channels to run",

@@ -4,13 +4,13 @@ slug: aaron-cold-outbound-sequencer
 displayName: "Cold Outbound Sequencer · B2B冷启动外联序列"
 summary: "B2B冷启动外联序列/回复分流/域名预热"
 description: 'Use when the user asks to "build a B2B cold-outbound sequence", "design reply-triage branching", "plan a domain warmup / sending throttle", or "make my outbound CAN-SPAM / opt-in compliant"; produces a multi-step outbound sequence with reply-triage branches (positive / objection / referral / not-now / opt-out), a warmup + send-throttle ramp schedule, jurisdiction opt-in/CAN-SPAM guardrails (guidance, not legal advice), and a SEND S-dimension read. Not for B2C lifecycle flows — use email-sequence-designer; not for the consent record — use consent-registry; not for computing EQS — use email-quality-auditor. B2B冷启动外联序列/回复分流/域名预热'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when designing a B2B cold-outbound email program before writing the individual emails: a multi-step prospecting sequence with per-step timing and exit rules, the reply-triage branching that routes each reply type, a domain/mailbox warmup ramp and per-mailbox sending throttle to protect deliverability, and the CAN-SPAM / opt-in jurisdiction guardrails the sequence must respect. Activate when the user has a target list or ICP and wants the sequence map, the warmup/throttle schedule, and the compliance guardrails before creative or send-testing begins. Not for consented B2C lifecycle automation and not for adjudicating the consent record itself."
 argument-hint: "<sequence goal or ICP> [sending domain/mailbox setup] [target jurisdiction(s)] [list source]"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Cold Outbound Sequencer

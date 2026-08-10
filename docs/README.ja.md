@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.1.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.2.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -97,12 +97,15 @@ Claude Code、Agent Skills 互換の任意のホスト、あるいは単純な `
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` の後に `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ ホスト](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
+| **Agent Plugins v1 クライアント · Portable Lite** | [v19.2.0 リリース](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v19.2.0)から `aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` をダウンロードして展開し、抽出されたプラグインディレクトリをインストール |
 | **[SkillHub.cn](https://skillhub.cn)（中国語コミュニティ）** | `skillhub install <frontmatter-slug>`（例：`keyword-research`） |
 | **任意のホスト** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
 Claude Code では `marketplace add` はカタログを登録するだけです —— スキルとコマンドを実際に有効化するには `/plugin install aaron-marketing@aaron` を実行（または `/plugin` から選択）してください。汎用ホストで**単一**スキルを取得するには：`npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research`。バンドルは [skills.sh レジストリ](https://skills.sh/aaron-he-zhu/aaron-marketing-skills)で閲覧できます。エージェントごとのディレクトリ、frontmatter の癖、プラグイン外での劣化については：[docs/agent-compatibility.md](agent-compatibility.md)（120/120 インストール可能を検証、2026-07）。
 
 プラグインをインストールしても `/mcp` リストには**何も**追加されません —— MCP カタログは [`docs/mcp-catalog.json`](mcp-catalog.json) にあり、Claude Code が自動登録するプラグインルートの `.mcp.json` パスの外に意図的に置かれているため、コピー＆ペースト用の参照にすぎません（[コネクタ](#コネクタと拡張ティア)を参照）。
+
+リポジトリのルートはオーサリング用 SSOT であり、Agent Plugins v1 の標準インストールルートでは**ありません**。上記のリリース資産を使ってください。**120/120 の厳格な Agent Skills** を `skills/<name>/` に投影し、`mcp.json`、コマンド、hooks、コネクタ、リポジトリのランタイムは含みません。既存のクライアント互換レイヤーは維持されます。詳細は [Portable Lite パッケージと機能境界](agent-plugins-v1.md)を参照してください。
 
 ---
 
@@ -680,7 +683,7 @@ docs/            # ローカライズ済み README（zh）
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— オーサリングルール、コントリビューションチェックリスト、権威ある 10 の追跡サーフェスのリスト。
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** —— スキルごとのバージョン + changelog（現在のバンドル：`19.1.0`）。
+- **[VERSIONS.md](../VERSIONS.md)** —— スキルごとのバージョン + changelog（現在のバンドル：`19.2.0`）。
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— セキュリティ、プライバシー、コミュニティのポリシー。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— この repo のエージェント向けコンテキスト。

@@ -166,6 +166,7 @@ class BehaviorProfileTests(unittest.TestCase):
         changed_paths = [
             "scripts/adapters/codex-behavior-adapter.py",
             "evals/codex-behavior-candidate-output.schema.json",
+            "evals/codex-behavior-routing-output.schema.json",
             "evals/codex-behavior-model-output.schema.json",
             "references/framework-catalog.json",
         ]

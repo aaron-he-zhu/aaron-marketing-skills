@@ -265,7 +265,12 @@ class ReleaseAssetIntegrationTests(unittest.TestCase):
                     *[
                         "aaron-marketing-skills-%s-%s.tar.gz"
                         % (self.version, profile)
-                        for profile in ("lite", "pro", "governed")
+                        for profile in (
+                            "lite",
+                            "pro",
+                            "governed",
+                            "agent-plugin-v1-lite",
+                        )
                     ],
                 ]
             ),
@@ -278,23 +283,36 @@ class ReleaseAssetIntegrationTests(unittest.TestCase):
                 name,
             )
 
-    def test_ledger_and_checksums_cover_all_three_archives(self):
+    def test_ledger_and_checksums_cover_all_four_archives(self):
         ledger = json.loads(
             (self.outputs[0] / "release-assets.json").read_text(encoding="utf-8")
         )
-        self.assertEqual("1.0", ledger["schema_version"])
+        self.assertEqual("1.1", ledger["schema_version"])
         self.assertEqual(
             {"repository": REPOSITORY, "commit": self.commit},
             ledger["source"],
         )
         self.assertEqual(
-            ["lite", "pro", "governed"],
+            ["lite", "pro", "governed", "portable-lite"],
             [item["profile"] for item in ledger["assets"]],
+        )
+        self.assertEqual(
+            ["plugin", "plugin", "plugin", "agent-plugin"],
+            [item["kind"] for item in ledger["assets"]],
+        )
+        self.assertEqual(
+            [
+                "claude-code-plugin-host",
+                "claude-code-plugin-host",
+                "claude-code-plugin-host",
+                "agent-plugins-v1",
+            ],
+            [item["host_profile"] for item in ledger["assets"]],
         )
         checksum_lines = (
             self.outputs[0] / "SHA256SUMS"
         ).read_text(encoding="utf-8").splitlines()
-        self.assertEqual(3, len(checksum_lines))
+        self.assertEqual(4, len(checksum_lines))
         for asset, line in zip(ledger["assets"], checksum_lines):
             content = (self.outputs[0] / asset["filename"]).read_bytes()
             self.assertEqual(hashlib.sha256(content).hexdigest(), asset["sha256"])
@@ -357,16 +375,21 @@ class ReleaseAssetIntegrationTests(unittest.TestCase):
         self.assertNotEqual(0, completed.returncode)
         self.assertIn("does not match its ledger", completed.stderr)
 
-    def test_ledger_schema_declares_exact_three_asset_contract(self):
+    def test_ledger_schema_declares_exact_four_asset_contract(self):
         schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
         self.assertEqual(
             "https://json-schema.org/draft/2020-12/schema",
             schema["$schema"],
         )
-        self.assertEqual(3, schema["properties"]["assets"]["minItems"])
-        self.assertEqual(3, schema["properties"]["assets"]["maxItems"])
+        self.assertEqual(4, schema["properties"]["assets"]["minItems"])
+        self.assertEqual(4, schema["properties"]["assets"]["maxItems"])
         self.assertEqual(
-            ["liteAsset", "proAsset", "governedAsset"],
+            [
+                "liteAsset",
+                "proAsset",
+                "governedAsset",
+                "agentPluginV1LiteAsset",
+            ],
             [
                 item["$ref"].rsplit("/", 1)[-1]
                 for item in schema["properties"]["assets"]["prefixItems"]

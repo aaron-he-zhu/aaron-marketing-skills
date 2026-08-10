@@ -4,13 +4,13 @@ slug: geo-content-optimizer
 displayName: "GEO Content Optimizer · AI引用优化"
 summary: "AI引用优化/GEO优化/AI搜索"
 description: 'Use when the user asks to "optimize for AI citations"; improves citation readiness for ChatGPT, Perplexity, AI Overviews, Gemini, and Claude. Not for structural on-page SEO — use on-page-seo-checker; not for net-new drafting — use content-writer. AI引用优化/GEO优化/AI搜索'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when optimizing content for AI engines like ChatGPT, Perplexity, AI Overviews, Gemini, Claude, or Copilot. Also for AI citation optimization, generative engine visibility, AI引用优化, AI搜索优化, GEO优化, or 让AI引用我."
 argument-hint: "<content URL or text> [target AI engine]"
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "seo-geo", "phase": "implement", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "implement"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "seo-geo", "phase": "implement", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "implement"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # GEO Content Optimizer

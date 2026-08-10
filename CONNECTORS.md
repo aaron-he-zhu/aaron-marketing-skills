@@ -2,6 +2,15 @@
 
 > Skills use `~~category` placeholders instead of specific tool names. **Every skill runs at Tier 1 with zero external dependencies** — paste data manually, or pull it yourself from the free/public sources below. MCP servers (further down) are an optional Tier 2/3 convenience, never required.
 
+> **Agent Plugins v1 Portable Lite:** the release archive ships the 120 strict
+> static Skills and reachable static references only. It does not copy
+> `scripts/connectors/`, commands, hooks, controllers, or any other executable
+> repository runtime, and it deliberately has no `mcp.json`. Installing the
+> archive cannot run a helper, connect to an endpoint, register an MCP server, or
+> grant credentials/permissions. Use pasted data at Tier 1, or configure a
+> connector explicitly in the client that owns and authorizes it. See the
+> [Portable Lite capability boundary](docs/agent-plugins-v1.md).
+
 All endpoints below were verified against primary vendor/source docs (2026-05; re-verified 2026-07 with each product's **official documentation linked inline** — click the source name in any row). If a call 404s, re-check the linked doc — vendors move endpoints.
 
 ## Bundled helpers — run the data fetch locally (zero-dependency)
@@ -212,7 +221,7 @@ A skill might say: *"Pull keyword rankings from `~~SEO tool` and cross-reference
 
 ## Optional MCP servers (Tier 2/3 automation)
 
-[`docs/mcp-catalog.json`](docs/mcp-catalog.json) is a **copy-paste reference** of official remote HTTP MCP endpoints (plus one self-hosted entry, OpenSEO) — it is **opt-in, not auto-registered**. The catalog is deliberately kept outside the plugin-root `.mcp.json` path that Claude Code auto-discovers (and `plugin.json` carries no `mcpServers` key), so installing the plugin does NOT add 15 servers to your `/mcp` list or trigger any auth prompts. To enable any of these, copy the entries you want into your own host/user MCP config; auth happens interactively on first use. MCP automates retrieval but is never required — the free sources above cover the same data.
+[`docs/mcp-catalog.json`](docs/mcp-catalog.json) is a **copy-paste reference** of official remote HTTP MCP endpoints (plus one self-hosted entry, OpenSEO) — it is **opt-in, not auto-registered**. The catalog is deliberately kept outside the plugin-root `.mcp.json` path that Claude Code auto-discovers (and `plugin.json` carries no `mcpServers` key), so installing the plugin does NOT add 15 servers to your `/mcp` list or trigger any auth prompts. The Agent Plugins v1 Portable Lite projection likewise generates no `mcp.json`. To enable any of these, copy the entries you want into your own host/user MCP config; auth happens interactively on first use. MCP automates retrieval but is never required — the free sources above cover the same data.
 
 **SEO data** (endpoints verified 2026-05; vendor MCP docs linked + re-checked 2026-07):
 

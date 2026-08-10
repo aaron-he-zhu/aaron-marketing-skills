@@ -362,11 +362,11 @@ class ReleaseReceiptTests(unittest.TestCase):
                 paths,
                 report_path,
                 evidence_root,
-            ) = engineering_fixture(Path(tmp), release_version="19.1.0")
+            ) = engineering_fixture(Path(tmp), release_version="19.2.0")
             identity = release_receipt.validate_receipt(
                 receipt,
                 expected_commit=commit,
-                expected_version="19.1.0",
+                expected_version="19.2.0",
                 verifier_path=ROOT / "scripts" / "verify-profile-outcomes.py",
                 repository_root=repository,
                 engineering_paths=paths,
@@ -375,7 +375,7 @@ class ReleaseReceiptTests(unittest.TestCase):
                 semantic_revalidator=mocked_semantic_revalidator,
             )
         self.assertEqual("engineering-validation-v19", identity["gate"])
-        self.assertEqual("19.1.0-rc.1", identity["release_candidate"])
+        self.assertEqual("19.2.0-rc.1", identity["release_candidate"])
 
     def test_engineering_receipt_reasserts_provenance_scores_claims_and_tools(self):
         def rejected(path, value):

@@ -61,12 +61,13 @@
     "release_version": {
       "enum": [
         "19.0.0",
-        "19.1.0"
+        "19.1.0",
+        "19.2.0"
       ]
     },
     "release_candidate": {
       "type": "string",
-      "pattern": "^19\\.(?:0|1)\\.0-rc\\.[1-9][0-9]*$"
+      "pattern": "^19\\.(?:0|1|2)\\.0-rc\\.[1-9][0-9]*$"
     },
     "source_commit": {
       "$ref": "#/$defs/sha1"
@@ -200,7 +201,7 @@
         },
         "release_candidate": {
           "type": "string",
-          "pattern": "^19\\.(?:0|1)\\.0-rc\\.[1-9][0-9]*$"
+          "pattern": "^19\\.(?:0|1|2)\\.0-rc\\.[1-9][0-9]*$"
         },
         "source_commit": {
           "$ref": "#/$defs/sha1"
@@ -315,7 +316,7 @@
         },
         "release_candidate": {
           "type": "string",
-          "pattern": "^19\\.(?:0|1)\\.0-rc\\.[1-9][0-9]*$"
+          "pattern": "^19\\.(?:0|1|2)\\.0-rc\\.[1-9][0-9]*$"
         },
         "source_commit": {
           "$ref": "#/$defs/sha1"

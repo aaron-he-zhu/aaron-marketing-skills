@@ -11,7 +11,7 @@
           "end_char": 18,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314"
+      "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0"
     }
   },
   "context_hints": {
@@ -32,14 +32,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 30
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 40
       },
       {
@@ -86,7 +86,7 @@
           "end_char": 20,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -102,7 +102,7 @@
           "end_char": 206,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 22
         },
@@ -120,7 +120,7 @@
           "end_char": 372,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 207
         },
@@ -138,7 +138,7 @@
           "end_char": 560,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 373
         },
@@ -156,7 +156,7 @@
           "end_char": 626,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 562
         },
@@ -172,7 +172,7 @@
           "end_char": 648,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 627
         },
@@ -188,7 +188,7 @@
           "end_char": 672,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 650
         },
@@ -204,7 +204,7 @@
           "end_char": 788,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 674
         },
@@ -220,7 +220,7 @@
           "end_char": 875,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 790
         },
@@ -233,7 +233,7 @@
     "summary_ref": {
       "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314"
+      "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -248,8 +248,8 @@
     "name": "fatigue-frequency-manager",
     "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
     "phase": "scale",
-    "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
-    "version": "19.1.0"
+    "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<campaign/ad-set> [flight window]",
@@ -263,7 +263,7 @@
           "end_char": 148,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -278,7 +278,7 @@
           "end_char": 228,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 150
         },
@@ -293,7 +293,7 @@
           "end_char": 245,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 230
         },
@@ -308,7 +308,7 @@
           "end_char": 302,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 247
         },
@@ -320,7 +320,7 @@
     "source": {
       "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314"
+      "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0"
     }
   },
   "output_contract": {
@@ -335,7 +335,7 @@
           "end_char": 106,
           "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314",
+          "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -346,7 +346,7 @@
     "source": {
       "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314"
+      "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0"
     },
     "summary": "a per-ad-set fatigue read — frequency now vs baseline, CTR and CVR decay slope against the early-flight baseline, the diagnosis (creative fatigue vs audience saturation vs neither), and one trigger (**Rotate-creative** /",
     "summary_source": "expected-output",
@@ -361,8 +361,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -371,7 +371,7 @@
     "source": {
       "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
       "section": "frontmatter",
-      "sha256": "e201cafd4406082321af41e0f7a4cc0e2c374f7cd6d6df87fc2b74dace0f1314"
+      "sha256": "948a639ffc1ad51b1d6e420336a41ab8bc08a894765e0de092c16a6368c59de0"
     },
     "trigger_phrases": [
       "is my ad fatiguing",

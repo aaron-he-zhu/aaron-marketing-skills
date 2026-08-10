@@ -11,7 +11,7 @@
           "end_char": 81,
           "path": "seo-geo/survey/keyword-research/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8",
+          "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 130,
           "path": "seo-geo/survey/keyword-research/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8",
+          "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce",
           "span_basis": "field-text",
           "start_char": 83
         },
@@ -41,7 +41,7 @@
           "end_char": 220,
           "path": "seo-geo/survey/keyword-research/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8",
+          "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce",
           "span_basis": "field-text",
           "start_char": 132
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "seo-geo/survey/keyword-research/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8"
+      "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 32
       },
       {
@@ -130,7 +130,7 @@
           "end_char": 175,
           "path": "seo-geo/survey/keyword-research/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8",
+          "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -147,7 +147,7 @@
     "summary_ref": {
       "path": "seo-geo/survey/keyword-research/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8"
+      "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -162,8 +162,8 @@
     "name": "keyword-research",
     "path": "seo-geo/survey/keyword-research/SKILL.md",
     "phase": "survey",
-    "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8",
-    "version": "19.1.0"
+    "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<topic or seed keyword> [market/language]",
@@ -177,7 +177,7 @@
           "end_char": 109,
           "path": "seo-geo/survey/keyword-research/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8",
+          "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -189,7 +189,7 @@
     "source": {
       "path": "seo-geo/survey/keyword-research/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8"
+      "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce"
     }
   },
   "output_contract": {
@@ -204,7 +204,7 @@
           "end_char": 56,
           "path": "seo-geo/survey/keyword-research/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8",
+          "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -215,7 +215,7 @@
     "source": {
       "path": "seo-geo/survey/keyword-research/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8"
+      "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce"
     },
     "summary": "a prioritized keyword brief plus the standard handoff summary for `memory/research/`.",
     "summary_source": "expected-output",
@@ -230,8 +230,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -240,7 +240,7 @@
     "source": {
       "path": "seo-geo/survey/keyword-research/SKILL.md",
       "section": "frontmatter",
-      "sha256": "8471b237954ae838dd8bd2c8c3398556d9c652693a0f7b622703730eae0ac1b8"
+      "sha256": "ac4586d8261f6d841d0750189858a6faba73397f04487d468bf3f1a6d5ffa4ce"
     },
     "trigger_phrases": [
       ", or",

@@ -29,6 +29,9 @@
 - [ ] `marketplace.json` (repo root) skills array updated (if adding a new skill)
 - [ ] `.claude-plugin/marketplace.json` byte-identical to root (`cp marketplace.json .claude-plugin/marketplace.json` — CI only diff-checks and fails on mismatch, it never copies)
 - [ ] `.claude-plugin/plugin.json` skills array updated (if adding a new skill)
+- [ ] Agent Plugins v1 impact reviewed for Skill/static-reference changes: Portable Lite builds and `python3 scripts/validate-agent-plugin.py <unpacked-package-dir>` passes with 120/120 strict Skills
+- [ ] No generated root `skills/` mirror was added; the discipline/phase source tree remains authoritative
+- [ ] Portable Lite still contains no `mcp.json`, commands, hooks, connector helpers, or executable repository runtime
 - [ ] `README.md` skills table updated (if adding a new skill)
 - [ ] `CLAUDE.md` category table updated (if counts/structure changed)
 - [ ] `AGENTS.md` name/count line updated (if counts/structure changed)

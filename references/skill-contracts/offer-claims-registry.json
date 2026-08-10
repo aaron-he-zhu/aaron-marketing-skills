@@ -11,7 +11,7 @@
           "end_char": 158,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 189,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 160
         },
@@ -41,7 +41,7 @@
           "end_char": 388,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 191
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "protocol/offer-claims-registry/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67"
+      "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 61
       },
       {
@@ -118,7 +118,7 @@
           "end_char": 89,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -136,7 +136,7 @@
           "end_char": 202,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 90
         },
@@ -154,7 +154,7 @@
           "end_char": 300,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 203
         },
@@ -172,7 +172,7 @@
           "end_char": 372,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 301
         },
@@ -187,7 +187,7 @@
     "summary_ref": {
       "path": "protocol/offer-claims-registry/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67"
+      "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -203,8 +203,8 @@
     "name": "offer-claims-registry",
     "path": "protocol/offer-claims-registry/SKILL.md",
     "phase": "protocol",
-    "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
-    "version": "19.1.0"
+    "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<claim/offer aggregate-id or 'review pending proposals'>",
@@ -218,7 +218,7 @@
           "end_char": 82,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -230,7 +230,7 @@
     "source": {
       "path": "protocol/offer-claims-registry/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67"
+      "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b"
     }
   },
   "output_contract": {
@@ -245,7 +245,7 @@
           "end_char": 42,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -261,7 +261,7 @@
           "end_char": 107,
           "path": "protocol/offer-claims-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67",
+          "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b",
           "span_basis": "field-text",
           "start_char": 44
         },
@@ -272,7 +272,7 @@
     "source": {
       "path": "protocol/offer-claims-registry/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67"
+      "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b"
     },
     "summary": "claims events through `registry-events.py`; `claims-ledger.md` and `offers.md` are regenerated human views.",
     "summary_source": "writes-fallback",
@@ -287,8 +287,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -297,7 +297,7 @@
     "source": {
       "path": "protocol/offer-claims-registry/SKILL.md",
       "section": "frontmatter",
-      "sha256": "60cbb4144c40f75d59bd8b23249b1c29c482553f161fa045500aacc41e50bd67"
+      "sha256": "6144652ef7c68aa0a4fb07d2438fb1321769d8b669c5bb5f56c7b6c1c854125b"
     },
     "trigger_phrases": [
       "log our current offers",

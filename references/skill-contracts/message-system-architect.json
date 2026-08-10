@@ -11,7 +11,7 @@
           "end_char": 230,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 305,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 232
         },
@@ -41,7 +41,7 @@
           "end_char": 588,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 307
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/architect/message-system-architect/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b"
+      "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008"
     }
   },
   "context_hints": {
@@ -62,14 +62,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 42
       },
       {
@@ -142,7 +142,7 @@
           "end_char": 167,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -160,7 +160,7 @@
           "end_char": 350,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 168
         },
@@ -178,7 +178,7 @@
           "end_char": 544,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 351
         },
@@ -196,7 +196,7 @@
           "end_char": 944,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 546
         },
@@ -209,7 +209,7 @@
     "summary_ref": {
       "path": "narrative/architect/message-system-architect/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b"
+      "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -224,8 +224,8 @@
     "name": "message-system-architect",
     "path": "narrative/architect/message-system-architect/SKILL.md",
     "phase": "architect",
-    "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
-    "version": "19.1.0"
+    "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<product / brand> [personas] [positioning truth set path] [narrative arc path]",
@@ -239,7 +239,7 @@
           "end_char": 161,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -254,7 +254,7 @@
           "end_char": 316,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 163
         },
@@ -269,7 +269,7 @@
           "end_char": 342,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 318
         },
@@ -284,7 +284,7 @@
           "end_char": 414,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 344
         },
@@ -299,7 +299,7 @@
           "end_char": 512,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 416
         },
@@ -311,7 +311,7 @@
     "source": {
       "path": "narrative/architect/message-system-architect/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b"
+      "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008"
     }
   },
   "output_contract": {
@@ -326,7 +326,7 @@
           "end_char": 73,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -342,7 +342,7 @@
           "end_char": 384,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 75
         },
@@ -358,7 +358,7 @@
           "end_char": 591,
           "path": "narrative/architect/message-system-architect/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b",
+          "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008",
           "span_basis": "field-text",
           "start_char": 386
         },
@@ -369,7 +369,7 @@
     "source": {
       "path": "narrative/architect/message-system-architect/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b"
+      "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008"
     },
     "summary": "a durable brand message house — main narrative, three value pillars (each traced to a positioning value theme), per-persona proof points each labeled Measured / User-provided / `[needs source]`, and the tagline/one-liner — with an internal-consistency pass (tagline ↔ pillars ↔ proof do not contradict), a canon-grade candidate block for the registry, a `[needs source]` claims list, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -384,8 +384,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -394,7 +394,7 @@
     "source": {
       "path": "narrative/architect/message-system-architect/SKILL.md",
       "section": "frontmatter",
-      "sha256": "6a502cfac9fc2ee66df31d8d441521d88f121754d705015e18d5a87ccf05024b"
+      "sha256": "e7d2518c825126aa04f061885132eb12f0e09fe4daa885162177d10e2c023008"
     },
     "trigger_phrases": [
       "author our durable brand message hierarchy",

@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.1.0
+- **Catalog version:** 19.2.0
 - **Framework:** RAMP
 - **Auditor:** launch-readiness-auditor
 - **Complete item definitions:** 40
-- **Source digest:** `sha256:ff6d4cb5d84c2dc3ea37c32278d5baa93de98bff95b7864abeee70c15d4f34bd`
+- **Source digest:** `sha256:e025913cc7d543dcef6813f16926607823766cc53ca93702fc2ddc1001444c69`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "19.1.0",
+  "catalog_version": "19.2.0",
   "frameworks": {
     "RAMP": {
       "composite_score": false,

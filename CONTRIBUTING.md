@@ -87,21 +87,45 @@ CI runs additional guards beyond the per-skill validator:
 - **architecture conformance** — checks `references/system-catalog.json` against all 120 paths/frontmatters, plugin order, framework/auditor/registry ownership, transition graphs, L1 dependencies, distribution contracts, and the **symmetry contract** (SYM-01..17: loop/acronym derivation, command selector, registry/gate naming and topology, score surfaces, grouping titles, Scope edges, metadata key set — every violation must be licensed by a `symmetry.deviations` entry, and stale deviations fail).
 - **five-engineering maturity** — validates the closed 100-control Prompt/Context/Harness/Loop/Graph rubric and report contract. Before release, run `python3 scripts/check-engineering-maturity.py --semantic-evidence-run-id <uuid>` against a complete current-source protocol-v2 real-provider smoke run; every dimension must reach 95/100 and pass its hard gates. Protocol-v3 compact certification is separate: it requires canonical real cases, stored hash-chained v3 provenance for every arm, an immutable model revision, and a current Governed binding. The current 700-case corpus is simulated and the bundled adapter reports a null revision, so no compact binding is certified and `explicit` remains the deployment default. Until a release carries either complete paired evidence for trusted revalidation or a signed release attestation, distribution builds and manifest verification reject every non-empty `certified_bindings` array; package-local hashes alone are never promotion authority.
 
-Build the three physical plugin ceilings users receive and run their boundary
-tests. A fresh project resolves to Lite in every archive; the archive controls
-only the maximum available capability:
+Build the four physical archives users receive and run their boundary tests.
+The Lite, Pro, and Governed plugin archives share the 120 canonical Skills and
+eight commands; a fresh project resolves to Lite in all three and the archive
+controls only the maximum available capability. The fourth archive is the
+static Agent Plugins v1 Portable Lite projection: 120/120 strict Skills with no
+commands, hooks, connectors, executable repository runtime, or `mcp.json`.
 
 ```bash
 python3 scripts/build-release-assets.py \
   --source-repo /path/to/aaron-marketing-skills \
   --source-repository aaron-he-zhu/aaron-marketing-skills \
   --source-commit <exact-40-hex-release-commit> \
-  --version 19.1.0 \
-  --output /private/path/v19.1.0-release-assets
+  --version 19.2.0 \
+  --output /private/path/v19.2.0-release-assets
 python3 -m unittest tests.test_distribution_builder tests.test_release_assets tests.test_publish_release tests.test_publish_state
 ```
 
-The allowlist in `references/distribution-files.json` is authoritative. Runtime additions must be declared there; tests, evals, CI, generators, and repository-maintenance documentation must not leak into the plugin payload. The builder rejects symlinks, special files, and multiply linked files and emits a complete SHA-256 manifest with its physical profile ceiling. Governed distributions carry the generated capsule index as a reference-only model projection; generic shared-root host projections additionally replace slash commands with eight router facades. Host catalogs and sidecars bind every facade and target to exact hashes, while standalone installs continue to route directly to one complete skill. To meet the Governed hard budget, the builder deterministically replaces the expanded `references/skill-contracts/` tree with `references/skill-contracts.pack.json.gz`; the resolver accepts that derived pack only after bounded decompression and exact record/aggregate hash checks. Keep expanded generated trees in source control for review and CI, and never hand-edit a pack, capsule, facade, or compact root index. Bare `--plugin` is a deprecated Governed-ceiling alias through v20; contributor and release commands must name `--profile`. The release-asset builder privately exports one exact Git commit, builds Lite/Pro/Governed independently, emits canonical fixed-root tarballs plus `SHA256SUMS` and `release-assets.json`, safely unpacks them, and verifies each profile/provenance-bound manifest against a fresh build of that same commit. Run it twice into new directories and require all five outputs to be byte-identical before release. Every live release publisher/projector accepts only a clean commit reachable from successfully refreshed `origin/main`; per-skill and built-package publishers package a private Git export of that pinned commit and verify repository/commit-bound manifests before upload. Dry-runs do not apply the live clean-tree gate. Standalone one-folder auditor bundles stay compact and fail closed; regenerate them with `python3 scripts/generate-auditor-runtime.py --write` after changing any bound source. Auto-routing cases are maintained only in `evals/auto-routing-scenarios.source.md`; regenerate the runtime index/eight shards with `python3 scripts/generate-auto-routing-shards.py --write` and never hand-edit the generated views. Auditor prompt contracts are maintenance/evaluation artifacts derived from the system/framework catalogs and bound sources; regenerate them with `python3 scripts/generate-auditor-prompt-contracts.py --write` and never hand-edit `references/prompt-contracts/`.
+Build and validate the Portable Lite projection directly when changing Skills,
+their reachable static references, or the projection contract:
+
+```bash
+python3 scripts/build-distribution.py \
+  --agent-plugin --profile portable-lite \
+  --output /private/path/aaron-agent-plugin
+python3 scripts/validate-agent-plugin.py \
+  /private/path/aaron-agent-plugin
+python3 scripts/build-distribution.py \
+  --verify-manifest /private/path/aaron-agent-plugin \
+  --profile portable-lite
+```
+
+Add `--source-repository owner/repo` and `--source-commit
+<40-or-64-hex-object-id>` to the manifest-verification command when exact
+provenance must match. The repository root is the authoring SSOT, not an Agent
+Plugins v1 install root. Generate into an untracked directory outside the repo;
+never add or commit a root `skills/` mirror. See
+[`docs/agent-plugins-v1.md`](docs/agent-plugins-v1.md).
+
+The allowlist in `references/distribution-files.json` is authoritative. Runtime additions must be declared there; tests, evals, CI, generators, and repository-maintenance documentation must not leak into the plugin payload. The builder rejects symlinks, special files, and multiply linked files and emits a complete SHA-256 manifest with its physical profile ceiling. Governed distributions carry the generated capsule index as a reference-only model projection; generic shared-root host projections additionally replace slash commands with eight router facades. Host catalogs and sidecars bind every facade and target to exact hashes, while standalone installs continue to route directly to one complete skill. To meet the Governed hard budget, the builder deterministically replaces the expanded `references/skill-contracts/` tree with `references/skill-contracts.pack.json.gz`; the resolver accepts that derived pack only after bounded decompression and exact record/aggregate hash checks. Keep expanded generated trees in source control for review and CI, and never hand-edit a pack, capsule, facade, compact root index, or portable projection. Bare `--plugin` is a deprecated Governed-ceiling alias through v20; contributor and release commands must name `--profile`. The release-asset builder privately exports one exact Git commit, builds Lite/Pro/Governed plus Agent Plugins v1 Portable Lite independently, emits four canonical fixed-root tarballs plus `SHA256SUMS` and `release-assets.json`, safely unpacks them, and verifies each profile/projection/provenance-bound manifest against a fresh build of that same commit. Run it twice into new directories and require all six outputs to be byte-identical before release. Every live release publisher/projector accepts only a clean commit reachable from successfully refreshed `origin/main`; per-skill and built-package publishers package a private Git export of that pinned commit and verify repository/commit-bound manifests before upload. Dry-runs do not apply the live clean-tree gate. Standalone one-folder auditor bundles stay compact and fail closed; regenerate them with `python3 scripts/generate-auditor-runtime.py --write` after changing any bound source. Auto-routing cases are maintained only in `evals/auto-routing-scenarios.source.md`; regenerate the runtime index/eight shards with `python3 scripts/generate-auto-routing-shards.py --write` and never hand-edit the generated views. Auditor prompt contracts are maintenance/evaluation artifacts derived from the system/framework catalogs and bound sources; regenerate them with `python3 scripts/generate-auditor-prompt-contracts.py --write` and never hand-edit `references/prompt-contracts/`.
 - **check-evals** — strict case parsing plus structural lint over all 700 authored/generated semantic fixtures and their real-evidence bindings (phase directories and command selectors derive from the system catalog).
 - **check-context-budget** — the progressive-disclosure budget as a hard gate: compact root-policy and combined-agent byte ceilings, SKILL.md line caps, capsule-plus-kernel and auditor activation-chain byte budgets, recursive per-reference byte budgets, the largest valid command + index + three-shard `/auto` assembly, and the HOT template's runtime 80-line/25 KB limit.
 - **check-routing** — description-routing health as a hard gate: quoted trigger phrases are uniquely owned across all 120 skills, every description carries a `Not for X — use Y` boundary clause, and bare-name handoffs in Next Best Skill blocks resolve to real skills.
@@ -147,7 +171,7 @@ issue a private `engineering-validation-v19` receipt with
 python3 scripts/issue-engineering-release-receipt.py \
   --semantic-evidence-run-id "<fresh-current-source-run-uuid>" \
   --evidence-root "/private/project-root" \
-  --release-candidate "19.1.0-rc.N" \
+  --release-candidate "19.2.0-rc.N" \
   --owner-authorization "release-v19-without-real-project-outcomes" \
   --maturity-report-output "/private/path/v19-engineering-maturity-report.json" \
   --output "/private/path/v19-engineering-release-receipt.json"
@@ -165,7 +189,7 @@ export AARON_RELEASE_MATURITY_REPORT="/private/path/v19-engineering-maturity-rep
 export AARON_RELEASE_EVIDENCE_ROOT="/absolute/private/project-root"
 python3 scripts/verify-release-receipt.py "$AARON_RELEASE_RECEIPT" \
   --source-commit "$(git rev-parse --verify 'HEAD^{commit}')" \
-  --release-version 19.1.0 \
+  --release-version 19.2.0 \
   --required-gate engineering-validation-v19 \
   --maturity-report "$AARON_RELEASE_MATURITY_REPORT" \
   --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT"
@@ -176,7 +200,7 @@ the receipt, the exact report bytes, and the original semantic event chain with
 the current verifier. Receipt issuance and `create-github-release.py --live`
 always enforce the strict 24-hour freshness gate for the receipt and semantic
 evidence.
-After the immutable final tag, non-draft Release, exact five assets, and owner
+After the immutable final tag, non-draft Release, exact six assets, and owner
 workflow have all been verified, publisher entrypoints may internally use the
 explicit post-release-continuation verifier mode: it relaxes only the current
 wall-clock check, still proves issuance-time freshness and every
@@ -201,7 +225,7 @@ projects (four per discipline), with two distinct blind reviewers. Keep all
 evidence outside Git and run
 `python3 scripts/verify-profile-outcomes.py /private/path/evidence.json
 --stage governed-promotion --source-commit "$RELEASE_COMMIT"
---release-candidate 19.1.0-rc.N
+--release-candidate 19.2.0-rc.N
 --evidence-manifest /private/path/manifest.json --receipt
 /private/path/promotion-receipt.json --json`. The verifier refuses simulated,
 duplicated, or identity-mismatched evidence and checks the attested private

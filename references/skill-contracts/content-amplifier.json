@@ -11,7 +11,7 @@
           "end_char": 122,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 209,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 124
         },
@@ -41,7 +41,7 @@
           "end_char": 287,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 211
         },
@@ -56,7 +56,7 @@
           "end_char": 371,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 290
         },
@@ -71,7 +71,7 @@
           "end_char": 461,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 373
         },
@@ -86,7 +86,7 @@
           "end_char": 524,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 463
         },
@@ -98,7 +98,7 @@
     "source": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7"
+      "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb"
     }
   },
   "context_hints": {
@@ -107,7 +107,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 64
       },
       {
@@ -212,7 +212,7 @@
           "end_char": 12,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -228,7 +228,7 @@
           "end_char": 152,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 13
         },
@@ -246,7 +246,7 @@
           "end_char": 328,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 153
         },
@@ -264,7 +264,7 @@
           "end_char": 345,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 330
         },
@@ -280,7 +280,7 @@
           "end_char": 505,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 346
         },
@@ -298,7 +298,7 @@
           "end_char": 612,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 506
         },
@@ -316,7 +316,7 @@
           "end_char": 735,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 613
         },
@@ -334,7 +334,7 @@
           "end_char": 1035,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 737
         },
@@ -347,7 +347,7 @@
     "summary_ref": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7"
+      "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -364,8 +364,8 @@
     "name": "content-amplifier",
     "path": "influencer/activate/content-amplifier/SKILL.md",
     "phase": "activate",
-    "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
-    "version": "19.1.0"
+    "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "[--mode paid|repurpose] <campaign or content set> [budget] [platforms/channels]",
@@ -379,7 +379,7 @@
           "end_char": 242,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -394,7 +394,7 @@
           "end_char": 481,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 245
         },
@@ -409,7 +409,7 @@
           "end_char": 581,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 484
         },
@@ -421,7 +421,7 @@
     "source": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7"
+      "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb"
     }
   },
   "output_contract": {
@@ -436,7 +436,7 @@
           "end_char": 101,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -452,7 +452,7 @@
           "end_char": 292,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7",
+          "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb",
           "span_basis": "field-text",
           "start_char": 103
         },
@@ -463,7 +463,7 @@
     "source": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7"
+      "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb"
     },
     "summary": "the mode's deliverable (paid: selection scorecard, strategy, targeting, budget, optimization playbook; repurpose: inventory, repurposing map, distribution plan, format specs, rights tracker) plus a reusable handoff summary. Save to `memory/influencer/content-amplifier/YYYY-MM-DD-<topic>.md`.",
     "summary_source": "writes-fallback",
@@ -478,8 +478,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -488,7 +488,7 @@
     "source": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "frontmatter",
-      "sha256": "87a4d647c8b2ee93e83aaf5a4acc1669a0f7785eaa419d26ae95f9052a64d2c7"
+      "sha256": "2a7aa3df71dd61114fafe3b36365d2fdac122c565fae5f20d8ff303353e0b4cb"
     },
     "trigger_phrases": [
       "amplify influencer content with paid media",

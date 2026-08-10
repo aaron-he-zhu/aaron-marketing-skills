@@ -11,7 +11,7 @@
           "end_char": 209,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
+          "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 438,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
+          "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
           "span_basis": "field-text",
           "start_char": 212
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9"
+      "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3"
     }
   },
   "context_hints": {
@@ -47,14 +47,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "bf4a8f7cb85c41f7e77d2d47688fa4c476d25b0939d8c9c4ee090062d2205e55",
+        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
         "source_line": 50
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "3dc4d9e1deb1cca80cd85a28c3cacf1409a1ca21f26454242b28614be6ec246e",
+        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
         "source_line": 50
       },
       {
@@ -122,7 +122,7 @@
           "end_char": 167,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
+          "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -140,7 +140,7 @@
           "end_char": 320,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
+          "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
           "span_basis": "field-text",
           "start_char": 168
         },
@@ -158,7 +158,7 @@
           "end_char": 630,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
+          "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
           "span_basis": "field-text",
           "start_char": 322
         },
@@ -171,7 +171,7 @@
     "summary_ref": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9"
+      "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -185,8 +185,8 @@
     "name": "offsite-signal-analyzer",
     "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
     "phase": "evaluate",
-    "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
-    "version": "19.1.0"
+    "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
+    "version": "19.2.0"
   },
   "input_contract": {
     "argument_hint": "<domain or URL> [--mode backlinks|ai-referrals] [date range]",
@@ -200,7 +200,7 @@
           "end_char": 133,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
+          "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -215,7 +215,7 @@
           "end_char": 313,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
+          "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
           "span_basis": "field-text",
           "start_char": 136
         },
@@ -227,7 +227,7 @@
     "source": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9"
+      "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3"
     }
   },
   "output_contract": {
@@ -242,7 +242,7 @@
           "end_char": 95,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9",
+          "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -253,7 +253,7 @@
     "source": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9"
+      "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3"
     },
     "summary": "for `backlinks`, a backlink report (profile overview, quality/anchors/toxicity, competitive gap, change tracking) or delta summary; for `ai-referrals`, an AI-referral channel definition plus trend, top landing pages, and AI-vs-organic conversion. Both plus the standard handoff summary ready for `memory/monitoring/`.",
     "summary_source": "expected-output",
@@ -268,8 +268,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "8748360f7daa21d44e067a5de526e1cfb77bc873babe837130d978050c3d8906",
-      "version": "19.1.0"
+      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
+      "version": "19.2.0"
     }
   },
   "routing_contract": {
@@ -278,7 +278,7 @@
     "source": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "73785546f254da440336eac98eecfef946e603cec67fa69d8a042d8675b51ab9"
+      "sha256": "1dc7839ff7d3daeb21ed4d42c29f267799f772ae4c00865032713c95b1f714c3"
     },
     "trigger_phrases": [
       "analyze backlinks",

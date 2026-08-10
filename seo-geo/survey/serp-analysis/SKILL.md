@@ -4,14 +4,14 @@ slug: serp-analysis
 displayName: "SERP Analysis · SERP分析"
 summary: "SERP分析/搜索结果"
 description: 'Use when the user asks to "analyze the SERP" or "SERP分析"; maps SERP features, layout, ranking factors, search intent, AI Overviews, and snippet opportunities for a query. Not for keyword demand discovery — use keyword-research. SERP分析/搜索结果'
-version: "19.1.0"
+version: "19.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when analyzing search engine results pages, SERP features, featured snippets, People Also Ask, or understanding ranking patterns for a query."
 argument-hint: "<keyword or query>"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "19.1.0", "discipline": "seo-geo", "phase": "survey", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "survey"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "seo-geo", "phase": "survey", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "survey"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # SERP Analysis
