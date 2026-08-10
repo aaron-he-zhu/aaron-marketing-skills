@@ -42,8 +42,10 @@ For Agent Plugins submissions, use the separate Portable Lite install line and
 capability boundary above. The repository root is not its standard install
 root, and the portable archive must not be described as carrying the eight
 commands, connector/runtime behavior, or automatic MCP registration. Client
-install/UI smokes remain candidate-release acceptance until their evidence is
-recorded in [agent-compatibility.md](agent-compatibility.md).
+install/UI smokes remain a non-blocking client-verification backlog until their
+evidence is recorded in [agent-compatibility.md](agent-compatibility.md); a
+`Pending` row blocks a client-verified claim, not release of the schema- and
+repository-validator-conformant archive.
 
 **Awesome-list entry line (EN, generic)**
 ```markdown
