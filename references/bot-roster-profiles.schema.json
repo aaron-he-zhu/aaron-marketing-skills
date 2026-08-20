@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/bot-roster-profiles.schema.json",
+  "title": "Aaron bot-roster deployment profiles",
+  "description": "Roster-projection-only host profiles for named-bot deployments (Hermes Bot Mode, Grok Bot). These profiles describe the generated deployment surfaces produced by scripts/generate-bot-projections.py. They are deliberately kept out of references/host-capability-profiles.json: they never enter prompt/context assembly, runtime profile resolution, or distribution builds, and no capability listed here creates write or external-action authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "kind",
+    "context_assembly",
+    "generator",
+    "expected_bots",
+    "expected_skills",
+    "profile_order",
+    "profiles"
+  ],
+  "properties": {
+    "$schema": {"const": "./bot-roster-profiles.schema.json"},
+    "schema_version": {"const": "1.0"},
+    "kind": {"const": "bot-roster-profiles"},
+    "context_assembly": {"const": "excluded"},
+    "generator": {"const": "scripts/generate-bot-projections.py"},
+    "expected_bots": {"const": 8},
+    "expected_skills": {"const": 120},
+    "profile_order": {
+      "const": [
+        "hermes-bot-host",
+        "grok-bot-host"
+      ]
+    },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hermes-bot-host",
+        "grok-bot-host"
+      ],
+      "properties": {
+        "hermes-bot-host": {"$ref": "#/$defs/profile"},
+        "grok-bot-host": {"$ref": "#/$defs/profile"}
+      }
+    }
+  },
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "display_name",
+        "capabilities",
+        "compatible_distributions",
+        "routing_surface",
+        "reference_surface",
+        "connector_surface",
+        "mcp_policy",
+        "persistence",
+        "audit_scoring",
+        "install_surface"
+      ],
+      "properties": {
+        "display_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64,
+            "pattern": "^[a-z][a-z0-9-]*$"
+          }
+        },
+        "compatible_distributions": {
+          "const": [
+            "bot-roster"
+          ]
+        },
+        "routing_surface": {"const": "named-bot-roster"},
+        "reference_surface": {
+          "enum": [
+            "packaged-static-closure",
+            "instruction-inline-only"
+          ]
+        },
+        "connector_surface": {"const": "none"},
+        "mcp_policy": {"const": "absent"},
+        "persistence": {"const": "propose-only"},
+        "audit_scoring": {"const": "not-scored-without-runtime"},
+        "install_surface": {
+          "enum": [
+            "hermes-profile-distribution",
+            "grok-plugins-or-written-instructions"
+          ]
+        }
+      }
+    }
+  }
+}

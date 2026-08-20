@@ -85,13 +85,14 @@ OpenClaw also installs without ClawHub: `npx skills add aaron-he-zhu/aaron-marke
 
 ## Hermes Agent install routes
 
-Hermes pulls from multiple hubs; three routes work for this bundle, in order of preference:
+Hermes pulls from multiple hubs; four routes work for this bundle, in order of preference:
 
 1. **skills.sh source** (works today, full skill folders): `hermes skills install skills-sh/aaron-he-zhu/aaron-marketing-skills/<skill-name>` — e.g. `…/keyword-research`; browse with `hermes skills search seo --source skills-sh`.
 2. **ClawHub source** (after the owner publishes, see above): `hermes skills search marketing --source clawhub`.
 3. **Pinned direct URL** (single file, no `references/` bundled — prefer routes 1–2): `hermes skills install https://raw.githubusercontent.com/aaron-he-zhu/aaron-marketing-skills/<release-tag>/<discipline>/<phase>/<skill>/SKILL.md`. Pin a release tag; do not use a mutable branch for an execution contract.
+4. **Local bulk via `skills.external_dirs`** (all 120, no hub): unpack the Portable Lite release archive anywhere local and point `skills.external_dirs` in the Hermes config at its `skills/` directory — Hermes discovers the 120 flat `skills/<name>/` folders with their bundled reference closure. External dirs sit at the lowest skill-precedence tier, so project and profile skills shadow them cleanly.
 
-**Tap caveat**: `hermes skills tap add` assumes one `skills/` root per repo (one `path` override in `~/.hermes/.hub/taps.json`), which this multi-discipline layout deliberately doesn't have — use the skills.sh source instead; it resolves the same folders. Installed skills surface as slash commands (`/keyword-research …`) and are security-scanned at `community` trust on install. Every skill's `metadata.hermes` carries `tags`/`category` so `hermes skills browse` filters cleanly.
+**Tap caveat**: `hermes skills tap add` takes a GitHub repository source and assumes one `skills/` root per repo (one `path` override in `~/.hermes/.hub/taps.json`) — it accepts neither local paths nor this multi-discipline layout. Use the skills.sh source (same folders) or route 4 for local bulk installs; a downstream mirror repository with a flat `skills/` root would enable `tap add`, but that mirror is an optional owner-published artifact and is never committed here. Installed skills surface as slash commands (`/keyword-research …`) and are security-scanned at `community` trust on install. Every skill's `metadata.hermes` carries `tags`/`category` so `hermes skills browse` filters cleanly.
 
 ## SkillHub.cn (中文 Skills 社区)
 
@@ -127,7 +128,9 @@ Paths below are each host's **native** skill directories (docs verified 2026-07;
 | **OpenCode** ✦ | `.opencode/skills/`, `.claude/skills/` | `~/.config/opencode/skills/`, `~/.claude/skills/`, `~/.agents/skills/` | Unknown frontmatter ignored; per-skill permissions in `opencode.json`. |
 | **Cursor** ✦ | `.cursor/skills/` | `~/.cursor/skills/`, `~/.agents/skills/` | Rules/commands converge on skills (`/migrate-to-skills`). |
 | **OpenClaw** ✦ | `<ws>/skills/`, `<ws>/.agents/skills/` | `~/.agents/skills/`, `~/.openclaw/skills/` | Parser reads single-line keys only — every skill's `metadata` is therefore a single-line JSON object (fully parsed, incl. `metadata.openclaw` emoji/homepage). Registry: [ClawHub](#clawhub-openclaws-registry). |
-| **Hermes Agent** | — (config `skills.external_dirs`) | `~/.hermes/skills/` | Three install routes — [see below](#hermes-agent-install-routes). `metadata.hermes` carries tags/category for `hermes skills browse`. Skills double as slash commands (`/keyword-research`). Recommends ≤60-char descriptions; ours are longer by design (trigger-phrase routing) and load fine. |
+| **Hermes Agent** | — (config `skills.external_dirs`) | `~/.hermes/skills/` | Four install routes — [see below](#hermes-agent-install-routes). `metadata.hermes` carries tags/category for `hermes skills browse`. Skills double as slash commands (`/keyword-research`). Recommends ≤60-char descriptions; ours are longer by design (trigger-phrase routing) and load fine. Named-bot deployment (one profile per bot): [see below](#named-bot-roster-deployment-grok-bot--hermes-bot-mode). |
+| **Grok Build** ✦ (docs 2026-08) | `.grok/skills/` | `~/.grok/skills/`, `~/.agents/skills/` | xAI's coding agent. Reads `SKILL.md` natively; unknown frontmatter keys are ignored, so the extended metadata is inert. The global `npx skills add … -g` route serves it via `~/.agents/skills/`. |
+| **Grok Bot** (docs 2026-08) | — (no filesystem install surface) | — | xAI's managed named bots on a shared cloud computer. Skills arrive per bot via Settings → Plugins or by saving written instructions in chat — [see below](#named-bot-roster-deployment-grok-bot--hermes-bot-mode). Not a `npx skills` target. |
 | **Gemini CLI** ✦ | `.gemini/skills/` | `~/.gemini/skills/`, `~/.agents/skills/` | `.agents/` outranks `.gemini/` at the same tier; `/skills list\|enable\|disable`. |
 | **GitHub Copilot CLI** ✦ | `.github/skills/`, `.claude/skills/` | `~/.copilot/skills/`, `~/.agents/skills/` | Same skills work in Copilot cloud agent + code review; `gh skill` adds provenance frontmatter. |
 | **Amp** ✦ | `.claude/skills/` | `~/.agents/skills/`, `~/.claude/skills/`, `~/.config/amp/skills/` | — |
@@ -136,6 +139,77 @@ Paths below are each host's **native** skill directories (docs verified 2026-07;
 | **Cline** | `.cline/skills/`, `.clinerules/skills/`, `.claude/skills/` | `~/.cline/skills/` | Docs don't list `.agents/skills/` — use `-a cline` so the installer places the agent dir. |
 | **Roo Code** ✦ | `.roo/skills/` | `~/.roo/skills/`, `~/.agents/skills/` | Per-mode variants (`skills-<mode>/`); `.roo/` outranks `.agents/`. |
 | **50+ more** ✦ | see [installer table](https://github.com/vercel-labs/skills#supported-agents) | | Cline-likes, Warp, Zed, Kilo, Kiro, Trae, Qoder, OpenHands, Droid, Junie, … |
+
+## Named-bot roster deployment (Grok Bot / Hermes Bot Mode)
+
+Hosts with **named, persistent bots** (xAI's Grok Bot; Hermes Agent's Bot
+Mode, where a bot is an isolated profile) deploy this bundle as an
+**8-bot roster** instead of one flat skill pile: seven discipline specialists
+(`aaron-narrative`, `aaron-seo-geo`, `aaron-social`, `aaron-email`,
+`aaron-ad`, `aaron-influencer`, `aaron-launch`) plus `aaron-chief-of-staff`,
+which routes cross-discipline goals and owns the 8 protocol skills. Together
+the bots cover the 120 canonical skills exactly once; the roster derives
+entirely from [`references/system-catalog.json`](../references/system-catalog.json) —
+there is no second hand-maintained inventory.
+
+```bash
+python3 scripts/generate-bot-projections.py --output /private/path/aaron-bot-roster
+```
+
+The generator writes, into a private directory **outside the repository**
+(outputs are release/deployment artifacts and are never committed):
+
+- `hermes/<bot>/` — one installable [Hermes profile distribution](https://hermes-agent.nousresearch.com/docs/user-guide/profile-distributions)
+  per bot: `distribution.yaml`, a generated `SOUL.md` (persona, phase-grouped
+  skill index, handoff protocol, inlined non-reducible red lines),
+  `skills/<name>/` folders projected with the same link-rewriting and
+  static-reference closure as Portable Lite, the bundled
+  `references/policy-kernel.md`, and a hash-bound `distribution-manifest.json`.
+  Publish a bundle as a git repository and `hermes profile install <url> --alias`.
+- `grok/` — `bot-cards.md` (name/title/description per bot; the description
+  doubles as Grok's cross-bot routing signal), `enable-lists.md` (exact
+  per-bot skill enablement), and `setup-checklist.md`. Grok Bot has no bulk
+  import: bots are created manually from the cards, and skills install via
+  Settings → Plugins or the officially supported fallback of saving a skill
+  from written instructions pasted in chat.
+
+Deployment boundaries, in both hosts:
+
+- Links to a skill owned by another bot are redirected to the bundle's
+  `PORTABILITY.md` boundary; cross-bot work is handed off **by name**
+  (`@aaron-chief-of-staff` first) with a visited set and at most three
+  automatic handoffs.
+- Bundles are Tier-1 and static: no connectors, `mcp.json`, cron, hooks, or
+  deterministic runtimes. Auditors return `NOT_SCORED` instead of
+  hand-calculating verdicts; registry and durable-memory work is
+  propose-only, with canonical acceptance remaining an owner-run step.
+- Grok Bot specifics: bots on one account share **one persistent cloud
+  computer** — files, browser sessions, and logins are visible to every bot,
+  so bot names are not security boundaries. Grok Bot runs on macOS, Windows,
+  and iOS at launch (no Linux desktop, Android, or iPad).
+- The matching typed host profiles (`hermes-bot-host`, `grok-bot-host`) live
+  in the dedicated **roster-projection-only** catalog
+  [`references/bot-roster-profiles.json`](../references/bot-roster-profiles.json)
+  (schema-locked to `routing_surface: named-bot-roster`,
+  `compatible_distributions: ["bot-roster"]`, `context_assembly: excluded`).
+  They are deliberately kept out of
+  [`references/host-capability-profiles.json`](../references/host-capability-profiles.json),
+  so the certified context/prompt assembly chain and its hash-pinned host
+  catalog stay untouched; each generated bundle manifest binds the selected
+  profile definition by SHA-256.
+
+### Named-bot / Grok smoke backlog (owner-run)
+
+Same contract as the Agent Plugins backlog above: a `Pending` row blocks only
+the *verified* claim, never the generated artifact, and only the owner flips a
+row after recording the evidence.
+
+| Surface | Status | Required evidence before marking verified |
+|---|---|---|
+| Grok Build (filesystem skills) | Pending | Client version + OS; skills placed in `.grok/skills/` or `~/.agents/skills/`; discovery confirmed; one skill invoked; unknown frontmatter keys ignored without error. |
+| Grok Bot (managed bots) | Pending | App version + platform; one bot created from `bot-cards.md`; one skill saved from written instructions; per-bot enable list applied; a send/publish dry-run stopped at the approval boundary. |
+| Hermes Bot Mode (profile distributions) | Pending | `hermes --version` + OS; one generated bundle installed via `hermes profile install`; bundle SHA-256 recorded; bundled skill count discovered (16, or 8 for chief-of-staff); one skill invoked as a slash command; no MCP server registered. |
+| Hermes `skills.external_dirs` (local bulk) | Pending | `hermes --version` + OS; unpacked Portable Lite SHA-256; 120/120 discovery from the external dir; one skill invoked; profile-over-external shadowing observed as documented. |
 
 ## Frontmatter portability
 
