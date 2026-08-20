@@ -3,7 +3,7 @@
 This repository ships a **four-layer marketing operating system**: 112 discipline skills, 8 protocol skills, and 8 command entrypoints. This file is a compact navigation and safety map, not a second handbook. The authoritative topology is [`references/system-catalog.json`](references/system-catalog.json); its generated human view is [`docs/system-architecture.md`](docs/system-architecture.md).
 
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-Current bundle version: `19.2.0` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)).
+Current bundle version: `20.0.0` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)).
 <!-- GENERATED:END release-surface:current-bundle -->
 
 ## Start Here

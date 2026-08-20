@@ -11,7 +11,7 @@
           "end_char": 247,
           "path": "launch/assemble/launch-asset-packager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
+          "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "launch/assemble/launch-asset-packager/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0"
+      "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c"
     }
   },
   "context_hints": {
@@ -39,7 +39,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 43
       },
       {
@@ -104,7 +104,7 @@
           "end_char": 168,
           "path": "launch/assemble/launch-asset-packager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
+          "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -122,7 +122,7 @@
           "end_char": 358,
           "path": "launch/assemble/launch-asset-packager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
+          "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
           "span_basis": "field-text",
           "start_char": 169
         },
@@ -140,7 +140,7 @@
           "end_char": 542,
           "path": "launch/assemble/launch-asset-packager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
+          "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
           "span_basis": "field-text",
           "start_char": 359
         },
@@ -158,7 +158,7 @@
           "end_char": 873,
           "path": "launch/assemble/launch-asset-packager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
+          "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
           "span_basis": "field-text",
           "start_char": 544
         },
@@ -171,7 +171,7 @@
     "summary_ref": {
       "path": "launch/assemble/launch-asset-packager/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0"
+      "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -186,8 +186,8 @@
     "name": "launch-asset-packager",
     "path": "launch/assemble/launch-asset-packager/SKILL.md",
     "phase": "assemble",
-    "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
-    "version": "19.2.0"
+    "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<product + launch tier> [channels] [target stores: ios/android/both] [existing assets]",
@@ -201,7 +201,7 @@
           "end_char": 217,
           "path": "launch/assemble/launch-asset-packager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
+          "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -213,7 +213,7 @@
     "source": {
       "path": "launch/assemble/launch-asset-packager/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0"
+      "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c"
     }
   },
   "output_contract": {
@@ -228,7 +228,7 @@
           "end_char": 76,
           "path": "launch/assemble/launch-asset-packager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
+          "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -244,7 +244,7 @@
           "end_char": 205,
           "path": "launch/assemble/launch-asset-packager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0",
+          "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c",
           "span_basis": "field-text",
           "start_char": 78
         },
@@ -255,7 +255,7 @@
     "source": {
       "path": "launch/assemble/launch-asset-packager/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0"
+      "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c"
     },
     "summary": "a tier-scoped asset manifest (artifact · owner · spec source · status), a press kit section spec, demo script + screenshot specs, a launch FAQ outline, dual-store listing drafts with Measured character counts against the official budgets, a technical go-live checklist (manifest only), and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -270,8 +270,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -280,7 +280,7 @@
     "source": {
       "path": "launch/assemble/launch-asset-packager/SKILL.md",
       "section": "frontmatter",
-      "sha256": "b62e5e6e1e9dd9eb28162e838d3ff02a590f4aa383c541958c5b17615b6ee5f0"
+      "sha256": "21939f4b7e43d6437c34969f1f8dc6a4eba7febd5e4440a385ef6c5ddfb4f91c"
     },
     "trigger_phrases": [
       "build a press kit",

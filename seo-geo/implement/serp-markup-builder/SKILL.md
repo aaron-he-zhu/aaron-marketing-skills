@@ -4,14 +4,14 @@ slug: serp-markup-builder
 displayName: "SERP Markup Builder · 标题优化"
 summary: "标题优化/元描述/Schema标记/结构化数据"
 description: 'Use when the user asks to "optimize meta tags", "write title tags / meta descriptions", "add Open Graph or Twitter cards", or "generate schema / JSON-LD" for FAQ, HowTo, Article, Product, or LocalBusiness rich-result candidates. Produces title/description options, an OG+Twitter block, and validated JSON-LD for the document head. Not for body copy — use content-writer; not for crawl/index technical issues — use technical-seo-checker. 标题优化/元描述/Schema标记/结构化数据'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when building anything in the document head for a page — title tags, meta descriptions, Open Graph and Twitter Card tags, canonical/robots meta, and JSON-LD Schema.org structured data for rich-result and answer-engine eligibility."
 argument-hint: "[meta|schema] <page URL or content>"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "seo-geo", "phase": "implement", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "implement"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "implement", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "implement"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # SERP Markup Builder

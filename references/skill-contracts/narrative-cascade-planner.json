@@ -11,7 +11,7 @@
           "end_char": 135,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 239,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 137
         },
@@ -41,7 +41,7 @@
           "end_char": 377,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 241
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/land/narrative-cascade-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5"
+      "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 42
       },
       {
@@ -127,7 +127,7 @@
           "end_char": 175,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -145,7 +145,7 @@
           "end_char": 417,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 176
         },
@@ -163,7 +163,7 @@
           "end_char": 616,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 418
         },
@@ -181,7 +181,7 @@
           "end_char": 978,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 618
         },
@@ -194,7 +194,7 @@
     "summary_ref": {
       "path": "narrative/land/narrative-cascade-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5"
+      "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -209,8 +209,8 @@
     "name": "narrative-cascade-planner",
     "path": "narrative/land/narrative-cascade-planner/SKILL.md",
     "phase": "land",
-    "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
-    "version": "19.2.0"
+    "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<product / brand> [surfaces to cover] [target creative builders] [canon path]",
@@ -224,7 +224,7 @@
           "end_char": 184,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +239,7 @@
           "end_char": 365,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 186
         },
@@ -254,7 +254,7 @@
           "end_char": 437,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 367
         },
@@ -269,7 +269,7 @@
           "end_char": 527,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 439
         },
@@ -284,7 +284,7 @@
           "end_char": 577,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 529
         },
@@ -296,7 +296,7 @@
     "source": {
       "path": "narrative/land/narrative-cascade-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5"
+      "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02"
     }
   },
   "output_contract": {
@@ -311,7 +311,7 @@
           "end_char": 99,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -327,7 +327,7 @@
           "end_char": 342,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 101
         },
@@ -343,7 +343,7 @@
           "end_char": 587,
           "path": "narrative/land/narrative-cascade-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5",
+          "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02",
           "span_basis": "field-text",
           "start_char": 344
         },
@@ -354,7 +354,7 @@
     "source": {
       "path": "narrative/land/narrative-cascade-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5"
+      "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02"
     },
     "summary": "a cascade plan — a per-surface message-match spec for each flagship surface (which pillar, lead claim + its ledger status, proof module, and objection reframe it must carry, plus any localization note), a drift list naming surfaces that currently contradict the canon, and one handoff brief per target creative builder (canon pointer, the surface's spec, the pillar and proof to lead with — angles and constraints, not finished copy) — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -369,8 +369,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -379,7 +379,7 @@
     "source": {
       "path": "narrative/land/narrative-cascade-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "66efe8d59b7a2b7eea3f6c4dd3d9c14d4a63c7e33d1d0f756e981e6e50a0d7c5"
+      "sha256": "c7be812c8af11929ff458b0c90056b527cf13c31d6d1137057ab0c0d1e985e02"
     },
     "trigger_phrases": [
       "brief each creative builder from the canon",

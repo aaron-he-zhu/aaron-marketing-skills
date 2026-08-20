@@ -45,7 +45,7 @@ ADOPTION = ("adopt", "minor", "major", "reject")
 SUCCESS = {"adopt", "minor"}
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
-RC_RE = re.compile(r"^(?P<version>19\.(?:0|1|2)\.0)-rc\.[1-9][0-9]*$")
+RC_RE = re.compile(r"^(?P<version>(?:19\.(?:0|1|2)|20\.0)\.0)-rc\.[1-9][0-9]*$")
 EVIDENCE_MAX_BYTES = 10 * 1024 * 1024
 PRIVATE_MANIFEST_MAX_BYTES = 10 * 1024 * 1024
 TOP_KEYS = {
@@ -219,8 +219,8 @@ def load_evidence_with_bytes(path: Path) -> tuple[dict, bytes]:
         root["release_candidate"]
     ):
         raise OutcomeError(
-            "release_candidate must be a supported v19.0.0, v19.1.0, or "
-            "v19.2.0 RC identity"
+            "release_candidate must be a supported v19.0.0, v19.1.0, "
+            "v19.2.0, or v20.0.0 RC identity"
         )
     _hash(root["source_commit"], "source_commit", sha1=True)
     model = _object(root["model_identity"], MODEL_KEYS, "model_identity")
@@ -326,7 +326,7 @@ def verify_expected_identity(
         if not RC_RE.fullmatch(release_candidate):
             raise OutcomeError(
                 "expected release_candidate must be a supported v19.0.0, "
-                "v19.1.0, or v19.2.0 RC identity"
+                "v19.1.0, v19.2.0, or v20.0.0 RC identity"
             )
         if evidence["release_candidate"] != release_candidate:
             raise OutcomeError(
@@ -933,7 +933,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         required=True,
         help=(
             "Require the evidence to bind an exact supported "
-            "19.0.0-rc.N, 19.1.0-rc.N, or 19.2.0-rc.N identity."
+            "19.0.0-rc.N, 19.1.0-rc.N, 19.2.0-rc.N, or 20.0.0-rc.N identity."
         ),
     )
     parser.add_argument(

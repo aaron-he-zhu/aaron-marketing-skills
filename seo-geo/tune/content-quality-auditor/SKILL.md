@@ -4,7 +4,7 @@ slug: content-quality-auditor
 displayName: "Content Quality Auditor · 内容质量"
 summary: "内容质量/EEAT评分"
 description: 'Use when auditing content quality, E-E-A-T, or publish readiness; runs a typed 80-item CORE-EEAT profile with evidence coverage, veto checks, and a fix plan. Not for structural tags/headers alone — use on-page-seo-checker; not for domain/citation trust — use domain-authority-auditor. 内容质量/EEAT评分'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -12,7 +12,7 @@ when_to_use: "Use when auditing content quality before publishing. Runs a typed 
 argument-hint: "<URL or paste content> [content type] [market]"
 allowed-tools: WebFetch
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Content Quality Auditor

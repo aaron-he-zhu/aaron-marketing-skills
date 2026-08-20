@@ -11,7 +11,7 @@
           "end_char": 149,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 269,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 151
         },
@@ -41,7 +41,7 @@
           "end_char": 322,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 271
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e"
+      "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 51
       },
       {
@@ -137,7 +137,7 @@
           "end_char": 165,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -153,7 +153,7 @@
           "end_char": 393,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 167
         },
@@ -169,7 +169,7 @@
           "end_char": 552,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 394
         },
@@ -187,7 +187,7 @@
           "end_char": 803,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 553
         },
@@ -202,7 +202,7 @@
     "summary_ref": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e"
+      "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -216,8 +216,8 @@
     "name": "site-structure-optimizer",
     "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
     "phase": "tune",
-    "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
-    "version": "19.2.0"
+    "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "[--mode architecture|linking] <domain, sitemap, or page list + site type>",
@@ -231,7 +231,7 @@
           "end_char": 166,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -243,7 +243,7 @@
     "source": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e"
+      "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5"
     }
   },
   "output_contract": {
@@ -258,7 +258,7 @@
           "end_char": 126,
           "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e",
+          "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -269,7 +269,7 @@
     "source": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e"
+      "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5"
     },
     "summary": "(mode-dependent): architecture mode → a page hierarchy (ASCII tree), a URL map table, a navigation spec, a hub/spoke link plan, a Mermaid site map flagging orphans/islands, an **architecture score /100**. Linking mode → a scored diagnosis, orphan list with disposition, anchor distribution check, and a prioritized source/target/anchor plan (**structure score /100**). Both emit a short handoff summary ready for `memory/seo-geo/tune/site-structure-optimizer/`.",
     "summary_source": "expected-output",
@@ -284,8 +284,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -294,7 +294,7 @@
     "source": {
       "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "0f0d8a0f94ede3e91941bc3e78274c27dd7b148e658b8c9a90770f5ca12c196e"
+      "sha256": "d2520e2331014837ddc919debf2f2bc4ee23deefa0ea63ee12acbd9852655da5"
     },
     "trigger_phrases": [
       "design the page hierarchy / navigation / URL taxonomy",

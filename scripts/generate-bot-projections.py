@@ -40,7 +40,7 @@ import agent_plugin_builder as apb
 
 ROOT = apb.ROOT
 BOT_PREFIX = "aaron-"
-CHIEF_KEY = "chief-of-staff"
+CHIEF_KEY = "chief"
 CHIEF_BOT = BOT_PREFIX + CHIEF_KEY
 SCHEMA_VERSION = "1.0"
 ROSTER_KIND = "bot-roster"

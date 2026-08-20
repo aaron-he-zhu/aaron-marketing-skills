@@ -4,13 +4,13 @@ slug: aaron-crisis-response-planner
 displayName: "Crisis Response Planner · 危机响应预案"
 summary: "社媒危机分级阶梯/暂停发布队列/预批声明库/发言人矩阵/复盘模板"
 description: 'Use when the user asks to "build our social crisis protocol", "mentions are exploding — what do we do first", or "when do we pause the posting queue"; produces a 1-5 severity ladder with tunable Estimated trigger thresholds (mention-velocity multiples vs the 7-day listening baseline, sentiment flip, journalist/regulator contact, employee-conduct class), the first-mechanical-action rule — pause ALL scheduled posts AND paid amplification, with dated state markers dropped to the channels proposal protocol and reconciled post-incident — a pre-approved holding-statement library with committed update cadences, when-NOT-to-post rules, a spokesperson/approval matrix, and a post-crisis retro template; re-runs the social-quality-auditor pre-publish gate before un-pausing the queue. Not for email deliverability incidents (blocklist, spam-rate spikes) — use deliverability-qa; inside a launch window launch-day-conductor owns incident handling. 社媒危机预案/暂停队列/声明库/发言人矩阵'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when drafting or activating the social crisis protocol: setting the 1-5 severity ladder and its trigger thresholds against the pulse-monitor 7-day baseline, executing the queue-pause rule (all scheduled posts and paid amplification), preparing holding statements with committed update cadences, writing when-NOT-to-post rules, naming the spokesperson/approval matrix, or running the stand-down — pause-marker reconciliation, gate re-run, post-crisis retro. Stands down to launch-day-conductor inside launch windows; deliverability incidents go to deliverability-qa."
 argument-hint: "<channel set / incident description> [severity if known] ['draft the protocol' | 'stand down']"
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Crisis Response Planner

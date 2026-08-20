@@ -11,7 +11,7 @@
           "end_char": 159,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 313,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 161
         },
@@ -41,7 +41,7 @@
           "end_char": 408,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 315
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "protocol/creator-registry/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449"
+      "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 66
       },
       {
@@ -132,7 +132,7 @@
           "end_char": 80,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -150,7 +150,7 @@
           "end_char": 170,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 81
         },
@@ -168,7 +168,7 @@
           "end_char": 263,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 171
         },
@@ -186,7 +186,7 @@
           "end_char": 335,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 264
         },
@@ -201,7 +201,7 @@
     "summary_ref": {
       "path": "protocol/creator-registry/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449"
+      "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -217,8 +217,8 @@
     "name": "creator-registry",
     "path": "protocol/creator-registry/SKILL.md",
     "phase": "protocol",
-    "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
-    "version": "19.2.0"
+    "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<creator aggregate-id/handle or 'review pending proposals'>",
@@ -232,7 +232,7 @@
           "end_char": 104,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -244,7 +244,7 @@
     "source": {
       "path": "protocol/creator-registry/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449"
+      "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d"
     }
   },
   "output_contract": {
@@ -259,7 +259,7 @@
           "end_char": 57,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -275,7 +275,7 @@
           "end_char": 159,
           "path": "protocol/creator-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449",
+          "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d",
           "span_basis": "field-text",
           "start_char": 59
         },
@@ -286,7 +286,7 @@
     "source": {
       "path": "protocol/creator-registry/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449"
+      "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d"
     },
     "summary": "canonical creator events via `scripts/registry-events.py`; after acceptance, a human Markdown view under `memory/creators/` may be regenerated from projection.",
     "summary_source": "writes-fallback",
@@ -301,8 +301,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -311,7 +311,7 @@
     "source": {
       "path": "protocol/creator-registry/SKILL.md",
       "section": "frontmatter",
-      "sha256": "a980483d220a64535d1c86f05c6be1b0b5e822d5332dede7e4ff04fd1b1b6449"
+      "sha256": "678faf3fe192400901c4af8d4e0065050840ad8d2a4d4f392ab23d9471d72f0d"
     },
     "trigger_phrases": [
       "update the creator roster",

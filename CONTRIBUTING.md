@@ -99,8 +99,8 @@ python3 scripts/build-release-assets.py \
   --source-repo /path/to/aaron-marketing-skills \
   --source-repository aaron-he-zhu/aaron-marketing-skills \
   --source-commit <exact-40-hex-release-commit> \
-  --version 19.2.0 \
-  --output /private/path/v19.2.0-release-assets
+  --version 20.0.0 \
+  --output /private/path/v20.0.0-release-assets
 python3 -m unittest tests.test_distribution_builder tests.test_release_assets tests.test_publish_release tests.test_publish_state
 ```
 
@@ -171,7 +171,7 @@ issue a private `engineering-validation-v19` receipt with
 python3 scripts/issue-engineering-release-receipt.py \
   --semantic-evidence-run-id "<fresh-current-source-run-uuid>" \
   --evidence-root "/private/project-root" \
-  --release-candidate "19.2.0-rc.N" \
+  --release-candidate "20.0.0-rc.N" \
   --owner-authorization "release-v19-without-real-project-outcomes" \
   --maturity-report-output "/private/path/v19-engineering-maturity-report.json" \
   --output "/private/path/v19-engineering-release-receipt.json"
@@ -189,7 +189,7 @@ export AARON_RELEASE_MATURITY_REPORT="/private/path/v19-engineering-maturity-rep
 export AARON_RELEASE_EVIDENCE_ROOT="/absolute/private/project-root"
 python3 scripts/verify-release-receipt.py "$AARON_RELEASE_RECEIPT" \
   --source-commit "$(git rev-parse --verify 'HEAD^{commit}')" \
-  --release-version 19.2.0 \
+  --release-version 20.0.0 \
   --required-gate engineering-validation-v19 \
   --maturity-report "$AARON_RELEASE_MATURITY_REPORT" \
   --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT"
@@ -225,7 +225,7 @@ projects (four per discipline), with two distinct blind reviewers. Keep all
 evidence outside Git and run
 `python3 scripts/verify-profile-outcomes.py /private/path/evidence.json
 --stage governed-promotion --source-commit "$RELEASE_COMMIT"
---release-candidate 19.2.0-rc.N
+--release-candidate 20.0.0-rc.N
 --evidence-manifest /private/path/manifest.json --receipt
 /private/path/promotion-receipt.json --json`. The verifier refuses simulated,
 duplicated, or identity-mismatched evidence and checks the attested private

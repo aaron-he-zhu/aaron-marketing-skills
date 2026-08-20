@@ -11,7 +11,7 @@
           "end_char": 50,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
+          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 113,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
+          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
           "span_basis": "field-text",
           "start_char": 52
         },
@@ -41,7 +41,7 @@
           "end_char": 287,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
+          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
           "span_basis": "field-text",
           "start_char": 115
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9"
+      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 65
       },
       {
@@ -109,7 +109,7 @@
           "end_char": 445,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
+          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -130,7 +130,7 @@
           "end_char": 649,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
+          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
           "span_basis": "field-text",
           "start_char": 447
         },
@@ -146,7 +146,7 @@
           "end_char": 693,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
+          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
           "span_basis": "field-text",
           "start_char": 651
         },
@@ -159,7 +159,7 @@
     "summary_ref": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9"
+      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -175,8 +175,8 @@
     "name": "send-experiment-designer",
     "path": "email/deliver/send-experiment-designer/SKILL.md",
     "phase": "deliver",
-    "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
-    "version": "19.2.0"
+    "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<what to test / results export> [mode: a-b|multivariate|send-time|hold-out] [profile: promotional|retention|cold-outbound|newsletter] [baseline] [alpha/power/MDE]",
@@ -190,7 +190,7 @@
           "end_char": 268,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
+          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -202,7 +202,7 @@
     "source": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9"
+      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
     }
   },
   "output_contract": {
@@ -217,7 +217,7 @@
           "end_char": 71,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9",
+          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -228,7 +228,7 @@
     "source": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9"
+      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
     },
     "summary": "a user-facing test-design or read-out doc plus a `### Handoff Summary`.",
     "summary_source": "writes-fallback",
@@ -243,8 +243,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -253,7 +253,7 @@
     "source": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "fed883bd7ff3c8163655ef8e5ee5d724e7a00fea0676767f3ef7629df42bb7d9"
+      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
     },
     "trigger_phrases": [
       "build a hold-out group",

@@ -11,7 +11,7 @@
           "end_char": 96,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 189,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 98
         },
@@ -41,7 +41,7 @@
           "end_char": 303,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 191
         },
@@ -56,7 +56,7 @@
           "end_char": 447,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 305
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "email/nurture/preference-frequency-manager/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf"
+      "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed"
     }
   },
   "context_hints": {
@@ -84,7 +84,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 40
       },
       {
@@ -117,7 +117,7 @@
           "end_char": 234,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -135,7 +135,7 @@
           "end_char": 437,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 235
         },
@@ -153,7 +153,7 @@
           "end_char": 509,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 439
         },
@@ -169,7 +169,7 @@
           "end_char": 731,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 510
         },
@@ -187,7 +187,7 @@
           "end_char": 1286,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 733
         },
@@ -200,7 +200,7 @@
     "summary_ref": {
       "path": "email/nurture/preference-frequency-manager/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf"
+      "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -215,8 +215,8 @@
     "name": "preference-frequency-manager",
     "path": "email/nurture/preference-frequency-manager/SKILL.md",
     "phase": "nurture",
-    "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
-    "version": "19.2.0"
+    "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<preference-center or opt-down goal> [platform/ESP] [topic set] [audience/segment]",
@@ -230,7 +230,7 @@
           "end_char": 599,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -242,7 +242,7 @@
     "source": {
       "path": "email/nurture/preference-frequency-manager/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf"
+      "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed"
     }
   },
   "output_contract": {
@@ -257,7 +257,7 @@
           "end_char": 197,
           "path": "email/nurture/preference-frequency-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf",
+          "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -268,7 +268,7 @@
     "source": {
       "path": "email/nurture/preference-frequency-manager/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf"
+      "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed"
     },
     "summary": "a preference-center field spec (topic groups, cadence tiers, channel toggles, save/confirm behavior), a frequency/topic opt-down ladder (the down-tier steps offered on the unsubscribe path and their order), a preference-choice → suppression/frequency mapping (what each selection tells the ESP and consent-registry to honor), a SEND **N** sub-item note on preference-center / frequency options offered, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -283,8 +283,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -293,7 +293,7 @@
     "source": {
       "path": "email/nurture/preference-frequency-manager/SKILL.md",
       "section": "frontmatter",
-      "sha256": "574712c374219d925be43d7b103896cb301a869a2bd8764c91a1c14b4961c9bf"
+      "sha256": "43f377714c9731e066cf6ea65248dcfeec95b18c4920f74eccf70fe538958aed"
     },
     "trigger_phrases": [
       "build a preference center",

@@ -37,14 +37,15 @@ VERSION_ROW_RE = re.compile(
 )
 
 CURRENT_SUMMARY = (
-    "**Agent Plugins v1 Portable Lite delivery.** The same 120 canonical skills, "
-    "seven mandatory 4×4 discipline loops, eight commands, framework IDs, routes, "
-    "and state paths remain intact. A deterministic release-only projection now "
-    "emits a strict Agent Plugins 1.0.0 directory with flat Agent Skills, "
-    "string-valued metadata, rewritten contained links, an explicit Portable Lite "
-    "capability ceiling, and no automatic MCP registration. Existing Claude, "
-    "npx skills, SkillHub, ClawHub, OpenClaw, and Hermes surfaces remain separate "
-    "compatibility channels generated from the same canonical source."
+    "**AI Staff positioning.** The same 120 canonical skills, seven mandatory "
+    "4×4 discipline loops, eight commands, framework IDs, routes, and state "
+    "paths remain intact. The bundle now presents as an installable AI "
+    "marketing staff: the named-bot roster (Grok Bot, Hermes Bot Mode) becomes "
+    "a first-class install surface alongside the plugin and portable skills, "
+    "the README leads vendor-neutral, and the chief bot handle shortens to "
+    "`aaron-chief`. Existing Claude, npx skills, SkillHub, ClawHub, OpenClaw, "
+    "and Hermes surfaces remain separate compatibility channels generated from "
+    "the same canonical source."
 )
 CHANGELOG_BODY = """\
 ### v{version} — Agent Plugins v1 Portable Lite ({date})

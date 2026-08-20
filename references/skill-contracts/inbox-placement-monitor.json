@@ -11,7 +11,7 @@
           "end_char": 106,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 188,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 108
         },
@@ -41,7 +41,7 @@
           "end_char": 274,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 190
         },
@@ -56,7 +56,7 @@
           "end_char": 341,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 276
         },
@@ -71,7 +71,7 @@
           "end_char": 471,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 343
         },
@@ -83,7 +83,7 @@
     "source": {
       "path": "email/deliver/inbox-placement-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e"
+      "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b"
     }
   },
   "context_hints": {
@@ -99,7 +99,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 42
       },
       {
@@ -146,7 +146,7 @@
           "end_char": 228,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -164,7 +164,7 @@
           "end_char": 443,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 229
         },
@@ -182,7 +182,7 @@
           "end_char": 639,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 444
         },
@@ -200,7 +200,7 @@
           "end_char": 1064,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 641
         },
@@ -216,7 +216,7 @@
           "end_char": 1166,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 1066
         },
@@ -229,7 +229,7 @@
     "summary_ref": {
       "path": "email/deliver/inbox-placement-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e"
+      "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -244,8 +244,8 @@
     "name": "inbox-placement-monitor",
     "path": "email/deliver/inbox-placement-monitor/SKILL.md",
     "phase": "deliver",
-    "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
-    "version": "19.2.0"
+    "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<sending domain / program> [seed-list placement test + Postmaster/SNDS export] [prior send baseline] [goal: promo|retention|cold]",
@@ -259,7 +259,7 @@
           "end_char": 80,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -274,7 +274,7 @@
           "end_char": 83,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 82
         },
@@ -286,7 +286,7 @@
     "source": {
       "path": "email/deliver/inbox-placement-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e"
+      "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b"
     }
   },
   "output_contract": {
@@ -301,7 +301,7 @@
           "end_char": 137,
           "path": "email/deliver/inbox-placement-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e",
+          "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -312,7 +312,7 @@
     "source": {
       "path": "email/deliver/inbox-placement-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e"
+      "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b"
     },
     "summary": "a per-provider placement read (inbox / spam / promotions %, per Gmail, Outlook/Microsoft, Yahoo, Apple) from the seed-list test; a domain/IP reputation trend from Gmail Postmaster Tools and Microsoft SNDS (high/medium/low/bad, complaint-rate curve, IP status); a send-over-send delta naming each regression with its number; the SEND-`S` placement sub-item read (inbox-placement ≥ threshold, spam-complaint < 0.1%) with the typed profile named; and the standard handoff summary. Every metric is labeled Measured / User-provided / Estimated — never invent a placement number; if a provider's export is missing, mark that provider **NEEDS_INPUT**.",
     "summary_source": "expected-output",
@@ -327,8 +327,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -337,7 +337,7 @@
     "source": {
       "path": "email/deliver/inbox-placement-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "6fde430f359e05c031e22628ffe3c670dff02a303f2c86266756e74e5729941e"
+      "sha256": "f95935743643f9603d6e24989b0904c961a8f37a2b76e8f445d2ab5efa28cc1b"
     },
     "trigger_phrases": [
       "did placement drop after my last send",

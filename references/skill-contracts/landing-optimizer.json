@@ -11,7 +11,7 @@
           "end_char": 64,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 174,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 67
         },
@@ -41,7 +41,7 @@
           "end_char": 258,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 177
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "influencer/report/landing-optimizer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705"
+      "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec"
     }
   },
   "context_hints": {
@@ -109,7 +109,7 @@
           "end_char": 154,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -127,7 +127,7 @@
           "end_char": 192,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 156
         },
@@ -143,7 +143,7 @@
           "end_char": 329,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 194
         },
@@ -161,7 +161,7 @@
           "end_char": 474,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 330
         },
@@ -179,7 +179,7 @@
           "end_char": 691,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 476
         },
@@ -192,7 +192,7 @@
     "summary_ref": {
       "path": "influencer/report/landing-optimizer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705"
+      "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -207,8 +207,8 @@
     "name": "landing-optimizer",
     "path": "influencer/report/landing-optimizer/SKILL.md",
     "phase": "report",
-    "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
-    "version": "19.2.0"
+    "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<landing page URL or campaign> [influencer handle] [promo code]",
@@ -222,7 +222,7 @@
           "end_char": 247,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -234,7 +234,7 @@
     "source": {
       "path": "influencer/report/landing-optimizer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705"
+      "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec"
     }
   },
   "output_contract": {
@@ -249,7 +249,7 @@
           "end_char": 192,
           "path": "influencer/report/landing-optimizer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705",
+          "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -260,7 +260,7 @@
     "source": {
       "path": "influencer/report/landing-optimizer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705"
+      "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec"
     },
     "summary": "optimization plan saved to `memory/influencer/landing-optimizer/YYYY-MM-DD-<topic>.md` (message-match audit, structure and social-proof recommendations, conversion/CTA plan, A/B test roadmap).",
     "summary_source": "writes-fallback",
@@ -275,8 +275,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -285,7 +285,7 @@
     "source": {
       "path": "influencer/report/landing-optimizer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "3525aa8682144c7004cb4d45dd0469e443ef75f08f2542fbeb8d290e96bf2705"
+      "sha256": "d599c7bc4d5af666fa9854fb2b30604303bc7c84c48db1050d522459894238ec"
     },
     "trigger_phrases": [
       "fix our promo-code landing page",

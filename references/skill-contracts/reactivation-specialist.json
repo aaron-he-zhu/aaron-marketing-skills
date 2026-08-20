@@ -11,7 +11,7 @@
           "end_char": 54,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 129,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 56
         },
@@ -41,7 +41,7 @@
           "end_char": 179,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 131
         },
@@ -56,7 +56,7 @@
           "end_char": 256,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 181
         },
@@ -71,7 +71,7 @@
           "end_char": 395,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 258
         },
@@ -86,7 +86,7 @@
           "end_char": 549,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 397
         },
@@ -98,7 +98,7 @@
     "source": {
       "path": "email/nurture/reactivation-specialist/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084"
+      "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c"
     }
   },
   "context_hints": {
@@ -114,7 +114,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 40
       },
       {
@@ -147,7 +147,7 @@
           "end_char": 189,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -165,7 +165,7 @@
           "end_char": 407,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 190
         },
@@ -183,7 +183,7 @@
           "end_char": 610,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 408
         },
@@ -201,7 +201,7 @@
           "end_char": 718,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 612
         },
@@ -217,7 +217,7 @@
           "end_char": 965,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 719
         },
@@ -235,7 +235,7 @@
           "end_char": 1520,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 967
         },
@@ -248,7 +248,7 @@
     "summary_ref": {
       "path": "email/nurture/reactivation-specialist/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084"
+      "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -264,8 +264,8 @@
     "name": "reactivation-specialist",
     "path": "email/nurture/reactivation-specialist/SKILL.md",
     "phase": "nurture",
-    "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
-    "version": "19.2.0"
+    "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<lapsed cohort or no-engagement window> [platform/ESP] [offer/incentive available] [suppression policy]",
@@ -279,7 +279,7 @@
           "end_char": 309,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -291,7 +291,7 @@
     "source": {
       "path": "email/nurture/reactivation-specialist/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084"
+      "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c"
     }
   },
   "output_contract": {
@@ -306,7 +306,7 @@
           "end_char": 179,
           "path": "email/nurture/reactivation-specialist/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084",
+          "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -317,7 +317,7 @@
     "source": {
       "path": "email/nurture/reactivation-specialist/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084"
+      "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c"
     },
     "summary": "a lapsed-cohort definition (the no-engagement window + how the cohort is pulled), a staged offer ladder (each step's trigger, timing, message intent, and escalation/stop rule), a re-consent / re-permission capture step (what re-affirms opt-in and how it is recorded), a sunset-confirm / suppression rule (the terminal branch that either re-permissions or suppresses each subject), a handoff of the sunset-confirm and re-consent facts to the SEND **N** sub-item owners (engagement-decay / sunset → [email-sequence-designer](../email-sequence-designer/SKILL.md); preference-center / frequency options → [preference-frequency-manager](../preference-frequency-manager/SKILL.md)) rather than an own sub-item score, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -332,8 +332,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -342,7 +342,7 @@
     "source": {
       "path": "email/nurture/reactivation-specialist/SKILL.md",
       "section": "frontmatter",
-      "sha256": "e1a6675cfbb616809ba544f10aa479d6acdec21a270c91d46b3e7a90fc0df084"
+      "sha256": "19e9758da1674e08f58186cb162b92609557148ebafe671fc7e528fff73c715c"
     },
     "trigger_phrases": [
       "build a win-back campaign",

@@ -15,19 +15,19 @@ ROOT = Path(__file__).resolve().parents[1]
 RELEASER = ROOT / "scripts" / "create-github-release.py"
 COMMIT = "a" * 40
 OTHER_COMMIT = "d" * 40
-VERSION = "19.2.0"
+VERSION = "20.0.0"
 TAG = "v" + VERSION
 ASSET_NAMES = (
-    "aaron-marketing-skills-19.2.0-lite.tar.gz",
-    "aaron-marketing-skills-19.2.0-pro.tar.gz",
-    "aaron-marketing-skills-19.2.0-governed.tar.gz",
-    "aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz",
+    "aaron-marketing-skills-20.0.0-lite.tar.gz",
+    "aaron-marketing-skills-20.0.0-pro.tar.gz",
+    "aaron-marketing-skills-20.0.0-governed.tar.gz",
+    "aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz",
     "SHA256SUMS",
     "release-assets.json",
 )
 NOTES = (
-    "### v19.2.0 — Agent Plugins v1 Portable Lite (2026-08-09)\n\n"
-    "Portable Lite adds a strict generated Agent Plugins release asset.\n"
+    "### v20.0.0 — AI Staff positioning (2026-08-20)\n\n"
+    "AI Staff makes the named-bot roster a first-class install surface.\n"
 )
 
 
@@ -71,18 +71,18 @@ elif args[:2] == ["merge-base", "--is-ancestor"]:
 elif args[:2] == ["ls-remote", "--tags"]:
     target = state.get("remote_tag")
     if target:
-        print("%s\trefs/tags/v19.2.0" % ("b" * 40))
-        print("%s\trefs/tags/v19.2.0^{}" % target)
-elif args == ["rev-parse", "-q", "--verify", "refs/tags/v19.2.0"]:
+        print("%s\trefs/tags/v20.0.0" % ("b" * 40))
+        print("%s\trefs/tags/v20.0.0^{}" % target)
+elif args == ["rev-parse", "-q", "--verify", "refs/tags/v20.0.0"]:
     target = state.get("local_tag")
     if not target:
         raise SystemExit(1)
     print("c" * 40)
-elif args == ["cat-file", "-t", "refs/tags/v19.2.0"]:
+elif args == ["cat-file", "-t", "refs/tags/v20.0.0"]:
     if not state.get("local_tag"):
         raise SystemExit(1)
     print("tag")
-elif args == ["rev-parse", "--verify", "refs/tags/v19.2.0^{commit}"]:
+elif args == ["rev-parse", "--verify", "refs/tags/v20.0.0^{commit}"]:
     target = state.get("local_tag")
     if not target:
         raise SystemExit(1)
@@ -135,19 +135,19 @@ if args[:3] == ["api", "--method", "GET"] and "release-validation.yml/runs" in a
     print(json.dumps({"workflow_runs": runs}))
 elif args[:3] == ["api", "--paginate", "--slurp"]:
     print(json.dumps([state.get("releases", [])]))
-elif args[:3] == ["release", "create", "v19.2.0"]:
+elif args[:3] == ["release", "create", "v20.0.0"]:
     notes_index = args.index("--notes-file")
     if args[notes_index + 1] != "-":
         raise SystemExit(93)
     title_index = args.index("--title")
-    if args[title_index + 1] != "v19.2.0" or "--verify-tag" not in args:
+    if args[title_index + 1] != "v20.0.0" or "--verify-tag" not in args:
         raise SystemExit(94)
     paths = [Path(value) for value in args[notes_index + 2:]]
     if {path.name for path in paths} != {
-        "aaron-marketing-skills-19.2.0-lite.tar.gz",
-        "aaron-marketing-skills-19.2.0-pro.tar.gz",
-        "aaron-marketing-skills-19.2.0-governed.tar.gz",
-        "aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz",
+        "aaron-marketing-skills-20.0.0-lite.tar.gz",
+        "aaron-marketing-skills-20.0.0-pro.tar.gz",
+        "aaron-marketing-skills-20.0.0-governed.tar.gz",
+        "aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz",
         "SHA256SUMS",
         "release-assets.json",
     }:
@@ -156,8 +156,8 @@ elif args[:3] == ["release", "create", "v19.2.0"]:
     for path in paths:
         shutil.copy2(path, remote_assets / path.name)
     release = {
-        "tag_name": "v19.2.0",
-        "name": "v19.2.0",
+        "tag_name": "v20.0.0",
+        "name": "v20.0.0",
         "draft": False,
         "prerelease": False,
         "body": sys.stdin.read(),
@@ -168,7 +168,7 @@ elif args[:3] == ["release", "create", "v19.2.0"]:
     state["releases"] = [release]
     save()
     mutate("release")
-elif args[:3] == ["release", "download", "v19.2.0"]:
+elif args[:3] == ["release", "download", "v20.0.0"]:
     destination = Path(args[args.index("--dir") + 1])
     for source in remote_assets.iterdir():
         shutil.copy2(source, destination / source.name)
@@ -197,7 +197,7 @@ if os.environ.get("FAKE_STALE_RECEIPT") == "1":
     print("engineering receipt is older than 24 hours", file=sys.stderr)
     raise SystemExit(3)
 if (
-    version != "19.2.0"
+    version != "20.0.0"
     or required_gate != "engineering-validation-v19"
     or not receipt.is_file()
     or not maturity_report.is_absolute()
@@ -206,7 +206,7 @@ if (
     or not evidence_root.is_dir()
 ):
     raise SystemExit(1)
-print("%s\t19.2.0-rc.1\t%s" % (hashlib.sha256(receipt.read_bytes()).hexdigest(), commit))
+print("%s\t20.0.0-rc.1\t%s" % (hashlib.sha256(receipt.read_bytes()).hexdigest(), commit))
 """
 
 
@@ -216,10 +216,10 @@ import sys
 
 directory = Path(sys.argv[sys.argv.index("--verify") + 1])
 expected = {
-    "aaron-marketing-skills-19.2.0-lite.tar.gz",
-    "aaron-marketing-skills-19.2.0-pro.tar.gz",
-    "aaron-marketing-skills-19.2.0-governed.tar.gz",
-    "aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz",
+    "aaron-marketing-skills-20.0.0-lite.tar.gz",
+    "aaron-marketing-skills-20.0.0-pro.tar.gz",
+    "aaron-marketing-skills-20.0.0-governed.tar.gz",
+    "aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz",
     "SHA256SUMS",
     "release-assets.json",
 }
@@ -257,7 +257,7 @@ class CreateGitHubReleaseTests(unittest.TestCase):
         )
         (self.repository / "VERSIONS.md").write_text(
             "# Versions\n\n"
-            "**Current release**: `19.2.0` (2026-08-09). Current.\n\n"
+            "**Current release**: `20.0.0` (2026-08-09). Current.\n\n"
             "## Changelog\n\n"
             + NOTES
             + "\n### v18.0.0 — Previous (2026-07-12)\n\nOld.\n",

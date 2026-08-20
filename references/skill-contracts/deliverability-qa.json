@@ -11,7 +11,7 @@
           "end_char": 112,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 181,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 114
         },
@@ -41,7 +41,7 @@
           "end_char": 219,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 183
         },
@@ -56,7 +56,7 @@
           "end_char": 359,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 221
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "email/setup/deliverability-qa/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7"
+      "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca"
     }
   },
   "context_hints": {
@@ -84,7 +84,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 44
       },
       {
@@ -131,7 +131,7 @@
           "end_char": 202,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -149,7 +149,7 @@
           "end_char": 425,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 203
         },
@@ -167,7 +167,7 @@
           "end_char": 603,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 426
         },
@@ -185,7 +185,7 @@
           "end_char": 822,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 604
         },
@@ -203,7 +203,7 @@
           "end_char": 885,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 824
         },
@@ -219,7 +219,7 @@
           "end_char": 1148,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 887
         },
@@ -235,7 +235,7 @@
           "end_char": 1273,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 1150
         },
@@ -248,7 +248,7 @@
     "summary_ref": {
       "path": "email/setup/deliverability-qa/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7"
+      "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -264,8 +264,8 @@
     "name": "deliverability-qa",
     "path": "email/setup/deliverability-qa/SKILL.md",
     "phase": "setup",
-    "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
-    "version": "19.2.0"
+    "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<sending domain / program> [ESP + goal] [DMARC RUA report + inbox-placement test]",
@@ -279,7 +279,7 @@
           "end_char": 80,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -294,7 +294,7 @@
           "end_char": 83,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 82
         },
@@ -306,7 +306,7 @@
     "source": {
       "path": "email/setup/deliverability-qa/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7"
+      "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca"
     }
   },
   "output_contract": {
@@ -321,7 +321,7 @@
           "end_char": 102,
           "path": "email/setup/deliverability-qa/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7",
+          "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -332,7 +332,7 @@
     "source": {
       "path": "email/setup/deliverability-qa/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7"
+      "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca"
     },
     "summary": "a deliverability pre-flight (Pass/Partial/Fail/Unknown/N/A per qualified item), an `S1` authentication evidence flag (pass / partial / veto-candidate / unknown), a spam-content/link/render scan, a list-hygiene read, the typed profile, and either a complete-coverage SEND **S** score or `NEEDS_INPUT/UNDECIDED/NOT_SCORED` with exact gaps, plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -347,8 +347,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -357,7 +357,7 @@
     "source": {
       "path": "email/setup/deliverability-qa/SKILL.md",
       "section": "frontmatter",
-      "sha256": "591e68a0029dfa59f9449b64d67366ba09e6e85106dfceaceec81279c09ee2e7"
+      "sha256": "d5a2d29db8b3114ef633e40cd0dcc58c32448f0db5961e39479b3bd64a88a6ca"
     },
     "trigger_phrases": [
       "check my SPF/DKIM/DMARC/BIMI",

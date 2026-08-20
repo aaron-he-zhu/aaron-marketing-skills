@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.2.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.0.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -97,7 +97,7 @@ Use com o Claude Code, qualquer host compatível com Agent Skills ou um simples 
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` e depois `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ hosts](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Clientes Agent Plugins v1 · Portable Lite** | Baixe `aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` da [release v19.2.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v19.2.0), extraia-o e instale o diretório de plugin extraído |
+| **Clientes Agent Plugins v1 · Portable Lite** | Baixe `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` da [release v20.0.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0), extraia-o e instale o diretório de plugin extraído |
 | **[SkillHub.cn](https://skillhub.cn) (comunidade chinesa)** | `skillhub install <frontmatter-slug>` (ex.: `keyword-research`) |
 | **Qualquer host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
@@ -683,7 +683,7 @@ A deriva de endpoints ao vivo é amostrada separadamente pelo **manual** [`scrip
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — regras de authoring, o checklist de contribuição e a lista autoritativa das 10 superfícies de tracking.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** — versões por skill + changelog (bundle atual: `19.2.0`).
+- **[VERSIONS.md](../VERSIONS.md)** — versões por skill + changelog (bundle atual: `20.0.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — política de segurança, privacidade e comunidade.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — contexto voltado ao agente para este repo.

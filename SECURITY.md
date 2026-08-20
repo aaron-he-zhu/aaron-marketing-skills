@@ -5,8 +5,8 @@
 <!-- GENERATED:BEGIN release-surface:supported-major -->
 | Version | Supported |
 |---------|-----------|
-| 19.x    | Yes (current line) |
-| < 19    | No        |
+| 20.x    | Yes (current line) |
+| < 20    | No        |
 <!-- GENERATED:END release-surface:supported-major -->
 
 Policy: only the latest minor of the current major line receives fixes; older majors are unsupported — upgrade to the current release.
@@ -51,7 +51,7 @@ security concerns are:
 ### Agent Plugins v1 Portable Lite boundary
 
 The release asset
-`aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` is a generated,
+`aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` is a generated,
 static Skills package. It contains the 120 strict `SKILL.md` projections and
 only their reachable static references. It does **not** contain commands, hooks,
 connector helpers, controllers, scoring/state runtimes, other executable

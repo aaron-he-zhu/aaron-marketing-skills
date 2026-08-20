@@ -11,7 +11,7 @@
           "end_char": 383,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "email/engage/subject-line-lab/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008"
+      "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49"
     }
   },
   "context_hints": {
@@ -39,7 +39,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 44
       },
       {
@@ -93,7 +93,7 @@
           "end_char": 248,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -111,7 +111,7 @@
           "end_char": 491,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 249
         },
@@ -129,7 +129,7 @@
           "end_char": 676,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 492
         },
@@ -147,7 +147,7 @@
           "end_char": 748,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 678
         },
@@ -163,7 +163,7 @@
           "end_char": 1005,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 749
         },
@@ -181,7 +181,7 @@
           "end_char": 1243,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 1006
         },
@@ -199,7 +199,7 @@
           "end_char": 1381,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 1244
         },
@@ -215,7 +215,7 @@
           "end_char": 1570,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 1383
         },
@@ -228,7 +228,7 @@
     "summary_ref": {
       "path": "email/engage/subject-line-lab/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008"
+      "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -245,8 +245,8 @@
     "name": "subject-line-lab",
     "path": "email/engage/subject-line-lab/SKILL.md",
     "phase": "engage",
-    "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
-    "version": "19.2.0"
+    "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<subject candidates or angle> [from-name] [mode: promo|cold|newsletter]",
@@ -260,7 +260,7 @@
           "end_char": 245,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -275,7 +275,7 @@
           "end_char": 466,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 247
         },
@@ -287,7 +287,7 @@
     "source": {
       "path": "email/engage/subject-line-lab/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008"
+      "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49"
     }
   },
   "output_contract": {
@@ -302,7 +302,7 @@
           "end_char": 101,
           "path": "email/engage/subject-line-lab/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008",
+          "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -313,7 +313,7 @@
     "source": {
       "path": "email/engage/subject-line-lab/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008"
+      "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49"
     },
     "summary": "a subject-line + preheader variant set (3-8 variants, each with a stable variant id and an angle label) and a per-variant heuristic pre-score card covering spam-trigger flags, desktop + mobile length/truncation, emoji count, and the rendered inbox preview — plus a ranked shortlist of survivors and the standard handoff summary for `memory/email/subject-line-lab/`.",
     "summary_source": "expected-output",
@@ -328,8 +328,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -338,7 +338,7 @@
     "source": {
       "path": "email/engage/subject-line-lab/SKILL.md",
       "section": "frontmatter",
-      "sha256": "a0a5ca3fb1589d024004166cc52383140f05c966b206fef61add3f10738ca008"
+      "sha256": "441793a7ecd71aae5f64215b5b5de76f7d99e333ce98f798ab5c4229dde74d49"
     },
     "trigger_phrases": [
       "generate subject line variants",

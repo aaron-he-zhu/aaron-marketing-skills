@@ -4,13 +4,13 @@ slug: entity-registry
 displayName: "Entity Registry · 实体注册表"
 summary: "实体注册表/知识图谱"
 description: 'Use when the user asks to "optimize entity presence", reconcile an entity identity, or update canonical Knowledge Graph facts; audits and maintains machine-facing identity, sameAs, schema, disambiguation, and AI-recognition evidence through the entities registry. Not for page-level AI-citation readiness - use geo-content-optimizer; not for human-facing brand canon - use narrative-registry. 实体注册/知识图谱'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when auditing, reconciling, or updating canonical entity identity for Knowledge Graph, Wikidata, schema.org, sameAs, or AI-system disambiguation."
 argument-hint: "<entity aggregate-id/name or 'review entity proposals'>"
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "high", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "high", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Entity Registry

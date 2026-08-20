@@ -503,7 +503,7 @@ class ProfileOutcomeTests(unittest.TestCase):
         )
         self.assertEqual(2, len(schema["oneOf"]))
         self.assertEqual(
-            ["19.0.0", "19.1.0", "19.2.0"],
+            ["19.0.0", "19.1.0", "19.2.0", "20.0.0"],
             schema["properties"]["release_version"]["enum"],
         )
         pilot = schema["$defs"]["release_pilot_summary"]

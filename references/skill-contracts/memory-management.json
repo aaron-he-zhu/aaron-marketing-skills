@@ -11,7 +11,7 @@
           "end_char": 182,
           "path": "protocol/memory-management/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85",
+          "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 270,
           "path": "protocol/memory-management/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85",
+          "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1",
           "span_basis": "field-text",
           "start_char": 184
         },
@@ -41,7 +41,7 @@
           "end_char": 445,
           "path": "protocol/memory-management/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85",
+          "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1",
           "span_basis": "field-text",
           "start_char": 272
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "protocol/memory-management/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85"
+      "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1"
     }
   },
   "context_hints": {
@@ -130,7 +130,7 @@
           "end_char": 278,
           "path": "protocol/memory-management/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85",
+          "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -151,7 +151,7 @@
     "summary_ref": {
       "path": "protocol/memory-management/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85"
+      "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -170,8 +170,8 @@
     "name": "memory-management",
     "path": "protocol/memory-management/SKILL.md",
     "phase": "protocol",
-    "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85",
-    "version": "19.2.0"
+    "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "[init|review|archive|consolidate|purge] [scope]",
@@ -185,7 +185,7 @@
           "end_char": 130,
           "path": "protocol/memory-management/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85",
+          "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -197,7 +197,7 @@
     "source": {
       "path": "protocol/memory-management/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85"
+      "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1"
     }
   },
   "output_contract": {
@@ -212,7 +212,7 @@
           "end_char": 77,
           "path": "protocol/memory-management/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85",
+          "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -228,7 +228,7 @@
           "end_char": 163,
           "path": "protocol/memory-management/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85",
+          "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1",
           "span_basis": "field-text",
           "start_char": 79
         },
@@ -239,7 +239,7 @@
     "source": {
       "path": "protocol/memory-management/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85"
+      "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1"
     },
     "summary": "HOT/WARM/COLD notes, archives, indexes, and authorized tombstone/erase events; it never accepts registry proposals or writes canonical facts on behalf of an owner.",
     "summary_source": "writes-fallback",
@@ -254,8 +254,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -264,7 +264,7 @@
     "source": {
       "path": "protocol/memory-management/SKILL.md",
       "section": "frontmatter",
-      "sha256": "090170f1a2b964499b95dfe78e46a42942ec827abd48c581019cf0aaf49a3a85"
+      "sha256": "7a578665f26282bf53736bbef67e0d0ca1ac1fe7a28e78c3b83969caed0f5ab1"
     },
     "trigger_phrases": [
       "remember project context"

@@ -4,13 +4,13 @@ slug: competitor-analysis
 displayName: "Competitor Analysis · 竞品分析"
 summary: "竞品分析/竞争对手"
 description: 'Use when the user asks to "analyze competitors" or "竞品分析"; benchmarks competitor keywords, content, backlinks, AI citations, and traffic share into strengths, weaknesses, and an action plan. Not for a pairwise topic-coverage gap map — use content-gap-analysis. 竞品分析/竞争对手'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when analyzing competitor SEO strategy, comparing domains, benchmarking against competitors, or finding competitor keywords and content gaps."
 argument-hint: "<competitor URL or domain>"
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "seo-geo", "phase": "survey", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "survey"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "survey", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "survey"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Competitor Analysis

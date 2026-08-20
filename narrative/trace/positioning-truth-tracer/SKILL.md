@@ -4,13 +4,13 @@ slug: aaron-positioning-truth-tracer
 displayName: "Positioning Truth Tracer · 定位真相校准"
 summary: "定位画布对齐可交付现实与主张台账/差异化真相集"
 description: 'Use when the user asks to "check our positioning against what we can actually ship", "trace which differentiators we can defend", or "reconcile the positioning canvas with the claims ledger"; reconciles the reused positioning canvas against the shippable stage and the claims ledger to produce a differentiation truth set — every differentiating claim verifiable or marked ''[needs source]'' — that TALE-T1 is judged against. Not for building the canvas — use positioning-mapper; not for adjudicating claims — use offer-claims-registry; not for authoring the message house — use message-system-architect. 定位真相/差异化校准/可交付现实/主张核对'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use in the TALE Trace phase after a positioning canvas exists, to reconcile it against shippable reality (the launch-registry stage record) and the claims ledger, then produce the differentiation truth set that the T1 veto is judged against. Every differentiating claim is either verifiable now or marked [needs source] and routed to the claims candidates. Not the canvas itself (reuse positioning-mapper) and not claim adjudication (offer-claims-registry)."
 argument-hint: "<product / brand> [positioning canvas path] [stage: draft|alpha|beta|GA]"
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "narrative", "phase": "trace", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "trace"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "narrative", "phase": "trace", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "trace"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Positioning Truth Tracer

@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-19.2.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.0.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -97,7 +97,7 @@
 |------|------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` 然后 `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ 宿主](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Agent Plugins v1 客户端 · Portable Lite** | 从 [v19.2.0 Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v19.2.0)下载 `aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz`，解压后安装其中的插件目录 |
+| **Agent Plugins v1 客户端 · Portable Lite** | 从 [v20.0.0 Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0)下载 `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz`，解压后安装其中的插件目录 |
 | **[SkillHub.cn](https://skillhub.cn)(中文社区)** | `skillhub install <frontmatter-slug>`(如 `keyword-research`) |
 | **任意宿主** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
@@ -683,7 +683,7 @@ docs/            # 本地化 README(zh)
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— 撰写规则、贡献清单，以及权威的 10 个追踪面清单。
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`19.2.0`）。
+- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`20.0.0`）。
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— 安全、隐私、社区政策。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— 面向 Agent 的本仓库上下文。

@@ -23,7 +23,7 @@ provenance, and capability boundary](agent-plugins-v1.md).
 | **Any other agent** (global) | `npx skills add aaron-he-zhu/aaron-marketing-skills -g` | same, user-wide |
 | **Single skill** | `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research` | one skill folder |
 | **Force one agent** | `… -a codex` / `-a cursor` / `-a opencode` … | one host only |
-| **Agent Plugins v1 · Portable Lite** | Download `aaron-marketing-skills-19.2.0-agent-plugin-v1-lite.tar.gz` from the [v19.2.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v19.2.0), unpack it, and select the extracted plugin directory in the client | 120 strict static Skills; no `mcp.json`, commands, hooks, connectors, or repository runtime |
+| **Agent Plugins v1 · Portable Lite** | Download `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` from the [v20.0.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0), unpack it, and select the extracted plugin directory in the client | 120 strict static Skills; no `mcp.json`, commands, hooks, connectors, or repository runtime |
 
 `npx skills` auto-detects which agents are installed and symlinks each skill into the right directories (canonical copy in `.agents/skills/`, per-agent symlinks). Use `--copy` where symlinks are unsupported, `npx skills update` to pull new versions, `npx skills remove` to uninstall.
 
@@ -146,7 +146,7 @@ Hosts with **named, persistent bots** (xAI's Grok Bot; Hermes Agent's Bot
 Mode, where a bot is an isolated profile) deploy this bundle as an
 **8-bot roster** instead of one flat skill pile: seven discipline specialists
 (`aaron-narrative`, `aaron-seo-geo`, `aaron-social`, `aaron-email`,
-`aaron-ad`, `aaron-influencer`, `aaron-launch`) plus `aaron-chief-of-staff`,
+`aaron-ad`, `aaron-influencer`, `aaron-launch`) plus `aaron-chief`,
 which routes cross-discipline goals and owns the 8 protocol skills. Together
 the bots cover the 120 canonical skills exactly once; the roster derives
 entirely from [`references/system-catalog.json`](../references/system-catalog.json) —
@@ -177,7 +177,7 @@ Deployment boundaries, in both hosts:
 
 - Links to a skill owned by another bot are redirected to the bundle's
   `PORTABILITY.md` boundary; cross-bot work is handed off **by name**
-  (`@aaron-chief-of-staff` first) with a visited set and at most three
+  (`@aaron-chief` first) with a visited set and at most three
   automatic handoffs.
 - Bundles are Tier-1 and static: no connectors, `mcp.json`, cron, hooks, or
   deterministic runtimes. Auditors return `NOT_SCORED` instead of
@@ -208,7 +208,7 @@ row after recording the evidence.
 |---|---|---|
 | Grok Build (filesystem skills) | Pending | Client version + OS; skills placed in `.grok/skills/` or `~/.agents/skills/`; discovery confirmed; one skill invoked; unknown frontmatter keys ignored without error. |
 | Grok Bot (managed bots) | Pending | App version + platform; one bot created from `bot-cards.md`; one skill saved from written instructions; per-bot enable list applied; a send/publish dry-run stopped at the approval boundary. |
-| Hermes Bot Mode (profile distributions) | Pending | `hermes --version` + OS; one generated bundle installed via `hermes profile install`; bundle SHA-256 recorded; bundled skill count discovered (16, or 8 for chief-of-staff); one skill invoked as a slash command; no MCP server registered. |
+| Hermes Bot Mode (profile distributions) | Pending | `hermes --version` + OS; one generated bundle installed via `hermes profile install`; bundle SHA-256 recorded; bundled skill count discovered (16, or 8 for `aaron-chief`); one skill invoked as a slash command; no MCP server registered. |
 | Hermes `skills.external_dirs` (local bulk) | Pending | `hermes --version` + OS; unpacked Portable Lite SHA-256; 120/120 discovery from the external dir; one skill invoked; profile-over-external shadowing observed as documented. |
 
 ## Frontmatter portability

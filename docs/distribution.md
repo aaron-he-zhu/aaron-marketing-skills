@@ -129,7 +129,7 @@ python3 scripts/generate-bot-projections.py --output /private/path/aaron-bot-ros
 ```
 
 That command derives the 8-bot roster (7 discipline bots plus
-`aaron-chief-of-staff`, which owns the 8 protocol skills and the routing table)
+`aaron-chief`, which owns the 8 protocol skills and the routing table)
 from `references/system-catalog.json`, covering the 120 skills exactly once. It
 writes 8 self-contained Hermes profile-distribution bundles (`distribution.yaml`,
 generated `SOUL.md`, Portable-Lite-projected `skills/`, static reference

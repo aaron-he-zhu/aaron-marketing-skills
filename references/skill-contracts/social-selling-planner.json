@@ -11,7 +11,7 @@
           "end_char": 74,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 180,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 76
         },
@@ -41,7 +41,7 @@
           "end_char": 258,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 182
         },
@@ -56,7 +56,7 @@
           "end_char": 314,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 260
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "social/host/social-selling-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074"
+      "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6"
     }
   },
   "context_hints": {
@@ -84,7 +84,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 42
       },
       {
@@ -134,7 +134,7 @@
           "end_char": 204,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -152,7 +152,7 @@
           "end_char": 389,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 205
         },
@@ -170,7 +170,7 @@
           "end_char": 564,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 390
         },
@@ -188,7 +188,7 @@
           "end_char": 603,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 566
         },
@@ -204,7 +204,7 @@
           "end_char": 963,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 605
         },
@@ -217,7 +217,7 @@
     "summary_ref": {
       "path": "social/host/social-selling-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074"
+      "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -232,8 +232,8 @@
     "name": "social-selling-planner",
     "path": "social/host/social-selling-planner/SKILL.md",
     "phase": "host",
-    "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
-    "version": "19.2.0"
+    "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<target-account list or fired trigger signal> [platform] [--quarterly-diagnostic]",
@@ -247,7 +247,7 @@
           "end_char": 56,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -262,7 +262,7 @@
           "end_char": 222,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 58
         },
@@ -277,7 +277,7 @@
           "end_char": 385,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 224
         },
@@ -292,7 +292,7 @@
           "end_char": 451,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 387
         },
@@ -307,7 +307,7 @@
           "end_char": 498,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 453
         },
@@ -322,7 +322,7 @@
           "end_char": 545,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 500
         },
@@ -334,7 +334,7 @@
     "source": {
       "path": "social/host/social-selling-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074"
+      "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6"
     }
   },
   "output_contract": {
@@ -349,7 +349,7 @@
           "end_char": 62,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -365,7 +365,7 @@
           "end_char": 283,
           "path": "social/host/social-selling-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074",
+          "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6",
           "span_basis": "field-text",
           "start_char": 64
         },
@@ -376,7 +376,7 @@
     "source": {
       "path": "social/host/social-selling-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074"
+      "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6"
     },
     "summary": "the operating block — a time-boxed daily engagement-block spec with target-account tiers and a comment quality bar, warm-touch-before-ask cadence rules with an explicit ask threshold, trigger-response plays keyed to the watchlist signal types, and a quarterly diagnostic template — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -391,8 +391,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -401,7 +401,7 @@
     "source": {
       "path": "social/host/social-selling-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "091c6964f4a6054b3b857d86901384880686a0106ec996dbb2861bf12f6d1074"
+      "sha256": "d44b89b24ecd0f0638c8c6dff4502bfc58eacd0b2c7845eca12c0efb7231aaa6"
     },
     "trigger_phrases": [
       "build a daily engagement block for target accounts",

@@ -4,13 +4,13 @@ slug: aaron-channel-registry
 displayName: "Channel Registry · 渠道台账"
 summary: "品牌自有社媒渠道/声音档案/UGC授权/节奏承诺唯一真相"
 description: 'Use when the user asks to register/query a social channel, record channel state, cadence, governance, voice adaptation, UGC permission, or advocacy facts; curates them through the append-only channels event stream and derived views. Not for ECHO scoring — use social-quality-auditor; not for channel selection — use channel-portfolio-planner. 渠道台账/账号档案/UGC授权记录'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when recording/querying channel handle/state/governance/cadence/voice pointers, UGC permissions, advocate opt-in, or accepting pending social activity/incident proposals."
 argument-hint: "<channel or permission aggregate-id, transition, or proposal review>"
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "📡", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "📡", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Channel Registry

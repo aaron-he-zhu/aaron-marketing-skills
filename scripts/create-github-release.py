@@ -23,7 +23,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "aaron-he-zhu/aaron-marketing-skills"
-RELEASE_VERSION = "19.2.0"
+RELEASE_VERSION = "20.0.0"
 TAG = "v" + RELEASE_VERSION
 ASSET_NAMES = (
     "aaron-marketing-skills-%s-lite.tar.gz" % RELEASE_VERSION,

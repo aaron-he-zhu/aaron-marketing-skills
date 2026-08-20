@@ -11,7 +11,7 @@
           "end_char": 34,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 80,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 36
         },
@@ -41,7 +41,7 @@
           "end_char": 180,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 82
         },
@@ -56,7 +56,7 @@
           "end_char": 354,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 182
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "ad/orchestrate/ad-test-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b"
+      "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce"
     }
   },
   "context_hints": {
@@ -84,7 +84,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 47
       },
       {
@@ -131,7 +131,7 @@
           "end_char": 309,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -150,7 +150,7 @@
           "end_char": 368,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 311
         },
@@ -163,7 +163,7 @@
     "summary_ref": {
       "path": "ad/orchestrate/ad-test-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b"
+      "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -177,8 +177,8 @@
     "name": "ad-test-designer",
     "path": "ad/orchestrate/ad-test-designer/SKILL.md",
     "phase": "orchestrate",
-    "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
-    "version": "19.2.0"
+    "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<what to test / results CSV> [profile: direct-response|prospecting|incremental-profit] [baseline] [alpha/power/MDE]",
@@ -192,7 +192,7 @@
           "end_char": 133,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -207,7 +207,7 @@
           "end_char": 239,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 135
         },
@@ -219,7 +219,7 @@
     "source": {
       "path": "ad/orchestrate/ad-test-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b"
+      "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce"
     }
   },
   "output_contract": {
@@ -234,7 +234,7 @@
           "end_char": 71,
           "path": "ad/orchestrate/ad-test-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b",
+          "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -245,7 +245,7 @@
     "source": {
       "path": "ad/orchestrate/ad-test-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b"
+      "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce"
     },
     "summary": "a test design (hypothesis, variant matrix, primary/secondary/guardrail metrics, sample-size + duration + power plan)",
     "summary_source": "expected-output",
@@ -260,8 +260,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -270,7 +270,7 @@
     "source": {
       "path": "ad/orchestrate/ad-test-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "e12303cbd54a45be94fdee0b7dd390ad91aeec4d5065966db0f029066da1c79b"
+      "sha256": "60a2d5e9586e741354ae693673bca9b71d7fc72ad081753193126a17545dc1ce"
     },
     "trigger_phrases": [
       "design an A/B test",

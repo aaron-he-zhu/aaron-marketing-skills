@@ -4,13 +4,13 @@ slug: aaron-share-of-voice-tracker
 displayName: "Share of Voice Tracker · 声量份额追踪"
 summary: "锁定竞品面板/声量份额SOV/情感加权变体/注意力份额"
 description: 'Use when the user asks to "track our share of voice", "what share of the conversation do we own vs competitors", or "trend our SOV this quarter"; computes SOV% = brand mentions ÷ (brand + competitor panel mentions) per platform per period on a LOCKED competitor panel — a panel switch invalidates the trend (restart the series and log the break; the ECHO O3 rule) — plus a sentiment-weighted SOV variant (sentiment labeled Estimated unless human-coded) and a Wikipedia-pageviews attention-share alternative; built from keyless listening connectors, gdelt.py news echo, and user exports — public counts only, closed platforms are never scraped. Not for backlink or offsite SEO signals — use offsite-signal-analyzer. 声量份额/竞品声量对比/提及份额/注意力份额'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when producing or trending the share-of-voice number: brand mentions vs a locked competitor panel per platform per period, a sentiment-weighted SOV variant, or a Wikipedia-pageviews attention-share read. Also when a panel change is proposed — the trend restarts and the break is logged, never spliced. This skill owns the SOV number only; competitor content and strategy watching stays with competitor-tracker, the mention sweep and spike baseline with social-pulse-monitor."
 argument-hint: "<brand + locked competitor panel> [platforms] [period]"
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "social", "phase": "observe", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "observe"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "social", "phase": "observe", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "observe"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Share of Voice Tracker

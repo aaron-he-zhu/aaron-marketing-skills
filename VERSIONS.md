@@ -2,134 +2,163 @@
 
 Current versions for the plugin and all 120 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/aaron-marketing-skills/main/VERSIONS.md` once per session.
 
-**Current release**: `19.2.0` (2026-08-09). **Agent Plugins v1 Portable Lite delivery.** The same 120 canonical skills, seven mandatory 4×4 discipline loops, eight commands, framework IDs, routes, and state paths remain intact. A deterministic release-only projection now emits a strict Agent Plugins 1.0.0 directory with flat Agent Skills, string-valued metadata, rewritten contained links, an explicit Portable Lite capability ceiling, and no automatic MCP registration. Existing Claude, npx skills, SkillHub, ClawHub, OpenClaw, and Hermes surfaces remain separate compatibility channels generated from the same canonical source.
+**Current release**: `20.0.0` (2026-08-20). **AI Staff positioning.** The same 120 canonical skills, seven mandatory 4×4 discipline loops, eight commands, framework IDs, routes, and state paths remain intact. The bundle now presents as an installable AI marketing staff: the named-bot roster (Grok Bot, Hermes Bot Mode) becomes a first-class install surface alongside the plugin and portable skills, the README leads vendor-neutral, and the chief bot handle shortens to `aaron-chief`. Existing Claude, npx skills, SkillHub, ClawHub, OpenClaw, and Hermes surfaces remain separate compatibility channels generated from the same canonical source.
 
 ## Skills
 
 | Skill | Category | Version | Last Updated |
 |-------|----------|---------|--------------|
-| narrative-baseline-mapper | trace | 19.2.0 | 2026-08-09 |
-| category-narrative-mapper | trace | 19.2.0 | 2026-08-09 |
-| audience-belief-mapper | trace | 19.2.0 | 2026-08-09 |
-| positioning-truth-tracer | trace | 19.2.0 | 2026-08-09 |
-| strategic-narrative-designer | architect | 19.2.0 | 2026-08-09 |
-| message-system-architect | architect | 19.2.0 | 2026-08-09 |
-| brand-language-codifier | architect | 19.2.0 | 2026-08-09 |
-| story-bank-builder | architect | 19.2.0 | 2026-08-09 |
-| narrative-cascade-planner | land | 19.2.0 | 2026-08-09 |
-| pitch-narrative-builder | land | 19.2.0 | 2026-08-09 |
-| narrative-enablement-kit | land | 19.2.0 | 2026-08-09 |
-| proof-point-packager | land | 19.2.0 | 2026-08-09 |
-| narrative-quality-auditor | evaluate | 19.2.0 | 2026-08-09 |
-| message-test-designer | evaluate | 19.2.0 | 2026-08-09 |
-| narrative-resonance-monitor | evaluate | 19.2.0 | 2026-08-09 |
-| narrative-drift-monitor | evaluate | 19.2.0 | 2026-08-09 |
-| keyword-research | survey | 19.2.0 | 2026-08-09 |
-| competitor-analysis | survey | 19.2.0 | 2026-08-09 |
-| serp-analysis | survey | 19.2.0 | 2026-08-09 |
-| content-gap-analysis | survey | 19.2.0 | 2026-08-09 |
-| content-writer | implement | 19.2.0 | 2026-08-09 |
-| geo-content-optimizer | implement | 19.2.0 | 2026-08-09 |
-| serp-markup-builder | implement | 19.2.0 | 2026-08-09 |
-| page-play-builder | implement | 19.2.0 | 2026-08-09 |
-| content-quality-auditor | tune | 19.2.0 | 2026-08-09 |
-| technical-seo-checker | tune | 19.2.0 | 2026-08-09 |
-| on-page-seo-checker | tune | 19.2.0 | 2026-08-09 |
-| site-structure-optimizer | tune | 19.2.0 | 2026-08-09 |
-| domain-authority-auditor | evaluate | 19.2.0 | 2026-08-09 |
-| rank-tracker | evaluate | 19.2.0 | 2026-08-09 |
-| performance-monitor | evaluate | 19.2.0 | 2026-08-09 |
-| offsite-signal-analyzer | evaluate | 19.2.0 | 2026-08-09 |
-| channel-portfolio-planner | explore | 19.2.0 | 2026-08-09 |
-| voice-dossier-builder | explore | 19.2.0 | 2026-08-09 |
-| platform-norm-profiler | explore | 19.2.0 | 2026-08-09 |
-| participation-warmup-planner | explore | 19.2.0 | 2026-08-09 |
-| social-calendar-builder | craft | 19.2.0 | 2026-08-09 |
-| social-creative-builder | craft | 19.2.0 | 2026-08-09 |
-| short-video-scripter | craft | 19.2.0 | 2026-08-09 |
-| advocacy-program-designer | craft | 19.2.0 | 2026-08-09 |
-| social-quality-auditor | host | 19.2.0 | 2026-08-09 |
-| engagement-inbox-manager | host | 19.2.0 | 2026-08-09 |
-| social-selling-planner | host | 19.2.0 | 2026-08-09 |
-| crisis-response-planner | host | 19.2.0 | 2026-08-09 |
-| social-pulse-monitor | observe | 19.2.0 | 2026-08-09 |
-| share-of-voice-tracker | observe | 19.2.0 | 2026-08-09 |
-| dark-social-attributor | observe | 19.2.0 | 2026-08-09 |
-| social-measurement-loop | observe | 19.2.0 | 2026-08-09 |
-| deliverability-qa | email | 19.2.0 | 2026-08-09 |
-| list-segment-builder | email | 19.2.0 | 2026-08-09 |
-| list-growth-designer | email | 19.2.0 | 2026-08-09 |
-| list-hygiene-monitor | email | 19.2.0 | 2026-08-09 |
-| email-creative-builder | email | 19.2.0 | 2026-08-09 |
-| subject-line-lab | email | 19.2.0 | 2026-08-09 |
-| email-render-builder | email | 19.2.0 | 2026-08-09 |
-| dynamic-content-personalizer | email | 19.2.0 | 2026-08-09 |
-| email-sequence-designer | email | 19.2.0 | 2026-08-09 |
-| newsletter-monetization-planner | email | 19.2.0 | 2026-08-09 |
-| preference-frequency-manager | email | 19.2.0 | 2026-08-09 |
-| reactivation-specialist | email | 19.2.0 | 2026-08-09 |
-| email-quality-auditor | email | 19.2.0 | 2026-08-09 |
-| send-experiment-designer | email | 19.2.0 | 2026-08-09 |
-| inbox-placement-monitor | email | 19.2.0 | 2026-08-09 |
-| cold-outbound-sequencer | email | 19.2.0 | 2026-08-09 |
-| campaign-architect | paid | 19.2.0 | 2026-08-09 |
-| audience-segment-builder | paid | 19.2.0 | 2026-08-09 |
-| search-term-miner | paid | 19.2.0 | 2026-08-09 |
-| product-feed-optimizer | paid | 19.2.0 | 2026-08-09 |
-| ad-creative-builder | paid | 19.2.0 | 2026-08-09 |
-| ad-test-designer | paid | 19.2.0 | 2026-08-09 |
-| bid-strategy-planner | paid | 19.2.0 | 2026-08-09 |
-| landing-experience-checker | paid | 19.2.0 | 2026-08-09 |
-| ad-account-auditor | paid | 19.2.0 | 2026-08-09 |
-| conversion-signal-qa | paid | 19.2.0 | 2026-08-09 |
-| placement-exclusion-manager | paid | 19.2.0 | 2026-08-09 |
-| conversion-value-mapper | paid | 19.2.0 | 2026-08-09 |
-| paid-measurement-loop | paid | 19.2.0 | 2026-08-09 |
-| attribution-reconciler | paid | 19.2.0 | 2026-08-09 |
-| budget-pacing-monitor | paid | 19.2.0 | 2026-08-09 |
-| fatigue-frequency-manager | paid | 19.2.0 | 2026-08-09 |
-| audience-mapper | scout | 19.2.0 | 2026-08-09 |
-| trend-spotter | scout | 19.2.0 | 2026-08-09 |
-| influencer-discovery | scout | 19.2.0 | 2026-08-09 |
-| fit-scorer | scout | 19.2.0 | 2026-08-09 |
-| competitor-tracker | target | 19.2.0 | 2026-08-09 |
-| campaign-planner | target | 19.2.0 | 2026-08-09 |
-| brief-generator | target | 19.2.0 | 2026-08-09 |
-| budget-optimizer | target | 19.2.0 | 2026-08-09 |
-| outreach-manager | activate | 19.2.0 | 2026-08-09 |
-| creator-content-auditor | activate | 19.2.0 | 2026-08-09 |
-| contract-helper | activate | 19.2.0 | 2026-08-09 |
-| content-amplifier | activate | 19.2.0 | 2026-08-09 |
-| landing-optimizer | report | 19.2.0 | 2026-08-09 |
-| performance-analyzer | report | 19.2.0 | 2026-08-09 |
-| roi-calculator | report | 19.2.0 | 2026-08-09 |
-| report-generator | report | 19.2.0 | 2026-08-09 |
-| positioning-mapper | launch | 19.2.0 | 2026-08-09 |
-| launch-tier-planner | launch | 19.2.0 | 2026-08-09 |
-| launch-window-planner | launch | 19.2.0 | 2026-08-09 |
-| early-access-designer | launch | 19.2.0 | 2026-08-09 |
-| message-house-builder | launch | 19.2.0 | 2026-08-09 |
-| launch-asset-packager | launch | 19.2.0 | 2026-08-09 |
-| pricing-packaging-planner | launch | 19.2.0 | 2026-08-09 |
-| sales-enablement-kit | launch | 19.2.0 | 2026-08-09 |
-| launch-readiness-auditor | launch | 19.2.0 | 2026-08-09 |
-| launch-day-conductor | launch | 19.2.0 | 2026-08-09 |
-| community-launch-runner | launch | 19.2.0 | 2026-08-09 |
-| press-media-relations | launch | 19.2.0 | 2026-08-09 |
-| launch-monitor | launch | 19.2.0 | 2026-08-09 |
-| launch-feedback-synthesizer | launch | 19.2.0 | 2026-08-09 |
-| launch-retro-analyzer | launch | 19.2.0 | 2026-08-09 |
-| momentum-planner | launch | 19.2.0 | 2026-08-09 |
-| entity-registry | protocol | 19.2.0 | 2026-08-09 |
-| creator-registry | protocol | 19.2.0 | 2026-08-09 |
-| offer-claims-registry | protocol | 19.2.0 | 2026-08-09 |
-| consent-registry | protocol | 19.2.0 | 2026-08-09 |
-| launch-registry | protocol | 19.2.0 | 2026-08-09 |
-| channel-registry | protocol | 19.2.0 | 2026-08-09 |
-| narrative-registry | protocol | 19.2.0 | 2026-08-09 |
-| memory-management | protocol | 19.2.0 | 2026-08-09 |
+| narrative-baseline-mapper | trace | 20.0.0 | 2026-08-20 |
+| category-narrative-mapper | trace | 20.0.0 | 2026-08-20 |
+| audience-belief-mapper | trace | 20.0.0 | 2026-08-20 |
+| positioning-truth-tracer | trace | 20.0.0 | 2026-08-20 |
+| strategic-narrative-designer | architect | 20.0.0 | 2026-08-20 |
+| message-system-architect | architect | 20.0.0 | 2026-08-20 |
+| brand-language-codifier | architect | 20.0.0 | 2026-08-20 |
+| story-bank-builder | architect | 20.0.0 | 2026-08-20 |
+| narrative-cascade-planner | land | 20.0.0 | 2026-08-20 |
+| pitch-narrative-builder | land | 20.0.0 | 2026-08-20 |
+| narrative-enablement-kit | land | 20.0.0 | 2026-08-20 |
+| proof-point-packager | land | 20.0.0 | 2026-08-20 |
+| narrative-quality-auditor | evaluate | 20.0.0 | 2026-08-20 |
+| message-test-designer | evaluate | 20.0.0 | 2026-08-20 |
+| narrative-resonance-monitor | evaluate | 20.0.0 | 2026-08-20 |
+| narrative-drift-monitor | evaluate | 20.0.0 | 2026-08-20 |
+| keyword-research | survey | 20.0.0 | 2026-08-20 |
+| competitor-analysis | survey | 20.0.0 | 2026-08-20 |
+| serp-analysis | survey | 20.0.0 | 2026-08-20 |
+| content-gap-analysis | survey | 20.0.0 | 2026-08-20 |
+| content-writer | implement | 20.0.0 | 2026-08-20 |
+| geo-content-optimizer | implement | 20.0.0 | 2026-08-20 |
+| serp-markup-builder | implement | 20.0.0 | 2026-08-20 |
+| page-play-builder | implement | 20.0.0 | 2026-08-20 |
+| content-quality-auditor | tune | 20.0.0 | 2026-08-20 |
+| technical-seo-checker | tune | 20.0.0 | 2026-08-20 |
+| on-page-seo-checker | tune | 20.0.0 | 2026-08-20 |
+| site-structure-optimizer | tune | 20.0.0 | 2026-08-20 |
+| domain-authority-auditor | evaluate | 20.0.0 | 2026-08-20 |
+| rank-tracker | evaluate | 20.0.0 | 2026-08-20 |
+| performance-monitor | evaluate | 20.0.0 | 2026-08-20 |
+| offsite-signal-analyzer | evaluate | 20.0.0 | 2026-08-20 |
+| channel-portfolio-planner | explore | 20.0.0 | 2026-08-20 |
+| voice-dossier-builder | explore | 20.0.0 | 2026-08-20 |
+| platform-norm-profiler | explore | 20.0.0 | 2026-08-20 |
+| participation-warmup-planner | explore | 20.0.0 | 2026-08-20 |
+| social-calendar-builder | craft | 20.0.0 | 2026-08-20 |
+| social-creative-builder | craft | 20.0.0 | 2026-08-20 |
+| short-video-scripter | craft | 20.0.0 | 2026-08-20 |
+| advocacy-program-designer | craft | 20.0.0 | 2026-08-20 |
+| social-quality-auditor | host | 20.0.0 | 2026-08-20 |
+| engagement-inbox-manager | host | 20.0.0 | 2026-08-20 |
+| social-selling-planner | host | 20.0.0 | 2026-08-20 |
+| crisis-response-planner | host | 20.0.0 | 2026-08-20 |
+| social-pulse-monitor | observe | 20.0.0 | 2026-08-20 |
+| share-of-voice-tracker | observe | 20.0.0 | 2026-08-20 |
+| dark-social-attributor | observe | 20.0.0 | 2026-08-20 |
+| social-measurement-loop | observe | 20.0.0 | 2026-08-20 |
+| deliverability-qa | email | 20.0.0 | 2026-08-20 |
+| list-segment-builder | email | 20.0.0 | 2026-08-20 |
+| list-growth-designer | email | 20.0.0 | 2026-08-20 |
+| list-hygiene-monitor | email | 20.0.0 | 2026-08-20 |
+| email-creative-builder | email | 20.0.0 | 2026-08-20 |
+| subject-line-lab | email | 20.0.0 | 2026-08-20 |
+| email-render-builder | email | 20.0.0 | 2026-08-20 |
+| dynamic-content-personalizer | email | 20.0.0 | 2026-08-20 |
+| email-sequence-designer | email | 20.0.0 | 2026-08-20 |
+| newsletter-monetization-planner | email | 20.0.0 | 2026-08-20 |
+| preference-frequency-manager | email | 20.0.0 | 2026-08-20 |
+| reactivation-specialist | email | 20.0.0 | 2026-08-20 |
+| email-quality-auditor | email | 20.0.0 | 2026-08-20 |
+| send-experiment-designer | email | 20.0.0 | 2026-08-20 |
+| inbox-placement-monitor | email | 20.0.0 | 2026-08-20 |
+| cold-outbound-sequencer | email | 20.0.0 | 2026-08-20 |
+| campaign-architect | paid | 20.0.0 | 2026-08-20 |
+| audience-segment-builder | paid | 20.0.0 | 2026-08-20 |
+| search-term-miner | paid | 20.0.0 | 2026-08-20 |
+| product-feed-optimizer | paid | 20.0.0 | 2026-08-20 |
+| ad-creative-builder | paid | 20.0.0 | 2026-08-20 |
+| ad-test-designer | paid | 20.0.0 | 2026-08-20 |
+| bid-strategy-planner | paid | 20.0.0 | 2026-08-20 |
+| landing-experience-checker | paid | 20.0.0 | 2026-08-20 |
+| ad-account-auditor | paid | 20.0.0 | 2026-08-20 |
+| conversion-signal-qa | paid | 20.0.0 | 2026-08-20 |
+| placement-exclusion-manager | paid | 20.0.0 | 2026-08-20 |
+| conversion-value-mapper | paid | 20.0.0 | 2026-08-20 |
+| paid-measurement-loop | paid | 20.0.0 | 2026-08-20 |
+| attribution-reconciler | paid | 20.0.0 | 2026-08-20 |
+| budget-pacing-monitor | paid | 20.0.0 | 2026-08-20 |
+| fatigue-frequency-manager | paid | 20.0.0 | 2026-08-20 |
+| audience-mapper | scout | 20.0.0 | 2026-08-20 |
+| trend-spotter | scout | 20.0.0 | 2026-08-20 |
+| influencer-discovery | scout | 20.0.0 | 2026-08-20 |
+| fit-scorer | scout | 20.0.0 | 2026-08-20 |
+| competitor-tracker | target | 20.0.0 | 2026-08-20 |
+| campaign-planner | target | 20.0.0 | 2026-08-20 |
+| brief-generator | target | 20.0.0 | 2026-08-20 |
+| budget-optimizer | target | 20.0.0 | 2026-08-20 |
+| outreach-manager | activate | 20.0.0 | 2026-08-20 |
+| creator-content-auditor | activate | 20.0.0 | 2026-08-20 |
+| contract-helper | activate | 20.0.0 | 2026-08-20 |
+| content-amplifier | activate | 20.0.0 | 2026-08-20 |
+| landing-optimizer | report | 20.0.0 | 2026-08-20 |
+| performance-analyzer | report | 20.0.0 | 2026-08-20 |
+| roi-calculator | report | 20.0.0 | 2026-08-20 |
+| report-generator | report | 20.0.0 | 2026-08-20 |
+| positioning-mapper | launch | 20.0.0 | 2026-08-20 |
+| launch-tier-planner | launch | 20.0.0 | 2026-08-20 |
+| launch-window-planner | launch | 20.0.0 | 2026-08-20 |
+| early-access-designer | launch | 20.0.0 | 2026-08-20 |
+| message-house-builder | launch | 20.0.0 | 2026-08-20 |
+| launch-asset-packager | launch | 20.0.0 | 2026-08-20 |
+| pricing-packaging-planner | launch | 20.0.0 | 2026-08-20 |
+| sales-enablement-kit | launch | 20.0.0 | 2026-08-20 |
+| launch-readiness-auditor | launch | 20.0.0 | 2026-08-20 |
+| launch-day-conductor | launch | 20.0.0 | 2026-08-20 |
+| community-launch-runner | launch | 20.0.0 | 2026-08-20 |
+| press-media-relations | launch | 20.0.0 | 2026-08-20 |
+| launch-monitor | launch | 20.0.0 | 2026-08-20 |
+| launch-feedback-synthesizer | launch | 20.0.0 | 2026-08-20 |
+| launch-retro-analyzer | launch | 20.0.0 | 2026-08-20 |
+| momentum-planner | launch | 20.0.0 | 2026-08-20 |
+| entity-registry | protocol | 20.0.0 | 2026-08-20 |
+| creator-registry | protocol | 20.0.0 | 2026-08-20 |
+| offer-claims-registry | protocol | 20.0.0 | 2026-08-20 |
+| consent-registry | protocol | 20.0.0 | 2026-08-20 |
+| launch-registry | protocol | 20.0.0 | 2026-08-20 |
+| channel-registry | protocol | 20.0.0 | 2026-08-20 |
+| narrative-registry | protocol | 20.0.0 | 2026-08-20 |
+| memory-management | protocol | 20.0.0 | 2026-08-20 |
 
 ## Changelog
+
+### v20.0.0 — AI Staff positioning (2026-08-20)
+
+All 120 canonical skills align to `20.0.0` together while the exact 7 ×
+(4 phases × 4 skills) shape, TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP acronym
+symmetry, eight public commands, framework/veto IDs, registry keys, and user
+state paths remain unchanged.
+
+- **AI Staff install surface.** The named-bot roster (xAI's Grok Bot, Hermes
+  Agent's Bot Mode) is presented as a first-class install form alongside the
+  plugin and portable skills: seven discipline specialists plus a routing
+  chief, generated from the same typed catalog and covering the 120 skills
+  exactly once. README gains an "AI Staff" section, an install-table row, and
+  a worked @mention handoff example.
+- **Vendor-neutral positioning.** The README headline and intro no longer lead
+  with a single host. The bundle presents as an installable AI marketing
+  staff — one plugin with commands and memory, portable skills on 70+ agent
+  hosts, or an 8-bot AI Staff on named-bot hosts.
+- **`aaron-chief` handle.** The chief bot's public handle shortens from
+  `aaron-chief-of-staff` to `aaron-chief` across the roster generator, its
+  Hermes bundle directory (`hermes/chief/`), tests, and deployment docs. The
+  display title remains "Chief of Staff"; internal `kind` labels and role
+  semantics are unchanged.
+- **Boundaries restated, not weakened.** Staff bundles remain Tier-1 static:
+  no connectors, `mcp.json`, cron, hooks, or deterministic runtimes; auditors
+  return `NOT_SCORED`; registry and durable-memory writes stay propose-only;
+  Grok Bot's shared cloud computer caveat is documented in the README section
+  itself.
+
 
 ### v19.2.0 — Agent Plugins v1 Portable Lite (2026-08-09)
 

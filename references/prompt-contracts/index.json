@@ -17,10 +17,10 @@
       ],
       "framework": "TALE",
       "ref": "references/prompt-contracts/narrative-quality-auditor.json",
-      "sha256": "41716b0474849dd79bdd22f354c450dc2be12f0d2c178e01c623950cf523afc8",
+      "sha256": "52eb64cb33bc7452438325ed5c7338a9c6948a6cdc695e45a43c0c765ee95bda",
       "skill": "narrative-quality-auditor",
-      "skill_sha256": "2295a47d5413d7bcad1ccef3720f65ede6b209ea2f82d6afd8be935a3ff5b129",
-      "skill_version": "19.2.0"
+      "skill_sha256": "14cd9522a6dd230f9b48045575bda5ab58019ab4da0491bb8c0bdca7da155699",
+      "skill_version": "20.0.0"
     },
     {
       "evaluation_variant_count": 5,
@@ -33,10 +33,10 @@
       ],
       "framework": "CORE-EEAT",
       "ref": "references/prompt-contracts/content-quality-auditor.json",
-      "sha256": "066bd0570366b4db2fe142d321ad0b7f0ce285c70875d8ff64882921ef40f05d",
+      "sha256": "7c393c7e6dff4c831ceec27fb4c4cb9dfcfcce6af6bba82fef8f4a73c9a66ee2",
       "skill": "content-quality-auditor",
-      "skill_sha256": "0ae94ea4859a3f3f28ae199c39655396c65b41783ea4b1e72fdd6f244d02aa40",
-      "skill_version": "19.2.0"
+      "skill_sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
+      "skill_version": "20.0.0"
     },
     {
       "evaluation_variant_count": 5,
@@ -49,10 +49,10 @@
       ],
       "framework": "CITE",
       "ref": "references/prompt-contracts/domain-authority-auditor.json",
-      "sha256": "4f41e13c1df4b83328ce8c57e4d656036d34c3318d30f072b06352e21ab2b0cb",
+      "sha256": "205288d4839046ca49e35e7c16f8987fdd48e88e0f5c49cfffc5ac1d9e552cbc",
       "skill": "domain-authority-auditor",
-      "skill_sha256": "ff666555653172d62212cd10ec6038c9f7bdeab55205f3ef4d6d1e53ab3a3695",
-      "skill_version": "19.2.0"
+      "skill_sha256": "b3f8ac9d2f9605b77b258230592e5fa99e7a0dbe248840e1f5a8adc37b1216e9",
+      "skill_version": "20.0.0"
     },
     {
       "evaluation_variant_count": 5,
@@ -65,10 +65,10 @@
       ],
       "framework": "ECHO",
       "ref": "references/prompt-contracts/social-quality-auditor.json",
-      "sha256": "71a74b3a702c2bbad29507133cfde5800d03823f758db1284524198b480724f5",
+      "sha256": "e97b6a7668193be9a54ed3072af4d0a6e0609788b2413df97b217abfb2f2e0fe",
       "skill": "social-quality-auditor",
-      "skill_sha256": "d3f6ee757596a0b573ba78ade03fa495b1b45c26cec076c89231c929bf7fb89a",
-      "skill_version": "19.2.0"
+      "skill_sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+      "skill_version": "20.0.0"
     },
     {
       "evaluation_variant_count": 5,
@@ -81,10 +81,10 @@
       ],
       "framework": "SEND",
       "ref": "references/prompt-contracts/email-quality-auditor.json",
-      "sha256": "be5eef8e02e687278680c0fd151a352c87cc0c68fe734489fa55b8d61f4b6a16",
+      "sha256": "f113d8f932e415f4270dbc66ac6193fc4c059a4615613f2bad1351929eb73283",
       "skill": "email-quality-auditor",
-      "skill_sha256": "27922319459feaa1411351b0771fce9eb8e9731f4c5fadf973c20a0924796b8d",
-      "skill_version": "19.2.0"
+      "skill_sha256": "e2c9f4118bae5fdf706ac95e70ebdf5151d99946830529c0fc8cc2f7a09bb76a",
+      "skill_version": "20.0.0"
     },
     {
       "evaluation_variant_count": 5,
@@ -97,10 +97,10 @@
       ],
       "framework": "ROAS",
       "ref": "references/prompt-contracts/ad-account-auditor.json",
-      "sha256": "58b9c1b2d3e43bf439029805a15c9dbcc3f207cd3ca62f2a6f5e4e0d0f6edd5e",
+      "sha256": "24aac5fa0f76d1e64b5c32de96407e26d542e96631594a17897b7eca706377b4",
       "skill": "ad-account-auditor",
-      "skill_sha256": "a20dc8564189ed609f8a12d1438e2e9f19057901ded502f7f7c366ccdc6b3abc",
-      "skill_version": "19.2.0"
+      "skill_sha256": "717c914cfa4033725e97faeeaccf94ebb038233e28c2bf98a7aaa38ee7ff531c",
+      "skill_version": "20.0.0"
     },
     {
       "evaluation_variant_count": 5,
@@ -113,10 +113,10 @@
       ],
       "framework": "STAR",
       "ref": "references/prompt-contracts/creator-content-auditor.json",
-      "sha256": "8f71d5f8dc8b9d1fef4ac59814b6c0331ce65a97917107bd30839a55f769d9c1",
+      "sha256": "56b69edd5ac4e781fd9f1f331b20e652076832fd45465980db4541e21e537c8e",
       "skill": "creator-content-auditor",
-      "skill_sha256": "a8002b86d55f5a00c2a68e009d20be2680b907d181feeedce91c7b4a529190bc",
-      "skill_version": "19.2.0"
+      "skill_sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+      "skill_version": "20.0.0"
     },
     {
       "evaluation_variant_count": 5,
@@ -129,22 +129,22 @@
       ],
       "framework": "RAMP",
       "ref": "references/prompt-contracts/launch-readiness-auditor.json",
-      "sha256": "12ad0357023de14ef44e509164312eb03e7b925850dba5fc3a44bf2d21fe0e68",
+      "sha256": "4aed049819e733a51e51f3b284d1f534ec96f3a7b308439fc5315fb036d80c64",
       "skill": "launch-readiness-auditor",
-      "skill_sha256": "eed958ef52090abc9bcadb414b67b210d3057dc6fc367cc467d0d1287004b301",
-      "skill_version": "19.2.0"
+      "skill_sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+      "skill_version": "20.0.0"
     }
   ],
   "framework_catalog": {
     "path": "references/framework-catalog.json",
-    "sha256": "42275869d98be20f96ba492339447619a6a52a6954288f120035ad6dc27145bf",
-    "version": "19.2.0"
+    "sha256": "335a3d9f24c9a58fea13bb7a60c587232b4b296b8f992918fee61309ac925b58",
+    "version": "20.0.0"
   },
   "schema_version": "1.0",
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-    "version": "19.2.0"
+    "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+    "version": "20.0.0"
   },
   "variant_count": 40
 }

@@ -195,8 +195,8 @@
   ],
   "framework_contract": {
     "catalog_path": "references/framework-catalog.json",
-    "catalog_sha256": "42275869d98be20f96ba492339447619a6a52a6954288f120035ad6dc27145bf",
-    "catalog_version": "19.2.0",
+    "catalog_sha256": "335a3d9f24c9a58fea13bb7a60c587232b4b296b8f992918fee61309ac925b58",
+    "catalog_version": "20.0.0",
     "profiles": [
       "truth",
       "system",
@@ -226,7 +226,7 @@
     "runtime_sources": [
       {
         "path": "references/auditor-runbook.md",
-        "sha256": "939e773559545a0ac5870e2f97f4619bb51e5b45d32b4039bd3b59ad10afac1c"
+        "sha256": "1bdafd8e080bfd77ec933b67221dcc2652bf350f0e73b0ecafdeb57136195474"
       },
       {
         "path": "references/scoring-semantics.md",
@@ -242,7 +242,7 @@
       },
       {
         "path": "references/audit-artifact.schema.json",
-        "sha256": "f127b5eb0669daa7c7f37c79f1c619515ed20f1fd87b32a1f5776ebf46444049"
+        "sha256": "bc273810760801c04ecfade99c3eb6964e7c99369916aeca1a1e743dfa6ebe42"
       }
     ],
     "sink": "memory/audits/narrative/"
@@ -323,12 +323,12 @@
   "skill": {
     "name": "narrative-quality-auditor",
     "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
-    "sha256": "2295a47d5413d7bcad1ccef3720f65ede6b209ea2f82d6afd8be935a3ff5b129",
-    "version": "19.2.0"
+    "sha256": "14cd9522a6dd230f9b48045575bda5ab58019ab4da0491bb8c0bdca7da155699",
+    "version": "20.0.0"
   },
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-    "version": "19.2.0"
+    "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+    "version": "20.0.0"
   }
 }

@@ -11,7 +11,7 @@
           "end_char": 86,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 224,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 88
         },
@@ -41,7 +41,7 @@
           "end_char": 306,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 226
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e"
+      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ed302bd3d6734c72a85f4b2df79a4f6d86cdc2d424387bc36bb9087d826f4c82",
+        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 44
       },
       {
@@ -102,7 +102,7 @@
           "end_char": 139,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -120,7 +120,7 @@
           "end_char": 313,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 140
         },
@@ -138,7 +138,7 @@
           "end_char": 494,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 314
         },
@@ -156,7 +156,7 @@
           "end_char": 843,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 496
         },
@@ -169,7 +169,7 @@
     "summary_ref": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e"
+      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -184,8 +184,8 @@
     "name": "launch-monitor",
     "path": "launch/prove/launch-monitor/SKILL.md",
     "phase": "prove",
-    "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
-    "version": "19.2.0"
+    "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+    "version": "20.0.0"
   },
   "input_contract": {
     "argument_hint": "<launch date / platforms> [KPI targets] [--pre-launch | --snapshot D0|W1|M1]",
@@ -199,7 +199,7 @@
           "end_char": 106,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -214,7 +214,7 @@
           "end_char": 207,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 108
         },
@@ -229,7 +229,7 @@
           "end_char": 360,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 209
         },
@@ -244,7 +244,7 @@
           "end_char": 410,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 362
         },
@@ -259,7 +259,7 @@
           "end_char": 468,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 412
         },
@@ -271,7 +271,7 @@
     "source": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e"
+      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
     }
   },
   "output_contract": {
@@ -286,7 +286,7 @@
           "end_char": 65,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -302,7 +302,7 @@
           "end_char": 319,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e",
+          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
           "span_basis": "field-text",
           "start_char": 67
         },
@@ -313,7 +313,7 @@
     "source": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e"
+      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
     },
     "summary": "a pre-launch instrumentation verification report (per-surface UTM/event pass-fail) or a window telemetry read — polling log, flamewar/anomaly alerts, D0/W1/M1 KPI snapshot vs targets, spike-vs-sustain and owned-capture reads — every number labeled Measured / User-provided / Estimated, plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -328,8 +328,8 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "bbe1d063d75c079dd0761f50904f1ab64faa8d8adcc9f25cd3fffb5ac0a3ff7c",
-      "version": "19.2.0"
+      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
+      "version": "20.0.0"
     }
   },
   "routing_contract": {
@@ -338,7 +338,7 @@
     "source": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "42d30523f9f88a1a599d1fd5e3584302cedb519f228941ff0dbe9c8ce9a2ff7e"
+      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
     },
     "trigger_phrases": [
       "monitor my launch",

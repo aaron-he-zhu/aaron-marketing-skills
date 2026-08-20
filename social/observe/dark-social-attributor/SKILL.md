@@ -4,13 +4,13 @@ slug: aaron-dark-social-attributor
 displayName: "Dark Social Attributor · 暗社交归因"
 summary: "暗社交归因/直接流量分解/自报来源字段/分享链路UTM"
 description: 'Use when the user asks to "figure out where our direct traffic really comes from", "measure dark social", "add a how-did-you-hear-about-us field", or "show social drives signups without click data"; produces a share-link/UTM hygiene spec for owned share surfaces, a self-reported attribution field design that replaces an existing form field (free-text first, coded later), a GA4 direct-traffic decomposition read (deep-URL directs, mobile-app skew, private-push correlation) with every derived number hard-labeled Estimated/proxy, and a branded-search-lift proxy from GSC plus Wikipedia pageviews — the declared dark-social method behind ECHO O2. Not for paid-channel attribution reconciliation (platform-claimed vs analytics conversions) — use attribution-reconciler. 暗社交归因/直接流量分解/自报来源字段/分享链路UTM'
-version: "19.2.0"
+version: "20.0.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when direct traffic is unexplained, social ROI is questioned without click evidence, share buttons carry naked URLs, or a how-did-you-hear field is being designed: declares the dark-social estimation method (ECHO O2) and specs the instrumentation — share-link/UTM hygiene, a self-reported attribution field that replaces an existing form field, GA4 direct-traffic decomposition heuristics, and a branded-search-lift proxy via GSC + pageviews.py. Every derived number is Estimated/proxy by construction. Not for reconciling paid-platform conversion claims (attribution-reconciler) and not the metric dictionary or write-back loop (social-measurement-loop)."
 argument-hint: "<GA4/GSC exports or site> [share-surface inventory] [existing form fields]"
-metadata: {"author": "aaron-he-zhu", "version": "19.2.0", "discipline": "social", "phase": "observe", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "observe"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "social", "phase": "observe", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "observe"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Dark Social Attributor
