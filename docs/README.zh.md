@@ -2,7 +2,7 @@
 
 # Aaron 营销技能库
 
-**120 个营销技能 —— 品牌叙事、SEO/GEO、红人、付费广告、邮件、产品发布、自然社媒 —— 共享一套契约。**
+**120 个营销技能，7 个学科，一套契约 —— 你的 AI 营销团队，可装成插件、便携技能或 8-bot 小队。**
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
@@ -22,7 +22,7 @@
 
 </div>
 
-一套 Claude 技能与斜杠命令，让聊天 Agent 成为营销操作员。七个学科 + 一个共享协议层，一图总览（逻辑顺序：叙事 → 各常态频道 → 发布 → 协议）：
+一支**可安装、而不是靠提示词堆出来的 AI 营销团队** —— 120 个 agent skills，可装成带命令与记忆的插件、70+ 宿主上的便携技能，或 named-bot 宿主（Grok Bot、Hermes Bot Mode）上的 **8-bot AI Staff**。七个学科 + 一个共享协议层，一图总览（逻辑顺序：叙事 → 各常态频道 → 发布 → 协议）：
 
 | 层 | 技能 | 生命周期（阶段目录） | 框架 → 门 | 入口命令 |
 |----|------|----------------------|-----------|----------|
@@ -47,6 +47,7 @@
 
 - [为什么选它](#为什么选它)
 - [安装](#安装)
+  - [AI Staff](#ai-staff)
 - [初次使用](#初次使用)
 - [架构](#架构)
   - [共享技能契约](#共享技能契约)
@@ -98,6 +99,7 @@
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` 然后 `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ 宿主](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
 | **Agent Plugins v1 客户端 · Portable Lite** | 从 [v20.0.0 Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0)下载 `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz`，解压后安装其中的插件目录 |
+| **Grok Bot · Hermes Bot Mode（AI Staff）** | 生成 8-bot 花名册：`python3 scripts/generate-bot-projections.py --output <private-dir>` —— 7 个专科 + `aaron-chief`。见 [AI Staff](#ai-staff) |
 | **[SkillHub.cn](https://skillhub.cn)(中文社区)** | `skillhub install <frontmatter-slug>`(如 `keyword-research`) |
 | **任意宿主** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
@@ -106,6 +108,18 @@
 安装插件**不会**往你的 `/mcp` 列表添加任何东西——MCP 目录位于 [`docs/mcp-catalog.json`](mcp-catalog.json)，刻意放在 Claude Code 会自动注册的插件根 `.mcp.json` 路径之外，仅作复制粘贴参考（见[连接器与层级](#连接器与层级)）。
 
 仓库根目录是创作单一事实源，**不是** Agent Plugins v1 的标准安装根。请使用上述 Release 资产；它把 **120/120 个严格 Agent Skills** 投影为扁平的 `skills/<name>/`，且不含 `mcp.json`、命令、hooks、连接器或仓库运行时。现有客户端兼容层继续保留；详见 [Portable Lite 包结构与能力边界](agent-plugins-v1.md)。
+
+### AI Staff
+
+在 named-bot 宿主（xAI 的 **Grok Bot**、Hermes Agent 的 **Bot Mode**）上，本仓库不是装成 120 个技能的一堆，而是一支 **团队**：八个有名字的同事，用 @ 像对同事说话。七个专科各管一条线 —— `aaron-narrative`、`aaron-seo-geo`、`aaron-social`、`aaron-email`、`aaron-ad`、`aaron-influencer`、`aaron-launch` —— **`aaron-chief`** 坐席：它持有 8 个协议注册表，并用 @mention 路由跨线目标（visited set、三次交棒上限）。这就是这些宿主围绕的「参谋长 + 专科」编制，来源与其它安装形态相同的类型化目录：120 个技能恰好覆盖一次，没有第二套清单。
+
+对 `@aaron-chief` 说「三周后在 Product Hunt 发 v2」，计划会经 `@aaron-launch`、`@aaron-email`、`@aaron-social` 回来 —— 每个 bot 只答自己的线，不会越权兼职。
+
+```bash
+python3 scripts/generate-bot-projections.py --output /private/path/aaron-bot-roster
+```
+
+生成器写出 8 个可安装的 Hermes profile 包（`hermes/<bot>/`，哈希绑定清单）以及 Grok Bot 安装包（`grok/bot-cards.md`、各 bot 启用列表、检查清单）。Staff 包是 **Tier-1 静态**：无连接器、MCP、cron 或运行时；auditor 返回 `NOT_SCORED` 而不是瞎猜；注册表与记忆写入保持 propose-only。在 Grok Bot 上，同一成员的所有 bot 共享一台云电脑 —— bot 名字不是安全边界。部署步骤、宿主限制与 owner-run smoke backlog：[agent-compatibility.md](agent-compatibility.md#named-bot-roster-deployment-grok-bot--hermes-bot-mode)。
 
 ---
 

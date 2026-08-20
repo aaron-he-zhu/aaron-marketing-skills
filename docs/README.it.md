@@ -2,7 +2,7 @@
 
 # Aaron Marketing Skills
 
-**120 skill di marketing — brand narrative, SEO/GEO, influencer, paid ads, email, launch, social — su un unico contratto.**
+**120 skill di marketing, 7 discipline, un contratto — il tuo AI marketing staff, installabile come plugin, skill portabili o un team di 8 bot.**
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
@@ -22,7 +22,7 @@
 
 </div>
 
-Una libreria di skill Claude e comandi slash che trasforma un agente di chat in un operatore di marketing. Sette discipline e uno strato di protocollo condiviso, a colpo d'occhio:
+Un **AI marketing staff che installi, non che prompti** — 120 agent skill che girano come un plugin con comandi e memoria, come skill portabili su 70+ host, o come un **AI Staff di 8 bot** sugli host a bot nominati (Grok Bot, Hermes Bot Mode). Sette discipline e uno strato di protocollo condiviso, a colpo d'occhio:
 
 | Strato | Skill | Ciclo di vita (directory di fase) | Framework → gate | Punto d'ingresso |
 |-------|--------|-------------------------------|------------------|------------|
@@ -47,6 +47,7 @@ La topologia tipizzata autorevole è [`references/system-catalog.json`](../refer
 
 - [Perché questa libreria](#perché-questa-libreria)
 - [Installazione](#installazione)
+  - [AI Staff](#ai-staff)
 - [Prima esecuzione](#prima-esecuzione)
 - [Architettura](#architettura)
   - [Il contratto di skill condiviso](#il-contratto-di-skill-condiviso)
@@ -98,6 +99,7 @@ Usala con Claude Code, qualsiasi host compatibile con Agent Skills o un semplice
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` poi `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ host](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
 | **Client Agent Plugins v1 · Portable Lite** | Scarica `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` dalla [release v20.0.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0), estrailo e installa la directory del plugin estratta |
+| **Grok Bot · Hermes Bot Mode (AI Staff)** | Genera il roster da 8 bot: `python3 scripts/generate-bot-projections.py --output <private-dir>` — 7 specialisti + `aaron-chief`. Vedi [AI Staff](#ai-staff) |
 | **[SkillHub.cn](https://skillhub.cn) (community cinese)** | `skillhub install <frontmatter-slug>` (es. `keyword-research`) |
 | **Qualsiasi host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
@@ -106,6 +108,18 @@ In Claude Code, `marketplace add` registra solo il catalogo — esegui `/plugin 
 Installare il plugin **non** aggiunge nulla alla tua lista `/mcp` — il catalogo MCP vive in [`docs/mcp-catalog.json`](mcp-catalog.json), deliberatamente fuori dal percorso `.mcp.json` della root del plugin che Claude Code registra automaticamente, quindi è solo un riferimento da copiare e incollare (vedi [Connettori](#connettori--livelli-di-potenziamento)).
 
 La root del repository è la fonte di authoring, **non** la root di installazione standard Agent Plugins v1. Usa l'asset della release sopra: proietta **120/120 Agent Skills rigorose** in `skills/<name>/` e non include `mcp.json`, comandi, hook, connettori o il runtime del repository. I livelli di compatibilità esistenti restano supportati; consulta il [pacchetto Portable Lite e i suoi limiti di capacità](agent-plugins-v1.md).
+
+### AI Staff
+
+Sui host a bot nominati (**Grok Bot** di xAI, **Bot Mode** di Hermes Agent) questo bundle non si installa come un mucchio di 120 skill — si installa come **staff**: otto colleghi con nome a cui scrivi come a dei colleghi. Sette specialisti possiedono ciascuno una corsia — `aaron-narrative`, `aaron-seo-geo`, `aaron-social`, `aaron-email`, `aaron-ad`, `aaron-influencer`, `aaron-launch` — e **`aaron-chief`** tiene la scrivania: detiene gli 8 registri di protocollo e instrada ogni obiettivo cross-lane con @mention (visited set, tetto di tre handoff). È lo stesso organigramma capo di staff più specialisti per cui questi host sono nati, derivato dallo stesso catalogo tipizzato delle altre forme di installazione: tutte le 120 skill, coperte esattamente una volta, senza un secondo inventario.
+
+Di' a `@aaron-chief` «launch v2 on Product Hunt in three weeks» e il piano torna tramite `@aaron-launch`, `@aaron-email` e `@aaron-social` — ogni bot risponde solo nella propria corsia.
+
+```bash
+python3 scripts/generate-bot-projections.py --output /private/path/aaron-bot-roster
+```
+
+Il generatore scrive 8 bundle di profilo Hermes installabili (`hermes/<bot>/`, manifest legati da hash) più il pack di setup Grok Bot (`grok/bot-cards.md`, elenchi di enable, checklist). I bundle staff sono **Tier-1 statici**: niente connettori, MCP, cron o runtime; gli auditor restituiscono `NOT_SCORED` invece di indovinare; le scritture di registro e memoria restano propose-only. Su Grok Bot tutti i bot di un membro condividono un computer cloud — i nomi dei bot non sono perimetri di sicurezza. Passi di deploy, caveat dell'host e backlog smoke owner-run: [agent-compatibility.md](agent-compatibility.md#named-bot-roster-deployment-grok-bot--hermes-bot-mode).
 
 ---
 

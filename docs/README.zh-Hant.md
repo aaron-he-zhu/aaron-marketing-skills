@@ -2,7 +2,7 @@
 
 # Aaron 行銷技能庫
 
-**120 個行銷技能 —— 品牌敘事、SEO/GEO、紅人、付費廣告、郵件、產品發布、社媒 —— 共享一套契約。**
+**120 個行銷技能，7 個學科，一套契約 —— 你的 AI 行銷團隊，可裝成外掛、可攜技能或 8-bot 小隊。**
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
@@ -22,7 +22,7 @@
 
 </div>
 
-一套 Claude 技能與斜線命令，讓聊天 Agent 成為行銷操作員。七個學科 + 一個共享協議層，一圖總覽：
+一支**可安裝、而不是靠提示詞堆出來的 AI 行銷團隊** —— 120 個 agent skills，可裝成帶命令與記憶的外掛、70+ 宿主上的可攜技能，或 named-bot 宿主（Grok Bot、Hermes Bot Mode）上的 **8-bot AI Staff**。七個學科 + 一個共享協議層，一圖總覽：
 
 | 層 | 技能 | 生命週期（階段目錄） | 框架 → 門 | 入口命令 |
 |----|------|----------------------|-----------|----------|
@@ -47,6 +47,7 @@
 
 - [為什麼選它](#為什麼選它)
 - [安裝](#安裝)
+  - [AI Staff](#ai-staff)
 - [初次使用](#初次使用)
 - [架構](#架構)
   - [共享技能契約](#共享技能契約)
@@ -98,6 +99,7 @@
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` 然後 `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ 宿主](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
 | **Agent Plugins v1 客戶端 · Portable Lite** | 從 [v20.0.0 Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0)下載 `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz`，解壓後安裝其中的外掛目錄 |
+| **Grok Bot · Hermes Bot Mode（AI Staff）** | 產生 8-bot 花名冊：`python3 scripts/generate-bot-projections.py --output <private-dir>` —— 7 個專科 + `aaron-chief`。見 [AI Staff](#ai-staff) |
 | **[SkillHub.cn](https://skillhub.cn)（中文社群）** | `skillhub install <frontmatter-slug>`（如 `keyword-research`） |
 | **任意宿主** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
@@ -106,6 +108,18 @@
 安裝外掛**不會**往你的 `/mcp` 清單新增任何東西——MCP 目錄位於 [`docs/mcp-catalog.json`](mcp-catalog.json)，刻意放在 Claude Code 會自動註冊的外掛根 `.mcp.json` 路徑之外，僅作複製貼上參考（見[連接器與層級](#連接器與層級)）。
 
 儲存庫根目錄是編寫單一事實來源，**不是** Agent Plugins v1 的標準安裝根。請使用上述 Release 資產；它把 **120/120 個嚴格 Agent Skills** 投影為扁平的 `skills/<name>/`，且不含 `mcp.json`、命令、hooks、連接器或儲存庫執行環境。現有客戶端相容層繼續保留；詳見 [Portable Lite 套件結構與能力邊界](agent-plugins-v1.md)。
+
+### AI Staff
+
+在 named-bot 宿主（xAI 的 **Grok Bot**、Hermes Agent 的 **Bot Mode**）上，本倉庫不是裝成 120 個技能的一堆，而是一支 **團隊**：八個有名字的同事，用 @ 像對同事說話。七個專科各管一條線 —— `aaron-narrative`、`aaron-seo-geo`、`aaron-social`、`aaron-email`、`aaron-ad`、`aaron-influencer`、`aaron-launch` —— **`aaron-chief`** 坐席：它持有 8 個協議註冊表，並用 @mention 路由跨線目標（visited set、三次交棒上限）。這就是這些宿主圍繞的「參謀長 + 專科」編制，來源與其它安裝形態相同的類型化目錄：120 個技能恰好覆蓋一次，沒有第二套清單。
+
+對 `@aaron-chief` 說「三週後在 Product Hunt 發 v2」，計畫會經 `@aaron-launch`、`@aaron-email`、`@aaron-social` 回來 —— 每個 bot 只答自己的線，不會越權兼職。
+
+```bash
+python3 scripts/generate-bot-projections.py --output /private/path/aaron-bot-roster
+```
+
+產生器寫出 8 個可安裝的 Hermes profile 包（`hermes/<bot>/`，雜湊綁定清單）以及 Grok Bot 安裝包（`grok/bot-cards.md`、各 bot 啟用列表、檢查清單）。Staff 包是 **Tier-1 靜態**：無連接器、MCP、cron 或執行環境；auditor 回傳 `NOT_SCORED` 而不是瞎猜；註冊表與記憶寫入保持 propose-only。在 Grok Bot 上，同一成員的所有 bot 共享一台雲端電腦 —— bot 名字不是安全邊界。部署步驟、宿主限制與 owner-run smoke backlog：[agent-compatibility.md](agent-compatibility.md#named-bot-roster-deployment-grok-bot--hermes-bot-mode)。
 
 ---
 

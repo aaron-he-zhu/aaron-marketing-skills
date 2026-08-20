@@ -2,7 +2,7 @@
 
 # Aaron Marketing Skills
 
-**120 のマーケティングスキル — ブランドナラティブ、SEO/GEO、インフルエンサー、Paid Ads、メール、Launch、ソーシャル — を一つの契約で。**
+**120 のマーケティングスキル、7 領域、一つの契約 — プラグイン、ポータブルスキル、または 8 ボットチームとして入れられる AI マーケティングスタッフ。**
 
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
@@ -22,7 +22,7 @@
 
 </div>
 
-チャットエージェントをマーケティングオペレーターに変える Claude スキルとスラッシュコマンドのライブラリ。7 つの専門領域と 1 つの共有プロトコル層を一望：
+**プロンプトではなくインストールする AI マーケティングスタッフ** — 120 の agent skills が、コマンドとメモリ付きの一つのプラグイン、70+ ホスト上のポータブルスキル、または名前付きボットホスト（Grok Bot、Hermes Bot Mode）上の **8 ボット AI Staff** として動きます。7 つの専門領域と 1 つの共有プロトコル層を一望：
 
 | 層 | スキル | ライフサイクル（フェーズディレクトリ） | フレームワーク → ゲート | エントリポイント |
 |-------|--------|-------------------------------|------------------|------------|
@@ -47,6 +47,7 @@
 
 - [なぜこのライブラリか](#なぜこのライブラリか)
 - [インストール](#インストール)
+  - [AI Staff](#ai-staff)
 - [初回実行](#初回実行)
 - [アーキテクチャ](#アーキテクチャ)
   - [共有スキルコントラクト](#共有スキルコントラクト)
@@ -98,6 +99,7 @@ Claude Code、Agent Skills 互換の任意のホスト、あるいは単純な `
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` の後に `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ ホスト](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
 | **Agent Plugins v1 クライアント · Portable Lite** | [v20.0.0 リリース](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0)から `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` をダウンロードして展開し、抽出されたプラグインディレクトリをインストール |
+| **Grok Bot · Hermes Bot Mode (AI Staff)** | 8 ボットの名簿を生成：`python3 scripts/generate-bot-projections.py --output <private-dir>` — 7 専門家 + `aaron-chief`。[AI Staff](#ai-staff) を参照 |
 | **[SkillHub.cn](https://skillhub.cn)（中国語コミュニティ）** | `skillhub install <frontmatter-slug>`（例：`keyword-research`） |
 | **任意のホスト** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
 
@@ -106,6 +108,18 @@ Claude Code では `marketplace add` はカタログを登録するだけです 
 プラグインをインストールしても `/mcp` リストには**何も**追加されません —— MCP カタログは [`docs/mcp-catalog.json`](mcp-catalog.json) にあり、Claude Code が自動登録するプラグインルートの `.mcp.json` パスの外に意図的に置かれているため、コピー＆ペースト用の参照にすぎません（[コネクタ](#コネクタと拡張ティア)を参照）。
 
 リポジトリのルートはオーサリング用 SSOT であり、Agent Plugins v1 の標準インストールルートでは**ありません**。上記のリリース資産を使ってください。**120/120 の厳格な Agent Skills** を `skills/<name>/` に投影し、`mcp.json`、コマンド、hooks、コネクタ、リポジトリのランタイムは含みません。既存のクライアント互換レイヤーは維持されます。詳細は [Portable Lite パッケージと機能境界](agent-plugins-v1.md)を参照してください。
+
+### AI Staff
+
+名前付きボットホスト（xAI の **Grok Bot**、Hermes Agent の **Bot Mode**）では、このバンドルは 120 スキルの山としては入りません。**スタッフ**として入ります。名前のある 8 人の同僚に、同僚と同じように @mention します。7 人の専門家がそれぞれ 1 レーンを持ちます —— `aaron-narrative`、`aaron-seo-geo`、`aaron-social`、`aaron-email`、`aaron-ad`、`aaron-influencer`、`aaron-launch` —— **`aaron-chief`** がデスクを回します。8 つのプロトコルレジストリを持ち、横断目標を @mention でルーティングします（visited set、3 回のハンドオフ上限）。これはこれらのホストが前提とするチーフ・オブ・スタッフ＋専門家の編成と同じで、他の導入形態と同じ型付きカタログから導出されます。120 スキルをちょうど 1 回ずつ、第二の在庫はありません。
+
+`@aaron-chief` に「3 週間後に Product Hunt で v2 を出す」と伝えると、計画は `@aaron-launch`、`@aaron-email`、`@aaron-social` 経由で戻ります。各ボットは自分のレーンだけ答えます。
+
+```bash
+python3 scripts/generate-bot-projections.py --output /private/path/aaron-bot-roster
+```
+
+ジェネレータはインストール可能な Hermes プロファイル 8 本（`hermes/<bot>/`、ハッシュ拘束マニフェスト）と Grok Bot セットアップパック（`grok/bot-cards.md`、有効化リスト、チェックリスト）を書き出します。Staff バンドルは **Tier-1 静的**：コネクタ、MCP、cron、ランタイムなし。auditor は推測せず `NOT_SCORED` を返します。レジストリとメモリの書き込みは propose-only のままです。Grok Bot ではメンバーの全ボットが 1 台のクラウドコンピュータを共有します —— ボット名はセキュリティ境界ではありません。デプロイ手順、ホスト上の注意、owner-run のスモークバックログ：[agent-compatibility.md](agent-compatibility.md#named-bot-roster-deployment-grok-bot--hermes-bot-mode)。
 
 ---
 
