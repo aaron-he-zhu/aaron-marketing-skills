@@ -53,6 +53,15 @@ connectors. The typed source is
 | `generic-shared-root-host` | plugin/repository | eight router-skill facades | `router-facades/<discipline>/SKILL.md` plus a typed sidecar manifest |
 | `standalone-skill-host` | one-folder standalone skill | direct skill invocation | none |
 | `agent-plugins-v1` | Portable Lite Agent Plugin | direct Skill discovery | exactly 120 immediate `skills/<name>/SKILL.md` directories |
+| `hermes-bot-host` (roster-projection-only) | `bot-roster` output of `generate-bot-projections.py` | named-bot roster (8 bots, handoff by @mention) | 8 Hermes profile-distribution bundles (`hermes/<bot>/`) |
+| `grok-bot-host` (roster-projection-only) | `bot-roster` output of `generate-bot-projections.py` | named-bot roster (8 bots, handoff by @mention) | `grok/bot-cards.md`, `enable-lists.md`, `setup-checklist.md` |
+
+The two `*-bot-host` rows are declared in the separate
+[`references/bot-roster-profiles.json`](../references/bot-roster-profiles.json)
+catalog (`context_assembly: excluded`), not in `host-capability-profiles.json`:
+they describe generated deployment surfaces only and never enter
+`build-distribution.py` payload selection, prompt/context assembly, or the
+certified resolver chain.
 
 Every plugin host projection, at every physical profile, ships the typed host,
 prompt, and context-module catalogs, `context-profile-resolver.py`, and the
@@ -109,6 +118,30 @@ Omitting `--host-profile` preserves existing behavior: plugin builds select
 An incompatible combination fails closed. Manifest 1.2 records the selected
 host profile and surfaces; read-only verification remains compatible with
 legacy manifest 1.0 and physical-profile manifest 1.1.
+
+### Bot roster deployment (Grok Bot / Hermes Bot Mode)
+
+Named-bot hosts consume a fifth, separately generated surface — never a
+committed tree and never a `build-distribution.py` payload:
+
+```bash
+python3 scripts/generate-bot-projections.py --output /private/path/aaron-bot-roster
+```
+
+That command derives the 8-bot roster (7 discipline bots plus
+`aaron-chief-of-staff`, which owns the 8 protocol skills and the routing table)
+from `references/system-catalog.json`, covering the 120 skills exactly once. It
+writes 8 self-contained Hermes profile-distribution bundles (`distribution.yaml`,
+generated `SOUL.md`, Portable-Lite-projected `skills/`, static reference
+closure, hash-bound manifest) plus the Grok Bot cards, per-bot enable lists,
+and setup checklist. Degradation is identical in spirit to Portable Lite and is
+stamped into every bundle: no connectors, `mcp.json`, cron, hooks, or
+deterministic runtimes; auditors return `NOT_SCORED`; registry and
+durable-memory work is propose-only with owner-run acceptance; links to skills
+owned by another bot redirect to the bundle boundary and hand off by name.
+Deployment steps, host caveats (including Grok Bot's shared cloud computer),
+and the owner-run smoke backlog live in
+[agent-compatibility.md](agent-compatibility.md#named-bot-roster-deployment-grok-bot--hermes-bot-mode).
 
 Build the complete release-asset set with one command. The builder exports the
 exact Git object into a private directory, builds all three runtime profiles

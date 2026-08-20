@@ -1,0 +1,51 @@
+{
+  "$schema": "./bot-roster-profiles.schema.json",
+  "context_assembly": "excluded",
+  "expected_bots": 8,
+  "expected_skills": 120,
+  "generator": "scripts/generate-bot-projections.py",
+  "kind": "bot-roster-profiles",
+  "profile_order": [
+    "hermes-bot-host",
+    "grok-bot-host"
+  ],
+  "profiles": {
+    "grok-bot-host": {
+      "audit_scoring": "not-scored-without-runtime",
+      "capabilities": [
+        "skill-discovery",
+        "named-bot-roster"
+      ],
+      "compatible_distributions": [
+        "bot-roster"
+      ],
+      "connector_surface": "none",
+      "display_name": "Grok Bot (managed named bots on a shared cloud computer)",
+      "install_surface": "grok-plugins-or-written-instructions",
+      "mcp_policy": "absent",
+      "persistence": "propose-only",
+      "reference_surface": "instruction-inline-only",
+      "routing_surface": "named-bot-roster"
+    },
+    "hermes-bot-host": {
+      "audit_scoring": "not-scored-without-runtime",
+      "capabilities": [
+        "skill-discovery",
+        "skill-local-references",
+        "shared-root-references",
+        "named-bot-roster"
+      ],
+      "compatible_distributions": [
+        "bot-roster"
+      ],
+      "connector_surface": "none",
+      "display_name": "Hermes Agent Bot Mode (one profile distribution per bot)",
+      "install_surface": "hermes-profile-distribution",
+      "mcp_policy": "absent",
+      "persistence": "propose-only",
+      "reference_surface": "packaged-static-closure",
+      "routing_surface": "named-bot-roster"
+    }
+  },
+  "schema_version": "1.0"
+}
