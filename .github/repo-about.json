@@ -1,10 +1,11 @@
 {
   "_comment": "SSOT for the GitHub repo About (sidebar description + topics). NOT read by GitHub directly — projected onto the repo by scripts/sync-about.sh (owner-run, --live), verified weekly by .github/workflows/about-drift.yml, and its leading skill count is checked against the tree by scripts/check-versions.sh. Edit here when the skill/discipline/gate counts change; the description MUST start with the current skill count so check-versions can parse it.",
-  "description": "120 marketing skills + 8 commands for Claude Code & AI agents across 7 disciplines — SEO/GEO, influencer, paid ads, email, product launch, organic social & brand narrative — on one shared contract, with 8 auditor gates: CORE-EEAT · CITE · STAR · ROAS · SEND · RAMP · ECHO · TALE.",
+  "description": "120 marketing skills as an AI marketing staff — plugin, portable skills, or an 8-bot team across 7 disciplines (narrative, SEO/GEO, social, email, paid, influencer, launch) on one contract, with 8 auditor gates: TALE · CORE-EEAT · CITE · ECHO · SEND · ROAS · STAR · RAMP.",
   "topics": [
     "agent-skills",
-    "claude-code",
-    "claude-skills",
+    "ai-staff",
+    "grok",
+    "hermes",
     "marketing",
     "seo",
     "geo",
@@ -17,7 +18,6 @@
     "email-marketing",
     "marketing-automation",
     "product-launch",
-    "product-hunt",
     "social-media-marketing",
     "organic-social",
     "brand-messaging",

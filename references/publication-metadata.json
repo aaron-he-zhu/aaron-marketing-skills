@@ -4,7 +4,7 @@
     "id": "aaron-marketing",
     "name": "aaron-marketing",
     "display_name": "Aaron Marketing Skills",
-    "description": "120 marketing skills and 8 commands as a four-layer operating system: Narrative strategy; SEO/GEO, Organic Social, Email, Paid Ads, and Influencer channels; Product Launch orchestration; and a Protocol layer with seven append-only truth registries plus non-canonical working memory. Eight typed advisory frameworks (TALE, CORE-EEAT, CITE, STAR, ECHO, SEND, ROAS, RAMP) use machine-checkable auditor artifacts and immutable standalone runtime contracts. Keyless-first and zero-dependency.",
+    "description": "120 marketing skills and 8 commands as an AI marketing staff — one plugin, portable skills on 70+ hosts, or an 8-bot team — and as a four-layer operating system: Narrative strategy; SEO/GEO, Organic Social, Email, Paid Ads, and Influencer channels; Product Launch orchestration; and a Protocol layer with seven append-only truth registries plus non-canonical working memory. Eight typed advisory frameworks (TALE, CORE-EEAT, CITE, STAR, ECHO, SEND, ROAS, RAMP) use machine-checkable auditor artifacts and immutable standalone runtime contracts. Keyless-first and zero-dependency.",
     "author": {
       "name": "Aaron He Zhu",
       "email": "hello@zhuhe.io",
@@ -112,11 +112,12 @@
   },
   "github_about": {
     "comment": "SSOT for the GitHub repo About (sidebar description + topics). NOT read by GitHub directly — projected onto the repo by scripts/sync-about.sh (owner-run, --live), verified weekly by .github/workflows/about-drift.yml, and its leading skill count is checked against the tree by scripts/check-versions.sh. Edit here when the skill/discipline/gate counts change; the description MUST start with the current skill count so check-versions can parse it.",
-    "description": "120 marketing skills + 8 commands for Claude Code & AI agents across 7 disciplines — SEO/GEO, influencer, paid ads, email, product launch, organic social & brand narrative — on one shared contract, with 8 auditor gates: CORE-EEAT · CITE · STAR · ROAS · SEND · RAMP · ECHO · TALE.",
+    "description": "120 marketing skills as an AI marketing staff — plugin, portable skills, or an 8-bot team across 7 disciplines (narrative, SEO/GEO, social, email, paid, influencer, launch) on one contract, with 8 auditor gates: TALE · CORE-EEAT · CITE · ECHO · SEND · ROAS · STAR · RAMP.",
     "topics": [
       "agent-skills",
-      "claude-code",
-      "claude-skills",
+      "ai-staff",
+      "grok",
+      "hermes",
       "marketing",
       "seo",
       "geo",
@@ -129,7 +130,6 @@
       "email-marketing",
       "marketing-automation",
       "product-launch",
-      "product-hunt",
       "social-media-marketing",
       "organic-social",
       "brand-messaging",

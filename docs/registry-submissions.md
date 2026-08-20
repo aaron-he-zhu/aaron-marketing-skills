@@ -11,19 +11,19 @@ Operational dossier for getting the bundle listed on every skills marketplace, d
 **Install (Claude Code plugin, full suite)**: `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` → `/plugin install aaron-marketing@aaron`
 **Install (Agent Plugins v1, Portable Lite)**: download `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` from the [v20.0.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0), unpack it, and install/load the extracted plugin directory — 120/120 strict static Agent Skills; no `mcp.json`, commands, hooks, connectors, or repository runtime ([package boundary](agent-plugins-v1.md))
 **Live registry pages**: [skills.sh](https://skills.sh/aaron-he-zhu/aaron-marketing-skills) · ClawHub (`@aaron-he-zhu/<skill>`) · SkillHub.cn (frontmatter slugs: `<skill>` when owned, otherwise `aaron-<skill>`)
-**Topics/tags**: marketing, seo, geo, influencer-marketing, paid-ads, email-marketing, organic-social, product-launch, go-to-market, brand-narrative, brand-messaging, agent-skills, claude-code, skill-md
+**Topics/tags**: marketing, seo, geo, influencer-marketing, paid-ads, email-marketing, organic-social, product-launch, go-to-market, brand-narrative, brand-messaging, agent-skills, ai-staff, grok, hermes, skill-md
 
 **One-liner (EN, ~120 chars)**
-> 120 marketing skills as one four-layer operating system — narrative, SEO/GEO, social, email, paid, influencer, launch — with 8 auditor gates and keyless connectors.
+> 120 marketing skills as an AI marketing staff — plugin, portable skills, or an 8-bot team across narrative, SEO/GEO, social, email, paid, influencer, and launch.
 
 **One-liner (中文, ~60 字)**
-> 120 个营销技能构成四层营销操作系统:品牌叙事、SEO/GEO、自然社媒、邮件、付费广告、红人、产品发布,内置 8 个审计门与免密钥连接器。
+> 120 个营销技能组成一支可安装的 AI 营销团队:插件、便携技能或 8-bot AI Staff,覆盖品牌叙事、SEO/GEO、社媒、邮件、付费、红人与发布。
 
 **Short blurb (EN, ~350 chars)**
-> A four-layer marketing operating system for AI agents: 120 SKILL.md skills across seven disciplines — brand narrative (TALE), SEO/GEO (CORE-EEAT + CITE), organic social (ECHO), email (SEND), paid ads (ROAS), influencer (STAR) and product launch (RAMP) — sharing one contract (trigger, quick start, handoff, next-best-skill). Eight benchmark-driven auditor gates emit machine-checkable verdicts. Every skill runs Tier-1 on pasted data; zero-dependency Python connectors pull free/own data. Works on Claude Code (full plugin) and 70+ SKILL.md hosts.
+> An AI marketing staff you install, not prompt: 120 SKILL.md skills across seven disciplines — brand narrative (TALE), SEO/GEO (CORE-EEAT + CITE), organic social (ECHO), email (SEND), paid ads (ROAS), influencer (STAR) and product launch (RAMP) — sharing one contract (trigger, quick start, handoff, next-best-skill). Eight auditor gates emit machine-checkable verdicts. Runs as one plugin with commands and memory, as portable skills on 70+ hosts, or as an 8-bot AI Staff on named-bot hosts.
 
 **Short blurb (中文, ~200 字)**
-> 把聊天 Agent 变成营销操作员的四层营销操作系统:120 个 SKILL.md 技能覆盖七大学科——品牌叙事(TALE)、SEO/GEO(CORE-EEAT + CITE)、自然社媒(ECHO)、邮件营销(SEND)、付费广告(ROAS)、红人营销(STAR)、产品发布(RAMP)——共享同一套契约(触发→快速开始→交棒→下一技能)。八套基准驱动八个审计门,产出可机器校验的判定。每个技能都能仅凭粘贴的数据运行;零依赖 Python 连接器可拉取免费/自有数据。支持 Claude Code 完整插件与 70+ SKILL.md 宿主。
+> 一支可安装、而不是靠提示词堆出来的 AI 营销团队:120 个 SKILL.md 技能覆盖七大学科——品牌叙事(TALE)、SEO/GEO(CORE-EEAT + CITE)、自然社媒(ECHO)、邮件营销(SEND)、付费广告(ROAS)、红人营销(STAR)、产品发布(RAMP)——共享同一套契约(触发→快速开始→交棒→下一技能)。八个审计门产出可机器校验的判定。可装成带命令与记忆的插件、70+ 宿主上的便携技能,或 named-bot 宿主上的 8-bot AI Staff。
 
 **Example use cases (EN — for submission forms asking "Example 1/2/…")**
 ```text
@@ -49,12 +49,12 @@ repository-validator-conformant archive.
 
 **Awesome-list entry line (EN, generic)**
 ```markdown
-- [Aaron Marketing Skills](https://github.com/aaron-he-zhu/aaron-marketing-skills) - 120 marketing skills as a four-layer operating system (narrative, SEO/GEO, social, email, paid ads, influencer, launch) on one shared contract, with 8 benchmark-driven auditor gates and keyless data connectors.
+- [Aaron Marketing Skills](https://github.com/aaron-he-zhu/aaron-marketing-skills) - 120 marketing skills as an AI marketing staff (plugin, portable skills, or an 8-bot team) covering narrative, SEO/GEO, social, email, paid ads, influencer, and launch.
 ```
 
 **Awesome-list entry line (中文, generic)**
 ```markdown
-- [Aaron Marketing Skills](https://github.com/aaron-he-zhu/aaron-marketing-skills) - 120 个营销技能构成四层营销操作系统(品牌叙事、SEO/GEO、自然社媒、邮件、付费广告、红人、产品发布),同一套运行契约 + 8 个审计门 + 免密钥数据连接器。
+- [Aaron Marketing Skills](https://github.com/aaron-he-zhu/aaron-marketing-skills) - 120 个营销技能组成 AI 营销团队(插件 / 便携技能 / 8-bot),覆盖品牌叙事、SEO/GEO、社媒、邮件、付费、红人与发布。
 ```
 
 ## Status matrix
@@ -119,7 +119,7 @@ repository-validator-conformant archive.
    ---
    name: aaron-marketing-skills
    title: Aaron Marketing Skills
-   description: 120 marketing skills as a four-layer operating system — narrative, SEO/GEO, social, email, paid ads, influencer, launch — with 8 auditor gates and keyless data connectors.
+   description: 120 marketing skills as an AI marketing staff — plugin, portable skills, or an 8-bot team across narrative, SEO/GEO, social, email, paid ads, influencer, and launch.
    source: community
    author: aaron-he-zhu
    githubUrl: https://github.com/aaron-he-zhu/aaron-marketing-skills
@@ -144,7 +144,7 @@ repository-validator-conformant archive.
 
 1. **VoltAgent/awesome-agent-skills** (~27k★) — *top target*. Links-only curated list with an existing **Community Skills → Marketing** subcategory (marketing precedent: Corey Haines' skills already listed). Requirements per its CONTRIBUTING: public repo, working skill, SKILL.md docs, ≤10-word description, and *demonstrated community adoption* (brand-new repos get declined — our star count and skills.sh installs are the evidence). PR-ready entry (title `Add skill: aaron-he-zhu/aaron-marketing-skills`):
    ```markdown
-   - **[aaron-he-zhu/aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills)** - 120 marketing skills: narrative, SEO/GEO, social, email, paid, influencer, launch
+   - **[aaron-he-zhu/aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills)** - 120 marketing skills as an AI staff: narrative, SEO/GEO, social, email, paid, influencer, launch
    ```
 2. **Sibling awesome lists** (same entry line, adjust format to each list's style): `travisvn/awesome-claude-skills`, `heilcheng/awesome-agent-skills`, `kodustech/awesome-agent-skills`, `ComposioHQ/awesome-claude-skills`, and the Chinese-maintained `libukai/awesome-agent-skills`, `JackyST0/awesome-agent-skills`.
 3. **VoltAgent/awesome-openclaw-skills** (5,400+ entries) — hard gate: entry must link `clawhub.ai/<author>/<skill>` for skills **already on ClawHub** with clean scan + adoption. Second wave after `scripts/publish-clawhub.sh` runs for real. Entry format: `- [skill-name](https://clawhub.ai/aaron-he-zhu/<skill>) - <≤10-word description>.`
