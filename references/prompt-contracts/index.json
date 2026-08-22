@@ -17,7 +17,7 @@
       ],
       "framework": "TALE",
       "ref": "references/prompt-contracts/narrative-quality-auditor.json",
-      "sha256": "52eb64cb33bc7452438325ed5c7338a9c6948a6cdc695e45a43c0c765ee95bda",
+      "sha256": "78275a9672c939ce07bea53fdc8014fcbb260a9330951bcb53bd241404c489c4",
       "skill": "narrative-quality-auditor",
       "skill_sha256": "14cd9522a6dd230f9b48045575bda5ab58019ab4da0491bb8c0bdca7da155699",
       "skill_version": "20.0.0"
@@ -33,7 +33,7 @@
       ],
       "framework": "CORE-EEAT",
       "ref": "references/prompt-contracts/content-quality-auditor.json",
-      "sha256": "7c393c7e6dff4c831ceec27fb4c4cb9dfcfcce6af6bba82fef8f4a73c9a66ee2",
+      "sha256": "4395b8e0952ea42ac12b2e0951acbd5d7e0a4ad145d86dacade34f6a6e8c0624",
       "skill": "content-quality-auditor",
       "skill_sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
       "skill_version": "20.0.0"
@@ -49,7 +49,7 @@
       ],
       "framework": "CITE",
       "ref": "references/prompt-contracts/domain-authority-auditor.json",
-      "sha256": "205288d4839046ca49e35e7c16f8987fdd48e88e0f5c49cfffc5ac1d9e552cbc",
+      "sha256": "c09a17b838dd747b35f529ea2c920e9953e1c4e710c869126276baee2050ac74",
       "skill": "domain-authority-auditor",
       "skill_sha256": "b3f8ac9d2f9605b77b258230592e5fa99e7a0dbe248840e1f5a8adc37b1216e9",
       "skill_version": "20.0.0"
@@ -65,7 +65,7 @@
       ],
       "framework": "ECHO",
       "ref": "references/prompt-contracts/social-quality-auditor.json",
-      "sha256": "e97b6a7668193be9a54ed3072af4d0a6e0609788b2413df97b217abfb2f2e0fe",
+      "sha256": "7f6d98e2f3bf576b5967ec151841e50ff2ed6e1889d93cba5dd1c19a1f6e7224",
       "skill": "social-quality-auditor",
       "skill_sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
       "skill_version": "20.0.0"
@@ -81,7 +81,7 @@
       ],
       "framework": "SEND",
       "ref": "references/prompt-contracts/email-quality-auditor.json",
-      "sha256": "f113d8f932e415f4270dbc66ac6193fc4c059a4615613f2bad1351929eb73283",
+      "sha256": "3839894e323328272ce1790720c3a36ffd17103b3d1b8dd50e91c8aaface07de",
       "skill": "email-quality-auditor",
       "skill_sha256": "e2c9f4118bae5fdf706ac95e70ebdf5151d99946830529c0fc8cc2f7a09bb76a",
       "skill_version": "20.0.0"
@@ -97,7 +97,7 @@
       ],
       "framework": "ROAS",
       "ref": "references/prompt-contracts/ad-account-auditor.json",
-      "sha256": "24aac5fa0f76d1e64b5c32de96407e26d542e96631594a17897b7eca706377b4",
+      "sha256": "ae144c4b24e569a67dfa2411667a3520b5642fb3d1b427c69f15611763289775",
       "skill": "ad-account-auditor",
       "skill_sha256": "717c914cfa4033725e97faeeaccf94ebb038233e28c2bf98a7aaa38ee7ff531c",
       "skill_version": "20.0.0"
@@ -113,7 +113,7 @@
       ],
       "framework": "STAR",
       "ref": "references/prompt-contracts/creator-content-auditor.json",
-      "sha256": "56b69edd5ac4e781fd9f1f331b20e652076832fd45465980db4541e21e537c8e",
+      "sha256": "2d77de0084e1dd7ed1aaca93d360966e546d7c5b594766720d83374857260ee7",
       "skill": "creator-content-auditor",
       "skill_sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
       "skill_version": "20.0.0"
@@ -129,7 +129,7 @@
       ],
       "framework": "RAMP",
       "ref": "references/prompt-contracts/launch-readiness-auditor.json",
-      "sha256": "4aed049819e733a51e51f3b284d1f534ec96f3a7b308439fc5315fb036d80c64",
+      "sha256": "f0336893d96306a5b66de0c03d217bbfa8e2fb3b9c58270b058e8755c53127af",
       "skill": "launch-readiness-auditor",
       "skill_sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
       "skill_version": "20.0.0"
@@ -137,14 +137,14 @@
   ],
   "framework_catalog": {
     "path": "references/framework-catalog.json",
-    "sha256": "335a3d9f24c9a58fea13bb7a60c587232b4b296b8f992918fee61309ac925b58",
-    "version": "20.0.0"
+    "sha256": "71700105604bf955bc9fe634ed917a97f8f912b2674d1eee8c989fe13e6a9a0a",
+    "version": "20.1.0"
   },
   "schema_version": "1.0",
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-    "version": "20.0.0"
+    "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+    "version": "20.1.0"
   },
   "variant_count": 40
 }

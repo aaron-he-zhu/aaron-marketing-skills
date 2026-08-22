@@ -52,7 +52,7 @@
     "note": "Markdown was used only to create the initial explicit edge inventory; normal generation never treats prose as authoritative.",
     "source_surface": "Markdown Next Best Skill declarations"
   },
-  "catalog_version": "20.0.0",
+  "catalog_version": "20.1.0",
   "edge_shards": [
     {
       "edge_count": 40,
@@ -68,7 +68,7 @@
       "id": "edges-01",
       "last_edge_id": "content-quality-auditor--technical-seo-checker",
       "ref": "references/workflow-graph/edges-01.json",
-      "sha256": "996f4bce94a4739e4a9198e647ebdc96bb8e4b7ef626c5af67230ad59254c7e9"
+      "sha256": "d2fc18d964df4bceabd64a7bf70c6f41d021242d634e0bb3fbc25d3c61b4203a"
     },
     {
       "edge_count": 40,
@@ -84,7 +84,7 @@
       "id": "edges-03",
       "last_edge_id": "keyword-research--serp-analysis",
       "ref": "references/workflow-graph/edges-03.json",
-      "sha256": "9d08ea81ed3ffda4678de75f0f7efc7284a4dcaad4973c2d9c449cd2948c2ccd"
+      "sha256": "ced3002a2d891a3ec74cec5b72d0174f78ced0dcfe8d3f016b7011f113b7d1bf"
     },
     {
       "edge_count": 40,
@@ -132,7 +132,7 @@
       "id": "edges-09",
       "last_edge_id": "voice-dossier-builder--social-calendar-builder",
       "ref": "references/workflow-graph/edges-09.json",
-      "sha256": "2ab40d1ab59f1c161a205992e922cd05460a4dc91f3a6b47ea62ff4a961faf48"
+      "sha256": "d330ab30f01d14d42287684af6e654f6f8ae8eedfed5494252a1b021320ecf9b"
     }
   ],
   "entrypoint_policy": "all-catalog-skills-directly-routable",

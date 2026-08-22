@@ -4,13 +4,13 @@ slug: trend-spotter
 displayName: "Trend Spotter · 趋势侦察"
 summary: "排名化趋势报告:品牌契合评分、rising/peak/declining 判断与 go/skip 建议"
 description: 'Use when the user asks to "find trending topics", "what trends should my brand jump on", or "time a campaign around a cultural moment"; produces a ranked trend report with brand-fit scores, format calls (rising/peak/declining), a cultural calendar, and go/skip recommendations. Not for finding the creators to run those trends — use influencer-discovery; not for building the brand posting calendar from a go verdict — use social-calendar-builder. 热点趋势洞察/借势营销'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when planning campaign timing and themes, deciding whether to join a hashtag, sound, or challenge, scouting trending content formats on a platform, mapping upcoming cultural moments to lead times, or checking which trends competitors have adopted or missed. Auto-activate when the request is about what is trending, what to post around, or when to act."
 argument-hint: "<brand or industry> [platform] [time horizon]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Trend Spotter
@@ -63,12 +63,14 @@ For a keyless way to fill the trending tables with real signal, run the multi-so
 
 **Keyless momentum sharpeners**: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/pageviews.py" "<Topic_Article>" --granularity daily --days 30` shows whether a topic's Wikipedia attention is actually climbing — Measured evidence for the rising / peak / declining format call — and the Hacker News Algolia API (`https://hn.algolia.com/api/v1/search?query=<topic>`, keyless) upgrades the HN RSS read with points and comment counts usable as a heat score.
 
+**X/Twitter trend corroboration (metered key).** `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/xquik.py" listen "<candidate trend A>" "<candidate trend B>" --sort Latest --limit 20` returns bounded public X posts with engagement counters and preserved query membership. Use it to inspect recency, formats, and named adopters. Do not treat a capped result page as platform-wide volume or growth. Pair it with a dated baseline or another source before making a rising/peak/declining call.
+
 ## Instructions
 
 When a user requests trend analysis, run these steps. Each step has a fill-in template in [references/templates.md](references/templates.md) — copy the matching block and populate it.
 
 1. **Define trend parameters** — capture brand/industry, platforms, audience, geographic focus, time horizon, and content categories. (Template: Step 1.)
-2. **Identify current trends** — log trending topics, hashtags, audio/sounds, and challenges with volume, growth, lifespan, and brand-safety flags. (Template: Step 2.)
+2. **Identify current trends.** Log trending topics, hashtags, audio/sounds, and challenges with volume, growth, lifespan, and brand-safety flags. On X, use `xquik.py listen` only as bounded post evidence. Never convert its page count into total platform volume. (Template: Step 2.)
 3. **Analyze content format trends** — list hot, emerging, and declining formats per platform with how-to-adapt notes. (Template: Step 3.)
 4. **Track cultural moments** — build the cultural calendar (events + lead times), conversations to join vs avoid, and seasonal opportunities. (Template: Step 4.)
 5. **Assess trend relevance** — for each candidate trend, score audience alignment, brand value fit, content adaptability, risk, and timing (X/25) and land a ✅ participate / ⚠️ caution / ❌ skip call. (Template: Step 5.)

@@ -305,7 +305,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/scout/trend-spotter/SKILL.md:97",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:99",
       "condition_text": "Alternate: audience-mapper — confirm which trends actually resonate with your audience before committing.",
       "documentation_required": true,
       "exception": null,
@@ -333,7 +333,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/scout/trend-spotter/SKILL.md:98",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:100",
       "condition_text": "Alternate: fit-scorer — score which creators fit the chosen trends and the brand before committing.",
       "documentation_required": true,
       "exception": null,
@@ -361,7 +361,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "influencer/scout/trend-spotter/SKILL.md:96",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:98",
       "condition_text": "Primary: influencer-discovery — turn the chosen trends into a shortlist of creators who can execute them.",
       "documentation_required": true,
       "exception": null,

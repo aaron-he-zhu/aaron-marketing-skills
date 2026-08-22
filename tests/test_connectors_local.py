@@ -30,6 +30,7 @@ import youtube  # noqa: E402
 import indexpush  # noqa: E402
 import hn  # noqa: E402
 import producthunt  # noqa: E402
+import xquik  # noqa: E402
 import appstore  # noqa: E402
 import bluesky  # noqa: E402
 import fediverse  # noqa: E402
@@ -1309,6 +1310,181 @@ class ProducthuntTests(unittest.TestCase):
             for k, v in saved.items():
                 if v is not None:
                     os.environ[k] = v
+
+
+class XquikTests(unittest.TestCase):
+    def response(self, payload, status=200, headers=None, error=None):
+        return {"status": status, "headers": headers or {}, "json": payload,
+                "error": error}
+
+    def test_build_url_locks_host_encodes_queries_and_bounds_users(self):
+        url = xquik.build_url("search", params={"q": "brand & rival", "limit": 10})
+        self.assertEqual(
+            url,
+            "https://xquik.com/api/v1/x/tweets/search?q=brand+%26+rival&limit=10",
+        )
+        self.assertEqual(
+            xquik.build_url("posts", "@OpenAI", {"pageSize": 5}),
+            "https://xquik.com/api/v1/x/users/OpenAI/tweets?pageSize=5",
+        )
+        with self.assertRaises(ValueError):
+            xquik.build_url("profile", "bad/name")
+        with self.assertRaises(ValueError):
+            xquik.build_url("unknown")
+
+    def test_query_and_page_bounds_are_deterministic(self):
+        self.assertEqual(xquik.clamp_page_size(None), xquik.DEFAULT_PAGE_SIZE)
+        self.assertEqual(xquik.clamp_page_size(0), 1)
+        self.assertEqual(xquik.clamp_page_size(999), xquik.MAX_PAGE_SIZE)
+        self.assertEqual(xquik.normalize_queries([" brand ", "brand", "rival"]),
+                         ["brand", "rival"])
+        with self.assertRaises(ValueError):
+            xquik.normalize_queries(["q%d" % n for n in range(6)])
+        with self.assertRaises(ValueError):
+            xquik.validate_date("2026/08/22")
+
+    def test_normalizers_accept_contract_and_legacy_field_shapes(self):
+        profile = xquik.normalize_profile({
+            "id": "1", "username": "acme", "followers": 9,
+            "is_blue_verified": True, "created": "2026-01-01T00:00:00Z",
+            "coverPicture": "https://example.com/cover.jpg",
+        })
+        self.assertEqual(profile["followers"], 9)
+        self.assertTrue(profile["is_blue_verified"])
+        self.assertEqual(profile["created_at"], "2026-01-01T00:00:00Z")
+        self.assertEqual(
+            profile["profile_banner_url"], "https://example.com/cover.jpg"
+        )
+        page = xquik.parse_page({
+            "tweets": [{"id": "t1", "text": "fixture", "likeCount": 4,
+                        "author": {"username": "a", "followersCount": 8,
+                                   "profilePicture": "https://example.com/a.jpg"},
+                        "media": [{"type": "photo",
+                                   "mediaUrl": "https://example.com/photo.jpg",
+                                   "url": "https://t.co/media"}]}],
+            "has_next_page": True,
+            "next_cursor": "opaque",
+        })
+        self.assertEqual(page["tweets"][0]["like_count"], 4)
+        self.assertEqual(page["tweets"][0]["author"]["followers"], 8)
+        self.assertEqual(
+            page["tweets"][0]["author"]["profile_picture"],
+            "https://example.com/a.jpg",
+        )
+        self.assertEqual(page["tweets"][0]["media"], [{
+            "type": "photo",
+            "media_url": "https://example.com/photo.jpg",
+            "url": "https://t.co/media",
+        }])
+        self.assertTrue(page["has_more"])
+        self.assertEqual(page["next_cursor"], "opaque")
+
+    def test_failure_classes_preserve_retry_and_setup_detail(self):
+        code, error = xquik.classify_failure(self.response(
+            {"error": {"code": "rate_limit_exceeded", "message": "wait"}},
+            status=429, headers={"Retry-After": "1"}))
+        self.assertEqual((code, error["error"], error["retry_after"]),
+                         (3, "rate_limited", "1"))
+        code, error = xquik.classify_failure(self.response(
+            {"error": "no_credits", "message": "top up"}, status=402))
+        self.assertEqual((code, error["error"]), (3, "no_credits"))
+        code, error = xquik.classify_failure(self.response(
+            {"error": "unauthenticated"}, status=401))
+        self.assertEqual((code, error["error"]), (2, "auth_failed"))
+        self.assertIsNone(xquik.classify_failure(self.response({"tweets": []})))
+
+    def test_listen_composes_queries_and_records_duplicate_membership(self):
+        first = self.response({
+            "tweets": [{"id": "shared", "text": "one"},
+                       {"id": "brand-only", "text": "two"}],
+            "has_more": True, "next_cursor": "brand-next",
+        })
+        second = self.response({
+            "tweets": [{"id": "shared", "text": "one"},
+                       {"id": "rival-only", "text": "three"}],
+            "has_more": False, "next_cursor": "",
+        })
+        with mock.patch.object(xquik, "_call", side_effect=[first, second]) as call, \
+             mock.patch.object(xquik.time, "sleep") as sleep:
+            result, code = xquik.listen(
+                "secret", ["brand", "rival"], limit=999, min_likes=2,
+                from_user="acme",
+            )
+        self.assertEqual(code, 0)
+        self.assertEqual(result["count"], 3)
+        self.assertEqual(result["tweets"][0]["matched_queries"],
+                         ["brand", "rival"])
+        self.assertEqual(result["queries"][0]["next_cursor"], "brand-next")
+        self.assertEqual(call.call_args_list[0].kwargs["params"]["limit"],
+                         xquik.MAX_PAGE_SIZE)
+        self.assertEqual(call.call_args_list[0].kwargs["params"]["fromUser"],
+                         "acme")
+        self.assertEqual(
+            call.call_args_list[0].kwargs["params"]["minFaves"], 2
+        )
+        sleep.assert_called_once_with(xquik.MIN_INTERVAL)
+
+        with self.assertRaises(ValueError):
+            xquik.listen("secret", ["brand", "rival"], cursor="opaque")
+
+    def test_listen_failure_preserves_partial_rows_and_count(self):
+        first = self.response({
+            "tweets": [{"id": "t1", "text": "fixture"}],
+            "has_more": False,
+        })
+        second = self.response(
+            {"error": {"code": "rate_limit_exceeded", "message": "wait"}},
+            status=429,
+            headers={"Retry-After": "2"},
+        )
+        with mock.patch.object(xquik, "_call", side_effect=[first, second]), \
+             mock.patch.object(xquik.time, "sleep"):
+            result, code = xquik.listen("secret", ["brand", "rival"])
+        self.assertEqual(code, 3)
+        self.assertTrue(result["partial"])
+        self.assertEqual(result["count"], 1)
+        self.assertEqual(result["tweets"][0]["id"], "t1")
+        self.assertEqual(result["retry_after"], "2")
+
+    def test_creator_composes_profile_and_posts_with_cursor(self):
+        profile = self.response({"id": "1", "username": "acme", "followers": 4})
+        posts = self.response({
+            "tweets": [{"id": "t1", "text": "fixture"}],
+            "has_more": True, "next_cursor": "next",
+        })
+        with mock.patch.object(xquik, "_call", side_effect=[profile, posts]) as call, \
+             mock.patch.object(xquik.time, "sleep"):
+            result, code = xquik.creator("secret", "@acme", post_limit=3,
+                                          include_replies=True, cursor="prior")
+        self.assertEqual(code, 0)
+        self.assertEqual(result["profile"]["username"], "acme")
+        self.assertEqual(result["post_count"], 1)
+        self.assertEqual(result["next_cursor"], "next")
+        self.assertEqual(call.call_args_list[1].kwargs["params"], {
+            "pageSize": 3, "includeReplies": "true", "cursor": "prior",
+        })
+
+    def test_mentions_normalizes_one_bounded_page(self):
+        page = self.response({
+            "tweets": [{"id": "m1", "text": "fixture"}],
+            "has_more": True,
+            "next_cursor": "next",
+        })
+        with mock.patch.object(xquik, "_call", return_value=page) as call:
+            result, code = xquik.mentions(
+                "secret", "@acme", limit=200, since="2026-08-01",
+                until="2026-08-22", cursor="prior",
+            )
+        self.assertEqual(code, 0)
+        self.assertEqual(result["user"], "acme")
+        self.assertEqual(result["count"], 1)
+        self.assertEqual(result["next_cursor"], "next")
+        self.assertEqual(call.call_args.kwargs["params"], {
+            "pageSize": xquik.MAX_PAGE_SIZE,
+            "sinceDate": "2026-08-01",
+            "untilDate": "2026-08-22",
+            "cursor": "prior",
+        })
 
 
 class AppstoreTests(unittest.TestCase):

@@ -391,7 +391,7 @@ else:
             self.assertEqual(0, result.returncode, result.stderr)
 
     def test_supported_v19_releases_require_a_private_receipt(self):
-        for version in ("19.0.0", "19.1.0", "19.2.0", "20.0.0"):
+        for version in ("19.0.0", "19.1.0", "19.2.0", "20.0.0", "20.1.0"):
             with self.subTest(version=version), tempfile.TemporaryDirectory() as temporary:
                 repository, commit = self.fixture_repo(Path(temporary), version)
                 result = self.run_gate(repository, commit)

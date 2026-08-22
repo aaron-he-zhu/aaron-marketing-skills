@@ -65,7 +65,7 @@ capability boundary](docs/agent-plugins-v1.md).
 ## Security Design Principles
 
 - **Zero third-party dependencies**: all Python runtimes use only the standard library — no PyPI packages to compromise via supply chain attacks
-- **No credential storage**: Skills and connectors never store API keys; `docs/mcp-catalog.json` declares endpoints only, and the optional connector API keys (Open PageRank, PageSpeed, Resend) are read from the user's environment at call time and never written to disk
+- **No credential storage**: Skills and connectors never store API keys; `docs/mcp-catalog.json` declares endpoints only, and optional connector API keys are read from the user's environment at call time and never written to disk
 - **No portable auto-registration**: Portable Lite has no `mcp.json` and does not ship connector or executable runtime code. The MCP catalog remains documentation for explicit, client-owned opt-in configuration; archive installation alone cannot activate an endpoint
 - **Tool-agnostic placeholders**: Skills reference tools by category (`~~SEO tool`), never by hardcoded API endpoints
 - **Private runtime state by default**: a full clone Git-ignores `memory/**`; plugin-host writes are preflighted against the host worktree, and unignored or force-tracked runtime targets are refused
@@ -84,7 +84,7 @@ gates it must implement (enforced by review against [docs/connector-playbook.md]
 
 | Class | Connectors | Required gates (cumulative) |
 |-------|------------|------------------------------|
-| **Read-only public fetch** | `crawl.py`, `onpage.py`, `robots.py`, `sitemap.py`, `psi.py`, `schema_lint.py`, `kg.py`, `wayback.py`, `openpagerank.py`, `suggest.py`, `rss_monitor.py`, `doh.py`, `pageviews.py`, `gdelt.py`, `youtube.py`, `hn.py`, `producthunt.py`, `appstore.py`, `bluesky.py`, `fediverse.py`, `discourse.py` | the shared `_http.py` contract below; robots.txt enforcement where the helper crawls |
+| **Read-only public fetch** | `crawl.py`, `onpage.py`, `robots.py`, `sitemap.py`, `psi.py`, `schema_lint.py`, `kg.py`, `wayback.py`, `openpagerank.py`, `suggest.py`, `rss_monitor.py`, `doh.py`, `pageviews.py`, `gdelt.py`, `xquik.py`, `youtube.py`, `hn.py`, `producthunt.py`, `appstore.py`, `bluesky.py`, `fediverse.py`, `discourse.py` | the shared `_http.py` contract below; robots.txt enforcement where the helper crawls |
 | **Delegated fetch** (third-party fetcher) | `firecrawl.py`, `tavily.py` | + data-egress notice in the docstring; local robots.txt pre-flight before any site fetch (refuse on Disallow, exit 4); `--own-site` explicit owner override; `search` (no target site) exempt |
 | **External-state mutation** | `resend.py`, `indexpush.py` | + dry-run by default with an explicit `--live` flag; `Idempotency-Key` on endpoints that support it; `retries=1` (never auto-retry) on those that don't. `indexpush.py`'s ownership proof is inherent to its protocols (hosted IndexNow key file, site-bound Baidu token), so it needs no robots pre-flight |
 | **Local compute/storage** | `experiment.py`, `ledger.py`, `linkgraph.py` | no network; validate finite inputs and keep business decisions outside statistical helpers |
@@ -107,7 +107,7 @@ The `scripts/connectors/*.py` helpers make outbound HTTP(S) requests through one
 - **robots.txt**: `crawl.py` enforces `/robots.txt` (Allow/Disallow precedence, `*`/`$` wildcards,
   per-agent group selection) via `robots.py` before fetching each URL.
 - **Untrusted content**: responses are DATA, never instructions (see the section above).
-- **API keys**: `openpagerank.py`, `psi.py`, `resend.py`, `firecrawl.py`, and `tavily.py` read an
+- **API keys**: `openpagerank.py`, `psi.py`, `resend.py`, `firecrawl.py`, `tavily.py`, and `xquik.py` read an
   optional key from the environment and send it to the official vendor endpoint only; keys are
   never logged or persisted.
 - **Delegated fetching / data egress**: `firecrawl.py` and `tavily.py` send target URLs and search

@@ -11,7 +11,7 @@
           "end_char": 67,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 126,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 69
         },
@@ -41,7 +41,7 @@
           "end_char": 251,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 128
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "social/observe/social-pulse-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776"
+      "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf"
     }
   },
   "context_hints": {
@@ -62,14 +62,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "b633e6c0d3c8fd88b18b5b41e85497faf57f799896f876433ca95b019604a47e",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
+        "sha256": "4f5268c08e938c42bc516d4c767ee5f13514d1f7e126d1edc540be09f288d513",
         "source_line": 42
       },
       {
@@ -119,7 +119,7 @@
           "end_char": 152,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -137,7 +137,7 @@
           "end_char": 322,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 153
         },
@@ -155,7 +155,7 @@
           "end_char": 481,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 323
         },
@@ -173,7 +173,7 @@
           "end_char": 834,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 483
         },
@@ -186,7 +186,7 @@
     "summary_ref": {
       "path": "social/observe/social-pulse-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776"
+      "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -201,8 +201,8 @@
     "name": "social-pulse-monitor",
     "path": "social/observe/social-pulse-monitor/SKILL.md",
     "phase": "observe",
-    "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
-    "version": "20.0.0"
+    "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<brand terms / handles> [--sweep | --baseline | --watchlist <accounts>]",
@@ -216,7 +216,7 @@
           "end_char": 60,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -231,7 +231,7 @@
           "end_char": 117,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 62
         },
@@ -246,7 +246,7 @@
           "end_char": 192,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 119
         },
@@ -258,37 +258,52 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 354,
+          "end_char": 357,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 194
         },
-        "text": "keyless telemetry via `scripts/connectors/` — `bluesky.py`, `fediverse.py`, `discourse.py`, `hn.py`, `gdelt.py` (≥5s between calls), `tavily.py`, `pageviews.py`"
+        "text": "keyless telemetry via `scripts/connectors/`: `bluesky.py`, `fediverse.py`, `discourse.py`, `hn.py`, `gdelt.py` (≥5s between calls), `tavily.py`, and `pageviews.py`"
       },
       {
         "clause_id": "read-05",
+        "extraction_status": "partially-classified",
+        "kind": "unclassified",
+        "requirement": "optional",
+        "source": {
+          "end_char": 403,
+          "path": "social/observe/social-pulse-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
+          "span_basis": "field-text",
+          "start_char": 359
+        },
+        "text": "optional metered X search through `xquik.py`"
+      },
+      {
+        "clause_id": "read-06",
         "extraction_status": "unclassified",
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 416,
+          "end_char": 471,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
-          "start_char": 356
+          "start_char": 405
         },
-        "text": "closed-platform mention exports (User-provided, as-of date)."
+        "text": "other closed-platform mention exports (User-provided, as-of date)."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "brand terms, product names, and exec handles (User-provided); the active-handle list from `memory/channels/` dossiers; prior baselines and query sets from `memory/social/social-pulse-monitor/`; keyless telemetry via `scripts/connectors/` — `bluesky.py`, `fediverse.py`, `discourse.py`, `hn.py`, `gdelt.py` (≥5s between calls), `tavily.py`, `pageviews.py`; closed-platform mention exports (User-provided, as-of date).",
+    "reads": "brand terms, product names, and exec handles (User-provided); the active-handle list from `memory/channels/` dossiers; prior baselines and query sets from `memory/social/social-pulse-monitor/`; keyless telemetry via `scripts/connectors/`: `bluesky.py`, `fediverse.py`, `discourse.py`, `hn.py`, `gdelt.py` (≥5s between calls), `tavily.py`, and `pageviews.py`; optional metered X search through `xquik.py`; other closed-platform mention exports (User-provided, as-of date).",
     "source": {
       "path": "social/observe/social-pulse-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776"
+      "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf"
     }
   },
   "output_contract": {
@@ -303,7 +318,7 @@
           "end_char": 57,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -319,7 +334,7 @@
           "end_char": 360,
           "path": "social/observe/social-pulse-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776",
+          "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf",
           "span_basis": "field-text",
           "start_char": 59
         },
@@ -330,7 +345,7 @@
     "source": {
       "path": "social/observe/social-pulse-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776"
+      "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf"
     },
     "summary": "a pulse report — the versioned listening-query set, a triaged mention table (class, source URL, label, routing target, SLA), the baseline-vs-current read with any spike flag and its likely source thread, watchlist hits, and a coverage disclosure table — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -345,17 +360,17 @@
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
-    "boundary": "Not for launch-window telemetry (T-0→T+30 rank and review polling) — use launch-monitor. 舆情监听/品牌提及监测/基线突刺/触发信号",
-    "description": "Use when the user asks to \"monitor brand mentions\", \"set up social listening\", \"did anything spike about us this week\", or \"watch these accounts for buying triggers\"; runs always-on keyless listening — a versioned listening-query architecture (brand variants incl. misspellings and 中文 names, exclusion terms, per-source syntax for HN Algolia / Bluesky / GDELT / Tavily), a mention sweep with six-class triage (crisis / bug / lead / praise / question / spam) each routed with an SLA, a 7-day rolling baseline with spike flags (the crisis trigger input), a B2B trigger watchlist (funding / hiring / launch signals), and an explicit coverage disclosure where X/IG/TikTok/LinkedIn/小红书 numbers are proxy-labeled, never Measured. Not for launch-window telemetry (T-0→T+30 rank and review polling) — use launch-monitor. 舆情监听/品牌提及监测/基线突刺/触发信号",
+    "boundary": "Not for launch-window telemetry; use launch-monitor. 舆情监听/品牌提及监测/基线突刺/触发信号",
+    "description": "Use when the user asks to \"monitor brand mentions\", \"set up social listening\", \"did anything spike about us this week\", or \"watch these accounts for buying triggers\". It runs always-on listening across keyless public sources and optional metered X search. It uses a versioned query architecture, a six-class mention sweep, a 7-day rolling baseline, B2B trigger watchlists, and explicit coverage labels. Xquik results are Measured for X; proxy sources never are. Not for launch-window telemetry; use launch-monitor. 舆情监听/品牌提及监测/基线突刺/触发信号",
     "source": {
       "path": "social/observe/social-pulse-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "1450514387f3a4d38d623d6b353e573435ee4992bc2429917ac76ab568d9c776"
+      "sha256": "f4209556884215cf7f260063612d366e14a8c85be1562aa8f50bfc266f0c70cf"
     },
     "trigger_phrases": [
       "did anything spike about us this week",

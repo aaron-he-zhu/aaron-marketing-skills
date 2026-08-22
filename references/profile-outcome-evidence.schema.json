@@ -19,7 +19,7 @@
     },
     "release_candidate": {
       "type": "string",
-      "pattern": "^(?:19\\.(?:0|1|2)|20\\.0)\\.0-rc\\.[1-9][0-9]*$"
+      "pattern": "^(?:19\\.(?:0|1|2)|20\\.(?:0|1))\\.0-rc\\.[1-9][0-9]*$"
     },
     "source_commit": {
       "type": "string",

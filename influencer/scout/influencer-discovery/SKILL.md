@@ -4,13 +4,13 @@ slug: influencer-discovery
 displayName: "Influencer Discovery · 红人发现"
 summary: "多平台红人挖掘:候选池、画像与互动指标、真实性红旗筛查、分层短名单"
 description: 'Use when the user asks to "find influencers", "build an influencer list", or "discover creators in [niche]"; produces a multi-platform candidate pool, per-influencer profiles, authenticity red-flag screening, and a tiered shortlist with preliminary triage signals. Not for STAR scoring or ranking a known shortlist — use fit-scorer. 达人挖掘/找达人/创作者名单'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Activate when building an influencer roster from scratch, expanding into a new platform or niche, replacing churned partners, finding micro and nano creators at scale, identifying which influencers a competitor partners with, or standing up an always-on discovery pipeline. The user names a niche, platform, follower band, or brand and wants a list of candidate creators to evaluate."
 argument-hint: "<brand or niche> [platform] [follower-range]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "influencer", "phase": "scout", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "scout"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Influencer Discovery
@@ -59,6 +59,8 @@ Where a tool *could* sharpen results, use `~~` connector placeholders:
 
 **Measured YouTube metrics (free key)**: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/youtube.py" channel @handle` returns the real displayed subscriber count, total views, and video count, and `youtube.py videos @handle --limit 10` adds per-video views/likes/comments — upgrading a YouTube candidate's profile row from Estimated to **Measured**. Free `YOUTUBE_API_KEY` (10,000 units/day; one channel check ≈ 1–3 units). ToS boundary: vet a **named shortlist**, don't build a bulk creator database — quota extensions are refused for competitive harvesting. See [scripts/connectors/README.md](../../../scripts/connectors/README.md).
 
+**Measured public X evidence (metered key).** `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/xquik.py" listen "<niche or hashtag>" --limit 25` returns public posts and authors for the candidate pool. Then `xquik.py creator <handle> --posts 10` combines a named candidate's public profile with one recent-post page. Use it for bounded discovery and shortlist vetting, not bulk harvesting. Follower and engagement counters are Measured-as-displayed. Audience demographics, authenticity, and brand fit remain Unknown until separate evidence supports them.
+
 See [CONNECTORS.md](../../../CONNECTORS.md) for the free/keyless recipe per category and the opt-in MCP layer. None are required — every step degrades to user-supplied inputs.
 
 ## Instructions
@@ -66,9 +68,9 @@ See [CONNECTORS.md](../../../CONNECTORS.md) for the free/keyless recipe per cate
 Each step has a fill-in block in [references/templates.md](references/templates.md) — copy the matching block. This skill does *not* compute a STAR Suitability score; any per-influencer score in step 4 is only a discovery-triage signal that [fit-scorer](../fit-scorer/SKILL.md) replaces with a typed evidence read downstream.
 
 1. **Define search criteria.** Capture brand, goal, audience definition, budget/follower tier, platforms, engagement floor, location/language, exclusions, and the required/preferred parameter table. If any required criterion is missing, stop with `NEEDS_INPUT`; offer [audience-mapper](../audience-mapper/SKILL.md) only when the user wants help defining the audience. Step 1 template.
-2. **Conduct the search.** Work hashtags, similar-accounts, competitor mentions, and platform-native discovery; log any tool queries used. Step 2 template.
+2. **Conduct the search.** Work hashtags, similar accounts, competitor mentions, and platform-native discovery. For X, use a bounded `xquik.py listen` query and dedupe authors by ID. Log every query and its `as_of` time. Step 2 template.
 3. **Initial screening.** Filter the pool on follower range, engagement, recency, relevance, and brand safety; tally red flags (suspected fake followers, controversy, competitor exclusivity, inactivity). These are discovery signals, not verified STAR failures or vetoes; unsupported applicable evidence remains Unknown for downstream scoring. Per-platform reading cues: [references/platform-vetting.md](references/platform-vetting.md). Step 3 template.
-4. **Build influencer profiles.** For each qualified creator, fill the profile (basics, metrics, audience, content, partnership history, contact, preliminary discovery-triage signal). Do not emit a STAR Suitability score from partial coverage. For a deep single-creator read with a contact waterfall, use [references/creator-dossier.md](references/creator-dossier.md). Step 4 template.
+4. **Build influencer profiles.** For each qualified creator, fill the profile with basics, metrics, audience, content, partnership history, contact, and a preliminary discovery signal. Use `xquik.py creator` for named X candidates. Do not infer audience demographics or authenticity from public counters. Do not emit a STAR Suitability score from partial coverage. For a deep single-creator read with a contact waterfall, use [references/creator-dossier.md](references/creator-dossier.md). Step 4 template.
 5. **Compile the discovery report.** Roll profiles into summary stats, by-platform and by-tier breakdowns, the three-tier shortlist, mix recommendation, and next steps. Step 5 template.
 6. **Add insights.** Note niche content trends, the competitive picture, and recommendations for future searches. Step 6 template.
 

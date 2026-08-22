@@ -29,11 +29,11 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 RECEIPT_SCHEMA_REF = "references/engineering-release-receipt.schema.json"
 REPORT_SCHEMA_REF = "references/engineering-maturity-report.schema.json"
-RELEASE_VERSION = "20.0.0"
+RELEASE_VERSION = "20.1.0"
 GATE = "engineering-validation-v19"
 AUTHORIZATION = "release-v19-without-real-project-outcomes"
 MAX_EVIDENCE_AGE_SECONDS = 24 * 60 * 60
-RC_RE = re.compile(r"^20\.0\.0-rc\.[1-9][0-9]*$")
+RC_RE = re.compile(r"^20\.1\.0-rc\.[1-9][0-9]*$")
 SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 UUID_RE = re.compile(
@@ -799,7 +799,7 @@ def issue_receipt(
     root = Path(root).resolve()
     if not RC_RE.fullmatch(release_candidate):
         raise EngineeringReceiptError(
-            "release_candidate must match 20.0.0-rc.N with N >= 1"
+            "release_candidate must match 20.1.0-rc.N with N >= 1"
         )
     if owner_authorization != AUTHORIZATION:
         raise EngineeringReceiptError(

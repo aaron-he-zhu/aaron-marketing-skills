@@ -2,7 +2,7 @@
 
 Current versions for the plugin and all 120 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/aaron-marketing-skills/main/VERSIONS.md` once per session.
 
-**Current release**: `20.0.0` (2026-08-20). **AI Staff positioning.** The same 120 canonical skills, seven mandatory 4×4 discipline loops, eight commands, framework IDs, routes, and state paths remain intact. The bundle now presents as an installable AI marketing staff: the named-bot roster (Grok Bot, Hermes Bot Mode) becomes a first-class install surface alongside the plugin and portable skills, the README leads vendor-neutral, and the chief bot handle shortens to `aaron-chief`. Existing Claude, npx skills, SkillHub, ClawHub, OpenClaw, and Hermes surfaces remain separate compatibility channels generated from the same canonical source.
+**Current release**: `20.1.0` (2026-08-22). **Bounded X listening and creator reads.** The bundle adds a read-only Xquik connector for metered X/Twitter search, mentions, public profiles, and recent posts. Five social and influencer skills use it where X evidence changes the result. Tier 1 remains keyless or user-provided.
 
 ## Skills
 
@@ -52,8 +52,8 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | engagement-inbox-manager | host | 20.0.0 | 2026-08-20 |
 | social-selling-planner | host | 20.0.0 | 2026-08-20 |
 | crisis-response-planner | host | 20.0.0 | 2026-08-20 |
-| social-pulse-monitor | observe | 20.0.0 | 2026-08-20 |
-| share-of-voice-tracker | observe | 20.0.0 | 2026-08-20 |
+| social-pulse-monitor | observe | 20.1.0 | 2026-08-22 |
+| share-of-voice-tracker | observe | 20.1.0 | 2026-08-22 |
 | dark-social-attributor | observe | 20.0.0 | 2026-08-20 |
 | social-measurement-loop | observe | 20.0.0 | 2026-08-20 |
 | deliverability-qa | email | 20.0.0 | 2026-08-20 |
@@ -89,10 +89,10 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | budget-pacing-monitor | paid | 20.0.0 | 2026-08-20 |
 | fatigue-frequency-manager | paid | 20.0.0 | 2026-08-20 |
 | audience-mapper | scout | 20.0.0 | 2026-08-20 |
-| trend-spotter | scout | 20.0.0 | 2026-08-20 |
-| influencer-discovery | scout | 20.0.0 | 2026-08-20 |
+| trend-spotter | scout | 20.1.0 | 2026-08-22 |
+| influencer-discovery | scout | 20.1.0 | 2026-08-22 |
 | fit-scorer | scout | 20.0.0 | 2026-08-20 |
-| competitor-tracker | target | 20.0.0 | 2026-08-20 |
+| competitor-tracker | target | 20.1.0 | 2026-08-22 |
 | campaign-planner | target | 20.0.0 | 2026-08-20 |
 | brief-generator | target | 20.0.0 | 2026-08-20 |
 | budget-optimizer | target | 20.0.0 | 2026-08-20 |
@@ -130,6 +130,36 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 | memory-management | protocol | 20.0.0 | 2026-08-20 |
 
 ## Changelog
+
+### v20.1.0 Bounded X listening and creator reads (2026-08-22)
+
+Adds `scripts/connectors/xquik.py`, a read-only stdlib connector for public X
+evidence. `listen` composes up to five bounded searches and retains duplicate
+query membership. `creator` combines one public profile with one recent-post
+page. `mentions` reads one bounded public mention page.
+
+The connector uses Xquik's published `2026-04-29` response contract. It sends
+`XQUIK_API_KEY` only to the fixed `xquik.com` host. Every call uses `_http.py`.
+Pages cap at 100 rows. Listening caps at five queries. The helper never writes
+to X. It surfaces credits, subscriptions, and `Retry-After` failures without
+retrying a metered call.
+
+Wired skills: `social-pulse-monitor`, `share-of-voice-tracker`,
+`influencer-discovery`, `trend-spotter`, and `competitor-tracker`. X rows are
+Measured-as-displayed at the connector's `as_of` time. Bounded pages never
+become total-volume claims. Public counters never prove audience quality,
+sentiment, sponsorship, or fit.
+
+Endpoints were checked against Xquik's published OpenAPI and REST overview in
+2026-08. Search, profile, recent-post, and mention shapes also passed live
+requests. Offline tests cover URL construction, bounds, legacy and opt-in field
+normalization, failures, duplicate membership, and composed creator reads.
+
+Deliberately not wired: `social-measurement-loop` still requires first-party
+native analytics for closed-platform outcomes. Publishing, engagement, and DM
+skills remain human or separately authorized. No write endpoint exists in this
+connector. Tier 1 remains keyless or user-provided. Xquik is an independent
+third-party service. Not affiliated with X Corp.
 
 ### v20.0.0 — AI Staff positioning (2026-08-20)
 

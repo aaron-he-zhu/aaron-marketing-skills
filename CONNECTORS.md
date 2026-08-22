@@ -36,6 +36,7 @@ For the bundle-able categories the repo ships small **Python-3-stdlib** helpers 
 | Email-auth DNS records — SPF/DMARC/BIMI/MX + DKIM-selector probes (DoH) | `doh.py auth <domain>` · `doh.py query <name> --type TXT` | — |
 | Entity/topic attention series (Wikipedia pageviews) | `pageviews.py "<Article>" --months 12` | — |
 | Global news mentions + volume trend (GDELT) | `gdelt.py '"<brand>"' --days 30` (⚠️ ≥5s between calls) | — |
+| X/Twitter search, mentions, and creator evidence | `xquik.py listen "<brand>" "<rival>" --limit 10` · `xquik.py creator <handle>` | metered API key |
 | Brand / mention RSS | `rss_monitor.py <feed-url>` | — |
 | YouTube creator metrics — real subs/views/video stats for shortlist vetting | `youtube.py channel @handle` · `youtube.py videos @handle --limit 10` | free key |
 | Hacker News launch/mention heat — brand/domain search, front-page rank + live points/comments, account facts | `hn.py search "<brand or domain>" --tags story` · `hn.py rank <item-id> --list showstories` | — |
@@ -133,6 +134,15 @@ The fastest way to keep a skill zero-dependency is to feed it data from a free, 
 
 **Zero-tool DIY pattern:** for most technical and content checks you need nothing but `fetch` — pull `robots.txt`, `sitemap.xml`, `llms.txt`, and the page HTML directly, and paste them in.
 
+## Opt-in metered public reads
+
+| Need (`~~category`) | Source | Endpoint / how | Auth | Limit |
+|---|---|---|---|---|
+| X/Twitter search and social listening (`~~brand monitor`, `~~social listening`) | [Xquik REST API](https://docs.xquik.com/api-reference/overview) | `GET /api/v1/x/tweets/search` and `/x/users/{id}/mentions`, bundled as `xquik.py listen` / `mentions`; one page per query | `XQUIK_API_KEY` | credit-metered; 10 reads/s; helper caps each page at 100 and listening at 5 queries |
+| Public X creator and competitor evidence (`~~social platform analytics`, `~~competitor tracking`) | [Xquik REST API](https://docs.xquik.com/api-reference/overview) | `GET /api/v1/x/users/{id}` plus `/tweets`, bundled as the composed `xquik.py creator` command | `XQUIK_API_KEY` | profile plus one bounded post page; public counters only |
+
+Xquik is optional. Tier 1 remains keyless or user-provided. Its helper is read-only and uses the `2026-04-29` response contract. Search, profile, post, and mention reads consume credits. Review [current billing](https://docs.xquik.com/guides/billing) before a large run. Xquik is an independent third-party service. Not affiliated with X Corp.
+
 ## Tool Categories (placeholder → tools)
 
 `Discipline` = which discipline(s) use the category (search / influencer / paid / both / all). `Agent default` = what an agent should reach for first at Tier 1 (use the free/own-data path unless the team already pays for a listed tool).
@@ -151,7 +161,7 @@ The fastest way to keep a skill zero-dependency is to feed it data from a free, 
 | Schema Validator | `~~schema validator` | search | — | validator.schema.org / Rich Results Test | Rich Results Test |
 | Knowledge Graph | `~~knowledge graph` | both | Google KG API, CrunchBase | Wikidata SPARQL | Wikidata SPARQL |
 | Local Listings | `~~local listings` | search | Google Business Profile, Yext, BrightLocal, Whitespark | GBP dashboard (own data, manual export) + official GBP APIs (OAuth, own listings) + manual NAP/citation check + [Nominatim/OSM geocoding](https://nominatim.org/release-docs/latest/api/Overview/) (keyless, 1 req/s + descriptive UA) | GBP own data; GBP API when connected |
-| Brand Monitor | `~~brand monitor` | both | Brand24, Mention, Brandwatch | Google Alerts / F5Bot / GDELT DOC API | Google Alerts RSS + `gdelt.py` (keyless) |
+| Brand Monitor | `~~brand monitor` | both | Brand24, Mention, Brandwatch | Google Alerts / F5Bot / GDELT DOC API; X via metered `xquik.py listen` | Google Alerts RSS + `gdelt.py` (keyless); Xquik opt-in |
 | Launch Platform | `~~launch platform` | launch | Product Hunt Ship, launch-tracking suites | `hn.py` (keyless HN Algolia + official API) + `producthunt.py` (free developer token — **non-commercial per PH API terms**: business use needs PH's OK via hello@producthunt.com; keep the attribution field visible) | `hn.py` keyless + `producthunt.py` free-token (non-commercial reads only) |
 | App Store Data | `~~app store data` | launch | Sensor Tower, data.ai, App Radar | `appstore.py` — keyless iTunes Search API lookup/search + top-charts RSS (documented endpoints only) | `appstore.py` (keyless) |
 | CRM / Marketing | `~~CRM` | all | HubSpot, Salesforce, Marketo | — | manual CSV |
@@ -165,9 +175,9 @@ The influencer-marketing skills use these additional placeholders (plus `~~CRM`,
 
 | Category | Placeholder | Discipline | Example paid tools | Free / own-data path | Agent default |
 |----------|-------------|------------|--------------------|----------------------|---------------|
-| Influencer Database | `~~influencer database` | influencer | Modash, HypeAuditor, Upfluence, GRIN | manual creator CSV (handles + public metrics); **YouTube: `youtube.py` real channel stats (free key, shortlist-vetting scope)** | manual CSV + `youtube.py` for YouTube candidates |
-| Social Platform Analytics | `~~social platform analytics` | influencer | IG/TikTok/YouTube creator APIs, Dash Hudson | native creator dashboards (manual export of own/partner data) + keyless oEmbed post metadata (YouTube/TikTok/X) + **`youtube.py` per-video stats** + [IG Graph Business Discovery](https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/business-discovery/) (other Business/Creator accounts' follower + media counts via your own IG business account + FB app) | manual export; YouTube → `youtube.py` (free key) |
-| Social Listening | `~~social listening` | both (influencer + social) | Brandwatch, Sprout Social, Talkwalker | keyless bundled connectors — `bluesky.py` (profile/feed/actors) + `fediverse.py` (Mastodon trends/tags + Lemmy) + `discourse.py` (forum health) + `gdelt.py`/`tavily.py` (news/answer **proxy**, always labeled) + Google Alerts / F5Bot / self-host RSSHub; Reddit `.rss` recipe only (keyless `.json` 403 as of 2026-07) | `bluesky.py` + `fediverse.py` + `discourse.py` (keyless); `gdelt.py`/`tavily.py` proxy for the rest |
+| Influencer Database | `~~influencer database` | influencer | Modash, HypeAuditor, Upfluence, GRIN | manual creator CSV (handles + public metrics); **YouTube: `youtube.py` real channel stats (free key, shortlist-vetting scope)**; **X: `xquik.py creator` public profile + recent-post evidence (metered key)** | manual CSV + `youtube.py`; Xquik opt-in for named X candidates |
+| Social Platform Analytics | `~~social platform analytics` | influencer | IG/TikTok/YouTube creator APIs, Dash Hudson | native creator dashboards (manual export of own/partner data) + keyless oEmbed post metadata (YouTube/TikTok/X) + **`youtube.py` per-video stats** + **`xquik.py creator` public X counters/posts** + [IG Graph Business Discovery](https://developers.facebook.com/docs/instagram-platform/instagram-api-with-facebook-login/business-discovery/) (other Business/Creator accounts' follower + media counts via your own IG business account + FB app) | manual export; YouTube → `youtube.py`; Xquik opt-in for X public evidence |
+| Social Listening | `~~social listening` | both (influencer + social) | Brandwatch, Sprout Social, Talkwalker | keyless bundled connectors: `bluesky.py` (profile/feed/actors) + `fediverse.py` (Mastodon trends/tags + Lemmy) + `discourse.py` (forum health) + `gdelt.py`/`tavily.py` (news/answer **proxy**, always labeled) + Google Alerts / F5Bot / self-host RSSHub; Reddit `.rss` recipe only (keyless `.json` 403 as of 2026-07); `xquik.py listen` adds metered X reads | keyless stack first; Xquik opt-in for Measured X posts |
 | Audience Intelligence | `~~audience intelligence` | influencer | HypeAuditor, Audiense, SparkToro | platform audience demographics (own/manual) | platform native (own) |
 | Audience Overlap | `~~audience overlap` | influencer | Audiense, SparkToro | manual follower-sample comparison | manual sample |
 | Trend Database | `~~trend database` | both | Exploding Topics, TrendTok | Google Trends / platform trending pages / Tavily news search / Wikipedia pageviews / HN Algolia | Google Trends RSS (`rss_monitor.py`) + `tavily.py search --topic news` + `pageviews.py` |
@@ -179,7 +189,7 @@ The influencer-marketing skills use these additional placeholders (plus `~~CRM`,
 | DAM / Asset Library | `~~DAM / asset library` | influencer | Bynder, Brandfolder | shared Drive / Dropbox folder | shared folder |
 | Email / DM | `~~email/DM tool` | influencer | Klaviyo, Mailchimp, native DMs | native DM + manual email | manual DM |
 | Compliance Reference | `~~compliance reference` | both | platform policy portals | [FTC 16 CFR §255](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255) / [Part 465](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-465) (public) | FTC public rule |
-| Competitor Tracking | `~~competitor tracking` | influencer | Social Blade, BuzzSumo | manual competitor profile review + `youtube.py channel` (partner stats) + keyless YouTube channel RSS (cadence via `rss_monitor.py`) + `gdelt.py` (rival news) | manual review + YouTube RSS (keyless) |
+| Competitor Tracking | `~~competitor tracking` | influencer | Social Blade, BuzzSumo | manual competitor profile review + `youtube.py channel` (partner stats) + keyless YouTube channel RSS (cadence via `rss_monitor.py`) + `gdelt.py` (rival news) + `xquik.py creator` (metered X public evidence) | manual review + YouTube RSS; Xquik opt-in for X rivals |
 | Customer Survey | `~~customer survey data` | influencer | Typeform, SurveyMonkey, Qualtrics | Google Forms | Google Forms |
 | E-signature | `~~e-signature` | influencer | DocuSign, Dropbox Sign, PandaDoc | PDF + manual signature | manual PDF sign |
 
@@ -292,6 +302,7 @@ keyless/lower-quota mode, and the rest degrade to a clear where-to-get-a-key mes
 | `TAVILY_API_KEY` | `scripts/connectors/tavily.py` | Optional — `search`/`extract` work keyless (rate-limited); a free key (1,000 credits/mo) lifts the limit |
 | `YOUTUBE_API_KEY` | `scripts/connectors/youtube.py` | YouTube Data API v3 (free key, 10,000 units/day; shortlist vetting, not bulk harvesting) |
 | `PRODUCTHUNT_DEVELOPER_TOKEN` | `scripts/connectors/producthunt.py` | Product Hunt GraphQL v2 (free developer token from your PH app; fallback pair `PRODUCTHUNT_CLIENT_ID` + `PRODUCTHUNT_CLIENT_SECRET` for the client_credentials grant). **⚠️ PH API ToS: non-commercial use only — for business use contact hello@producthunt.com first; keep the Product Hunt attribution (the JSON `attribution` field) visible wherever the data is shown** |
+| `XQUIK_API_KEY` | `scripts/connectors/xquik.py` | Metered read-only X/Twitter search, mentions, public profiles, and recent posts. Read at call time and sent only to `xquik.com` |
 | `INDEXNOW_KEY` | `scripts/connectors/indexpush.py` | Self-minted IndexNow key (host it at `https://<host>/<key>.txt`; submissions additionally require `--live`) |
 | `BAIDU_PUSH_TOKEN` | `scripts/connectors/indexpush.py` | 百度普通收录 site-bound push token (from ziyuan.baidu.com; submissions additionally require `--live`) |
 
@@ -308,4 +319,4 @@ The opt-in MCP servers do not use env vars here: most (Semrush, SE Ranking, SIST
 - **CrUX History API** returns weekly windows updated Mondays (~04:00 UTC, data through the prior Saturday) — align `ledger.py` comparisons to the same weekday to avoid phantom deltas.
 - **Microsoft SNDS** is mid-migration: legacy automated-access URLs (`sendersupport.olc.protection.outlook.com/snds/…`) are deprecated as of 2026-06-22; the portal + new REST API live at `postmaster.live.com/snds`, and access links now expire after 30 days.
 - **Google Trends API** is official but **alpha and application-gated** ([apply here](https://developers.google.com/search/apis/trends) — 5 years of consistently scaled interest data). Until access lands, the keyless trend stack stays Google Trends RSS + `pageviews.py` + `tavily.py --topic news`.
-- **Meta Ad Library API** covers only political/social-issue ads (EU-scoped, ~200 calls/hr); **all commercial ads are web-UI only**. TikTok's Commercial Content API is application-gated and EU-data-only for now. Evaluated and not adopted: X/Twitter API (free tier effectively gone), TikTok Research API (academic gate), Twitch API (deferred — vertical).
+- **Meta Ad Library API** covers only political/social-issue ads (EU-scoped, ~200 calls/hr); **all commercial ads are web-UI only**. TikTok's Commercial Content API is application-gated and EU-data-only for now. The official X/Twitter API remains unbundled because its free read tier is effectively gone; the opt-in `xquik.py` path uses Xquik's published, metered read contract instead. Evaluated and not adopted: TikTok Research API (academic gate), Twitch API (deferred for this vertical).

@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.2.0
+- **Catalog version:** 20.1.0
 - **Framework:** STAR
 - **Auditor:** creator-content-auditor
 - **Complete item definitions:** 40
-- **Source digest:** `sha256:8b5918c92e73bc471e44c2d29d69310e912dae0f15a00688dbe00f1fb0e752a6`
+- **Source digest:** `sha256:4f2dd25235c314e08fe2f0bd1718121cde97c4b5340f9da6d4b0ed6c0c2e5b7c`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "19.2.0",
+  "catalog_version": "20.1.0",
   "frameworks": {
     "STAR": {
       "construct": "influencer partnership quality across creator suitability, trust and compliance, content appeal, and campaign return",

@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.2.0
+- **Catalog version:** 20.1.0
 - **Framework:** TALE
 - **Auditor:** narrative-quality-auditor
 - **Complete item definitions:** 40
-- **Source digest:** `sha256:1c161b3423d6a7eba8bc157422d3b974590b6c93181a394f031ea96a976de37c`
+- **Source digest:** `sha256:f53772348a7d8b113ab15876e5a1e435ca0c88fb64cb2c0babfec297745921a4`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "19.2.0",
+  "catalog_version": "20.1.0",
   "frameworks": {
     "TALE": {
       "composite_score": false,

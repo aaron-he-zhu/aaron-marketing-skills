@@ -4,13 +4,13 @@ slug: aaron-competitor-tracker
 displayName: "Competitor Tracker · 竞对红人追踪"
 summary: "竞品创作者合作动向:合作名单、投放节奏与策略启示"
 description: 'Use when the user asks to "track competitor influencer marketing", "see who my rivals partner with", or "benchmark my influencer program"; produces a competitor partnership roster, campaign and content-strategy breakdown, performance estimates, and a gap/opportunity list. Not for finding your own new creators — use influencer-discovery. 竞品达人合作追踪/竞品营销分析'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when the user wants to understand a competitor's influencer marketing: which creators they partner with, what campaigns and content formats they run, estimated reach and spend, and where they leave gaps. Activate for competitive benchmarking, finding untapped or former-competitor creators, and spotting strategy shifts over time."
 argument-hint: "<your brand> [competitor names] [platform]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "influencer", "phase": "target", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "target"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "influencer", "phase": "target", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "target"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Competitor Tracker
@@ -60,6 +60,8 @@ Where a tool could speed things up, use `~~` connector placeholders:
 
 **Rival-partner channel watch (free key / keyless)**: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/youtube.py" channel <partner-handle>` reads a competitor partner's real subscriber/view counts (free `YOUTUBE_API_KEY`), and every YouTube channel also has a **keyless RSS feed** — `https://www.youtube.com/feeds/videos.xml?channel_id=UC…` piped into `rss_monitor.py` — for tracking partner posting cadence and spotting a burst of sponsored content without any API at all.
 
+**Rival X evidence (metered key).** `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/xquik.py" creator <competitor-or-partner-handle> --posts 20` combines a public profile with one recent-post page. Use `xquik.py listen "<campaign term>" --from-user <handle> --limit 20` when the public query needs campaign terms. Label public counters Measured-as-displayed. A mention, hashtag, or co-appearance does not prove a paid partnership. Mark partnership type and spend Unknown unless a post, disclosure, contract, or other source confirms them.
+
 Label every estimate as an estimate. See [CONNECTORS.md](../../../CONNECTORS.md) for the keyless/free recipe per category.
 
 ## Instructions
@@ -67,7 +69,7 @@ Label every estimate as an estimate. See [CONNECTORS.md](../../../CONNECTORS.md)
 Each step has a fill-in template in [references/templates.md](references/templates.md).
 
 1. **Define competitive set** — capture your brand, prioritized competitors (direct/indirect), platforms, time period, and focus areas. ([template](references/templates.md#1-define-competitive-set))
-2. **Track influencer partnerships** — for each competitor, build a current/recent partner roster (handle, platform, followers, partnership type, duration), then the observed selection criteria, relationship-type mix, partnership frequency, and notable partners. ([template](references/templates.md#2-track-influencer-partnerships))
+2. **Track influencer partnerships.** For each competitor, build a current/recent partner roster with source links. Use `xquik.py creator` for named X accounts. Treat public counters as Measured and relationship claims as Unknown until confirmed. Then record selection criteria, relationship mix, frequency, and notable partners. ([template](references/templates.md#2-track-influencer-partnerships))
 3. **Analyze campaigns** — break down recent campaigns (timeline, platforms, tier mix, content type, hashtag, CTA, estimated spend, what worked/didn't), plus a calendar and seasonal/launch patterns. ([template](references/templates.md#3-analyze-campaigns))
 4. **Review content strategy** — log format preferences, content themes, messaging, hashtag strategy, and creative direction. ([template](references/templates.md#4-review-content-strategy))
 5. **Estimate performance** — estimate overall program metrics, performance by platform and by tier, and top/underperforming content. Mark every figure as an estimate. ([template](references/templates.md#5-estimate-performance))

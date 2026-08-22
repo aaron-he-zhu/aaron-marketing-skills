@@ -8,7 +8,7 @@ The source manifest pins context-budgeted authoritative edge shards by SHA-256; 
 - Nodes: **120**
 - Edges: **376**
 - Named workflows: **1**
-- Graph digest: `sha256:a6f227b562da7ec9fff8bfb659b9d4fcda7a6e24150ca9083b1fd5e62b75de69`
+- Graph digest: `sha256:100dfbbe4e6ae13f7ca13c67cf2878654c4e5d3bcb37bdd2b1fa29dc9f054582`
 
 ## Named Workflows
 

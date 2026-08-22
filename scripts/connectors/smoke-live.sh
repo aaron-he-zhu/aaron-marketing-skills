@@ -128,6 +128,14 @@ else
   skip "producthunt.py daily" "PRODUCTHUNT_DEVELOPER_TOKEN not set"
 fi
 
+if [ -n "${XQUIK_API_KEY:-}" ]; then
+  check "xquik.py listen" \
+    'import json,sys; d=json.load(sys.stdin); assert d["error"] is None and d["count"] == 1 and d["queries"][0]["next_cursor"] is not None' \
+    python3 xquik.py listen "open source marketing" --limit 1
+else
+  skip "xquik.py listen" "XQUIK_API_KEY not set"
+fi
+
 # indexpush is mutation-class: smoke only its dry-run (no network, no submission).
 check "indexpush.py (dry-run)" \
   'import json,sys; d=json.load(sys.stdin); assert d["dry_run"] and d["request"]["body"]["host"]=="example.com"' \

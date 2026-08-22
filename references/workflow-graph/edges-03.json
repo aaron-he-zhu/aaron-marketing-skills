@@ -1024,7 +1024,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "influencer/scout/influencer-discovery/SKILL.md:100",
+      "condition_source": "influencer/scout/influencer-discovery/SKILL.md:102",
       "condition_text": "audience-mapper — when the target audience is still fuzzy and criteria need sharpening before a re-search.",
       "documentation_required": true,
       "exception": null,
@@ -1053,7 +1053,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "influencer/scout/influencer-discovery/SKILL.md:99",
+      "condition_source": "influencer/scout/influencer-discovery/SKILL.md:101",
       "condition_text": "competitor-tracker — when discovery surfaced competitor-saturated creators and you want to map the competitive field first.",
       "documentation_required": true,
       "exception": null,
@@ -1082,7 +1082,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "influencer/scout/influencer-discovery/SKILL.md:96",
+      "condition_source": "influencer/scout/influencer-discovery/SKILL.md:98",
       "condition_text": "Primary: fit-scorer — score and rank the discovered candidates with weighted criteria before outreach.",
       "documentation_required": true,
       "exception": null,

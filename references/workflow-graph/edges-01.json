@@ -706,7 +706,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "influencer/target/competitor-tracker/SKILL.md:95",
+      "condition_source": "influencer/target/competitor-tracker/SKILL.md:97",
       "condition_text": "Primary: campaign-planner — turn competitive gaps into a differentiated campaign.",
       "documentation_required": true,
       "exception": null,
@@ -734,7 +734,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/target/competitor-tracker/SKILL.md:97",
+      "condition_source": "influencer/target/competitor-tracker/SKILL.md:99",
       "condition_text": "Alternate (Scout): fit-scorer — score a competitor's roster against your brand before you poach.",
       "documentation_required": true,
       "exception": {
@@ -766,7 +766,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/target/competitor-tracker/SKILL.md:96",
+      "condition_source": "influencer/target/competitor-tracker/SKILL.md:98",
       "condition_text": "Alternate (Scout): influencer-discovery — pursue the untapped and former-competitor creators this analysis surfaced.",
       "documentation_required": true,
       "exception": {
