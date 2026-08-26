@@ -784,8 +784,8 @@ Apache License 2.0 — see [LICENSE](LICENSE).
 
 <a href="https://www.star-history.com/?repos=aaron-he-zhu%2Faaron-marketing-skills&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=aaron-he-zhu/aaron-marketing-skills&type=date&theme=dark&legend=top-left&sealed_token=K6urMhBIrcVIXJvMDWhgZP6KneM8cTo073XO6c-99j4vYWm7J_YIu_W3HFewr-QySk00ZWB9V0Btf-aJPMWiYZjcmuIqBh2G6aEd69Sw43PX7ypi90Il-lwwtdBkmx_1g_Sw589a2axs_lHmFfnANYjjmJwtTtmXy7RY07-HAASvV5LxsgpYwabVPwKZ" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=aaron-he-zhu/aaron-marketing-skills&type=date&legend=top-left&sealed_token=K6urMhBIrcVIXJvMDWhgZP6KneM8cTo073XO6c-99j4vYWm7J_YIu_W3HFewr-QySk00ZWB9V0Btf-aJPMWiYZjcmuIqBh2G6aEd69Sw43PX7ypi90Il-lwwtdBkmx_1g_Sw589a2axs_lHmFfnANYjjmJwtTtmXy7RY07-HAASvV5LxsgpYwabVPwKZ" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=aaron-he-zhu/aaron-marketing-skills&type=date&legend=top-left&sealed_token=K6urMhBIrcVIXJvMDWhgZP6KneM8cTo073XO6c-99j4vYWm7J_YIu_W3HFewr-QySk00ZWB9V0Btf-aJPMWiYZjcmuIqBh2G6aEd69Sw43PX7ypi90Il-lwwtdBkmx_1g_Sw589a2axs_lHmFfnANYjjmJwtTtmXy7RY07-HAASvV5LxsgpYwabVPwKZ" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=aaron-he-zhu/aaron-marketing-skills&type=date&theme=dark&legend=top-left&sealed_token=ejNFyk10Yua2s8a5BomKSd5kCPTp6s9p5WfLLK7z_xHjBbBXuZ2-m7dowGHvGzCJi4zhs-PUv4m4v77ZIsuYunVBnwWGIZRF5zGe6bl3Dob3Pwlm9VUelpwpKOAtf4V9s8crOVP2h4hAEfMV4TgrzuLW-K2Tx5Lv870ovKJuWC-urh-yG2E-9_c25uVl" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=aaron-he-zhu/aaron-marketing-skills&type=date&legend=top-left&sealed_token=ejNFyk10Yua2s8a5BomKSd5kCPTp6s9p5WfLLK7z_xHjBbBXuZ2-m7dowGHvGzCJi4zhs-PUv4m4v77ZIsuYunVBnwWGIZRF5zGe6bl3Dob3Pwlm9VUelpwpKOAtf4V9s8crOVP2h4hAEfMV4TgrzuLW-K2Tx5Lv870ovKJuWC-urh-yG2E-9_c25uVl" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=aaron-he-zhu/aaron-marketing-skills&type=date&legend=top-left&sealed_token=ejNFyk10Yua2s8a5BomKSd5kCPTp6s9p5WfLLK7z_xHjBbBXuZ2-m7dowGHvGzCJi4zhs-PUv4m4v77ZIsuYunVBnwWGIZRF5zGe6bl3Dob3Pwlm9VUelpwpKOAtf4V9s8crOVP2h4hAEfMV4TgrzuLW-K2Tx5Lv870ovKJuWC-urh-yG2E-9_c25uVl" />
  </picture>
 </a>
