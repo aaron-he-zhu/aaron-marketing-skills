@@ -247,7 +247,7 @@ jobs:
           bash tests/test_runtime_distribution.sh
           bash tests/test_hook_artifact_gate.sh
 
-      - name: Full behavior and 700-case credential-free plan
+      - name: Full behavior and 734-case credential-free plan
         if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
         run: |
           set -euo pipefail
@@ -264,8 +264,8 @@ jobs:
 
           with open(sys.argv[1], encoding="utf-8") as handle:
               plan = json.load(handle)
-          if plan.get("selected_count") != 700 or len(plan.get("cases", [])) != 700:
-              raise SystemExit("nightly semantic plan must contain exactly 700 cases")
+          if plan.get("selected_count") != 734 or len(plan.get("cases", [])) != 734:
+              raise SystemExit("nightly semantic plan must contain exactly 734 cases")
           PY
 
       - name: Reproducible legacy and Agent Plugins builds
