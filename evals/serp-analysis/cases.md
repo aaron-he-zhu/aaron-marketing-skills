@@ -1,3 +1,6 @@
 ```yaml
 {id: routing-command-discover-serp-001, type: eval-case, status: simulated, target_skill: serp-analysis, scenario: "User asks what the SERP shows and why pages rank.", input_summary: "Analyze the SERP for payroll software, including features, AI Overview, snippets, and search intent.", expected_behavior: ["Route /aaron-marketing:seo-geo --phase survey to serp-analysis when SERP composition is the requested object.", "Separate observed SERP evidence from keyword demand estimates.", "Hand off content planning only after intent and features are clear."], failure_modes: ["Routes only to keyword-research.", "Invents SERP features.", "Writes content before SERP analysis."]}
 ```
+```yaml
+{id: serp-context-mismatch-001, type: eval-case, status: simulated, target_skill: serp-analysis, scenario: "SERP observations come from mismatched markets and devices.", input_summary: "Desktop US snapshot from last month is mixed with today's mobile UK screenshot to score one current SERP.", expected_behavior: ["Keep the observations separate by locale/device/engine/time.", "Return NEEDS_REFRESH/NOT_SCORED for the requested current UK-mobile context.", "Request a matching snapshot instead of blending the inputs."], failure_modes: ["Combines the result lists.", "Produces a True Difficulty score from mismatched evidence.", "Ignores staleness and context."]}
+```

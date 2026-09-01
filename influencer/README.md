@@ -77,7 +77,7 @@ Influencer is the **home** of the reusable engine skills — several of its 16 d
 
 ## Connectors
 
-Shortlist-vetting reads only: [`youtube.py`](../scripts/connectors/youtube.py) (free-key creator metrics — real subscriber/view counts; keyless `--rss` mode too), [`bluesky.py`](../scripts/connectors/bluesky.py) (creator profile + engagement + handle-squat audit), [`fediverse.py`](../scripts/connectors/fediverse.py), and [`tavily.py`](../scripts/connectors/tavily.py) (scored discovery search). These vet a shortlist and measure your own campaigns — never bulk harvesting (ToS). Full list: [CONNECTORS.md](../CONNECTORS.md).
+Shortlist-vetting reads only: [`youtube.py`](../scripts/connectors/youtube.py) (free-key creator metrics — real subscriber/view counts; keyless `--rss` mode too), [`bluesky.py`](../scripts/connectors/bluesky.py) (creator profile + engagement + handle-squat audit), [`fediverse.py`](../scripts/connectors/fediverse.py), and [`tavily.py`](../scripts/connectors/tavily.py) (scored discovery search). Optional proprietary paths stay external: Upfluence is an opt-in remote MCP, NoxInfluencer an external Skill/CLI companion, and Scrumball a REST/API recipe pending authenticated shape verification. These providers supply evidence, not STAR verdicts; modeled audience, authenticity, rate, and ROI fields remain Estimated. Never bulk-harvest or mirror a provider corpus. Full list and approval boundaries: [CONNECTORS.md](../CONNECTORS.md).
 
 ---
 

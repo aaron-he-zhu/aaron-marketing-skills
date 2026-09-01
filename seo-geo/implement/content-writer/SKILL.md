@@ -4,13 +4,13 @@ slug: aaron-content-writer
 displayName: "Content Writer · SEO文章写作"
 summary: "SEO文章写作/内容更新/排名恢复"
 description: 'Use when the user asks to "write SEO content", "draft a blog post / landing page", "update outdated content", or "fix traffic/ranking decay"; two modes — new drafts pages with keywords, headers, snippets, and evidence boundaries; refresh scores decay, prioritizes update work, and produces a republish plan with GEO guidance. Not for AI-citation/GEO readiness scoring — use geo-content-optimizer; not for publish-gate scoring — use content-quality-auditor. SEO文章写作/内容更新/排名恢复'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when writing SEO articles, blog posts, landing pages, or product descriptions targeting a keyword (mode: new), OR when updating outdated content, refreshing old articles, or recovering pages that lost traffic/rankings (mode: refresh)."
 argument-hint: "[--mode new|refresh] <topic/keyword or URL of existing content>"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "implement", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "implement"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "seo-geo", "phase": "implement", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "implement"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Content Writer
@@ -47,9 +47,9 @@ Update this content to outrank [competitor URL]: [your URL]
 
 **Expected output**: mode `new` → a ready-to-use draft; mode `refresh` → a scored decay diagnosis plus a prioritized update plan (and optional refreshed copy). Both emit the standard handoff summary for `memory/content/`.
 
-- **Reads**: the brief, target keywords, page intent, entity inputs, `memory/projections/narrative.json`, and `memory/projections/claims.json` (new); those same truth projections plus candidate URL/content, traffic/ranking history, publish/update dates, and competitor examples (refresh).
+- **Reads**: the brief, target keywords, page intent, entity inputs, `memory/projections/narrative.json`, and `memory/projections/claims.json` (new); those same truth projections plus stable page ref, prior content version/hash, change ref, candidate URL/content, traffic/ranking history, publish/update dates, and competitor examples (refresh).
 - **Writes**: a user-facing content deliverable and, with permission, a dated artifact under `memory/content/content-writer/`; unresolved durable claims are submitted through `registry-events.py` as authorized `operation: propose` events.
-- **Done when**: (new) the draft satisfies target intent with natural keyword use, H1/H2 structure, meta description, one snippet-targetable block, and evidence-safe claims; (refresh) decay drivers and concrete updates are documented; both modes report `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`.
+- **Done when**: (new) the draft satisfies target intent with natural keyword use, H1/H2 structure, meta description, one snippet-targetable block, and evidence-safe claims; (refresh) decay drivers and concrete updates are documented; both modes report `page_ref`, `content_version`, `content_sha256`, `change_ref`, `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`.
 - **Primary next skill**: [content-quality-auditor](../../tune/content-quality-auditor/SKILL.md) to gate the draft or refreshed page before publishing.
 
 ### Handoff Summary
@@ -60,7 +60,7 @@ Update this content to outrank [competitor URL]: [your URL]
 
 Keyless Tier-1 first: ask for the brief, keywords, intent, and competitors (new); ask for traffic data, ranking history, publish dates, candidate URLs, and competitor examples (refresh). Use `~~SEO tool`, `~~search console`, and `~~analytics` when connected — keyed APIs are opt-in Tier-2/3 only, never required. See [CONNECTORS.md](../../../CONNECTORS.md).
 
-**Publish-time index push (write channel, gated)**: after a new or refreshed page is actually live, `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/indexpush.py" indexnow <url> --key $INDEXNOW_KEY --live` (Bing/DuckDuckGo/Yandex/…) and `indexpush.py baidu <url> --site <site> --token $BAIDU_PUSH_TOKEN --live` (百度) tell engines to fetch it now instead of waiting for a recrawl — minutes-scale discovery, especially valuable for refresh-mode republishing. Dry-run by default; push only URLs that are live and final.
+**Publish-time index push (write channel, gated)**: after a new or refreshed page is actually live, `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/indexpush.py" indexnow <url> --key $INDEXNOW_KEY --live` (Bing/DuckDuckGo/Yandex/…) and `indexpush.py baidu <url> --site <site> --token $BAIDU_PUSH_TOKEN --live` (百度) tell engines to fetch it now instead of waiting for a recrawl. Dry-run by default; push only URLs that are live and final. Bind the intent to URL, engine, method, and exact `content_sha256`; emit an index receipt only from the returned provider/HTTP response. A dry-run, request body, or no-error local build is not a receipt and must not be described as submitted.
 
 Label every metric **Measured**, **User-provided**, **Calculated**, **Estimated**, or **Proxy**; never present an estimate as measured. If an applicable metric is unavailable, mark it Unknown, not N/A. Never invent figures, studies, dates, or attributions; cite the source or flag `[needs source]`.
 
@@ -122,6 +122,7 @@ Both modes apply the 16 high-weight CORE-EEAT items in [references/instructions-
 - [Refresh Templates](references/refresh-templates.md) — compact templates for refresh steps 2-9
 - [Refresh Example & Checklist](references/refresh-example.md) — full worked refresh example and pre/post-refresh checklist
 - [Measurement Protocol](../../../references/measurement-protocol.md) — refresh readback windows (7/14/28/56 days) and judging impact against a control
+- [SEO/GEO Evidence and Cycle Control Profile](../../evaluate/performance-monitor/references/evidence-and-cycle-control.md) — page/change binding and index intent/receipt fields
 - [Humanizer Slop Check](../../../references/humanizer-slop.md) — pre-publish self-check that strips AI-slop phrasing before handoff
 
 ## Save Results

@@ -1451,7 +1451,7 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
                     ))
 
     def test_v3_exhaustive_blind_payloads_and_post_route_assembly_closure(self):
-        """Prove the complete 700-case/120-skill v3 surface without credentials."""
+        """Prove the complete 734-case/120-skill v3 surface without credentials."""
         selection = self.runner.select_semantic_cases("nightly", set())
         requests = self.runner.build_v3_requests(
             selection["cases"], selection["profile"],
@@ -1460,8 +1460,8 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
             model_id="gpt-fixture",
             judge_model_id="gpt-judge-fixture",
         )
-        self.assertEqual(700, len(requests))
-        self.assertEqual(700, len({item["request_sha256"] for item in requests}))
+        self.assertEqual(734, len(requests))
+        self.assertEqual(734, len({item["request_sha256"] for item in requests}))
 
         request_by_skill = {}
         for request in requests:

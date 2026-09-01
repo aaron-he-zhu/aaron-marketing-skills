@@ -11,7 +11,7 @@
           "end_char": 115,
           "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+          "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 256,
           "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+          "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
           "span_basis": "field-text",
           "start_char": 117
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba"
+      "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd"
     }
   },
   "context_hints": {
@@ -47,21 +47,21 @@
         "path": "launch/mobilize/launch-readiness-auditor/references/auditor-runtime.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "7ce54040e2150fe1b2baa1edd39bfa5c50e29ee250ab27ffce4f79fe69e887a1",
+        "sha256": "023aabbda8618bd820ac535db2b8ca02eb42ea6b68cedd3f2c8b2ebc563e9491",
         "source_line": 44
       },
       {
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "1bdafd8e080bfd77ec933b67221dcc2652bf350f0e73b0ecafdeb57136195474",
+        "sha256": "028a87012aa8cded04d9b7fb70f44a2b0eb3475b7984251050e1ec281c60a3ec",
         "source_line": 40
       },
       {
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
         "source_line": 104
       },
       {
@@ -75,7 +75,7 @@
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "sha256": "9aed49f657df95e95d34d6d46beaf32d8be49d19b28a073e00f40b721f588cc6",
         "source_line": 43
       },
       {
@@ -89,6 +89,7 @@
     "project_paths": []
   },
   "contract_id": "skill:launch-readiness-auditor",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -101,7 +102,7 @@
           "end_char": 91,
           "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+          "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -119,7 +120,7 @@
           "end_char": 191,
           "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+          "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
           "span_basis": "field-text",
           "start_char": 92
         },
@@ -137,7 +138,7 @@
           "end_char": 277,
           "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+          "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
           "span_basis": "field-text",
           "start_char": 192
         },
@@ -155,7 +156,7 @@
           "end_char": 357,
           "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+          "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
           "span_basis": "field-text",
           "start_char": 278
         },
@@ -170,7 +171,7 @@
     "summary_ref": {
       "path": "references/skill-contract.md",
       "section": "Handoff Summary Format",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "summary_source": "shared-skill-contract",
     "target_skills": [
@@ -186,8 +187,8 @@
     "name": "launch-readiness-auditor",
     "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
     "phase": "mobilize",
-    "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
-    "version": "20.0.0"
+    "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<launch slug/plan/evidence> [preflight|execution|outcome]",
@@ -201,7 +202,7 @@
           "end_char": 91,
           "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+          "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -213,7 +214,7 @@
     "source": {
       "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba"
+      "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd"
     }
   },
   "output_contract": {
@@ -228,7 +229,7 @@
           "end_char": 32,
           "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba",
+          "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +240,7 @@
     "source": {
       "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba"
+      "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd"
     },
     "summary": "only a permissioned v3 artifact.",
     "summary_source": "writes-fallback",
@@ -250,12 +251,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -264,7 +265,7 @@
     "source": {
       "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "3f976456a28d72f58dee839dc8233ac54b29f3811d30a4b21d4f51cf158d21ba"
+      "sha256": "cf4c342cdbc822fcf39d1e5f69f5f0d4fea6310b0396103cc139aa5ea29498dd"
     },
     "trigger_phrases": [
       "are we ready to launch",

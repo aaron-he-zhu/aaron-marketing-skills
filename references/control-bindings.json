@@ -1,0 +1,510 @@
+{
+  "$schema": "./control-bindings.schema.json",
+  "authority": "cross-discipline-control-bindings",
+  "bindings": {
+    "ad-test-designer": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "ad/orchestrate/ad-test-designer/SKILL.md"
+    },
+    "advocacy-program-designer": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "social/craft/advocacy-program-designer/SKILL.md"
+    },
+    "attribution-reconciler": {
+      "control_requirements": [
+        "evidence-observation"
+      ],
+      "skill_path": "ad/scale/attribution-reconciler/SKILL.md"
+    },
+    "audience-mapper": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/scout/audience-mapper/SKILL.md"
+    },
+    "brief-generator": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/target/brief-generator/SKILL.md"
+    },
+    "budget-optimizer": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/target/budget-optimizer/SKILL.md"
+    },
+    "campaign-architect": {
+      "control_requirements": [
+        "evidence-observation"
+      ],
+      "skill_path": "ad/research/campaign-architect/SKILL.md"
+    },
+    "campaign-planner": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "influencer/target/campaign-planner/SKILL.md"
+    },
+    "competitor-tracker": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/target/competitor-tracker/SKILL.md"
+    },
+    "content-amplifier": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/activate/content-amplifier/SKILL.md"
+    },
+    "content-writer": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding"
+      ],
+      "skill_path": "seo-geo/implement/content-writer/SKILL.md"
+    },
+    "contract-helper": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding"
+      ],
+      "skill_path": "influencer/activate/contract-helper/SKILL.md"
+    },
+    "conversion-signal-qa": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "ad/activate/conversion-signal-qa/SKILL.md"
+    },
+    "creator-content-auditor": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/activate/creator-content-auditor/SKILL.md"
+    },
+    "crisis-response-planner": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding"
+      ],
+      "skill_path": "social/host/crisis-response-planner/SKILL.md"
+    },
+    "email-creative-builder": {
+      "control_requirements": [
+        "artifact-binding"
+      ],
+      "skill_path": "email/engage/email-creative-builder/SKILL.md"
+    },
+    "email-render-builder": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding"
+      ],
+      "skill_path": "email/engage/email-render-builder/SKILL.md"
+    },
+    "email-sequence-designer": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "email/nurture/email-sequence-designer/SKILL.md"
+    },
+    "engagement-inbox-manager": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "social/host/engagement-inbox-manager/SKILL.md"
+    },
+    "fit-scorer": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/scout/fit-scorer/SKILL.md"
+    },
+    "influencer-discovery": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/scout/influencer-discovery/SKILL.md"
+    },
+    "inbox-placement-monitor": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "email/deliver/inbox-placement-monitor/SKILL.md"
+    },
+    "keyword-research": {
+      "control_requirements": [
+        "evidence-observation"
+      ],
+      "skill_path": "seo-geo/survey/keyword-research/SKILL.md"
+    },
+    "landing-optimizer": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/report/landing-optimizer/SKILL.md"
+    },
+    "launch-asset-packager": {
+      "control_requirements": [
+        "artifact-binding"
+      ],
+      "skill_path": "launch/assemble/launch-asset-packager/SKILL.md"
+    },
+    "community-launch-runner": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding"
+      ],
+      "skill_path": "launch/mobilize/community-launch-runner/SKILL.md"
+    },
+    "launch-day-conductor": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "launch/mobilize/launch-day-conductor/SKILL.md"
+    },
+    "launch-monitor": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "launch/prove/launch-monitor/SKILL.md"
+    },
+    "launch-retro-analyzer": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "launch/prove/launch-retro-analyzer/SKILL.md"
+    },
+    "list-hygiene-monitor": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "email/setup/list-hygiene-monitor/SKILL.md"
+    },
+    "list-segment-builder": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "email/setup/list-segment-builder/SKILL.md"
+    },
+    "message-system-architect": {
+      "control_requirements": [
+        "artifact-binding"
+      ],
+      "skill_path": "narrative/architect/message-system-architect/SKILL.md"
+    },
+    "message-test-designer": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "narrative/evaluate/message-test-designer/SKILL.md"
+    },
+    "narrative-resonance-monitor": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md"
+    },
+    "narrative-drift-monitor": {
+      "control_requirements": [
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "narrative/evaluate/narrative-drift-monitor/SKILL.md"
+    },
+    "outreach-manager": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/activate/outreach-manager/SKILL.md"
+    },
+    "paid-measurement-loop": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "ad/scale/paid-measurement-loop/SKILL.md"
+    },
+    "performance-analyzer": {
+      "control_requirements": [
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "influencer/report/performance-analyzer/SKILL.md"
+    },
+    "performance-monitor": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "seo-geo/evaluate/performance-monitor/SKILL.md"
+    },
+    "positioning-truth-tracer": {
+      "control_requirements": [
+        "evidence-observation"
+      ],
+      "skill_path": "narrative/trace/positioning-truth-tracer/SKILL.md"
+    },
+    "rank-tracker": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "seo-geo/evaluate/rank-tracker/SKILL.md"
+    },
+    "report-generator": {
+      "control_requirements": [
+        "artifact-binding",
+        "cycle-retro",
+        "measurement-contract"
+      ],
+      "skill_path": "influencer/report/report-generator/SKILL.md"
+    },
+    "roi-calculator": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "influencer/report/roi-calculator/SKILL.md"
+    },
+    "send-experiment-designer": {
+      "control_requirements": [
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "email/deliver/send-experiment-designer/SKILL.md"
+    },
+    "serp-analysis": {
+      "control_requirements": [
+        "evidence-observation"
+      ],
+      "skill_path": "seo-geo/survey/serp-analysis/SKILL.md"
+    },
+    "social-creative-builder": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "social/craft/social-creative-builder/SKILL.md"
+    },
+    "social-calendar-builder": {
+      "control_requirements": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "social/craft/social-calendar-builder/SKILL.md"
+    },
+    "social-measurement-loop": {
+      "control_requirements": [
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ],
+      "skill_path": "social/observe/social-measurement-loop/SKILL.md"
+    },
+    "trend-spotter": {
+      "control_requirements": [
+        "artifact-binding",
+        "evidence-observation"
+      ],
+      "skill_path": "influencer/scout/trend-spotter/SKILL.md"
+    }
+  },
+  "catalog_ref": "references/system-catalog.json",
+  "control_artifact_schema": "references/control-artifact.schema.json",
+  "handoff_requirements": {
+    "ad-test-designer--paid-measurement-loop": [
+      "artifact-binding",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "campaign-planner--creator-content-auditor": [
+      "action-receipt",
+      "artifact-binding",
+      "evidence-observation"
+    ],
+    "campaign-planner--performance-analyzer": [
+      "action-receipt",
+      "artifact-binding",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "email-sequence-designer--email-quality-auditor": [
+      "action-intent",
+      "artifact-binding",
+      "evidence-observation"
+    ],
+    "inbox-placement-monitor--email-quality-auditor": [
+      "action-receipt",
+      "artifact-binding",
+      "evidence-observation"
+    ],
+    "launch-asset-packager--launch-readiness-auditor": [
+      "artifact-binding"
+    ],
+    "launch-day-conductor--launch-monitor": [
+      "action-receipt",
+      "artifact-binding",
+      "evidence-observation"
+    ],
+    "launch-monitor--launch-retro-analyzer": [
+      "action-receipt",
+      "artifact-binding",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "launch-retro-analyzer--momentum-planner": [
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "message-test-designer--send-experiment-designer": [
+      "artifact-binding",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "narrative-drift-monitor--message-system-architect": [
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "narrative-drift-monitor--narrative-quality-auditor": [
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "paid-measurement-loop--ad-account-auditor": [
+      "action-receipt",
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "paid-measurement-loop--report-generator": [
+      "action-receipt",
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "performance-analyzer--report-generator": [
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "performance-monitor--domain-authority-auditor": [
+      "action-receipt",
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "rank-tracker--performance-monitor": [
+      "artifact-binding",
+      "evidence-observation"
+    ],
+    "send-experiment-designer--email-quality-auditor": [
+      "action-receipt",
+      "artifact-binding",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "social-calendar-builder--social-quality-auditor": [
+      "action-intent",
+      "artifact-binding",
+      "evidence-observation"
+    ],
+    "social-measurement-loop--social-quality-auditor": [
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ],
+    "social-measurement-loop--social-calendar-builder": [
+      "artifact-binding",
+      "cycle-retro",
+      "evidence-observation",
+      "measurement-contract"
+    ]
+  },
+  "schema_version": "1.0"
+}

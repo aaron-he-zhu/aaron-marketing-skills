@@ -4,13 +4,13 @@ slug: aaron-category-narrative-mapper
 displayName: "Category Narrative Mapper · 品类叙事地图"
 summary: "品类主叙事/竞争叙事拆解/语言惯例/叙事演变"
 description: 'Use when the user asks to "map the category narrative", "tear down how competitors tell their story", or "find the language conventions in our market"; produces a category narrative map — the dominant stories and points of view in the category, its language conventions and framing clichés, and a per-competitor narrative teardown (arc, claimed onlyness, proof pattern) plus how each rival''s messaging has shifted over time (scraped copy vs archived copy). Not for the positioning canvas itself — use positioning-mapper; not for the beachhead''s beliefs and objections — use audience-belief-mapper; not for SERP keyword targeting — use keyword-research; not for claim adjudication — use offer-claims-registry. 品类叙事/竞争叙事拆解/语言惯例/叙事演变'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when tracing the category's narrative landscape before authoring any brand canon: naming the dominant stories and points of view, recording the language conventions and framing clichés, teardown of each named competitor's narrative (arc, claimed onlyness, proof pattern), and how their messaging has drifted over time. The second move of the TALE Trace phase, feeding the Truth dimension's category-frame and named-alternatives sub-items. Not the positioning canvas and not audience belief work."
 argument-hint: "<category / product> [named competitors] [competitor URLs]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "narrative", "phase": "trace", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "trace"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "narrative", "phase": "trace", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "trace"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Category Narrative Mapper

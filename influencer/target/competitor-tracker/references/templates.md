@@ -1,6 +1,6 @@
 # Competitor Tracker — Templates & Reference Packs
 
-Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus extended usage notes and a worked example. Label every estimate as an estimate.
+Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus extended usage notes and a worked example. Every factual partnership/campaign row needs `source_ref`, `observed_at`, and a measurement window. Estimates also need a formula and input refs. If dated evidence is absent, return the collection plan with `NEEDS_INPUT`; never fill from memory. Durable creator identity is always opaque `creator_ref`; raw names, handles, URLs, and contacts are transient lookup inputs. Exclusivity is confirmed only by explicit signed or official source evidence and is never inferred.
 
 ## 1. Define Competitive Set
 
@@ -36,11 +36,9 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 
 #### Current/Recent Partners
 
-| Influencer | Platform | Followers | Partnership Type | Duration |
-|------------|----------|-----------|------------------|----------|
-| @[handle1] | [platform] | [count] | [ambassador/campaign/one-off] | [ongoing/date] |
-| @[handle2] | [platform] | [count] | [type] | [duration] |
-| @[handle3] | [platform] | [count] | [type] | [duration] |
+| Creator ref | Platform | Followers | Partnership Type | Duration | Source ref | Observed at / window |
+|-------------|----------|-----------|------------------|----------|------------|----------------------|
+| [creator-<UUIDv4>] | [platform] | [count] | [ambassador/campaign/one-off] | [ongoing/date] | [ref] | [date/window] |
 
 #### Partnership Patterns
 
@@ -53,10 +51,10 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 **Relationship Types**:
 | Type | % of Partnerships | Examples |
 |------|-------------------|----------|
-| Brand Ambassadors | [%] | @[handle] |
-| Campaign-based | [%] | @[handle] |
-| One-off posts | [%] | @[handle] |
-| Affiliate | [%] | @[handle] |
+| Brand Ambassadors | [%] | [creator_ref] |
+| Campaign-based | [%] | [creator_ref] |
+| One-off posts | [%] | [creator_ref] |
+| Affiliate | [%] | [creator_ref] |
 
 **Partnership Frequency**:
 - New partnerships/month: ~[#]
@@ -65,11 +63,12 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 
 #### Notable Partners
 
-**[Influencer Name] @[handle]**
+**[creator_ref]**
 - Relationship since: [date]
 - Content produced: [#] pieces
 - Estimated spend: [$X]
-- Why they work together: [analysis]
+- Observed association: [what the dated evidence shows]
+- Hypothesis: [untested explanation, clearly labeled]
 ```
 
 ## 3. Analyze Campaigns
@@ -95,8 +94,8 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 | Estimated Spend | [$X] |
 
 **Campaign Content Examples**:
-1. @[handle]: [content description] - [engagement]
-2. @[handle]: [content description] - [engagement]
+1. [creator_ref]: [content description] - [engagement + source/date/window]
+2. [creator_ref]: [content description] - [engagement + source/date/window]
 
 **Campaign Performance Estimates**:
 | Metric | Estimated Value |
@@ -107,12 +106,12 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 | Content Pieces | [#] |
 | EMV | [$X] |
 
-**What Worked**:
-- [Observation 1]
-- [Observation 2]
+**Observed associations**:
+- [Observation + source/date/window]
+- [Observation + source/date/window]
 
-**What Didn't**:
-- [Observation 1]
+**Hypotheses to test**:
+- [Hypothesis; do not claim causation]
 
 ---
 
@@ -229,19 +228,19 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 
 #### Top Performing Content
 
-1. **@[handle]** - [content type]
+1. **[creator_ref]** - [content type]
    - Engagement: [X]
-   - Why it worked: [analysis]
+   - Observed association / hypothesis: [cite or label]
 
-2. **@[handle]** - [content type]
+2. **[creator_ref]** - [content type]
    - Engagement: [X]
-   - Why it worked: [analysis]
+   - Observed association / hypothesis: [cite or label]
 
 #### Underperforming Content
 
-1. **@[handle]** - [content type]
+1. **[creator_ref]** - [content type]
    - Engagement: [X]
-   - Why it failed: [analysis]
+   - Observed association / hypothesis: [cite or label]
 ```
 
 ## 6. Generate Competitive Comparison
@@ -293,16 +292,15 @@ Category Influencer Share of Voice:
 
 **Untapped Influencers** (not working with competitors):
 
-| Influencer | Platform | Followers | Fit Score | Opportunity |
-|------------|----------|-----------|-----------|-------------|
-| @[handle] | [platform] | [count] | [score] | [why available] |
-| @[handle] | [platform] | [count] | [score] | [why available] |
+| Creator ref | Platform | Followers | Discovery status | Opportunity hypothesis |
+|-------------|----------|-----------|------------------|------------------------|
+| [creator-<UUIDv4>] | [platform] | [count] | [READY_FOR_FIT/NEEDS_INPUT] | [hypothesis] |
 
 **Former Competitor Partners** (available):
 
-| Influencer | Former Partner | Why Ended | Your Opportunity |
-|------------|----------------|-----------|------------------|
-| @[handle] | [competitor] | [reason] | [opportunity] |
+| Creator ref | Former Partner | End reason evidence | Opportunity hypothesis |
+|-------------|----------------|---------------------|------------------------|
+| [creator-<UUIDv4>] | [competitor] | [explicit source ref or Unknown] | [hypothesis] |
 
 ### Strategy Gaps
 
@@ -384,7 +382,7 @@ Category Influencer Share of Voice:
 
 **Continue monitoring**:
 - [Competitor]: [specific aspects]
-- [Influencer]: [why important]
+- [creator_ref]: [why important + evidence ref]
 
 **Set alerts for**:
 - [Trigger 1]
@@ -439,7 +437,7 @@ What influencer opportunities are my competitors missing in [category]?
 
 **User**: "Track the influencer marketing activities of Glossier, Fenty Beauty, and Rare Beauty"
 
-**Output**: Comprehensive competitor analysis showing Glossier's UGC-heavy approach, Fenty's diverse creator network, Rare Beauty's mental health-focused partnerships, with identification of gaps and opportunities.
+**Output**: `NEEDS_INPUT`. Return source queries for dated public partnership posts, campaign announcements, provider records, and comparable metric windows. Do not characterize any named brand's current strategy, name partners, infer exclusivity, estimate results, or rank opportunities from the prompt alone.
 
 ## Tips for success
 

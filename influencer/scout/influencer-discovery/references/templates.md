@@ -26,7 +26,7 @@ block and replace the bracketed cells. For platform-specific reading cues see
 | Platform(s) | [platforms] | Required |
 | Follower Range | [min-max] | Required |
 | Engagement Rate | [minimum %] | Required |
-| Location | [regions] | [Required/Preferred] |
+| Geography | [minimum country/region granularity needed for this decision] | [Required/Preferred] |
 | Language | [languages] | [Required/Preferred] |
 | Content Type | [video/photo/etc.] | Preferred |
 | Posting Frequency | [minimum] | Preferred |
@@ -50,6 +50,14 @@ block and replace the bracketed cells. For platform-specific reading cues see
 ```markdown
 ## Search Strategy
 
+### Transient Lookup Block — DO NOT SAVE OR HAND OFF
+
+Raw handles/profile URLs may appear only in this block while the current session performs lookup. Delete the block before producing any saved artifact, handoff, checkpoint, or registry proposal.
+
+| Lookup slot | Raw handle/profile URL | Platform hint | Lookup purpose |
+|-------------|------------------------|---------------|----------------|
+| lookup-01 | [raw locator supplied/returned this session] | [platform] | [search/verification purpose] |
+
 ### Primary Search Methods
 
 1. **Hashtag Research**
@@ -58,7 +66,7 @@ block and replace the bracketed cells. For platform-specific reading cues see
    - Brand-adjacent: #[hashtag5]
 
 2. **Similar Accounts**
-   - Starting from: @[known influencer]
+   - Starting from: [lookup slot from the transient block]
    - Platform suggestions: "Similar to" features
 
 3. **Competitor Mentions**
@@ -70,8 +78,44 @@ block and replace the bracketed cells. For platform-specific reading cues see
    - Instagram: Explore page, Reels
    - YouTube: Related channels, collaboration networks
 
-5. **Tool Queries** (if available)
-   - [Platform]: [search query]
+5. **Saved-Safe Tool Queries / Import Batches** (when records are available)
+
+| Batch | creator_ref | identity_status | handle_ref | Provider/tool | Query or purpose | source_ref | observed_at | Window | Evidence label |
+|-------|-------------|-----------------|------------|---------------|------------------|------------|-------------|--------|----------------|
+| batch-01 | [creator-<UUIDv4>] | [resolved/unresolved/conflict] | [opaque authorized ref or unknown] | [provider/tool or user-export] | [query/import purpose] | [opaque ref] | [date/ISO 8601] | [measurement window/not-supplied] | [Measured/Calculated/Estimated/User-provided/Proxy] |
+
+Keep no credential or raw contact coordinate in this log. A provider name does
+not label every returned field automatically; apply the evidence label to each
+field in the profile below. Save an opaque `handle_ref`/`source_ref` only when an
+authorized artifact or verified registry link can resolve it. Otherwise do not
+create a hidden raw-handle mapping: set `identity_status: unresolved`, set
+`handle_ref: unknown`, and record `cross_session_locator_required: true` so a
+later session asks the user for the transient locator again.
+```
+
+### Partial Checkpoint — Two Raw Locators, Missing Inputs
+
+When the only candidates are exactly two transient raw locators and required criteria or dated evidence are missing, do not produce or save a vetted shortlist. Return `NEEDS_INPUT` inline. Only after a separate exact authorization to save a partial checkpoint may you copy this block:
+
+```markdown
+## Partial Discovery Checkpoint
+
+- `status`: `NEEDS_INPUT`
+- `checkpoint_state`: `PARTIAL`
+- `artifact_kind`: `partial_discovery_checkpoint`
+- `candidate_count`: 2
+- `shortlist_status`: `NOT_VETTED`
+- `ranking_status`: `NOT_RANKED`
+- `tiering_status`: `NOT_TIERED`
+- `criteria_gaps`: [[missing required criterion], ...]
+- `evidence_gaps`: [[missing dated evidence/source], ...]
+
+| creator_ref | identity_status | handle_ref | source_ref | cross_session_locator_required |
+|-------------|-----------------|------------|------------|--------------------------------|
+| [creator-<UUIDv4>] | [unresolved/resolved] | [opaque authorized ref or unknown] | [opaque authorized ref or unknown] | [true/false] |
+| [creator-<UUIDv4>] | [unresolved/resolved] | [opaque authorized ref or unknown] | [opaque authorized ref or unknown] | [true/false] |
+
+Raw locators are omitted. If no authorized resolver exists, do not preserve a hidden mapping; the next session must request each locator again. Do not add discovery signals, tiers, ranks, “top” language, or a fit-scorer handoff until criteria and evidence are complete.
 ```
 
 ---
@@ -108,107 +152,170 @@ block and replace the bracketed cells. For platform-specific reading cues see
 
 For each qualified influencer:
 
+Apply this identity-reference rule before filling the block:
+
+- Reuse an explicitly carried opaque `creator_ref`, or a creator-registry
+  aggregate ID only after its handle link is verified.
+- Otherwise generate one random `creator-<UUIDv4>` and reuse it unchanged across
+  the report, any authorized save, and every downstream handoff/tracker.
+- A raw handle, display name, profile URL, email, provider ID, or deterministic
+  hash of any of them is never a valid `creator_ref`. Keep provider identity
+  evidence in separate opaque `handle_ref` and `source_ref` fields.
+- Resolve the ref only through the accompanying authorized artifact's verified
+  handle evidence or an accepted registry identity link. If neither is
+  available, set `identity_status: unresolved`, persist no `handle_ref`,
+  `source_ref`, or hidden raw-locator mapping, and set
+  `cross_session_locator_required: true`. A later session must ask the user for
+  the transient locator again; do not guess or merge.
+
 ```markdown
 ---
 
-## Influencer #[X]: @[handle]
+## Influencer #[X]: [creator-<UUIDv4>]
+
+**Identity status**: [resolved/unresolved/conflict]
+**Verified cross-link ref**: [source_ref or none]
+**Cross-session locator required**: [true/false]
+**Current STAR evidence_window**: [start/end or not-supplied]
 
 ### Basic Information
 
-| Attribute | Details |
-|-----------|---------|
-| **Name** | [name] |
-| **Handle** | @[handle] |
-| **Platform** | [primary platform] |
-| **Other Platforms** | [other handles] |
-| **Location** | [city, country] |
-| **Language** | [primary language] |
-| **Niche** | [category] |
+| Field | Value/ref | Provider/tool | source_ref | observed_at | Window | Evidence label | Freshness |
+|-------|-----------|---------------|------------|-------------|--------|----------------|-----------|
+| **Creator ref** | [creator-<UUIDv4> or verified registry aggregate ID] | [upstream artifact/registry] | [opaque ref] | [date] | [N/A] | [User-provided/Measured] | [current/stale/unknown] |
+| **Primary handle ref** | [opaque public-handle/profile ref] | [provider/tool] | [opaque ref] | [date] | [N/A] | [label] | [current/stale/unknown] |
+| **Other handle refs** | [opaque refs] | [provider/tool] | [opaque ref] | [date] | [N/A] | [label] | [current/stale/unknown] |
+| **Platform** | [primary platform] | [provider/tool] | [opaque ref] | [date] | [N/A] | [label] | [current/stale/unknown] |
+| **Geography** | [only the country/region required by the filter] | [provider/tool] | [opaque ref] | [date] | [window/not-supplied] | [label] | [current/stale/unknown] |
+| **Language** | [primary language] | [provider/tool] | [opaque ref] | [date] | [window/not-supplied] | [label] | [current/stale/unknown] |
+| **Niche** | [category] | [provider/tool] | [opaque ref] | [date] | [window/not-supplied] | [label] | [current/stale/unknown] |
 
 ### Metrics
 
-| Platform | Followers | Engagement Rate | Avg. Views |
-|----------|-----------|-----------------|------------|
-| [Platform 1] | [count] | [%] | [views] |
-| [Platform 2] | [count] | [%] | [views] |
+Use one row per field and observation. When two providers disagree about the
+same field, retain both rows with their own dates/windows; do not average them or
+let the newest row overwrite the other automatically.
 
-**Growth Trend**: [growing/stable/declining] ([%] last 90 days)
+| Field | Platform | Value | Provider/tool | source_ref | observed_at | Window | Evidence label | Freshness |
+|-------|----------|-------|---------------|------------|-------------|--------|----------------|-----------|
+| Followers | [platform] | [count] | [provider/tool] | [opaque ref] | [date] | [point-in-time] | [label] | [current/stale/unknown] |
+| Engagement rate | [platform] | [%] | [provider/tool] | [opaque ref] | [date] | [posts/date range + denominator] | [label] | [current/stale/unknown] |
+| Average views | [platform] | [views] | [provider/tool] | [opaque ref] | [date] | [posts/date range] | [label] | [current/stale/unknown] |
+| Growth trend | [platform] | [growing/stable/declining + %] | [provider/tool] | [opaque ref] | [date] | [e.g. trailing 90 days] | [label] | [current/stale/unknown] |
 
 ### Audience Analysis
 
-| Demographic | Breakdown | Notes |
-|-------------|-----------|-------|
-| Gender | [%F / %M] | |
-| Age | [primary age range] | |
-| Location | [top countries/cities] | |
-| Interests | [categories] | |
-
-**Audience Quality Score**: [X/10]
-- Real followers estimate: [%]
-- Audience-brand overlap: [High/Medium/Low]
+| Field | Value | Provider/tool | source_ref | observed_at | Window | Evidence label | Freshness |
+|-------|-------|---------------|------------|-------------|--------|----------------|-----------|
+| Gender mix | [%F / %M] | [provider/tool] | [opaque ref] | [date] | [audience/export window] | [label] | [current/stale/unknown] |
+| Age | [primary age range] | [provider/tool] | [opaque ref] | [date] | [window] | [label] | [current/stale/unknown] |
+| Geography | [country/region-level breakdown only] | [provider/tool] | [opaque ref] | [date] | [window] | [label] | [current/stale/unknown] |
+| Interests | [categories] | [provider/tool] | [opaque ref] | [date] | [window] | [label] | [current/stale/unknown] |
+| Real-follower estimate | [%] | [provider/model] | [opaque ref] | [date] | [window] | Estimated | [current/stale/unknown] |
+| Audience-brand overlap | [High/Medium/Low] | [provider/method] | [opaque ref] | [date] | [window] | [Estimated/Calculated/Proxy] | [current/stale/unknown] |
 
 ### Content Analysis
 
-**Content Style**:
-- Primary format: [format]
-- Posting frequency: [X posts/week]
-- Aesthetic: [description]
-- Tone: [description]
+| Field | Observation | Provider/tool | source_ref | observed_at | Window | Evidence label | Freshness |
+|-------|-------------|---------------|------------|-------------|--------|----------------|-----------|
+| Primary format | [format] | [provider/tool] | [opaque ref] | [date] | [post sample] | [label] | [current/stale/unknown] |
+| Posting frequency | [X posts/week] | [provider/tool] | [opaque ref] | [date] | [post sample] | [label] | [current/stale/unknown] |
+| Aesthetic/tone | [description] | [method] | [post refs] | [date] | [post sample] | [Calculated/Estimated] | [current/stale/unknown] |
+| Top content | [content ref + supported engagement] | [provider/tool] | [opaque ref] | [date] | [metric window] | [label] | [current/stale/unknown] |
 
-**Top Performing Content**:
-1. [Content 1]: [engagement]
-2. [Content 2]: [engagement]
-3. [Content 3]: [engagement]
+**Discovery Relevance Observations — NOT_EVALUATED by Fit**:
 
-**Brand Fit Assessment**:
-- Visual alignment: [High/Medium/Low]
-- Value alignment: [High/Medium/Low]
-- Audience alignment: [High/Medium/Low]
+| Dimension | Read | Evidence-row refs | Evidence label |
+|-----------|------|-------------------|----------------|
+| Visual-content overlap | [Observed/Not observed/Unknown] | [refs] | [Calculated/Estimated] |
+| Value-topic overlap | [Observed/Not observed/Unknown] | [refs] | [Calculated/Estimated] |
+| Audience-evidence overlap | [Observed/Not observed/Unknown] | [refs] | [Calculated/Estimated] |
+
+These observations support the Fit evidence package only. Do not translate
+them into a Fit score, recommendation, priority, or creator-selection decision.
 
 ### Partnership History
 
 **Past Brand Partnerships**:
-| Brand | Date | Content Type | Est. Performance |
-|-------|------|--------------|------------------|
-| [brand 1] | [date] | [type] | [performance] |
-| [brand 2] | [date] | [type] | [performance] |
+| Brand ref | Date/window | Content Type | Performance | Provider/tool | source_ref | observed_at | Evidence label | Freshness |
+|-----------|-------------|--------------|-------------|---------------|------------|-------------|----------------|-----------|
+| [brand ref 1] | [date/window] | [type] | [performance] | [provider/tool] | [opaque ref] | [date] | [label] | [current/stale/unknown] |
+| [brand ref 2] | [date/window] | [type] | [performance] | [provider/tool] | [opaque ref] | [date] | [label] | [current/stale/unknown] |
 
-**Competitor Partnerships**: [Yes/No - details]
+**Competitor Partnerships**: [Yes/No/Unknown + evidence-row refs]
 
-### Contact Information
+### Contact-path References
 
-- **Email**: [if public]
-- **Agency/Manager**: [if applicable]
-- **Contact Method**: [best approach]
+- **Creator ref**: [creator-<UUIDv4> or verified registry aggregate ID; never a raw handle]
+- **Recipient ref**: [pseudonymous recipient_ref or unknown]
+- **Contact source ref**: [opaque contact_source_ref or unknown]
+- **Agency ref**: [opaque agency_ref or not-applicable]
+- **Eligible channel**: [email/DM/form/unknown; eligibility is checked by outreach-manager]
+- **Observed at**: [date/ISO 8601 or unknown]
 
-### Fit Score Summary
+Resolve any raw email, phone, postal address, public name, or named manager only
+transiently when needed. Never copy it into this profile, a saved discovery
+artifact, a handoff, or a registry proposal.
 
-| Factor | Score (1-5) |
-|--------|-------------|
-| Audience match | [score] |
-| Content quality | [score] |
-| Brand alignment | [score] |
-| Engagement quality | [score] |
-| Authenticity | [score] |
-| **Total** | **[X/25]** |
+### Discovery-to-Fit Freshness
 
-**Recommendation**: ⭐ [Highly Recommended / Recommended / Consider / Pass]
+- `STAR evidence_window`: [start/end or not-supplied]
+- `freshness_status`: [current/stale/unknown]
+- `refresh_required`: [field list or none]
 
-**Why They're a Good Fit**:
-[2-3 sentences explaining the fit]
+`current` means every required volatile input falls inside the supplied STAR
+window. A field outside it is `stale`; a missing observation date/window or an
+absent STAR window is `unknown`. Keep stale/unknown evidence visible for
+provenance, but hand that field to `fit-scorer` as Unknown until refreshed. The
+profile-level status is `stale` if any required field is stale, otherwise
+`unknown` if any required field is unknown, and `current` only when all required
+fields are current. Do not create a global TTL.
 
-**Potential Concerns**:
-- [Concern 1 if any]
+### Unresolved Evidence / Identity Conflicts
+
+| Field or identity | Observation A ref | Observation B ref | Status / next check |
+|-------------------|-------------------|-------------------|---------------------|
+| [field/identity] | [source/date/window] | [source/date/window] | [unresolved/verified cross-link needed] |
+
+Do not average conflicting values, select by recency alone, or merge identities
+from similar names/handles. Only a verified cross-link or explicit user
+confirmation permits one `creator_ref`.
+
+### Discovery Evidence Completeness
+
+| Required input group | Coverage | Freshness | Evidence-row refs | Gap / next query |
+|----------------------|----------|-----------|-------------------|------------------|
+| Declared follower/platform/geography filters | [complete/gap] | [current/stale/unknown] | [refs] | [gap/query or none] |
+| Engagement and recency observations | [complete/gap] | [current/stale/unknown] | [refs] | [gap/query or none] |
+| Audience evidence | [complete/gap] | [current/stale/unknown] | [refs] | [gap/query or none] |
+| Content/relevance evidence | [complete/gap] | [current/stale/unknown] | [refs] | [gap/query or none] |
+| Authenticity and brand-safety observations | [complete/gap] | [current/stale/unknown] | [refs] | [gap/query or none] |
+| Identity resolution | [resolved/unresolved/conflict] | [current/stale/unknown] | [refs] | [gap/query or none] |
+
+- `triage_state`: [READY_FOR_FIT / NEEDS_REFRESH / INELIGIBLE]
+- `ranking_status`: `NOT_RANKED`
+- `fit_status`: `NOT_EVALUATED`
+- `refresh_required`: [field list or none]
+- `declared_filter_result`: [pass / fail + exact criterion / unknown]
+
+`READY_FOR_FIT` requires complete current required evidence and no unresolved
+identity/evidence conflict. Any stale or unknown required field forces
+`NEEDS_REFRESH`, `NOT_RANKED`, and `NEEDS_INPUT`. `INELIGIBLE` requires dated
+evidence that fails an explicit discovery filter; it is not a STAR veto or Fit
+verdict.
 
 ---
 ```
 
-> The preliminary fit score above is a fast triage signal only. The weighted,
-> defensible score is computed downstream by [fit-scorer](../../fit-scorer/SKILL.md).
+> Discovery emits evidence completeness and declared-filter status only. It
+> never emits a Fit score, recommendation tier, outreach priority, or action
+> rank. [fit-scorer](../../fit-scorer/SKILL.md) owns typed comparison.
 
 ---
 
 ## Step 5 — Compiled Discovery Report
+
+Use this block only after the required criteria and real candidate records exist. A `PARTIAL` checkpoint is not eligible for a `READY_FOR_FIT` queue or fit-scorer handoff. Discovery never action-ranks candidates; stale/unknown required evidence remains `NEEDS_REFRESH/NOT_RANKED/NEEDS_INPUT`.
 
 ```markdown
 # Influencer Discovery Results
@@ -222,71 +329,69 @@ For each qualified influencer:
 | Metric | Count |
 |--------|-------|
 | Total Candidates Reviewed | [#] |
-| Passed Initial Screening | [#] |
-| Highly Recommended | [#] |
-| Recommended | [#] |
-| To Consider | [#] |
+| Passed Declared Discovery Filters | [#] |
+| READY_FOR_FIT | [#] |
+| NEEDS_REFRESH / NOT_RANKED | [#] |
+| INELIGIBLE by Declared Filter | [#] |
 
 ### By Platform
 
-| Platform | Count | Avg Followers | Avg ER |
-|----------|-------|---------------|--------|
-| Instagram | [#] | [avg] | [%] |
-| TikTok | [#] | [avg] | [%] |
-| YouTube | [#] | [avg] | [%] |
+| Platform | Count | Current complete | Needs refresh |
+|----------|-------|------------------|---------------|
+| Instagram | [#] | [#] | [#] |
+| TikTok | [#] | [#] | [#] |
+| YouTube | [#] | [#] | [#] |
 
-### By Tier
+Calculate summaries only from comparable field/window observations selected
+with an explicit rationale. Do not average unresolved provider conflicts.
 
-| Tier | Follower Range | Count | Est. Cost Range |
-|------|----------------|-------|-----------------|
-| Mega | 1M+ | [#] | [range] |
-| Macro | 100K-1M | [#] | [range] |
-| Micro | 10K-100K | [#] | [range] |
-| Nano | <10K | [#] | [range] |
+### Descriptive Follower-Band Distribution
 
-## Top Recommendations
+Use only the user-declared or source-dated taxonomy. A follower band is not a
+quality or action tier.
 
-### Tier 1: Must Reach Out
+| Declared band | Follower range | Count | Taxonomy source/date |
+|---------------|----------------|-------|----------------------|
+| [band] | [range] | [#] | [user/source ref + date] |
 
-| Rank | Handle | Platform | Followers | ER | Fit Score | Why |
-|------|--------|----------|-----------|----|-----------| ----|
-| 1 | @[handle] | [platform] | [count] | [%] | [X/25] | [brief reason] |
-| 2 | @[handle] | [platform] | [count] | [%] | [X/25] | [brief reason] |
-| 3 | @[handle] | [platform] | [count] | [%] | [X/25] | [brief reason] |
+## Candidate Evidence Queue — No Action Ranking
 
-### Tier 2: Strong Candidates
+### READY_FOR_FIT
 
-| Handle | Platform | Followers | ER | Fit Score | Notes |
-|--------|----------|-----------|----|-----------| ------|
-| @[handle] | [platform] | [count] | [%] | [X/25] | [notes] |
+| Creator ref | Platform | Declared-filter result | Evidence completeness | Freshness | Fit status | Ranking status |
+|-------------|----------|------------------------|-----------------------|-----------|------------|----------------|
+| [creator-<UUIDv4>] | [platform] | [pass + refs] | complete | current | NOT_EVALUATED | NOT_RANKED |
 
-### Tier 3: Worth Considering
+### NEEDS_REFRESH / NEEDS_INPUT
 
-| Handle | Platform | Followers | ER | Fit Score | Notes |
-|--------|----------|-----------|----|-----------| ------|
-| @[handle] | [platform] | [count] | [%] | [X/25] | [notes] |
+| Creator ref | Platform | Stale/unknown required fields | Refresh query | Fit status | Ranking status |
+|-------------|----------|-------------------------------|---------------|------------|----------------|
+| [creator-<UUIDv4>] | [platform] | [fields] | [exact query/fields] | NOT_EVALUATED | NOT_RANKED |
 
-## Influencer Mix Recommendation
+### INELIGIBLE BY DECLARED FILTER
 
-For a balanced campaign, consider:
+| Creator ref | Failed criterion | Evidence refs | Fit status | Ranking status |
+|-------------|------------------|---------------|------------|----------------|
+| [creator-<UUIDv4>] | [exact declared filter] | [dated refs] | NOT_EVALUATED | NOT_RANKED |
 
-| Tier | Recommended # | Role | Budget % |
-|------|---------------|------|----------|
-| Macro | [#] | Reach & credibility | [%] |
-| Micro | [#] | Engagement & trust | [%] |
-| Nano | [#] | Authenticity & UGC | [%] |
+Do not recommend a creator mix or budget split from discovery. After typed Fit,
+`campaign-planner` owns selected mix, objectives, deliverables, and budget.
 
 ## Next Steps
 
-1. Review top recommendations with [fit-scorer](../../fit-scorer/SKILL.md)
-2. Develop outreach strategy with [outreach-manager](../../../activate/outreach-manager/SKILL.md)
-3. Create campaign briefs with [brief-generator](../../../target/brief-generator/SKILL.md)
+1. Send current-evidence candidates to [fit-scorer](../../fit-scorer/SKILL.md) for the typed Suitability read; stale/unknown rows remain `NEEDS_INPUT` and are not action-ranked.
+2. Send selected Fit results to [campaign-planner](../../../target/campaign-planner/SKILL.md) to approve objectives, deliverables, rights, measurement, and decision rules.
+3. Use [outreach-manager](../../../activate/outreach-manager/SKILL.md) only after the plan is approved and creator selection plus contact/consent/channel readiness are documented. This handoff never authorizes a send.
 
 ## Export Options
 
-- [ ] Export to CSV for CRM import
-- [ ] Create outreach tracking sheet
-- [ ] Generate brief templates for top picks
+- [ ] Export pseudonymous refs and evidence pointers to CSV for CRM import
+- [ ] Export Fit handoff package
+- [ ] Export campaign-planning inputs after Fit
+
+Exports and saved artifacts omit raw names, emails, phones, postal addresses,
+named managers, and credentials. Resolve a contact coordinate only transiently
+at outreach's exact send gate.
 ```
 
 ---
@@ -322,47 +427,48 @@ For a balanced campaign, consider:
 **User**: "Find 15 micro-influencers (10K-100K followers) in the sustainable
 fashion space for a new eco-friendly clothing brand."
 
-**Output**:
+**Output** (illustrative; assumes a dated export supplied the evidence rows):
 
 ```markdown
 # Influencer Discovery: Sustainable Fashion Micro-Influencers
 
-## Top 5 Recommendations
+## Candidate Evidence Queue — NOT RANKED
 
-### 1. @sustainablestyle_sarah
+### creator-7f3c2f84-7f1e-47e8-a726-f0d620bb0d91
+- **Identity evidence**: public-handle-ref-01 (opaque, verified cross-link)
 - **Platform**: Instagram (47K) + TikTok (23K)
 - **Engagement**: 5.2% IG, 8.1% TikTok
-- **Location**: Los Angeles, CA
+- **Geography**: US (the required decision granularity)
 - **Content**: Outfit styling, brand reviews, thrift hauls
 - **Audience**: 78% F, 25-34 primary, US-based
-- **Fit Score**: 24/25 ⭐
+- **Evidence**: the full profile retains one export/provider ref, observation date, window, evidence label, and freshness state per factual field (abridged here)
+- **Triage state**: READY_FOR_FIT only if every required field above is current
+- **Fit status**: NOT_EVALUATED
+- **Ranking status**: NOT_RANKED
 
-**Why**: Authentic focus on sustainable fashion since 2019, highly engaged
-audience that matches target demo exactly, previous successful partnerships with
-similar eco brands. Known for honest reviews.
+**Declared-filter result**: [pass/fail/unknown from the cited rows only]. Do not
+translate these observations into a Fit claim or outreach priority.
 
-**Past Partnerships**: Reformation, ThredUp, Girlfriend Collective
+**Past Partnerships**: brand-ref-01, brand-ref-02, brand-ref-03 (each backed by a dated post/export row in the full profile)
 
-### 2. @eco_emma_style
-[... continues with 14 more influencers ...]
+### creator-e2e582d4-655f-4bbd-97f2-c34945b2547a
+- **Identity evidence**: public-handle-ref-02 (opaque, verified cross-link)
+[... continue with the supplied candidate records, without numbering or rank ...]
 
 ## Summary
 
-Found 43 candidates, 15 meet all criteria with fit scores above 18/25.
+Report only counts derived from the supplied export: reviewed, passed declared
+filters, `READY_FOR_FIT`, `NEEDS_REFRESH`, and `INELIGIBLE`. Do not invent a
+threshold, recommended mix, priority tier, or “rising star” label.
 
-**Recommended Mix**:
-- 5 with higher engagement (>5%) for key content
-- 7 mid-tier for volume and variety
-- 3 rising stars for early partnership potential
-
-**Next Steps**: Run through fit-scorer for final ranking, begin outreach to top 5.
+**Next Steps**: Run current-evidence candidates through fit-scorer, then approve the campaign plan. Prepare outreach only after selection and contact/consent/channel readiness; do not send from discovery.
 ```
 
 ---
 
 ## Tips for Success
 
-1. **Quality over quantity** — better to have 10 perfect fits than 100 maybes.
+1. **Evidence over volume** — prefer evidence-complete candidates to a larger pool with stale or unknown required fields.
 2. **Verify authenticity** — check for fake followers and engagement pods.
 3. **Review recent content** — confirm consistent quality and brand safety.
 4. **Consider past partnerships** — learn from their collaboration history.
@@ -379,7 +485,7 @@ Found 43 candidates, 15 meet all criteria with fit scores above 18/25.
 3. **Audience Analysis**: evaluates whether their audience matches your target.
 4. **Content Assessment**: reviews content quality and style fit.
 5. **Authenticity Screening**: identifies potential red flags.
-6. **List Building**: compiles organized, actionable influencer lists.
+6. **Evidence Queue Building**: compiles organized, non-ranked candidate queues for typed Fit.
 
 ## When to Use This Skill
 

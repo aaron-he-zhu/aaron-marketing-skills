@@ -4,13 +4,13 @@ slug: aaron-story-bank-builder
 displayName: "Story Bank Builder · 品牌故事库"
 summary: "品牌故事库/起源客户转化/证据故事单元"
 description: 'Use when the user asks to "build a story bank", "collect our origin and customer stories", or "assemble reusable proof stories for the message"; assembles reusable narrative units — origin, founder, customer, transformation, and proof stories — each tagged to a claims-ledger ID and a message-house pillar, with every proof labeled Measured / User-provided / [needs source]. Not for authoring the message house or pillars — use message-system-architect; not for brand voice or naming rules — use brand-language-codifier; not for finished long-form prose — use content-writer; not for adjudicating whether a proof is true — use offer-claims-registry. 品牌故事库/起源客户转化/证据故事单元'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when the durable message house and brand voice exist and you need a bank of reusable story units — origin, founder, customer, transformation, proof — each tagged to a claim ID and a pillar, so every downstream surface pulls the same stories instead of reinventing them. The fourth move of the TALE Architect phase; supplies A-dimension story raw material and E-dimension proof assets. Not the message house itself and not finished copy."
 argument-hint: "<product / brand> [interview or case material] [pillars] [claims-ledger path]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "narrative", "phase": "architect", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "architect"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "narrative", "phase": "architect", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "architect"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Story Bank Builder

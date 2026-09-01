@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 122,
+          "end_char": 163,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "- *paid* — (1) each candidate is scored /25 and tiered (must amplify / consider / do not amplify) with a recommended spend"
+        "text": "- *paid* — (1) each evidence-complete candidate has dated evidence for organic performance plus Hook/Message/Quality/CTA and is scored /25 before any tier or spend"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 209,
+          "end_char": 249,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
-          "start_char": 124
+          "start_char": 165
         },
-        "text": "(2) a budget allocation by content, objective, and platform sums to the stated budget"
+        "text": "every incomplete candidate is `NOT_SCORED/NEEDS_INPUT` with no total/rank/tier/spend"
       },
       {
         "clause_id": "done-03",
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 287,
+          "end_char": 374,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
-          "start_char": 211
+          "start_char": 251
         },
-        "text": "(3) an optimization plan with KPI targets and scale/pause rules is recorded."
+        "text": "(2) a budget allocation across only evidence-complete eligible content, objectives, and platforms sums to the stated budget"
       },
       {
         "clause_id": "done-04",
@@ -53,14 +53,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 371,
+          "end_char": 495,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
-          "start_char": 290
+          "start_char": 376
         },
-        "text": "- *repurpose* — (1) every source asset has a rights level and expiration recorded"
+        "text": "(3) an optimization plan with supplied KPI targets and scale/pause rules is recorded, or those rules stay `NEEDS_INPUT`"
       },
       {
         "clause_id": "done-05",
@@ -68,14 +68,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 461,
+          "end_char": 585,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
-          "start_char": 373
+          "start_char": 497
         },
-        "text": "(2) at least one source asset is mapped to 3+ distinct output formats across 2+ channels"
+        "text": "(4) every selected asset has current `active` rights evidence covering the intended use."
       },
       {
         "clause_id": "done-06",
@@ -83,22 +83,67 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 524,
+          "end_char": 764,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
-          "start_char": 463
+          "start_char": 588
         },
-        "text": "(3) a dated distribution plan with an asset checklist exists."
+        "text": "- *repurpose* — (1) every source asset has a rights level, expiration, `active | expired | revoked | disputed | unknown` status, `status_observed_at`, and `status_evidence_ref`"
+      },
+      {
+        "clause_id": "done-07",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 854,
+          "path": "influencer/activate/content-amplifier/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
+          "span_basis": "field-text",
+          "start_char": 766
+        },
+        "text": "(2) at least one source asset is mapped to 3+ distinct output formats across 2+ channels"
+      },
+      {
+        "clause_id": "done-08",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 916,
+          "path": "influencer/activate/content-amplifier/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
+          "span_basis": "field-text",
+          "start_char": 856
+        },
+        "text": "(3) a dated distribution plan with an asset checklist exists"
+      },
+      {
+        "clause_id": "done-09",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 1029,
+          "path": "influencer/activate/content-amplifier/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
+          "span_basis": "field-text",
+          "start_char": 918
+        },
+        "text": "(4) any existing placement affected by a non-active or out-of-scope status appears in the manual removal queue."
       }
     ],
-    "done_when": "- *paid* — (1) each candidate is scored /25 and tiered (must amplify / consider / do not amplify) with a recommended spend; (2) a budget allocation by content, objective, and platform sums to the stated budget; (3) an optimization plan with KPI targets and scale/pause rules is recorded.\n  - *repurpose* — (1) every source asset has a rights level and expiration recorded; (2) at least one source asset is mapped to 3+ distinct output formats across 2+ channels; (3) a dated distribution plan with an asset checklist exists.",
+    "done_when": "- *paid* — (1) each evidence-complete candidate has dated evidence for organic performance plus Hook/Message/Quality/CTA and is scored /25 before any tier or spend; every incomplete candidate is `NOT_SCORED/NEEDS_INPUT` with no total/rank/tier/spend; (2) a budget allocation across only evidence-complete eligible content, objectives, and platforms sums to the stated budget; (3) an optimization plan with supplied KPI targets and scale/pause rules is recorded, or those rules stay `NEEDS_INPUT`; (4) every selected asset has current `active` rights evidence covering the intended use.\n  - *repurpose* — (1) every source asset has a rights level, expiration, `active | expired | revoked | disputed | unknown` status, `status_observed_at`, and `status_evidence_ref`; (2) at least one source asset is mapped to 3+ distinct output formats across 2+ channels; (3) a dated distribution plan with an asset checklist exists; (4) any existing placement affected by a non-active or out-of-scope status appears in the manual removal queue.",
     "extraction_status": "classified",
     "source": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c"
+      "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a"
     }
   },
   "context_hints": {
@@ -107,21 +152,21 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 64
       },
       {
         "path": "influencer/activate/content-amplifier/references/atom-extraction.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "9d18fbe4b95fa6e3c31bb2f1adc8773fdb236db8a42e0bf6773b5a6c6c383acc",
+        "sha256": "fac25955a5c0c4b92c009e7c8b82793eca0ef284409c4253b9f226d129c651f4",
         "source_line": 92
       },
       {
         "path": "influencer/activate/content-amplifier/references/templates.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "86c515c555b2f5e09f19dbbb337ce7882062e693c164bf4006eb1bd9aba23d01",
+        "sha256": "fa9834d3accaba5d7c006fb046603347bcd5997d45f06823b7e7012e4de159c2",
         "source_line": 68
       },
       {
@@ -129,48 +174,48 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "eca3767d8eca9ec52aa356430655fc5ec6bb1dd357fe162e2b51cae572d04b63",
-        "source_line": 123
+        "source_line": 125
       },
       {
         "path": "references/platforms/linkedin.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "72d7fcb4396cce801b0945a9623197b5d7f84fa5a190d8d86e55f9f2053a00e7",
-        "source_line": 123
+        "source_line": 125
       },
       {
         "path": "references/platforms/reddit.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "0bb2789a358432c2c08ff8d1b1145d80e31d93b5f369d7776db1142dce9a2b45",
-        "source_line": 123
+        "source_line": 125
       },
       {
         "path": "references/platforms/tiktok.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "b4cad87f7a84f28c29e41c50124ca9e8525d5e55709ecf3a31dbaebdf81853fa",
-        "source_line": 123
+        "source_line": 125
       },
       {
         "path": "references/platforms/x.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "764dc4123fc18b42f9a2f4c76c3f5181af656cae298eae9ab436b8b46d758115",
-        "source_line": 123
+        "source_line": 125
       },
       {
         "path": "references/platforms/youtube.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "5fc2d9404b36912bba1d4dcae6072bd01d6a5162b95f767ce1058336297563c4",
-        "source_line": 123
+        "source_line": 125
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 50
       },
       {
@@ -178,14 +223,14 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "d5e6cec23805026c8371cac0336026fb88ca4262c6ad48f52164b00925768e91",
-        "source_line": 124
+        "source_line": 126
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
-        "source_line": 126
+        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "source_line": 128
       }
     ],
     "project_paths": [
@@ -200,6 +245,12 @@
     ]
   },
   "contract_id": "skill:content-amplifier",
+  "control_requirements": [
+    "action-intent",
+    "action-receipt",
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -212,7 +263,7 @@
           "end_char": 12,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -228,7 +279,7 @@
           "end_char": 152,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 13
         },
@@ -246,7 +297,7 @@
           "end_char": 328,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 153
         },
@@ -264,7 +315,7 @@
           "end_char": 345,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 330
         },
@@ -280,7 +331,7 @@
           "end_char": 505,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 346
         },
@@ -298,7 +349,7 @@
           "end_char": 612,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 506
         },
@@ -316,7 +367,7 @@
           "end_char": 735,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 613
         },
@@ -334,7 +385,7 @@
           "end_char": 1035,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 737
         },
@@ -343,11 +394,11 @@
       }
     ],
     "next_best": "**Primary**:\n- *paid mode* → [performance-analyzer](../../report/performance-analyzer/SKILL.md) — measure amplification results once campaigns are live.\n- *repurpose mode* → [landing-optimizer](../../report/landing-optimizer/SKILL.md) — drop the repurposed testimonials, hero videos, and quote cards onto the pages that convert.\n\n**Alternates**:\n- [content-amplifier --mode paid](SKILL.md) — when repurposed ad variations are ready for paid spend (run only if repurpose ran this session and paid has not).\n- [contract-helper](../contract-helper/SKILL.md) — secure or expand usage rights before reuse (repurpose).\n- [budget-optimizer](../../target/budget-optimizer/SKILL.md) — reallocate paid budget across the recommended tiers (paid).\n\n**Termination**: maintain a visited-set this session. If a recommended target (including the sibling mode of this skill) already ran, STOP and report the chain complete rather than re-invoking it. Max chain depth 3. When routing is ambiguous, present the options and stop instead of auto-following.",
-    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md). State which mode ran. Label every metric Measured / User-provided / Estimated — never present a CPM, ROAS, view count, or rights date you were not given as Measured; if it is missing, ask for the export or mark it Estimated with the basis.",
+    "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md). State which mode ran. Label every metric Measured / User-provided / Calculated / Estimated / Unknown. Never fill a missing CPM, ROAS, view count, rights date, or decision threshold with an example value: ask for the export or use `Unknown`/`NEEDS_INPUT`. Organic performance and the Hook/Message/Quality/CTA observations are selection evidence, not forecast fields: if any is missing, do not substitute `Estimated`; set that asset to `NOT_SCORED/NEEDS_INPUT` and emit no `/25`, rank, tier, or spend. Use Estimated elsewhere only when the user supplied or approved the calculation inputs and assumptions, and show that basis.",
     "summary_ref": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c"
+      "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -364,8 +415,8 @@
     "name": "content-amplifier",
     "path": "influencer/activate/content-amplifier/SKILL.md",
     "phase": "activate",
-    "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
-    "version": "20.0.0"
+    "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "[--mode paid|repurpose] <campaign or content set> [budget] [platforms/channels]",
@@ -376,14 +427,14 @@
         "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 242,
+          "end_char": 438,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "- *paid* — organic content set (creator handles, platform, content type, reach, engagement rate, views), amplification budget, campaign objective (awareness/traffic/conversions), target platforms, any prior performance data the user provides."
+        "text": "- *paid* — stable opaque `creator_ref` values plus transient creator locators, platform, content type, dated organic reach/engagement/views evidence, separate dated Hook/Message/Quality/CTA observations, amplification budget, campaign objective (awareness/traffic/conversions), target platforms, any prior performance data the user provides, and each candidate asset's current rights status/evidence plus existing placements when present."
       },
       {
         "clause_id": "read-02",
@@ -391,37 +442,52 @@
         "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 481,
+          "end_char": 927,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
-          "start_char": 245
+          "start_char": 441
         },
-        "text": "- *repurpose* — source UGC assets (videos, reels, reviews, images), creator handles and platforms, usage rights per asset, original performance metrics, target channels. For atomizing a source, the pasted transcript/caption/review text."
+        "text": "- *repurpose* — source UGC assets (videos, reels, reviews, images), stable opaque `creator_ref` values plus transient creator locators and platforms, exact frozen `approved_asset_ref`, opaque authorized `source_ref`, usage rights per asset, rights status with observation time/evidence, original performance metrics, target channels, and existing placements. For atomizing a source, the pasted transcript/caption/review text is transient evidence bound to that three-ref source identity"
       },
       {
         "clause_id": "read-03",
         "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 984,
+          "path": "influencer/activate/content-amplifier/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
+          "span_basis": "field-text",
+          "start_char": 929
+        },
+        "text": "a raw handle or content URL never becomes `source_ref`."
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "partially-classified",
         "kind": "project-resource",
         "requirement": "unclassified",
         "source": {
-          "end_char": 581,
+          "end_char": 1084,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
-          "start_char": 484
+          "start_char": 987
         },
         "text": "- Both pull prior campaign context from `memory/hot-cache.md` when `memory-management` is active."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "- *paid* — organic content set (creator handles, platform, content type, reach, engagement rate, views), amplification budget, campaign objective (awareness/traffic/conversions), target platforms, any prior performance data the user provides.\n  - *repurpose* — source UGC assets (videos, reels, reviews, images), creator handles and platforms, usage rights per asset, original performance metrics, target channels. For atomizing a source, the pasted transcript/caption/review text.\n  - Both pull prior campaign context from `memory/hot-cache.md` when `memory-management` is active.",
+    "reads": "- *paid* — stable opaque `creator_ref` values plus transient creator locators, platform, content type, dated organic reach/engagement/views evidence, separate dated Hook/Message/Quality/CTA observations, amplification budget, campaign objective (awareness/traffic/conversions), target platforms, any prior performance data the user provides, and each candidate asset's current rights status/evidence plus existing placements when present.\n  - *repurpose* — source UGC assets (videos, reels, reviews, images), stable opaque `creator_ref` values plus transient creator locators and platforms, exact frozen `approved_asset_ref`, opaque authorized `source_ref`, usage rights per asset, rights status with observation time/evidence, original performance metrics, target channels, and existing placements. For atomizing a source, the pasted transcript/caption/review text is transient evidence bound to that three-ref source identity; a raw handle or content URL never becomes `source_ref`.\n  - Both pull prior campaign context from `memory/hot-cache.md` when `memory-management` is active.",
     "source": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c"
+      "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a"
     }
   },
   "output_contract": {
@@ -433,14 +499,14 @@
         "permission_posture": "unclassified",
         "side_effect": "unclassified",
         "source": {
-          "end_char": 101,
+          "end_char": 59,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the mode's deliverable (paid: selection scorecard, strategy, targeting, budget, optimization playbook"
+        "text": "return the mode's deliverable and handoff inline by default"
       },
       {
         "clause_id": "write-02",
@@ -452,34 +518,70 @@
           "end_char": 292,
           "path": "influencer/activate/content-amplifier/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
           "span_basis": "field-text",
-          "start_char": 103
+          "start_char": 61
         },
-        "text": "repurpose: inventory, repurposing map, distribution plan, format specs, rights tracker) plus a reusable handoff summary. Save to `memory/influencer/content-amplifier/YYYY-MM-DD-<topic>.md`."
+        "text": "save to `memory/influencer/content-amplifier/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Saved artifacts and handoffs reuse an explicitly carried opaque `creator_ref`, or a verified creator-registry aggregate ID"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 616,
+          "path": "influencer/activate/content-amplifier/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
+          "span_basis": "field-text",
+          "start_char": 294
+        },
+        "text": "otherwise generate one random `creator-<UUIDv4>` once for the lineage. Never persist a raw handle, creator name, profile/content URL, email, provider ID, or deterministic hash as identity. Keep only `creator_ref`, frozen asset/approval refs, opaque evidence/rights/contact/placement refs, and non-identifying campaign data"
+      },
+      {
+        "clause_id": "write-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 830,
+          "path": "influencer/activate/content-amplifier/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a",
+          "span_basis": "field-text",
+          "start_char": 618
+        },
+        "text": "every saved atom source must carry `creator_ref` + exact `approved_asset_ref` + opaque `source_ref`. If no authorized resolver exists, mark identity unresolved and require the transient locator again when needed."
       }
     ],
     "extraction_status": "partially-classified",
     "source": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c"
+      "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a"
     },
-    "summary": "the mode's deliverable (paid: selection scorecard, strategy, targeting, budget, optimization playbook; repurpose: inventory, repurposing map, distribution plan, format specs, rights tracker) plus a reusable handoff summary. Save to `memory/influencer/content-amplifier/YYYY-MM-DD-<topic>.md`.",
+    "summary": "return the mode's deliverable and handoff inline by default; save to `memory/influencer/content-amplifier/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Saved artifacts and handoffs reuse an explicitly carried opaque `creator_ref`, or a verified creator-registry aggregate ID; otherwise generate one random `creator-<UUIDv4>` once for the lineage. Never persist a raw handle, creator name, profile/content URL, email, provider ID, or deterministic hash as identity. Keep only `creator_ref`, frozen asset/approval refs, opaque evidence/rights/contact/placement refs, and non-identifying campaign data; every saved atom source must carry `creator_ref` + exact `approved_asset_ref` + opaque `source_ref`. If no authorized resolver exists, mark identity unresolved and require the transient locator again when needed.",
     "summary_source": "writes-fallback",
-    "writes": "the mode's deliverable (paid: selection scorecard, strategy, targeting, budget, optimization playbook; repurpose: inventory, repurposing map, distribution plan, format specs, rights tracker) plus a reusable handoff summary. Save to `memory/influencer/content-amplifier/YYYY-MM-DD-<topic>.md`."
+    "writes": "return the mode's deliverable and handoff inline by default; save to `memory/influencer/content-amplifier/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Saved artifacts and handoffs reuse an explicitly carried opaque `creator_ref`, or a verified creator-registry aggregate ID; otherwise generate one random `creator-<UUIDv4>` once for the lineage. Never persist a raw handle, creator name, profile/content URL, email, provider ID, or deterministic hash as identity. Keep only `creator_ref`, frozen asset/approval refs, opaque evidence/rights/contact/placement refs, and non-identifying campaign data; every saved atom source must carry `creator_ref` + exact `approved_asset_ref` + opaque `source_ref`. If no authorized resolver exists, mark identity unresolved and require the transient locator again when needed."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -488,7 +590,7 @@
     "source": {
       "path": "influencer/activate/content-amplifier/SKILL.md",
       "section": "frontmatter",
-      "sha256": "49a5b107ca96b314f03830b571d3653c6493bb78f052e6d6ffe741fc1c6b879c"
+      "sha256": "a10b329d0a0ff5c87269f045a324b2b2c19b6decbd97061785f320c7107a101a"
     },
     "trigger_phrases": [
       "amplify influencer content with paid media",
@@ -499,7 +601,7 @@
       "turn one video into multiple ads"
     ],
     "trigger_source": "description-quoted",
-    "when_to_use": "Use when a brand has live, approved creator content and wants to extract more value from it. Paid mode: extend reach with paid spend — choosing which posts to boost, setting up whitelisted Partnership Ads or TikTok Spark Ads, planning dark posts, allocating an ad budget across creators and platforms, building audience targeting off creator lookalikes, running an optimization and scale/pause playbook. Repurpose mode: reuse one asset across paid, website, email, and organic social — generating ad variations from organic clips, building a searchable rights-tracked library, populating product pages with social proof, or planning a multi-channel rollout from a small source set."
+    "when_to_use": "Use when a brand has a frozen, auditor-approved creator asset with active scoped rights and wants to extract more value from it. Paid mode: extend reach with paid spend — choosing which posts to boost, setting up whitelisted Partnership Ads or TikTok Spark Ads, planning dark posts, allocating an ad budget across creators and platforms, building audience targeting off creator lookalikes, running an optimization and scale/pause playbook. Repurpose mode: reuse one asset across paid, website, email, and organic social — generating ad variations from organic clips, building a searchable rights-tracked library, populating product pages with social proof, or planning a multi-channel rollout from a small source set."
   },
   "schema_version": "1.0"
 }

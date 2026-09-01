@@ -6,7 +6,7 @@ Guidelines for AI agents working in this repository. For full runtime context, s
 
 - **Name**: aaron-marketing-skills — 120 skills (16 × 7 disciplines + 8 protocol), 7 disciplines + a protocol layer, 8 commands, shared references
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **Current bundle**: 20.0.0
+- **Current bundle**: 20.1.0
 <!-- GENERATED:END release-surface:current-bundle -->
 - **Repository**: https://github.com/aaron-he-zhu/aaron-marketing-skills
 - **Author**: Aaron He Zhu | **License**: Apache 2.0
@@ -99,7 +99,7 @@ Auditor-class gates: `content-quality-auditor` (CORE-EEAT publish gate), `domain
 - **After skill changes**: update the authoritative **10 tracking surfaces** in [CONTRIBUTING.md §6](CONTRIBUTING.md). For release bumps, also sync localized README badges. `scripts/check-versions.sh` (CI) fails on any drift — run it locally after syncing.
 - **Adding a connector**: follow [docs/connector-playbook.md](docs/connector-playbook.md) end to end — qualify (category / connector-vs-recipe / safety class), verify against primary docs + a live call, implement to house style, offline-test the pure builders, wire skills by the differentiation rule, hit the six doc touchpoints, track, regress, record.
 - **Use `references/` for detail** — keep `SKILL.md` focused. Auditor-class skills `Read references/auditor-runbook.md` at activation (the framework-agnostic SSOT) and keep only their framework-specific §2 worked examples, §3 guardrails, and §5 translation inline.
-- **Validate**: `./scripts/validate-skill.sh <category>/<skill-name>` before release PRs. CI guards: `golden-math` (8 frameworks), strict 700-case `check-evals` plus credential-free smoke/change-aware/nightly profile planning, generated auditor prompt-contract drift, typed route/run/audit-loop tests for event-first recovery, selected-ancestry closure, bounded convergence, and terminal-slot preservation, `check-local-links`, `check-pii`, `check-stdlib-only` (incl. the Paid-Ads keyed-API red line), `check-context-budget` (SKILL.md/auditor-activation/recursive-reference and assembled `/auto` byte budgets), `check-routing` (trigger uniqueness, boundary clauses, bare-name handoff resolution), plus the `check-architecture.py` symmetry contract (conform-or-declared; stale deviations fail).
+- **Validate**: `./scripts/validate-skill.sh <category>/<skill-name>` before release PRs. CI guards: `golden-math` (8 frameworks), strict 734-case `check-evals` plus credential-free smoke/change-aware/nightly profile planning, generated auditor prompt-contract drift, typed route/run/audit-loop tests for event-first recovery, selected-ancestry closure, bounded convergence, and terminal-slot preservation, `check-local-links`, `check-pii`, `check-stdlib-only` (incl. the Paid-Ads keyed-API red line), `check-context-budget` (SKILL.md/auditor-activation/recursive-reference and assembled `/auto` byte budgets), `check-routing` (trigger uniqueness, boundary clauses, bare-name handoff resolution), plus the `check-architecture.py` symmetry contract (conform-or-declared; stale deviations fail).
 
 ## Writing Style
 

@@ -104,8 +104,8 @@ class SkillMachineContractTests(unittest.TestCase):
             for reference in contract["context_hints"]["bundle_references"]:
                 if reference["requirement"] == "required":
                     required.append((entry["skill"], reference))
-        self.assertEqual(len(required), 61)
-        self.assertEqual(len({skill for skill, _reference in required}), 18)
+        self.assertEqual(len(required), 63)
+        self.assertEqual(len({skill for skill, _reference in required}), 19)
         self.assertTrue(all(
             reference["reason_code"] == "explicit-runtime-read"
             for _skill, reference in required

@@ -2,26 +2,29 @@
 
 Fill-in templates for each review step, a worked example, the quick checklist, and review tips. Referenced from [../SKILL.md](../SKILL.md). The numbered steps below match the Instructions section there.
 
+**Persistence boundary**: every block except **Step 8 — Feedback Message for Creator** may be used to assemble a durable audit only after raw identities and locators are removed. Creator, reviewer, and governing-brief identity fields persist only as `creator_ref`, `reviewer_ref`, and `brief_ref`; use opaque approved-asset/evidence refs where the typed audit needs evidence. Never persist a raw handle, name, email, profile/content URL, brief URL, or recipient locator. Step 8 is a transient creator-facing render only: never copy it into the v3 artifact, WARM memory, HOT, or a handoff. Generating, reviewing, approving, or saving it is not send authorization; delivery must use `outreach-manager`'s independently approved single-touch send gate.
+
 ## Step 1 — Establish Review Criteria
 
 ```markdown
 ### Review Framework
 
-**Campaign**: [name]
-**Influencer**: @[handle]
+**Brief**: [brief_ref]
+**Creator**: [creator_ref]
 **Platform**: [platform]
 **Content Type**: [format]
-**Brief Reference**: [link to brief]
+**Reviewer**: [reviewer_ref]
 
-### Review Categories
+### Typed STAR Evidence Plan
 
-| Category | Weight | Pass Threshold |
-|----------|--------|----------------|
-| Brand Alignment | [%] | Must pass |
-| Message Accuracy | [%] | Must pass |
-| Compliance | [%] | Must pass |
-| Creative Quality | [%] | 80%+ |
-| Technical Specs | [%] | Must pass |
+| Dimension | Catalog items | Evidence refs / gaps |
+|-----------|---------------|----------------------|
+| Suitability | `STAR-S1..S10` from the supplied fit-scorer read | [opaque refs or `unknown`] |
+| Trust | `STAR-T1..T10` from the frozen deliverable and governing records | [opaque refs or `unknown`] |
+| Appeal | `STAR-A1..A10` from the frozen deliverable | [opaque refs or `unknown`] |
+| Return | `STAR-R1..R10` under the declared `assessment_time` | [opaque refs, catalog-authorized `na`, or `unknown`] |
+
+These tables collect evidence only. Do not invent category weights, thresholds, `/10` rollups, or a parallel verdict. The final result copies `status`, `verdict`, `score_state`, raw/final score, and `cap_applied` only from the typed scorer.
 ```
 
 ## Step 2 — Brand Alignment Review
@@ -55,10 +58,8 @@ Fill-in templates for each review step, a worked example, the quick checklist, a
 | [Value 1] | ✅/⚠️/❌ | [how/why not] |
 | [Value 2] | ✅/⚠️/❌ | [how/why not] |
 
-**Brand Alignment Score**: [X/10]
-**Status**: ✅ Pass / ⚠️ Minor Issues / ❌ Fail
-
-**Notes**: [Overall assessment]
+**Mapped STAR item evidence**: [qualified item IDs + dated evidence refs]
+**Notes**: [observations only; no manual subtotal or gate]
 ```
 
 ## Step 3 — Message Accuracy Review
@@ -99,16 +100,12 @@ Fill-in templates for each review step, a worked example, the quick checklist, a
 | Correct CTA | ✅/❌ | Expected: [X], Actual: [Y] |
 | Clear and compelling | ✅/⚠️/❌ | |
 
-**Message Accuracy Score**: [X/10]
-**Status**: ✅ Pass / ⚠️ Minor Issues / ❌ Fail
+**Mapped STAR item evidence**: [qualified item IDs + dated evidence refs]
 ```
 
 ## Step 4 — Compliance Review
 
-This compliance gate is the STAR **Trust** review ([Trust dimension](../../../../references/star-benchmark.md)). Two Trust items are veto-level — a failure forces the overall decision to **Reject** (never "revise"), and you must cite the veto ID:
-
-- **STAR-T1 · FTC Disclosure** (maps to the Disclosure Check + FTC compliance rows below) — missing or inadequate disclosure on sponsored content → **Reject (STAR-T1)**. Regulatory basis: FTC 16 CFR §255 and the 2024 Trade Regulation Rule (16 CFR Part 465). Not legal advice.
-- **STAR-T2 · Claim Integrity** (maps to Claims substantiation) — false or unsubstantiated claims → **Reject (STAR-T2)**.
+The complete STAR veto set is `STAR-S2`, `STAR-S6`, `STAR-T1`, `STAR-T2`, and `STAR-T3`. Record only verified `fail` states as vetoes; missing or refused evidence is `unknown`, never a veto. The typed scorer alone applies the outcome rule: exactly one verified veto → `DONE_WITH_CONCERNS/FIX`, `cap_applied: true`, and `final_overall_score = min(raw_overall_score, 59)`; two or more → `DONE/BLOCK`, `cap_applied: false`, and no final score. Never turn a single veto directly into Reject/Hold or hand-calculate a cap.
 
 ```markdown
 ## Compliance Review
@@ -144,7 +141,7 @@ This compliance gate is the STAR **Trust** review ([Trust dimension](../../../..
 
 | Requirement | Status | Notes |
 |-------------|--------|-------|
-| FTC compliance | ✅/❌ | |
+| Applicable market disclosure rule | ✅/❌/Unknown | [dated official source + market] |
 | Industry regulations | ✅/❌ | [specific] |
 | Age restrictions | ✅/❌ | [if applicable] |
 | Claims substantiation | ✅/❌ | |
@@ -155,13 +152,12 @@ This compliance gate is the STAR **Trust** review ([Trust dimension](../../../..
 | Element | Required | Present | Status |
 |---------|----------|---------|--------|
 | Brand mention | ✅ | ✅/❌ | ✅/❌ |
-| @[handle] tag | ✅ | ✅/❌ | ✅/❌ |
+| Required account tag from `brief_ref` | ✅/❌ | [present/absent; raw tag remains transient] | ✅/❌ |
 | #[hashtag] | ✅ | ✅/❌ | ✅/❌ |
-| Link/URL | ✅/❌ | ✅/❌ | ✅/❌ |
+| Required destination from `brief_ref` | ✅/❌ | [present/absent; raw URL remains transient] | ✅/❌ |
 | Promo code | ✅/❌ | ✅/❌ | ✅/❌ |
 
-**Compliance Score**: [X/10]
-**Status**: ✅ Pass / ❌ Fail (no partial pass for compliance)
+**Mapped STAR item evidence**: [`STAR-T1`, `STAR-T2`, `STAR-T3`, other qualified IDs + dated refs]
 ```
 
 ## Step 5 — Quality Assessment
@@ -169,50 +165,45 @@ This compliance gate is the STAR **Trust** review ([Trust dimension](../../../..
 ```markdown
 ## Quality Assessment
 
-### Production Quality
+### Production Quality Evidence
 
-| Element | Rating | Notes |
-|---------|--------|-------|
-| Video/Image quality | [1-5] | [notes] |
-| Audio quality (if applicable) | [1-5] | [notes] |
-| Lighting | [1-5] | [notes] |
-| Framing/Composition | [1-5] | [notes] |
-| Editing | [1-5] | [notes] |
-
-**Production Score**: [X/25]
+| Element | Observation | STAR item / evidence ref |
+|---------|-------------|--------------------------|
+| Video/Image quality | [observed / unknown] | [qualified Appeal item + dated ref] |
+| Audio quality (if applicable) | [observed / catalog-authorized na / unknown] | [qualified Appeal item + dated ref] |
+| Lighting | [observed / unknown] | [qualified Appeal item + dated ref] |
+| Framing/Composition | [observed / unknown] | [qualified Appeal item + dated ref] |
+| Editing | [observed / unknown] | [qualified Appeal item + dated ref] |
 
 ### Content Effectiveness
 
-| Element | Rating | Notes |
-|---------|--------|-------|
-| Hook strength | [1-5] | [notes] |
-| Engagement potential | [1-5] | [notes] |
-| Authenticity | [1-5] | [notes] |
-| Storytelling | [1-5] | [notes] |
-| Persuasiveness | [1-5] | [notes] |
-
-**Effectiveness Score**: [X/25]
+| Element | Observation | STAR item / evidence ref |
+|---------|-------------|--------------------------|
+| Hook strength | [observed / unknown] | [qualified Appeal item + dated ref] |
+| Engagement potential | [observed / unknown] | [qualified Appeal item + dated ref] |
+| Authenticity | [observed / unknown] | [qualified Appeal item + dated ref] |
+| Storytelling | [observed / unknown] | [qualified Appeal item + dated ref] |
+| Persuasiveness | [observed / unknown] | [qualified Appeal item + dated ref] |
 
 ### Platform Optimization
 
-| Element | Optimized? | Notes |
-|---------|------------|-------|
-| Format for platform | ✅/❌ | |
-| Length appropriate | ✅/❌ | [actual vs. optimal] |
-| Native feel | ✅/❌ | |
-| Trend relevance | ✅/⚠️/❌ | |
+| Element | Observation | Notes |
+|---------|-------------|-------|
+| Format for platform | [observed / unknown] | [dated official spec ref] |
+| Length within current platform rule | [observed / unknown] | [actual vs. dated official spec] |
+| Native feel | [observed / unknown] | [Appeal evidence only] |
+| Trend relevance | [observed / unknown] | [dated source where material] |
 
 ### Creative Assessment
 
-| Factor | Assessment |
-|--------|------------|
-| Originality | [1-5] |
-| Brand integration naturalness | [1-5] |
-| Memorability | [1-5] |
-| Share-worthiness | [1-5] |
+| Factor | Observation / evidence ref |
+|--------|----------------------------|
+| Originality | [observation + qualified Appeal item] |
+| Brand integration naturalness | [observation + qualified Appeal item] |
+| Memorability | [observation + qualified Appeal item] |
+| Share-worthiness | [observation + qualified Appeal item] |
 
-**Quality Score**: [X/10]
-**Status**: ✅ Pass / ⚠️ Acceptable / ❌ Below Standard
+AI-slop/humanizer signals are observations for the applicable **Appeal** items only. They never create a veto, a fixed penalty, or a verdict outside the typed scorer.
 ```
 
 ## Step 6 — Technical Specifications Check
@@ -239,7 +230,7 @@ This compliance gate is the STAR **Trust** review ([Trust dimension](../../../..
 | Tags | [requirements] | [actual] | ✅/❌ |
 | Links | [requirements] | [actual] | ✅/❌ |
 
-**Technical Status**: ✅ Pass / ❌ Fail
+**Mapped STAR item evidence**: [qualified item IDs + dated official-spec refs; no manual gate]
 ```
 
 ## Step 7 — Final Review
@@ -251,79 +242,50 @@ This compliance gate is the STAR **Trust** review ([Trust dimension](../../../..
 
 | Field | Value |
 |-------|-------|
-| Campaign | [name] |
-| Influencer | @[handle] |
+| Governing brief | [brief_ref] |
+| Creator | [creator_ref] |
 | Content Type | [type] |
 | Submission Date | [date] |
-| Reviewer | [name] |
+| Reviewer | [reviewer_ref] |
 | Review Date | [date] |
 
-## Review Scores
+## Typed Scorer Result
 
-| Category | Score | Status | Weight |
-|----------|-------|--------|--------|
-| Brand Alignment | [X/10] | ✅/⚠️/❌ | [%] |
-| Message Accuracy | [X/10] | ✅/⚠️/❌ | [%] |
-| Compliance | [X/10] | ✅/❌ | [%] |
-| Quality | [X/10] | ✅/⚠️/❌ | [%] |
-| Technical | Pass/Fail | ✅/❌ | - |
-| **Overall** | **[X/10]** | | |
+| Field | Value |
+|-------|-------|
+| `status` | [`DONE` / `DONE_WITH_CONCERNS` / `NEEDS_INPUT` / `BLOCKED`] |
+| `verdict` | [`SHIP` / `FIX` / `BLOCK` / `UNDECIDED`] |
+| `score_state` | [`SCORED` / `NOT_SCORED`] |
+| `raw_overall_score` | [typed scorer value or omitted] |
+| `final_overall_score` | [typed scorer value or omitted] |
+| `cap_applied` | [typed scorer boolean] |
+| `veto_count` | [typed scorer value] |
 
-## Decision
+Copy these fields from the deterministic scorer without recomputing or translating them into a second gate. Creator-facing translation may follow: `SHIP` → Approved, `FIX` → Revisions Required, `BLOCK` → Reject/Hold this version, `UNDECIDED` → Needs Evidence. Exactly one verified veto is `FIX` with a 59 ceiling; only two or more verified vetoes produce `BLOCK`.
 
-### ✅ APPROVED
-Content is approved for posting.
+## Evidence-Bound Changes
 
-OR
+- Must fix: [qualified item, exact evidence, correction, owner, resubmission condition]
+- Should fix: [qualified item, exact evidence, correction, owner, resubmission condition]
+- Optional: [non-gating observation]
 
-### ⚠️ APPROVED WITH MINOR CHANGES
-Content is conditionally approved pending minor adjustments:
-- [Change 1]
-- [Change 2]
+## Durable Feedback Summary
 
-Re-review: Not required / Required
-
-OR
-
-### 🔄 REVISIONS REQUIRED
-Content requires revisions before approval:
-
-**Must Fix**:
-1. [Critical issue 1]
-2. [Critical issue 2]
-
-**Should Fix**:
-1. [Issue 1]
-2. [Issue 2]
-
-**Nice to Have**:
-1. [Suggestion 1]
-
-Deadline for revised submission: [date]
-
-OR
-
-### ❌ REJECTED
-Content cannot be approved. Reason:
-- [Critical failure reason]
-
-Next steps: [what to do]
-
-## Feedback for Influencer
-
-[Constructive feedback message - see Step 8]
+[Evidence-bound requested changes and resubmission conditions only. Keep the creator-facing message transient; see Step 8.]
 ```
 
-## Step 8 — Feedback Message for Influencer
+## Step 8 — Feedback Message for Creator (Transient Only)
+
+Do not save or hand off this rendered copy. Resolve display names, the reply path, and any recipient locator only inside the independently authorized delivery job. Before any email/DM provider call, hand off to `outreach-manager` and require exact approval for the one currently due message bound to `recipient_ref`, channel, final rendered message, and a concrete ISO-8601 `dispatch_at` plus timezone when scheduled; then run its fresh eligibility and live-suppression checks. Any changed recipient, channel, message, or schedule requires new exact approval.
 
 ```markdown
-## Feedback Message for Influencer
+## Feedback Message for Creator — TRANSIENT, NOT PERSISTABLE
 
 ---
 
-Hi [Name]!
+Hi [creator display name resolved transiently at dispatch]!
 
-Thanks for submitting your content for [Campaign]. We've reviewed it and have some feedback.
+Thanks for submitting your content for [campaign display name resolved transiently from brief_ref]. We've reviewed it and have some feedback.
 
 ### What We Love ❤️
 
@@ -359,10 +321,12 @@ Let me know if you have any questions! Happy to hop on a quick call if that's ea
 Thanks again for your creativity!
 
 Best,
-[Name]
+[reviewer display signature resolved transiently from reviewer_ref at dispatch]
 
 ---
 ```
+
+**Dispatch state**: `DRAFT — NOT SENT` until the independent outreach exact-send authorization and fresh preflight both pass.
 
 ## Worked Example
 
@@ -371,33 +335,34 @@ Best,
 **Output**:
 
 ```markdown
-# Content Review: @fitnessfiona TikTok
+# Content Review: creator_ref / approved_asset_ref / TikTok
 
-## Quick Summary
+## Typed Scorer Result
 
-| Category | Score | Status |
-|----------|-------|--------|
-| Brand Alignment | 9/10 | ✅ |
-| Message Accuracy | 7/10 | ⚠️ |
-| Compliance | 5/10 | ❌ |
-| Quality | 9/10 | ✅ |
+| Field | Value |
+|-------|-------|
+| `status` | `DONE_WITH_CONCERNS` |
+| `verdict` | `FIX` |
+| `score_state` | `SCORED` |
+| `raw_overall_score` | `82` |
+| `final_overall_score` | `59` |
+| `cap_applied` | `true` |
+| `veto_count` | `1` |
 
-**Decision**: ❌ REJECTED — **Reject (STAR-T1 · FTC Disclosure veto)**
-
-> A missing/inadequate disclosure on sponsored content is the STAR **`STAR-T1`** Trust veto — it forces a Reject, not a revise (FTC 16 CFR §255). The creator must fix the veto item and resubmit; the non-veto items below are required on resubmission.
+**Creator-facing translation**: Revisions Required. One verified `STAR-T1` veto triggers `FIX` and the typed 59 ceiling; it does not become `BLOCK`/Reject.
 
 ## Issues Found
 
-### Veto — forces Reject (Compliance)
-1. **Missing disclosure** - No #ad or sponsored disclosure visible → **STAR-T1 veto → Reject**
-   - Fix: Add #ad in caption and/or verbal disclosure in first 3 seconds
+### Verified veto — requires revision and rerun
+1. **`STAR-T1` disclosure failure** — the required disclosure was not observed at the evidenced location.
+   - Fix: apply the market/platform-compatible disclosure specified by `brief_ref`, cite the revised asset evidence, and rerun the typed gate.
 
-2. **Promo code not mentioned** - Brief required promo code "FIONA20"
-   - Fix: Add verbal mention and caption inclusion
+2. **Required offer element absent** — `brief_ref` requires `promo_code_ref`, but the frozen asset evidence does not contain it.
+   - Fix: add the approved offer element exactly as governed by the brief and claim records.
 
 ### Should Fix (Messaging)
-1. **Missing key message** - "20g protein per serving" not mentioned
-   - Fix: Add this stat when showing the product
+1. **Required key message absent** — the approved claim ref in `brief_ref` is not represented in the frozen asset.
+   - Fix: add only the approved wording and retain the claim evidence ref.
 
 ## What's Great
 - Authentic workout integration
@@ -406,7 +371,7 @@ Best,
 - Great product showcase
 
 ## Feedback Message
-[Generated constructive feedback for influencer]
+[Transient creator-facing render from Step 8; excluded from the durable artifact]
 ```
 
 ## Quick Review Checklist
@@ -415,19 +380,23 @@ Best,
 ## Quick Review Checklist
 
 ### Must-Pass Items
-- [ ] Disclosure visible and clear (#ad, #sponsored, etc.)
-- [ ] No false/unsubstantiated claims
+- [ ] `STAR-S2` follower-authenticity evidence verified or explicitly `unknown`
+- [ ] `STAR-S6` coordinated/bought-engagement evidence verified or explicitly `unknown`
+- [ ] `STAR-T1` market/platform disclosure evidence verified or explicitly `unknown`
+- [ ] `STAR-T2` material-claim integrity evidence verified or explicitly `unknown`
+- [ ] `STAR-T3` documented brand-safety policy/window evidence verified or explicitly `unknown`
 - [ ] Brand mentioned correctly
 - [ ] Required hashtags included
 - [ ] No competitor mentions
 - [ ] Content is brand-safe
 
 ### Quality Check
-- [ ] Hook captures attention (first 3 seconds)
+- [ ] Hook observation mapped to the applicable Appeal item
 - [ ] Audio/video quality acceptable
 - [ ] Key messages communicated
 - [ ] CTA is clear
 - [ ] Authentic feel maintained
+- [ ] Slop/humanizer findings recorded only as Appeal evidence, never a veto or standalone penalty
 
 ### Technical
 - [ ] Correct format/dimensions

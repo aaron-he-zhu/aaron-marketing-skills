@@ -4,6 +4,102 @@
   "edges": [
     {
       "condition_code": "quality-gate",
+      "condition_source": "seo-geo/evaluate/performance-monitor/SKILL.md:160",
+      "condition_text": "After report — a change needs ongoing monitoring → run this skill in alert mode. A section marked \"Not yet evaluated\" for authority → domain-authority-auditor; for content quality → content-quality-auditor. One-off report with no action → Terminal.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "performance-monitor",
+      "gate": "content-quality-auditor",
+      "id": "performance-monitor--content-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "content-quality-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "seo-geo/evaluate/performance-monitor/SKILL.md:160",
+      "condition_text": "After report — a change needs ongoing monitoring → run this skill in alert mode. A section marked \"Not yet evaluated\" for authority → domain-authority-auditor; for content quality → content-quality-auditor. One-off report with no action → Terminal.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "performance-monitor",
+      "gate": "domain-authority-auditor",
+      "id": "performance-monitor--domain-authority-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "action-receipt",
+        "artifact-binding",
+        "audit-evidence",
+        "cycle-retro",
+        "evidence-observation",
+        "handoff-summary",
+        "measurement-contract"
+      ],
+      "to": "domain-authority-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "narrative/land/pitch-narrative-builder/SKILL.md:84",
+      "condition_text": "Primary: narrative-enablement-kit — turn the pitch into the elevator ladder, spokesperson Q&A, and approved boilerplate.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "pitch-narrative-builder",
+      "gate": null,
+      "id": "pitch-narrative-builder--narrative-enablement-kit",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "narrative-enablement-kit",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
       "condition_source": "narrative/land/pitch-narrative-builder/SKILL.md:86",
       "condition_text": "If the sales deck must go live and be checked against every surface: narrative-quality-auditor — run the pre-publish consistency mode (single surface vs canon go/no-go).",
       "documentation_required": true,
@@ -303,7 +399,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "narrative/trace/positioning-truth-tracer/SKILL.md:83",
+      "condition_source": "narrative/trace/positioning-truth-tracer/SKILL.md:84",
       "condition_text": "Primary: message-system-architect — author the durable message hierarchy on top of the confirmed differentiation truth set.",
       "documentation_required": true,
       "exception": null,
@@ -331,7 +427,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "narrative/trace/positioning-truth-tracer/SKILL.md:84",
+      "condition_source": "narrative/trace/positioning-truth-tracer/SKILL.md:85",
       "condition_text": "If 3+ differentiators are pending as proposals: offer-claims-registry — substantiate or reject the [needs source] claims before any message states the differentiation.",
       "documentation_required": true,
       "exception": null,
@@ -362,7 +458,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "narrative/trace/positioning-truth-tracer/SKILL.md:85",
+      "condition_source": "narrative/trace/positioning-truth-tracer/SKILL.md:86",
       "condition_text": "If the canvas is missing or incomplete: positioning-mapper — build or complete the positioning canvas first, then return to trace its truth.",
       "documentation_required": true,
       "exception": null,
@@ -837,7 +933,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "seo-geo/evaluate/rank-tracker/SKILL.md:104",
+      "condition_source": "seo-geo/evaluate/rank-tracker/SKILL.md:105",
       "condition_text": "Initial setup (no baseline) → performance-monitor. Subsequent runs (baseline exists) → Terminal. Visited-set rule applies per skill-contract.md.",
       "documentation_required": true,
       "exception": null,
@@ -858,6 +954,8 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "artifact-binding",
+        "evidence-observation",
         "handoff-summary"
       ],
       "to": "performance-monitor",
@@ -985,7 +1083,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "influencer/report/report-generator/SKILL.md:116",
+      "condition_source": "influencer/report/report-generator/SKILL.md:124",
       "condition_text": "Primary: content-quality-auditor — run the finished report through the publish-readiness gate before it goes to a stakeholder.",
       "documentation_required": true,
       "exception": null,
@@ -1015,7 +1113,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "influencer/report/report-generator/SKILL.md:120",
+      "condition_source": "influencer/report/report-generator/SKILL.md:128",
       "condition_text": "performance-analyzer — if the report exposes data gaps, re-analyze before re-reporting.",
       "documentation_required": true,
       "exception": null,
@@ -1044,7 +1142,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/report/report-generator/SKILL.md:121",
+      "condition_source": "influencer/report/report-generator/SKILL.md:129",
       "condition_text": "roi-calculator — recompute return figures if the financial inputs changed.",
       "documentation_required": true,
       "exception": null,
@@ -1072,7 +1170,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/report/roi-calculator/SKILL.md:153",
+      "condition_source": "influencer/report/roi-calculator/SKILL.md:156",
       "condition_text": "budget-optimizer — feed by-influencer and by-tier ROI into the next budget allocation.",
       "documentation_required": true,
       "exception": {
@@ -1101,92 +1199,6 @@
       ],
       "to": "budget-optimizer",
       "type": "reentry"
-    },
-    {
-      "condition_code": "alternate",
-      "condition_source": "influencer/report/roi-calculator/SKILL.md:152",
-      "condition_text": "performance-analyzer — go back for deeper performance breakdowns if the ROI math exposed gaps.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "roi-calculator",
-      "gate": null,
-      "id": "roi-calculator--performance-analyzer",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "handoff-summary"
-      ],
-      "to": "performance-analyzer",
-      "type": "conditional"
-    },
-    {
-      "condition_code": "primary",
-      "condition_source": "influencer/report/roi-calculator/SKILL.md:148",
-      "condition_text": "Primary: report-generator — turn the ROI numbers into a stakeholder-ready report.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "roi-calculator",
-      "gate": null,
-      "id": "roi-calculator--report-generator",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "handoff-summary"
-      ],
-      "to": "report-generator",
-      "type": "conditional"
-    },
-    {
-      "condition_code": "conditional",
-      "condition_source": "launch/assemble/sales-enablement-kit/SKILL.md:88",
-      "condition_text": "If the B2B outbound lane opens with the launch: cold-outbound-sequencer — sequences built on this talk track.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "sales-enablement-kit",
-      "gate": null,
-      "id": "sales-enablement-kit--cold-outbound-sequencer",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "acyclic"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "condition-evidence",
-        "cross-discipline-context",
-        "handoff-summary"
-      ],
-      "to": "cold-outbound-sequencer",
-      "type": "cross-discipline"
     }
   ],
   "schema_version": "1.0",

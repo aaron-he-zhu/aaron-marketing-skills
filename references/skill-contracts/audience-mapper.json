@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 130,
+          "end_char": 137,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "1. The chosen mode is stated, and inputs are captured with every inferred attribute marked with a confidence level (High/Med/Low)."
+        "text": "1. The chosen mode is stated, and every factual field carries source ref, observed/retrieved date, measurement window, and evidence label"
       },
       {
         "clause_id": "done-02",
@@ -23,22 +23,82 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 135,
+          "end_char": 196,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
-          "start_char": 133
+          "start_char": 139
         },
-        "text": "2."
+        "text": "confidence never converts an unsupported guess into fact."
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 325,
+          "path": "influencer/scout/audience-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
+          "span_basis": "field-text",
+          "start_char": 199
+        },
+        "text": "2. With sufficient evidence, complete the selected branch. Without it, return `NEEDS_INPUT` plus the exact queries/data fields"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 420,
+          "path": "influencer/scout/audience-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
+          "span_basis": "field-text",
+          "start_char": 327
+        },
+        "text": "personas may be hypothetical but are not scored, tiered, promoted, or handed off as evidence."
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 473,
+          "path": "influencer/scout/audience-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
+          "span_basis": "field-text",
+          "start_char": 423
+        },
+        "text": "3. The deliverable and handoff are returned inline"
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 579,
+          "path": "influencer/scout/audience-mapper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
+          "span_basis": "field-text",
+          "start_char": 475
+        },
+        "text": "any requested WARM save or HOT promotion is completed and reported as a separately authorized operation."
       }
     ],
-    "done_when": "1. The chosen mode is stated, and inputs are captured with every inferred attribute marked with a confidence level (High/Med/Low).\n  2.",
+    "done_when": "1. The chosen mode is stated, and every factual field carries source ref, observed/retrieved date, measurement window, and evidence label; confidence never converts an unsupported guess into fact.\n  2. With sufficient evidence, complete the selected branch. Without it, return `NEEDS_INPUT` plus the exact queries/data fields; personas may be hypothetical but are not scored, tiered, promoted, or handed off as evidence.\n  3. The deliverable and handoff are returned inline; any requested WARM save or HOT promotion is completed and reported as a separately authorized operation.",
     "extraction_status": "classified",
     "source": {
       "path": "influencer/scout/audience-mapper/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b"
+      "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998"
     }
   },
   "context_hints": {
@@ -47,7 +107,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 49
       },
       {
@@ -61,14 +121,14 @@
         "path": "influencer/scout/audience-mapper/references/templates.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "b0492a5cfc4983d4f2e101aa2434b8a07e55ef5659de0429b5736f06db17a4a7",
+        "sha256": "ebd14b1f24421dbc2e6ca862e42ef9e4e0cc4915153221e8aec0c6321a7fea5b",
         "source_line": 53
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 37
       },
       {
@@ -82,7 +142,7 @@
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
         "source_line": 90
       }
     ],
@@ -98,6 +158,10 @@
     ]
   },
   "contract_id": "skill:audience-mapper",
+  "control_requirements": [
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -110,7 +174,7 @@
           "end_char": 215,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -123,30 +187,46 @@
         "item_id": "handoff-02",
         "kind": "primary",
         "source": {
-          "end_char": 455,
+          "end_char": 449,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
           "start_char": 217
         },
         "target_skills": [
           "influencer-discovery"
         ],
-        "text": "- **Primary**: [influencer-discovery](../influencer-discovery/SKILL.md) — once the selection criteria (audience mode) or the voice tiers + red lines (niche mode) are written and promoted, find and shortlist specific creators against them."
+        "text": "- **Primary**: [influencer-discovery](../influencer-discovery/SKILL.md) — once the selection criteria (audience mode) or the voice tiers + red lines (niche mode) are complete inline, find and shortlist specific creators against them"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-03",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 505,
+          "path": "influencer/scout/audience-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
+          "span_basis": "field-text",
+          "start_char": 451
+        },
+        "target_skills": [],
+        "text": "persistence is optional and does not gate the handoff."
       },
       {
         "condition": "If the audience/niche is set but you need live momentum first**: [trend-spotter](../trend-spotter/SKILL.md) — surface what is currently moving so partnerships ride live signal",
         "extraction_status": "partially-classified",
-        "item_id": "handoff-03",
+        "item_id": "handoff-04",
         "kind": "unclassified",
         "source": {
-          "end_char": 635,
+          "end_char": 685,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
-          "start_char": 456
+          "start_char": 506
         },
         "target_skills": [
           "trend-spotter"
@@ -156,76 +236,92 @@
       {
         "condition": "if it was already visited this chain.",
         "extraction_status": "unclassified",
-        "item_id": "handoff-04",
+        "item_id": "handoff-05",
         "kind": "unclassified",
         "source": {
-          "end_char": 684,
+          "end_char": 734,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
-          "start_char": 637
+          "start_char": 687
         },
         "target_skills": [],
         "text": "then STOP if it was already visited this chain."
       },
       {
-        "condition": "After a shortlist exists**: [fit-scorer](../fit-scorer/SKILL.md) — score candidates on Suitability and run the `STAR-S2`/`STAR-S6` vetoes (this skill does not score).",
+        "condition": "After an evidence-backed shortlist exists**: [fit-scorer](../fit-scorer/SKILL.md) — produce the typed S1–S10 read and potential S2/S6 control evidence. The downstream STAR audit gate alone applies S2/S6/T3 gates, caps, and verdicts",
         "extraction_status": "partially-classified",
-        "item_id": "handoff-05",
+        "item_id": "handoff-06",
         "kind": "unclassified",
         "source": {
-          "end_char": 855,
+          "end_char": 970,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
-          "start_char": 685
+          "start_char": 735
         },
         "target_skills": [
           "fit-scorer"
         ],
-        "text": "- **After a shortlist exists**: [fit-scorer](../fit-scorer/SKILL.md) — score candidates on Suitability and run the `STAR-S2`/`STAR-S6` vetoes (this skill does not score)."
+        "text": "- **After an evidence-backed shortlist exists**: [fit-scorer](../fit-scorer/SKILL.md) — produce the typed S1–S10 read and potential S2/S6 control evidence. The downstream STAR audit gate alone applies S2/S6/T3 gates, caps, and verdicts"
       },
       {
-        "condition": null,
+        "condition": "after Fit, follow its documented campaign-planning path before any outreach readiness check.",
         "extraction_status": "unclassified",
-        "item_id": "handoff-06",
+        "item_id": "handoff-07",
         "kind": "unclassified",
         "source": {
           "end_char": 1064,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
-          "start_char": 856
+          "start_char": 972
         },
         "target_skills": [],
-        "text": "- **Terminal**: once the influencer-selection criteria (audience) or the phased entry strategy + red lines (niche) are written and promoted, the scout-mapping step is complete — hand off to discovery and STOP"
+        "text": "after Fit, follow its documented campaign-planning path before any outreach readiness check."
       },
       {
         "condition": null,
         "extraction_status": "unclassified",
-        "item_id": "handoff-07",
+        "item_id": "handoff-08",
         "kind": "unclassified",
         "source": {
-          "end_char": 1147,
+          "end_char": 1268,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
-          "start_char": 1066
+          "start_char": 1065
         },
         "target_skills": [],
-        "text": "report chain-complete rather than re-entering the sibling mode on the same brand."
+        "text": "- **Terminal**: once the influencer-selection criteria (audience) or the phased entry strategy + red lines (niche) are complete inline, the scout-mapping step is complete — hand off to discovery and STOP"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-09",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 1424,
+          "path": "influencer/scout/audience-mapper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
+          "span_basis": "field-text",
+          "start_char": 1270
+        },
+        "target_skills": [],
+        "text": "report chain-complete rather than re-entering the sibling mode on the same brand. An optional WARM save or HOT promotion is not a completion prerequisite."
       }
     ],
-    "next_best": "Global termination applies (visited-set, `max-depth: 3`, ambiguity-stop) — see [skill-contract.md §Termination rules](../../../references/skill-contract.md). Do not re-invoke a skill already in this session's chain.\n\n- **Primary**: [influencer-discovery](../influencer-discovery/SKILL.md) — once the selection criteria (audience mode) or the voice tiers + red lines (niche mode) are written and promoted, find and shortlist specific creators against them.\n- **If the audience/niche is set but you need live momentum first**: [trend-spotter](../trend-spotter/SKILL.md) — surface what is currently moving so partnerships ride live signal; then STOP if it was already visited this chain.\n- **After a shortlist exists**: [fit-scorer](../fit-scorer/SKILL.md) — score candidates on Suitability and run the `STAR-S2`/`STAR-S6` vetoes (this skill does not score).\n- **Terminal**: once the influencer-selection criteria (audience) or the phased entry strategy + red lines (niche) are written and promoted, the scout-mapping step is complete — hand off to discovery and STOP; report chain-complete rather than re-entering the sibling mode on the same brand.",
+    "next_best": "Global termination applies (visited-set, `max-depth: 3`, ambiguity-stop) — see [skill-contract.md §Termination rules](../../../references/skill-contract.md). Do not re-invoke a skill already in this session's chain.\n\n- **Primary**: [influencer-discovery](../influencer-discovery/SKILL.md) — once the selection criteria (audience mode) or the voice tiers + red lines (niche mode) are complete inline, find and shortlist specific creators against them; persistence is optional and does not gate the handoff.\n- **If the audience/niche is set but you need live momentum first**: [trend-spotter](../trend-spotter/SKILL.md) — surface what is currently moving so partnerships ride live signal; then STOP if it was already visited this chain.\n- **After an evidence-backed shortlist exists**: [fit-scorer](../fit-scorer/SKILL.md) — produce the typed S1–S10 read and potential S2/S6 control evidence. The downstream STAR audit gate alone applies S2/S6/T3 gates, caps, and verdicts; after Fit, follow its documented campaign-planning path before any outreach readiness check.\n- **Terminal**: once the influencer-selection criteria (audience) or the phased entry strategy + red lines (niche) are complete inline, the scout-mapping step is complete — hand off to discovery and STOP; report chain-complete rather than re-entering the sibling mode on the same brand. An optional WARM save or HOT promotion is not a completion prerequisite.",
     "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
     "summary_ref": {
       "path": "influencer/scout/audience-mapper/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b"
+      "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -240,8 +336,8 @@
     "name": "audience-mapper",
     "path": "influencer/scout/audience-mapper/SKILL.md",
     "phase": "scout",
-    "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
-    "version": "20.0.0"
+    "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<brand/product or niche> [mode: audience|niche] [category] [geo/platforms]",
@@ -255,7 +351,7 @@
           "end_char": 49,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -270,7 +366,7 @@
           "end_char": 133,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
           "start_char": 51
         },
@@ -285,7 +381,7 @@
           "end_char": 258,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
           "start_char": 135
         },
@@ -300,7 +396,7 @@
           "end_char": 428,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
           "start_char": 260
         },
@@ -312,49 +408,69 @@
     "source": {
       "path": "influencer/scout/audience-mapper/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b"
+      "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998"
     }
   },
   "output_contract": {
     "clauses": [
       {
         "clause_id": "write-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 78,
+          "path": "influencer/scout/audience-mapper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "return the mode-appropriate deliverable and reusable handoff inline by default"
+      },
+      {
+        "clause_id": "write-02",
         "extraction_status": "classified",
         "kind": "project-artifact",
         "permission_posture": "permission-required",
         "side_effect": "project-write",
         "source": {
-          "end_char": 126,
+          "end_char": 195,
           "path": "influencer/scout/audience-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b",
+          "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998",
           "span_basis": "field-text",
-          "start_char": 0
+          "start_char": 80
         },
-        "text": "the mode-appropriate deliverable to `memory/influencer/audience-mapper/YYYY-MM-DD-<topic>.md` plus a reusable handoff summary."
+        "text": "save to `memory/influencer/audience-mapper/YYYY-MM-DD-<topic>.md` only with exact authorization for that WARM path."
       }
     ],
-    "extraction_status": "classified",
+    "extraction_status": "partially-classified",
     "source": {
       "path": "influencer/scout/audience-mapper/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b"
+      "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998"
     },
-    "summary": "in",
+    "summary": "with sufficient dated evidence, in",
     "summary_source": "expected-output",
-    "writes": "the mode-appropriate deliverable to `memory/influencer/audience-mapper/YYYY-MM-DD-<topic>.md` plus a reusable handoff summary."
+    "writes": "return the mode-appropriate deliverable and reusable handoff inline by default; save to `memory/influencer/audience-mapper/YYYY-MM-DD-<topic>.md` only with exact authorization for that WARM path."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -363,7 +479,7 @@
     "source": {
       "path": "influencer/scout/audience-mapper/SKILL.md",
       "section": "frontmatter",
-      "sha256": "421e2aa63685cc24af6416de3a622c3875db935a4882690cdcc255c4d972662b"
+      "sha256": "80840cb62bcd20aa51724a60d8d69ce04f92134812cd06343c6db4cb9719b998"
     },
     "trigger_phrases": [
       "analyze my target audience",
@@ -372,7 +488,7 @@
       "research a niche community"
     ],
     "trigger_source": "description-quoted",
-    "when_to_use": "Run at the start of an influencer program, or when entering a new market/segment, before any creator selection — this is the who + what-community step. Use audience mode to understand who the customer is, where they spend time online, which creators they trust, and what selection criteria follow; use niche mode to decode a specific subculture's language, norms, taboos, key voices, and brand fit before outreach so the brand avoids cultural missteps. Works from a brand or product name alone, or from supplied customer/community data. Also use to diagnose why a prior campaign underperformed or to build personas for a creative brief."
+    "when_to_use": "Run at the start of an influencer program, or when entering a new market/segment, before any creator selection — this is the who + what-community step. Use audience mode to understand who the customer is, where they spend time online, which creators they trust, and what selection criteria follow; use niche mode to decode a specific subculture's language, norms, taboos, key voices, and brand fit before outreach so the brand avoids cultural missteps. From a brand or product name alone, produce hypotheses and a research plan; factual mapping requires supplied or fetched customer/community evidence. Also use to diagnose why a prior campaign underperformed or to build personas for a creative brief."
   },
   "schema_version": "1.0"
 }

@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 111,
+          "end_char": 53,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "all 5 ladder levels have a trigger threshold (labeled Estimated until tuned), a named owner, and a first action"
+        "text": "all 5 ladder levels have threshold/owner/first action"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 205,
+          "end_char": 115,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
-          "start_char": 113
+          "start_char": 55
         },
-        "text": "the pause rule covers both scheduled posts AND paid amplification with the marker path named"
+        "text": "the pause rule covers scheduled posts and paid amplification"
       },
       {
         "clause_id": "done-03",
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 281,
+          "end_char": 224,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
-          "start_char": 207
+          "start_char": 117
         },
-        "text": "every holding statement carries an approver and a committed update cadence"
+        "text": "every required per-channel pause/unpause/removal action has a receipt slot and missing receipts remain open"
       },
       {
         "clause_id": "done-04",
@@ -53,22 +53,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 345,
+          "end_char": 269,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
-          "start_char": 283
+          "start_char": 226
         },
-        "text": "and the when-NOT-to-post rules and retro template are on file."
+        "text": "every statement has approver/update cadence"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 324,
+          "path": "social/host/crisis-response-planner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
+          "span_basis": "field-text",
+          "start_char": 271
+        },
+        "text": "and the when-NOT-to-post and retro rules are on file."
       }
     ],
-    "done_when": "all 5 ladder levels have a trigger threshold (labeled Estimated until tuned), a named owner, and a first action; the pause rule covers both scheduled posts AND paid amplification with the marker path named; every holding statement carries an approver and a committed update cadence; and the when-NOT-to-post rules and retro template are on file.",
+    "done_when": "all 5 ladder levels have threshold/owner/first action; the pause rule covers scheduled posts and paid amplification; every required per-channel pause/unpause/removal action has a receipt slot and missing receipts remain open; every statement has approver/update cadence; and the when-NOT-to-post and retro rules are on file.",
     "extraction_status": "classified",
     "source": {
       "path": "social/host/crisis-response-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d"
+      "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af"
     }
   },
   "context_hints": {
@@ -91,8 +106,15 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
+      },
+      {
+        "path": "social/craft/social-calendar-builder/references/human-action-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "cb4e4fb48b922adfc32fa648149a44c141afc7fddf4f08bcbbd079d7963f1ad2",
+        "source_line": 46
       }
     ],
     "project_paths": [
@@ -123,6 +145,10 @@
     ]
   },
   "contract_id": "skill:crisis-response-planner",
+  "control_requirements": [
+    "action-receipt",
+    "artifact-binding"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -135,7 +161,7 @@
           "end_char": 171,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -153,7 +179,7 @@
           "end_char": 348,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 172
         },
@@ -171,7 +197,7 @@
           "end_char": 548,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 349
         },
@@ -189,7 +215,7 @@
           "end_char": 965,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 550
         },
@@ -202,7 +228,7 @@
     "summary_ref": {
       "path": "social/host/crisis-response-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d"
+      "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -217,8 +243,8 @@
     "name": "crisis-response-planner",
     "path": "social/host/crisis-response-planner/SKILL.md",
     "phase": "host",
-    "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
-    "version": "20.0.0"
+    "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<channel set / incident description> [severity if known] ['draft the protocol' | 'stand down']",
@@ -232,7 +258,7 @@
           "end_char": 125,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -247,7 +273,7 @@
           "end_char": 218,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 127
         },
@@ -262,7 +288,7 @@
           "end_char": 434,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 220
         },
@@ -277,7 +303,7 @@
           "end_char": 515,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 436
         },
@@ -292,7 +318,7 @@
           "end_char": 602,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 517
         },
@@ -304,7 +330,7 @@
     "source": {
       "path": "social/host/crisis-response-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d"
+      "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af"
     }
   },
   "output_contract": {
@@ -319,7 +345,7 @@
           "end_char": 80,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -335,7 +361,7 @@
           "end_char": 360,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 82
         },
@@ -351,7 +377,7 @@
           "end_char": 498,
           "path": "social/host/crisis-response-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d",
+          "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af",
           "span_basis": "field-text",
           "start_char": 362
         },
@@ -362,23 +388,27 @@
     "source": {
       "path": "social/host/crisis-response-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d"
+      "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af"
     },
-    "summary": "the crisis protocol document — severity ladder 1-5 (trigger threshold, named owner, first action, statement class, update cadence per level), the first-mechanical-action rule with its marker path, the holding-statement library, when-NOT-to-post rules, the spokesperson/approval matrix, all-clear criteria, and the post-crisis retro template — plus the standard handoff summary.",
+    "summary": "the crisis protocol document — severity ladder 1-5, first-mechanical-action rule, holding statements, when-NOT-to-post rules, approval matrix, all-clear criteria, and retro template — plus per-channel human pause/unpause/removal receipt requirements and the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "the protocol and dated incident logs to `memory/social/crisis-response-planner/`; per-channel queue-pause and un-pause state markers submitted as proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` (reconciled post-incident by channel-registry — its offset-ordered proposal resolution path); new or changed statement claims to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -387,7 +417,7 @@
     "source": {
       "path": "social/host/crisis-response-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "763607988a9384195422b94435a1595e760e182ffa8ec11ea545a677b15dc32d"
+      "sha256": "a4c6811d12a54678151b9dcdafe7e32a9c2f076f9aa7f641ec940f737e5816af"
     },
     "trigger_phrases": [
       "build our social crisis protocol",

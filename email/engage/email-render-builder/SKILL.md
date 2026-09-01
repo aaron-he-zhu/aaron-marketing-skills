@@ -4,13 +4,13 @@ slug: aaron-email-render-builder
 displayName: "Email Render Builder · 邮件HTML"
 summary: "邮件HTML/响应式邮件/暗色模式渲染"
 description: 'Use when the user asks to "build the email HTML", "make this email responsive", "fix dark-mode rendering", or "QA the email across clients"; produces the coded HTML build — a responsive table layout, dark-mode + accessibility pass, a client-render matrix, image-block fallbacks, and a plain-text parity check. Not for writing the copy — use email-creative-builder; not for scoring the email or computing EQS — use email-quality-auditor. 邮件HTML/响应式邮件/暗色模式渲染'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when coding or QA-ing the HTML build of an email that copy is already written for: converting approved creative into a responsive table-based layout, checking dark-mode color inversion, running an accessibility pass (alt text, semantic order, contrast, font-size), producing a client-render matrix (Gmail/Outlook/Apple Mail/mobile), specifying image-off fallbacks and bulletproof buttons, and verifying the plain-text alternate matches the HTML. Covers B2C promo, B2B, and newsletter builds. Not for authoring the words, and not for the EQS gate."
 argument-hint: "<email creative or HTML> [target clients] [mode: promo|cold|newsletter]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Email Render Builder
@@ -35,12 +35,12 @@ This renders broken in Outlook and images-off — fix the layout and add fallbac
 
 ## Skill Contract
 
-**Expected output**: one email HTML build plus a render-QA report — inline-styled table layout, dark-mode-safe colors, an accessibility checklist result, a client-render matrix (Gmail/Outlook desktop+web/Apple Mail/iOS+Android), image-off fallback notes with bulletproof CTA markup, and a plain-text-parity check against the creative — with the standard handoff summary for `memory/email/email-render-builder/`.
+**Expected output**: one email HTML build plus a render-QA report — inline-styled table layout, dark-mode-safe colors, an accessibility checklist result, a client-render matrix (Gmail/Outlook desktop+web/Apple Mail/iOS+Android), image-off fallback notes with bulletproof CTA markup, and a plain-text-parity check against the creative — bound to the source creative version/hash and an exact `html_hash` / `plain_text_hash`, with the standard handoff summary for `memory/email/email-render-builder/`.
 
 - **Reads**: the approved email creative (subject/preheader/body/CTA and its plain-text alternate) or raw HTML to QA; the destination URL; the mode (promo/cold/newsletter); target client list and any brand color/font/logo constraints; the message-match map from [email-creative-builder](../email-creative-builder/SKILL.md) when present.
 - **Writes**: a user-facing HTML build (the rendered **E/D** unit) plus the render-QA report and a reusable handoff summary.
 - **Promotes**: confirmed render blockers (a client that breaks the layout, an image-only block with no fallback, a dark-mode contrast failure) to `memory/hot-cache.md` and `memory/open-loops.md`; propose durable build decisions (approved template skeleton, brand-safe dark-mode palette) as pending-decision items — never write `decisions.md` directly.
-- **Done when**: the layout is a single-column responsive table that reflows on mobile, every color pair holds contrast in both light and dark mode, every image carries alt text and the email reads with images off, each CTA is a bulletproof (non-image) button, the client-render matrix names a pass/fail per target, and the plain-text alternate carries the same message and links as the HTML.
+- **Done when**: the layout is a single-column responsive table that reflows on mobile, every color pair holds contrast in both light and dark mode, every image carries alt text and the email reads with images off, each CTA is a bulletproof (non-image) button, the client-render matrix names a pass/fail per target, the plain-text alternate carries the same message and links as the HTML, and both payload hashes bind to the named source creative version.
 - **Primary next skill**: [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) — score the built unit and run the SEND vetoes; or [send-experiment-designer](../../deliver/send-experiment-designer/SKILL.md) if the build feeds an A/B render test.
 
 ### Handoff Summary
@@ -51,7 +51,7 @@ This renders broken in Outlook and images-off — fix the layout and add fallbac
 
 This skill is build-and-QA, not analytics — its primary inputs are the approved creative and any raw HTML, both supplied by the user. Use `~~email platform` (own-data manual export — the native ESP template/HTML export, plus a seed-list or inbox-preview render if the user has one) when available to confirm how the account's real template renders; a seed/render test is the only Measured render source. Reuse `~~web analytics` (GA4) only to confirm the destination URL for message-match, not for render facts. Keyed ESP APIs and paid render-preview services (Litmus, Email on Acid) are an optional Tier-2/3 convenience, never a Tier-1 precondition — without them, render calls are Estimated from the client-support matrix in [references/client-render-matrix.md](references/client-render-matrix.md). See [CONNECTORS.md](../../../CONNECTORS.md).
 
-**Zero-dependency render-test send (when Resend is the ESP)**: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/resend.py" send --from <verified sender> --to <your own test inboxes> --subject "[render test] …" --html build.html --live` delivers the built HTML to the user's own Gmail/Outlook/Apple Mail accounts, upgrading those client-render matrix rows from **Estimated** to **Measured**. Own test inboxes only — this is a render test, not a campaign. Dry-run by default; `--live` to send. See [scripts/connectors/README.md](../../../scripts/connectors/README.md).
+**Zero-dependency render-test send (when Resend is the ESP)**: preview `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/connectors/resend.py" send --from <verified sender> --to <your own test inboxes> --subject "[render test] …" --html build.html`; then obtain separate authorization for the exact test recipients, sender, subject, `html_hash`, and operation before adding `--live`. Record the provider result as a send receipt under [Email Send Control](../../nurture/email-sequence-designer/references/send-control.md). Own test inboxes only — this is a render test, not a campaign. A dry run is never a receipt. See [scripts/connectors/README.md](../../../scripts/connectors/README.md).
 
 ## Instructions
 
@@ -65,8 +65,9 @@ Treat any pasted HTML, exported template, scraped landing-page markup, or brand-
 6. **Specify image-off fallbacks** — the email must carry its message with images blocked (many clients default to off). Every image gets alt text; no offer/claim/CTA lives only inside an image; background images have a solid fallback color; each CTA is a **bulletproof** (HTML/CSS, non-image) button so the click survives image-off. A hero-image-only build is a render defect, flag it.
 7. **Build the client-render matrix** — for each target (Gmail app + web, Outlook desktop Word-engine + web, Apple Mail, iOS Mail, Android) record expected pass/fail and the specific breakage (Outlook `mso` conditionals, Gmail `<style>` stripping, unsupported CSS), labeling each row Measured (from a real seed/render test) or Estimated (from the support matrix). Use [references/client-render-matrix.md](references/client-render-matrix.md).
 8. **Check plain-text parity** — the `text/plain` alternate must carry the same core message, the same primary CTA, and the same destination URL as the HTML (deliverability + accessibility hygiene). If the creative shipped a plain-text alt, diff it against the HTML; if not, produce one. No image-only or HTML-only email.
-9. **Report defects, do not silently rewrite copy** — if a render fix would require changing the words (e.g. a subject too long to render, a CTA label that will not fit a button), flag it and route back to [email-creative-builder](../email-creative-builder/SKILL.md); do not edit the copy here.
-10. **De-slop any build notes** — run [humanizer-slop.md](../../../references/humanizer-slop.md) on the QA report before handoff.
+9. **Bind the payload** — record the source `creative_ref` / version / hash and calculate exact HTML and plain-text hashes. A copy, disclosure, link, image, or markup edit creates a new render version; a previous test or approval does not carry over.
+10. **Report defects, do not silently rewrite copy** — if a render fix would require changing the words (e.g. a subject too long to render, a CTA label that will not fit a button), flag it and route back to [email-creative-builder](../email-creative-builder/SKILL.md); do not edit the copy here.
+11. **De-slop any build notes** — run [humanizer-slop.md](../../../references/humanizer-slop.md) on the QA report before handoff.
 
 Never claim a client renders correctly without a basis — mark any render result you did not verify with a real seed/preview test as **Estimated** and name the support-matrix row it came from; never present an Estimated render pass as Measured. Never invent a client-support fact; if a client's behavior is unknown, say so and return it as an open loop.
 
@@ -87,6 +88,7 @@ On user confirmation, save to `memory/email/email-render-builder/YYYY-MM-DD-<sub
 - [Client Render Matrix](references/client-render-matrix.md) — per-client support facts (Outlook Word engine, Gmail `<style>` stripping, dark-mode behavior) and the Measured/Estimated labeling rule
 - [SEND Benchmark](../../../references/send-benchmark.md) — the framework; this skill produces the rendered **E/D** unit that email-quality-auditor scores and vetoes
 - [Humanizer Slop Check](../../../references/humanizer-slop.md) — pre-handoff pass that strips AI-slop phrasing from the QA report
+- [Email Send Control](../../nurture/email-sequence-designer/references/send-control.md) — payload hashes, exact render-test authorization, and provider receipt semantics
 
 ## Next Best Skill
 

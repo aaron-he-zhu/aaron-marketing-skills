@@ -23,6 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 INDEX_REF = "references/skill-contracts/index.json"
 SHARED_CONTRACT_REF = "references/skill-contract.md"
 CATALOG_REF = "references/system-catalog.json"
+CONTROL_BINDINGS_REF = "references/control-bindings.json"
+CONTROL_ARTIFACT_SCHEMA_REF = "references/control-artifact.schema.json"
 MAX_DOCUMENT_BYTES = 10_000_000
 DEFAULT_PROJECT_PATHS = (
     "memory/hot-cache.md",
@@ -43,6 +45,14 @@ PROTOCOL_DISCIPLINES = {
 AUTHORITY_RANK = {"canonical": 0, "approved": 1, "working": 2, "untrusted": 3}
 REQUIREMENT_RANK = {"required": 0, "optional": 1, "forbidden": 2}
 AUDITOR_EXCLUSIVE_GROUP = "auditor-runtime-chain"
+CONTROL_REQUIREMENTS = {
+    "action-intent",
+    "action-receipt",
+    "artifact-binding",
+    "cycle-retro",
+    "evidence-observation",
+    "measurement-contract",
+}
 
 
 def _load_resolver():
@@ -257,6 +267,66 @@ def _validate_machine_projection(contract):
         raise ContextPlanError("handoff item extraction_status aggregate differs")
 
 
+def _validate_control_requirements(contract):
+    requirements = contract["control_requirements"]
+    if (
+            not isinstance(requirements, list)
+            or len(requirements) > len(CONTROL_REQUIREMENTS)
+            or len(requirements) != len(set(requirements))
+            or requirements != sorted(requirements)
+            or any(item not in CONTROL_REQUIREMENTS for item in requirements)):
+        raise ContextPlanError("skill machine contract control requirements are invalid")
+    return requirements
+
+
+def _validate_control_handoff_requirements(bindings):
+    """Validate compact edge controls without adding them to context candidates."""
+    handoffs = bindings.get("handoff_requirements")
+    if handoffs is None:
+        return {}
+    if not isinstance(handoffs, dict) or not handoffs:
+        raise ContextPlanError(
+            "control handoff requirements must be a non-empty object when present"
+        )
+    result = {}
+    for edge_id, requirements in handoffs.items():
+        if not isinstance(edge_id, str) or edge_id.count("--") != 1:
+            raise ContextPlanError("control handoff has invalid edge identity")
+        source, target = edge_id.split("--", 1)
+        resolver.validate_safe_id(source, "control handoff source")
+        resolver.validate_safe_id(target, "control handoff target")
+        if (
+                not isinstance(requirements, list)
+                or not 1 <= len(requirements) <= len(CONTROL_REQUIREMENTS)
+                or len(requirements) != len(set(requirements))
+                or requirements != sorted(requirements)
+                or any(item not in CONTROL_REQUIREMENTS for item in requirements)):
+            raise ContextPlanError(
+                "control handoff %s requirements are invalid or not sorted" % edge_id
+            )
+        source_binding = bindings["bindings"].get(source)
+        if not isinstance(source_binding, dict):
+            raise ContextPlanError(
+                "control handoff source is not bound: %s" % source
+            )
+        source_requirements = source_binding.get("control_requirements")
+        if (
+                not isinstance(source_requirements, list)
+                or not 1 <= len(source_requirements) <= len(CONTROL_REQUIREMENTS)
+                or len(source_requirements) != len(set(source_requirements))
+                or source_requirements != sorted(source_requirements)
+                or any(
+                    item not in CONTROL_REQUIREMENTS
+                    for item in source_requirements
+                )
+                or not set(requirements) <= set(source_requirements)):
+            raise ContextPlanError(
+                "control handoff %s exceeds source skill requirements" % edge_id
+            )
+        result[edge_id] = list(requirements)
+    return result
+
+
 def _load_contract(bundle_root, skill):
     resolver.validate_safe_id(skill, "skill")
     index, index_raw = _load_json(bundle_root, INDEX_REF, "skill contract index")
@@ -309,7 +379,7 @@ def _load_contract(bundle_root, skill):
         {
             "$schema", "schema_version", "contract_id", "identity", "routing_contract",
             "input_contract", "output_contract", "completion_contract", "handoff_contract",
-            "context_hints", "provenance",
+            "control_requirements", "context_hints", "provenance",
         },
         "skill machine contract",
     )
@@ -340,6 +410,7 @@ def _load_contract(bundle_root, skill):
     if identity["discipline"] not in resolver.COMMANDS | {"protocol"}:
         raise ContextPlanError("skill machine contract discipline is unsupported")
     _validate_machine_projection(contract)
+    control_requirements = _validate_control_requirements(contract)
 
     hints = contract["context_hints"]
     _exact(hints, {"bundle_references", "project_paths"}, "skill machine contract.context_hints")
@@ -347,9 +418,11 @@ def _load_contract(bundle_root, skill):
             hints["project_paths"], list):
         raise ContextPlanError("skill machine contract context hints must be arrays")
     provenance = contract["provenance"]
+    provenance_fields = {"generator", "system_catalog", "shared_contract"}
+    if control_requirements:
+        provenance_fields.add("control_bindings")
     _exact(
-        provenance, {"generator", "system_catalog", "shared_contract"},
-        "skill machine contract.provenance",
+        provenance, provenance_fields, "skill machine contract.provenance",
     )
     if provenance["generator"] != "generate-skill-contracts-v1":
         raise ContextPlanError("skill machine contract generator is unsupported")
@@ -362,6 +435,21 @@ def _load_contract(bundle_root, skill):
     if {"path": contract_shared["path"], "sha256": contract_shared["sha256"]} != index[
             "shared_contract"]:
         raise ContextPlanError("contract and index shared-contract provenance differ")
+    if control_requirements:
+        control_bindings = provenance["control_bindings"]
+        _exact(
+            control_bindings, {"path", "sha256"},
+            "contract control bindings",
+        )
+        resolver.validate_relative_path(
+            control_bindings["path"], "contract control bindings path"
+        )
+        resolver.validate_sha(
+            control_bindings["sha256"], "contract control bindings hash"
+        )
+        if control_bindings["path"] != CONTROL_BINDINGS_REF:
+            raise ContextPlanError("contract control bindings provenance is unsupported")
+    _validate_live_control_binding(bundle_root, contract)
 
     _verify_live_ref(bundle_root, index["contract_schema"], "contract schema")
     _verify_live_ref(bundle_root, index["shared_contract"], "shared contract")
@@ -535,6 +623,52 @@ def _auditor_spec(bundle_root, skill):
     return matches[0] if matches else None
 
 
+def _validate_live_control_binding(bundle_root, contract):
+    """Close a bound contract against the live SSOT without injecting context."""
+    requirements = _validate_control_requirements(contract)
+    if not requirements:
+        return
+    provenance = contract["provenance"]["control_bindings"]
+    binding_raw = _verify_live_ref(
+        bundle_root,
+        {"path": provenance["path"], "sha256": provenance["sha256"]},
+        "contract control bindings",
+    )
+    try:
+        bindings = resolver.strict_json_loads(
+            binding_raw.decode("utf-8"), "control bindings"
+        )
+    except UnicodeDecodeError as exc:
+        raise ContextPlanError("control bindings must be UTF-8") from exc
+    resolver.exact_object(
+        bindings,
+        {
+            "$schema", "schema_version", "authority", "catalog_ref",
+            "control_artifact_schema", "bindings",
+        },
+        {"handoff_requirements"},
+        "control bindings",
+    )
+    if (
+            bindings["$schema"] != "./control-bindings.schema.json"
+            or bindings["schema_version"] != "1.0"
+            or bindings["authority"] != "cross-discipline-control-bindings"
+            or bindings["catalog_ref"] != CATALOG_REF
+            or bindings["control_artifact_schema"] != CONTROL_ARTIFACT_SCHEMA_REF
+            or not isinstance(bindings["bindings"], dict)):
+        raise ContextPlanError("control bindings identity is unsupported")
+    _validate_control_handoff_requirements(bindings)
+    skill = contract["identity"]["name"]
+    binding = bindings["bindings"].get(skill)
+    if not isinstance(binding, dict):
+        raise ContextPlanError("bound skill is absent from live control bindings")
+    _exact(binding, {"skill_path", "control_requirements"}, "control binding")
+    if (
+            binding["skill_path"] != contract["identity"]["path"]
+            or binding["control_requirements"] != requirements):
+        raise ContextPlanError("live control binding differs from machine contract")
+
+
 def _condition_applies(candidate, distribution_profile):
     condition = candidate.get("condition_code")
     if condition is None:
@@ -574,7 +708,6 @@ def _planned_bundle_candidates(
     for candidate in _bundle_reference_candidates(
             bundle_root, contract, observed_at, auditor=auditor):
         _merge_candidate(candidates, candidate)
-
     shards = []
     if command == "auto" and not post_route:
         shards = ["references/auto-routing/%s.md" % _primary_discipline(contract)]

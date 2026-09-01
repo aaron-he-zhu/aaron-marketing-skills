@@ -242,7 +242,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "ad/orchestrate/ad-test-designer/SKILL.md:90",
+      "condition_source": "ad/orchestrate/ad-test-designer/SKILL.md:92",
       "condition_text": "Primary: ad-creative-builder after the decision owner approves a direction, or paid-measurement-loop to read an approved shipped change over a fixed window. If the action rule or owner is missing, stop with decision: UNDECIDED; do not silently convert statistical flags into an action.",
       "documentation_required": true,
       "exception": null,
@@ -271,7 +271,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "ad/orchestrate/ad-test-designer/SKILL.md:90",
+      "condition_source": "ad/orchestrate/ad-test-designer/SKILL.md:92",
       "condition_text": "Primary: ad-creative-builder after the decision owner approves a direction, or paid-measurement-loop to read an approved shipped change over a fixed window. If the action rule or owner is missing, stop with decision: UNDECIDED; do not silently convert statistical flags into an action.",
       "documentation_required": true,
       "exception": null,
@@ -292,15 +292,18 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "artifact-binding",
+        "evidence-observation",
         "failure-evidence",
-        "handoff-summary"
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "paid-measurement-loop",
       "type": "sequential"
     },
     {
       "condition_code": "governance",
-      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:85",
+      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:86",
       "condition_text": "If 3+ advocate rows are pending as pending proposals: channel-registry — promote them into advocate-roster.md so the gate has a fact base.",
       "documentation_required": true,
       "exception": null,
@@ -331,7 +334,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:86",
+      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:87",
       "condition_text": "If the roster needs recruiting first: outreach-manager — run the 1:1 invite and follow-up mechanics, then return with opt-in evidence.",
       "documentation_required": true,
       "exception": null,
@@ -361,7 +364,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:84",
+      "condition_source": "social/craft/advocacy-program-designer/SKILL.md:85",
       "condition_text": "Primary: social-quality-auditor — run the pre-publish gate on the program and its first kit (ECHO C2/H1 exposure) before anyone posts.",
       "documentation_required": true,
       "exception": null,
@@ -391,7 +394,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:97",
+      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:100",
       "condition_text": "Alternates: report-generator once the ratios are in, or ad-account-auditor if the reconciliation surfaces a point-in-time integrity problem (broken tracking, systemic double-count) that needs the gate.",
       "documentation_required": true,
       "exception": {
@@ -424,7 +427,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:97",
+      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:100",
       "condition_text": "Alternates: report-generator once the ratios are in, or ad-account-auditor if the reconciliation surfaces a point-in-time integrity problem (broken tracking, systemic double-count) that needs the gate.",
       "documentation_required": true,
       "exception": null,
@@ -453,7 +456,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:95",
+      "condition_source": "ad/scale/attribution-reconciler/SKILL.md:98",
       "condition_text": "Primary: roi-calculator — turn the de-duped, normalized counts into ROAS/CPA/ROI.",
       "documentation_required": true,
       "exception": null,
@@ -570,7 +573,7 @@
     {
       "condition_code": "conditional",
       "condition_source": "influencer/scout/audience-mapper/SKILL.md:114",
-      "condition_text": "After a shortlist exists: fit-scorer — score candidates on Suitability and run the STAR-S2/STAR-S6 vetoes (this skill does not score).",
+      "condition_text": "After an evidence-backed shortlist exists: fit-scorer — produce the typed S1–S10 read and potential S2/S6 control evidence. The downstream STAR audit gate alone applies S2/S6/T3 gates, caps, and verdicts; after Fit, follow its documented campaign-planning path before any outreach readiness check.",
       "documentation_required": true,
       "exception": null,
       "from": "audience-mapper",
@@ -599,7 +602,7 @@
     {
       "condition_code": "primary",
       "condition_source": "influencer/scout/audience-mapper/SKILL.md:112",
-      "condition_text": "Primary: influencer-discovery — once the selection criteria (audience mode) or the voice tiers + red lines (niche mode) are written and promoted, find and shortlist specific creators against them.",
+      "condition_text": "Primary: influencer-discovery — once the selection criteria (audience mode) or the voice tiers + red lines (niche mode) are complete inline, find and shortlist specific creators against them; persistence is optional and does not gate the handoff.",
       "documentation_required": true,
       "exception": null,
       "from": "audience-mapper",
@@ -887,7 +890,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "influencer/target/brief-generator/SKILL.md:99",
+      "condition_source": "influencer/target/brief-generator/SKILL.md:101",
       "condition_text": "Primary: budget-optimizer - Once the brief defines deliverables, set how spend is split across creators and platforms.",
       "documentation_required": true,
       "exception": null,
@@ -915,7 +918,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "influencer/target/brief-generator/SKILL.md:101",
+      "condition_source": "influencer/target/brief-generator/SKILL.md:103",
       "condition_text": "campaign-planner - Re-plan campaign scope if the brief surfaces new deliverable needs.",
       "documentation_required": true,
       "exception": null,
@@ -943,9 +946,9 @@
       "type": "conditional"
     },
     {
-      "condition_code": "unclassified",
-      "condition_source": "influencer/target/brief-generator/SKILL.md:102",
-      "condition_text": "outreach-manager - Send the finished brief to selected creators.",
+      "condition_code": "conditional",
+      "condition_source": "influencer/target/brief-generator/SKILL.md:104",
+      "condition_text": "outreach-manager - prepare and, only after its exact single-touch authorization/preflight, deliver the finished brief to selected creators.",
       "documentation_required": true,
       "exception": null,
       "from": "brief-generator",
@@ -965,15 +968,16 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "condition-evidence",
         "handoff-summary"
       ],
       "to": "outreach-manager",
       "type": "sequential"
     },
     {
-      "condition_code": "conditional",
-      "condition_source": "influencer/target/budget-optimizer/SKILL.md:141",
-      "condition_text": "campaign-planner — if the budget exposed a gap in the underlying campaign plan.",
+      "condition_code": "primary",
+      "condition_source": "influencer/target/budget-optimizer/SKILL.md:121",
+      "condition_text": "Primary: campaign-planner — when no approved execution-ready campaign plan exists, lock objectives, deliverables, rights, measurement, and decision rules before execution.",
       "documentation_required": true,
       "exception": null,
       "from": "budget-optimizer",
@@ -993,16 +997,15 @@
         "target-not-visited"
       ],
       "required_inputs": [
-        "condition-evidence",
         "handoff-summary"
       ],
       "to": "campaign-planner",
       "type": "conditional"
     },
     {
-      "condition_code": "conditional",
-      "condition_source": "influencer/target/budget-optimizer/SKILL.md:140",
-      "condition_text": "influencer-discovery — if you need to source candidates that fit each tier's per-influencer budget first.",
+      "condition_code": "alternate",
+      "condition_source": "influencer/target/budget-optimizer/SKILL.md:125",
+      "condition_text": "influencer-discovery — when the approved plan exists but a sourced shortlist does not; continue through discovery's documented typed-Fit handoff before treating any creator as selected.",
       "documentation_required": true,
       "exception": {
         "code": "documented-bounded-reentry",
@@ -1025,7 +1028,6 @@
         "target-not-visited"
       ],
       "required_inputs": [
-        "condition-evidence",
         "failure-evidence",
         "handoff-summary"
       ],
@@ -1033,9 +1035,9 @@
       "type": "reentry"
     },
     {
-      "condition_code": "primary",
-      "condition_source": "influencer/target/budget-optimizer/SKILL.md:136",
-      "condition_text": "Primary: outreach-manager — once the allocation is funded and the tier mix is locked, move to recruiting the influencers it pays for.",
+      "condition_code": "conditional",
+      "condition_source": "influencer/target/budget-optimizer/SKILL.md:126",
+      "condition_text": "outreach-manager — only when the campaign plan is approved, creators are selected after Fit, and contact/consent/channel readiness is documented. The handoff prepares outreach; it does not authorize a send.",
       "documentation_required": true,
       "exception": null,
       "from": "budget-optimizer",
@@ -1055,6 +1057,7 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "condition-evidence",
         "handoff-summary"
       ],
       "to": "outreach-manager",
@@ -1124,7 +1127,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "ad/research/campaign-architect/SKILL.md:82",
+      "condition_source": "ad/research/campaign-architect/SKILL.md:83",
       "condition_text": "Primary: ad-account-auditor — score the full RQS and enforce the ROAS veto items.",
       "documentation_required": true,
       "exception": null,
@@ -1154,7 +1157,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "ad/research/campaign-architect/SKILL.md:83",
+      "condition_source": "ad/research/campaign-architect/SKILL.md:84",
       "condition_text": "If the structure is approved and creatives are the next gap: ad-creative-builder — build the ad/creative set for the approved structure.",
       "documentation_required": true,
       "exception": null,

@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 159,
+          "end_char": 70,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the per-channel actual-vs-target table is complete with every figure labeled Measured / User-provided / Estimated and the UTM-attributed column marked as truth"
+        "text": "every required current-manifest action has a matching terminal receipt"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 280,
+          "end_char": 158,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
-          "start_char": 161
+          "start_char": 72
         },
-        "text": "one 5-Whys chain exists for the single largest miss and every channel carries a keep / kill / change call with a reason"
+        "text": "the measurement contract/window and actual-vs-target evidence are complete and labeled"
       },
       {
         "clause_id": "done-03",
@@ -38,22 +38,52 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 515,
+          "end_char": 183,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
-          "start_char": 282
+          "start_char": 160
         },
-        "text": "3-5 learning entries are drafted and the outcome snapshot is submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` (or the retro is marked NEEDS_INPUT on missing targets)."
+        "text": "one 5-Whys chain exists"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 239,
+          "path": "launch/prove/launch-retro-analyzer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
+          "span_basis": "field-text",
+          "start_char": 185
+        },
+        "text": "every channel carries a reasoned keep/kill/change call"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 425,
+          "path": "launch/prove/launch-retro-analyzer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
+          "span_basis": "field-text",
+          "start_char": 241
+        },
+        "text": "and 3-5 learnings plus the bound outcome proposal are delivered. Missing receipts, targets, or window evidence produce `retro_status: PROVISIONAL | NEEDS_INPUT`, never a closed launch."
       }
     ],
-    "done_when": "the per-channel actual-vs-target table is complete with every figure labeled Measured / User-provided / Estimated and the UTM-attributed column marked as truth; one 5-Whys chain exists for the single largest miss and every channel carries a keep / kill / change call with a reason; 3-5 learning entries are drafted and the outcome snapshot is submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` (or the retro is marked NEEDS_INPUT on missing targets).",
+    "done_when": "every required current-manifest action has a matching terminal receipt; the measurement contract/window and actual-vs-target evidence are complete and labeled; one 5-Whys chain exists; every channel carries a reasoned keep/kill/change call; and 3-5 learnings plus the bound outcome proposal are delivered. Missing receipts, targets, or window evidence produce `retro_status: PROVISIONAL | NEEDS_INPUT`, never a closed launch.",
     "extraction_status": "classified",
     "source": {
       "path": "launch/prove/launch-retro-analyzer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16"
+      "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba"
     }
   },
   "context_hints": {
@@ -62,7 +92,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 40
       },
       {
@@ -71,6 +101,13 @@
         "requirement": "optional",
         "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 44
+      },
+      {
+        "path": "launch/assemble/launch-asset-packager/references/action-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bfd006baaad6458795c334d1ba61d66123ab8de6ee81c341d3b9e7efe0376bdd",
+        "source_line": 46
       },
       {
         "path": "references/ramp-benchmark.md",
@@ -83,13 +120,20 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 36
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:launch-retro-analyzer",
+  "control_requirements": [
+    "action-receipt",
+    "artifact-binding",
+    "cycle-retro",
+    "evidence-observation",
+    "measurement-contract"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -102,7 +146,7 @@
           "end_char": 158,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -120,7 +164,7 @@
           "end_char": 333,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
           "start_char": 159
         },
@@ -138,7 +182,7 @@
           "end_char": 532,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
           "start_char": 334
         },
@@ -156,7 +200,7 @@
           "end_char": 911,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
           "start_char": 534
         },
@@ -169,7 +213,7 @@
     "summary_ref": {
       "path": "launch/prove/launch-retro-analyzer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16"
+      "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -184,26 +228,26 @@
     "name": "launch-retro-analyzer",
     "path": "launch/prove/launch-retro-analyzer/SKILL.md",
     "phase": "prove",
-    "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
-    "version": "20.0.0"
+    "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<launch / product> [window: D1|W1|M1] [targets] [analytics export]",
     "clauses": [
       {
         "clause_id": "read-01",
-        "extraction_status": "unclassified",
+        "extraction_status": "partially-classified",
         "kind": "unclassified",
-        "requirement": "unclassified",
+        "requirement": "required",
         "source": {
-          "end_char": 23,
+          "end_char": 57,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "predeclared KPI targets"
+        "text": "the current manifest version/hash and required action IDs"
       },
       {
         "clause_id": "read-02",
@@ -211,14 +255,14 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 93,
+          "end_char": 83,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
-          "start_char": 25
+          "start_char": 59
         },
-        "text": "accepted launch type/stage/date and prior lifecycle-profile pointers"
+        "text": "matching action receipts"
       },
       {
         "clause_id": "read-03",
@@ -226,29 +270,29 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 115,
+          "end_char": 137,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
-          "start_char": 95
+          "start_char": 85
         },
-        "text": "T-0 to T+30 tracking"
+        "text": "the predeclared measurement contract and KPI targets"
       },
       {
         "clause_id": "read-04",
-        "extraction_status": "partially-classified",
-        "kind": "evidence-input",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 141,
+          "end_char": 170,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
-          "start_char": 117
+          "start_char": 139
         },
-        "text": "own attributed analytics"
+        "text": "accepted launch type/stage/date"
       },
       {
         "clause_id": "read-05",
@@ -256,22 +300,52 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 195,
+          "end_char": 192,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
-          "start_char": 143
+          "start_char": 172
+        },
+        "text": "T-0 to T+30 tracking"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 218,
+          "path": "launch/prove/launch-retro-analyzer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
+          "span_basis": "field-text",
+          "start_char": 194
+        },
+        "text": "own attributed analytics"
+      },
+      {
+        "clause_id": "read-07",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 272,
+          "path": "launch/prove/launch-retro-analyzer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
+          "span_basis": "field-text",
+          "start_char": 220
         },
         "text": "and separately labeled platform-reported dashboards."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "predeclared KPI targets; accepted launch type/stage/date and prior lifecycle-profile pointers; T-0 to T+30 tracking; own attributed analytics; and separately labeled platform-reported dashboards.",
+    "reads": "the current manifest version/hash and required action IDs; matching action receipts; the predeclared measurement contract and KPI targets; accepted launch type/stage/date; T-0 to T+30 tracking; own attributed analytics; and separately labeled platform-reported dashboards.",
     "source": {
       "path": "launch/prove/launch-retro-analyzer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16"
+      "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba"
     }
   },
   "output_contract": {
@@ -286,7 +360,7 @@
           "end_char": 84,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -302,7 +376,7 @@
           "end_char": 316,
           "path": "launch/prove/launch-retro-analyzer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16",
+          "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba",
           "span_basis": "field-text",
           "start_char": 86
         },
@@ -313,23 +387,27 @@
     "source": {
       "path": "launch/prove/launch-retro-analyzer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16"
+      "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba"
     },
-    "summary": "a D1/W1/M1 launch retrospective — a per-channel actual-vs-target table (UTM-attributed truth column, platform self-reported reference column, every figure labeled Measured / User-provided / Estimated), a 5-Whys chain on the single largest miss, keep / kill / change decisions per channel with one-line reasons, 3-5 learning entries for the next launch, an outcome snapshot submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py`, and the standard handoff summary.",
+    "summary": "a D1/W1/M1 launch retrospective bound to the current manifest, complete action-receipt set, and predeclared measurement contract — a per-channel actual-vs-target table, one 5-Whys chain, keep / kill / change decisions, 3-5 learning entries, an outcome proposal, and the standard handoff summary. Missing receipts or an incomplete measurement window keep the retro provisional.",
     "summary_source": "expected-output",
     "writes": "the user-facing retro + a reusable summary to `memory/launch/launch-retro-analyzer/`; the outcome snapshot to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` for launch-registry to attach to the launch dossier — never `memory/launch-registry/` records directly."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -338,7 +416,7 @@
     "source": {
       "path": "launch/prove/launch-retro-analyzer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "387543240c0af702a1bcdf63545d89ad6bf0baa54037e3016da40e60df047e16"
+      "sha256": "a5e3b411893af555a2454c29caf2b12fef9a6abd5f8de56ead0e93555f4070ba"
     },
     "trigger_phrases": [
       "compare launch results vs targets by channel",

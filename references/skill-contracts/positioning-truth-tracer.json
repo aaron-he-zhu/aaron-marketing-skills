@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 129,
+          "end_char": 90,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the onlyness statement holds against the named alternatives and matches the recorded stage (no GA-tense claim for a beta product)"
+        "text": "the onlyness statement holds against the named alternatives and matches the recorded stage"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 234,
+          "end_char": 191,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
-          "start_char": 131
+          "start_char": 92
         },
-        "text": "every differentiator is Measured / User-provided or marked `[needs source]` and submitted to candidates"
+        "text": "every differentiator is source- and time-bound, Measured / User-provided or marked `[needs source]`"
       },
       {
         "clause_id": "done-03",
@@ -38,22 +38,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 341,
+          "end_char": 264,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
-          "start_char": 236
+          "start_char": 193
+        },
+        "text": "stale or conflicting differentiators stay outside confirmed canon truth"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 371,
+          "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
+          "span_basis": "field-text",
+          "start_char": 266
         },
         "text": "and the stage-truth reconciliation note names any drift between the canvas and `memory/launch-registry/`."
       }
     ],
-    "done_when": "the onlyness statement holds against the named alternatives and matches the recorded stage (no GA-tense claim for a beta product); every differentiator is Measured / User-provided or marked `[needs source]` and submitted to candidates; and the stage-truth reconciliation note names any drift between the canvas and `memory/launch-registry/`.",
+    "done_when": "the onlyness statement holds against the named alternatives and matches the recorded stage; every differentiator is source- and time-bound, Measured / User-provided or marked `[needs source]`; stale or conflicting differentiators stay outside confirmed canon truth; and the stage-truth reconciliation note names any drift between the canvas and `memory/launch-registry/`.",
     "extraction_status": "classified",
     "source": {
       "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81"
+      "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403"
     }
   },
   "context_hints": {
@@ -62,7 +77,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -73,10 +88,17 @@
         "source_line": 42
       },
       {
+        "path": "narrative/evaluate/message-test-designer/references/stimulus-binding.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "4acf5b2b7e15cfeaff6a9fda2de08b14a92c11a80499af5a2216a54baefd878f",
+        "source_line": 46
+      },
+      {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
       },
       {
@@ -123,6 +145,9 @@
     ]
   },
   "contract_id": "skill:positioning-truth-tracer",
+  "control_requirements": [
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -135,7 +160,7 @@
           "end_char": 182,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -153,7 +178,7 @@
           "end_char": 410,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 183
         },
@@ -171,7 +196,7 @@
           "end_char": 613,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 411
         },
@@ -189,7 +214,7 @@
           "end_char": 1019,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 615
         },
@@ -202,7 +227,7 @@
     "summary_ref": {
       "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81"
+      "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -217,8 +242,8 @@
     "name": "positioning-truth-tracer",
     "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
     "phase": "trace",
-    "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
-    "version": "20.0.0"
+    "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / brand> [positioning canvas path] [stage: draft|alpha|beta|GA]",
@@ -232,7 +257,7 @@
           "end_char": 150,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -247,7 +272,7 @@
           "end_char": 240,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 152
         },
@@ -262,7 +287,7 @@
           "end_char": 306,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 242
         },
@@ -277,7 +302,7 @@
           "end_char": 441,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 308
         },
@@ -289,7 +314,7 @@
     "source": {
       "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81"
+      "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403"
     }
   },
   "output_contract": {
@@ -304,7 +329,7 @@
           "end_char": 77,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -320,7 +345,7 @@
           "end_char": 286,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 79
         },
@@ -336,7 +361,7 @@
           "end_char": 588,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 288
         },
@@ -352,7 +377,7 @@
           "end_char": 731,
           "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81",
+          "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403",
           "span_basis": "field-text",
           "start_char": 590
         },
@@ -363,23 +388,27 @@
     "source": {
       "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81"
+      "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403"
     },
-    "summary": "a differentiation truth set — the defensible differentiators (each Measured / User-provided / `[needs source]`), the onlyness statement re-tested against named alternatives *and* shippable reality, a stage-truth reconciliation note (canvas tense vs recorded stage), the `[needs source]` claims routed to candidates, and the standard handoff summary.",
+    "summary": "a differentiation truth set — the defensible differentiators, each with claim ID, stage scope, source ref, observation time/window, evidence label, conflict/missing state; the onlyness statement re-tested against named alternatives *and* shippable reality; a stage-truth reconciliation note; the `[needs source]` claims routed to candidates; and the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "the differentiation truth set to `memory/narrative/positioning-truth-tracer/`; every unverifiable or comparative differentiator marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` (this skill never adjudicates); a durable positioning statement worth seeding canon to `memory/events/narrative.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) is the sole writer of `memory/narrative-registry/` canonical files; a stage/date fact it surfaces to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` only."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -388,7 +417,7 @@
     "source": {
       "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "b32f13a3e4700899c5bc2c5932417d5865a3715b5ec404242be1bc067a918c81"
+      "sha256": "8b9d67161c6bb008ba8c5a43d6cf7b651ea780824614ec716cfb2b2177373403"
     },
     "trigger_phrases": [
       "check our positioning against what we can actually ship",

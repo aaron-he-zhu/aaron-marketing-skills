@@ -4,14 +4,14 @@ slug: on-page-seo-checker
 displayName: "On-Page SEO Checker · 页面SEO检查"
 summary: "页面SEO检查/排名诊断"
 description: 'Use when the user asks to "audit on-page SEO" or "diagnose why a single page dropped"; scores titles, meta, header structure, keyword placement, links, and images with prioritized fixes. Not for E-E-A-T / publish-readiness scoring — use content-quality-auditor; not for crawl / CWV / indexing — use technical-seo-checker. 页面SEO审计/排名诊断'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when auditing a page's on-page SEO health, checking heading structure, keyword placement, image optimization, or content quality signals."
 argument-hint: "<URL> [keyword]"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # On-Page SEO Checker

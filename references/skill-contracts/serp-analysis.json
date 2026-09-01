@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 101,
+          "end_char": 158,
           "path": "seo-geo/survey/serp-analysis/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4",
+          "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the SERP composition and top-result ranking factors are documented from a verified live/provided SERP"
+        "text": "the SERP composition and top-result ranking factors are documented from a source-, time-, locale-, language-, device-, and engine-bound live/provided snapshot"
       },
       {
         "clause_id": "done-02",
@@ -23,12 +23,12 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 141,
+          "end_char": 198,
           "path": "seo-geo/survey/serp-analysis/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4",
+          "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4",
           "span_basis": "field-text",
-          "start_char": 103
+          "start_char": 160
         },
         "text": "dominant intent is named with evidence"
       },
@@ -38,22 +38,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 247,
+          "end_char": 224,
           "path": "seo-geo/survey/serp-analysis/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4",
+          "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4",
           "span_basis": "field-text",
-          "start_char": 143
+          "start_char": 200
         },
-        "text": "and a True Difficulty score (0-100, weighted inputs per the template) plus per-site-stage fit is stated."
+        "text": "conflicts remain visible"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 363,
+          "path": "seo-geo/survey/serp-analysis/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4",
+          "span_basis": "field-text",
+          "start_char": 226
+        },
+        "text": "and a True Difficulty score plus per-site-stage fit is stated only at complete applicable coverage, otherwise `NEEDS_REFRESH/NOT_SCORED`."
       }
     ],
-    "done_when": "the SERP composition and top-result ranking factors are documented from a verified live/provided SERP; dominant intent is named with evidence; and a True Difficulty score (0-100, weighted inputs per the template) plus per-site-stage fit is stated.",
+    "done_when": "the SERP composition and top-result ranking factors are documented from a source-, time-, locale-, language-, device-, and engine-bound live/provided snapshot; dominant intent is named with evidence; conflicts remain visible; and a True Difficulty score plus per-site-stage fit is stated only at complete applicable coverage, otherwise `NEEDS_REFRESH/NOT_SCORED`.",
     "extraction_status": "classified",
     "source": {
       "path": "seo-geo/survey/serp-analysis/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4"
+      "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4"
     }
   },
   "context_hints": {
@@ -62,7 +77,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 32
       },
       {
@@ -83,7 +98,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 28
       },
       {
@@ -92,6 +107,13 @@
         "requirement": "optional",
         "sha256": "755816582373b846b95783c125c6d9cd57d5c20bbf4af97bc00aecdbaa557c56",
         "source_line": 34
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/evidence-and-cycle-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "05461e0f16aa0a52f7897f8fc51d3a7907f85f8ae73a21500972a67419fe22f3",
+        "source_line": 44
       },
       {
         "path": "seo-geo/survey/serp-analysis/references/analysis-templates.md",
@@ -112,12 +134,15 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "13ea2d135bd0067df01e4ccc33190fece5d1ebd42e745c2421ed867d8d85cf15",
-        "source_line": 106
+        "source_line": 107
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:serp-analysis",
+  "control_requirements": [
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -130,7 +155,7 @@
           "end_char": 67,
           "path": "seo-geo/survey/serp-analysis/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4",
+          "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -145,7 +170,7 @@
     "summary_ref": {
       "path": "seo-geo/survey/serp-analysis/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4"
+      "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -158,8 +183,8 @@
     "name": "serp-analysis",
     "path": "seo-geo/survey/serp-analysis/SKILL.md",
     "phase": "survey",
-    "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4",
-    "version": "20.0.0"
+    "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<keyword or query>",
@@ -170,22 +195,22 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 102,
+          "end_char": 162,
           "path": "seo-geo/survey/serp-analysis/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4",
+          "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "target keyword(s), location/language, device, any SERP screenshots or top-10 URLs, and search context."
+        "text": "target keyword(s), location/language, device, engine/answer surface, SERP snapshot ref, observation time, any SERP screenshots or top-10 URLs, and search context."
       }
     ],
     "extraction_status": "unclassified",
-    "reads": "target keyword(s), location/language, device, any SERP screenshots or top-10 URLs, and search context.",
+    "reads": "target keyword(s), location/language, device, engine/answer surface, SERP snapshot ref, observation time, any SERP screenshots or top-10 URLs, and search context.",
     "source": {
       "path": "seo-geo/survey/serp-analysis/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4"
+      "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4"
     }
   },
   "output_contract": {
@@ -200,7 +225,7 @@
           "end_char": 44,
           "path": "seo-geo/survey/serp-analysis/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4",
+          "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -211,23 +236,27 @@
     "source": {
       "path": "seo-geo/survey/serp-analysis/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4"
+      "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4"
     },
     "summary": "a prioritized SERP brief plus the standard handoff summary for `memory/research/`.",
     "summary_source": "expected-output",
     "writes": "a user-facing analysis and reusable summary."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -236,7 +265,7 @@
     "source": {
       "path": "seo-geo/survey/serp-analysis/SKILL.md",
       "section": "frontmatter",
-      "sha256": "0f9c4b961355f9e067204d75cc07fa2a68e7558277e0ce4813185bce496faff4"
+      "sha256": "2b23cae5a675bdfe9872b6d21b68b6650b8edc9c8d3561c0423c2b6f097470c4"
     },
     "trigger_phrases": [
       "SERP分析",

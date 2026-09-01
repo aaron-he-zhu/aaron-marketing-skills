@@ -114,7 +114,9 @@ BOUNDARY = """\
 > runtime scripts, connector sidecars or native connectors, persistence and
 > writes, working memory, registries, runtime controllers, and workflow or audit
 > loops are not packaged. Treat runtime instructions as capability-gated guidance;
-> do not claim execution or persistence. See [PORTABILITY.md](../../PORTABILITY.md).
+> any runtime-dependent artifact is `NOT_VERIFIED`. Do not claim execution,
+> persistence, selected ancestry, a current head, a verified receipt, or
+> permission from static content. See [PORTABILITY.md](../../PORTABILITY.md).
 """
 PORTABILITY = """\
 # Portable Lite Compatibility Boundary
@@ -133,6 +135,11 @@ or execution loops. A source skill may describe one of those richer-host paths;
 in this package that text is guidance only. Do not report a write, connector
 call, deterministic runtime result, persisted audit, or loop execution unless
 the active host independently supplies and verifies that capability.
+
+Any locally drafted control artifact is `NOT_VERIFIED`. Static schema presence
+does not verify selected ancestry or a current head, does not turn an action
+record into a verified receipt, does not grant or consume permission, and does
+not prove that state was persisted. Use a Governed runtime for those claims.
 
 Relative links whose source targets require an omitted runtime are redirected to
 this section. Static links are rewritten to their projected package locations.

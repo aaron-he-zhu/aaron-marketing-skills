@@ -24,6 +24,13 @@
     "identity": {"$ref": "#/$defs/identity"},
     "routing": {"$ref": "#/$defs/routing"},
     "execution": {"$ref": "#/$defs/execution"},
+    "control_requirements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/controlRequirement"}
+    },
     "runtime_reads": {
       "type": "array",
       "maxItems": 64,
@@ -49,6 +56,16 @@
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "semver": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$"},
     "nonEmptyText": {"type": "string", "minLength": 1, "maxLength": 50000},
+    "controlRequirement": {
+      "enum": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ]
+    },
     "fileRef": {
       "type": "object",
       "additionalProperties": false,

@@ -43,6 +43,8 @@ MAX_CONTEXT_MANIFESTS = 256
 MAX_EVENTS = 10_000
 MAX_AUDIT_LOOPS = 256
 MAX_LOOP_VALIDATION_SECONDS = 30
+MAX_CONTROL_ARTIFACT_VALIDATION_SECONDS = 30
+MAX_VALIDATED_ARTIFACTS_PER_BOUNDARY = 128
 MAX_LOOP_CLOSURE_STEPS = 1_024
 MAX_LOOP_CLOSURE_BYTES = 16_000_000
 SAFE_ID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
@@ -107,6 +109,8 @@ INTERNAL_EVENT_TYPES = {
     "run_finished", "run_failed", "run_aborted",
 }
 RESERVED_IDEMPOTENCY_PREFIXES = ("snapshot:", "save:", "loop:", "envelope:", "hook:")
+CONTROL_ARTIFACT_VALIDATOR = "validate-control-artifact"
+CONTROL_ARTIFACT_SCHEMA_REF = "references/control-artifact.schema.json"
 
 
 class RunEventError(ValueError):
@@ -1412,6 +1416,187 @@ def ensure_event_capacity(events, event_type):
         )
 
 
+def _looks_like_control_artifact(raw):
+    try:
+        document = strict_json_loads(raw.decode("utf-8"), "artifact candidate")
+    except (UnicodeDecodeError, RunEventError):
+        return False
+    return (
+        isinstance(document, dict)
+        and document.get("$schema") == CONTROL_ARTIFACT_SCHEMA_REF
+    )
+
+
+def validate_artifact_validation_event(root, request, control_session=None):
+    """Verify the bytes behind an ``artifact_validated`` event before append."""
+    if request["event_type"] != "artifact_validated":
+        return None
+    reference = request["references"][0]
+    _path, raw, metadata = _stable_project_read(
+        root, reference["ref"], MAX_REFERENCE_BYTES, "validated artifact",
+    )
+    if hashlib.sha256(raw).hexdigest() != reference["sha256"]:
+        raise RunEventError(
+            "referenced artifact hash mismatch: %s" % reference["ref"]
+        )
+    validator_id = request["dimensions"]["validator"]
+    if _looks_like_control_artifact(raw) and validator_id != CONTROL_ARTIFACT_VALIDATOR:
+        raise RunEventError(
+            "control artifact schema requires validator=%s"
+            % CONTROL_ARTIFACT_VALIDATOR
+        )
+    if validator_id == CONTROL_ARTIFACT_VALIDATOR:
+        return validate_control_artifact_reference(
+            root, reference["ref"], reference["sha256"], control_session,
+        )
+    return metadata.st_size
+
+
+def _validated_control_record(root, event, record_cache=None):
+    """Read the exact control bytes already attested by ``event``."""
+    if (
+            event["event_type"] != "artifact_validated"
+            or event["dimensions"].get("validator") != CONTROL_ARTIFACT_VALIDATOR):
+        return None
+    reference = event["references"][0]
+    identity = (reference["ref"], reference["sha256"])
+    if record_cache is not None and identity in record_cache:
+        return record_cache[identity]
+    _path, raw, _metadata = _stable_project_read(
+        root, reference["ref"], MAX_DOCUMENT_BYTES, "control artifact",
+    )
+    if hashlib.sha256(raw).hexdigest() != reference["sha256"]:
+        raise RunEventError(
+            "referenced control artifact hash mismatch: %s" % reference["ref"]
+        )
+    try:
+        record = strict_json_loads(raw.decode("utf-8"), "control artifact")
+    except UnicodeDecodeError as exc:
+        raise RunEventError("control artifact must be UTF-8") from exc
+    if (
+            not isinstance(record, dict)
+            or record.get("$schema") != CONTROL_ARTIFACT_SCHEMA_REF
+            or record.get("schema_version") != SCHEMA_VERSION):
+        raise RunEventError("validated control artifact identity is invalid")
+    if record_cache is not None:
+        record_cache[identity] = record
+    return record
+
+
+def _receipt_intent_identity(record):
+    if not isinstance(record, dict) or record.get("kind") != "action-receipt":
+        return None
+    payload = record.get("payload", {})
+    return ("action-intent", payload.get("intent_id"))
+
+
+def ensure_single_use_receipt_available(
+        root, events, request, proposed_record, control_session=None,
+        record_cache=None):
+    """Reject a second receipt for one logical single-use intent ancestry.
+
+    The run coordinator and stream lock make this check-plus-append atomic.
+    Copying or renaming the bound intent does not mint a new logical intent.
+    Sibling branches intentionally do not consume one another; an exact retry
+    is handled by the event idempotency check before reaching a new append.
+    """
+    intent_identity = _receipt_intent_identity(proposed_record)
+    if intent_identity is None:
+        return
+    session = control_session or _control_validation_session()
+    cache = record_cache if record_cache is not None else {}
+    for event in event_ancestry(events, request["parent_event_id"]):
+        if (
+                event["event_type"] != "artifact_validated"
+                or event["dimensions"].get("validator")
+                    != CONTROL_ARTIFACT_VALIDATOR):
+            continue
+        validate_artifact_validation_event(root, event, session)
+        ancestor_record = _validated_control_record(root, event, cache)
+        if _receipt_intent_identity(ancestor_record) == intent_identity:
+            raise RunEventError(
+                "single-use action-intent already has a terminal receipt on "
+                "the selected ancestry"
+            )
+
+
+def validate_artifact_validation_events(root, events, selected_event_ids=None):
+    selected = set(selected_event_ids) if selected_event_ids is not None else None
+    candidates = [
+        event for event in events
+        if (
+            event["event_type"] == "artifact_validated"
+            and (selected is None or event["event_id"] in selected)
+        )
+    ]
+    identities = {
+        (
+            event["references"][0]["ref"],
+            event["references"][0]["sha256"],
+            event["dimensions"]["validator"],
+        )
+        for event in candidates
+    }
+    if len(identities) > MAX_VALIDATED_ARTIFACTS_PER_BOUNDARY:
+        raise RunEventError(
+            "artifact replay exceeds the %d-artifact boundary budget"
+            % MAX_VALIDATED_ARTIFACTS_PER_BOUNDARY
+        )
+    session = _control_validation_session()
+    records = {}
+    inspected_bytes = 0
+    seen = set()
+    for event in candidates:
+        identity = (
+            event["references"][0]["ref"],
+            event["references"][0]["sha256"],
+            event["dimensions"]["validator"],
+        )
+        if identity in seen:
+            continue
+        seen.add(identity)
+        inspected_bytes += validate_artifact_validation_event(
+            root, event, session,
+        )
+        if event["dimensions"].get("validator") == CONTROL_ARTIFACT_VALIDATOR:
+            _validated_control_record(root, event, records)
+        if inspected_bytes > MAX_REFERENCE_INSPECTION_BYTES:
+            raise RunEventError(
+                "artifact replay exceeds %d inspected bytes"
+                % MAX_REFERENCE_INSPECTION_BYTES
+            )
+    for event in candidates:
+        record = _validated_control_record(root, event, records)
+        if _receipt_intent_identity(record) is not None:
+            ensure_single_use_receipt_available(
+                root, events, event, record, session, records,
+            )
+    return len(seen)
+
+
+def ensure_artifact_validation_capacity(events, request):
+    if request["event_type"] != "artifact_validated":
+        return
+    identities = {
+        (
+            event["references"][0]["ref"],
+            event["references"][0]["sha256"],
+            event["dimensions"]["validator"],
+        )
+        for event in events if event["event_type"] == "artifact_validated"
+    }
+    reference = request["references"][0]
+    identities.add((
+        reference["ref"], reference["sha256"],
+        request["dimensions"]["validator"],
+    ))
+    if len(identities) > MAX_VALIDATED_ARTIFACTS_PER_BOUNDARY:
+        raise RunEventError(
+            "run cannot exceed the %d-artifact replay boundary"
+            % MAX_VALIDATED_ARTIFACTS_PER_BOUNDARY
+        )
+
+
 def append_locked(root, run_id, handle, events, request, projection_path, allow_hook_retry=False):
     normalized = validate_event_request(request)
     if normalized["run_id"] != run_id:
@@ -1422,6 +1607,7 @@ def append_locked(root, run_id, handle, events, request, projection_path, allow_
         if existing["request_hash"] != request_hash:
             if not allow_hook_retry or not hook_retry_equivalent(existing, normalized):
                 raise RunEventError("idempotency key was already used with different content")
+        validate_artifact_validation_event(root, normalized)
         projected = project_events(run_id, events)
         atomic_write_json(normalized_root(root), projection_path, projected)
         return {"deduplicated": True, "event": existing, "projection": projected}
@@ -1433,6 +1619,21 @@ def append_locked(root, run_id, handle, events, request, projection_path, allow_
     if events and normalized["parent_event_id"] not in {event["event_id"] for event in events}:
         raise RunEventError("parent_event_id must reference an existing event")
     validate_event_transition(normalized, events)
+    ensure_artifact_validation_capacity(events, normalized)
+    control_session = _control_validation_session()
+    validate_artifact_validation_event(root, normalized, control_session)
+    if (
+            normalized["event_type"] == "artifact_validated"
+            and normalized["dimensions"].get("validator")
+                == CONTROL_ARTIFACT_VALIDATOR):
+        record_cache = {}
+        proposed_record = _validated_control_record(
+            root, normalized, record_cache,
+        )
+        ensure_single_use_receipt_available(
+            root, events, normalized, proposed_record,
+            control_session, record_cache,
+        )
     event = dict(normalized)
     event.update({
         "event_id": str(uuid.uuid5(NAMESPACE, run_id + ":" + normalized["idempotency_key"])),
@@ -2016,6 +2217,7 @@ def rebuild_projection(root, run_id):
         events = read_stream(handle, run_id)
         if not events:
             raise RunEventError("cannot project an empty run")
+        validate_artifact_validation_events(root, events)
         state = project_events(run_id, events)
         atomic_write_json(normalized_root(root), projection, state)
         return state
@@ -2385,6 +2587,122 @@ def resolve_project_reference(root, reference, expected_sha, max_bytes=MAX_REFER
     return path, metadata.st_size
 
 
+def validate_non_control_artifact_reference(root, reference, expected_sha):
+    path, raw, metadata = _stable_project_read(
+        root, reference, MAX_REFERENCE_BYTES, "referenced artifact",
+    )
+    if hashlib.sha256(raw).hexdigest() != expected_sha:
+        raise RunEventError("referenced artifact hash mismatch: %s" % reference)
+    if _looks_like_control_artifact(raw):
+        raise RunEventError(
+            "control artifact schema requires validator=%s"
+            % CONTROL_ARTIFACT_VALIDATOR
+        )
+    return path, metadata.st_size
+
+
+def _control_validation_session():
+    return {
+        "deadline": time.monotonic() + MAX_CONTROL_ARTIFACT_VALIDATION_SECONDS,
+        "results": {},
+    }
+
+
+def validate_control_artifact_reference(
+        root, reference, expected_sha, validation_session=None):
+    """Live-validate one exact project-relative control artifact.
+
+    The run event is only an observation that this validator succeeded.  The
+    referenced bytes remain the evidence, so callers must re-run this check at
+    append, checkpoint, and replay boundaries rather than trusting event
+    metadata or a caller-supplied ``validation_status``.
+    """
+    session = validation_session or _control_validation_session()
+    validate_ref(reference, "control artifact ref")
+    validate_sha(expected_sha, "control artifact sha256")
+    root_path = normalized_root(root)
+    cache_key = (str(root_path), reference, expected_sha)
+    if cache_key in session["results"]:
+        return session["results"][cache_key]
+    remaining = session["deadline"] - time.monotonic()
+    if remaining <= 0:
+        raise RunEventError(
+            "control artifact validation exceeded the %d-second boundary budget"
+            % MAX_CONTROL_ARTIFACT_VALIDATION_SECONDS
+        )
+    _path, raw, metadata = _stable_project_read(
+        root_path, reference, MAX_DOCUMENT_BYTES, "control artifact",
+    )
+    actual_sha = hashlib.sha256(raw).hexdigest()
+    if actual_sha != expected_sha:
+        raise RunEventError(
+            "referenced control artifact hash mismatch: %s" % reference
+        )
+    validator = Path(__file__).with_name("validate-control-artifact.py")
+    validator_status = _lstat(
+        validator, "control artifact validator", missing_ok=True,
+    )
+    if (
+            validator_status is None or statmod.S_ISLNK(validator_status.st_mode)
+            or not statmod.S_ISREG(validator_status.st_mode)):
+        raise RunEventError("control artifact validator is unavailable or unsafe")
+    try:
+        result = subprocess.run(
+            [
+                sys.executable, "-I", str(validator), "validate", "-",
+                "--project-root", str(root_path),
+            ],
+            cwd=root_path, input=raw, env={},
+            stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            check=False, timeout=remaining,
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise RunEventError(
+            "control artifact validation timed out within the %d-second boundary budget"
+            % MAX_CONTROL_ARTIFACT_VALIDATION_SECONDS
+        ) from exc
+    except OSError as exc:
+        raise RunEventError(
+            "control artifact validation could not run: %s" % exc
+        ) from exc
+    output_lines = result.stdout.decode(
+        "utf-8", errors="replace",
+    ).splitlines()
+    expected_attestation = re.compile(
+        r"^valid [a-z0-9-]+ sha256:%s$" % re.escape(expected_sha)
+    )
+    if (
+            result.returncode
+            or len(output_lines) != 1
+            or expected_attestation.fullmatch(output_lines[0]) is None):
+        detail = " ".join(output_lines[-3:])[:500]
+        raise RunEventError(
+            "control artifact validation failed: %s"
+            % (detail or "validator did not attest the exact artifact digest")
+        )
+
+    # Re-read after the subprocess inspected all linked bindings.  This catches
+    # in-place mutation or replacement during validation before any event is
+    # appended; subsequent checkpoint/replay checks catch later drift.
+    _verified_path, verified_raw, verified_metadata = _stable_project_read(
+        root_path, reference, MAX_DOCUMENT_BYTES, "control artifact",
+    )
+    stable_fields = (
+        "st_dev", "st_ino", "st_nlink", "st_size", "st_mtime_ns", "st_ctime_ns",
+    )
+    if raw != verified_raw or any(
+            getattr(metadata, field) != getattr(verified_metadata, field)
+            for field in stable_fields):
+        raise RunEventError("control artifact changed during validation: %s" % reference)
+    if time.monotonic() > session["deadline"]:
+        raise RunEventError(
+            "control artifact validation exceeded the %d-second boundary budget"
+            % MAX_CONTROL_ARTIFACT_VALIDATION_SECONDS
+        )
+    session["results"][cache_key] = verified_metadata.st_size
+    return verified_metadata.st_size
+
+
 def verified_json_reference(root, reference, expected_sha, label, limit=MAX_DOCUMENT_BYTES):
     validate_ref(reference, label + " ref")
     path, raw, metadata = _stable_project_read(root, reference, limit, label)
@@ -2495,7 +2813,9 @@ def validate_snapshot_document(root, reference, expected_sha, run_id, turn_id):
     return normalized
 
 
-def validate_save_point_document(root, reference, expected_sha, run_id):
+def validate_save_point_document(
+        root, reference, expected_sha, run_id, events=None,
+        parent_event_id=None, control_session=None):
     path, document, metadata = verified_json_reference(root, reference, expected_sha, "save point")
     normalized = validate_save_point(document)
     if normalized["run_id"] != run_id:
@@ -2508,6 +2828,9 @@ def validate_save_point_document(root, reference, expected_sha, run_id):
     if statmod.S_IMODE(metadata.st_mode) != 0o600:
         raise RunEventError("save point must use private file mode 0600")
     ensure_ignored(root, [path])
+    validate_save_point_artifact_references(
+        root, normalized["artifacts"], events, parent_event_id, control_session,
+    )
     return normalized
 
 
@@ -2574,6 +2897,88 @@ def validate_audit_reference(root, reference):
     return metadata.st_size
 
 
+def validate_save_point_artifact_references(
+        root, artifacts, events=None, parent_event_id=None,
+        control_session=None):
+    """Revalidate save-point artifacts and, when available, their ancestry.
+
+    ``artifact_validated`` is metadata-only evidence.  A checkpoint may claim
+    ``valid`` only when the exact ref/hash/validator tuple appears on its
+    selected ancestry.  Registered control artifacts additionally undergo live
+    content validation on every checkpoint and replay.
+    """
+    selected_events = None
+    if events is not None:
+        selected_events = event_ancestry(events, parent_event_id)
+    session = control_session or _control_validation_session()
+    inspected_bytes = 0
+    for reference in artifacts:
+        if reference["ref"].endswith(("/events.ndjson", "/session.json")):
+            raise RunEventError(
+                "save point artifacts cannot reference mutable runtime files"
+            )
+        if reference["ref"].startswith("memory/audits/"):
+            reference_bytes = validate_audit_reference(root, reference)
+        elif (
+                reference["validation_status"] == "valid"
+                and reference["validator"] == CONTROL_ARTIFACT_VALIDATOR):
+            reference_bytes = validate_control_artifact_reference(
+                root, reference["ref"], reference["sha256"], session,
+            )
+        else:
+            _path, reference_bytes = validate_non_control_artifact_reference(
+                root, reference["ref"], reference["sha256"],
+            )
+        inspected_bytes += reference_bytes
+        if inspected_bytes > MAX_REFERENCE_INSPECTION_BYTES:
+            raise RunEventError(
+                "save point artifact references exceed %d inspected bytes"
+                % MAX_REFERENCE_INSPECTION_BYTES
+            )
+        if (
+                selected_events is not None
+                and not reference["ref"].startswith("memory/audits/")
+                and reference["validation_status"] == "valid"):
+            matches = [
+                event for event in selected_events
+                if (
+                    event["event_type"] == "artifact_validated"
+                    and event["references"][0]["ref"] == reference["ref"]
+                    and event["references"][0]["sha256"] == reference["sha256"]
+                    and event["dimensions"].get("validator") == reference["validator"]
+                )
+            ]
+            if not matches:
+                raise RunEventError(
+                    "validated artifact lacks a matching ancestor artifact_validated event on selected ancestry"
+                )
+    return inspected_bytes
+
+
+def validate_selected_save_point_replay(root, run_id, events, state):
+    """Live-verify the selected save point and its pre-save artifact ancestry."""
+    if state["last_save_point_ref"] is None:
+        return None
+    by_id = {event["event_id"]: event for event in events}
+    selected = [by_id[event_id] for event_id in state["selected_path_event_ids"]]
+    matching = [
+        event for event in selected
+        if (
+            event["event_type"] == "save_point_created"
+            and event["references"][0]["ref"] == state["last_save_point_ref"]
+            and event["references"][0]["sha256"] == state["last_save_point_sha256"]
+        )
+    ]
+    if len(matching) != 1:
+        raise RunEventError(
+            "selected save point lacks one exact selected-branch creation event"
+        )
+    return validate_save_point_document(
+        root, state["last_save_point_ref"], state["last_save_point_sha256"],
+        run_id, events, matching[0]["parent_event_id"],
+    )
+
+
 def existing_artifact_result(root, existing, proposed, projection, expected_kind):
     references = existing.get("references")
     if (
@@ -2590,6 +2995,11 @@ def existing_artifact_result(root, existing, proposed, projection, expected_kind
     ensure_ignored(root, [path])
     if canonical_json(stored) != canonical_json(proposed):
         raise RunEventError("idempotency key was already used with different artifact content")
+    if expected_kind == "save-point":
+        normalized_save_point = validate_save_point(stored)
+        validate_save_point_artifact_references(
+            root, normalized_save_point["artifacts"],
+        )
     return {
         "deduplicated": True,
         "event": existing,
@@ -2742,32 +3152,9 @@ def _write_save_point_under_coordinator(root, run_id, value):
             raise RunEventError(
                 "save point chain_depth must equal the derived automatic-handoff depth"
             )
-        artifact_bytes = 0
-        for reference in normalized["artifacts"]:
-            if reference["ref"].endswith(("/events.ndjson", "/session.json")):
-                raise RunEventError("save point artifacts cannot reference mutable runtime files")
-            if reference["ref"].startswith("memory/audits/"):
-                reference_bytes = validate_audit_reference(root_path, reference)
-            else:
-                _path, reference_bytes = resolve_project_reference(
-                    root_path, reference["ref"], reference["sha256"],
-                )
-            artifact_bytes += reference_bytes
-            if artifact_bytes > MAX_REFERENCE_INSPECTION_BYTES:
-                raise RunEventError(
-                    "save point artifact references exceed %d inspected bytes"
-                    % MAX_REFERENCE_INSPECTION_BYTES
-                )
-            if (
-                    not reference["ref"].startswith("memory/audits/")
-                    and reference["validation_status"] == "valid"):
-                matches = [entry for entry in state["validated_artifacts"] if (
-                    entry["ref"] == reference["ref"]
-                    and entry["sha256"] == reference["sha256"]
-                    and entry["validator"] == reference["validator"]
-                )]
-                if not matches:
-                    raise RunEventError("validated artifact lacks a matching ancestor artifact_validated event")
+        validate_save_point_artifact_references(
+            root_path, normalized["artifacts"], events, normalized["last_event_id"],
+        )
         target_dir = ensure_child_directories(root_path, run_dir, ["save-points"])
         target = target_dir / (normalized["save_point_id"] + ".json")
         digest = write_immutable_json(root_path, target, normalized)
@@ -3275,6 +3662,10 @@ def resume_summary(root, run_id, max_bytes):
         raise RunEventError("max-bytes must be between 512 and 16384")
     events = load_events(root, run_id)
     state = project_events(run_id, events)
+    validate_artifact_validation_events(
+        root, events, state["selected_path_event_ids"],
+    )
+    validate_selected_save_point_replay(root, run_id, events, state)
     summary = {
         "schema_version": SCHEMA_VERSION,
         "authoritative": False,
@@ -3390,6 +3781,7 @@ def main(argv=None):
         result = append_event(args.root, args.run_id, read_json(args.request, "event request"))
     elif args.command == "verify":
         events = load_events(args.root, args.run_id)
+        validate_artifact_validation_events(args.root, events)
         result = {"valid": True, "events": len(events), "projection": project_events(args.run_id, events)}
     elif args.command == "project":
         result = rebuild_projection(args.root, args.run_id)

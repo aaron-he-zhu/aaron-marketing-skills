@@ -1,0 +1,775 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/control-artifact.schema.json",
+  "title": "Non-authoritative cross-discipline control artifact",
+  "description": "Closed v1 union for operational evidence, measurement, action provenance, receipts, and cycle retros. These artifacts are WARM/run evidence only: they do not write a registry, grant permission, or authorize an external mutation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_version",
+    "kind",
+    "artifact_id",
+    "created_at",
+    "authoritative",
+    "authority",
+    "registry_effect",
+    "external_mutation_authorized",
+    "payload"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "references/control-artifact.schema.json"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "kind": {
+      "enum": [
+        "evidence-observation",
+        "measurement-contract",
+        "action-intent",
+        "action-receipt",
+        "cycle-retro"
+      ]
+    },
+    "artifact_id": {
+      "$ref": "#/$defs/safe_id"
+    },
+    "created_at": {
+      "$ref": "#/$defs/timestamp"
+    },
+    "authoritative": {
+      "const": false
+    },
+    "authority": {
+      "const": "non-authoritative-operational-evidence"
+    },
+    "registry_effect": {
+      "const": false
+    },
+    "external_mutation_authorized": {
+      "const": false
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "oneOf": [
+    {
+      "title": "Evidence observation",
+      "properties": {
+        "kind": {
+          "const": "evidence-observation"
+        },
+        "payload": {
+          "$ref": "#/$defs/evidence_observation"
+        }
+      }
+    },
+    {
+      "title": "Measurement contract",
+      "properties": {
+        "kind": {
+          "const": "measurement-contract"
+        },
+        "payload": {
+          "$ref": "#/$defs/measurement_contract"
+        }
+      }
+    },
+    {
+      "title": "Action intent",
+      "properties": {
+        "kind": {
+          "const": "action-intent"
+        },
+        "payload": {
+          "$ref": "#/$defs/action_intent"
+        }
+      }
+    },
+    {
+      "title": "Action receipt",
+      "properties": {
+        "kind": {
+          "const": "action-receipt"
+        },
+        "payload": {
+          "$ref": "#/$defs/action_receipt"
+        }
+      }
+    },
+    {
+      "title": "Cycle retro",
+      "properties": {
+        "kind": {
+          "const": "cycle-retro"
+        },
+        "payload": {
+          "$ref": "#/$defs/cycle_retro"
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "safe_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "safe_field": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z_][A-Za-z0-9_.-]*$"
+    },
+    "opaque_ref": {
+      "description": "Immutable identifier whose locator is resolved outside the control artifact. A project path is never an opaque ref.",
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 512,
+      "pattern": "^opaque:[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "project_ref": {
+      "description": "Project-relative local artifact path. It is valid only inside artifact_binding, never as a bare *_ref value.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?!/)(?!.*//)(?!.*@)(?!.*(?:^|/)\\.\\.?(?:/|$))[A-Za-z0-9](?:[A-Za-z0-9._/-]*[A-Za-z0-9._-])?$"
+    },
+    "binding_ref": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/opaque_ref"
+        },
+        {
+          "$ref": "#/$defs/project_ref"
+        }
+      ]
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]*$"
+    },
+    "timestamp": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z$"
+    },
+    "nullable_timestamp": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/timestamp"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reference": {
+      "description": "Either an immutable opaque ID or an exact binding for a local project artifact. Local paths are forbidden as bare strings.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/opaque_ref"
+        },
+        {
+          "$ref": "#/$defs/artifact_binding"
+        }
+      ]
+    },
+    "nullable_reference": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/reference"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "artifact_binding": {
+      "description": "Exact immutable binding. sha256 covers the referenced raw bytes. A local project ref additionally requires content privacy inspection and an embedded version equal to this version; control JSON uses the canonical encoding defined by the validator.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "sha256",
+        "version"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/binding_ref"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      }
+    },
+    "nullable_binding": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "time_window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start_at",
+        "end_at"
+      ],
+      "properties": {
+        "start_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "end_at": {
+          "$ref": "#/$defs/timestamp"
+        }
+      }
+    },
+    "nullable_window": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/time_window"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "source_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_type",
+        "ref",
+        "observed_at",
+        "window"
+      ],
+      "properties": {
+        "evidence_type": {
+          "enum": [
+            "measured",
+            "user-provided",
+            "calculated",
+            "estimated",
+            "proxy"
+          ]
+        },
+        "ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "observed_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "window": {
+          "$ref": "#/$defs/nullable_window"
+        }
+      }
+    },
+    "field_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field_id",
+        "state",
+        "sources",
+        "value_ref",
+        "freshness",
+        "missing_reason",
+        "conflict_group"
+      ],
+      "properties": {
+        "field_id": {
+          "$ref": "#/$defs/safe_field"
+        },
+        "state": {
+          "enum": [
+            "observed",
+            "unknown",
+            "not-applicable",
+            "conflict"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "$ref": "#/$defs/source_observation"
+          }
+        },
+        "value_ref": {
+          "$ref": "#/$defs/nullable_reference"
+        },
+        "freshness": {
+          "enum": [
+            "current",
+            "stale",
+            "unknown"
+          ]
+        },
+        "missing_reason": {
+          "oneOf": [
+            {
+              "enum": [
+                "no-source",
+                "not-observed",
+                "stale-source",
+                "conflicting-sources",
+                "not-applicable",
+                "withheld"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "conflict_group": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "evidence_observation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "observation_window",
+        "fields",
+        "readiness",
+        "unresolved_conflicts"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        "observation_window": {
+          "$ref": "#/$defs/time_window"
+        },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/field_observation"
+          }
+        },
+        "readiness": {
+          "enum": [
+            "ready",
+            "needs-refresh",
+            "ineligible",
+            "unknown"
+          ]
+        },
+        "unresolved_conflicts": {
+          "type": "array",
+          "maxItems": 256,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_id"
+          }
+        }
+      }
+    },
+    "primary_metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metric_id",
+        "unit",
+        "direction",
+        "truth_source_ref",
+        "attribution_rule_ref",
+        "conversion_lag_ref"
+      ],
+      "properties": {
+        "metric_id": {
+          "$ref": "#/$defs/safe_id"
+        },
+        "unit": {
+          "$ref": "#/$defs/safe_id"
+        },
+        "direction": {
+          "enum": [
+            "increase",
+            "decrease",
+            "target-range"
+          ]
+        },
+        "truth_source_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "attribution_rule_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "conversion_lag_ref": {
+          "$ref": "#/$defs/reference"
+        }
+      }
+    },
+    "measurement_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "contract_version",
+        "population_ref",
+        "scope_ref",
+        "analysis_unit",
+        "counterfactual_type",
+        "control",
+        "candidate",
+        "primary_metric",
+        "guardrail_metric_ids",
+        "start_at",
+        "stop_at",
+        "read_at",
+        "decision_rule_ref",
+        "decision_owner_ref",
+        "locked_at",
+        "exploratory"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        "contract_version": {
+          "$ref": "#/$defs/version"
+        },
+        "population_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "scope_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "analysis_unit": {
+          "$ref": "#/$defs/safe_id"
+        },
+        "counterfactual_type": {
+          "enum": [
+            "randomized-control",
+            "holdout",
+            "matched-control",
+            "interrupted-series",
+            "none-exploratory"
+          ]
+        },
+        "control": {
+          "$ref": "#/$defs/nullable_binding"
+        },
+        "candidate": {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        "primary_metric": {
+          "$ref": "#/$defs/primary_metric"
+        },
+        "guardrail_metric_ids": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_id"
+          }
+        },
+        "start_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "stop_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "read_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "decision_rule_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "decision_owner_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "locked_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "exploratory": {
+          "type": "boolean"
+        }
+      }
+    },
+    "action_intent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operation",
+        "target",
+        "content",
+        "audience_ref",
+        "channel_ref",
+        "constraint_refs",
+        "safety_checks",
+        "permission_ref",
+        "permission_observed_at",
+        "permission_effect",
+        "requested_at",
+        "expires_at",
+        "single_use"
+      ],
+      "properties": {
+        "operation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "target": {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        "content": {
+          "$ref": "#/$defs/nullable_binding"
+        },
+        "audience_ref": {
+          "$ref": "#/$defs/nullable_reference"
+        },
+        "channel_ref": {
+          "$ref": "#/$defs/nullable_reference"
+        },
+        "constraint_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/reference"
+          }
+        },
+        "safety_checks": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/artifact_binding"
+          }
+        },
+        "permission_ref": {
+          "$ref": "#/$defs/nullable_reference"
+        },
+        "permission_observed_at": {
+          "$ref": "#/$defs/nullable_timestamp"
+        },
+        "permission_effect": {
+          "const": "provenance-only"
+        },
+        "requested_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "expires_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "single_use": {
+          "const": true
+        }
+      }
+    },
+    "action_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "intent",
+        "intent_id",
+        "operation",
+        "actual_target",
+        "actual_content",
+        "actual_audience_ref",
+        "actual_channel_ref",
+        "applied_constraint_refs",
+        "status",
+        "attempted_at",
+        "completed_at",
+        "provider_operation_ref",
+        "evidence",
+        "failure_code",
+        "permission_effect"
+      ],
+      "properties": {
+        "intent": {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        "intent_id": {
+          "$ref": "#/$defs/safe_id"
+        },
+        "operation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "actual_target": {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        "actual_content": {
+          "$ref": "#/$defs/nullable_binding"
+        },
+        "actual_audience_ref": {
+          "$ref": "#/$defs/nullable_reference"
+        },
+        "actual_channel_ref": {
+          "$ref": "#/$defs/nullable_reference"
+        },
+        "applied_constraint_refs": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/reference"
+          }
+        },
+        "status": {
+          "enum": [
+            "succeeded",
+            "failed",
+            "partial",
+            "unknown"
+          ]
+        },
+        "attempted_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "completed_at": {
+          "$ref": "#/$defs/nullable_timestamp"
+        },
+        "provider_operation_ref": {
+          "$ref": "#/$defs/nullable_reference"
+        },
+        "evidence": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "$ref": "#/$defs/artifact_binding"
+          }
+        },
+        "failure_code": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/safe_id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permission_effect": {
+          "const": "provenance-only"
+        }
+      }
+    },
+    "head_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "is_current",
+        "fork_count",
+        "selected_ancestry_ref"
+      ],
+      "properties": {
+        "is_current": {
+          "const": true
+        },
+        "fork_count": {
+          "const": 0
+        },
+        "selected_ancestry_ref": {
+          "$ref": "#/$defs/reference"
+        }
+      }
+    },
+    "cycle_retro": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "measurement_contract",
+        "measurement_contract_id",
+        "current_head",
+        "head_state",
+        "evidence",
+        "decision_code",
+        "decision_taxonomy_ref",
+        "decision_owner_ref",
+        "decided_at",
+        "limitations",
+        "hypothesis_ref",
+        "hypothesis_evidence_weight",
+        "next_read_at"
+      ],
+      "properties": {
+        "measurement_contract": {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        "measurement_contract_id": {
+          "$ref": "#/$defs/safe_id"
+        },
+        "current_head": {
+          "$ref": "#/$defs/artifact_binding"
+        },
+        "head_state": {
+          "$ref": "#/$defs/head_state"
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "items": {
+            "$ref": "#/$defs/artifact_binding"
+          }
+        },
+        "decision_code": {
+          "$ref": "#/$defs/safe_id"
+        },
+        "decision_taxonomy_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "decision_owner_ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "decided_at": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "limitations": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/safe_id"
+          }
+        },
+        "hypothesis_ref": {
+          "$ref": "#/$defs/nullable_reference"
+        },
+        "hypothesis_evidence_weight": {
+          "const": 0
+        },
+        "next_read_at": {
+          "$ref": "#/$defs/nullable_timestamp"
+        }
+      }
+    }
+  }
+}

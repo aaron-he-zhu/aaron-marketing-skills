@@ -11,7 +11,7 @@
           "end_char": 78,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 159,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 80
         },
@@ -41,7 +41,7 @@
           "end_char": 228,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 161
         },
@@ -56,7 +56,7 @@
           "end_char": 266,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 230
         },
@@ -71,7 +71,7 @@
           "end_char": 372,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 268
         },
@@ -83,7 +83,7 @@
     "source": {
       "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2"
+      "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe"
     }
   },
   "context_hints": {
@@ -92,7 +92,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 40
       },
       {
@@ -113,13 +113,14 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 36
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:pricing-packaging-planner",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -132,7 +133,7 @@
           "end_char": 205,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -150,7 +151,7 @@
           "end_char": 369,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 206
         },
@@ -168,7 +169,7 @@
           "end_char": 536,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 370
         },
@@ -186,7 +187,7 @@
           "end_char": 879,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 538
         },
@@ -199,7 +200,7 @@
     "summary_ref": {
       "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2"
+      "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -214,8 +215,8 @@
     "name": "pricing-packaging-planner",
     "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
     "phase": "assemble",
-    "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
-    "version": "20.0.0"
+    "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / offer> [launch goal: b2b / devtool / mobile] [current pricing if any] [launch date]",
@@ -229,7 +230,7 @@
           "end_char": 38,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -244,7 +245,7 @@
           "end_char": 63,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 40
         },
@@ -259,7 +260,7 @@
           "end_char": 88,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 65
         },
@@ -274,7 +275,7 @@
           "end_char": 120,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 90
         },
@@ -289,7 +290,7 @@
           "end_char": 147,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 122
         },
@@ -304,7 +305,7 @@
           "end_char": 182,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 149
         },
@@ -316,7 +317,7 @@
     "source": {
       "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2"
+      "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe"
     }
   },
   "output_contract": {
@@ -331,7 +332,7 @@
           "end_char": 93,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -347,7 +348,7 @@
           "end_char": 342,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 95
         },
@@ -363,7 +364,7 @@
           "end_char": 596,
           "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2",
+          "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe",
           "span_basis": "field-text",
           "start_char": 344
         },
@@ -374,7 +375,7 @@
     "source": {
       "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2"
+      "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe"
     },
     "summary": "a launch pricing/packaging plan — named tiers with per-tier contents, a value-to-price map aligned to the message-house pillars, a launch-offer ladder with a true deadline rationale, a beta / early-adopter price with its declared graduation path, and guarantee / refund terms — plus the claim/term candidates routed to the registries and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -385,12 +386,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -399,7 +400,7 @@
     "source": {
       "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "2c1c8be6bd2061f4d2074b53a1332c2ccdcfc9c79e4920bd1ee570504d5e71d2"
+      "sha256": "0eca15bb86148a70d62f429f599f02620692ec206679f398c3c467353f7132fe"
     },
     "trigger_phrases": [
       "design pricing tiers / packaging",

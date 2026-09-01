@@ -20,6 +20,10 @@
         "commands"
       ],
       "runtime_references": [
+        "ad/orchestrate/ad-test-designer/references/measurement-control.md",
+        "email/nurture/email-sequence-designer/references/send-control.md",
+        "launch/assemble/launch-asset-packager/references/action-control.md",
+        "narrative/evaluate/message-test-designer/references/stimulus-binding.md",
         "references/audit-run.schema.json",
         "references/auditor-runbook.md",
         "references/auto-routing-scenarios.md",
@@ -39,7 +43,9 @@
         "references/router-facade-sidecar.schema.json",
         "references/scoring-semantics.md",
         "references/system-catalog.json",
-        "scripts/connectors/README.md"
+        "scripts/connectors/README.md",
+        "seo-geo/evaluate/performance-monitor/references/evidence-and-cycle-control.md",
+        "social/craft/social-calendar-builder/references/human-action-control.md"
       ],
       "runtime_scripts": [
         "scripts/context-profile-resolver.py",
@@ -59,7 +65,7 @@
         ],
         "package_ceiling": {
           "max_files": 350,
-          "max_bytes": 3300000
+          "max_bytes": 3450000
         },
         "add": {
           "root_files": [],
@@ -68,7 +74,9 @@
           "runtime_scripts": [],
           "runtime_script_trees": []
         },
-        "derived_outputs": []
+        "derived_outputs": [
+          "authoring-guide-pointers-v1"
+        ]
       },
       "pro": {
         "capabilities": [
@@ -77,7 +85,7 @@
         ],
         "package_ceiling": {
           "max_files": 400,
-          "max_bytes": 3800000
+          "max_bytes": 3950000
         },
         "add": {
           "root_files": [],
@@ -109,7 +117,7 @@
         ],
         "package_ceiling": {
           "max_files": 560,
-          "max_bytes": 6500000
+          "max_bytes": 6700000
         },
         "add": {
           "root_files": [],
@@ -120,21 +128,20 @@
             "references/workflow-graph"
           ],
           "runtime_references": [
-            "docs/workflow-graph.md",
             "references/audit-loop-protocol.md",
             "references/audit-loop-state.schema.json",
+            "references/control-artifact.schema.json",
+            "references/control-bindings.json",
+            "references/control-bindings.schema.json",
             "references/context-assembly.schema.json",
             "references/context-manifest.schema.json",
-            "references/context-planning.md",
             "references/context-request.schema.json",
-            "references/context-resolution.md",
             "references/prompt-profile-release-certificate.schema.json",
             "references/registry-event-protocol.md",
             "references/registry-event.schema.json",
             "references/run-envelope.schema.json",
             "references/run-event.schema.json",
             "references/runtime-controller-request.schema.json",
-            "references/runtime-controller.md",
             "references/runtime-protocol.md",
             "references/save-point.schema.json",
             "references/skill-capsule-index.schema.json",
@@ -143,7 +150,6 @@
             "references/skill-machine-contract.schema.json",
             "references/turn-snapshot.schema.json",
             "references/workflow-graph-edge-shard.schema.json",
-            "references/workflow-graph-protocol.md",
             "references/workflow-graph-source.schema.json",
             "references/workflow-graph.json",
             "references/workflow-graph.schema.json",
@@ -164,7 +170,7 @@
             "scripts/registry-events.py",
             "scripts/runtime-controller.py",
             "scripts/run-events.py",
-            "scripts/workflow-graph.py",
+            "scripts/validate-control-artifact.py",
             "scripts/workflow-loop.py",
             "scripts/workflow_loop.py"
           ],

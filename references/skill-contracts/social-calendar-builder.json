@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 113,
+          "end_char": 56,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "every active channel has recurring slots and a queue depth at or under its committed cadence and hosting capacity"
+        "text": "every active channel has compliant slots and queue depth"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 197,
+          "end_char": 121,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
-          "start_char": 115
+          "start_char": 58
         },
-        "text": "every ratio target is labeled Estimated with a named source and a calibration date"
+        "text": "every ratio target is labeled Estimated with a calibration date"
       },
       {
         "clause_id": "done-03",
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 250,
+          "end_char": 171,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
-          "start_char": 199
+          "start_char": 123
         },
-        "text": "the recycle cycle carries a freshness re-check rule"
+        "text": "recycle freshness and realtime gaps are explicit"
       },
       {
         "clause_id": "done-04",
@@ -53,14 +53,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 278,
+          "end_char": 213,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
-          "start_char": 252
+          "start_char": 173
         },
-        "text": "realtime gaps are reserved"
+        "text": "each assembled batch is versioned/hashed"
       },
       {
         "clause_id": "done-05",
@@ -68,22 +68,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 334,
+          "end_char": 259,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
-          "start_char": 280
+          "start_char": 215
         },
-        "text": "and the publish step states the hard SHIP requirement."
+        "text": "the SHIP verdict is bound to that exact hash"
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 338,
+          "path": "social/craft/social-calendar-builder/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
+          "span_basis": "field-text",
+          "start_char": 261
+        },
+        "text": "and no row is labeled published/done without a matching human-action receipt."
       }
     ],
-    "done_when": "every active channel has recurring slots and a queue depth at or under its committed cadence and hosting capacity; every ratio target is labeled Estimated with a named source and a calibration date; the recycle cycle carries a freshness re-check rule; realtime gaps are reserved; and the publish step states the hard SHIP requirement.",
+    "done_when": "every active channel has compliant slots and queue depth; every ratio target is labeled Estimated with a calibration date; recycle freshness and realtime gaps are explicit; each assembled batch is versioned/hashed; the SHIP verdict is bound to that exact hash; and no row is labeled published/done without a matching human-action receipt.",
     "extraction_status": "classified",
     "source": {
       "path": "social/craft/social-calendar-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26"
+      "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87"
     }
   },
   "context_hints": {
@@ -92,7 +107,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 40
       },
       {
@@ -113,8 +128,15 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 36
+      },
+      {
+        "path": "social/craft/social-calendar-builder/references/human-action-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "cb4e4fb48b922adfc32fa648149a44c141afc7fddf4f08bcbbd079d7963f1ad2",
+        "source_line": 52
       }
     ],
     "project_paths": [
@@ -137,6 +159,12 @@
     ]
   },
   "contract_id": "skill:social-calendar-builder",
+  "control_requirements": [
+    "action-intent",
+    "action-receipt",
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -149,7 +177,7 @@
           "end_char": 143,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -167,7 +195,7 @@
           "end_char": 276,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 144
         },
@@ -185,7 +213,7 @@
           "end_char": 318,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 278
         },
@@ -201,7 +229,7 @@
           "end_char": 491,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 319
         },
@@ -219,7 +247,7 @@
           "end_char": 843,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 493
         },
@@ -232,7 +260,7 @@
     "summary_ref": {
       "path": "social/craft/social-calendar-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26"
+      "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -247,8 +275,8 @@
     "name": "social-calendar-builder",
     "path": "social/craft/social-calendar-builder/SKILL.md",
     "phase": "craft",
-    "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
-    "version": "20.0.0"
+    "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<channels + committed cadence> [content pillars] [planning horizon]",
@@ -262,7 +290,7 @@
           "end_char": 151,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -277,7 +305,7 @@
           "end_char": 234,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 153
         },
@@ -292,7 +320,7 @@
           "end_char": 360,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 236
         },
@@ -307,7 +335,7 @@
           "end_char": 502,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 362
         },
@@ -322,7 +350,7 @@
           "end_char": 571,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 504
         },
@@ -334,7 +362,7 @@
     "source": {
       "path": "social/craft/social-calendar-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26"
+      "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87"
     }
   },
   "output_contract": {
@@ -349,7 +377,7 @@
           "end_char": 74,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -365,7 +393,7 @@
           "end_char": 313,
           "path": "social/craft/social-calendar-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26",
+          "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87",
           "span_basis": "field-text",
           "start_char": 76
         },
@@ -376,23 +404,27 @@
     "source": {
       "path": "social/craft/social-calendar-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26"
+      "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87"
     },
-    "summary": "a posting calendar — pillar allocation with hero/hub/help balance and give:ask targets (each labeled Estimated with a named source and a calibration date), per-channel recurring slot map with queue depth, a batching workflow, an evergreen recycle cycle with its freshness re-check rule, reserved realtime/trend gaps wired to trend-spotter verdicts, and first-comment/publish-order ops notes — plus the standard handoff summary.",
+    "summary": "a posting calendar — pillar allocation, per-channel recurring slots, batching, evergreen freshness checks, realtime gaps, and first-comment/publish-order notes — whose assembled batches carry `package_ref` / version / hash and whose state distinguishes planned, queued, and human-published with receipt refs; plus the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "the calendar to `memory/social/social-calendar-builder/` (on confirmation); new or changed cadence commitments as dated one-line candidates to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only — never to `calendar-commitments.md` or the dossiers directly."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -401,7 +433,7 @@
     "source": {
       "path": "social/craft/social-calendar-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "396924db827818199e22178380eebe0772d73cd0b7df4787d7cbb4ececb8dc26"
+      "sha256": "970c26d7b3fd1bfe899f10baeedeafad8b7effc364e5553bbce7527fe5eb0d87"
     },
     "trigger_phrases": [
       "build our social posting calendar",

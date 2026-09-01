@@ -4,14 +4,14 @@ slug: rank-tracker
 displayName: "Rank Tracker · 排名追踪"
 summary: "排名追踪/SERP监控"
 description: 'Use when the user asks to "track rankings" or "查排名"; measures keyword and SERP-position deltas over time from provided exports or connected tools, including AI-response checks. Not for multi-metric stakeholder reports or setting alerts — use performance-monitor (report or alert mode). 排名追踪/SERP监控'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when tracking keyword rankings, monitoring position changes, comparing ranking snapshots, or detecting ranking drops."
 argument-hint: "<domain> [keyword list]"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "evaluate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "evaluate"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "seo-geo", "phase": "evaluate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "evaluate"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Rank Tracker
@@ -32,10 +32,10 @@ Analyze ranking changes for [domain] over the past [time period]
 
 **Expected output**: a ranking report or delta summary plus the standard handoff summary for `memory/monitoring/`.
 
-- **Reads**: current rankings, prior baselines, target keyword list, market/device, and any user-provided or tool metrics.
+- **Reads**: current rankings, prior baselines, target keyword list, locale/language/device/engine, snapshot/source refs, observation times/windows, stable page/content bindings, and any user-provided or tool metrics.
 - **Writes**: a user-facing monitoring deliverable and reusable summary.
 - **Promotes**: significant changes, confirmed anomalies, follow-up actions, and pending decisions to `memory/open-loops.md`.
-- **Done when**: every tracked keyword shows current position vs baseline with a labeled delta (or N/A); each position cites its source (tool export / user-provided / estimated); and biggest movers and likely causes are named.
+- **Done when**: every tracked keyword shows a current, context-matched position vs baseline with a labeled delta, or Unknown/NEEDS_REFRESH with its reason; each observation cites its source ref, observed time, window, locale/language/device/engine, evidence label, and ranking page ref; conflicts remain visible; and biggest movers and likely causes are named.
 - **Primary next skill**: [performance-monitor](../performance-monitor/SKILL.md) when recurring monitoring should become automated.
 
 ### Handoff Summary
@@ -61,7 +61,7 @@ All integrations optional (see [CONNECTORS.md](../../../CONNECTORS.md)). With to
 
 When a user requests rank tracking or analysis:
 
-1. **Set Up Keyword Tracking** — configure domain, market, device, language, update frequency, priorities, and competitor watchlist.
+1. **Set Up Keyword Tracking** — configure domain, market/locale, device, language, engine, update frequency, priorities, competitor watchlist, and stable page refs. Apply the [SEO/GEO Evidence and Cycle Control Profile](../performance-monitor/references/evidence-and-cycle-control.md).
 2. **Record Current Rankings** — output a position table where every row cites its source (tool export / user-provided / estimated), with position ranges, ranking URLs, feature ownership, and movement vs baseline.
 3. **Analyze Ranking Changes** — highlight biggest wins, declines, stable terms, new rankings, lost rankings, likely causes, and recovery ideas; each delta labeled against its baseline.
 4. **Track SERP Features** — compare ownership of snippets, PAA, image/video packs, local packs, and related feature shifts.
@@ -69,7 +69,7 @@ When a user requests rank tracking or analysis:
 6. **Compare Against Competitors** — report share of voice, head-to-head comparisons, and threat levels.
 7. **Generate Ranking Report** — output overall trend, key wins, concerns, opportunities, SERP feature changes, GEO visibility, and recommendations, with each metric carrying its source tag.
 
-Label every metric **Measured** (tool/export), **User-provided**, or **Estimated** (model inference); never present an estimate as measured; if a required metric is unavailable, mark it N/A — do not invent it.
+Label every metric **Measured**, **User-provided**, **Calculated**, **Estimated**, **Proxy**, or **Unknown**; never present an estimate or proxy as measured. An applicable missing metric is Unknown with its reason. A stale or locale/language/device/engine-mismatched position is `NEEDS_REFRESH`, not a current ranking; N/A is only for a genuinely non-applicable field.
 
 > **Reference**: See [Ranking Analysis Templates](references/ranking-analysis-templates.md) for the complete output templates for all seven steps.
 
@@ -97,6 +97,7 @@ Ask "Save these results?" If yes, write to `memory/monitoring/` — see [Skill C
 
 ## Reference Materials
 
+- [SEO/GEO Evidence and Cycle Control Profile](../performance-monitor/references/evidence-and-cycle-control.md) — exact search observations, freshness, page bindings, and cycle rules
 - [Tracking Setup Guide](references/tracking-setup-guide.md) — Setup rules, feature tracking, and interpretation guidance
 
 ## Next Best Skill

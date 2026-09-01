@@ -64,6 +64,8 @@ class ContextPlanTests(unittest.TestCase):
             *(item["path"] for item in contract["context_hints"]["bundle_references"]),
             "references/auto-routing/seo-geo.md",
         }
+        if contract.get("control_requirements"):
+            paths.add(contract["provenance"]["control_bindings"]["path"])
         for relative in paths:
             target = bundle / relative
             target.parent.mkdir(parents=True, exist_ok=True)
@@ -147,6 +149,37 @@ class ContextPlanTests(unittest.TestCase):
         self.assertTrue(all(request["planner"]["generator"] == "context-plan-v1.1"
                             for request in requests))
         self.assertTrue(all(request["candidates"] for request in requests))
+
+    def test_control_bindings_are_validated_without_schema_context_injection(self):
+        bound = self.request(self.project, "campaign-planner")
+        unbound = self.request(self.project, "technical-seo-checker")
+        bound_controls = [
+            item for item in bound["candidates"]
+            if item["path"] == planner.CONTROL_ARTIFACT_SCHEMA_REF
+        ]
+        unbound_controls = [
+            item for item in unbound["candidates"]
+            if item["path"] == planner.CONTROL_ARTIFACT_SCHEMA_REF
+        ]
+        self.assertEqual([], bound_controls)
+        self.assertEqual([], unbound_controls)
+        self.assertFalse(any(
+            item["path"] == planner.CONTROL_BINDINGS_REF
+            for item in bound["candidates"]
+        ))
+
+    def test_context_plan_rejects_invalid_handoffs_without_loading_graph_or_schema(self):
+        bindings = json.loads(
+            (ROOT / planner.CONTROL_BINDINGS_REF).read_text(encoding="utf-8")
+        )
+        edge_id = "campaign-planner--performance-analyzer"
+        bindings["handoff_requirements"][edge_id] = list(reversed(
+            bindings["handoff_requirements"][edge_id]
+        ))
+        with self.assertRaisesRegex(
+                resolver.ContextResolutionError,
+                "requirements are invalid or not sorted"):
+            planner._validate_control_handoff_requirements(bindings)
 
     def test_protocol_skill_gets_explicit_auto_routing_shard(self):
         request = self.request(self.project, "consent-registry")

@@ -26,8 +26,17 @@ issuer = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = issuer
 SPEC.loader.exec_module(issuer)
 
+VERIFIER_SPEC = importlib.util.spec_from_file_location(
+    "engineering_release_receipt_verifier",
+    ROOT / "scripts" / "verify-release-receipt.py",
+)
+assert VERIFIER_SPEC and VERIFIER_SPEC.loader
+release_verifier = importlib.util.module_from_spec(VERIFIER_SPEC)
+VERIFIER_SPEC.loader.exec_module(release_verifier)
+
 NOW = dt.datetime(2026, 7, 24, 12, 0, tzinfo=dt.timezone.utc)
 RUN_ID = "123e4567-e89b-42d3-a456-426614174099"
+RELEASE_CANDIDATE = issuer.RELEASE_VERSION + "-rc.1"
 
 
 def source_bindings() -> dict:
@@ -168,8 +177,12 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
             schema["properties"]["gate"]["const"],
         )
         self.assertEqual(
-            ["19.0.0", "19.1.0", "19.2.0", "20.0.0"],
+            list(release_verifier.SUPPORTED_RELEASE_VERSIONS),
             schema["properties"]["release_version"]["enum"],
+        )
+        self.assertEqual(
+            issuer.RELEASE_VERSION,
+            schema["properties"]["release_version"]["enum"][-1],
         )
         claims = schema["properties"]["claims"]
         self.assertFalse(claims["additionalProperties"])
@@ -214,7 +227,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
             report,
             repository=repository(),
             tools=source_bindings(),
-            release_candidate="20.0.0-rc.1",
+            release_candidate=RELEASE_CANDIDATE,
             semantic=semantic,
             report_sha256=hashlib.sha256(private_json_bytes(report)).hexdigest(),
             issued_at=NOW,
@@ -224,7 +237,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )["required"]), set(receipt))
-        self.assertEqual("20.0.0", receipt["release_version"])
+        self.assertEqual(issuer.RELEASE_VERSION, receipt["release_version"])
         self.assertEqual({"simulated": 24}, receipt["semantic_evidence"]["case_provenance"])
         self.assertEqual("engineering-only", receipt["claims"]["validation_scope"])
         self.assertFalse(receipt["claims"]["real_project_outcomes_validated"])
@@ -292,7 +305,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
             report,
             repository=repository(),
             tools=source_bindings(),
-            release_candidate="20.0.0-rc.1",
+            release_candidate=RELEASE_CANDIDATE,
             semantic=self.validate(report),
             report_sha256=hashlib.sha256(private_json_bytes(report)).hexdigest(),
             issued_at=NOW,
@@ -322,7 +335,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
             report,
             repository=repository(),
             tools=source_bindings(),
-            release_candidate="20.0.0-rc.1",
+            release_candidate=RELEASE_CANDIDATE,
             semantic=self.validate(report),
             report_sha256=hashlib.sha256(private_json_bytes(report)).hexdigest(),
             issued_at=NOW,
@@ -349,7 +362,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
         ) as repo_snapshot, mock.patch.object(
             issuer, "source_snapshot", return_value=source_bindings()
         ) as tool_snapshot, mock.patch.object(
-            issuer, "committed_release_version", return_value="20.0.0"
+            issuer, "committed_release_version", return_value=issuer.RELEASE_VERSION
         ), mock.patch.object(
             issuer, "_load_maturity_checker", return_value=checker
         ):
@@ -359,7 +372,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
                 root=ROOT,
                 run_id=RUN_ID,
                 evidence_root=Path(temporary),
-                release_candidate="20.0.0-rc.7",
+                release_candidate=issuer.RELEASE_VERSION + "-rc.7",
                 owner_authorization=issuer.AUTHORIZATION,
                 output=output,
                 maturity_report_output=report_output,
@@ -374,7 +387,9 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
                 receipt["maturity"]["report_sha256"],
             )
             self.assertEqual(0o600, stat.S_IMODE(report_output.stat().st_mode))
-            self.assertEqual("20.0.0-rc.7", receipt["release_candidate"])
+            self.assertEqual(
+                issuer.RELEASE_VERSION + "-rc.7", receipt["release_candidate"]
+            )
             self.assertEqual(3, repo_snapshot.call_count)
             self.assertEqual(3, tool_snapshot.call_count)
         self.assertEqual(1, len(calls))
@@ -394,7 +409,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
                     root=ROOT,
                     run_id=RUN_ID,
                     evidence_root=Path(temporary),
-                    release_candidate="20.0.0-rc.1",
+                    release_candidate=RELEASE_CANDIDATE,
                     owner_authorization="",
                     output=output,
                     maturity_report_output=report_output,
@@ -413,7 +428,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
         ), mock.patch.object(
             issuer, "source_snapshot", return_value=source_bindings()
         ), mock.patch.object(
-            issuer, "committed_release_version", return_value="20.0.0"
+            issuer, "committed_release_version", return_value=issuer.RELEASE_VERSION
         ), mock.patch.object(
             issuer, "_load_maturity_checker", return_value=checker
         ):
@@ -426,7 +441,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
                     root=ROOT,
                     run_id=RUN_ID,
                     evidence_root=Path(temporary),
-                    release_candidate="20.0.0-rc.1",
+                    release_candidate=RELEASE_CANDIDATE,
                     owner_authorization=issuer.AUTHORIZATION,
                     output=output,
                     maturity_report_output=report_output,
@@ -442,7 +457,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
         ), mock.patch.object(
             issuer, "source_snapshot", return_value=source_bindings()
         ), mock.patch.object(
-            issuer, "committed_release_version", return_value="20.0.0"
+            issuer, "committed_release_version", return_value=issuer.RELEASE_VERSION
         ), mock.patch.object(
             issuer, "_load_maturity_checker", return_value=checker
         ):
@@ -456,7 +471,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
                     root=ROOT,
                     run_id=RUN_ID,
                     evidence_root=Path(temporary),
-                    release_candidate="20.0.0-rc.1",
+                    release_candidate=RELEASE_CANDIDATE,
                     owner_authorization=issuer.AUTHORIZATION,
                     output=output,
                     maturity_report_output=report_output,
@@ -477,7 +492,7 @@ class EngineeringReleaseReceiptIssuerTests(unittest.TestCase):
                     root=ROOT,
                     run_id=RUN_ID,
                     evidence_root=Path(temporary),
-                    release_candidate="20.0.0-rc.1",
+                    release_candidate=RELEASE_CANDIDATE,
                     owner_authorization=issuer.AUTHORIZATION,
                     output=output,
                     maturity_report_output=output,

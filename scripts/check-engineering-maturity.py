@@ -52,7 +52,7 @@ P18_RUNNER_SYMBOLS = (
 P18_SEMANTIC_REQUEST_TESTS = (
     "test_v2_authored_case_consumes_machine_contract_and_runtime_context",
     "test_auto_routing_case_binds_router_and_primary_command_without_case_corpus",
-    "test_nightly_700_requests_are_constructible_with_bounded_refs",
+    "test_nightly_734_requests_are_constructible_with_bounded_refs",
     "test_memory_management_auto_requests_bind_seo_command_without_case_corpus",
     "test_prompt_source_expansion_rejects_33_unique_refs",
 )
@@ -176,7 +176,7 @@ def p18_fact(semantic_request_suite, semantic_runner_text,
         )
     return Fact(
         True,
-        "semantic_request_suite proves all 700 nightly requests bind 1..32 current refs; "
+        "semantic_request_suite proves all 734 nightly requests bind 1..32 current refs; "
         "memory-management auto cases bind commands/seo-geo.md without eval/routing "
         "corpora; 33 refs and per-ref/aggregate byte overflow fail closed before model "
         "execution; machine, auto-router, and assertion-isolation tests pass",

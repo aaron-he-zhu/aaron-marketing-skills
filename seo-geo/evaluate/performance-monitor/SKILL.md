@@ -4,13 +4,13 @@ slug: performance-monitor
 displayName: "Performance Monitor · SEO报告"
 summary: "SEO报告/绩效仪表盘/SEO预警/排名监控"
 description: 'Use when the user asks to "generate an SEO report", "出月报", "set SEO alerts", or "排名掉了提醒我"; two modes — report builds multi-metric traffic/ranking/authority/content dashboards, and alert configures threshold notifications for future ranking, traffic, technical, backlink, competitor, and AI-visibility changes. Not for raw position-by-position deltas — use rank-tracker. SEO报告/绩效仪表盘/SEO预警/排名监控'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when generating multi-metric SEO/GEO performance reports, traffic summaries, stakeholder dashboards, SEO报告, 流量报告, 月报, 周报, 汇报给老板 (mode: report), OR when setting up monitoring alerts for rankings, traffic, backlinks, technical issues, competitor moves, or AI visibility changes, SEO预警, 排名监控 (mode: alert). Not for raw position-by-position ranking deltas — use rank-tracker."
 argument-hint: "<domain> [--mode report|alert] [date range | metric]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "evaluate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "evaluate"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "seo-geo", "phase": "evaluate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "evaluate"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Performance Monitor
@@ -39,13 +39,13 @@ Shortest valid invocation: `performance-monitor <domain>` (mode inferred). Outpu
 
 ## Skill Contract
 
-**Expected output**: mode `report` → a delta-based multi-metric report/dashboard; mode `alert` → an alert configuration summary. Both include the standard handoff summary for `memory/monitoring/`.
+**Expected output**: mode `report` → a delta-based multi-metric report/dashboard plus per-change Cycle Retro; mode `alert` → an alert configuration summary that opens a bound readback rather than declaring an instant outcome. Both include exact page/change/measurement bindings, evidence refs, and the standard handoff summary for `memory/monitoring/`.
 
 - **Reads**: prior baselines and current performance data. `report` reads current + prior-period metrics across traffic/rankings/authority/content, report audience, and date range. `alert` reads baselines, critical keywords/metrics to watch, normal volatility, and delivery preferences. Plus any user-provided or tool data.
 - **Writes**: a user-facing monitoring deliverable plus a reusable summary storable under `memory/monitoring/`.
 - **Promotes**: significant changes, confirmed anomalies, durable thresholds, and follow-up actions; pending decisions go to `memory/open-loops.md` (never directly to `decisions.md`).
 - **Done when**:
-  - `report`: each in-scope section (traffic, rankings, GEO, authority, backlinks, content) is present or marked "Not yet evaluated"; every metric is source-tagged and compared to the prior period; recommendations carry owner, priority, and expected impact.
+  - `report`: each in-scope section (traffic, rankings, GEO, authority, backlinks, content) is present or marked "Not yet evaluated"; every metric is source-, time-, window-, and target-bound and compared to the prior period/control; each changed page records the current page/content/change and measurement-contract refs/hashes; recommendations carry owner, priority, and expected impact.
   - `alert`: each chosen alert category has a named trigger, threshold, and priority; a Critical/High/Medium/Low response plan and delivery routing are defined; thresholds are tuned to the metric's stated normal volatility.
 - **Primary next skill**: see [Next Best Skill](#next-best-skill) — the two modes hand off to each other.
 
@@ -128,8 +128,10 @@ Label every metric **Measured** (tool/export), **User-provided**, or **Estimated
 
 A reported delta or a fired alert is only evidence if it beats a control over a **fixed readback window** set before the change — a raw before/after on a confounded outcome is a story, not proof. Attach the decision protocol from [references/measurement-protocol.md §Cross-discipline decision protocol](../../../references/measurement-protocol.md):
 
+First apply the [SEO/GEO Evidence and Cycle Control Profile](references/evidence-and-cycle-control.md). The readback must bind the current non-forked page/content/change head and exact measurement-contract hash. A later edit supersedes the old binding and starts a new window; a post-hoc window is explicitly `reconstructed`.
+
 - **Readback window** — pick the window for the change type up front (content refresh 7/14/28/56 days; new content 14/28/56/90; technical fix daily ×7 then 28; AEO/GEO surfacing weekly) and do not react to noise inside it. A fired alert opens a readback window, not an instant verdict — confirm the drop holds before declaring an incident.
-- **Required readback fields** — record: change · owner · baseline window · candidate window · sources · primary + secondary metric · winner · caveats · decision · next-patch · next-readback date.
+- **Required readback fields** — record: page/content/change refs + hashes · current head · measurement contract ref/hash · owner · baseline/candidate/control windows · evidence refs · primary + secondary metric · decision · caveats · next patch · next-readback date · applicable index receipt.
 - **Decision** — mark each change **Promote** (beats control on the primary metric past the bar), **Keep-testing** (trending, not yet significant), **Rollback** (loses by the same bar), or **Unproven** (everything else). Report delta-vs-control, not raw delta.
 
 ## Example
@@ -149,6 +151,7 @@ Ask "Save these results?" If yes, write to `memory/monitoring/` using filename `
 - [Alert Configuration Templates](references/alert-configuration-templates.md) — full category tables, thresholds, response-plan templates (alert mode)
 - [Alert Threshold Guide](references/alert-threshold-guide.md) — threshold setting, fatigue prevention, escalation paths, response playbooks
 - [Measurement & Attribution Protocol](../../../references/measurement-protocol.md) — readback windows, required fields, and the promote / keep-testing / rollback / unproven decision rule
+- [SEO/GEO Evidence and Cycle Control Profile](references/evidence-and-cycle-control.md) — search/page bindings, index receipts, freshness, and Cycle Retro fields
 
 ## Next Best Skill
 

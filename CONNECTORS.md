@@ -183,6 +183,86 @@ The influencer-marketing skills use these additional placeholders (plus `~~CRM`,
 | Customer Survey | `~~customer survey data` | influencer | Typeform, SurveyMonkey, Qualtrics | Google Forms | Google Forms |
 | E-signature | `~~e-signature` | influencer | DocuSign, Dropbox Sign, PandaDoc | PDF + manual signature | manual PDF sign |
 
+**Influencer provider recipes (opt-in, no bundled vendor client).** Keep the
+skill family and STAR gate vendor-neutral: providers return evidence or perform
+an exactly approved action; they do not own fit, brand-safety, contract, or ROI
+verdicts.
+
+- **Upfluence MCP** — official remote Streamable HTTP MCP at
+  `https://mcp.upfluence.co/mcp`, authenticated with an Upfluence OAuth account.
+  It is Beta/request-access and its tool list evolves; discover the live schema
+  after connection. Start with search/profile/audience/campaign reads. Shortlist,
+  approve/reject, and email tools are external mutations and remain disabled
+  unless the host can require exact per-action approval. Email actions must
+  additionally pass `outreach-manager`'s jurisdiction, lawful-basis,
+  contact-eligibility, exact-recipient/message, and per-dispatch live
+  suppression gates; approval alone is insufficient. See the
+  [official MCP guide](https://help.upfluence.co/en/articles/15518509-using-the-upfluence-mcp-server).
+- **NoxInfluencer Skill + CLI** — use the
+  [official external Skill](https://github.com/NoxInfluencer/skills) as an
+  optional companion; do not copy it into this 120-skill topology or bundle its
+  Node dependency. Check its live command schema/quota and use preview/dry-run
+  before any approved operation. Nox priority/authenticity/rate outputs remain
+  provider evidence, never STAR verdicts.
+- **Scrumball REST/API** — treat the
+  [API service](https://www.scrumball.com/zh/api-services) as an external recipe,
+  not a bundled connector or MCP entry. Verify authenticated endpoint and field
+  shapes before use; until then, prefer manual exports and do not infer outreach,
+  CRM, or payment API capability from the SaaS marketing surface.
+
+**Provider Readiness Receipt (manual, noncanonical).** When one of these
+providers is actually connected, optionally keep this small run receipt beside
+the campaign evidence. It records what was observed; it is not a registry,
+connector health service, or readiness certificate. Do not store OAuth tokens,
+API keys, cookies, raw contact details, or other secrets in it.
+
+```yaml
+provider: upfluence | noxinfluencer | scrumball
+auth_state: not-configured | authenticated-live | failed | unknown
+capabilities_observed_at: null # ISO 8601; null until observed after live auth
+schema_observed_at: null       # ISO 8601; null until observed after live auth
+last_read_only_probe:
+  operation: null
+  observed_at: null            # ISO 8601
+  result: not-run | passed | failed
+  source_ref: null             # link or local evidence reference, never a secret
+write_state: disabled
+known_limits: []
+```
+
+A provider may be described as **observed for reads**, not generally “ready,”
+only after a live authenticated session has recorded its current capabilities,
+schema, and a passing read-only probe with `source_ref`. Apply these provider
+checks when filling the receipt:
+
+| Provider | Minimum live observation | Known-limit prompts |
+|---|---|---|
+| Upfluence | Re-list the dynamic MCP tools and their input schemas at run time, then perform one non-mutating search/profile/audience/campaign read | Beta/request access, account/role scope, tool drift, quota or result-window limits |
+| NoxInfluencer | Inspect the installed external Skill/CLI's current command schema and quota, then perform one preview or read-only lookup | package/version, account scope, quota, regional/platform coverage, preview support |
+| Scrumball | Verify the authenticated endpoint and response fields, then perform one read-only lookup or record that no such endpoint is available | undocumented or changing shapes, account scope, quota, coverage; no inferred outreach/CRM/payment capability |
+
+Receipts are updated by a person or the active run only—never by CI, cron, or
+automatic network probing. Dynamic tools must be re-listed at execution time;
+an earlier receipt does not pin their schema. `write_state` stays `disabled` by
+default, and changing it in a receipt grants no authority: every write remains
+subject to the skill's separate exact-action, rights, privacy, and suppression
+gates. This recipe adds no wrapper, provider adapter, dependency, or background
+service.
+
+Use this compact field-level labeling rule for every provider:
+
+| Provider result | Evidence label | Required context |
+|---|---|---|
+| Raw platform/API observation | Measured | provider/tool, observed-at, platform, unit, window |
+| Recomputed rate or aggregate | Calculated | formula and source inputs |
+| Modeled audience, authenticity, rate, or ROI prediction | Estimated | provider/model or method, confidence when supplied |
+| User-pasted/exported value | User-provided | export/source date |
+| Adjacent signal standing in for the target measure | Proxy | proxy rationale and limitation |
+
+Never persist raw contact details or bulk-mirror a provider's creator corpus.
+Conflicting provider values remain separate with their own as-of dates; newer
+does not automatically mean more authoritative.
+
 **ADJUDICATION — organic social has no publishing connector.** Organic social publishing deliberately has **NO `~~category` and NO posting/scheduling/DM connector** — Tier-1 delivery is a human copy-pasting the ready-to-paste packages a skill produces; vendor schedulers (Buffer, Hootsuite, Later, …) are opt-in MCP-catalog entries only, never bundled. The bundled social connectors (`bluesky.py`, `fediverse.py`, `discourse.py`, `youtube.py rss`) are **read-only listening/measurement** — none can post, reply, like, follow, or DM.
 
 **Threads — recipe only, not a shipped connector.** `threads.py` is intentionally left as a recipe: the official [Threads API](https://developers.facebook.com/docs/threads) needs a Meta developer app + a long-lived access token (no keyless read path exists), so it does not fit the keyless-bundled ethos. Until a keyless path appears, treat Threads listening as manual (or route it through self-host RSSHub → `rss_monitor.py`).
@@ -221,7 +301,13 @@ A skill might say: *"Pull keyword rankings from `~~SEO tool` and cross-reference
 
 ## Optional MCP servers (Tier 2/3 automation)
 
-[`docs/mcp-catalog.json`](docs/mcp-catalog.json) is a **copy-paste reference** of official remote HTTP MCP endpoints (plus one self-hosted entry, OpenSEO) — it is **opt-in, not auto-registered**. The catalog is deliberately kept outside the plugin-root `.mcp.json` path that Claude Code auto-discovers (and `plugin.json` carries no `mcpServers` key), so installing the plugin does NOT add 15 servers to your `/mcp` list or trigger any auth prompts. The Agent Plugins v1 Portable Lite projection likewise generates no `mcp.json`. To enable any of these, copy the entries you want into your own host/user MCP config; auth happens interactively on first use. MCP automates retrieval but is never required — the free sources above cover the same data.
+[`docs/mcp-catalog.json`](docs/mcp-catalog.json) is a **copy-paste reference** of official remote HTTP MCP endpoints (plus one self-hosted entry, OpenSEO) — it is **opt-in, not auto-registered**. The catalog is deliberately kept outside the plugin-root `.mcp.json` path that Claude Code auto-discovers (and `plugin.json` carries no `mcpServers` key), so installing the plugin adds no servers to your `/mcp` list and triggers no auth prompts. The Agent Plugins v1 Portable Lite projection likewise generates no `mcp.json`. To enable any of these, copy the entries you want into your own host/user MCP config; auth happens interactively on first use. MCP automates retrieval but is never required — the free sources above cover the same data.
+
+**Influencer data** (verified 2026-08; Beta access may require approval):
+
+| Vendor (official docs) | Endpoint | Transport | Auth | Default posture |
+|---|---|---|---|---|
+| [Upfluence](https://help.upfluence.co/en/articles/15518509-using-the-upfluence-mcp-server) | `https://mcp.upfluence.co/mcp` | streamable HTTP | OAuth | opt-in reads first; writes require exact host approval |
 
 **SEO data** (endpoints verified 2026-05; vendor MCP docs linked + re-checked 2026-07):
 

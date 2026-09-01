@@ -288,7 +288,28 @@ class SkillCapsuleTests(unittest.TestCase):
             self.assertEqual(expected, capsule["runtime_reads"], skill)
             if expected:
                 skills_with_runtime_reads += 1
-        self.assertEqual(18, skills_with_runtime_reads)
+        self.assertEqual(19, skills_with_runtime_reads)
+
+    def test_control_requirements_exist_only_on_bound_capsules(self):
+        binding_document = json.loads(
+            (ROOT / "references/control-bindings.json").read_text(encoding="utf-8")
+        )
+        bound = 0
+        for item in self.index["capsules"]:
+            skill = item["skill"]
+            capsule = json.loads((ROOT / item["capsule_ref"]).read_text(encoding="utf-8"))
+            contract = json.loads(
+                (ROOT / self.contracts[skill]["contract_ref"]).read_text(
+                    encoding="utf-8"
+                )
+            )
+            expected = contract["control_requirements"]
+            if expected:
+                bound += 1
+                self.assertEqual(expected, capsule["control_requirements"], skill)
+            else:
+                self.assertNotIn("control_requirements", capsule, skill)
+        self.assertEqual(len(binding_document["bindings"]), bound)
 
     def test_policy_kernel_and_safety_overlays_cannot_drift_per_skill(self):
         kernel = self.index["policy_kernel"]

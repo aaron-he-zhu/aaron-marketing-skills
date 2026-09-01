@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.2.0
+- **Catalog version:** 20.1.0
 - **Framework:** ROAS
 - **Auditor:** ad-account-auditor
 - **Complete item definitions:** 20
-- **Source digest:** `sha256:2f758f1b1fc56e90637c0da99eba775a44fb7ca588db617d0c20fab7161c11e5`
+- **Source digest:** `sha256:1d9cb169c82655b1db3578e5166be6554398656562757e0ea5bb9618b2f8dde9`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "19.2.0",
+  "catalog_version": "20.1.0",
   "frameworks": {
     "ROAS": {
       "construct": "incremental paid-media contribution and operating quality under declared business constraints",

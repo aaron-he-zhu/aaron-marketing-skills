@@ -11,7 +11,7 @@
           "end_char": 50,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 113,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
           "span_basis": "field-text",
           "start_char": 52
         },
@@ -38,22 +38,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 287,
+          "end_char": 201,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
           "span_basis": "field-text",
           "start_char": 115
         },
-        "text": "and a read-out reports effect/interval/statistical/practical flags with `Calculated` provenance. Without a precommitted action rule and owner, return `decision: UNDECIDED`."
+        "text": "the measurement contract binds the segment-definition version and exact variant hashes"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 450,
+          "path": "email/deliver/send-experiment-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
+          "span_basis": "field-text",
+          "start_char": 203
+        },
+        "text": "and a read-out binds results to send receipts or explicitly reports the receipt gap, then reports effect/interval/statistical/practical flags with `Calculated` provenance. Without a precommitted action rule and owner, return `decision: UNDECIDED`."
       }
     ],
-    "done_when": "mode/unit/profile and design parameters are stated; the matrix isolates one variable per cell and keeps a control; and a read-out reports effect/interval/statistical/practical flags with `Calculated` provenance. Without a precommitted action rule and owner, return `decision: UNDECIDED`.",
+    "done_when": "mode/unit/profile and design parameters are stated; the matrix isolates one variable per cell and keeps a control; the measurement contract binds the segment-definition version and exact variant hashes; and a read-out binds results to send receipts or explicitly reports the receipt gap, then reports effect/interval/statistical/practical flags with `Calculated` provenance. Without a precommitted action rule and owner, return `decision: UNDECIDED`.",
     "extraction_status": "classified",
     "source": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
+      "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce"
     }
   },
   "context_hints": {
@@ -62,7 +77,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 50
       },
       {
@@ -73,10 +88,17 @@
         "source_line": 65
       },
       {
+        "path": "email/nurture/email-sequence-designer/references/send-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "907b65e5cd8475090f39a46bec8f70ae052389161dc9b749b6662f10378b2c5a",
+        "source_line": 115
+      },
+      {
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
         "source_line": 105
       },
       {
@@ -90,49 +112,69 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 46
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:send-experiment-designer",
+  "control_requirements": [
+    "action-receipt",
+    "artifact-binding",
+    "evidence-observation",
+    "measurement-contract"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
       {
-        "condition": "after the decision owner approves a shipped direction, or [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the program before scale. Reuse [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md) for revenue/list-value math and [report-generator](../../../influencer/report/report-generator/SKILL.md) to package the read-out.",
+        "condition": "before scale. If the user separately requests revenue/list-value math after the read-out is complete, use [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md)",
         "extraction_status": "partially-classified",
         "item_id": "handoff-01",
         "kind": "unclassified",
         "source": {
-          "end_char": 445,
+          "end_char": 276,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
           "span_basis": "field-text",
           "start_char": 0
         },
         "target_skills": [
           "email-quality-auditor",
-          "performance-analyzer",
-          "report-generator",
           "roi-calculator"
         ],
-        "text": "Primary: [performance-analyzer](../../../influencer/report/performance-analyzer/SKILL.md) after the decision owner approves a shipped direction, or [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the program before scale. Reuse [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md) for revenue/list-value math and [report-generator](../../../influencer/report/report-generator/SKILL.md) to package the read-out."
+        "text": "Primary: [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the receipt-bound program before scale. If the user separately requests revenue/list-value math after the read-out is complete, use [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md)"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-02",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 372,
+          "path": "email/deliver/send-experiment-designer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
+          "span_basis": "field-text",
+          "start_char": 278
+        },
+        "target_skills": [],
+        "text": "do not route the email experiment through an Influencer analyzer or report builder by default."
       },
       {
         "condition": "If the owner/action rule is missing or the planned read is incomplete, stop with `decision: UNDECIDED`",
         "extraction_status": "classified",
-        "item_id": "handoff-02",
+        "item_id": "handoff-03",
         "kind": "termination",
         "source": {
-          "end_char": 649,
+          "end_char": 576,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
           "span_basis": "field-text",
-          "start_char": 447
+          "start_char": 374
         },
         "target_skills": [],
         "text": "**Termination**: global rules apply per [skill-contract.md](../../../references/skill-contract.md). If the owner/action rule is missing or the planned read is incomplete, stop with `decision: UNDECIDED`"
@@ -140,32 +182,30 @@
       {
         "condition": null,
         "extraction_status": "unclassified",
-        "item_id": "handoff-03",
+        "item_id": "handoff-04",
         "kind": "unclassified",
         "source": {
-          "end_char": 693,
+          "end_char": 620,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
           "span_basis": "field-text",
-          "start_char": 651
+          "start_char": 578
         },
         "target_skills": [],
         "text": "do not auto-chain or manufacture a winner."
       }
     ],
-    "next_best": "Primary: [performance-analyzer](../../../influencer/report/performance-analyzer/SKILL.md) after the decision owner approves a shipped direction, or [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the program before scale. Reuse [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md) for revenue/list-value math and [report-generator](../../../influencer/report/report-generator/SKILL.md) to package the read-out.\n\n**Termination**: global rules apply per [skill-contract.md](../../../references/skill-contract.md). If the owner/action rule is missing or the planned read is incomplete, stop with `decision: UNDECIDED`; do not auto-chain or manufacture a winner.",
+    "next_best": "Primary: [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the receipt-bound program before scale. If the user separately requests revenue/list-value math after the read-out is complete, use [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md); do not route the email experiment through an Influencer analyzer or report builder by default.\n\n**Termination**: global rules apply per [skill-contract.md](../../../references/skill-contract.md). If the owner/action rule is missing or the planned read is incomplete, stop with `decision: UNDECIDED`; do not auto-chain or manufacture a winner.",
     "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md): Status / Objective / Key Findings / Evidence (label each Measured / User-provided / Estimated) / Assumptions / Open Loops / Recommended Next Skill.",
     "summary_ref": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
+      "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce"
     },
     "summary_source": "skill-section",
     "target_skills": [
       "email-quality-auditor",
-      "performance-analyzer",
-      "report-generator",
       "roi-calculator"
     ]
   },
@@ -175,34 +215,34 @@
     "name": "send-experiment-designer",
     "path": "email/deliver/send-experiment-designer/SKILL.md",
     "phase": "deliver",
-    "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
-    "version": "20.0.0"
+    "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<what to test / results export> [mode: a-b|multivariate|send-time|hold-out] [profile: promotional|retention|cold-outbound|newsletter] [baseline] [alpha/power/MDE]",
     "clauses": [
       {
         "clause_id": "read-01",
-        "extraction_status": "partially-classified",
+        "extraction_status": "classified",
         "kind": "evidence-input",
-        "requirement": "unclassified",
+        "requirement": "optional",
         "source": {
-          "end_char": 268,
+          "end_char": 381,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the mode, what the user wants to test, SEND profile (`promotional|retention|cold-outbound|newsletter`), baseline outcome rate, list size/send volume, alpha, power, MDE, multiplicity/sequential rule, guardrails, decision owner/rule, and any finished ESP results export."
+        "text": "the mode, what the user wants to test, SEND profile (`promotional|retention|cold-outbound|newsletter`), baseline outcome rate, list size/send volume, alpha, power, MDE, multiplicity/sequential rule, guardrails, decision owner/rule, the segment-definition and variant creative/HTML versions/hashes, and any finished ESP results export with matching send-receipt refs when available."
       }
     ],
-    "extraction_status": "partially-classified",
-    "reads": "the mode, what the user wants to test, SEND profile (`promotional|retention|cold-outbound|newsletter`), baseline outcome rate, list size/send volume, alpha, power, MDE, multiplicity/sequential rule, guardrails, decision owner/rule, and any finished ESP results export.",
+    "extraction_status": "classified",
+    "reads": "the mode, what the user wants to test, SEND profile (`promotional|retention|cold-outbound|newsletter`), baseline outcome rate, list size/send volume, alpha, power, MDE, multiplicity/sequential rule, guardrails, decision owner/rule, the segment-definition and variant creative/HTML versions/hashes, and any finished ESP results export with matching send-receipt refs when available.",
     "source": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
+      "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce"
     }
   },
   "output_contract": {
@@ -217,7 +257,7 @@
           "end_char": 71,
           "path": "email/deliver/send-experiment-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613",
+          "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -228,23 +268,27 @@
     "source": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
+      "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce"
     },
     "summary": "a user-facing test-design or read-out doc plus a `### Handoff Summary`.",
     "summary_source": "writes-fallback",
     "writes": "a user-facing test-design or read-out doc plus a `### Handoff Summary`."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -253,7 +297,7 @@
     "source": {
       "path": "email/deliver/send-experiment-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "680ae64c0dcd35233596d550e0e934e3e3443e116f457b696e9d9b2c4fecd613"
+      "sha256": "7d0f3e2825a408a20ac5ac4a6514ab093c34bebb9450ebf6e481e21f84d918ce"
     },
     "trigger_phrases": [
       "build a hold-out group",

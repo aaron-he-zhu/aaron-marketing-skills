@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 19.2.0
+- **Catalog version:** 20.1.0
 - **Framework:** CITE
 - **Auditor:** domain-authority-auditor
 - **Complete item definitions:** 40
-- **Source digest:** `sha256:7c7308b1b06c62a04c447109130068253cdbb55d4c8c63e3a981200f800b96dd`
+- **Source digest:** `sha256:f8a8ff35ee4c5cc38ff955956237cefee123777bbcac14e2b920f545bc4022e5`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "19.2.0",
+  "catalog_version": "20.1.0",
   "frameworks": {
     "CITE": {
       "benchmark_mode": "peer-relative; absolute thresholds are diagnostic starting points only",

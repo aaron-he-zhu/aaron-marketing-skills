@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 68,
+          "end_char": 105,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the echo rate is reported with its matching method and corpus stated"
+        "text": "the report binds the exact canon and, when applicable, stimulus/result `evidence-observation` it measures"
       },
       {
         "clause_id": "done-02",
@@ -23,22 +23,67 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 121,
+          "end_char": 145,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
-          "start_char": 70
+          "start_char": 107
         },
-        "text": "every AI-answer / GDELT / Bluesky number is labeled"
+        "text": "the echo rate states method and corpus"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 222,
+          "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
+          "span_basis": "field-text",
+          "start_char": 147
+        },
+        "text": "every proxy remains proxy and every own-export number carries an as-of date"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 261,
+          "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
+          "span_basis": "field-text",
+          "start_char": 224
+        },
+        "text": "the SOV figure names the locked panel"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 370,
+          "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
+          "span_basis": "field-text",
+          "start_char": 263
+        },
+        "text": "and any canon, panel, method, or stimulus switch restarts the trend rather than silently merging histories."
       }
     ],
-    "done_when": "the echo rate is reported with its matching method and corpus stated; every AI-answer / GDELT / Bluesky number is labeled",
+    "done_when": "the report binds the exact canon and, when applicable, stimulus/result `evidence-observation` it measures; the echo rate states method and corpus; every proxy remains proxy and every own-export number carries an as-of date; the SOV figure names the locked panel; and any canon, panel, method, or stimulus switch restarts the trend rather than silently merging histories.",
     "extraction_status": "classified",
     "source": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b"
+      "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629"
     }
   },
   "context_hints": {
@@ -47,7 +92,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -58,10 +103,17 @@
         "source_line": 42
       },
       {
+        "path": "narrative/evaluate/message-test-designer/references/stimulus-binding.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "4acf5b2b7e15cfeaff6a9fda2de08b14a92c11a80499af5a2216a54baefd878f",
+        "source_line": 44
+      },
+      {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
       },
       {
@@ -84,6 +136,11 @@
     ]
   },
   "contract_id": "skill:narrative-resonance-monitor",
+  "control_requirements": [
+    "artifact-binding",
+    "evidence-observation",
+    "measurement-contract"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -96,7 +153,7 @@
           "end_char": 179,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -114,7 +171,7 @@
           "end_char": 396,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
           "start_char": 180
         },
@@ -132,7 +189,7 @@
           "end_char": 600,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
           "start_char": 397
         },
@@ -150,7 +207,7 @@
           "end_char": 974,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
           "start_char": 602
         },
@@ -163,7 +220,7 @@
     "summary_ref": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b"
+      "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -178,8 +235,8 @@
     "name": "narrative-resonance-monitor",
     "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
     "phase": "evaluate",
-    "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
-    "version": "20.0.0"
+    "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<brand / narrative> [canon lexicon path] [competitor panel] [platforms]",
@@ -190,14 +247,14 @@
         "kind": "project-resource",
         "requirement": "unclassified",
         "source": {
-          "end_char": 218,
+          "end_char": 98,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the canon lexicon (positioning statement, pillars, boilerplate, approved/banned terms) from `memory/narrative-registry/canon.md` (read-only — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) owns it)"
+        "text": "the exact canon ID/version/hash/current head and lexicon from `memory/narrative-registry/canon.md`"
       },
       {
         "clause_id": "read-02",
@@ -205,14 +262,14 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 350,
+          "end_char": 165,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
-          "start_char": 220
+          "start_char": 100
         },
-        "text": "the locked competitor panel and prior trend from [share-of-voice-tracker](../../../social/observe/share-of-voice-tracker/SKILL.md)"
+        "text": "when measuring a tested message, its stimulus/test/result binding"
       },
       {
         "clause_id": "read-03",
@@ -220,37 +277,52 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 592,
+          "end_char": 210,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
-          "start_char": 352
+          "start_char": 167
         },
-        "text": "public resonance telemetry via `scripts/connectors/tavily.py --answer` (AI-answer, proxy), `scripts/connectors/bluesky.py` and `scripts/connectors/gdelt.py` (adjacent-signal, proxy), `scripts/connectors/pageviews.py` (attention denominator)"
+        "text": "the locked competitor panel and prior trend"
       },
       {
         "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 234,
+          "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
+          "span_basis": "field-text",
+          "start_char": 212
+        },
+        "text": "proxy public telemetry"
+      },
+      {
+        "clause_id": "read-05",
         "extraction_status": "partially-classified",
         "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 671,
+          "end_char": 297,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
-          "start_char": 594
+          "start_char": 236
         },
-        "text": "user-exported closed-platform analytics (Measured, as-of date) when supplied."
+        "text": "and user-exported closed-platform analytics with as-of dates."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "the canon lexicon (positioning statement, pillars, boilerplate, approved/banned terms) from `memory/narrative-registry/canon.md` (read-only — [narrative-registry](../../../protocol/narrative-registry/SKILL.md) owns it); the locked competitor panel and prior trend from [share-of-voice-tracker](../../../social/observe/share-of-voice-tracker/SKILL.md); public resonance telemetry via `scripts/connectors/tavily.py --answer` (AI-answer, proxy), `scripts/connectors/bluesky.py` and `scripts/connectors/gdelt.py` (adjacent-signal, proxy), `scripts/connectors/pageviews.py` (attention denominator); user-exported closed-platform analytics (Measured, as-of date) when supplied.",
+    "reads": "the exact canon ID/version/hash/current head and lexicon from `memory/narrative-registry/canon.md`; when measuring a tested message, its stimulus/test/result binding; the locked competitor panel and prior trend; proxy public telemetry; and user-exported closed-platform analytics with as-of dates.",
     "source": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b"
+      "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629"
     }
   },
   "output_contract": {
@@ -265,7 +337,7 @@
           "end_char": 71,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -281,7 +353,7 @@
           "end_char": 381,
           "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b",
+          "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629",
           "span_basis": "field-text",
           "start_char": 73
         },
@@ -292,23 +364,27 @@
     "source": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b"
+      "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629"
     },
     "summary": "a resonance report — an echo rate with its matching method and corpus declared, an AI-answer perception read (proxy-labeled) comparing answer-engine descriptions against the canon, a share-of-voice figure on a named locked panel, and resonance signals from the keyless connectors — every number labeled Measured / proxy / User-provided with its as-of date, plus the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "the resonance report to `memory/narrative/narrative-resonance-monitor/`; any resonance/effectiveness statement it cannot back with Measured or User-provided evidence stays `[needs source]` and goes to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` — this skill never adjudicates it and never asserts a proxy number as Measured."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -317,7 +393,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "974a9770f0f82410249ecc6d3ad2d15aa0d7dc4426beef3748d7cbc87321443b"
+      "sha256": "e826eafad5a7ecf13c595134fda5ac2a8332705fd09cb33f0463edf13a2d0629"
     },
     "trigger_phrases": [
       "check how AI answer engines describe our brand",

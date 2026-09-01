@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.0.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.1.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -562,7 +562,7 @@ Skills benennen Tools mit `~~category`-Platzhaltern (`~~SEO tool`, `~~web analyt
 |-------|--------------|
 | **28 gebündelte Zero-Dependency-Konnektoren** | Reine Python-Standardbibliothek — kein `pip`, kein Build-Schritt. Keyless Live-SERP + JS-gerendertes Scraping (Firecrawl, Tavily), eine AI-Answer-Citation-Probe, DNS-over-HTTPS-E-Mail-Auth-Pulls, Wikipedia-Aufmerksamkeitsserien, GDELT-News-Mentions, echte YouTube-Creator-Metriken, IndexNow + Baidu-Index-Push, Resend-ESP-Automatisierung und ein git-differenzierbares Messbuch, das jeden von ihnen in eine Vorher/Nachher-Zeitreihe verwandelt. |
 | **60+ dokumentierte offizielle/kostenlose APIs** | Jede Zeile verlinkt die **offizielle Dokumentation** des Anbieters, trägt ein Verifiziert-am-Datum, und jeder Link wird vor Auslieferung HTTP-geprüft. Enthält die Pfade, die die meisten Tool-Listen übersehen: GSC URL Inspection, CrUX History (40 Wochen Field-CWV), die Gmail Postmaster Tools API, Metas Ad Library, Microsoft Claritys Data Export API. |
-| **Anbieter-MCP-Server** | 18 Remote-Endpunkte katalogisiert (nie automatisch registriert — deine `/mcp`-Liste bleibt sauber) plus die offiziellen selbst gehosteten Server für Google Analytics, Search Console, **Google Ads** und **Microsoft Clarity**. Zwei Remote-MCPs funktionieren ganz ohne Schlüssel (Firecrawl, Tavily). |
+| **Anbieter-MCP-Server** | 20 optionale Katalogeinträge — 19 von Anbietern gehostete Remote-Endpunkte plus ein selbst gehosteter OpenSEO-Eintrag — werden nie automatisch registriert; deine `/mcp`-Liste bleibt sauber. Die offiziellen selbst gehosteten Server für Google Analytics, Search Console, **Google Ads** und **Microsoft Clarity** sind ebenfalls dokumentiert. Zwei Remote-MCPs funktionieren ganz ohne Schlüssel (Firecrawl, Tavily). |
 
 Was sie vertrauenswürdig statt nur zahlreich macht:
 
@@ -579,7 +579,7 @@ Was sie vertrauenswürdig statt nur zahlreich macht:
 
 - **Gebündelte Zero-Dependency-Helfer** unter `scripts/connectors/` (nur Python-Standardbibliothek) ziehen öffentliche/eigene Daten lokal — z. B. PageSpeed/CrUX, Open PageRank, Page-Crawl, Wayback CDX, Wikidata SPARQL, Common Crawl, advertools-Rezepte — plus **`resend.py`**, direkte Resend-ESP-Automatisierung für die E-Mail-Skills (Free-Tier-Key: Domain-Auth-Status, Seed-Test-Sends, Suppression-Sync, Broadcast-Scheduling; verändernde Subcommands standardmäßig Dry-Run und erfordern `--live`), und **`firecrawl.py`** + **`tavily.py`**, keyless Hosted-Fetcher-Automatisierung für die Research-Skills (Firecrawl: Live-Web-SERP + JS-gerendertes Page-Markdown + Site-Maps; Tavily: bewertete Suche + Cited-Sources-Probe einer AI-Answer-Engine für GEO + URL-Extract — beide kostenlos ganz ohne Schlüssel, beide mit einem eingebauten lokalen robots.txt-Pre-Flight).
 - **Kostenlose/keyless Quellen** pro Kategorie dokumentiert: Google Search Console & GA4 (eigene Daten), PageSpeed/CrUX, Wikidata, Common Crawl, Open PageRank, Firecrawl keyless SERP/Scrape, Tavily keyless AI-Search, DNS-over-HTTPS-E-Mail-Auth-Records (`doh.py`), Wikipedia-Aufmerksamkeitsserien (`pageviews.py`), GDELT-News-Mentions (`gdelt.py`), YouTube-Creator-Metriken mit einem Free-Key (`youtube.py`), IndexNow + Baidu-Index-Push (`indexpush.py`, Dry-Run-gegatet), die Ad-Transparency-Bibliotheken (Meta/Google/TikTok) und Rezept-Zeilen für crt.sh, den W3C-Validator, oEmbed und HN Algolia.
-- **Opt-in-MCP-Server** (Ahrefs, Semrush, SE Ranking, SISTRIX, SimilarWeb, die selbst gehostete kostenlose **OpenSEO**-Suite, Cloudflare, Vercel, HubSpot, Amplitude, Notion, Webflow, Sanity, Contentful, Slack, Resend, das keyless Firecrawl und Tavily) sind in [`docs/mcp-catalog.json`](mcp-catalog.json) als **reine Copy-Paste-Referenz** katalogisiert — der Katalog sitzt außerhalb des automatisch registrierten Plugin-Root-`.mcp.json`-Pfads, sodass nichts für dich registriert wird. Kopiere die gewünschten Einträge in deine eigene MCP-Konfiguration.
+- **Opt-in-MCP-Server** (Ahrefs, Semrush, SE Ranking, SISTRIX, SimilarWeb, die selbst gehostete kostenlose **OpenSEO**-Suite, Cloudflare, Vercel, HubSpot, Amplitude, Notion, Webflow, Sanity, Contentful, Slack, Resend, das keyless Firecrawl und Tavily, Appeeky und Upfluence) sind in [`docs/mcp-catalog.json`](mcp-catalog.json) als **reine Copy-Paste-Referenz** katalogisiert — der Katalog sitzt außerhalb des automatisch registrierten Plugin-Root-`.mcp.json`-Pfads, sodass nichts für dich registriert wird. Kopiere die gewünschten Einträge in deine eigene MCP-Konfiguration.
 
 Paid-Ads-Skills bewerten aus deinem **eigenen manuellen Kontoexport** (nativer Ad-Manager-CSV, GA4, E-Commerce). Mit Schlüssel versehene Ad-Plattform-APIs (Google Ads SDK, Meta Marketing API) sind nur Opt-in-Tier-2/3 und **niemals** eine Tier-1-Voraussetzung. E-Mail-Skills bewerten genauso — aus deinem **eigenen ESP-Export** — und jedes Deliverability-Signal ist keyless (DNS-Lookups, ein DMARC-RUA-Report und ein Seed-List-Inbox-Test), sodass eine mit Schlüssel versehene ESP-API auch keine Tier-1-Voraussetzung ist; wenn Resend dein ESP ist, automatisiert das gebündelte `resend.py` dieselbe Schleife auf dem Free-Tier.
 
@@ -697,7 +697,7 @@ Live-Endpunkt-Drift wird separat mit dem **manuellen** [`scripts/connectors/smok
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — Authoring-Regeln, die Beitrags-Checkliste und die maßgebliche Liste der 10 Tracking-Oberflächen.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** — Versionen pro Skill + Changelog (aktuelles Bundle: `20.0.0`).
+- **[VERSIONS.md](../VERSIONS.md)** — Versionen pro Skill + Changelog (aktuelles Bundle: `20.1.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — Sicherheits-, Datenschutz- und Community-Richtlinie.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — Agent-seitiger Kontext für dieses Repo.

@@ -4,13 +4,13 @@ slug: aaron-positioning-mapper
 displayName: "Positioning Mapper · 定位画布"
 summary: "定位画布/竞争替代品/独特价值/滩头细分"
 description: 'Use when the user asks to "map our positioning", "name our competitive alternatives", or "pick a beachhead segment for the launch"; produces a Dunford-style positioning canvas — named competitive alternatives (including spreadsheet and status quo), unique attributes (verifiable, or routed to the claims ledger), value themes (attribute→benefit→value chains), a target beachhead segment scored on serviceability / pain intensity / reachability, and a one-sentence onlyness statement — the sole upstream of the message house and the entity-signal source for the canonical entity profile. Not for the message house or per-channel launch copy — use message-house-builder; not for audience/persona profiling itself — use audience-mapper; not for SEO keyword positioning — use keyword-research. 定位画布/竞争替代品/独特价值/滩头细分'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when defining launch positioning before any launch copy exists: naming the real competitive alternatives (including spreadsheet / manual process / status quo), isolating unique attributes, mapping value themes, choosing the beachhead segment, or writing the onlyness statement. The first move of the RAMP Research phase, the sole upstream of message-house-builder, and the entity-signal source for entity-registry. Not the message house itself and not persona research."
 argument-hint: "<product / offering> [known alternatives] [candidate segments]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "launch", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "research"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "launch", "phase": "research", "geo-relevance": "low", "hermes": {"tags": ["marketing", "launch", "research"], "category": "launch"}, "openclaw": {"emoji": "🚀", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Positioning Mapper

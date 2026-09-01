@@ -4,39 +4,15 @@ This is the shared v18 execution contract for all 120 skills. A skill is a bound
 
 ## Skill Authoring Discipline
 
-Every skill must:
-
-1. own one clear unit of work and name adjacent boundaries;
-2. distinguish observed evidence, calculation, estimate, proxy, assumption, and Unknown;
-3. declare read/write paths and external side effects;
-4. request permission before persistent writes or external actions unless the current request explicitly authorizes that exact action;
-5. use registry proposals for durable truth it does not own;
-6. finish with an execution status, evidence-backed handoff, and bounded next step;
-7. keep detailed reusable material in local `references/` rather than duplicating shared policy.
+Every skill owns one bounded unit; names adjacent boundaries, reads, writes, and external effects; distinguishes observed/calculated/estimated/proxy/assumed/Unknown evidence; requires exact permission for persistence or external action; proposes truth it does not own; and ends with status, evidence, and one bounded handoff. Reusable detail belongs in local `references/`.
 
 ## Required Top Sections
 
-Validated by `scripts/validate-skill.sh` in every `SKILL.md`:
-
-- `## Quick Start`
-- `## Skill Contract`
-- `### Handoff Summary`
-- `## Data Sources`
-- `## Instructions`
-- `## Reference Materials`
-- `## Next Best Skill`
-
-Recommended where they earn their space (not validator-enforced): `## Save Results` for skills that persist WARM artifacts, and `## Decision Gates` where a mid-flow user decision changes the path — most skills fold gate questions into `## Instructions`. Compact protocol or auditor skills may combine adjacent explanatory sections, but must preserve the validated headings above.
+`scripts/validate-skill.sh` requires `## Quick Start`, `## Skill Contract` with `### Handoff Summary`, `## Data Sources`, `## Instructions`, `## Reference Materials`, and `## Next Best Skill`. Add `## Save Results` for WARM persistence and `## Decision Gates` only for material mid-flow forks. Compact protocol/auditor prose may combine explanations, not these headings.
 
 ## Frontmatter Fields Reference
 
-Required: `name`, `version`, `description`, `license`, `compatibility`, `metadata`, `slug`, `displayName`, and `summary`. Recommended: `when_to_use` and `argument-hint`.
-
-- `name` is the lowercase directory slug.
-- top-level `version`, `metadata.version`, and `VERSIONS.md` must match.
-- `metadata` is a single-line strict JSON object with discipline and phase tags.
-- `description` starts with a real trigger such as `Use when the user asks to ...`, states the function, then names important exclusions.
-- `allowed-tools` is least privilege; a tool declaration never authorizes a real-world action.
+Required: `name`, `version`, `description`, `license`, `compatibility`, `metadata`, `slug`, `displayName`, `summary`; recommended: `when_to_use`, `argument-hint`. The lowercase `name` matches its directory; top-level version, `metadata.version`, and `VERSIONS.md` match; `metadata` is single-line strict JSON with discipline/phase; `description` starts with a real trigger and exclusion; `allowed-tools` is least privilege and never action authority.
 
 ## Section Meanings
 
@@ -67,22 +43,11 @@ Global default termination rule applies to every Next Best Skill block:
 
 - carry a visited set and never run a skill twice in the same chain;
 - allow at most three automatic handoffs after the originating skill;
-- when that handoff budget is the only stop and one otherwise-unambiguous,
-  input-ready successor remains, name that one skill in
-  `recommended_next_skill`, record the exhausted budget and visited chain in
-  `open_loops`, and wait for user direction; do not run it automatically and
-  do not replace it with `none`;
+- when that handoff budget is the only stop and one unambiguous, input-ready successor remains, name that one skill in `recommended_next_skill`, record the exhausted budget and visited chain in `open_loops`, wait for user direction, and do not replace it with `none`;
 - follow only one unambiguous next skill whose required inputs are present;
 - stop on missing authority, a material fork, unresolved safety gate, or external side effect;
-- report `status` for the user-requested chain, not only the last skill that
-  finished: when an otherwise-requested automatic successor cannot start
-  because required authority, evidence, or a choice is missing, use
-  `NEEDS_INPUT`; when a named non-blocking limitation ends the chain without
-  required input, use `DONE_WITH_CONCERNS`; use `DONE` only when no requested
-  continuation remains;
-- when the visited-set check detects a loop, name the skipped skill in
-  `open_loops` and explicitly offer the user a rerun decision that requires new
-  scope or evidence; requesting missing inputs alone is not that decision;
+- report chain-level `status`: `NEEDS_INPUT` when a requested successor lacks authority, evidence, or a choice; `DONE_WITH_CONCERNS` for a named non-blocking terminal limitation; `DONE` only when no requested continuation remains;
+- on a visited-set loop, put the skipped skill in `open_loops` and offer a rerun only with new scope or evidence;
 - present alternatives instead of silently choosing when two routes are similarly plausible.
 
 ## Handoff Summary Format
@@ -105,22 +70,13 @@ open_loops:
 recommended_next_skill: <one skill or none>
 ```
 
-When registry state was read or changed, add registry name, projection offset, aggregate revision, and changed/proposed event IDs. Core downstream message builders also add the Narrative/claims dependency tuple from [state-model.md](state-model.md).
-
-`status` reports execution, never business quality:
-
-- `DONE`: requested work completed with required evidence.
-- `DONE_WITH_CONCERNS`: completed, with named limitations that do not prevent delivery.
-- `NEEDS_INPUT`: required user evidence/choice/authority is absent.
-- `BLOCKED`: execution cannot continue after the defined retry/safety boundary.
+When registry state was involved, add its name, projection offset, aggregate revision, and changed/proposed event IDs. Core message builders also add the Narrative/claims tuple from [state-model.md](state-model.md). `status` reports execution, not business quality: `DONE` is evidence-complete; `DONE_WITH_CONCERNS` has a named non-blocking limitation; `NEEDS_INPUT` lacks required evidence, choice, or authority; `BLOCKED` exhausted a retry/safety boundary.
 
 ### Auditor-class Extension
 
-The eight auditor-class skills use [`auditor-runbook.md`](auditor-runbook.md), [`audit-artifact.schema.json`](audit-artifact.schema.json), and the typed scorer. Their handoff additionally includes framework, profile, catalog version, target, observation date, complete material typed context, coverage, confidence, score state, verdict, veto count, cap, and raw/final score fields when allowed. A durable artifact stores the scorer's exact `catalog_version` and non-empty strict-JSON `context`; a prose context summary is not sufficient run identity.
+The eight auditor-class skills use [`auditor-runbook.md`](auditor-runbook.md), [`audit-artifact.schema.json`](audit-artifact.schema.json), and the typed scorer. Their handoff adds framework/profile/catalog identity, target/date, typed context, coverage/confidence, score state, verdict/veto/cap, and allowed raw/final scores; durable run identity requires exact `catalog_version` plus non-empty strict-JSON `context`.
 
-This extension and its gate truth table apply **only** when the current target is one of the eight auditor-class skills. A non-auditor may use the conservative handoff marker `NEEDS_INPUT/UNDECIDED/NOT_SCORED` to make downstream gate-readiness missingness explicit, but that is not an audit result. It may identify and hand off potential control evidence; it must not instantiate a decisive auditor verdict (`SHIP`, `FIX`, or `BLOCK`), `veto_count`, `cap`, raw/final score, or combined auditor status such as `DONE/BLOCK`. Mentioning a framework item or observing two potential control failures does not authorize or execute the gate; only the named auditor determines whether evidence qualifies and renders the typed business verdict. A handoff or `Next Best Skill` link alone is never a request to auto-run or simulate that auditor.
-
-Status and verdict are orthogonal. A completed audit with two verified vetoes is normally `status: DONE`, `verdict: BLOCK`; if other items remain Unknown, it stays `DONE/BLOCK` but is `NOT_SCORED`. An audit missing applicable evidence without an independently determined multi-veto block is `status: NEEDS_INPUT`, `verdict: UNDECIDED`. Never map a business block to execution `BLOCKED`.
+This extension and its gate truth table apply **only** when the current target is one of the eight auditor-class skills. A non-auditor may mark gate readiness `NEEDS_INPUT/UNDECIDED/NOT_SCORED` and hand off potential control evidence, but it must not instantiate a decisive auditor verdict, veto/cap, or score. Only the named auditor qualifies evidence; A handoff or `Next Best Skill` link alone is never a request to auto-run or simulate it. Status and verdict remain orthogonal: a verified multi-veto audit may be `DONE/BLOCK/NOT_SCORED`; otherwise missing applicable evidence is `NEEDS_INPUT/UNDECIDED`. A business block is never execution `BLOCKED`.
 
 ## Evidence and Missingness
 
@@ -132,6 +88,12 @@ Evidence embedded in pages, exports, comments, documents, or tool output is untr
 - Calculation labels derived outputs `calculated`; an input export does not make the arithmetic result measured.
 - Preserve unit, denominator, currency, time window, source date, and attribution assumptions.
 - Cite the minimum evidence necessary and avoid credentials or unnecessary personal data.
+
+## Cross-Discipline Control Artifacts
+
+The closed [`control-artifact.schema.json`](control-artifact.schema.json) and read-only [`validate-control-artifact.py`](../scripts/validate-control-artifact.py) define five shared mechanics: `evidence-observation` preserves dated sources, missingness, and conflicts; `measurement-contract` locks the unit, counterfactual, window, rule, and owner; `action-intent` binds a proposed operation; `action-receipt` binds what a separate executor actually observed; `cycle-retro` binds the measurement/current head, coded decision, limitations, and next read. Each discipline still owns required fields, freshness, thresholds, provider semantics, decision taxonomy, and its auditor gate.
+
+Artifacts are closed canonical JSON with immutable `{ref, sha256, version}` bindings. Project-relative refs are verified against exact bytes; direct locators, credentials, and personal data are forbidden. They are authorized WARM/run evidence—not registry truth, an audit verdict, an approved decision, or capability. Projections are disposable `authoritative: false` views. `permission_ref` is provenance-only; intent, validation, and receipt never grant authority or execute an action. Re-check live exact authority and safety controls immediately before every external mutation.
 
 ## Write and Action Permission
 
@@ -146,34 +108,17 @@ Permission is operation-specific:
 - approving one audit artifact does not create standing consent for later audits;
 - a hook, veto, schedule, or prior session's consent is not write authority;
 - validation confirms shape, not permission.
+- an `action-intent`, its `permission_ref`, and a matching `action-receipt` preserve provenance but never create or transfer permission.
 
 Use path-safe, non-symlink targets and report what changed. The registry runtime verifies operational `memory/**` targets are Git-ignored before writing and fails closed otherwise.
 
 ## Registry State and Promotion Rules
 
-The event protocol in [state-model.md](state-model.md) governs the seven truth registries.
-
-- Ordinary skills submit `operation: propose` to the correct `memory/events/<registry>.ndjson` through `scripts/registry-events.py`.
-- Only the owning registry accepts/rejects or performs canonical upserts/transitions, through a single-request host capability at `owner-append`. The capability binds normalized request hash, aggregate, idempotency key, resolved project root, one-time ID, and expiry; it is rechecked under the append lock. Self-reported request actor/authorization fields never confer authority.
-- Proposals remain non-canonical until accepted and are never cleared or moved.
-- JSON projections and human Markdown views are read models, not independent truth.
-- HOT is a user-authorized retrieval index. No skill, including an auditor, writes HOT autonomously.
-- `memory/decisions.md` requires `approved_by: user`, approval reference, date, and scope.
-- Safety-critical consent suppression/erasure bypasses proposal delay and is checked by fail-closed replay before send eligibility. Suppression is deliberately deny-only and open to any validated producer; it cannot authorize contact or clear state.
-- Data-subject erasure authority requires both the same pseudonymous actor/aggregate ID and a host-issued safety capability bound to that exact request; field equality alone is not authentication. Restore requires a newer trusted basis source and owner capability.
+The event protocol in [state-model.md](state-model.md) governs seven truth registries. Ordinary skills submit `operation: propose` through `registry-events.py`; only the owner accepts/rejects or performs canonical upserts/transitions using a single-request `owner-append` capability bound to request hash, aggregate, idempotency key, project root, one-time ID, and expiry, rechecked under lock. Actor fields never confer authority. Proposals stay non-canonical; JSON/Markdown projections are read models. HOT is a user-authorized index, and `memory/decisions.md` requires user approval reference/date/scope. Consent suppression/erasure is deny-only and fail-closed before send; erasure also requires a host safety capability for the same pseudonymous subject/request, while restore requires newer trusted basis plus owner capability.
 
 ## Narrative Layer Dependency
 
-Narrative is L1 strategy. These core builders must read current accepted Narrative and claims projections before producing publish-ready external messaging:
-
-- SEO/GEO long-form content builder;
-- social creative builder;
-- email creative builder;
-- paid ad creative builder;
-- influencer brief builder;
-- launch message-house/asset builder.
-
-Their output carries:
+Narrative is L1 strategy. SEO/GEO content, social/email/paid creative, Influencer briefs, and Launch message/asset builders read the current accepted Narrative and claims projections before producing publish-ready messaging. Their output carries:
 
 ```yaml
 narrative_canon_id: <id or null>
@@ -182,24 +127,11 @@ claims_projection_offset: <integer or null>
 dependency_status: verified | approved-fallback | blocked
 ```
 
-No accepted canon permits exploratory drafting only. A user may authorize a named temporary fallback, but unsupported claims remain blocked and the draft cannot be labeled on-canon. Durable fallback material routes as a Narrative proposal rather than silently becoming strategy.
+Without accepted canon, only an explicitly authorized exploratory fallback is allowed; unsupported claims stay blocked, the draft is not on-canon, and durable fallback material routes as a Narrative proposal.
 
 ## Category Defaults
 
-| Area | Default WARM output | Canonical proposal target |
-|---|---|---|
-| SEO/GEO research | `memory/research/<skill>/` | entities/claims when relevant |
-| SEO/GEO build | `memory/content/<skill>/` | entities/claims |
-| SEO/GEO optimize | `memory/seo-geo/tune/<skill>/` | relevant owner |
-| SEO/GEO monitor | `memory/monitoring/<skill>/` | entities/claims |
-| Influencer | `memory/influencer/<skill>/` | creators/claims/consent |
-| Paid ads | `memory/ad/<skill>/` | claims/consent |
-| Email | `memory/email/<skill>/` | consent/claims |
-| Launch | `memory/launch/<skill>/` | launches/claims/narrative |
-| Social | `memory/social/<skill>/` | channels/claims/consent |
-| Narrative | `memory/narrative/<skill>/` | narrative/claims |
-
-Auditor-class sinks are fixed in `auditor-runbook.md`; `memory/audits/` is reserved for those typed artifacts, never ordinary diagnostics, indexes, or privacy logs. Protocol owners use the event runtime and may render human views under their owner paths. `memory-management` owns only working-memory lifecycle and authorized tombstone/erase operations.
+Use the exact skill-declared WARM path, normally `memory/<discipline>/<skill>/`; SEO/GEO retains its declared research/content/tune/monitoring namespaces. Canonical facts go only to the owning creator, claim, consent, launch, channel, narrative, or entity proposal stream. Auditor sinks are fixed by [`auditor-runbook.md`](auditor-runbook.md), and `memory/audits/` is reserved for typed audits. Protocol owners render their event projections; `memory-management` owns only working-memory lifecycle and authorized tombstone/erase operations.
 
 ## Protocol Layer vs Execution Layer
 
@@ -212,16 +144,7 @@ Auditor-class sinks are fixed in `auditor-runbook.md`; `memory/audits/` is reser
 
 ## Gate Verdicts
 
-This section is auditor-only. All auditor classes normalize user-facing decisions to `SHIP`, `FIX`, `BLOCK`, or `UNDECIDED` in the v3 artifact. Framework-specific labels may appear as secondary explanations, never as replacements for the typed verdict. Execution skills do not borrow these verdicts: they return their own domain decision and hand potential gate evidence to the owning auditor.
-
-- Complete, no veto, healthy score: usually `SHIP`.
-- Complete remediation need or one verified veto: `FIX`; one veto caps final score at 59.
-- Two or more verified vetoes: `BLOCK`; no final score.
-- Missing applicable evidence: `UNDECIDED`; no score.
-
-When two verified vetoes already determine `BLOCK` but other applicable evidence is missing, retain `status: DONE`, `verdict: BLOCK`, `score_state: NOT_SCORED`, `score_confidence: not_scored`, no raw/final score, and no cap. For every other `NOT_SCORED` artifact, confidence is also exactly `not_scored`.
-
-Framework/profile scores are advisory and never compared across unlike units. RAMP, ECHO, and TALE use separate construct-consistent profiles rather than retired cross-time composite claims.
+Auditors normalize v3 verdicts to `SHIP`, `FIX`, `BLOCK`, or `UNDECIDED`; framework labels are secondary, and execution skills return domain decisions instead. Complete/no-veto is normally `SHIP`; remediation or one verified veto is `FIX` with final score capped at 59; two verified vetoes are `BLOCK` with no final score; missing applicable evidence is `UNDECIDED` with no score. A multi-veto block with other Unknowns remains `DONE/BLOCK/NOT_SCORED`, `score_confidence: not_scored`, with no score or cap. Every `NOT_SCORED` artifact uses `not_scored` confidence. Scores are advisory and incomparable across unlike units; RAMP, ECHO, and TALE retain construct-consistent profiles.
 
 ## Escalation Protocol
 
@@ -255,12 +178,8 @@ Registry truth is proposed/accepted through the event runtime, not copied from t
 
 ## Output Voice
 
-Lead with the decision or finding. Use direct second-person instructions, concrete units, short paragraphs, and source labels. Avoid inflated claims, hidden assumptions, methodology jargon in the opening, and guarantees unsupported by evidence. Put reproducibility details in an appendix when they would interrupt the user's primary decision.
+Lead with the decision and material limitation. Use direct language, concrete units, short paragraphs, and source/date labels; separate fact, calculation, estimate, proxy, and recommendation. Avoid inflated claims, hidden assumptions, early methodology jargon, and unsupported guarantees. Keep trace IDs available without making them the headline; end with the required next action or state none remains.
 
 ## Response Presentation Norms
 
-1. State the conclusion and material limitation first.
-2. Separate fact, calculation, estimate, proxy, and recommendation.
-3. Name the source/date for consequential claims.
-4. Keep internal paths/IDs available for traceability without making them the user-facing headline.
-5. End with the next required action or state that no action remains.
+Put reproducibility detail in an appendix when it would interrupt the user's primary decision.

@@ -11,7 +11,7 @@
           "end_char": 153,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 256,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
           "start_char": 156
         },
@@ -38,22 +38,52 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 327,
+          "end_char": 394,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
           "start_char": 259
         },
-        "text": "- A negotiation cheat sheet maps each open term to a standard range."
+        "text": "- A negotiation cheat sheet maps each open term only to a user-supplied target or a source-dated, jurisdiction/market-compatible anchor"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 444,
+          "path": "influencer/activate/contract-helper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "span_basis": "field-text",
+          "start_char": 396
+        },
+        "text": "otherwise the counter remains `TBD/NEEDS_INPUT`."
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 622,
+          "path": "influencer/activate/contract-helper/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "span_basis": "field-text",
+          "start_char": 447
+        },
+        "text": "- Any WARM record is reference-only, and any signature request is either not sent or has its own exact authorization bound to the final recipient, document bytes, and channel."
       }
     ],
-    "done_when": "- Every required term is filled or explicitly marked TBD (parties, deliverables, compensation, payment timeline, usage rights, exclusivity, termination).\n  - Red flags are listed for any review, and a legal-counsel review note is attached before execution.\n  - A negotiation cheat sheet maps each open term to a standard range.",
+    "done_when": "- Every required term is filled or explicitly marked TBD (parties, deliverables, compensation, payment timeline, usage rights, exclusivity, termination).\n  - Red flags are listed for any review, and a legal-counsel review note is attached before execution.\n  - A negotiation cheat sheet maps each open term only to a user-supplied target or a source-dated, jurisdiction/market-compatible anchor; otherwise the counter remains `TBD/NEEDS_INPUT`.\n  - Any WARM record is reference-only, and any signature request is either not sent or has its own exact authorization bound to the final recipient, document bytes, and channel.",
     "extraction_status": "classified",
     "source": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1"
+      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
     }
   },
   "context_hints": {
@@ -62,29 +92,29 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
-        "source_line": 42
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "source_line": 43
       },
       {
         "path": "influencer/activate/contract-helper/references/templates.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "a2eb59a0f0297d5c11d99a4fe91baa85ae7537245c8e70b7a0f8b7d17a620f0e",
-        "source_line": 48
+        "sha256": "b7765f587fb32d32a4c1e101234ccf428ded49814c6562e00b8987ff2852c375",
+        "source_line": 49
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
-        "source_line": 30
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
+        "source_line": 31
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
-        "source_line": 65
+        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "source_line": 70
       }
     ],
     "project_paths": [
@@ -99,26 +129,31 @@
     ]
   },
   "contract_id": "skill:contract-helper",
+  "control_requirements": [
+    "action-intent",
+    "action-receipt",
+    "artifact-binding"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
       {
-        "condition": null,
+        "condition": "after signature.",
         "extraction_status": "classified",
         "item_id": "handoff-01",
         "kind": "primary",
         "source": {
-          "end_char": 182,
+          "end_char": 131,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
           "start_char": 0
         },
         "target_skills": [
-          "content-amplifier"
+          "brief-generator"
         ],
-        "text": "**Primary**: [content-amplifier](../content-amplifier/SKILL.md) — once the agreement is signed and usage rights are locked, amplify the licensed content into paid and owned channels."
+        "text": "**Primary**: [brief-generator](../../target/brief-generator/SKILL.md) — create or finalize the creator-ready brief after signature."
       },
       {
         "condition": null,
@@ -126,46 +161,96 @@
         "item_id": "handoff-02",
         "kind": "unclassified",
         "source": {
-          "end_char": 222,
+          "end_char": 160,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
-          "start_char": 184
+          "start_char": 133
         },
         "target_skills": [],
-        "text": "**Alternates (same Activate family)**:"
+        "text": "**Conditional next steps**:"
       },
       {
         "condition": null,
-        "extraction_status": "partially-classified",
+        "extraction_status": "unclassified",
         "item_id": "handoff-03",
         "kind": "unclassified",
         "source": {
-          "end_char": 337,
+          "end_char": 220,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
-          "start_char": 223
+          "start_char": 161
         },
-        "target_skills": [
-          "creator-content-auditor"
-        ],
-        "text": "- [creator-content-auditor](../creator-content-auditor/SKILL.md) — run the approval workflow the contract defines."
+        "target_skills": [],
+        "text": "- **Brief already final**: proceed with creator fulfillment"
       },
       {
-        "condition": "if terms stall, return to negotiation before re-drafting.",
+        "condition": "when content is submitted, use [creator-content-auditor](../creator-content-auditor/SKILL.md) to run the approval workflow the contract defines.",
         "extraction_status": "partially-classified",
         "item_id": "handoff-04",
         "kind": "unclassified",
         "source": {
-          "end_char": 448,
+          "end_char": 366,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
-          "start_char": 338
+          "start_char": 222
+        },
+        "target_skills": [
+          "creator-content-auditor"
+        ],
+        "text": "when content is submitted, use [creator-content-auditor](../creator-content-auditor/SKILL.md) to run the approval workflow the contract defines."
+      },
+      {
+        "condition": "after confirming the frozen asset is auditor-approved and covered by active rights for the intended use",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 562,
+          "path": "influencer/activate/contract-helper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "span_basis": "field-text",
+          "start_char": 367
+        },
+        "target_skills": [
+          "content-amplifier"
+        ],
+        "text": "- **Asset approved for reuse**: use [content-amplifier](../content-amplifier/SKILL.md) only after confirming the frozen asset is auditor-approved and covered by active rights for the intended use"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 646,
+          "path": "influencer/activate/contract-helper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "span_basis": "field-text",
+          "start_char": 564
+        },
+        "target_skills": [],
+        "text": "require a matching live post only for Spark/boost or another existing-post method."
+      },
+      {
+        "condition": "if terms stall, return to negotiation before re-drafting.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-07",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 757,
+          "path": "influencer/activate/contract-helper/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "span_basis": "field-text",
+          "start_char": 647
         },
         "target_skills": [
           "outreach-manager"
@@ -175,15 +260,15 @@
       {
         "condition": "If a skill above has already been invoked, stop and report chain-complete rather than re-running it. Max chain depth is 3 hops",
         "extraction_status": "classified",
-        "item_id": "handoff-05",
+        "item_id": "handoff-08",
         "kind": "termination",
         "source": {
-          "end_char": 630,
+          "end_char": 939,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
-          "start_char": 450
+          "start_char": 759
         },
         "target_skills": [],
         "text": "**Termination**: keep a visited-set for this session. If a skill above has already been invoked, stop and report chain-complete rather than re-running it. Max chain depth is 3 hops"
@@ -191,29 +276,30 @@
       {
         "condition": null,
         "extraction_status": "unclassified",
-        "item_id": "handoff-06",
+        "item_id": "handoff-09",
         "kind": "unclassified",
         "source": {
-          "end_char": 682,
+          "end_char": 991,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
-          "start_char": 632
+          "start_char": 941
         },
         "target_skills": [],
         "text": "once reached, summarize and hand back to the user."
       }
     ],
-    "next_best": "**Primary**: [content-amplifier](../content-amplifier/SKILL.md) — once the agreement is signed and usage rights are locked, amplify the licensed content into paid and owned channels.\n\n**Alternates (same Activate family)**:\n- [creator-content-auditor](../creator-content-auditor/SKILL.md) — run the approval workflow the contract defines.\n- [outreach-manager](../outreach-manager/SKILL.md) — if terms stall, return to negotiation before re-drafting.\n\n**Termination**: keep a visited-set for this session. If a skill above has already been invoked, stop and report chain-complete rather than re-running it. Max chain depth is 3 hops; once reached, summarize and hand back to the user.",
+    "next_best": "**Primary**: [brief-generator](../../target/brief-generator/SKILL.md) — create or finalize the creator-ready brief after signature.\n\n**Conditional next steps**:\n- **Brief already final**: proceed with creator fulfillment; when content is submitted, use [creator-content-auditor](../creator-content-auditor/SKILL.md) to run the approval workflow the contract defines.\n- **Asset approved for reuse**: use [content-amplifier](../content-amplifier/SKILL.md) only after confirming the frozen asset is auditor-approved and covered by active rights for the intended use; require a matching live post only for Spark/boost or another existing-post method.\n- [outreach-manager](../outreach-manager/SKILL.md) — if terms stall, return to negotiation before re-drafting.\n\n**Termination**: keep a visited-set for this session. If a skill above has already been invoked, stop and report chain-complete rather than re-running it. Max chain depth is 3 hops; once reached, summarize and hand back to the user.",
     "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
     "summary_ref": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1"
+      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
     },
     "summary_source": "skill-section",
     "target_skills": [
+      "brief-generator",
       "content-amplifier",
       "creator-content-auditor",
       "outreach-manager"
@@ -225,8 +311,8 @@
     "name": "contract-helper",
     "path": "influencer/activate/contract-helper/SKILL.md",
     "phase": "activate",
-    "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
-    "version": "20.0.0"
+    "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<deliverables and compensation> [platform] | review <pasted terms>",
@@ -235,24 +321,24 @@
         "clause_id": "read-01",
         "extraction_status": "classified",
         "kind": "project-resource",
-        "requirement": "required",
+        "requirement": "optional",
         "source": {
-          "end_char": 514,
+          "end_char": 896,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "campaign brief, agreed deliverables, compensation figure, platform list, usage-rights and exclusivity needs, any pasted incoming agreement. If `memory-management` is active, prior outreach terms and budget caps load from the hot cache. For rostered creators, read `memory/creators/<handle-slug>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) roster record — for existing exclusivity windows, contract status, usage-rights history, and standard-range anchors before drafting or reviewing."
+        "text": "campaign brief, agreed deliverables, compensation figure, platform list, usage-rights and exclusivity needs, any pasted incoming agreement, and stable `party_ref`, `contact_ref`, `address_ref`, and `signature_ref` values when available. Raw legal names, entity identifiers, emails, phones, postal addresses, payment details, and signatures are transient execution inputs only. If `memory-management` is active, prior outreach terms and budget caps load from the hot cache. For a rostered creator, resolve the carried opaque `creator_ref` through its authorized artifact or verified registry link, then read `memory/creators/<aggregate-id>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) projection — for existing exclusivity windows, contract status, usage-rights history, and standard-range anchors before drafting or reviewing. Never derive the path from a raw handle."
       }
     ],
     "extraction_status": "classified",
-    "reads": "campaign brief, agreed deliverables, compensation figure, platform list, usage-rights and exclusivity needs, any pasted incoming agreement. If `memory-management` is active, prior outreach terms and budget caps load from the hot cache. For rostered creators, read `memory/creators/<handle-slug>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) roster record — for existing exclusivity windows, contract status, usage-rights history, and standard-range anchors before drafting or reviewing.",
+    "reads": "campaign brief, agreed deliverables, compensation figure, platform list, usage-rights and exclusivity needs, any pasted incoming agreement, and stable `party_ref`, `contact_ref`, `address_ref`, and `signature_ref` values when available. Raw legal names, entity identifiers, emails, phones, postal addresses, payment details, and signatures are transient execution inputs only. If `memory-management` is active, prior outreach terms and budget caps load from the hot cache. For a rostered creator, resolve the carried opaque `creator_ref` through its authorized artifact or verified registry link, then read `memory/creators/<aggregate-id>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) projection — for existing exclusivity windows, contract status, usage-rights history, and standard-range anchors before drafting or reviewing. Never derive the path from a raw handle.",
     "source": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1"
+      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
     }
   },
   "output_contract": {
@@ -260,41 +346,77 @@
       {
         "clause_id": "write-01",
         "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 256,
+          "path": "influencer/activate/contract-helper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "return the drafted agreement or review memo inline by default. With exact WARM-save authorization, `memory/influencer/contract-helper/YYYY-MM-DD-<topic>.md` stores only `party_ref`, `contact_ref`, `address_ref`, `signature_ref`, and a non-PII terms summary"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
         "kind": "mixed",
         "permission_posture": "permission-required",
         "side_effect": "mixed",
         "source": {
-          "end_char": 354,
+          "end_char": 624,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
           "span_basis": "field-text",
-          "start_char": 0
+          "start_char": 258
         },
-        "text": "drafted agreement or review memo to `memory/influencer/contract-helper/YYYY-MM-DD-<topic>.md`. Signed terms (usage-rights window, exclusivity scope, final rate) also go as a one-line update to `memory/events/creators.ndjson` via an authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical roster records."
+        "text": "it never stores raw party/contact/address/signature values, payment details, or the executable/signed document bytes. The e-sign execution copy remains in the authorized external document/e-sign system. Each signed-term update requires a separate exact authorization for an `operation: propose` request through `registry-events.py` to `memory/events/creators.ndjson`"
+      },
+      {
+        "clause_id": "write-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 682,
+          "path": "influencer/activate/contract-helper/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "span_basis": "field-text",
+          "start_char": 626
+        },
+        "text": "only `creator-registry` writes canonical roster records."
       }
     ],
-    "extraction_status": "classified",
+    "extraction_status": "partially-classified",
     "source": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1"
+      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
     },
-    "summary": "drafted agreement or review memo to `memory/influencer/contract-helper/YYYY-MM-DD-<topic>.md`. Signed terms (usage-rights window, exclusivity scope, final rate) also go as a one-line update to `memory/events/creators.ndjson` via an authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical roster records.",
+    "summary": "return the drafted agreement or review memo inline by default. With exact WARM-save authorization, `memory/influencer/contract-helper/YYYY-MM-DD-<topic>.md` stores only `party_ref`, `contact_ref`, `address_ref`, `signature_ref`, and a non-PII terms summary; it never stores raw party/contact/address/signature values, payment details, or the executable/signed document bytes. The e-sign execution copy remains in the authorized external document/e-sign system. Each signed-term update requires a separate exact authorization for an `operation: propose` request through `registry-events.py` to `memory/events/creators.ndjson`; only `creator-registry` writes canonical roster records.",
     "summary_source": "writes-fallback",
-    "writes": "drafted agreement or review memo to `memory/influencer/contract-helper/YYYY-MM-DD-<topic>.md`. Signed terms (usage-rights window, exclusivity scope, final rate) also go as a one-line update to `memory/events/creators.ndjson` via an authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical roster records."
+    "writes": "return the drafted agreement or review memo inline by default. With exact WARM-save authorization, `memory/influencer/contract-helper/YYYY-MM-DD-<topic>.md` stores only `party_ref`, `contact_ref`, `address_ref`, `signature_ref`, and a non-PII terms summary; it never stores raw party/contact/address/signature values, payment details, or the executable/signed document bytes. The e-sign execution copy remains in the authorized external document/e-sign system. Each signed-term update requires a separate exact authorization for an `operation: propose` request through `registry-events.py` to `memory/events/creators.ndjson`; only `creator-registry` writes canonical roster records."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -303,7 +425,7 @@
     "source": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "frontmatter",
-      "sha256": "680e3df533ded24559522f9461294bd69942af29f984ab08a363a5679ccde1d1"
+      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
     },
     "trigger_phrases": [
       "build a partnership template",

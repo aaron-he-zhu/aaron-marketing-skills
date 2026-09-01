@@ -6,7 +6,7 @@ Operational dossier for getting the bundle listed on every skills marketplace, d
 
 ## Submission kit (copy-paste)
 
-**Repo**: <https://github.com/aaron-he-zhu/aaron-marketing-skills> · Apache-2.0 · v20.0.0 · 120 skills + 8 commands
+**Repo**: <https://github.com/aaron-he-zhu/aaron-marketing-skills> · Apache-2.0 · v20.1.0 · 120 skills + 8 commands
 **Install (universal)**: `npx skills add aaron-he-zhu/aaron-marketing-skills` — 70+ hosts (Codex, Cursor, OpenCode, Antigravity, Gemini CLI, Copilot CLI, OpenClaw, Hermes, …)
 **Install (Claude Code plugin, full suite)**: `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` → `/plugin install aaron-marketing@aaron`
 **Install (Agent Plugins v1, Portable Lite)**: download `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` from the [v20.0.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0), unpack it, and install/load the extracted plugin directory — 120/120 strict static Agent Skills; no `mcp.json`, commands, hooks, connectors, or repository runtime ([package boundary](agent-plugins-v1.md))
@@ -36,7 +36,7 @@ Example 6: "/aaron-marketing:auto turn our pricing page into an AI-citable compa
 ```
 
 **Reviewer/test notes (EN — for "submission details" fields)**
-> Validated with `claude plugin validate` (passes). 120 skills + 8 commands across seven disciplines; CI enforces frontmatter validity, 10-surface version-sync, and install-discovery guards on every commit. Latest release: v20.0.0.
+> Validated with `claude plugin validate` (passes). 120 skills + 8 commands across seven disciplines; CI enforces frontmatter validity, 10-surface version-sync, and install-discovery guards on every commit. Latest release: v20.1.0.
 
 For Agent Plugins submissions, use the separate Portable Lite install line and
 capability boundary above. The repository root is not its standard install
@@ -64,7 +64,7 @@ repository-validator-conformant archive.
 | # | Platform | Type | Status |
 |---|----------|------|--------|
 | 1 | [skills.sh](https://skills.sh/aaron-he-zhu/aaron-marketing-skills) | registry (telemetry) | ✅ live — `skills.sh.json` groupings shipped |
-| 2 | [SkillHub.cn](https://skillhub.cn) | registry (publish) | ✅ live — local release target is bundle 20.0.0; verify remote drift before publishing. Check with `bash scripts/registry-status.sh`; publish only the behind-set with `bash scripts/publish-registries.sh --live skillhub` (see [distribution.md](distribution.md)) |
+| 2 | [SkillHub.cn](https://skillhub.cn) | registry (publish) | ✅ live — local release target is bundle 20.1.0; verify remote drift before publishing. Check with `bash scripts/registry-status.sh`; publish only the behind-set with `bash scripts/publish-registries.sh --live skillhub` (see [distribution.md](distribution.md)) |
 | 3 | [ClawHub](https://clawhub.ai) | registry (publish) | ✅ live — 120 skills current **and** the whole plugin as the `aaron-marketing` **bundle-plugin** package (`bash scripts/publish-package.sh --from-build --live`). Verify the canonical set with `registry-status.sh --require-current`; publish skills with `publish-registries.sh --live clawhub` |
 | 4 | [Anthropic community marketplace](https://github.com/anthropics/claude-plugins-community) | curated directory | 🟢 **submitted 2026-07-04, pending review** (Console form; surfaces: Claude Code + Cowork; watch the [community catalog](https://github.com/anthropics/claude-plugins-community/blob/main/.claude-plugin/marketplace.json) for `aaron-marketing`) |
 | 5 | [Skills Directory](https://www.skillsdirectory.com) | directory + security scan | 🟢 **submitted 2026-07-04** (owner, via /submit) |

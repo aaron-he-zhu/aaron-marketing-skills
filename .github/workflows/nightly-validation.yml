@@ -55,8 +55,10 @@ jobs:
           python3 scripts/generate-auditor-prompt-contracts.py --check
           python3 scripts/generate-auto-routing-shards.py --check
           python3 scripts/generate-skill-contracts.py --check
+          python3 scripts/generate-skill-capsules.py --check
           python3 scripts/workflow-graph.py --check
           python3 scripts/check-context-budget.py
+          python3 scripts/check-context-efficiency.py --check
           python3 scripts/check-routing.py
 
       - name: All unit and runtime suites

@@ -11,7 +11,7 @@
           "end_char": 88,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 210,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 90
         },
@@ -41,7 +41,7 @@
           "end_char": 362,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 212
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/architect/story-bank-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5"
+      "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -76,7 +76,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
       },
       {
@@ -107,6 +107,7 @@
     ]
   },
   "contract_id": "skill:story-bank-builder",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -119,7 +120,7 @@
           "end_char": 196,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -137,7 +138,7 @@
           "end_char": 387,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 197
         },
@@ -155,7 +156,7 @@
           "end_char": 591,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 388
         },
@@ -173,7 +174,7 @@
           "end_char": 1006,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 593
         },
@@ -186,7 +187,7 @@
     "summary_ref": {
       "path": "narrative/architect/story-bank-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5"
+      "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -201,8 +202,8 @@
     "name": "story-bank-builder",
     "path": "narrative/architect/story-bank-builder/SKILL.md",
     "phase": "architect",
-    "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
-    "version": "20.0.0"
+    "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / brand> [interview or case material] [pillars] [claims-ledger path]",
@@ -216,7 +217,7 @@
           "end_char": 129,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -231,7 +232,7 @@
           "end_char": 285,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 131
         },
@@ -246,7 +247,7 @@
           "end_char": 366,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 287
         },
@@ -261,7 +262,7 @@
           "end_char": 439,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 368
         },
@@ -273,7 +274,7 @@
     "source": {
       "path": "narrative/architect/story-bank-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5"
+      "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145"
     }
   },
   "output_contract": {
@@ -288,7 +289,7 @@
           "end_char": 56,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -304,7 +305,7 @@
           "end_char": 280,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 58
         },
@@ -320,7 +321,7 @@
           "end_char": 534,
           "path": "narrative/architect/story-bank-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5",
+          "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145",
           "span_basis": "field-text",
           "start_char": 282
         },
@@ -331,7 +332,7 @@
     "source": {
       "path": "narrative/architect/story-bank-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5"
+      "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145"
     },
     "summary": "a story bank document — a set of reusable story units (origin, founder, customer, transformation, proof) each with a one-line premise, the arc beats, the pillar it supports, the claim-ledger ID(s) its proofs map to, and every proof labeled Measured / User-provided / `[needs source]` — plus a `[needs source]` list of unbacked proofs and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -342,12 +343,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -356,7 +357,7 @@
     "source": {
       "path": "narrative/architect/story-bank-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "571518054e79ba68a0bb17ef266f26fbc6bdaf042f7b34818069e27231ff80b5"
+      "sha256": "ef5875e8cb37e28ebd5b86553238311687cc35bf94e923db596417a5a12b4145"
     },
     "trigger_phrases": [
       "assemble reusable proof stories for the message",

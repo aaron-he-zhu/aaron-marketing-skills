@@ -67,11 +67,16 @@ TERMINAL_OUTCOMES = {
 REFERENCE_KINDS = {"run-event", "artifact", "evaluation", "registry-projection"}
 REGISTRIES = {"entities", "creators", "claims", "consent", "launches", "channels", "narrative"}
 QUALIFYING_ACTION_EVENT_TYPES = {"turn_finished", "artifact_validated", "save_point_created"}
+CONTROL_REQUIRED_INPUTS = {
+    "artifact-binding", "evidence-observation", "measurement-contract",
+    "action-intent", "action-receipt", "cycle-retro",
+}
 MAX_JSON_BYTES = 2_000_000
 MAX_EVENT_BYTES = 64_000
 MAX_ARTIFACT_BYTES = 32_000_000
 MAX_TRUST_ANCHOR_BYTES = 32_000
 MAX_APPROVAL_BYTES = 64_000
+MAX_WORKFLOW_LOOPS_PER_RUN = 32
 APPROVAL_SCHEMA = "references/workflow-execution-approval.schema.json"
 TRUST_ANCHOR_PATH_ENV = "AARON_WORKFLOW_APPROVAL_TRUST_ANCHOR"
 TRUST_ANCHOR_SHA_ENV = "AARON_WORKFLOW_APPROVAL_TRUST_ANCHOR_SHA256"
@@ -204,24 +209,10 @@ def _runtime_now():
 
 
 def _relative_file(root, reference):
-    if not isinstance(reference, str) or not reference or "\x00" in reference:
-        raise WorkflowLoopError("artifact reference must be a non-empty relative path")
-    relative = Path(reference)
-    if relative.is_absolute() or ".." in relative.parts:
-        raise WorkflowLoopError("artifact reference must stay inside the repository")
-    root = Path(root).resolve()
-    resolved = (root / relative).resolve()
-    try:
-        resolved.relative_to(root)
-    except ValueError as exc:
-        raise WorkflowLoopError("artifact reference escapes the repository") from exc
-    try:
-        metadata = resolved.stat()
-    except OSError as exc:
-        raise WorkflowLoopError("referenced artifact is unavailable: %s" % reference) from exc
-    if not stat.S_ISREG(metadata.st_mode) or metadata.st_size > MAX_ARTIFACT_BYTES:
-        raise WorkflowLoopError("referenced artifact must be a bounded regular file")
-    return resolved
+    path, _raw, _metadata = _stable_reference_read(
+        root, reference, "workflow artifact reference",
+    )
+    return path
 
 
 _RUN_EVENTS_MODULE = None
@@ -240,6 +231,17 @@ def _run_events_module():
         exec(compile(source, str(path), "exec", dont_inherit=True), module.__dict__)
         _RUN_EVENTS_MODULE = module
     return _RUN_EVENTS_MODULE
+
+
+def _stable_reference_read(root, reference, label):
+    """Read project bytes through the runtime's anchored, single-link boundary."""
+    module = _run_events_module()
+    try:
+        return module._stable_project_read(
+            Path(root), reference, MAX_ARTIFACT_BYTES, label,
+        )
+    except module.RunEventError as exc:
+        raise WorkflowLoopError(str(exc)) from exc
 
 
 def _audit_artifact_module():
@@ -274,6 +276,11 @@ def _reference(value, label):
         raise WorkflowLoopError("%s has unsupported kind" % label)
     if not isinstance(value["ref"], str) or not value["ref"]:
         raise WorkflowLoopError("%s ref must be non-empty" % label)
+    if value["kind"] != "run-event":
+        try:
+            _run_events_module().validate_ref(value["ref"], label + " ref")
+        except _run_events_module().RunEventError as exc:
+            raise WorkflowLoopError(str(exc)) from exc
     _digest(value["sha256"], label + " sha256")
     return copy.deepcopy(value)
 
@@ -296,8 +303,10 @@ def _verify_reference(root, run_id, reference, run_events=None):
         if len(matched) != 1 or matched[0]["event_hash"] != reference["sha256"]:
             raise WorkflowLoopError("run-event reference is missing or hash-mismatched")
         return
-    path = _relative_file(root, reference["ref"])
-    if sha256_bytes(path.read_bytes()) != reference["sha256"]:
+    _path, raw, _metadata = _stable_reference_read(
+        root, reference["ref"], "workflow evidence",
+    )
+    if sha256_bytes(raw) != reference["sha256"]:
         raise WorkflowLoopError("artifact reference hash mismatch: %s" % reference["ref"])
 
 
@@ -414,6 +423,92 @@ def _gate_release_edges(plan_value, node):
         edge for edge in plan_value["workflow"]["edge_snapshot"]
         if edge["from"] == node and edge["type"] == "gate" and edge["gate"] == node
     ]
+
+
+def _control_release_requirements(plan_value, node):
+    """Return the control-artifact inputs needed by every released edge.
+
+    Completing a node releases every outgoing edge in the immutable workflow
+    snapshot.  These requirements therefore belong to the completion
+    transition, rather than being advisory graph metadata.
+    """
+    requirements = set()
+    for edge in plan_value["workflow"]["edge_snapshot"]:
+        if edge["from"] == node:
+            requirements.update(
+                item for item in edge["required_inputs"]
+                if item in CONTROL_REQUIRED_INPUTS
+            )
+    return requirements
+
+
+def _validated_control_identity(root, event, session):
+    """Live-verify and return one exact control-artifact event identity."""
+    module = _run_events_module()
+    reference = event["references"][0]
+    try:
+        module.validate_artifact_validation_event(root, event, session)
+        _path, record, _metadata = module.verified_json_reference(
+            root, reference["ref"], reference["sha256"],
+            "workflow control artifact",
+        )
+    except module.RunEventError as exc:
+        raise WorkflowLoopError(
+            "workflow control artifact failed live validation: %s" % exc
+        ) from exc
+    if (
+            not isinstance(record, dict)
+            or record.get("$schema") != module.CONTROL_ARTIFACT_SCHEMA_REF
+            or record.get("kind") not in CONTROL_REQUIRED_INPUTS - {"artifact-binding"}
+            or record.get("schema_version") != "1.0"):
+        raise WorkflowLoopError("workflow control artifact identity is invalid")
+    return {
+        "kind": record["kind"],
+        "artifact_id": record["artifact_id"],
+        "ref": reference["ref"],
+        "sha256": reference["sha256"],
+        "version": record["schema_version"],
+        "validator": event["dimensions"]["validator"],
+    }
+
+
+def _validate_control_release_evidence(
+        root, plan_value, node, references, run_events, by_id, selected, anchor):
+    """Bind outgoing-edge control inputs to cited selected-ancestry events."""
+    required = _control_release_requirements(plan_value, node)
+    if not required:
+        return
+    session = _run_events_module()._control_validation_session()
+    identities = []
+    for reference in references:
+        if reference["kind"] != "run-event":
+            continue
+        event = by_id[reference["ref"]]
+        if (
+                event["event_id"] not in selected
+                or not _is_fresh_post_plan_event(plan_value, event, anchor)
+                or event["event_type"] != "artifact_validated"
+                or event["status"] != "succeeded"
+                or event["dimensions"].get("validator")
+                    != _run_events_module().CONTROL_ARTIFACT_VALIDATOR):
+            continue
+        route_state = _run_events_module().selected_route_state(
+            run_events, event["event_id"],
+        )
+        if route_state is None or route_state["skill"] != node:
+            continue
+        identities.append(_validated_control_identity(root, event, session))
+
+    available = {identity["kind"] for identity in identities}
+    if identities:
+        available.add("artifact-binding")
+    missing = sorted(required - available)
+    if missing:
+        raise WorkflowLoopError(
+            "action completion cannot release outgoing edge(s): missing exact "
+            "post-plan selected-ancestry control artifact(s) %s "
+            "(kind/ref/hash/version/validator required)" % ",".join(missing)
+        )
 
 
 def _workflow_requires_approval(workflow):
@@ -584,8 +679,9 @@ def _validate_approval_artifact(
         key: gate_approval[key] for key in ("kind", "ref", "sha256")
     }
     _verify_reference(root, plan_value["run_id"], reference)
-    path = _relative_file(root, gate_approval["ref"])
-    raw = path.read_bytes()
+    path, raw, _metadata = _stable_reference_read(
+        root, gate_approval["ref"], "execution approval artifact",
+    )
     if len(raw) > MAX_APPROVAL_BYTES:
         raise WorkflowLoopError("execution approval artifact exceeds its byte limit")
     # Validate the exact bytes parsed below.  The generic reference check above
@@ -811,10 +907,139 @@ def _validate_action_evidence(
             "with a matching %s route" % (kind, node)
         )
     if not failed:
+        _validate_control_release_evidence(
+            root, plan_value, node, references, run_events, by_id, selected, anchor,
+        )
         _validate_gate_release_evidence(
             root, plan_value, node, references, gate_approval,
             action_recorded_at, run_events, by_id, selected, anchor,
         )
+
+
+def _control_consumption_identities(root, source_event, cache):
+    """Read ref-independent control identities without rerunning its validator."""
+    references = source_event.get("references", [])
+    if len(references) != 1 or references[0].get("kind") != "artifact":
+        raise WorkflowLoopError(
+            "consumed control validation must bind exactly one artifact"
+        )
+    reference = references[0]
+    validator = source_event["dimensions"].get("validator")
+    cache_key = (reference["ref"], reference["sha256"], validator)
+    if cache_key in cache:
+        return cache[cache_key]
+    module = _run_events_module()
+    try:
+        _path, record, _metadata = module.verified_json_reference(
+            root, reference["ref"], reference["sha256"],
+            "workflow consumed control artifact",
+        )
+    except module.RunEventError as exc:
+        raise WorkflowLoopError(
+            "workflow consumed control artifact failed stable read: %s" % exc
+        ) from exc
+    if (
+            not isinstance(record, dict)
+            or record.get("$schema") != module.CONTROL_ARTIFACT_SCHEMA_REF
+            or record.get("kind") not in CONTROL_REQUIRED_INPUTS - {"artifact-binding"}
+            or record.get("schema_version") != "1.0"
+            or not isinstance(record.get("artifact_id"), str)
+            or not record["artifact_id"]):
+        raise WorkflowLoopError("workflow consumed control artifact identity is invalid")
+    identities = frozenset({
+        (
+            "control-binding", record["kind"], record["artifact_id"],
+            reference["ref"], reference["sha256"], record["schema_version"],
+            validator,
+        ),
+        (
+            "control-logical", record["kind"], record["artifact_id"],
+        ),
+        (
+            "control-content", record["kind"], reference["sha256"],
+            record["schema_version"], validator,
+        ),
+    })
+    cache[cache_key] = identities
+    return identities
+
+
+def _action_consumption_identities(
+        root, event, run_events_by_id, control_identity_cache):
+    """Return exact evidence identities consumed by one completed action."""
+    identities = set()
+    for reference in event["payload"]["evidence"]:
+        identities.add((
+            "evidence-binding", reference["ref"], reference["sha256"],
+        ))
+        identities.add((
+            "evidence-provenance", reference["kind"],
+            reference["ref"], reference["sha256"],
+        ))
+        if reference["kind"] != "run-event":
+            continue
+        source_event = run_events_by_id.get(reference["ref"])
+        if source_event is None:
+            continue
+        identities.add((
+            "run-event", source_event["event_id"], source_event["event_hash"],
+        ))
+        for nested in source_event.get("references", []):
+            identities.add((
+                "evidence-binding", nested["ref"], nested["sha256"],
+            ))
+            identities.add((
+                "evidence-provenance", nested["kind"],
+                nested["ref"], nested["sha256"],
+            ))
+        if (
+                source_event["event_type"] == "artifact_validated"
+                and source_event["status"] == "succeeded"
+                and source_event["dimensions"].get("validator")
+                    == _run_events_module().CONTROL_ARTIFACT_VALIDATOR):
+            identities.update(_control_consumption_identities(
+                root, source_event, control_identity_cache,
+            ))
+    return identities
+
+
+def _validate_action_evidence_consumption(
+        root, plan_value, events, consumed=None, run_events=None,
+        control_identity_cache=None):
+    """Reject reuse of action/run/control evidence across completed actions.
+
+    The workflow event stream is the consumption ledger. A new outer cycle must
+    produce new qualifying evidence; moving the frontier back to the entry node
+    never makes a prior action receipt, measurement, or run event reusable.
+    Exact idempotent retries do not append a second event and remain valid.
+    """
+    run_events = run_events or _load_run_events(root, plan_value["run_id"])
+    run_events_by_id = {event["event_id"]: event for event in run_events}
+    consumed = consumed if consumed is not None else {}
+    control_identity_cache = (
+        control_identity_cache if control_identity_cache is not None else {}
+    )
+    for event in events:
+        if event["event_type"] != "action-completed":
+            continue
+        current = _action_consumption_identities(
+            root, event, run_events_by_id, control_identity_cache,
+        )
+        duplicates = sorted(identity for identity in current if identity in consumed)
+        if duplicates:
+            prior = consumed[duplicates[0]]
+            raise WorkflowLoopError(
+                "action evidence/control identity was already consumed by %s/%s "
+                "action-completed event %s"
+                % (prior["loop_id"], prior["node"], prior["event_id"])
+            )
+        for identity in current:
+            consumed[identity] = {
+                "event_id": event["event_id"],
+                "loop_id": plan_value["loop_id"],
+                "node": event["payload"]["node"],
+            }
+    return consumed
 
 
 def _validate_verification_evidence(root, plan_value, payload):
@@ -1492,6 +1717,69 @@ def _read_events(path, plan):
     return events
 
 
+def _validate_run_action_evidence_consumption(
+        root, current_plan, current_events):
+    """Replay one run-scoped consumption ledger across every workflow loop.
+
+    Callers must hold the run coordinator before any workflow lock. That lock
+    makes the directory snapshot and all event streams stable while the shared
+    evidence identities are replayed.
+    """
+    root = Path(root).resolve()
+    run_id = current_plan["run_id"]
+    base = root / "memory" / "runs" / run_id / "workflow-plans"
+    if base.is_symlink() or not base.is_dir():
+        raise WorkflowLoopError("workflow-plans must be a real run directory")
+    entries = sorted(base.iterdir(), key=lambda path: path.name)
+    if len(entries) > MAX_WORKFLOW_LOOPS_PER_RUN:
+        raise WorkflowLoopError(
+            "run exceeds the %d workflow-loop consumption boundary"
+            % MAX_WORKFLOW_LOOPS_PER_RUN
+        )
+    run_events = _load_run_events(root, run_id)
+    consumed = {}
+    control_identity_cache = {}
+    saw_current = False
+    for entry in entries:
+        if entry.is_symlink() or not entry.is_dir():
+            raise WorkflowLoopError("workflow-plans contains an unsafe loop entry")
+        _safe_id(entry.name, "workflow loop directory")
+        if entry.name == current_plan["loop_id"]:
+            plan_value = current_plan
+            events = current_events
+            saw_current = True
+        else:
+            plan_path = entry / "plan.json"
+            events_path = entry / "events.ndjson"
+            if not plan_path.exists() and not events_path.exists():
+                # A failed pre-plan attempt may leave only its private directory.
+                continue
+            if not plan_path.exists():
+                raise WorkflowLoopError(
+                    "workflow event stream exists without its immutable plan"
+                )
+            plan_value, plan_raw = _load_plan(plan_path)
+            if (
+                    plan_value["run_id"] != run_id
+                    or plan_value["loop_id"] != entry.name):
+                raise WorkflowLoopError("workflow plan directory identity mismatch")
+            events = _read_events(events_path, plan_value)
+            if not events:
+                # plan() can recover the narrow crash window after plan install.
+                continue
+            if events[0]["payload"]["plan_sha256"] != sha256_bytes(plan_raw):
+                raise WorkflowLoopError(
+                    "workflow plan digest does not match the planned event"
+                )
+        _validate_action_evidence_consumption(
+            root, plan_value, events, consumed, run_events,
+            control_identity_cache,
+        )
+    if not saw_current:
+        raise WorkflowLoopError("current workflow loop is absent from its run")
+    return consumed
+
+
 def _initial_state(plan):
     workflow = plan["workflow"]
     return {
@@ -1884,6 +2172,7 @@ def _append_locked(root, paths, plan_value, events, request):
             raise WorkflowLoopError("idempotency_key was already used with a different request")
         for event in events:
             _validate_event_evidence(root, plan_value, event)
+        _validate_run_action_evidence_consumption(root, plan_value, events)
         projected = _project(plan_value, events)
         _atomic_write(paths["state"], pretty_json(projected))
         return {"deduplicated": True, "event": existing[0], "state": projected}
@@ -1907,6 +2196,9 @@ def _append_locked(root, paths, plan_value, events, request):
         _verify_references(root, plan_value["run_id"], references)
     event = _stored_event(request, len(events) + 1, head, recorded_at)
     _validate_event_evidence(root, plan_value, event)
+    _validate_run_action_evidence_consumption(
+        root, plan_value, [*events, event],
+    )
     projected = _apply_event(_project(plan_value, events), event, plan_value)
     _append_line(paths["events"], event)
     try:
@@ -2005,67 +2297,97 @@ def advance(root, request):
     _uuid(run_id, "run_id")
     _safe_id(loop_id, "loop_id")
     paths = _workflow_paths(root, run_id, loop_id, create=False)
-    with _locked(paths["lock"]):
-        plan_value, plan_raw = _load_plan(paths["plan"])
-        normalized = _advance_request(request, plan_value)
-        if normalized["workflow_id"] != plan_value["workflow_id"]:
-            raise WorkflowLoopError("advance workflow_id does not match the immutable plan")
-        events = _read_events(paths["events"], plan_value)
-        if not events or events[0]["payload"]["plan_sha256"] != sha256_bytes(plan_raw):
-            raise WorkflowLoopError("workflow plan digest does not match the planned event")
-        return _append_locked(root, paths, plan_value, events, normalized)
+    module = _run_events_module()
+    try:
+        with module.locked_run_coordinator(root, run_id):
+            with _locked(paths["lock"]):
+                plan_value, plan_raw = _load_plan(paths["plan"])
+                normalized = _advance_request(request, plan_value)
+                if normalized["workflow_id"] != plan_value["workflow_id"]:
+                    raise WorkflowLoopError(
+                        "advance workflow_id does not match the immutable plan"
+                    )
+                events = _read_events(paths["events"], plan_value)
+                if (
+                        not events
+                        or events[0]["payload"]["plan_sha256"]
+                            != sha256_bytes(plan_raw)):
+                    raise WorkflowLoopError(
+                        "workflow plan digest does not match the planned event"
+                    )
+                return _append_locked(
+                    root, paths, plan_value, events, normalized,
+                )
+    except module.RunEventError as exc:
+        raise WorkflowLoopError(
+            "workflow advance could not acquire the run coordinator: %s" % exc
+        ) from exc
 
 
 def verify(root, run_id, loop_id, repair_projection=False):
     """Validate the plan, run anchor, evidence, stream, and state projection."""
     root = Path(root).resolve()
     paths = _workflow_paths(root, run_id, loop_id, create=False)
-    with _locked(paths["lock"]):
-        plan_value, plan_raw = _load_plan(paths["plan"])
-        if plan_value["run_id"] != run_id or plan_value["loop_id"] != loop_id:
-            raise WorkflowLoopError("workflow plan identity mismatch")
-        run_events = _load_run_events(root, run_id)
-        _verify_reference(root, run_id, plan_value["run_event_anchor"], run_events)
-        _validate_plan_anchor(plan_value, run_events)
-        if _workflow_requires_approval(plan_value["workflow"]):
-            _approval_trust_for_plan(root, plan_value)
-        events = _read_events(paths["events"], plan_value)
-        if not events:
-            raise WorkflowLoopError("workflow event stream is empty")
-        if events[0]["payload"]["plan_sha256"] != sha256_bytes(plan_raw):
-            raise WorkflowLoopError("workflow plan digest does not match the planned event")
-        for event in events:
-            _validate_event_evidence(root, plan_value, event)
-        projected = _project(plan_value, events)
-        projection_current = False
-        if paths["state"].exists():
-            stored, _ = read_json(paths["state"], "workflow state projection")
-            projection_current = stored == projected
-        if not projection_current:
-            if not repair_projection:
-                raise WorkflowLoopError("workflow state projection is missing or stale")
-            _atomic_write(paths["state"], pretty_json(projected))
-            projection_current = True
-        current_graph_match = False
-        try:
-            graph, _ = _load_graph(root)
-            current_graph_match = graph["graph_sha256"] == plan_value["graph"]["sha256"]
-        except WorkflowLoopError:
-            current_graph_match = False
-        return {
-            "valid": True,
-            "authoritative": False,
-            "authority": AUTHORITY,
-            "run_id": run_id,
-            "loop_id": loop_id,
-            "workflow_id": plan_value["workflow_id"],
-            "event_count": len(events),
-            "head_event_hash": events[-1]["event_hash"],
-            "status": projected["status"],
-            "stage": projected["stage"],
-            "projection_current": projection_current,
-            "current_graph_match": current_graph_match,
-        }
+    module = _run_events_module()
+    try:
+        with module.locked_run_coordinator(root, run_id):
+            with _locked(paths["lock"]):
+                plan_value, plan_raw = _load_plan(paths["plan"])
+                if plan_value["run_id"] != run_id or plan_value["loop_id"] != loop_id:
+                    raise WorkflowLoopError("workflow plan identity mismatch")
+                run_events = _load_run_events(root, run_id)
+                _verify_reference(root, run_id, plan_value["run_event_anchor"], run_events)
+                _validate_plan_anchor(plan_value, run_events)
+                if _workflow_requires_approval(plan_value["workflow"]):
+                    _approval_trust_for_plan(root, plan_value)
+                events = _read_events(paths["events"], plan_value)
+                if not events:
+                    raise WorkflowLoopError("workflow event stream is empty")
+                if events[0]["payload"]["plan_sha256"] != sha256_bytes(plan_raw):
+                    raise WorkflowLoopError(
+                        "workflow plan digest does not match the planned event"
+                    )
+                for event in events:
+                    _validate_event_evidence(root, plan_value, event)
+                _validate_run_action_evidence_consumption(root, plan_value, events)
+                projected = _project(plan_value, events)
+                projection_current = False
+                if paths["state"].exists():
+                    stored, _ = read_json(paths["state"], "workflow state projection")
+                    projection_current = stored == projected
+                if not projection_current:
+                    if not repair_projection:
+                        raise WorkflowLoopError(
+                            "workflow state projection is missing or stale"
+                        )
+                    _atomic_write(paths["state"], pretty_json(projected))
+                    projection_current = True
+                current_graph_match = False
+                try:
+                    graph, _ = _load_graph(root)
+                    current_graph_match = (
+                        graph["graph_sha256"] == plan_value["graph"]["sha256"]
+                    )
+                except WorkflowLoopError:
+                    current_graph_match = False
+                return {
+                    "valid": True,
+                    "authoritative": False,
+                    "authority": AUTHORITY,
+                    "run_id": run_id,
+                    "loop_id": loop_id,
+                    "workflow_id": plan_value["workflow_id"],
+                    "event_count": len(events),
+                    "head_event_hash": events[-1]["event_hash"],
+                    "status": projected["status"],
+                    "stage": projected["stage"],
+                    "projection_current": projection_current,
+                    "current_graph_match": current_graph_match,
+                }
+    except module.RunEventError as exc:
+        raise WorkflowLoopError(
+            "workflow verify could not acquire the run coordinator: %s" % exc
+        ) from exc
 
 
 def _request_file(path):

@@ -10,4 +10,4 @@ Per-platform creator playbooks are inputs to candidate vetting. Read the playboo
 | YouTube | [../../../references/platforms/youtube.md](../../../../references/platforms/youtube.md) | watch-through, sub-to-view ratio, sponsorship saturation |
 | Reddit | [../../../references/platforms/reddit.md](../../../../references/platforms/reddit.md) | karma/account age, subreddit standing, self-promo tolerance |
 
-Each playbook lists platform-native metrics, red flags, and authenticity checks. Map its signals to the per-influencer profile fields (Metrics, Audience Quality Score, Brand Fit) and to the red-flag screen.
+Each playbook lists platform-native metrics, red flags, and authenticity checks. Map its signals to field-level evidence rows, freshness, declared-filter status, and the red-flag screen. Do not produce an Audience Quality Score, Brand Fit score, recommendation tier, or action rank here; typed comparison belongs to `fit-scorer`.

@@ -291,7 +291,7 @@ class DistributionBuilderTests(unittest.TestCase):
             "scripts/context-resolver.py",
             "scripts/context-plan.py",
             "scripts/runtime-controller.py",
-            "scripts/workflow-graph.py",
+            "scripts/validate-control-artifact.py",
             "scripts/workflow-loop.py",
             "scripts/workflow_loop.py",
             "references/context-request.schema.json",
@@ -299,9 +299,9 @@ class DistributionBuilderTests(unittest.TestCase):
             "references/context-assembly.schema.json",
             "references/context-modules.json",
             "references/context-modules.schema.json",
-            "references/context-planning.md",
-            "references/context-resolution.md",
-            "references/runtime-controller.md",
+            "references/control-artifact.schema.json",
+            "references/control-bindings.json",
+            "references/control-bindings.schema.json",
             "references/runtime-controller-request.schema.json",
             "references/skill-contracts.pack.json.gz",
             "references/skill-machine-contract.schema.json",
@@ -311,14 +311,12 @@ class DistributionBuilderTests(unittest.TestCase):
             "references/auto-routing-scenarios.md",
             "references/run-event.schema.json",
             "references/turn-snapshot.schema.json",
-            "references/workflow-graph-protocol.md",
             "references/workflow-graph.json",
             "references/workflow-graph.source.json",
             "references/workflow-graph.schema.json",
             "references/workflow-loop-protocol.md",
             "references/workflow-loop-request.schema.json",
             "references/workflow-loop-state.schema.json",
-            "docs/workflow-graph.md",
             "references/save-point.schema.json",
             "references/skill-capsule-index.schema.json",
             "references/skill-capsule.schema.json",
@@ -346,14 +344,13 @@ class DistributionBuilderTests(unittest.TestCase):
             self.assertTrue((output / "references" / "auto-routing" / (shard + ".md")).is_file(), shard)
         self.assertFalse((output / "evals/auto-routing-scenarios.source.md").exists())
         self.assertFalse((output / "scripts/generate-auto-routing-shards.py").exists())
+        self.assertFalse((output / "scripts/workflow-graph.py").exists())
         self.assertTrue((output / "scripts/connectors/resend.py").is_file())
         self.assertTrue((output / "references/skill-contract.md").is_file())
         for path in ("tests", "evals", ".github", ".githooks", "AGENTS.md", "CONTRIBUTING.md"):
             self.assertFalse((output / path).exists(), path)
-        self.assertEqual(
-            {Path("workflow-graph.md")},
-            {path.relative_to(output / "docs") for path in (output / "docs").rglob("*") if path.is_file()},
-        )
+        self.assertFalse((output / "docs").exists())
+        self.assertFalse((output / "references/workflow-graph-protocol.md").exists())
         self.assertEqual(10, len(list((output / "references/workflow-graph").glob("edges-*.json"))))
         self.assertFalse(any(path.name == "__pycache__" for path in output.rglob("*")))
         self.assertFalse(any(path.suffix == ".pyc" for path in output.rglob("*")))
@@ -362,6 +359,10 @@ class DistributionBuilderTests(unittest.TestCase):
         )
         manifest = json.loads(
             (output / "distribution-manifest.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(
+            BUILDER_MODULE.canonical_compact_json(manifest) + b"\n",
+            (output / "distribution-manifest.json").read_bytes(),
         )
         self.assertEqual("1.2", manifest["schema_version"])
         self.assertEqual("plugin", manifest["kind"])
@@ -394,7 +395,7 @@ class DistributionBuilderTests(unittest.TestCase):
 
         for runtime in (
                 "context-assembly.py", "runtime-controller.py",
-                "workflow-graph.py", "workflow-loop.py"):
+                "workflow-loop.py"):
             result = subprocess.run(
                 [sys.executable, str(output / "scripts" / runtime), "--help"],
                 cwd=output, capture_output=True, text=True,
@@ -526,9 +527,9 @@ class DistributionBuilderTests(unittest.TestCase):
         paths = {}
         capabilities = {}
         expected_ceilings = {
-            "lite": {"max_files": 350, "max_bytes": 3_300_000},
-            "pro": {"max_files": 400, "max_bytes": 3_800_000},
-            "governed": {"max_files": 560, "max_bytes": 6_500_000},
+            "lite": {"max_files": 350, "max_bytes": 3_450_000},
+            "pro": {"max_files": 400, "max_bytes": 3_950_000},
+            "governed": {"max_files": 560, "max_bytes": 6_700_000},
         }
         source_bindings = json.loads(
             (ROOT / "references/prompt-profiles.json").read_text()
@@ -585,10 +586,27 @@ class DistributionBuilderTests(unittest.TestCase):
                 profile == "governed",
                 (output / "references/prompt-profile-release-certificate.schema.json").is_file(),
             )
+            for relative in BUILDER_MODULE.AUTHORING_GUIDE_POINTERS:
+                path = output / relative
+                if path.is_file():
+                    self.assertIn(
+                        b"distribution-projection: authoring-guide-pointer-v1",
+                        path.read_bytes(),
+                    )
+                    self.assertLess(path.stat().st_size, 1024)
             self.assertFalse(any(
                 re.fullmatch(r".+ [0-9]+\.[A-Za-z0-9]+", path.name)
                 for path in output.rglob("*") if path.is_file()
             ))
+            for relative in (
+                "references/control-bindings.json",
+                "references/control-bindings.schema.json",
+                "scripts/validate-control-artifact.py",
+            ):
+                self.assertEqual(
+                    profile == "governed", (output / relative).is_file(),
+                    "%s: %s" % (profile, relative),
+                )
             with tempfile.TemporaryDirectory() as project:
                 resolution = subprocess.run(
                     [
@@ -630,6 +648,9 @@ class DistributionBuilderTests(unittest.TestCase):
         self.assertTrue((governed / "scripts/registry-events.py").is_file())
         self.assertTrue((governed / "scripts/context-assembly.py").is_file())
         self.assertTrue((governed / "scripts/runtime-controller.py").is_file())
+        self.assertTrue(
+            (governed / "references/control-artifact.schema.json").is_file()
+        )
         self.assertTrue((governed / "hooks/hooks.json").is_file())
         self.assertTrue(
             (governed / "references/skill-contracts.pack.json.gz").is_file()
@@ -660,7 +681,7 @@ class DistributionBuilderTests(unittest.TestCase):
             "pro": ("validate-audit-artifact.py",),
             "governed": (
                 "context-assembly.py", "registry-events.py",
-                "runtime-controller.py",
+                "runtime-controller.py", "validate-control-artifact.py",
             ),
         }.items():
             for runtime in runtimes:
@@ -728,6 +749,10 @@ class DistributionBuilderTests(unittest.TestCase):
         self.assertTrue((output / "SKILL.md").is_file())
         self.assertTrue((output / "references/auditor-runtime.md").is_file())
         self.assertFalse((output / "scripts").exists())
+        self.assertFalse((output / "references/control-bindings.json").exists())
+        self.assertFalse(
+            (output / "references/control-bindings.schema.json").exists()
+        )
         self.assertFalse((output / ".claude-plugin").exists())
         manifest = json.loads((output / "distribution-manifest.json").read_text())
         self.assertEqual("1.2", manifest["schema_version"])
@@ -757,6 +782,10 @@ class DistributionBuilderTests(unittest.TestCase):
 
         sidecar_path = output / "router-facades" / "sidecar-manifest.json"
         sidecar = json.loads(sidecar_path.read_text())
+        self.assertEqual(
+            BUILDER_MODULE.canonical_compact_json(sidecar) + b"\n",
+            sidecar_path.read_bytes(),
+        )
         self.assertEqual("router-facade-sidecar", sidecar["kind"])
         self.assertEqual("generic-shared-root-host", sidecar["host_profile"])
         self.assertEqual(8, sidecar["facade_count"])

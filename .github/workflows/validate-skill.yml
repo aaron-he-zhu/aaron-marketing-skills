@@ -126,6 +126,8 @@ jobs:
           python3 -m unittest \
             tests.test_change_impact \
             tests.test_check_pii \
+            tests.test_control_artifact \
+            tests.test_control_bindings \
             tests.test_create_github_release \
             tests.test_final_release_gate \
             tests.test_memory_privacy \
@@ -190,7 +192,9 @@ jobs:
           # change, so additions/deletions cannot evade the exact 4x4 catalog.
           python3 scripts/check-architecture.py
           python3 scripts/generate-skill-contracts.py --check
+          python3 scripts/generate-skill-capsules.py --check
           python3 scripts/check-context-budget.py
+          python3 scripts/check-context-efficiency.py --check
           python3 scripts/check-routing.py
           python3 scripts/check-evals.py
           python3 scripts/run-behavior-evals.py
@@ -225,6 +229,7 @@ jobs:
           python3 scripts/generate-auditor-prompt-contracts.py --check
           python3 scripts/generate-auto-routing-shards.py --check
           python3 scripts/generate-skill-contracts.py --check
+          python3 scripts/generate-skill-capsules.py --check
           python3 scripts/workflow-graph.py --check
 
       - name: Full unit and runtime suites

@@ -11,7 +11,7 @@
           "end_char": 118,
           "path": "social/host/social-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+          "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 300,
           "path": "social/host/social-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+          "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
           "span_basis": "field-text",
           "start_char": 120
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "social/host/social-quality-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad"
+      "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb"
     }
   },
   "context_hints": {
@@ -47,7 +47,7 @@
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "1bdafd8e080bfd77ec933b67221dcc2652bf350f0e73b0ecafdeb57136195474",
+        "sha256": "028a87012aa8cded04d9b7fb70f44a2b0eb3475b7984251050e1ec281c60a3ec",
         "source_line": 40
       },
       {
@@ -61,14 +61,14 @@
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
         "source_line": 105
       },
       {
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "sha256": "9aed49f657df95e95d34d6d46beaf32d8be49d19b28a073e00f40b721f588cc6",
         "source_line": 43
       },
       {
@@ -82,13 +82,14 @@
         "path": "social/host/social-quality-auditor/references/auditor-runtime.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "c268805facef794fd2ee45d023c18d3426119bf7a758c068a0d55f23167ff4a6",
+        "sha256": "264c898724a7eb057673bbb9eff90e42b26d57c2c642a32174ff90ed8b0d1858",
         "source_line": 44
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:social-quality-auditor",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -101,7 +102,7 @@
           "end_char": 84,
           "path": "social/host/social-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+          "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -119,7 +120,7 @@
           "end_char": 172,
           "path": "social/host/social-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+          "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
           "span_basis": "field-text",
           "start_char": 85
         },
@@ -137,7 +138,7 @@
           "end_char": 257,
           "path": "social/host/social-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+          "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
           "span_basis": "field-text",
           "start_char": 173
         },
@@ -155,7 +156,7 @@
           "end_char": 350,
           "path": "social/host/social-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+          "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
           "span_basis": "field-text",
           "start_char": 258
         },
@@ -170,7 +171,7 @@
     "summary_ref": {
       "path": "references/skill-contract.md",
       "section": "Handoff Summary Format",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "summary_source": "shared-skill-contract",
     "target_skills": [
@@ -186,8 +187,8 @@
     "name": "social-quality-auditor",
     "path": "social/host/social-quality-auditor/SKILL.md",
     "phase": "host",
-    "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
-    "version": "20.0.0"
+    "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<asset batch or channel portfolio> [asset-gate|community|b2c|founder]",
@@ -201,7 +202,7 @@
           "end_char": 102,
           "path": "social/host/social-quality-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+          "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -213,7 +214,7 @@
     "source": {
       "path": "social/host/social-quality-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad"
+      "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb"
     }
   },
   "output_contract": {
@@ -228,7 +229,7 @@
           "end_char": 32,
           "path": "social/host/social-quality-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad",
+          "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +240,7 @@
     "source": {
       "path": "social/host/social-quality-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad"
+      "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb"
     },
     "summary": "only a permissioned v3 artifact.",
     "summary_source": "writes-fallback",
@@ -250,12 +251,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -264,7 +265,7 @@
     "source": {
       "path": "social/host/social-quality-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "6b4f004dc119d11ec7c6183c281af76be36e9b2c5b5fedf07972ef1e260a39ad"
+      "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb"
     },
     "trigger_phrases": [
       "audit our social presence",

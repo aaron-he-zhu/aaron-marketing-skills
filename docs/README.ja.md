@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.0.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.1.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -562,7 +562,7 @@ Artifact Gate は**フレームワーク非依存**です —— 同じフック
 |-------|--------------|
 | **28 の同梱・依存関係ゼロのコネクタ** | 純粋な Python 標準ライブラリ —— `pip` 不要、ビルドステップ不要。keyless なライブ SERP + JS レンダースクレイピング（Firecrawl、Tavily）、AI 回答の引用プローブ、DNS-over-HTTPS のメール認証取得、Wikipedia 注目度シリーズ、GDELT ニュース言及、本物の YouTube クリエイター指標、IndexNow + Baidu インデックス送信、Resend ESP 自動化、そしてそれらのいずれをも前後比較の時系列に変える git 差分可能な測定台帳。 |
 | **60 以上の文書化された公式/無料 API** | 各行がベンダーの**公式ドキュメント**をリンクし、検証日を持ち、各リンクは公開前に HTTP で確認されます。多くのツールリストが見落とすパスを含みます：GSC URL Inspection、CrUX History（40 週間のフィールド CWV）、Gmail Postmaster Tools API、Meta の Ad Library、Microsoft Clarity の Data Export API。 |
-| **ベンダー MCP サーバー** | 18 のリモートエンドポイントをカタログ化（決して自動登録されません —— あなたの `/mcp` リストはきれいなまま）、加えて Google Analytics、Search Console、**Google Ads**、**Microsoft Clarity** の公式セルフホストサーバー。2 つのリモート MCP はキー不要で動作します（Firecrawl、Tavily）。 |
+| **ベンダー MCP サーバー** | オプトインのカタログ項目は 20 件（ベンダーホストのリモートエンドポイント 19 件 + セルフホストの OpenSEO 1 件）で、決して自動登録されないため `/mcp` リストはきれいなままです。Google Analytics、Search Console、**Google Ads**、**Microsoft Clarity** の公式セルフホストサーバーも記載しています。2 つのリモート MCP はキー不要で動作します（Firecrawl、Tavily）。 |
 
 単に数が多いだけでなく信頼できる理由：
 
@@ -579,7 +579,7 @@ Artifact Gate は**フレームワーク非依存**です —— 同じフック
 
 - **同梱・依存関係ゼロのヘルパー** は `scripts/connectors/` 配下（Python 標準ライブラリのみ）にあり、公開/自有データをローカルで取得します —— 例：PageSpeed/CrUX、Open PageRank、ページクロール、Wayback CDX、Wikidata SPARQL、Common Crawl、advertools レシピ —— 加えて **`resend.py`**（メールスキル向けの Resend ESP 直結自動化：無料枠キーでドメイン認証状態、seed-test 送信、抑制同期、ブロードキャストのスケジューリング；変更系サブコマンドはデフォルト dry-run で `--live` が必要）、および **`firecrawl.py`** + **`tavily.py`**（research スキル向けの keyless ホスト型フェッチャー自動化：Firecrawl はライブ Web SERP + JS レンダーページの markdown + サイトマップ；Tavily はスコア付き検索 + GEO 用の AI 回答エンジンの引用元プローブ + URL 抽出 —— どちらもキー不要で無料、どちらもローカル robots.txt 事前検査を内蔵）。
 - **無料/keyless ソース**をカテゴリ別に文書化：Google Search Console & GA4（自有データ）、PageSpeed/CrUX、Wikidata、Common Crawl、Open PageRank、Firecrawl keyless SERP/スクレイプ、Tavily keyless AI 検索、DNS-over-HTTPS メール認証レコード（`doh.py`）、Wikipedia 注目度シリーズ（`pageviews.py`）、GDELT ニュース言及（`gdelt.py`）、無料キーの YouTube クリエイター指標（`youtube.py`）、IndexNow + Baidu インデックス送信（`indexpush.py`、dry-run ゲート付き）、広告透明性ライブラリ（Meta/Google/TikTok）、そして crt.sh、W3C バリデータ、oEmbed、HN Algolia のレシピ行。
-- **オプトイン MCP サーバー**（Ahrefs、Semrush、SE Ranking、SISTRIX、SimilarWeb、セルフホストの無料 **OpenSEO** スイート、Cloudflare、Vercel、HubSpot、Amplitude、Notion、Webflow、Sanity、Contentful、Slack、Resend、keyless の Firecrawl と Tavily）は [`docs/mcp-catalog.json`](mcp-catalog.json) に**コピー＆ペースト用の参照としてのみ**カタログ化されています —— カタログは自動登録されるプラグインルートの `.mcp.json` パスの外にあるため、あなたのために何も登録されません。欲しいエントリを自分の MCP 設定にコピーしてください。
+- **オプトイン MCP サーバー**（Ahrefs、Semrush、SE Ranking、SISTRIX、SimilarWeb、セルフホストの無料 **OpenSEO** スイート、Cloudflare、Vercel、HubSpot、Amplitude、Notion、Webflow、Sanity、Contentful、Slack、Resend、keyless の Firecrawl と Tavily、Appeeky、Upfluence）は [`docs/mcp-catalog.json`](mcp-catalog.json) に**コピー＆ペースト用の参照としてのみ**カタログ化されています —— カタログは自動登録されるプラグインルートの `.mcp.json` パスの外にあるため、あなたのために何も登録されません。欲しいエントリを自分の MCP 設定にコピーしてください。
 
 Paid Ads スキルは**自アカウントの手動エクスポート**（ネイティブ広告マネージャーの CSV、GA4、ecommerce）から採点します。キー付き広告プラットフォーム API（Google Ads SDK、Meta Marketing API）はオプトインの Tier-2/3 のみで、**決して** Tier 1 の要件ではありません。メールスキルも同様 —— **自分の ESP エクスポート**から採点します —— そして各 deliverability シグナルは keyless（DNS ルックアップ、DMARC RUA レポート、seed-list の inbox テスト）なので、キー付き ESP API もまた決して Tier 1 の要件ではありません；あなたの ESP が Resend なら、同梱の `resend.py` が無料枠で同じループを自動化します。
 
@@ -697,7 +697,7 @@ docs/            # ローカライズ済み README（zh）
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— オーサリングルール、コントリビューションチェックリスト、権威ある 10 の追跡サーフェスのリスト。
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** —— スキルごとのバージョン + changelog（現在のバンドル：`20.0.0`）。
+- **[VERSIONS.md](../VERSIONS.md)** —— スキルごとのバージョン + changelog（現在のバンドル：`20.1.0`）。
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— セキュリティ、プライバシー、コミュニティのポリシー。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— この repo のエージェント向けコンテキスト。

@@ -25,8 +25,16 @@ TIMESTAMP_RE = re.compile(
     r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$"
 )
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+$")
-RC_RE = re.compile(r"^(?P<version>(?:19\.(?:0|1|2)|20\.0)\.0)-rc\.[1-9][0-9]*$")
-SUPPORTED_RELEASE_VERSIONS = frozenset({"19.0.0", "19.1.0", "19.2.0", "20.0.0"})
+RC_RE = re.compile(
+    r"^(?P<version>[0-9]+\.[0-9]+\.[0-9]+)-rc\.[1-9][0-9]*$"
+)
+SUPPORTED_RELEASE_VERSIONS = (
+    "19.0.0",
+    "19.1.0",
+    "19.2.0",
+    "20.0.0",
+    "20.1.0",
+)
 MAX_RECEIPT_BYTES = 1024 * 1024
 PROFILE_TOP_KEYS = {
     "schema_version",

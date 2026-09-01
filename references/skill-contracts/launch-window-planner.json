@@ -11,7 +11,7 @@
           "end_char": 83,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 144,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 85
         },
@@ -41,7 +41,7 @@
           "end_char": 233,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 146
         },
@@ -56,7 +56,7 @@
           "end_char": 374,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 235
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "launch/research/launch-window-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3"
+      "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181"
     }
   },
   "context_hints": {
@@ -77,7 +77,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 40
       },
       {
@@ -98,7 +98,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 36
       }
     ],
@@ -114,6 +114,7 @@
     ]
   },
   "contract_id": "skill:launch-window-planner",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -126,7 +127,7 @@
           "end_char": 210,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -144,7 +145,7 @@
           "end_char": 380,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 211
         },
@@ -162,7 +163,7 @@
           "end_char": 566,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 381
         },
@@ -180,7 +181,7 @@
           "end_char": 936,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 568
         },
@@ -193,7 +194,7 @@
     "summary_ref": {
       "path": "launch/research/launch-window-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3"
+      "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -208,8 +209,8 @@
     "name": "launch-window-planner",
     "path": "launch/research/launch-window-planner/SKILL.md",
     "phase": "research",
-    "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
-    "version": "20.0.0"
+    "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / launch stage> [candidate dates or quarter] [tier] [constraints]",
@@ -223,7 +224,7 @@
           "end_char": 128,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -238,7 +239,7 @@
           "end_char": 191,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 130
         },
@@ -253,7 +254,7 @@
           "end_char": 372,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 193
         },
@@ -268,7 +269,7 @@
           "end_char": 485,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 374
         },
@@ -280,7 +281,7 @@
     "source": {
       "path": "launch/research/launch-window-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3"
+      "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181"
     }
   },
   "output_contract": {
@@ -295,7 +296,7 @@
           "end_char": 80,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -311,7 +312,7 @@
           "end_char": 387,
           "path": "launch/research/launch-window-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3",
+          "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181",
           "span_basis": "field-text",
           "start_char": 82
         },
@@ -322,7 +323,7 @@
     "source": {
       "path": "launch/research/launch-window-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3"
+      "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181"
     },
     "summary": "a candidate-window comparison table (conflict / tailwind / risk per window), a launch-week vs rolling format call with rationale, store-review buffer padding (labeled Estimated), an embargo window definition (lift moment + timezone + committed parties), and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -333,12 +334,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -347,7 +348,7 @@
     "source": {
       "path": "launch/research/launch-window-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "314f18a074c531703cb455f9b8895caa239211f2d30650ca7e1fa8faeeb0b9c3"
+      "sha256": "c72365a213db35715addc1581e2c8aad5a3c0661aaeede11a3f976abd8d0c181"
     },
     "trigger_phrases": [
       "pick a launch date",

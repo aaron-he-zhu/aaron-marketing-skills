@@ -1,393 +1,379 @@
 # Fit Scorer — Scoring Templates
 
-Per-dimension scoring tables, the final-score rollup, the multi-influencer comparison report, the custom-weighting matrix, and a worked example. The numbered steps in [SKILL.md](../SKILL.md) reference these blocks. Fill in the bracketed cells per candidate.
+Typed Suitability evidence tables, commercial-fit component tables, the commercial rollup, the multi-creator comparison report, custom weighting, and a worked example. The numbered steps in [SKILL.md](../SKILL.md) reference these blocks. Fill in the bracketed cells per candidate.
 
-These 1-5 tables are a campaign-specific prioritization aid, not the typed STAR Suitability rubric. The Suitability (S) read comes from `references/star-benchmark.md`; label every score from this file `commercial_fit_score`, and never feed it into the SQS or use it to clear a Suitability veto.
+**Copy contract**: copied output uses only stable opaque `creator_ref` values and opaque evidence/identity refs; raw handles, names, profile URLs, emails, and provider IDs stay in transient lookup context. The Suitability read is the `STAR-S1`–`STAR-S10` typed-state table below, with dated evidence or an explicit gap/N/A reason for every item. It has no hand-calculated total. Every 1–5 value in this file is an optional campaign-specific `commercial_fit_score` component, never Suitability or SQS, and cannot clear a potential `STAR-S2`/`STAR-S6` control finding or missing Suitability evidence. Do not rename it “Fit Score,” “Final Score,” “Suitability score,” or “SQS.”
 
 ---
 
-## Step 1 — Scoring Framework
+## Step 0 — Identity and Typed STAR Context
 
 ```markdown
-### Scoring Framework
+### Identity and Typed Context
+
+- `creator_ref`: [creator-<UUIDv4> or verified registry aggregate ID]
+- `identity_status`: [resolved/unresolved/conflict]
+- `identity_evidence_refs`: [[opaque authorized artifact/registry refs] or []]
+- `target`: [creator partnership target]
+- `target_version`: [version]
+- `profile`: [awareness/engagement/conversion/brand-building]
+- `assessment_time`: [forecast/actual]
+- `rollup_id`: [shared campaign rollup ID]
+- `observation_date`: [YYYY-MM-DD]
+- `cohort`: [platform + tier + niche]
+- `evidence_window`: [start/end]
+- `material_context`: [market/category/campaign constraints object]
+- `catalog_version`: [current STAR catalog version]
+- `context_status`: [READY/NEEDS_INPUT]
+- `context_gaps`: [[missing field], ...]
+```
+
+Do not start the Suitability read when `context_status` is `NEEDS_INPUT`. Preserve the supplied `creator_ref` and return the gap list. If identity cannot be resolved through an authorized artifact or verified registry link, keep `identity_status: unresolved`; do not create a hidden raw-handle mapping.
+
+---
+
+## Step 1 — Typed Suitability (S) Read
+
+```markdown
+## Typed Suitability (S) Read
+
+**creator_ref**: [creator_ref]
+**Suitability read status**: [COMPLETE/NEEDS_INPUT]
+
+Allowed item states are exactly `Pass | Partial | Fail | Unknown | N/A`. `Pass`, `Partial`, and `Fail` require current dated evidence. `Unknown` requires a gap reason and prevents a complete Suitability read. `N/A` requires an applicability reason.
+
+| STAR item | Requirement | Typed state | Evidence refs | observed_at | Evidence window | Evidence type | Confidence | Gap / N/A reason |
+|-----------|-------------|-------------|---------------|-------------|-----------------|---------------|------------|------------------|
+| `STAR-S1` | Audience composition, geography, and language match | [state] | [opaque refs] | [date] | [window] | [Measured/Calculated/Estimated/User-provided/Proxy] | [confidence] | [reason/none] |
+| `STAR-S2` | Real-follower rate meets the matching cohort benchmark | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+| `STAR-S3` | Follower growth is organic and stable | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+| `STAR-S4` | Typical reach is reliable across a recent sample | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+| `STAR-S5` | Engagement rate meets the matching cohort median | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+| `STAR-S6` | Engagement is authentic, not bought or coordinated | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+| `STAR-S7` | Repeat audience action shows durable influence | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+| `STAR-S8` | Deal-independent brand/category and audience-brand fit is evidenced | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+| `STAR-S9` | Reliability, professionalism, and delivery history support partnership | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+| `STAR-S10` | Commercial saturation and disclosed category history are acceptable | [state] | [opaque refs] | [date] | [window] | [type] | [confidence] | [reason/none] |
+
+### Coverage and Control Handoff
+
+- `applicable_items`: [count]
+- `evidenced_applicable_items`: [count]
+- `unknown_items`: [[STAR item IDs], ...]
+- `potential_control_findings`: [[STAR-S2/STAR-S6 + evidence refs] or []]
+- `outreach_status`: [HOLD_FOR_INPUT/HOLD_FOR_POTENTIAL_CONTROL/ELIGIBLE_FOR_PLANNING]
+- `auditor_handoff_required`: [yes/no + reason]
+
+This table is the Suitability read. Do not average its states, convert them to 1–5 values, emit a Suitability total, apply a cap, or label it SQS. Only `creator-content-auditor` may verify the potential control finding and compute the later STAR verdict/SQS.
+```
+
+---
+
+## Step 2 — Commercial-Fit Framework
+
+```markdown
+### Commercial-Fit Framework
 
 **Brand/Campaign**: [name]
 **Campaign Goal**: [awareness/consideration/conversion]
 **Target Audience**: [description]
 
-### Scoring Dimensions
+### `commercial_fit_score` Components
 
 | Dimension | Weight | Description |
 |-----------|--------|-------------|
-| Audience Match | [%] | How well their audience matches target |
-| Content Quality | [%] | Production value and consistency |
-| Brand Alignment | [%] | Values, aesthetic, messaging fit |
-| Engagement Quality | [%] | Authenticity and depth of engagement |
-| Partnership Potential | [%] | Professionalism, history, availability |
+| Campaign Audience Activation Fit | [%] | Deal-specific segment, channel, and CTA fit; does not rescore `STAR-S1`/`STAR-S8` |
+| Concept & Format Fit | [%] | Fit to this campaign's supplied concept and deliverable format |
+| Message & Offer Fit | [%] | Fit to this campaign's approved message and offer constraints |
+| Activation & Commercial Fit | [%] | Supplied terms, rights readiness, availability, timing, and budget feasibility |
+| Partnership Execution Fit | [%] | Evidence-backed ability to execute this campaign workflow; does not rescore `STAR-S9` |
 | **Total** | **100%** | |
 
-**Scoring Scale**: 1-5 (1=Poor, 2=Below Average, 3=Average, 4=Good, 5=Excellent)
+**Commercial scale**: 1–5 against the declared campaign criteria. A missing criterion or evidence row is `NOT_SCORED`/`NEEDS_INPUT`, never a neutral 3. Record the explicit decision rule and user-approved weights. These values are never SQS.
 ```
 
 ---
 
-## Step 2 — Audience Match
+## Step 3 — Campaign Audience Activation Fit
 
 ```markdown
-## Audience Match Score
+## Campaign Audience Activation Fit
 
-**Influencer**: @[handle]
+**creator_ref**: [creator_ref]
 
-### Target vs. Actual Comparison
+### Campaign-Specific Comparison
 
-| Attribute | Target | Influencer's Audience | Match |
-|-----------|--------|----------------------|-------|
-| Age | [target] | [actual] | ✅/⚠️/❌ |
-| Gender | [target] | [actual] | ✅/⚠️/❌ |
-| Location | [target] | [actual] | ✅/⚠️/❌ |
-| Interests | [target] | [actual] | ✅/⚠️/❌ |
-| Income/Purchasing | [target] | [actual] | ✅/⚠️/❌ |
+| Campaign criterion | Supplied requirement | Creator evidence/read | Evidence refs | observed_at | Commercial implication |
+|--------------------|----------------------|-----------------------|---------------|-------------|------------------------|
+| Priority segment | [campaign segment] | [evidenced audience read] | [opaque refs] | [date] | [implication] |
+| Required market/language | [requirement] | [evidenced read] | [opaque refs] | [date] | [implication] |
+| Planned channel/CTA | [activation plan] | [evidenced behavior/format fit] | [opaque refs] | [date] | [implication] |
 
-### Audience Quality Assessment
+### Suitability Dependencies — Zero Commercial Points
 
-| Metric | Value | Assessment |
-|--------|-------|------------|
-| Real follower % | [%] | [Good/Concerning] |
-| Active follower % | [%] | [Good/Concerning] |
-| Bot/spam % | [%] | [Good/Concerning] |
-| Audience growth | [trend] | [Organic/Suspicious] |
+| STAR item | Typed state from Suitability read | Evidence refs | Effect here |
+|-----------|-----------------------------------|---------------|-------------|
+| `STAR-S1` | [state] | [refs] | Context only; do not rescore |
+| `STAR-S2` | [state] | [refs] | A potential finding holds ranking/outreach; commercial points cannot offset it |
+| `STAR-S8` | [state] | [refs] | Context only; do not rescore |
 
-### Audience Match Score: [X/5]
+### `commercial_fit_score.campaign_audience_activation_fit`: [1–5/NOT_SCORED]
 
-**Justification**: [explanation]
+**Evidence-backed rationale**: [campaign-specific explanation with refs]
 
-**Weighted Score**: [X] × [weight%] = [weighted points]
+**Weighted `commercial_fit_score` contribution**: [X] × [weight%] = [weighted points]
 ```
 
 ---
 
-## Step 3 — Content Quality
+## Step 4 — Concept & Format Fit
 
 ```markdown
-## Content Quality Score
+## Concept & Format Fit
 
-**Influencer**: @[handle]
+**creator_ref**: [creator_ref]
 
-### Production Quality
+### Supplied Deliverable Requirements
 
-| Factor | Rating | Notes |
-|--------|--------|-------|
-| Visual quality | [1-5] | [notes] |
-| Audio quality (if video) | [1-5] | [notes] |
-| Editing skill | [1-5] | [notes] |
-| Creativity | [1-5] | [notes] |
-| Consistency | [1-5] | [notes] |
+| Requirement | Creator evidence/read | Evidence refs | observed_at | Commercial implication |
+|-------------|-----------------------|---------------|-------------|------------------------|
+| Deliverable format | [read] | [opaque refs] | [date] | [implication] |
+| Production constraints | [read] | [opaque refs] | [date] | [implication] |
+| Concept compatibility | [read] | [opaque refs] | [date] | [implication] |
+| Revision/approval workflow | [read] | [opaque refs] | [date] | [implication] |
 
-### Content Analysis
+### Current Evidence
 
-**Posting Frequency**: [X posts/week]
-**Content Mix**: [types and %]
-**Caption Quality**: [assessment]
-**Hashtag Strategy**: [assessment]
+- **Format sample refs**: [[opaque content refs], ...]
+- **Sample window**: [start/end]
+- **Observed at**: [date]
+- **Evidence type/confidence**: [type/confidence]
 
-### Best Content Examples
+### Gaps and Hypotheses
 
-1. **[Content 1]**: [why it's good]
-2. **[Content 2]**: [why it's good]
+- `evidence_gaps`: [[gap], ...]
+- `concept_hypothesis`: [falsifiable campaign hypothesis or none; zero score/weight]
 
-### Content Concerns
+### `commercial_fit_score.concept_format_fit`: [1–5/NOT_SCORED]
 
-- [Concern 1 if any]
-- [Concern 2 if any]
+**Evidence-backed rationale**: [campaign-specific explanation with refs]
 
-### Content Quality Score: [X/5]
-
-**Justification**: [explanation]
-
-**Weighted Score**: [X] × [weight%] = [weighted points]
+**Weighted `commercial_fit_score` contribution**: [X] × [weight%] = [weighted points]
 ```
 
 ---
 
-## Step 4 — Brand Alignment
+## Step 5 — Message & Offer Fit
 
 ```markdown
-## Brand Alignment Score
+## Message & Offer Fit
 
-**Influencer**: @[handle]
+**creator_ref**: [creator_ref]
 
-### Value Alignment
+### Campaign-Specific Requirements
 
-| Brand Value | Influencer Alignment | Evidence |
-|-------------|---------------------|----------|
-| [Value 1] | ✅/⚠️/❌ | [example from content] |
-| [Value 2] | ✅/⚠️/❌ | [example from content] |
-| [Value 3] | ✅/⚠️/❌ | [example from content] |
+| Requirement | Supplied campaign constraint | Creator evidence/read | Evidence refs | observed_at | Commercial implication |
+|-------------|------------------------------|-----------------------|---------------|-------------|------------------------|
+| Approved message | [message] | [read] | [opaque refs] | [date] | [implication] |
+| Offer/CTA | [offer/CTA] | [read] | [opaque refs] | [date] | [implication] |
+| Required tone/format | [constraint] | [read] | [opaque refs] | [date] | [implication] |
+| Campaign conflict | [exclusion] | [read] | [opaque refs] | [date] | [implication] |
 
-### Aesthetic Alignment
+### Suitability and Trust Boundaries — Zero Commercial Points
 
-| Element | Brand Style | Influencer Style | Match |
-|---------|-------------|------------------|-------|
-| Colors | [brand] | [influencer] | [%] |
-| Tone | [brand] | [influencer] | [%] |
-| Visual style | [brand] | [influencer] | [%] |
+| Control/read | Status | Evidence refs | Effect here |
+|--------------|--------|---------------|-------------|
+| `STAR-S8` deal-independent brand/category fit | [typed state] | [refs] | Context only; do not rescore |
+| `STAR-T3` brand-safety control | [not assessed/potential finding from supplied evidence] | [refs] | Hand off to auditor; never turn it into commercial points or a verdict |
 
-### Messaging Fit
+### Gaps and Hypotheses
 
-- **Voice compatibility**: [assessment]
-- **Topic relevance**: [assessment]
-- **Audience overlap**: [assessment]
+- `evidence_gaps`: [[gap], ...]
+- `message_hypothesis`: [falsifiable test or none; zero score/weight]
 
-### Brand Safety Check
+### `commercial_fit_score.message_offer_fit`: [1–5/NOT_SCORED]
 
-| Risk Category | Assessment | Notes |
-|---------------|------------|-------|
-| Political content | [Low/Medium/High] | [notes] |
-| Controversial opinions | [Low/Medium/High] | [notes] |
-| Competitor mentions | [Low/Medium/High] | [notes] |
-| Adult content | [Low/Medium/High] | [notes] |
-| Legal/regulatory | [Low/Medium/High] | [notes] |
+**Evidence-backed rationale**: [campaign-specific explanation with refs]
 
-**Overall Brand Safety**: [Safe/Proceed with caution/Risk]
-
-### Brand Alignment Score: [X/5]
-
-**Justification**: [explanation]
-
-**Weighted Score**: [X] × [weight%] = [weighted points]
+**Weighted `commercial_fit_score` contribution**: [X] × [weight%] = [weighted points]
 ```
 
 ---
 
-## Step 5 — Engagement Quality
+## Step 6 — Activation & Commercial Fit
 
 ```markdown
-## Engagement Quality Score
+## Activation & Commercial Fit
 
-**Influencer**: @[handle]
+**creator_ref**: [creator_ref]
 
-### Engagement Metrics
+### Deal and Activation Inputs
 
-| Platform | Followers | Eng. Rate | Industry Avg | vs. Avg |
-|----------|-----------|-----------|--------------|---------|
-| [Platform 1] | [count] | [%] | [%] | [+/-] |
-| [Platform 2] | [count] | [%] | [%] | [+/-] |
+| Factor | Supplied requirement/term | Creator response/evidence | Evidence refs | observed_at | Commercial implication |
+|--------|---------------------------|---------------------------|---------------|-------------|------------------------|
+| Availability/window | [requirement] | [status] | [opaque refs] | [date] | [implication] |
+| Deliverables/revisions | [requirement] | [status] | [opaque refs] | [date] | [implication] |
+| Rights/usage scope | [requirement] | [status] | [opaque refs] | [date] | [implication] |
+| Category conflicts/exclusivity | [constraint] | [status] | [opaque refs] | [date] | [implication] |
+| Commercial terms/budget | [approved range] | [quoted terms or Unknown] | [opaque refs] | [date] | [implication] |
 
-### Engagement Authenticity
+### STAR Boundaries — Zero Commercial Points
 
-| Indicator | Assessment | Evidence |
-|-----------|------------|----------|
-| Comment quality | [1-5] | [sample comments] |
-| Comment diversity | [1-5] | [unique commenters] |
-| Like/comment ratio | [ratio] | [normal/abnormal] |
-| Engagement timing | [pattern] | [organic/suspicious] |
-| Follower engagement % | [%] | [good/poor] |
+| STAR item | Typed state from Suitability read | Evidence refs | Effect here |
+|-----------|-----------------------------------|---------------|-------------|
+| `STAR-S5` | [state] | [refs] | Context only; do not rescore |
+| `STAR-S6` | [state] | [refs] | A potential finding holds ranking/outreach; commercial points cannot offset it |
+| `STAR-S7` | [state] | [refs] | Context only; do not rescore |
 
-### Engagement Pods/Buying Signs
+### Gaps
 
-- [ ] Sudden follower spikes
-- [ ] Engagement from unrelated accounts
-- [ ] Generic/emoji-only comments
-- [ ] Inconsistent engagement patterns
-- [ ] Follower/following ratio red flags
+- `commercial_input_gaps`: [[missing quote/rights/availability/conflict evidence], ...]
+- `decision_rule`: [supplied rule or NEEDS_INPUT]
 
-**Authenticity Assessment**: [Authentic/Some concerns/Suspicious]
+### `commercial_fit_score.activation_commercial_fit`: [1–5/NOT_SCORED]
 
-### Response & Interaction
+**Evidence-backed rationale**: [campaign-specific explanation with refs]
 
-- **Responds to comments**: [Yes/Sometimes/Rarely]
-- **Community building**: [Strong/Average/Weak]
-- **Two-way engagement**: [assessment]
-
-### Engagement Quality Score: [X/5]
-
-**Justification**: [explanation]
-
-**Weighted Score**: [X] × [weight%] = [weighted points]
+**Weighted `commercial_fit_score` contribution**: [X] × [weight%] = [weighted points]
 ```
 
 ---
 
-## Step 6 — Partnership Potential
+## Step 7 — Partnership Execution Fit
 
 ```markdown
-## Partnership Potential Score
+## Partnership Execution Fit
 
-**Influencer**: @[handle]
+**creator_ref**: [creator_ref]
 
-### Partnership History
+### Campaign-Relevant Execution Evidence
 
-| Brand | Recency | Content Quality | Disclosure | Notes |
-|-------|---------|-----------------|------------|-------|
-| [Brand 1] | [date] | [rating] | [✅/❌] | [notes] |
-| [Brand 2] | [date] | [rating] | [✅/❌] | [notes] |
+| Factor | Evidence/read | Evidence refs | observed_at | Commercial implication |
+|--------|---------------|---------------|-------------|------------------------|
+| Response/coordination history | [read] | [opaque refs] | [date] | [implication] |
+| Delivery/revision history | [read] | [opaque refs] | [date] | [implication] |
+| Asset handoff readiness | [read] | [opaque refs] | [date] | [implication] |
+| Campaign-team workflow fit | [read] | [opaque refs] | [date] | [implication] |
 
-**Observations**:
-- Partnership frequency: [X per month]
-- Brand category mix: [categories]
-- Competitor partnerships: [details]
+### Suitability and Trust Boundaries — Zero Commercial Points
 
-### Professionalism Indicators
+| Control/read | Status | Evidence refs | Effect here |
+|--------------|--------|---------------|-------------|
+| `STAR-S9` reliability/professionalism | [typed state] | [refs] | Context only; do not rescore |
+| `STAR-S10` saturation/category history | [typed state] | [refs] | Context only; do not rescore |
+| `STAR-T1` disclosure control | [not assessed/potential finding from supplied evidence] | [refs] | Hand off to auditor; never turn it into commercial points or a verdict |
 
-| Factor | Assessment | Evidence |
-|--------|------------|----------|
-| Contact availability | [Easy/Moderate/Difficult] | [contact info] |
-| Response reputation | [Responsive/Mixed/Unresponsive] | [if known] |
-| Content delivery | [On time/Variable/Problematic] | [if known] |
-| Creative quality in ads | [Strong/Average/Weak] | [examples] |
-| Disclosure compliance | [Always/Usually/Sometimes] | [examples] |
+### Contact and Source Hygiene
 
-### Exclusivity & Availability
+- `recipient_ref`: [opaque ref or Unknown]
+- `contact_source_ref`: [opaque ref or Unknown]
+- `evidence_gaps`: [[gap], ...]
 
-- **Category exclusivity**: [Yes/No - details]
-- **Competitor restrictions**: [details]
-- **Upcoming availability**: [if known]
+### `commercial_fit_score.partnership_execution_fit`: [1–5/NOT_SCORED]
 
-### Estimated Value
+**Evidence-backed rationale**: [campaign-specific explanation with refs]
 
-| Metric | Estimate | Notes |
-|--------|----------|-------|
-| Estimated rate | [range] | Based on [followers/engagement] |
-| CPM estimate | [$X] | Industry average: [$X] |
-| Value assessment | [Good/Fair/Premium] | |
-
-### Partnership Potential Score: [X/5]
-
-**Justification**: [explanation]
-
-**Weighted Score**: [X] × [weight%] = [weighted points]
+**Weighted `commercial_fit_score` contribution**: [X] × [weight%] = [weighted points]
 ```
 
 ---
 
-## Step 7 — Final Fit Score
+## Step 8 — `commercial_fit_score` Rollup
 
 ```markdown
-## Final Fit Score
+## `commercial_fit_score` Rollup
 
-**Influencer**: @[handle]
+**creator_ref**: [creator_ref]
+**Suitability read status**: [COMPLETE/NEEDS_INPUT]
+**Potential Suitability control hold**: [none/STAR-S2/STAR-S6]
+**Commercial scoring status**: [COMPLETE/PROVISIONAL/NEEDS_INPUT]
 
-### Score Summary
+| `commercial_fit_score` component | Component score | User-approved weight | Weighted contribution | Evidence refs | observed_at |
+|----------------------------------|-----------------|----------------------|-----------------------|---------------|-------------|
+| Campaign audience activation fit | [1–5/NOT_SCORED] | [%] | [points] | [opaque refs] | [date] |
+| Concept & format fit | [1–5/NOT_SCORED] | [%] | [points] | [opaque refs] | [date] |
+| Message & offer fit | [1–5/NOT_SCORED] | [%] | [points] | [opaque refs] | [date] |
+| Activation & commercial fit | [1–5/NOT_SCORED] | [%] | [points] | [opaque refs] | [date] |
+| Partnership execution fit | [1–5/NOT_SCORED] | [%] | [points] | [opaque refs] | [date] |
+| **`commercial_fit_score`** | | **100%** | **[X/5.00 or NOT_SCORED]** | | |
 
-| Dimension | Raw Score | Weight | Weighted Score |
-|-----------|-----------|--------|----------------|
-| Audience Match | [X/5] | [%] | [points] |
-| Content Quality | [X/5] | [%] | [points] |
-| Brand Alignment | [X/5] | [%] | [points] |
-| Engagement Quality | [X/5] | [%] | [points] |
-| Partnership Potential | [X/5] | [%] | [points] |
-| **Total** | | **100%** | **[X/5.00]** |
+### Decision Readiness
 
-### Score Interpretation
+- `commercial_fit_score`: [X/5.00/NOT_SCORED]
+- `ranking_eligibility`: [ELIGIBLE/HOLD_FOR_SUITABILITY_INPUT/HOLD_FOR_COMMERCIAL_INPUT/HOLD_FOR_POTENTIAL_CONTROL]
+- `declared_decision_rule`: [rule + owner + source ref, or NEEDS_INPUT]
+- `action_under_declared_rule`: [PRIORITIZE_FOR_CAMPAIGN_PLANNING/RETEST/DEPRIORITIZE/NEEDS_INPUT]
+- `rationale`: [rule + evidence refs; no generic rating]
+- `rerun_condition`: [missing evidence or changed term/date]
 
-| Score Range | Rating | Recommendation |
-|-------------|--------|----------------|
-| 4.5-5.0 | Excellent | Priority partner |
-| 4.0-4.4 | Very Good | Strong candidate |
-| 3.5-3.9 | Good | Worth pursuing |
-| 3.0-3.4 | Average | Consider with caveats |
-| 2.5-2.9 | Below Average | Proceed with caution |
-| <2.5 | Poor | Not recommended |
-
-### Final Rating: [X/5] - [Rating]
-
-### Recommendation
-
-**Verdict**: [Highly Recommended / Recommended / Consider / Pass]
-
-**Key Strengths**:
-1. [Strength 1]
-2. [Strength 2]
-3. [Strength 3]
-
-**Key Concerns**:
-1. [Concern 1]
-2. [Concern 2]
-
-**Best Use Case**: [what type of campaign/content]
-
-**Expected Performance**:
-- Estimated reach: [X]
-- Estimated engagement: [X]
-- Cost estimate: [$X]
-- Projected CPE: [$X]
+Do not emit a generic “Verdict,” star rating, “Final Fit Score,” or “Final Score.” If the Suitability read is incomplete or a potential `STAR-S2`/`STAR-S6` finding stands, the creator is not ranking-eligible even when `commercial_fit_score` is numerically high. The action above is commercial planning advice under the declared rule, not a STAR gate verdict.
 ```
 
 ---
 
-## Step 8 — Multi-Influencer Comparison Report
+## Step 9 — Multi-Creator Comparison Report
 
 ```markdown
-# Influencer Comparison Report
+# Creator Commercial-Fit Comparison
 
 **Campaign**: [name]
 **Date**: [date]
-**Influencers Evaluated**: [count]
+**Creator refs evaluated**: [[creator_ref], ...]
+**Shared typed context ref**: [opaque ref]
+**Declared decision rule**: [rule + owner + source ref]
 
-## Ranking Summary
+## Ranking-Eligible Creators
 
-| Rank | Influencer | Platform | Followers | Final Score | Rating |
-|------|------------|----------|-----------|-------------|--------|
-| 1 | @[handle] | [platform] | [count] | [X/5] | ⭐⭐⭐⭐⭐ |
-| 2 | @[handle] | [platform] | [count] | [X/5] | ⭐⭐⭐⭐ |
-| 3 | @[handle] | [platform] | [count] | [X/5] | ⭐⭐⭐⭐ |
+Rank only candidates with a complete applicable Suitability read, no unresolved potential control hold, complete commercial inputs, and the same campaign criteria/weights.
 
-## Detailed Comparison
+| Rank | creator_ref | Suitability read status | S2/S6 hold | `commercial_fit_score` | Evidence confidence | Action under declared rule |
+|------|-------------|-------------------------|------------|------------------------|---------------------|----------------------------|
+| [rank] | [creator_ref] | COMPLETE | none | [X/5] | [confidence] | [explicit action] |
 
-| Dimension | @[handle1] | @[handle2] | @[handle3] |
-|-----------|------------|------------|------------|
-| Audience Match | [X/5] | [X/5] | [X/5] |
-| Content Quality | [X/5] | [X/5] | [X/5] |
-| Brand Alignment | [X/5] | [X/5] | [X/5] |
-| Engagement Quality | [X/5] | [X/5] | [X/5] |
-| Partnership Potential | [X/5] | [X/5] | [X/5] |
-| **Final Score** | **[X/5]** | **[X/5]** | **[X/5]** |
+## Not Ranked
 
-## Visual Comparison
+| creator_ref | Suitability gaps/control | Commercial gaps | Status | Rerun condition |
+|-------------|--------------------------|-----------------|--------|-----------------|
+| [creator_ref] | [Unknown items/hold] | [gaps] | [NEEDS_INPUT/HOLD] | [condition] |
 
-```
-Audience Match    |████████░░| |██████░░░░| |████████░░|
-Content Quality   |██████░░░░| |████████░░| |██████░░░░|
-Brand Alignment   |████████░░| |██████░░░░| |████████░░|
-Engagement        |██████░░░░| |████████░░| |████████░░|
-Partnership       |████████░░| |██████░░░░| |██████░░░░|
-                   @handle1     @handle2     @handle3
-```
+## Component Comparison
 
-## Recommendation
+| `commercial_fit_score` component | [creator_ref-1] | [creator_ref-2] | [creator_ref-3] |
+|----------------------------------|-----------------|-----------------|-----------------|
+| Campaign audience activation fit | [X/5] | [X/5] | [X/5] |
+| Concept & format fit | [X/5] | [X/5] | [X/5] |
+| Message & offer fit | [X/5] | [X/5] | [X/5] |
+| Activation & commercial fit | [X/5] | [X/5] | [X/5] |
+| Partnership execution fit | [X/5] | [X/5] | [X/5] |
+| **`commercial_fit_score`** | **[X/5]** | **[X/5]** | **[X/5]** |
 
-**For this campaign, prioritize**:
-1. **@[handle]** - [reason]
-2. **@[handle]** - [reason]
+## Planning Actions
 
-**Consider combining**:
-- [Influencer A] for [purpose] + [Influencer B] for [purpose]
+1. [creator_ref]: [explicit action under the declared rule + evidence refs]
+2. [creator_ref]: [explicit action under the declared rule + evidence refs]
 
-**Pass on**:
-- @[handle]: [reason]
+No row in this comparison is a Suitability total, SQS, or auditor verdict.
 ```
 
 ---
 
-## Custom Weighting
+## Custom Commercial Weighting
 
-Adjust weights based on campaign goals:
+Record one approved weight set per campaign; do not silently select a preset.
 
-| Campaign Goal | Audience | Content | Brand | Engagement | Partnership |
-|---------------|----------|---------|-------|------------|-------------|
-| Awareness | 30% | 25% | 15% | 20% | 10% |
-| Engagement | 20% | 20% | 15% | 35% | 10% |
-| Conversion | 35% | 15% | 20% | 20% | 10% |
-| Brand Building | 20% | 25% | 30% | 15% | 10% |
-| Long-term | 25% | 20% | 25% | 15% | 15% |
+| Weight-set ref | Campaign goal | Audience activation | Concept/format | Message/offer | Activation/commercial | Partnership execution | Total | Approved by/date |
+|----------------|---------------|---------------------|----------------|---------------|-----------------------|-----------------------|-------|------------------|
+| [opaque ref] | [goal] | [%] | [%] | [%] | [%] | [%] | 100% | [owner/date] |
+
+Weights belong only to `commercial_fit_score`. They never alter the typed `STAR-S1`–`STAR-S10` states or the gate's profile weights.
 
 ---
 
 ## Worked Example
 
-**User**: "Compare these 3 influencers for our sustainable fashion brand: @ecofashionista, @greenwardrobe, @sustainablesarah"
+**User**: "Compare `creator-11111111-1111-4111-8111-111111111111`, `creator-22222222-2222-4222-8222-222222222222`, and `creator-33333333-3333-4333-8333-333333333333` for our sustainable-fashion campaign. The authorized discovery artifact supplies the typed campaign context, current dated evidence for every applicable `STAR-S1`–`STAR-S10` item, commercial criteria, approved weights, and decision rule."
 
-**Output**: Detailed comparison with per-dimension scores, leading to clear recommendations with @sustainablesarah ranked #1 due to highest audience match and engagement authenticity.
+**Output**: Emit one dated typed Suitability table per `creator_ref`, then the separately labeled `commercial_fit_score` components and rollup. Rank only eligible refs under the supplied rule; place incomplete or potential-control candidates in **Not Ranked** with exact gaps. Persist only opaque refs. Emit no raw identity locator, Suitability composite, SQS, generic Verdict, “Final Fit Score,” or “Final Score.”
 
 ---
 

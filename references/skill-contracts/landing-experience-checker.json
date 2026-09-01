@@ -11,7 +11,7 @@
           "end_char": 186,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd"
+      "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab"
     }
   },
   "context_hints": {
@@ -32,7 +32,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 36
       },
       {
@@ -53,7 +53,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 32
       },
       {
@@ -67,6 +67,7 @@
     "project_paths": []
   },
   "contract_id": "skill:landing-experience-checker",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -79,7 +80,7 @@
           "end_char": 214,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -97,7 +98,7 @@
           "end_char": 237,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 216
         },
@@ -113,7 +114,7 @@
           "end_char": 406,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 238
         },
@@ -131,7 +132,7 @@
           "end_char": 450,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 408
         },
@@ -147,7 +148,7 @@
           "end_char": 679,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 451
         },
@@ -165,7 +166,7 @@
           "end_char": 804,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 680
         },
@@ -181,7 +182,7 @@
           "end_char": 844,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 806
         },
@@ -197,7 +198,7 @@
           "end_char": 975,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 845
         },
@@ -213,7 +214,7 @@
           "end_char": 1051,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 977
         },
@@ -226,7 +227,7 @@
     "summary_ref": {
       "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd"
+      "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -241,8 +242,8 @@
     "name": "landing-experience-checker",
     "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
     "phase": "orchestrate",
-    "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
-    "version": "20.0.0"
+    "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<destination URL> [ad copy/headlines] [goal: dr|prospecting]",
@@ -256,7 +257,7 @@
           "end_char": 235,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -271,7 +272,7 @@
           "end_char": 431,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 237
         },
@@ -283,7 +284,7 @@
     "source": {
       "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd"
+      "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab"
     }
   },
   "output_contract": {
@@ -298,7 +299,7 @@
           "end_char": 91,
           "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd",
+          "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -309,7 +310,7 @@
     "source": {
       "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd"
+      "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab"
     },
     "summary": "an ad↔page continuity punch list — each of the five checks (message-match, above-the-fold, speed, form friction, mobile) marked Pass / Partial / Fix with the specific gap and the one lever to hand off, plus the standard handoff summary for `memory/ad/landing-experience-checker/`.",
     "summary_source": "expected-output",
@@ -320,12 +321,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -334,7 +335,7 @@
     "source": {
       "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
       "section": "frontmatter",
-      "sha256": "91e5010c688c836eaccb23d9349c409af66f0b246fffbbf1ff5f35db6e7a69bd"
+      "sha256": "a8c7605868c58763622bdee078d74819a7c45bf77ee3075163eb6a8d1ed7d6ab"
     },
     "trigger_phrases": [
       "pre-launch check the landing page",

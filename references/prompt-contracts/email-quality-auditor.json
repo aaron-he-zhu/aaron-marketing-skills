@@ -195,8 +195,8 @@
   ],
   "framework_contract": {
     "catalog_path": "references/framework-catalog.json",
-    "catalog_sha256": "335a3d9f24c9a58fea13bb7a60c587232b4b296b8f992918fee61309ac925b58",
-    "catalog_version": "20.0.0",
+    "catalog_sha256": "71700105604bf955bc9fe634ed917a97f8f912b2674d1eee8c989fe13e6a9a0a",
+    "catalog_version": "20.1.0",
     "profiles": [
       "promotional",
       "retention",
@@ -229,7 +229,7 @@
     "runtime_sources": [
       {
         "path": "references/auditor-runbook.md",
-        "sha256": "1bdafd8e080bfd77ec933b67221dcc2652bf350f0e73b0ecafdeb57136195474"
+        "sha256": "028a87012aa8cded04d9b7fb70f44a2b0eb3475b7984251050e1ec281c60a3ec"
       },
       {
         "path": "references/scoring-semantics.md",
@@ -245,7 +245,7 @@
       },
       {
         "path": "references/audit-artifact.schema.json",
-        "sha256": "bc273810760801c04ecfade99c3eb6964e7c99369916aeca1a1e743dfa6ebe42"
+        "sha256": "e5a1898412907400a2cf67ddc950eb7013db0558da47bf7eb4f7bf7b98e2a717"
       }
     ],
     "sink": "memory/audits/email/"
@@ -329,12 +329,12 @@
   "skill": {
     "name": "email-quality-auditor",
     "path": "email/deliver/email-quality-auditor/SKILL.md",
-    "sha256": "e2c9f4118bae5fdf706ac95e70ebdf5151d99946830529c0fc8cc2f7a09bb76a",
-    "version": "20.0.0"
+    "sha256": "2e0125eac5aebb0702fe72efbeac37ffbe17db0d548988c77208e421aabe0a15",
+    "version": "20.1.0"
   },
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-    "version": "20.0.0"
+    "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+    "version": "20.1.0"
   }
 }

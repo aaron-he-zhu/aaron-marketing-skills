@@ -162,6 +162,16 @@ Record the unit of randomization/analysis, population and exclusions, control an
 
 **Required readback fields**: experiment/change ID · preregistration version · owner · target/population · control and candidate windows · sample/exclusions · sources and provenance · primary metric and guardrails · attribution/lag · effect and uncertainty · statistical method · data-quality incidents · decision · rationale · next patch · next readback date.
 
+### Typed Measurement Contract and Cycle Retro
+
+When a workflow needs a machine-verifiable cross-discipline loop, encode the preregistration as `kind: measurement-contract` under [`control-artifact.schema.json`](control-artifact.schema.json). Bind the exact measured target, candidate, and control bytes; population/scope; analysis unit; primary metric and guardrails; truth source; attribution and conversion-lag references; locked/start/stop/read times; decision rule; and decision owner. `locked_at` must be no later than exposure, and confirmatory designs require a control. `none-exploratory` is explicitly exploratory and cannot be reported as confirmatory evidence.
+
+Close a readback with `kind: cycle-retro`. It binds the exact measurement-contract digest, the contract's exact target as the non-forked current head, selected ancestry, evidence bindings, decision owner, decision time, coded limitations, and any next read. A new hypothesis may be carried forward only with `hypothesis_evidence_weight: 0`; it is a proposed next test, never evidence for the completed cycle.
+
+The protocol deliberately does not define a universal decision enum. Each discipline supplies a safe `decision_code` and an immutable `decision_taxonomy_ref`: for example Social, Narrative, Launch, Email, Paid, and Influencer may use different domain decisions without changing the shared schema. The validator checks identity, digest, owner, current-head, and time relationships; the discipline checks whether the code is allowed and what action it implies.
+
+An action receipt may be cited as readback evidence only when its exact digest and scope match the registered unit/window. A successful receipt proves that a separate executor reported the bounded operation; it does not prove business impact, transfer permission, or replace the declared outcome truth source.
+
 ### Method-Appropriate Evidence
 
 - **Binary rates**: use a prespecified two-proportion method, effect estimate/interval, and practical-effect bar. `experiment.py proportion` returns a two-sided pooled z-test, per-arm Wilson intervals, an absolute-lift interval, and separate statistical/practical flags.

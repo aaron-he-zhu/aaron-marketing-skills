@@ -77,7 +77,7 @@
 
 ## 连接器
 
-仅短名单甄别读取：[`youtube.py`](../scripts/connectors/youtube.py)（免费 key 的创作者指标 —— 真实订阅/观看数；也有 keyless `--rss` 模式）、[`bluesky.py`](../scripts/connectors/bluesky.py)（创作者档案 + 互动 + 抢注审计）、[`fediverse.py`](../scripts/connectors/fediverse.py)，以及 [`tavily.py`](../scripts/connectors/tavily.py)（打分发现搜索）。这些用于甄别短名单、度量你自己的 campaign —— 绝非批量抓取（ToS）。完整清单见 [CONNECTORS.md](../CONNECTORS.md)。
+仅短名单甄别读取：[`youtube.py`](../scripts/connectors/youtube.py)（免费 key 的创作者指标 —— 真实订阅/观看数；也有 keyless `--rss` 模式）、[`bluesky.py`](../scripts/connectors/bluesky.py)（创作者档案 + 互动 + 抢注审计）、[`fediverse.py`](../scripts/connectors/fediverse.py)，以及 [`tavily.py`](../scripts/connectors/tavily.py)（打分发现搜索）。专有服务保持外置：Upfluence 是 opt-in 远程 MCP，NoxInfluencer 是外部 Skill/CLI companion，Scrumball 在完成认证字段验证前只是 REST/API recipe。它们只提供证据，不提供 STAR 判决；模型推断的受众、真实性、费率和 ROI 仍标 Estimated。不得批量抓取或镜像供应商数据库。完整清单与授权边界见 [CONNECTORS.md](../CONNECTORS.md)。
 
 ---
 

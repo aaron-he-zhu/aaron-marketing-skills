@@ -1,35 +1,50 @@
-# Influencer Tiers and Partner-Type Decision
+# Influencer Band and Partner-Model Taxonomy
 
-Use this when deciding the influencer mix for a campaign plan. `fit-scorer` and `budget-optimizer` can consult it to validate tier follower ranges and screen candidates.
+Use this file to record the taxonomy chosen for a campaign. It supplies no
+universal follower ranges, rate card, performance ordering, engagement norm, or
+recommended creator mix. `fit-scorer` evaluates evidence for creators;
+`budget-optimizer` models costs only from user-provided or compatible
+source-dated anchors.
 
-## Influencer vs. Affiliate vs. Creator Program
+## Partner-Model Declaration
 
-Pick the partner model before sizing the mix — goal and incentive differ.
+Choose or define a model only when the user or an approved plan supplies its
+objective and commercial terms. The labels below organize inputs; they do not
+imply performance.
 
-| Dimension | Influencer | Affiliate | Creator Program |
-|-----------|------------|-----------|-----------------|
-| **Goal** | Brand exposure, trust | Direct sales | Content co-creation |
-| **Incentive** | Paid or product exchange | Commission (CPS) | Credits, free product use |
-| **Content** | Influencer's original post | Tracked links are enough | Must use/show the product |
-| **Relationship** | Short or long-term | Transactional | Long-term |
+| Declared model | Record before use |
+|----------------|-------------------|
+| Influencer partnership | objective, deliverables, compensation basis, rights, disclosure, duration |
+| Affiliate relationship | attribution rule/window, commission basis, eligible outcomes, rights/disclosure |
+| Creator program | program objective, contribution/deliverable rules, compensation/benefits, rights, duration |
+| Hybrid | exact components, deduplication/attribution rule, compensation and rights for each component |
 
-Hybrid is common: pay a flat fee plus commission to combine exposure with attributable sales.
+If the model or terms are not supplied, return `NEEDS_INPUT`; do not select a
+model from assumed industry practice.
 
-## Tier Definitions by Follower Count
+## Follower-Band Declaration
 
-| Tier | Follower Range | Typical Role | Notes |
-|------|----------------|--------------|-------|
-| **Nano** | 1K–10K | Authentic reach, high trust | Best engagement rates; cheap; volume play |
-| **Micro** | 10K–100K | Niche credibility | Strong engagement; good cost-per-engagement |
-| **Mid-tier** | 100K–1M | Scaled niche reach | Balance of reach and engagement |
-| **Macro** | 1M+ | Broad awareness | Lowest engagement rate; highest cost; reach play |
+Follower-band labels vary by platform, market, provider, and date. Copy the
+user's taxonomy or a compatible source-dated taxonomy into the plan:
 
-## Screening: Engagement Rate > Follower Count
+| Band label | Follower range | Platform/market | Source ref | Observed/published date | Decision use |
+|------------|----------------|-----------------|------------|-------------------------|--------------|
+| [label] | [min-max] | [scope] | [user/source ref] | [date] | [declared planning use] |
 
-Screen on engagement rate, not raw follower count. A nano creator with high engagement often beats a macro account with a passive audience. Also check:
+Without a compatible row, use `band: Unknown` and request the taxonomy. Never
+map a creator into nano/micro/mid/macro from repository defaults.
 
-- Fake/bought followers — flag accounts with engagement far below tier norms.
-- Content style match — does their voice fit the brand and campaign pillars?
-- Audience fit — demographics and niche over headline follower numbers.
+## Evidence Required for Mix Decisions
 
-Source: adapted from kostja94-marketing-skills `channels/partnerships/influencer-marketing` (decision table and tiering).
+Do not infer that one band is cheaper, more authentic, more trusted, more
+engaging, or higher-performing than another. For each proposed mix decision,
+record:
+
+- the campaign objective and decision rule;
+- complete current creator evidence from typed Fit;
+- compatible user/source-dated rate or cost evidence;
+- comparable platform, market, niche, window, and metric definitions;
+- rights, deliverable, and capacity constraints.
+
+Missing evidence remains `NEEDS_INPUT`. A follower count alone never clears
+authenticity, audience fit, brand safety, cost, or performance.

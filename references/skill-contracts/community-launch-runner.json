@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 139,
+          "end_char": 108,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "every selected platform has a complete submission package with field specs cited to that platform's official docs and marked verify-current"
+        "text": "every selected platform has a complete package bound to the current manifest hash and current official rules"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 297,
+          "end_char": 135,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
-          "start_char": 141
+          "start_char": 110
         },
-        "text": "the plan passes the red-line check — no vote or engagement solicitation anywhere, every undocumented platform mechanic labeled Estimated with a named source"
+        "text": "the red-line check passes"
       },
       {
         "clause_id": "done-03",
@@ -38,22 +38,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 383,
+          "end_char": 214,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
-          "start_char": 299
+          "start_char": 137
         },
-        "text": "and the wave schedule + regional channel selection states a per-channel rules check."
+        "text": "every attempted submission has its own action intent and provider/URL receipt"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 306,
+          "path": "launch/mobilize/community-launch-runner/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
+          "span_basis": "field-text",
+          "start_char": 216
+        },
+        "text": "and missing/partial/unknown receipts remain open rather than being labeled submitted/live."
       }
     ],
-    "done_when": "every selected platform has a complete submission package with field specs cited to that platform's official docs and marked verify-current; the plan passes the red-line check — no vote or engagement solicitation anywhere, every undocumented platform mechanic labeled Estimated with a named source; and the wave schedule + regional channel selection states a per-channel rules check.",
+    "done_when": "every selected platform has a complete package bound to the current manifest hash and current official rules; the red-line check passes; every attempted submission has its own action intent and provider/URL receipt; and missing/partial/unknown receipts remain open rather than being labeled submitted/live.",
     "extraction_status": "classified",
     "source": {
       "path": "launch/mobilize/community-launch-runner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651"
+      "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b"
     }
   },
   "context_hints": {
@@ -62,7 +77,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 37
       },
       {
@@ -71,6 +86,13 @@
         "requirement": "optional",
         "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 41
+      },
+      {
+        "path": "launch/assemble/launch-asset-packager/references/action-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bfd006baaad6458795c334d1ba61d66123ab8de6ee81c341d3b9e7efe0376bdd",
+        "source_line": 43
       },
       {
         "path": "launch/mobilize/community-launch-runner/references/channel-matrix.md",
@@ -84,28 +106,24 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
-        "source_line": 59
+        "source_line": 60
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 33
       }
     ],
-    "project_paths": [
-      {
-        "access": "read",
-        "authority": "working",
-        "kind": "prefix",
-        "path": "memory/launch-registry",
-        "reason_code": "explicit-skill-read",
-        "sensitivity": "confidential"
-      }
-    ]
+    "project_paths": []
   },
   "contract_id": "skill:community-launch-runner",
+  "control_requirements": [
+    "action-intent",
+    "action-receipt",
+    "artifact-binding"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -118,7 +136,7 @@
           "end_char": 129,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -136,7 +154,7 @@
           "end_char": 259,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 130
         },
@@ -154,7 +172,7 @@
           "end_char": 368,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 260
         },
@@ -172,7 +190,7 @@
           "end_char": 754,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 370
         },
@@ -185,7 +203,7 @@
     "summary_ref": {
       "path": "launch/mobilize/community-launch-runner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651"
+      "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -200,26 +218,26 @@
     "name": "community-launch-runner",
     "path": "launch/mobilize/community-launch-runner/SKILL.md",
     "phase": "mobilize",
-    "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
-    "version": "20.0.0"
+    "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / launch slug> [platforms] [region] [launch date]",
     "clauses": [
       {
         "clause_id": "read-01",
-        "extraction_status": "partially-classified",
-        "kind": "project-resource",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 168,
+          "end_char": 24,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the launch dossier facts (stage, authoritative date, embargo commitments) from [launch-registry](../../../protocol/launch-registry/SKILL.md) (`memory/launch-registry/`)"
+        "text": "the launch dossier facts"
       },
       {
         "clause_id": "read-02",
@@ -227,14 +245,14 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 253,
+          "end_char": 92,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
-          "start_char": 170
+          "start_char": 26
         },
-        "text": "the message house and per-channel asset kit from the assemble phase (User-provided)"
+        "text": "the current frozen manifest version/hash and matching SHIP verdict"
       },
       {
         "clause_id": "read-03",
@@ -242,14 +260,14 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 293,
+          "end_char": 137,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
-          "start_char": 255
+          "start_char": 94
         },
-        "text": "target platforms, region, and audience"
+        "text": "the message house and per-channel asset kit"
       },
       {
         "clause_id": "read-04",
@@ -257,14 +275,14 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 421,
+          "end_char": 177,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
-          "start_char": 295
+          "start_char": 139
         },
-        "text": "each platform's current submission rules and field specs via WebFetch of the official docs (verify current at submission time)"
+        "text": "target platforms, region, and audience"
       },
       {
         "clause_id": "read-05",
@@ -272,22 +290,37 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 598,
+          "end_char": 217,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
-          "start_char": 423
+          "start_char": 179
         },
-        "text": "early launch-window telemetry via `scripts/connectors/hn.py`, `scripts/connectors/producthunt.py`, and `scripts/connectors/gdelt.py` (`~~launch platform` / `~~brand monitor`)."
+        "text": "each platform's current official rules"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 253,
+          "path": "launch/mobilize/community-launch-runner/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
+          "span_basis": "field-text",
+          "start_char": 219
+        },
+        "text": "and early launch-window telemetry."
       }
     ],
-    "extraction_status": "partially-classified",
-    "reads": "the launch dossier facts (stage, authoritative date, embargo commitments) from [launch-registry](../../../protocol/launch-registry/SKILL.md) (`memory/launch-registry/`); the message house and per-channel asset kit from the assemble phase (User-provided); target platforms, region, and audience; each platform's current submission rules and field specs via WebFetch of the official docs (verify current at submission time); early launch-window telemetry via `scripts/connectors/hn.py`, `scripts/connectors/producthunt.py`, and `scripts/connectors/gdelt.py` (`~~launch platform` / `~~brand monitor`).",
+    "extraction_status": "unclassified",
+    "reads": "the launch dossier facts; the current frozen manifest version/hash and matching SHIP verdict; the message house and per-channel asset kit; target platforms, region, and audience; each platform's current official rules; and early launch-window telemetry.",
     "source": {
       "path": "launch/mobilize/community-launch-runner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651"
+      "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b"
     }
   },
   "output_contract": {
@@ -302,7 +335,7 @@
           "end_char": 118,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -318,7 +351,7 @@
           "end_char": 418,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 120
         },
@@ -334,7 +367,7 @@
           "end_char": 515,
           "path": "launch/mobilize/community-launch-runner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651",
+          "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b",
           "span_basis": "field-text",
           "start_char": 420
         },
@@ -345,23 +378,27 @@
     "source": {
       "path": "launch/mobilize/community-launch-runner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651"
+      "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b"
     },
     "summary": "per-platform submission packages (Product Hunt tagline / gallery / first-comment skeleton, factual Show HN title + text, per-subreddit posts with a self-promotion rules table, tiered directory waves, regional-channel posts), a red-line check across the whole plan, T-0 submission-status lines routed to the registry proposal protocol, and the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "submission packages + a reusable summary to `memory/launch/community-launch-runner/` (its WARM path, after permission); dated T-0 submission-status lines submitted as proposal events to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` (the hot path — [launch-registry](../../../protocol/launch-registry/SKILL.md) resolves each proposal individually in offset order; this skill never writes the dossier or calendar directly). It does not write HOT automatically."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -370,7 +407,7 @@
     "source": {
       "path": "launch/mobilize/community-launch-runner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "d1f666bf932f92389539be7a49bbdec24e2a73ef6803236aef15f928e8385651"
+      "sha256": "00ddaf40c5f13cb035f8a60463cb77e29de5df0dd19864623cafbbff6681747b"
     },
     "trigger_phrases": [
       "launch on Product Hunt / Hacker News",

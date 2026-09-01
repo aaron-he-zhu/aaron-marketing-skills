@@ -4,13 +4,13 @@ slug: aaron-deliverability-qa
 displayName: "Deliverability QA · DMARC认证"
 summary: "DMARC认证/发件域声誉"
 description: 'Use when the user asks to "run a deliverability pre-flight before I send", "check my SPF/DKIM/DMARC/BIMI", "why am I landing in spam / promotions", or "score my sender reputation and list hygiene"; runs the ONE-TIME pre-send SEND S1 authentication pre-flight and builds the SEND S (Sender-integrity / Deliverability) evidence read — DNS + DMARC-RUA auth, domain/IP reputation, inbox placement, content/link/render, and point-in-time bounce/complaint hygiene — using Pass/Partial/Fail/Unknown/N/A states and scoring only at complete applicable coverage. Not for the recurring hygiene trend — use list-hygiene-monitor; not for final EQS or veto verdicts — use email-quality-auditor; not for segments/suppression lists — use list-segment-builder. 邮件送达率预检/SPF DKIM DMARC认证/发件域声誉'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use as the ONE-TIME pre-flight snapshot before a send or scale-up, when the sending signal needs verifying or fixing: SPF/DKIM/DMARC/BIMI alignment, sending-domain/IP reputation, inbox placement vs spam/promotions, spam-content/link/render risk, and a point-in-time bounce/complaint list-hygiene read. Run it to BUILD and VERIFY the SEND S signal and flag S1; run email-quality-auditor to SCORE the full EQS and enforce S1/S2/N1/D1. For the standing, scheduled hygiene / bounce-complaint trend read over time, use list-hygiene-monitor instead — this skill owns the one-time snapshot, not the recurring watch."
 argument-hint: "<sending domain / program> [ESP + goal] [DMARC RUA report + inbox-placement test]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "email", "phase": "setup", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "setup"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "email", "phase": "setup", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "setup"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Deliverability QA

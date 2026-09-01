@@ -75,6 +75,10 @@
     "appeeky": {
       "type": "http",
       "url": "https://mcp.appeeky.com/mcp"
+    },
+    "upfluence": {
+      "type": "http",
+      "url": "https://mcp.upfluence.co/mcp"
     }
   }
 }

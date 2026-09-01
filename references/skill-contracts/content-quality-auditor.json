@@ -11,7 +11,7 @@
           "end_char": 142,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
+          "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13"
+      "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85"
     }
   },
   "context_hints": {
@@ -39,7 +39,7 @@
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "1bdafd8e080bfd77ec933b67221dcc2652bf350f0e73b0ecafdeb57136195474",
+        "sha256": "028a87012aa8cded04d9b7fb70f44a2b0eb3475b7984251050e1ec281c60a3ec",
         "source_line": 29
       },
       {
@@ -53,7 +53,7 @@
         "path": "references/framework-catalog.json",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "335a3d9f24c9a58fea13bb7a60c587232b4b296b8f992918fee61309ac925b58",
+        "sha256": "71700105604bf955bc9fe634ed917a97f8f912b2674d1eee8c989fe13e6a9a0a",
         "source_line": 32
       },
       {
@@ -67,7 +67,7 @@
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "sha256": "9aed49f657df95e95d34d6d46beaf32d8be49d19b28a073e00f40b721f588cc6",
         "source_line": 33
       },
       {
@@ -81,7 +81,7 @@
         "path": "seo-geo/tune/content-quality-auditor/references/auditor-runtime.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "277fe79fbdb834980cd52fda31cceffcd927eaaae319844f56d5edb66b28357a",
+        "sha256": "62a4424c1402babc70a7a803703b83386c13159a01a0880a049c7df2aa0063c0",
         "source_line": 34
       },
       {
@@ -102,6 +102,7 @@
     "project_paths": []
   },
   "contract_id": "skill:content-quality-auditor",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -114,7 +115,7 @@
           "end_char": 76,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
+          "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -132,7 +133,7 @@
           "end_char": 173,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
+          "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85",
           "span_basis": "field-text",
           "start_char": 77
         },
@@ -150,7 +151,7 @@
           "end_char": 269,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
+          "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85",
           "span_basis": "field-text",
           "start_char": 174
         },
@@ -168,7 +169,7 @@
           "end_char": 372,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
+          "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85",
           "span_basis": "field-text",
           "start_char": 270
         },
@@ -183,7 +184,7 @@
     "summary_ref": {
       "path": "references/skill-contract.md",
       "section": "Handoff Summary Format",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "summary_source": "shared-skill-contract",
     "target_skills": [
@@ -199,8 +200,8 @@
     "name": "content-quality-auditor",
     "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
     "phase": "tune",
-    "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
-    "version": "20.0.0"
+    "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<URL or paste content> [content type] [market]",
@@ -214,7 +215,7 @@
           "end_char": 44,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
+          "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -226,7 +227,7 @@
     "source": {
       "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13"
+      "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85"
     }
   },
   "output_contract": {
@@ -241,7 +242,7 @@
           "end_char": 32,
           "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13",
+          "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -252,7 +253,7 @@
     "source": {
       "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13"
+      "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85"
     },
     "summary": "only a permissioned v3 artifact.",
     "summary_source": "writes-fallback",
@@ -263,12 +264,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -277,7 +278,7 @@
     "source": {
       "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "a9052b924de1a8d876c25a3ad415db84e8698a540fd3196fe49dc8fde7c46d13"
+      "sha256": "e27be2557045da655193af0bc15d533aab40c2cfbdcd0972b2dce69545d4eb85"
     },
     "trigger_phrases": [
       "Use when auditing content quality before publishing. Runs a typed CORE-EEAT 80-item profile with explicit evidence gaps and veto checks. Also when the user asks for E-E-A-T analysis or publish readiness."

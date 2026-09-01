@@ -53,10 +53,10 @@ class CorpusTests(unittest.TestCase):
     def test_loads_exact_current_authored_and_routing_counts(self):
         authored = [case for case in self.cases if case["source_group"] == "authored"]
         routing = [case for case in self.cases if case["source_group"] == "auto-routing"]
-        self.assertEqual(len(authored), 572)
+        self.assertEqual(len(authored), 606)
         self.assertEqual(len(routing), 88)
-        self.assertEqual(len(self.cases), 660)
-        self.assertEqual(len({case["id"] for case in self.cases}), 660)
+        self.assertEqual(len(self.cases), 694)
+        self.assertEqual(len({case["id"] for case in self.cases}), 694)
 
     def test_every_case_has_the_exact_runner_request_shape(self):
         expected = set(eval_cases.RUNNER_CASE_FIELDS)
@@ -285,9 +285,9 @@ class CorpusTests(unittest.TestCase):
             "core-weighted-ranked-verdict-fit-scorer-001"
         ]["expected_behavior"])
         self.assertIn("supplied but undated fields", fit)
-        self.assertIn("every other applicable S1-S10 item Unknown", fit)
-        self.assertIn("do not run rubric-score.py or emit SQS", fit)
-        self.assertIn("NEEDS_INPUT/UNDECIDED/NOT_SCORED", fit)
+        self.assertIn("all applicable STAR-S1 through STAR-S10 items Unknown", fit)
+        self.assertIn("do not emit a Suitability total or SQS", fit)
+        self.assertIn("NEEDS_INPUT/NOT_SCORED", fit)
         self.assertIn("rather than inventing them", fit)
         self.assertIn("no save or promotion", fit)
 

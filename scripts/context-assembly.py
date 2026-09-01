@@ -44,9 +44,9 @@ ASSEMBLY_PROFILE_FIELDS = {
     "always_on_overlays", "catalogs",
 }
 PLUGIN_PACKAGE_CEILINGS = {
-    "lite": {"max_files": 350, "max_bytes": 3_300_000},
-    "pro": {"max_files": 400, "max_bytes": 3_800_000},
-    "governed": {"max_files": 560, "max_bytes": 6_500_000},
+    "lite": {"max_files": 350, "max_bytes": 3_450_000},
+    "pro": {"max_files": 400, "max_bytes": 3_950_000},
+    "governed": {"max_files": 560, "max_bytes": 6_700_000},
 }
 MAX_DISTRIBUTION_SCAN_ENTRIES = 2048
 

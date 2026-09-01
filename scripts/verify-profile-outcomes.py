@@ -45,7 +45,16 @@ ADOPTION = ("adopt", "minor", "major", "reject")
 SUCCESS = {"adopt", "minor"}
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 SHA1_RE = re.compile(r"^[0-9a-f]{40}$")
-RC_RE = re.compile(r"^(?P<version>(?:19\.(?:0|1|2)|20\.0)\.0)-rc\.[1-9][0-9]*$")
+RC_RE = re.compile(
+    r"^(?P<version>[0-9]+\.[0-9]+\.[0-9]+)-rc\.[1-9][0-9]*$"
+)
+SUPPORTED_RELEASE_VERSIONS = (
+    "19.0.0",
+    "19.1.0",
+    "19.2.0",
+    "20.0.0",
+    "20.1.0",
+)
 EVIDENCE_MAX_BYTES = 10 * 1024 * 1024
 PRIVATE_MANIFEST_MAX_BYTES = 10 * 1024 * 1024
 TOP_KEYS = {
@@ -215,13 +224,16 @@ def load_evidence_with_bytes(path: Path) -> tuple[dict, bytes]:
     root = _object(value, TOP_KEYS, "root")
     if root["schema_version"] != "1.0":
         raise OutcomeError("unsupported outcome evidence schema")
-    if not isinstance(root["release_candidate"], str) or not RC_RE.fullmatch(
-        root["release_candidate"]
+    release_match = (
+        RC_RE.fullmatch(root["release_candidate"])
+        if isinstance(root["release_candidate"], str)
+        else None
+    )
+    if (
+        release_match is None
+        or release_match.group("version") not in SUPPORTED_RELEASE_VERSIONS
     ):
-        raise OutcomeError(
-            "release_candidate must be a supported v19.0.0, v19.1.0, "
-            "v19.2.0, or v20.0.0 RC identity"
-        )
+        raise OutcomeError("release_candidate must use a supported RC identity")
     _hash(root["source_commit"], "source_commit", sha1=True)
     model = _object(root["model_identity"], MODEL_KEYS, "model_identity")
     for key in ("provider", "model", "version"):
@@ -323,10 +335,13 @@ def verify_expected_identity(
                 % (evidence["source_commit"], source_commit)
             )
     if release_candidate is not None:
-        if not RC_RE.fullmatch(release_candidate):
+        release_match = RC_RE.fullmatch(release_candidate)
+        if (
+            release_match is None
+            or release_match.group("version") not in SUPPORTED_RELEASE_VERSIONS
+        ):
             raise OutcomeError(
-                "expected release_candidate must be a supported v19.0.0, "
-                "v19.1.0, v19.2.0, or v20.0.0 RC identity"
+                "expected release_candidate must use a supported RC identity"
             )
         if evidence["release_candidate"] != release_candidate:
             raise OutcomeError(
@@ -856,7 +871,10 @@ def build_receipt(
         if isinstance(evidence, dict)
         else None
     )
-    if release_match is None:
+    if (
+        release_match is None
+        or release_match.group("version") not in SUPPORTED_RELEASE_VERSIONS
+    ):
         raise OutcomeError("receipt evidence has an unsupported release candidate")
     verifier_sha256 = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     return {
@@ -932,8 +950,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         "--release-candidate",
         required=True,
         help=(
-            "Require the evidence to bind an exact supported "
-            "19.0.0-rc.N, 19.1.0-rc.N, 19.2.0-rc.N, or 20.0.0-rc.N identity."
+            "Require the evidence to bind an exact supported VERSION-rc.N identity."
         ),
     )
     parser.add_argument(

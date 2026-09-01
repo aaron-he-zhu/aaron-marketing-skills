@@ -1,6 +1,12 @@
 # Audience Mapper — Templates
 
-Fill-in templates for both modes. Mark every inferred attribute with a confidence level (High/Med/Low) so unsupported guesses stay visible. Lead with user-supplied data. Steps map to the numbered Instructions in [../SKILL.md](../SKILL.md): **audience** mode uses §A1–A9, **niche** mode uses §N1–N7.
+Fill-in templates for both modes. Every factual row needs `source_ref`,
+`observed_at`/retrieval date, measurement window, and evidence label. Confidence
+does not turn a guess into a fact. If evidence is absent, leave factual cells
+`TBD`, return an exact research plan with `NEEDS_INPUT`, and keep optional
+personas/interpretations in a separate `Hypothesis` block. Saved artifacts and
+handoffs identify people only by opaque `creator_ref`; raw locators are transient.
+Steps map to the numbered Instructions in [../SKILL.md](../SKILL.md).
 
 ---
 
@@ -24,6 +30,12 @@ Confirm or infer the mode, state it, then fill the shared block. Niche mode fill
 **Parent Category**: [broader category]
 **Research Goal**: [awareness/partnership/entry strategy]
 **Platforms to Focus**: [platforms]
+
+### Evidence Inventory
+
+| Claim family | Source ref | Observed/retrieved | Measurement window | Geography | Evidence label | Status |
+|--------------|------------|--------------------|--------------------|-----------|----------------|--------|
+| [demographic/culture/platform/key voice] | [ref/TBD] | [date/TBD] | [window/TBD] | [scope] | [Measured/User-provided/Proxy] | READY/NEEDS_INPUT |
 ```
 
 ---
@@ -37,15 +49,15 @@ Confirm or infer the mode, state it, then fill the shared block. Niche mode fill
 
 ### Primary Audience
 
-| Attribute | Profile | Confidence |
-|-----------|---------|------------|
-| Age Range | [X-Y years] | High/Med/Low |
-| Gender | [distribution] | High/Med/Low |
-| Location | [primary markets] | High/Med/Low |
-| Income | [range] | High/Med/Low |
-| Education | [level] | High/Med/Low |
-| Occupation | [types] | High/Med/Low |
-| Family Status | [single/married/parents] | High/Med/Low |
+| Attribute | Profile | Source ref | Observed at / window | Evidence label |
+|-----------|---------|------------|----------------------|----------------|
+| Age Range | [X-Y years/TBD] | [ref] | [date/window] | [label] |
+| Gender | [distribution/TBD] | [ref] | [date/window] | [label] |
+| Location | [primary markets/TBD] | [ref] | [date/window] | [label] |
+| Income | [range/TBD] | [ref] | [date/window] | [label] |
+| Education | [level/TBD] | [ref] | [date/window] | [label] |
+| Occupation | [types/TBD] | [ref] | [date/window] | [label] |
+| Family Status | [value/TBD] | [ref] | [date/window] | [label] |
 
 ### Secondary Audience
 
@@ -407,7 +419,10 @@ Based on audience analysis, ideal influencers should:
 
 **User**: "Analyze the target audience for a premium skincare brand targeting millennial women."
 
-**Output**: a full analysis following A2–A9 — demographic and psychographic profiles for millennial women, a platform-priority matrix favoring Instagram and TikTok, a named persona, and a must-have/nice-to-have/red-flag selection set sized to a mega/macro/micro/nano budget mix. Saved under `memory/influencer/audience-mapper/`, with age range, priority platforms, and persona name promoted to the hot cache.
+**Output**: `NEEDS_INPUT`. The prompt supplies positioning, not audience
+evidence. Return the exact CRM/survey/platform queries and required
+source/date/window fields. An optional millennial-skincare persona is labeled
+`Hypothesis`, not scored, tiered, promoted, or handed off as evidence.
 
 ---
 
@@ -534,14 +549,13 @@ Based on audience analysis, ideal influencers should:
 
 ### Tier 1: Community Leaders
 
-| Creator | Platform | Followers | Why They Matter |
-|---------|----------|-----------|-----------------|
-| @[handle1] | [platform] | [count] | [influence description] |
-| @[handle2] | [platform] | [count] | [influence description] |
+| Creator ref | Platform | Followers | Evidence ref/date/window | Why They Matter |
+|-------------|----------|-----------|--------------------------|-----------------|
+| [creator-<UUIDv4>] | [platform] | [count] | [ref/date/window] | [evidenced description] |
 
-**Deep Dive: [Top Creator]**
+**Deep Dive: [creator_ref]**
 
-- **Handle**: @[handle]
+- **Creator ref**: [creator-<UUIDv4>]
 - **Platforms**: [platforms]
 - **Content focus**: [topics]
 - **Engagement rate**: [%]
@@ -551,15 +565,15 @@ Based on audience analysis, ideal influencers should:
 
 ### Tier 2: Rising Stars
 
-| Creator | Platform | Followers | Growth Rate | Specialty |
-|---------|----------|-----------|-------------|-----------|
-| @[handle] | [platform] | [count] | [% growth] | [focus] |
+| Creator ref | Platform | Followers | Growth Rate | Evidence ref/date/window | Specialty |
+|-------------|----------|-----------|-------------|--------------------------|-----------|
+| [creator-<UUIDv4>] | [platform] | [count] | [% growth] | [ref/date/window] | [focus] |
 
 ### Tier 3: Micro-Voices
 
-| Creator | Sub-niche | Followers | Engagement | Value |
-|---------|-----------|-----------|------------|-------|
-| @[handle] | [niche] | [count] | [rate] | [what they offer] |
+| Creator ref | Sub-niche | Followers | Engagement | Evidence ref/date/window | Value |
+|-------------|-----------|-----------|------------|--------------------------|-------|
+| [creator-<UUIDv4>] | [niche] | [count] | [rate] | [ref/date/window] | [what they offer] |
 
 ### Voice Map
 
@@ -568,9 +582,9 @@ Sketch the influence structure: Tier 1 leaders → core community; rising stars 
 ### Collaboration Networks
 
 **Who collaborates with whom**:
-- [Creator A] often works with [Creator B]
-- [Group/collective] includes: [members]
-- Cross-platform presence: [who's on multiple platforms]
+- [creator_ref A] often works with [creator_ref B] — [dated evidence ref]
+- [collective_ref] includes: [creator_refs + dated evidence]
+- Cross-platform presence: [creator_refs with verified identity links]
 ```
 
 ## N5 — Map Content Ecosystem
@@ -701,15 +715,15 @@ Sketch the influence structure: Tier 1 leaders → core community; rising stars 
 
 ### Creator Partnership Recommendations
 
-**Must-Partner (High priority)**:
-| Creator | Platform | Why | Approach |
-|---------|----------|-----|----------|
-| @[handle] | [platform] | [reason] | [how to approach] |
+**Candidates for Discovery and Fit (not partnership-ready)**:
+| Creator ref | Platform | Evidence-backed relevance | Next gate |
+|-------------|----------|---------------------------|-----------|
+| [creator-<UUIDv4>] | [platform] | [reason + source/date/window] | discovery → fit-scorer |
 
-**Should-Consider (Medium priority)**:
-| Creator | Platform | Why | Approach |
-|---------|----------|-----|----------|
-| @[handle] | [platform] | [reason] | [how to approach] |
+**Refresh / research candidates**:
+| Creator ref | Platform | Missing evidence | Status |
+|-------------|----------|------------------|--------|
+| [creator-<UUIDv4>] | [platform] | [gap] | NOT_RANKED / NEEDS_INPUT |
 
 ### Content Strategy
 
@@ -739,7 +753,10 @@ Things that would damage brand reputation in this community:
 
 **User**: "Research the #BookTok community for a publishing brand."
 
-**Output**: a niche dossier on BookTok — community culture, key voices (e.g. @aikitwokki), content types that perform (book reviews, reading vlogs, shelfies), insider language ("booktok made me buy it"), a Brand Fit Score with verdict, and phased partnership recommendations for the publisher. Niche name, brand-fit verdict, top 3 voices, and hard red lines promoted to the hot cache.
+**Output**: `NEEDS_INPUT`. The community name alone does not evidence current
+culture, size, voices, content patterns, or language. Return platform/community
+search queries and the required source/date/window fields; do not name or tier
+voices, calculate Brand Fit, or promote a verdict until dated records arrive.
 
 ---
 

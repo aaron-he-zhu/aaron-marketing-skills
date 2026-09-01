@@ -1,4 +1,5 @@
 import base64
+import copy
 import datetime as dt
 import hashlib
 import importlib.util
@@ -152,8 +153,9 @@ class WorkflowLoopTests(unittest.TestCase):
             "idempotency_key": key,
             "event_type": event_type,
             "occurred_at": occurred_at or (
-                "2026-07-22T10:00:%02dZ" % self.run_second
-            ),
+                dt.datetime(2026, 7, 22, 10, 0, tzinfo=dt.timezone.utc)
+                + dt.timedelta(seconds=self.run_second)
+            ).isoformat().replace("+00:00", "Z"),
             "actor": {"type": actor_type, "id": "workflow-test"},
             "parent_event_id": parent,
             "turn_id": turn_id,
@@ -201,7 +203,206 @@ class WorkflowLoopTests(unittest.TestCase):
         self.run_second += 1
         return result["event"]
 
+    @staticmethod
+    def control_record(kind, artifact_id, payload):
+        return {
+            "$schema": "references/control-artifact.schema.json",
+            "schema_version": "1.0",
+            "kind": kind,
+            "artifact_id": artifact_id,
+            "created_at": "2026-08-02T08:00:00Z",
+            "authoritative": False,
+            "authority": "non-authoritative-operational-evidence",
+            "registry_effect": False,
+            "external_mutation_authorized": False,
+            "payload": payload,
+        }
+
+    @staticmethod
+    def control_binding(ref, digest="a" * 64, version="v1"):
+        return {"ref": ref, "sha256": digest, "version": version}
+
+    def evidence_control_record(self, artifact_id):
+        return self.control_record(
+            "evidence-observation", artifact_id,
+            {
+                "target": self.control_binding("opaque:launch-asset-1"),
+                "observation_window": {
+                    "start_at": "2026-07-01T00:00:00Z",
+                    "end_at": "2026-07-31T23:59:59Z",
+                },
+                "fields": [{
+                    "field_id": "launch_readiness",
+                    "state": "observed",
+                    "sources": [{
+                        "evidence_type": "measured",
+                        "ref": "opaque:launch-observation-1",
+                        "observed_at": "2026-08-01T10:00:00Z",
+                        "window": {
+                            "start_at": "2026-07-01T00:00:00Z",
+                            "end_at": "2026-07-31T23:59:59Z",
+                        },
+                    }],
+                    "value_ref": "opaque:launch-value-1",
+                    "freshness": "current",
+                    "missing_reason": None,
+                    "conflict_group": None,
+                }],
+                "readiness": "ready",
+                "unresolved_conflicts": [],
+            },
+        )
+
+    def measurement_control_record(self, artifact_id):
+        target = self.control_binding(
+            "opaque:launch-head-1", "b" * 64, "launch-v1",
+        )
+        return self.control_record(
+            "measurement-contract", artifact_id,
+            {
+                "target": target,
+                "contract_version": "contract-v1",
+                "population_ref": "opaque:launch-population-1",
+                "scope_ref": "opaque:launch-scope-1",
+                "analysis_unit": "launch",
+                "counterfactual_type": "holdout",
+                "control": self.control_binding(
+                    "opaque:launch-control-1", "c" * 64, "launch-v0",
+                ),
+                "candidate": target,
+                "primary_metric": {
+                    "metric_id": "conversion_rate",
+                    "unit": "ratio",
+                    "direction": "increase",
+                    "truth_source_ref": "opaque:warehouse-view-1",
+                    "attribution_rule_ref": "opaque:attribution-rule-1",
+                    "conversion_lag_ref": "opaque:lag-7d",
+                },
+                "guardrail_metric_ids": ["refund_rate"],
+                "start_at": "2026-08-02T00:00:00Z",
+                "stop_at": "2026-08-09T00:00:00Z",
+                "read_at": "2026-08-16T00:00:00Z",
+                "decision_rule_ref": "opaque:decision-rule-1",
+                "decision_owner_ref": "opaque:decision-owner-1",
+                "locked_at": "2026-08-01T08:00:00Z",
+                "exploratory": False,
+            },
+        )
+
+    def intent_control_record(self, artifact_id):
+        return self.control_record(
+            "action-intent", artifact_id,
+            {
+                "operation": "publish",
+                "target": self.control_binding(
+                    "opaque:launch-target-1", "d" * 64, "target-v1",
+                ),
+                "content": self.control_binding(
+                    "opaque:launch-content-1", "e" * 64, "content-v1",
+                ),
+                "audience_ref": "opaque:launch-audience-1",
+                "channel_ref": "opaque:launch-channel-1",
+                "constraint_refs": ["opaque:launch-constraint-1"],
+                "safety_checks": [],
+                "permission_ref": "opaque:user-request-1",
+                "permission_observed_at": "2026-08-02T07:59:00Z",
+                "permission_effect": "provenance-only",
+                "requested_at": "2026-08-02T08:00:00Z",
+                "expires_at": "2026-08-02T09:00:00Z",
+                "single_use": True,
+            },
+        )
+
+    def receipt_control_record(self, artifact_id, intent_ref, intent_sha, intent):
+        record = self.control_record(
+            "action-receipt", artifact_id,
+            {
+                "intent": self.control_binding(intent_ref, intent_sha, "1.0"),
+                "intent_id": intent["artifact_id"],
+                "operation": intent["payload"]["operation"],
+                "actual_target": intent["payload"]["target"],
+                "actual_content": intent["payload"]["content"],
+                "actual_audience_ref": intent["payload"]["audience_ref"],
+                "actual_channel_ref": intent["payload"]["channel_ref"],
+                "applied_constraint_refs": intent["payload"]["constraint_refs"],
+                "status": "succeeded",
+                "attempted_at": "2026-08-02T08:05:00Z",
+                "completed_at": "2026-08-02T08:06:00Z",
+                "provider_operation_ref": "opaque:provider-operation-1",
+                "evidence": [self.control_binding(
+                    "opaque:provider-receipt-1", "1" * 64, "receipt-v1",
+                )],
+                "failure_code": None,
+                "permission_effect": "provenance-only",
+            },
+        )
+        record["created_at"] = "2026-08-02T08:06:00Z"
+        return record
+
+    def control_evidence(self, node, kinds, prefix="control", parent=None):
+        route = self.append_route(node, parent=parent, prefix=prefix + "-route")
+        parent_id = route["event_id"]
+        evidence = []
+        for kind in kinds:
+            self.evidence_counter += 1
+            artifact_id = "%s-%d" % (kind, self.evidence_counter)
+            if kind == "evidence-observation":
+                record = self.evidence_control_record(artifact_id)
+            elif kind == "measurement-contract":
+                record = self.measurement_control_record(artifact_id)
+            elif kind == "action-receipt":
+                intent_id = "intent-%d" % self.evidence_counter
+                intent = self.intent_control_record(intent_id)
+                intent_relative = Path("memory/control") / (
+                    "%s-%s-intent.json" % (prefix, self.evidence_counter)
+                )
+                intent_path = self.root / intent_relative
+                intent_path.parent.mkdir(parents=True, exist_ok=True)
+                intent_path.write_text(
+                    json.dumps(intent, indent=2, sort_keys=True) + "\n",
+                    encoding="utf-8",
+                )
+                record = self.receipt_control_record(
+                    artifact_id, intent_relative.as_posix(),
+                    hashlib.sha256(intent_path.read_bytes()).hexdigest(), intent,
+                )
+            else:
+                raise AssertionError("unsupported control fixture kind %s" % kind)
+            relative = Path("memory/control") / (
+                "%s-%s-%d.json" % (prefix, kind, self.evidence_counter)
+            )
+            path = self.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(
+                json.dumps(record, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            result = run_events.append_event(
+                self.root,
+                self.run_id,
+                self.run_request(
+                    "%s-%s-%d" % (prefix, kind, self.evidence_counter),
+                    "artifact_validated", parent_id, "succeeded",
+                    {"kind": "artifact", "ref": artifact_id},
+                    references=[{
+                        "kind": "artifact",
+                        "ref": relative.as_posix(),
+                        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                    }],
+                    dimensions={"validator": run_events.CONTROL_ARTIFACT_VALIDATOR},
+                ),
+            )
+            self.run_second += 1
+            parent_id = result["event"]["event_id"]
+            evidence.append(self.event_reference(result["event"]))
+        self.latest_evidence = evidence[-1]
+        return evidence
+
     def action_evidence(self, node, *, failed=False, parent=None, prefix="action"):
+        if not failed and node == "launch-asset-packager":
+            return self.control_evidence(
+                node, ["evidence-observation"], prefix=prefix, parent=parent,
+            )[0]
         route = self.append_route(node, parent=parent, prefix=prefix + "-route")
         self.evidence_counter += 1
         suffix = "%d-%s" % (self.evidence_counter, node)
@@ -526,6 +727,18 @@ class WorkflowLoopTests(unittest.TestCase):
     def complete_action(self, result, node, key, *, loop_id="launch-loop"):
         if node == "launch-readiness-auditor":
             evidence, gate_approval = self.gate_evidence(key, loop_id=loop_id)
+        elif node == "launch-day-conductor":
+            evidence = self.control_evidence(
+                node, ["action-receipt", "evidence-observation"], prefix=key,
+            )
+            gate_approval = None
+        elif node == "launch-monitor":
+            evidence = self.control_evidence(
+                node,
+                ["action-receipt", "evidence-observation", "measurement-contract"],
+                prefix=key,
+            )
+            gate_approval = None
         else:
             evidence = [self.action_evidence(node, prefix=key)]
             gate_approval = None
@@ -746,7 +959,13 @@ class WorkflowLoopTests(unittest.TestCase):
             "action-completed",
             {
                 "node": "launch-asset-packager",
-                "evidence": [captured["evidence"]],
+                "evidence": [
+                    captured["evidence"],
+                    *self.control_evidence(
+                        "launch-asset-packager", ["evidence-observation"],
+                        prefix="cutoff-race-control",
+                    ),
+                ],
             },
             "cutoff-race-action",
             loop_id="cutoff-race",
@@ -1015,6 +1234,371 @@ class WorkflowLoopTests(unittest.TestCase):
                     "gate_approval": gate_approval,
                 }, "replay-cycle-two-old-approval",
             )
+
+    def test_revise_requires_fresh_action_receipt_measurement_and_run_evidence(self):
+        loop_id = "fresh-evidence-cycle"
+        result = self.plan(loop_id)
+        old_payloads = {}
+        for node in self.WORKFLOW_NODES:
+            result = self.complete_action(
+                result, node, "fresh-c1-" + node, loop_id=loop_id,
+            )
+            old_payloads[node] = copy.deepcopy(result["event"]["payload"])
+        result, _ = self.advance(
+            result, "verification-recorded",
+            self.verification_payload(
+                "fail", "freshness-gap", "fresh-c1-verification",
+            ),
+            "fresh-c1-verification", loop_id=loop_id,
+        )
+        result, _ = self.advance(
+            result, "decision-recorded", {
+                "decision": "revise", "reason_codes": ["repeat-cycle"],
+                "evidence": [self.latest_evidence],
+            }, "fresh-c1-revise", loop_id=loop_id,
+        )
+
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            self.advance(
+                result, "action-completed",
+                old_payloads["launch-asset-packager"],
+                "fresh-c2-reuse-asset-control", loop_id=loop_id,
+            )
+        result = self.complete_action(
+            result, "launch-asset-packager", "fresh-c2-asset", loop_id=loop_id,
+        )
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            self.advance(
+                result, "action-completed",
+                old_payloads["community-launch-runner"],
+                "fresh-c2-reuse-ordinary", loop_id=loop_id,
+            )
+        for node in (
+                "community-launch-runner", "launch-readiness-auditor",
+                "press-media-relations"):
+            result = self.complete_action(
+                result, node, "fresh-c2-" + node, loop_id=loop_id,
+            )
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            self.advance(
+                result, "action-completed",
+                old_payloads["launch-day-conductor"],
+                "fresh-c2-reuse-receipt", loop_id=loop_id,
+            )
+        result = self.complete_action(
+            result, "launch-day-conductor", "fresh-c2-conductor", loop_id=loop_id,
+        )
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            self.advance(
+                result, "action-completed",
+                old_payloads["launch-monitor"],
+                "fresh-c2-reuse-measurement", loop_id=loop_id,
+            )
+
+    def test_replay_rejects_recomputed_cross_cycle_evidence_reuse(self):
+        loop_id = "replay-consumption"
+        result = self.complete_actions(
+            self.plan(loop_id), "replay-fresh-c1", loop_id=loop_id,
+        )
+        result, _ = self.advance(
+            result, "verification-recorded",
+            self.verification_payload(
+                "fail", "replay-gap", "replay-fresh-verification",
+            ),
+            "replay-fresh-verification", loop_id=loop_id,
+        )
+        result, _ = self.advance(
+            result, "decision-recorded", {
+                "decision": "revise", "reason_codes": ["repeat-cycle"],
+                "evidence": [self.latest_evidence],
+            }, "replay-fresh-revise", loop_id=loop_id,
+        )
+        self.complete_action(
+            result, "launch-asset-packager", "replay-fresh-c2-asset",
+            loop_id=loop_id,
+        )
+
+        stream = (
+            self.root / "memory" / "runs" / self.run_id / "workflow-plans"
+            / loop_id / "events.ndjson"
+        )
+        events = [
+            json.loads(line)
+            for line in stream.read_text(encoding="utf-8").splitlines()
+        ]
+        asset_events = [
+            event for event in events
+            if event["event_type"] == "action-completed"
+            and event["payload"]["node"] == "launch-asset-packager"
+        ]
+        self.assertEqual(2, len(asset_events))
+        asset_events[1]["payload"]["evidence"] = copy.deepcopy(
+            asset_events[0]["payload"]["evidence"]
+        )
+        previous = workflow_loop.ZERO_HASH
+        for event in events:
+            event["expected_head_sha256"] = previous
+            event["previous_hash"] = previous
+            event["request_hash"] = workflow_loop._event_request_hash(event)
+            without_hash = dict(event)
+            without_hash.pop("event_hash")
+            event["event_hash"] = workflow_loop.sha256_json(without_hash)
+            previous = event["event_hash"]
+        stream.write_text(
+            "".join(
+                json.dumps(event, sort_keys=True, separators=(",", ":")) + "\n"
+                for event in events
+            ),
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            workflow_loop.verify(self.root, self.run_id, loop_id)
+
+    def test_direct_evidence_cannot_be_reused_through_a_new_run_event(self):
+        result = self.plan("direct-to-nested")
+        control = self.control_evidence(
+            "launch-asset-packager", ["evidence-observation"],
+            prefix="direct-to-nested-control",
+        )[0]
+        shared_relative = Path("evidence/direct-to-nested.txt")
+        shared_path = self.root / shared_relative
+        shared_path.parent.mkdir(parents=True, exist_ok=True)
+        shared_path.write_text("one immutable observation\n", encoding="utf-8")
+        shared = {
+            "kind": "evaluation", "ref": shared_relative.as_posix(),
+            "sha256": hashlib.sha256(shared_path.read_bytes()).hexdigest(),
+        }
+        result, _ = self.advance(
+            result, "action-completed", {
+                "node": "launch-asset-packager", "evidence": [control, shared],
+            }, "direct-to-nested-first", loop_id="direct-to-nested",
+        )
+
+        route = self.append_route(
+            "community-launch-runner", prefix="direct-to-nested-route",
+        )
+        nested = run_events.append_event(
+            self.root, self.run_id,
+            self.run_request(
+                "direct-to-nested-wrapper", "artifact_validated",
+                route["event_id"], "succeeded",
+                {"kind": "artifact", "ref": "wrapped-shared-evidence"},
+                references=[{**shared, "kind": "artifact"}],
+                dimensions={"validator": "workflow-action-validator"},
+            ),
+        )["event"]
+        self.run_second += 1
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            self.advance(
+                result, "action-completed", {
+                    "node": "community-launch-runner",
+                    "evidence": [self.event_reference(nested)],
+                }, "direct-to-nested-second", loop_id="direct-to-nested",
+            )
+
+    def test_nested_evidence_cannot_be_reused_as_a_direct_reference(self):
+        result = self.plan("nested-to-direct")
+        control = self.control_evidence(
+            "launch-asset-packager", ["evidence-observation"],
+            prefix="nested-to-direct-control",
+        )[0]
+        shared_relative = Path("evidence/nested-to-direct.txt")
+        shared_path = self.root / shared_relative
+        shared_path.parent.mkdir(parents=True, exist_ok=True)
+        shared_path.write_text("one immutable observation\n", encoding="utf-8")
+        shared = {
+            "kind": "artifact", "ref": shared_relative.as_posix(),
+            "sha256": hashlib.sha256(shared_path.read_bytes()).hexdigest(),
+        }
+        parent = run_events.load_events(self.root, self.run_id)[-1]["event_id"]
+        nested = run_events.append_event(
+            self.root, self.run_id,
+            self.run_request(
+                "nested-to-direct-wrapper", "artifact_validated",
+                parent, "succeeded",
+                {"kind": "artifact", "ref": "wrapped-shared-evidence"},
+                references=[shared],
+                dimensions={"validator": "workflow-action-validator"},
+            ),
+        )["event"]
+        self.run_second += 1
+        result, _ = self.advance(
+            result, "action-completed", {
+                "node": "launch-asset-packager",
+                "evidence": [control, self.event_reference(nested)],
+            }, "nested-to-direct-first", loop_id="nested-to-direct",
+        )
+        ordinary = self.action_evidence(
+            "community-launch-runner", prefix="nested-to-direct-community",
+        )
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            self.advance(
+                result, "action-completed", {
+                    "node": "community-launch-runner",
+                    "evidence": [
+                        ordinary, {**shared, "kind": "registry-projection"},
+                    ],
+                }, "nested-to-direct-second", loop_id="nested-to-direct",
+            )
+
+    def test_non_run_references_require_canonical_safe_paths(self):
+        for reference in (
+                "evidence/./path-alias.txt",
+                "evidence//path-alias.txt",
+                "evidence\\path-alias.txt",
+                "/evidence/path-alias.txt"):
+            with self.subTest(reference=reference), self.assertRaisesRegex(
+                    workflow_loop.WorkflowLoopError,
+                    "relative|empty/dot|safe reference"):
+                workflow_loop._reference({
+                    "kind": "artifact", "ref": reference,
+                    "sha256": "a" * 64,
+                }, "test reference")
+
+    def test_non_run_references_reject_symlink_and_hardlink_aliases(self):
+        evidence_dir = self.root / "evidence"
+        evidence_dir.mkdir(parents=True, exist_ok=True)
+        symlink_target = evidence_dir / "symlink-target.txt"
+        symlink_target.write_text("stable evidence\n", encoding="utf-8")
+        symlink_alias = evidence_dir / "symlink-alias.txt"
+        symlink_alias.symlink_to(symlink_target.name)
+        digest = hashlib.sha256(symlink_target.read_bytes()).hexdigest()
+        with self.assertRaises(workflow_loop.WorkflowLoopError):
+            workflow_loop._verify_reference(self.root, self.run_id, {
+                "kind": "artifact", "ref": "evidence/symlink-alias.txt",
+                "sha256": digest,
+            })
+
+        hardlink_target = evidence_dir / "hardlink-target.txt"
+        hardlink_target.write_text("stable evidence\n", encoding="utf-8")
+        hardlink_alias = evidence_dir / "hardlink-alias.txt"
+        os.link(hardlink_target, hardlink_alias)
+        digest = hashlib.sha256(hardlink_target.read_bytes()).hexdigest()
+        for reference in (
+                "evidence/hardlink-target.txt",
+                "evidence/hardlink-alias.txt"):
+            with self.subTest(reference=reference), self.assertRaises(
+                    workflow_loop.WorkflowLoopError):
+                workflow_loop._verify_reference(self.root, self.run_id, {
+                    "kind": "artifact", "ref": reference,
+                    "sha256": digest,
+                })
+
+    def test_copied_or_mutated_control_identity_stays_consumed_after_revise(self):
+        loop_id = "copied-control-cycle"
+        result = self.plan(loop_id)
+        original = self.control_evidence(
+            "launch-asset-packager", ["evidence-observation"],
+            prefix="copied-control-original",
+        )[0]
+        result, _ = self.advance(
+            result, "action-completed", {
+                "node": "launch-asset-packager", "evidence": [original],
+            }, "copied-control-first", loop_id=loop_id,
+        )
+        for node in self.WORKFLOW_NODES[1:]:
+            result = self.complete_action(
+                result, node, "copied-control-c1-" + node, loop_id=loop_id,
+            )
+        result, _ = self.advance(
+            result, "verification-recorded",
+            self.verification_payload(
+                "fail", "copied-control-gap", "copied-control-verification",
+            ),
+            "copied-control-verification", loop_id=loop_id,
+        )
+        result, _ = self.advance(
+            result, "decision-recorded", {
+                "decision": "revise", "reason_codes": ["repeat-cycle"],
+                "evidence": [self.latest_evidence],
+            }, "copied-control-revise", loop_id=loop_id,
+        )
+
+        by_id = {
+            event["event_id"]: event
+            for event in run_events.load_events(self.root, self.run_id)
+        }
+        source_ref = by_id[original["ref"]]["references"][0]
+        source = self.root / source_ref["ref"]
+        for label, mutate in (("renamed", False), ("same-id-mutated", True)):
+            record = json.loads(source.read_text(encoding="utf-8"))
+            if mutate:
+                record["created_at"] = "2026-08-02T08:01:00Z"
+            relative = Path("memory/control/copied-control-%s.json" % label)
+            path = self.root / relative
+            path.write_text(
+                json.dumps(record, indent=2, sort_keys=True) + "\n",
+                encoding="utf-8",
+            )
+            route = self.append_route(
+                "launch-asset-packager", prefix="copied-control-" + label,
+            )
+            validation = run_events.append_event(
+                self.root, self.run_id,
+                self.run_request(
+                    "copied-control-validation-" + label,
+                    "artifact_validated", route["event_id"], "succeeded",
+                    {"kind": "artifact", "ref": "copied-control-" + label},
+                    references=[{
+                        "kind": "artifact", "ref": relative.as_posix(),
+                        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                    }],
+                    dimensions={
+                        "validator": run_events.CONTROL_ARTIFACT_VALIDATOR,
+                    },
+                ),
+            )["event"]
+            self.run_second += 1
+            with self.assertRaisesRegex(
+                    workflow_loop.WorkflowLoopError, "already consumed"):
+                self.advance(
+                    result, "action-completed", {
+                        "node": "launch-asset-packager",
+                        "evidence": [self.event_reference(validation)],
+                    }, "copied-control-action-" + label, loop_id=loop_id,
+                )
+
+    def test_action_evidence_is_single_use_across_loops_in_one_run(self):
+        first = self.plan("shared-ledger-a")
+        second = self.plan("shared-ledger-b")
+        evidence = self.action_evidence(
+            "launch-asset-packager", prefix="shared-ledger-evidence",
+        )
+        first, _ = self.advance(
+            first, "action-completed", {
+                "node": "launch-asset-packager", "evidence": [evidence],
+            }, "shared-ledger-first", loop_id="shared-ledger-a",
+        )
+        request = {
+            "schema_version": "1.0",
+            "run_id": self.run_id,
+            "loop_id": "shared-ledger-b",
+            "workflow_id": "product-launch-execution",
+            "idempotency_key": "shared-ledger-second",
+            "event_type": "action-completed",
+            "occurred_at": "2026-07-22T10:20:00Z",
+            "expected_head_sha256": second["state"]["last_event_hash"],
+            "payload": {
+                "node": "launch-asset-packager", "evidence": [evidence],
+            },
+        }
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            workflow_loop.advance(self.root, request)
+
+        # Replay must reject the same cross-loop duplicate even if an attacker
+        # recomputes the public workflow-event hash chain around it.
+        paths = workflow_loop._workflow_paths(
+            self.root, self.run_id, "shared-ledger-b",
+        )
+        plan_value, _plan_raw = workflow_loop._load_plan(paths["plan"])
+        normalized = workflow_loop._advance_request(request, plan_value)
+        stored = workflow_loop._stored_event(
+            normalized, 2, second["state"]["last_event_hash"],
+            workflow_loop._runtime_now(),
+        )
+        workflow_loop._append_line(paths["events"], stored)
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "already consumed"):
+            workflow_loop.verify(self.root, self.run_id, "shared-ledger-b")
 
     def test_compare_and_swap_and_idempotent_retry(self):
         first = self.plan()
@@ -1368,6 +1952,101 @@ class WorkflowLoopTests(unittest.TestCase):
                 "action-completed",
                 {"node": "launch-asset-packager", "evidence": [sibling]},
                 "sibling-evidence",
+            )
+
+    def test_required_control_inputs_block_turn_only_and_missing_receipt_or_measurement(self):
+        result = self.plan("required-controls")
+        for node in (
+                "launch-asset-packager", "community-launch-runner",
+                "launch-readiness-auditor", "press-media-relations"):
+            result = self.complete_action(
+                result, node, "required-" + node, loop_id="required-controls",
+            )
+
+        evidence_only = self.control_evidence(
+            "launch-day-conductor", ["evidence-observation"],
+            prefix="missing-receipt",
+        )
+        route = self.append_route(
+            "launch-day-conductor", prefix="turn-cannot-bypass-route",
+        )
+        turn_id = "turn-cannot-bypass-controls"
+        turn = run_events.append_event(
+            self.root, self.run_id,
+            self.run_request(
+                "turn-cannot-bypass-controls", "turn_finished",
+                route["event_id"], "succeeded",
+                {"kind": "turn", "ref": turn_id}, turn_id=turn_id,
+            ),
+        )["event"]
+        self.run_second += 1
+        with self.assertRaisesRegex(
+                workflow_loop.WorkflowLoopError, "action-receipt"):
+            self.advance(
+                result, "action-completed", {
+                    "node": "launch-day-conductor",
+                    "evidence": [*evidence_only, self.event_reference(turn)],
+                }, "reject-missing-receipt", loop_id="required-controls",
+            )
+
+        result = self.complete_action(
+            result, "launch-day-conductor", "required-conductor",
+            loop_id="required-controls",
+        )
+        missing_measurement = self.control_evidence(
+            "launch-monitor", ["action-receipt", "evidence-observation"],
+            prefix="missing-measurement",
+        )
+        with self.assertRaisesRegex(
+                workflow_loop.WorkflowLoopError, "measurement-contract"):
+            self.advance(
+                result, "action-completed", {
+                    "node": "launch-monitor", "evidence": missing_measurement,
+                }, "reject-missing-measurement", loop_id="required-controls",
+            )
+
+    def test_required_control_artifact_must_be_selected_and_untampered(self):
+        result = self.plan("selected-control")
+        sibling_control = self.control_evidence(
+            "launch-asset-packager", ["evidence-observation"],
+            prefix="sibling-control", parent=self.anchor["ref"],
+        )[0]
+        route = self.append_route(
+            "launch-asset-packager", parent=self.anchor["ref"],
+            prefix="selected-turn-route",
+        )
+        turn_id = "selected-asset-turn"
+        selected_turn = run_events.append_event(
+            self.root, self.run_id,
+            self.run_request(
+                "selected-asset-turn", "turn_finished", route["event_id"],
+                "succeeded", {"kind": "turn", "ref": turn_id},
+                turn_id=turn_id,
+            ),
+        )["event"]
+        self.run_second += 1
+        with self.assertRaisesRegex(
+                workflow_loop.WorkflowLoopError, "selected-ancestry control"):
+            self.advance(
+                result, "action-completed", {
+                    "node": "launch-asset-packager",
+                    "evidence": [self.event_reference(selected_turn), sibling_control],
+                }, "reject-sibling-control", loop_id="selected-control",
+            )
+
+        result = self.plan("tampered-control")
+        control = self.action_evidence(
+            "launch-asset-packager", prefix="tampered-control",
+        )
+        events = run_events.load_events(self.root, self.run_id)
+        event = next(item for item in events if item["event_id"] == control["ref"])
+        artifact_path = self.root / event["references"][0]["ref"]
+        artifact_path.write_bytes(artifact_path.read_bytes() + b" ")
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "hash mismatch"):
+            self.advance(
+                result, "action-completed", {
+                    "node": "launch-asset-packager", "evidence": [control],
+                }, "reject-tampered-control", loop_id="tampered-control",
             )
 
     def test_event_budget_reserves_the_terminal_slot(self):

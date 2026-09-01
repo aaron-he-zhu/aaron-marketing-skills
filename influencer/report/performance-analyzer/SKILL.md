@@ -4,13 +4,13 @@ slug: performance-analyzer
 displayName: "Performance Analyzer · 效果分析"
 summary: "活动效果分析:达成 vs 目标、平台与创作者维度拆解、优化建议"
 description: 'Use when the user asks to "analyze influencer campaign performance", "compare influencers", or "find what content worked"; produces metric scorecards vs target and benchmark, platform/influencer/content rankings, engagement-quality and sentiment reads, conversion-attribution breakdowns, and ranked learnings. Not for dollar-level return math — use roi-calculator. 达人营销效果分析/投放复盘'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use mid-flight or post-campaign when a user wants to evaluate influencer results, compare creators against each other, find top-performing content or formats, judge engagement quality and comment sentiment, connect influencer activity to conversions, or build performance benchmarks for future planning."
 argument-hint: "<campaign name> [platform or influencer handles]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "influencer", "phase": "report", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "report"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "influencer", "phase": "report", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "report"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Performance Analyzer
@@ -33,13 +33,14 @@ Compare performance of these influencers from [campaign]: @handle1, @handle2, @h
 
 ## Skill Contract
 
-- **Reads**: campaign name and date range; native platform analytics (reach, views, engagement); influencer-supplied reports or screenshots; website/GA traffic and conversion data; sales and promo-code redemption data; targets and benchmarks if the user has them; per-creator performance baselines from `memory/creators/<handle-slug>.md` ([creator-registry](../../../protocol/creator-registry/SKILL.md) roster records) when present.
-- **Writes**: a performance analysis to `memory/influencer/performance-analyzer/YYYY-MM-DD-<campaign>.md` covering core-metric scorecards, platform/influencer/content rankings, engagement-quality and sentiment reads, conversion attribution, and ranked learnings.
-- **Promotes**: durable facts (top-performing creators, winning formats, platform ROI splits, roster renew/drop calls) to `memory/hot-cache.md`.
+- **Reads**: campaign name and date range; native platform analytics (reach, views, engagement); influencer-supplied reports or screenshots; website/GA traffic and conversion data; sales and promo-code redemption data; targets, benchmarks, and the preregistered decision rule/readback window if supplied; the optional lightweight campaign tracker and its `evidence_refs`; and any ROI/ROAS artifact already computed by [roi-calculator](../roi-calculator/SKILL.md). Reuse each explicit upstream opaque `creator_ref` or a verified creator-registry aggregate ID; a raw handle/name/URL/provider ID is transient lookup input only and never becomes a saved identity. Per-creator baselines come from `memory/creators/<aggregate-id>.md` only when an authorized artifact or verified registry link resolves that ref. Never derive the path from a raw locator.
+- **Writes**: return the performance analysis inline by default. When a current non-forked tracker-state artifact proves `measured` or `closed`, include the compact Campaign Retro Card from step 8 bound to that campaign, creator, measurement contract, and decision rule. Save the analysis and card together to `memory/influencer/performance-analyzer/YYYY-MM-DD-<campaign>.md` only with exact WARM-save authorization; saved tables, headings, evidence, and handoffs use `creator_ref` plus opaque source refs, never raw handles, names, profile URLs, email addresses, or provider IDs.
+- **Promotes**: only with separate exact authorization, promote durable evidence-backed campaign facts (verified metric results and descriptive format/platform associations) to `memory/hot-cache.md`; any ROI/ROAS value remains tied to its exact roi-calculator artifact. The Retro Card's qualitative `renew | retest | retire | unknown` decision, rationale, next hypothesis, and limitations remain WARM and are never promoted as registry truth. This skill makes no creator-registry proposal: after a creator row is closed, the existing boundary still permits only a separately authorized, evidence-backed **actual rate**, **signed rights window/expiry**, or **measured performance baseline** to be proposed by the owning workflow; [creator-registry](../../../protocol/creator-registry/SKILL.md) alone decides whether it becomes canonical.
 - **Done when**:
-  - Core metrics are scored against target and benchmark with a performance verdict.
-  - Top and bottom performers are ranked with reasons, and content patterns that worked are named.
-  - Conversions are attributed by method (promo code / UTM / direct / estimated) and 3-5 learnings are written.
+  - Core metrics are compared against compatible source-dated targets/benchmarks. Missing or incompatible context is `Unknown`/`NOT_SCORED`, never an invented `/10` score or adjective verdict.
+  - Creators/platforms/content are ranked only under a declared metric, compatible window/basis, complete candidate set, and preregistered decision rule; descriptive associations and causal hypotheses stay visibly separate.
+  - Conversions use one declared attribution model with deduplicated, mutually exclusive counted buckets; overlapping promo/UTM/direct observations remain reconciliation evidence, and modeled influence stays Estimated outside the counted total.
+  - With verified current `measured` or `closed` state, each requested next-cycle decision has a scope-bound Campaign Retro Card with campaign/creator/state/measurement/decision-rule refs, evidence-backed rationale, `evidence_refs`, next-campaign hypothesis, and unresolved limitations; insufficient decision evidence resolves to `unknown`, while missing/forked state blocks the card.
 - **Primary next skill**: [roi-calculator](../roi-calculator/SKILL.md) — turn measured performance into dollar-level return.
 
 ### Handoff Summary
@@ -48,7 +49,7 @@ Compare performance of these influencers from [campaign]: @handle1, @handle2, @h
 
 ## Data Sources
 
-This family needs no live integrations (Tier 1). The skill runs entirely on inputs you provide — paste platform exports, influencer report screenshots, GA numbers, and promo-code redemption counts, and it builds the full analysis. Ask the user for whatever is missing rather than blocking.
+This family needs no live integrations (Tier 1). The skill runs entirely on inputs you provide — paste platform exports, influencer report screenshots, GA numbers, and promo-code redemption counts, and it analyzes the supported fields. Missing inputs do not block a partial descriptive read, but any dependent score, verdict, rank, causal explanation, attribution total, or decision becomes `Unknown`/`NOT_SCORED`/`NEEDS_INPUT` rather than being filled in.
 
 Where a connector could speed the work, the skill marks it with a `~~` placeholder:
 
@@ -63,27 +64,31 @@ No placeholder is required to run. See [CONNECTORS.md](../../../CONNECTORS.md) f
 
 ## Instructions
 
-Work the steps in order. Each fill-in template lives in [references/analysis-templates.md](references/analysis-templates.md) — copy the matching block and populate it.
+Work the steps below as one dependency-aware pass. Each fill-in template lives in [references/analysis-templates.md](references/analysis-templates.md). Build the Step 2 shell after intake, but run Step 7 before populating or publishing Step 2 `Conversions`, `Revenue`, or any rate/cost that depends on them; those fields must cite Step 7's reconciled counted total or remain `Unknown/NEEDS_INPUT`.
 
 1. **Gather performance data** — log campaign/period/influencers/platforms and the available sources (native analytics, influencer reports, web analytics, sales, promo codes). Template: step 1.
-2. **Analyze core metrics** — score reach, impressions, engagements, ER, video views, clicks, promo uses, conversions, and revenue against target and benchmark; assign a performance verdict and call out over/underperformers. Template: step 2.
-3. **Analyze by platform** — compare platforms on reach/ER/clicks/conversions/CPA, name the best and worst with reasons, and break out platform-specific formats (IG feed/Reels/Stories, TikTok watch time/completion). Template: step 3.
-4. **Analyze by influencer** — rank creators on reach/ER/conversions/ROI, deep-dive top performers (why they won, content anatomy, renew call), and explain underperformers. Template: step 4.
-5. **Content performance analysis** — rank top content, compare formats and themes, and name the winning hook/messaging/visual patterns. Template: step 5.
-6. **Engagement quality analysis** — break engagement by type and intent, run comment sentiment, surface purchase-intent signals, and score quality /10. Template: step 6.
-7. **Conversion & attribution analysis** — draw the funnel, score conversion metrics vs benchmark, attribute by method (promo / UTM / direct / estimated), and table promo-code performance. Template: step 7.
-8. **Generate insights & recommendations** — write the top-5 learnings, what worked / what didn't, optimization opportunities, roster renew/drop calls, and future-campaign guidance. Template: step 8.
+2. **Analyze core metrics** — compare reach, impressions, engagements, ER, video views, clicks, promo uses, conversions, and revenue against compatible source-dated targets/benchmarks. Emit field-level comparison states; do not invent an aggregate score or adjective verdict. Template: step 2.
+3. **Analyze by platform** — compare platforms on compatible reach/ER/click/conversion/CPA windows and state observed differences. Put any explanation in a separately labeled hypothesis unless a designed comparison supports it. Template: step 3.
+4. **Analyze by creator** — use opaque `creator_ref`; rank only comparable rows under the declared rule. Consume ROI/ROAS only from a cited roi-calculator artifact, do not compute it here, and separate observed content anatomy from causal hypotheses. A renew/retest/retire call comes only from the Retro decision gate. Template: step 4.
+5. **Content performance analysis** — compare formats/themes under compatible exposure and attribution bases. Name observed higher/lower associations; describe a hook/message/visual as causal or "winning" only when the supplied design clears the measurement protocol. Template: step 5.
+6. **Engagement quality analysis** — break engagement by type/intent, run evidenced comment sentiment, and surface purchase-intent signals. Use typed observations or `Unknown`; emit no `/10` quality score without a supplied rubric, inputs, and calculation. Template: step 6.
+7. **Conversion & attribution analysis** — draw the observed funnel and use one declared attribution model. Deduplicate events into mutually exclusive counted buckets; preserve promo/UTM/direct overlap as reconciliation evidence, and report Estimated influence outside the counted total. Template: step 7.
+8. **Generate insights & recommendations** — write 3–5 evidence-backed observations, separately labeled hypotheses, and bounded next tests. Add one compact Campaign Retro Card per creator decision requested only when a verified current, non-forked tracker-state artifact proves that exact campaign/creator is `measured` or `closed` and the matching measurement-contract and decision-rule refs are supplied; a bare stage string never qualifies. Use only `renew | retest | retire | unknown`. Template: step 8.
 
-Before naming any creator/format/platform a real winner, clear the significance bar in [measurement-protocol.md](../../../references/measurement-protocol.md) — otherwise mark it Keep-testing. When a structured score is needed, apply per-dimension STAR analysis (Suitability/Trust/Appeal/Return dimension reads) from [star-benchmark.md](../../../references/star-benchmark.md), and hand the measured inputs to [roi-calculator](../roi-calculator/SKILL.md) for the measured Return (R) evidence — this skill contributes the inputs but does not compute the SQS (the creator-content-auditor gate does).
+Before naming any creator/format/platform a real winner, clear the comparability, complete-scope, preregistered-rule, and significance bars in [measurement-protocol.md](../../../references/measurement-protocol.md) — otherwise mark it `Keep-testing` or `NOT_RANKED`. When a structured score is needed, apply per-dimension STAR analysis (Suitability/Trust/Appeal/Return dimension reads) from [star-benchmark.md](../../../references/star-benchmark.md), and hand financial inputs to [roi-calculator](../roi-calculator/SKILL.md) for Return (R) math — this skill contributes inputs but does not compute ROI/ROAS or SQS (the creator-content-auditor gate computes SQS).
+
+For the Retro Card, use `renew` only when comparable measured evidence clears the preregistered decision rule without a material unresolved limitation; use `retest` for a plausible but inconclusive or correctable test; use `retire` only when measured evidence or a documented hard constraint clears the declared stop rule; otherwise use `unknown`. This operating decision is not a STAR dimension, SQS, or creator-content-auditor verdict—do not simulate or carry forward one.
+
+After an authorized WARM save, offer a handoff to [campaign-planner](../../target/campaign-planner/SKILL.md) to append the saved analysis/card reference to the relevant tracker row's `evidence_refs`; the tracker edit needs its own exact authorization, and neither the card nor this skill advances `stage`. Also offer [fit-scorer](../../scout/fit-scorer/SKILL.md) as an explicit next-cycle handoff with the card's evidence references and hypothesis. Do not invoke it automatically, and do not translate the Retro decision into a STAR/SQS verdict.
 
 ## Example
 
-**User**: "Analyze performance of our summer skincare campaign with 10 influencers"
+**User**: "Analyze this dated summer-skincare export for 10 creators. It contains opaque creator refs, the metric/target table below, per-creator and per-platform results, one deduplicated attribution model, and a completed significance read. ROI comes from roi-calculator artifact `roi-ref-01`."
 
 **Output** (abridged — full version in [references/analysis-templates.md](references/analysis-templates.md)):
 
 ```markdown
-# Summer Skincare Campaign Performance Analysis — Above Average (7.5/10)
+# Summer Skincare Campaign Performance Analysis — illustrative export-backed read
 
 | Metric | Result | Target | Status |
 |--------|--------|--------|--------|
@@ -91,11 +96,11 @@ Before naming any creator/format/platform a real winner, clear the significance 
 | Engagement Rate | 4.2% | 3.5% | ✅ +20% |
 | Conversions | 1,847 | 2,000 | ⚠️ -8% |
 | Revenue | $142,500 | $150,000 | ⚠️ -5% |
-| ROI | 2.8:1 | 3:1 | ⚠️ -7% |
+| ROAS (from `roi-ref-01`) | 2.8:1 | 3:1 | ⚠️ -7% |
 
-**Top 3**: @skincaresarah (ROI 4.2:1), @glowwithgrace (ER 6.8%), @beautyreview (reach/$).
-**Key learning**: TikTok beat Instagram (3.5:1 vs 2.1:1 ROI) — shift 20% of IG budget to TikTok.
-**Recommendation**: Renew top 5; replace bottom 2 with TikTok-native creators.
+**Top 3**: the three `creator_ref` rows that clear the declared ranking and significance rule, using only comparable metrics in the export.
+**Key learning**: report the export-backed TikTok/Instagram delta only if the comparison windows and attribution bases match; otherwise mark it Keep-testing.
+**Recommendation**: renew/drop and reallocation calls remain conditional on the predeclared decision rule rather than invented from the campaign count alone.
 ```
 
 ## Reference Materials

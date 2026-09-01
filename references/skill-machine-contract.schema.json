@@ -8,7 +8,7 @@
   "required": [
     "$schema", "schema_version", "contract_id", "identity", "routing_contract",
     "input_contract", "output_contract", "completion_contract", "handoff_contract",
-    "context_hints", "provenance"
+    "control_requirements", "context_hints", "provenance"
   ],
   "properties": {
     "$schema": {"const": "../skill-machine-contract.schema.json"},
@@ -20,9 +20,34 @@
     "output_contract": {"$ref": "#/$defs/output"},
     "completion_contract": {"$ref": "#/$defs/completion"},
     "handoff_contract": {"$ref": "#/$defs/handoff"},
+    "control_requirements": {
+      "type": "array",
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/controlRequirement"}
+    },
     "context_hints": {"$ref": "#/$defs/contextHints"},
     "provenance": {"$ref": "#/$defs/provenance"}
   },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "control_requirements": {"minItems": 1}
+        }
+      },
+      "then": {
+        "properties": {
+          "provenance": {"required": ["control_bindings"]}
+        }
+      },
+      "else": {
+        "properties": {
+          "provenance": {"not": {"required": ["control_bindings"]}}
+        }
+      }
+    }
+  ],
   "$defs": {
     "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
     "safePath": {
@@ -35,6 +60,16 @@
     "extractionStatus": {
       "enum": ["classified", "partially-classified", "unclassified"]
     },
+    "controlRequirement": {
+      "enum": [
+        "action-intent",
+        "action-receipt",
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "measurement-contract"
+      ]
+    },
     "source": {
       "type": "object",
       "additionalProperties": false,
@@ -43,6 +78,15 @@
         "path": {"$ref": "#/$defs/safePath"},
         "sha256": {"$ref": "#/$defs/sha256"},
         "section": {"type": "string", "minLength": 1, "maxLength": 160}
+      }
+    },
+    "fileSource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/safePath"},
+        "sha256": {"$ref": "#/$defs/sha256"}
       }
     },
     "clauseSource": {
@@ -276,7 +320,8 @@
       "properties": {
         "generator": {"const": "generate-skill-contracts-v1"},
         "system_catalog": {"$ref": "#/$defs/catalogSource"},
-        "shared_contract": {"$ref": "#/$defs/source"}
+        "shared_contract": {"$ref": "#/$defs/source"},
+        "control_bindings": {"$ref": "#/$defs/fileSource"}
       }
     }
   }

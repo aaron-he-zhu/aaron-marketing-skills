@@ -100,6 +100,25 @@ class AgentPluginBuilderTests(unittest.TestCase):
         ):
             self.assertFalse((self.output / forbidden).exists(), forbidden)
 
+    def test_control_shape_is_static_but_governed_verification_is_absent(self):
+        self.assertTrue(
+            (self.output / "references/control-artifact.schema.json").is_file()
+        )
+        for forbidden in (
+            "references/control-bindings.json",
+            "references/control-bindings.schema.json",
+            "scripts/validate-control-artifact.py",
+        ):
+            self.assertFalse((self.output / forbidden).exists(), forbidden)
+
+        portability = (self.output / "PORTABILITY.md").read_text(encoding="utf-8")
+        self.assertIn("NOT_VERIFIED", portability)
+        for unavailable_claim in (
+            "selected ancestry", "current head", "verified receipt",
+            "permission", "persisted",
+        ):
+            self.assertIn(unavailable_claim, portability)
+
     def test_root_manifest_is_agent_plugins_v1_and_portable_specific(self):
         plugin = json.loads((self.output / "plugin.json").read_text(encoding="utf-8"))
         self.assertEqual(PLUGIN_SCHEMA, plugin["$schema"])
