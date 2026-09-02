@@ -25,6 +25,14 @@
 
 An **AI marketing staff you install, not prompt** — 120 agent skills that run as one plugin with commands and memory, as portable skills on 70+ agent hosts, or as an **8-bot AI Staff** on named-bot hosts (Grok Bot, Hermes Bot Mode). Seven disciplines and a shared protocol layer, at a glance:
 
+## BulkPublish handoff
+
+After the Social ECHO workflow has produced and reviewed content, use
+[BulkPublish](https://github.com/azeemkafridi/bulkpublish-api) for platform
+adaptation, scheduling, and publishing. The [BulkPublish social media content
+skills](https://github.com/azeemkafridi/bulkpublish-api/tree/main/skills/social-media-content-skills)
+and [API docs](https://app.bulkpublish.com/docs) provide the approval-first handoff.
+
 | Layer | Skills | Lifecycle (phase directories) | Framework → gate | Entrypoint |
 |-------|--------|-------------------------------|------------------|------------|
 | **Narrative** | 16 | trace → architect → land → evaluate | [TALE](references/tale-benchmark.md) truth / system / effectiveness profiles | `/aaron-marketing:narrative` |
