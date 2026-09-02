@@ -257,6 +257,12 @@ def mocked_semantic_revalidator(**arguments):
 
 
 class ReleaseReceiptTests(unittest.TestCase):
+    def test_supported_release_versions_keep_history_and_include_current(self):
+        self.assertEqual(
+            ("19.0.0", "19.1.0", "19.2.0", "20.0.0", "20.1.0"),
+            release_receipt.SUPPORTED_RELEASE_VERSIONS,
+        )
+
     def receipt(self, stage: str = "governed-promotion") -> dict:
         evidence = (
             test_profile_outcomes.valid_pilot_evidence()
@@ -353,7 +359,8 @@ class ReleaseReceiptTests(unittest.TestCase):
         self.assertEqual("19.0.0-rc.1", fields[1])
         self.assertEqual(commit, fields[2])
 
-    def test_19_1_engineering_receipt_is_accepted_without_dropping_19_0(self):
+    def test_current_engineering_receipt_is_accepted_without_dropping_history(self):
+        current = release_receipt.SUPPORTED_RELEASE_VERSIONS[-1]
         with tempfile.TemporaryDirectory() as tmp:
             (
                 repository,
@@ -362,11 +369,11 @@ class ReleaseReceiptTests(unittest.TestCase):
                 paths,
                 report_path,
                 evidence_root,
-            ) = engineering_fixture(Path(tmp), release_version="19.2.0")
+            ) = engineering_fixture(Path(tmp), release_version=current)
             identity = release_receipt.validate_receipt(
                 receipt,
                 expected_commit=commit,
-                expected_version="19.2.0",
+                expected_version=current,
                 verifier_path=ROOT / "scripts" / "verify-profile-outcomes.py",
                 repository_root=repository,
                 engineering_paths=paths,
@@ -375,7 +382,7 @@ class ReleaseReceiptTests(unittest.TestCase):
                 semantic_revalidator=mocked_semantic_revalidator,
             )
         self.assertEqual("engineering-validation-v19", identity["gate"])
-        self.assertEqual("19.2.0-rc.1", identity["release_candidate"])
+        self.assertEqual(current + "-rc.1", identity["release_candidate"])
 
     def test_engineering_receipt_reasserts_provenance_scores_claims_and_tools(self):
         def rejected(path, value):

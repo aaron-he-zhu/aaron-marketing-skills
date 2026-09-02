@@ -11,7 +11,7 @@
           "end_char": 66,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 174,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 68
         },
@@ -41,7 +41,7 @@
           "end_char": 229,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 176
         },
@@ -56,7 +56,7 @@
           "end_char": 396,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 231
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "email/setup/list-growth-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac"
+      "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd"
     }
   },
   "context_hints": {
@@ -77,7 +77,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -98,13 +98,14 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:list-growth-designer",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -117,7 +118,7 @@
           "end_char": 183,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -135,7 +136,7 @@
           "end_char": 356,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 184
         },
@@ -153,7 +154,7 @@
           "end_char": 519,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 357
         },
@@ -171,7 +172,7 @@
           "end_char": 888,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 521
         },
@@ -184,7 +185,7 @@
     "summary_ref": {
       "path": "email/setup/list-growth-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac"
+      "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -199,8 +200,8 @@
     "name": "list-growth-designer",
     "path": "email/setup/list-growth-designer/SKILL.md",
     "phase": "setup",
-    "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
-    "version": "20.0.0"
+    "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<growth goal / audience / offer> [channels] [jurisdiction]",
@@ -214,7 +215,7 @@
           "end_char": 30,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -229,7 +230,7 @@
           "end_char": 70,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 32
         },
@@ -244,7 +245,7 @@
           "end_char": 124,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 72
         },
@@ -259,7 +260,7 @@
           "end_char": 172,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 126
         },
@@ -274,7 +275,7 @@
           "end_char": 367,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 174
         },
@@ -286,7 +287,7 @@
     "source": {
       "path": "email/setup/list-growth-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac"
+      "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd"
     }
   },
   "output_contract": {
@@ -301,7 +302,7 @@
           "end_char": 86,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -317,7 +318,7 @@
           "end_char": 377,
           "path": "email/setup/list-growth-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac",
+          "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd",
           "span_basis": "field-text",
           "start_char": 88
         },
@@ -328,7 +329,7 @@
     "source": {
       "path": "email/setup/list-growth-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac"
+      "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd"
     },
     "summary": "a list-growth plan (channels + lead-magnet / incentive concepts), a compliant opt-in capture-flow spec (single vs double opt-in, what consent evidence to capture at the point of signup), referral-loop mechanics, subscriber-growth / cost-per-opt-in targets (labeled Estimated / User-provided), and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -339,12 +340,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -353,7 +354,7 @@
     "source": {
       "path": "email/setup/list-growth-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "f7271aa153f266cee2348a0ef7ba638ec58683efbf07e4f27d81b55221d537ac"
+      "sha256": "00344324db7b56d0d374bc143cad9f4ac7eade870f42cd47231d4c8d806e8bfd"
     },
     "trigger_phrases": [
       "design a lead magnet / signup incentive",

@@ -2,6 +2,19 @@
 
 Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus an extended example and execution tips. The SKILL.md keeps the numbered method; the long tables and report scaffolds live here.
 
+## Current-evidence gate
+
+Every named current trend, hashtag, sound, format, cultural conversation,
+competitor adoption, count, growth rate, or lifecycle call needs a source ref,
+`observed_at`/retrieval date, measurement window, platform, geography, metric
+definition, current value, and comparable prior value. RSS/feed-title overlap
+alone belongs in a separate `Proxy candidate` queue with
+`score_state: NOT_SCORED` and `decision: NEEDS_INPUT`; it never fills a
+lifecycle, brand-fit, watch/avoid, or act-now field. If those records are
+absent, copy the query-plan block in the extended example, leave current
+sections `TBD`, and return `NEEDS_INPUT`. Never fill an example row from memory
+or relabel an unsupported number `Estimated`.
+
 ## Step 1 — Trend Analysis Parameters
 
 ```markdown
@@ -22,31 +35,35 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 
 ### Trending Topics
 
-| Topic | Platform | Volume | Relevance | Lifespan |
-|-------|----------|--------|-----------|----------|
-| [Topic 1] | [platform] | High/Med/Low | ⭐⭐⭐⭐⭐ | [days/weeks] |
-| [Topic 2] | [platform] | High/Med/Low | ⭐⭐⭐⭐ | [days/weeks] |
-| [Topic 3] | [platform] | High/Med/Low | ⭐⭐⭐ | [days/weeks] |
+| Topic ref | Platform/geo | Current value | Comparable prior value | Metric definition | Lifecycle | Source refs | Observed at / window | Evidence label |
+|-----------|--------------|---------------|------------------------|-------------------|-----------|-------------|----------------------|----------------|
+| [topic ref] | [exact scope] | [value] | [value] | [unit/denominator] | [rising/peak/declining] | [opaque refs] | [dates/window] | [Measured/User-provided + Calculated lifecycle] |
+
+Only scope-matched dated momentum observations may enter this table. A Proxy or model estimate cannot fill `Current value`, `Comparable prior value`, or `Lifecycle`.
+
+### Proxy Candidate Queue — Not Scored
+
+| Candidate ref | Proxy sources | Observed at | Score state | Decision | Required platform/geo/window query |
+|---------------|---------------|-------------|-------------|----------|------------------------------------|
+| [candidate ref] | [opaque refs] | [dates] | NOT_SCORED | NEEDS_INPUT | [exact query and fields] |
 
 ### Trending Hashtags
 
-| Hashtag | Platform | Posts | Growth | Brand Fit |
-|---------|----------|-------|--------|-----------|
-| #[hashtag1] | [platform] | [volume] | +[%] | ✅/⚠️/❌ |
-| #[hashtag2] | [platform] | [volume] | +[%] | ✅/⚠️/❌ |
+| Hashtag ref | Platform/geo | Posts | Growth | Source ref | Observed at / window |
+|-------------|--------------|-------|--------|------------|----------------------|
+| [hashtag ref] | [scope] | [volume] | [%] | [ref] | [date/window] |
 
 ### Trending Audio/Sounds
 
-| Sound | Platform | Uses | Origin | Brand Safe |
-|-------|----------|------|--------|------------|
-| [sound 1] | TikTok | [count] | [source] | ✅/⚠️/❌ |
-| [sound 2] | Reels | [count] | [source] | ✅/⚠️/❌ |
+| Sound ref | Platform/geo | Uses | Origin ref | Source ref | Observed at / window | Safety status |
+|-----------|--------------|------|------------|------------|----------------------|---------------|
+| [sound ref] | [scope] | [count] | [ref] | [ref] | [date/window] | [supported/unknown] |
 
 ### Trending Challenges
 
-| Challenge | Platforms | Participation | Difficulty | Risk |
-|-----------|-----------|---------------|------------|------|
-| [challenge 1] | [platforms] | [level] | [easy/medium/hard] | [risk level] |
+| Challenge ref | Platform/geo | Participation | Source ref | Observed at / window | Risk evidence |
+|---------------|--------------|---------------|------------|----------------------|---------------|
+| [candidate ref] | [scope] | [value] | [ref] | [date/window] | [supported/unknown] |
 ```
 
 ## Step 3 — Trending Content Formats
@@ -56,32 +73,31 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 
 ### Video Formats
 
-| Format | Platform | Performance | Example | Adoption |
-|--------|----------|-------------|---------|----------|
-| [Format 1] | [platform] | [engagement] | [example] | Rising/Peak/Declining |
-| [Format 2] | [platform] | [engagement] | [example] | Rising/Peak/Declining |
+| Format | Platform/geo | Performance | Source ref | Observed at / window | Adoption |
+|--------|--------------|-------------|------------|----------------------|----------|
+| [Format] | [scope] | [metric] | [ref] | [date/window] | Rising/Peak/Declining |
 
 **Hot Formats Right Now**:
 
 1. **[Format Name]**
    - What it is: [description]
-   - Why it works: [explanation]
+   - Observed association: [what the cited comparison shows]
+   - Hypothesis: [untested explanation, clearly labeled]
    - Best for: [use cases]
    - How to adapt: [brand approach]
    - Example: [link or description]
 
 2. **[Format Name]**
    - What it is: [description]
-   - Why it works: [explanation]
+   - Observed association / hypothesis: [cite or label]
    - Best for: [use cases]
    - How to adapt: [brand approach]
 
 ### Emerging Formats to Watch
 
-| Format | Platform | Status | When to Adopt |
-|--------|----------|--------|---------------|
-| [format] | [platform] | Early adopter phase | Now for first-mover advantage |
-| [format] | [platform] | Growing | Next 2-4 weeks |
+| Format | Platform | Status | Source ref + observed window | Decision window |
+|--------|----------|--------|------------------------------|-----------------|
+| [format] | [platform] | [status] | [ref/date/window] | [supported window] |
 
 ### Declining Formats to Avoid
 
@@ -169,10 +185,9 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 
 ### Competitor Trend Adoption
 
-| Competitor | Recent Trends Adopted | Performance | Learnings |
-|------------|----------------------|-------------|-----------|
-| [Comp 1] | [trends] | [results if known] | [what to learn] |
-| [Comp 2] | [trends] | [results if known] | [what to learn] |
+| Competitor | Recent trends adopted | Observed performance | Source ref + observed window | Learning/hypothesis |
+|------------|-----------------------|----------------------|------------------------------|---------------------|
+| [Comp] | [evidenced trend] | [result or Unknown] | [ref/date/window] | [observation or labeled hypothesis] |
 
 ### Gap Analysis
 
@@ -200,7 +215,12 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 
 ## Executive Summary
 
-**Top 3 Trends to Act On Now**:
+Fill Top 3, watch, avoid, and action blocks only when every included candidate
+has complete current evidence for the exact platform/geography/window under the
+gate above. Otherwise set the block to `TBD`, return `NEEDS_INPUT`, and attach
+the exact collection plan; Proxy candidates never enter these blocks.
+
+**Top 3 Trends to Act On Now** (fill only when every selected row passes the current-evidence gate; otherwise `TBD/NEEDS_INPUT`):
 1. [Trend 1]: [why and how]
 2. [Trend 2]: [why and how]
 3. [Trend 3]: [why and how]
@@ -271,45 +291,26 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md), plus
 **Output**:
 
 ```markdown
-# TikTok Fitness Trends Report
+# TikTok Fitness Trend Evidence Request
 
-## Top Trends to Act On Now
+**Status**: NEEDS_INPUT
 
-### 1. "Hot Girl Walk" Evolution
-- **What**: Walking content with self-improvement audio
-- **Volume**: 2.3B views on related hashtags
-- **Status**: Still growing, evolved into multiple variations
-- **Brand Fit**: ⭐⭐⭐⭐⭐ Strong for fitness apparel/supplements
-- **How to Use**: Partner with lifestyle influencers for "walk with me" content featuring products
+The prompt contains brand/platform context but no dated current-trend evidence.
+Do not name or score a trend, report a view count, call a lifecycle state, select
+a hashtag/format, or recommend this-week execution.
 
-### 2. "75 Hard" / Challenge Content
-- **What**: Fitness challenge documentation
-- **Volume**: 1.8B views
-- **Status**: Evergreen, consistent interest
-- **Brand Fit**: ⭐⭐⭐⭐ Good for supplements, programs
-- **How to Use**: Sponsor influencers doing challenges, provide products as part of their journey
+## Exact query / collection plan
 
-### 3. GRWM (Get Ready With Me) Workout Edition
-- **What**: Pre-workout routines showing products used
-- **Volume**: Rising trend
-- **Status**: Early growth phase - first mover advantage
-- **Brand Fit**: ⭐⭐⭐⭐⭐ Strong for all fitness products
-- **How to Use**: Brief creators on "GRWM: Gym Edition" showing outfit + supplements + routine
+| Query or export | Required fields |
+|-----------------|-----------------|
+| TikTok fitness topic/hashtag trend results for the requested US window | candidate ref, volume definition/value, growth calculation, source_ref, observed_at, measurement window |
+| Current fitness sounds and format samples | sound/format ref, usage/performance metric, source_ref, observed_at, comparison window |
+| Safety/context read for each candidate | dated source refs, origin/context, rights constraints, observed risk signals |
+| Named competitor adoption, if requested | competitor ref, dated post/campaign ref, observed result and window |
 
-## Content Format Recommendation
-
-Best performing format: 15-30 second videos with:
-- Hook in first 2 seconds
-- Trending audio
-- Text overlay
-- Quick cuts
-
-## Hashtags to Use
-- #FitTok (42B views)
-- #GymTok (18B views)
-- #[Your product category specific]
-
-## Action: Brief your influencers this week on GRWM Gym Edition content
+After the records arrive, score only the evidenced candidates. Until then all
+trend tables are `TBD`, brand fit is `NOT_SCORED`, and no discovery handoff is
+made.
 ```
 
 ## Scope & Execution Tips

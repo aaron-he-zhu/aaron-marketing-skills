@@ -3,6 +3,92 @@
   "authority": "authoritative-workflow-graph-source-shard",
   "edges": [
     {
+      "condition_code": "alternate",
+      "condition_source": "influencer/report/roi-calculator/SKILL.md:155",
+      "condition_text": "performance-analyzer — go back for deeper performance breakdowns if the ROI math exposed gaps.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "roi-calculator",
+      "gate": null,
+      "id": "roi-calculator--performance-analyzer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "performance-analyzer",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "influencer/report/roi-calculator/SKILL.md:151",
+      "condition_text": "Primary: report-generator — turn the ROI numbers into a stakeholder-ready report.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "roi-calculator",
+      "gate": null,
+      "id": "roi-calculator--report-generator",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "report-generator",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "launch/assemble/sales-enablement-kit/SKILL.md:88",
+      "condition_text": "If the B2B outbound lane opens with the launch: cold-outbound-sequencer — sequences built on this talk track.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "sales-enablement-kit",
+      "gate": null,
+      "id": "sales-enablement-kit--cold-outbound-sequencer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "cold-outbound-sequencer",
+      "type": "cross-discipline"
+    },
+    {
       "condition_code": "quality-gate",
       "condition_source": "launch/assemble/sales-enablement-kit/SKILL.md:86",
       "condition_text": "Primary: launch-readiness-auditor — score the launch (RAMP profile result + vetoes), including the A enablement and R internal-readiness sub-items this kit just fed.",
@@ -152,8 +238,8 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "email/deliver/send-experiment-designer/SKILL.md:135",
-      "condition_text": "Primary: performance-analyzer after the decision owner approves a shipped direction, or email-quality-auditor to gate the program before scale. Reuse roi-calculator for revenue/list-value math and report-generator to package the read-out.",
+      "condition_source": "email/deliver/send-experiment-designer/SKILL.md:136",
+      "condition_text": "Primary: email-quality-auditor to gate the receipt-bound program before scale. If the user separately requests revenue/list-value math after the read-out is complete, use roi-calculator; do not route the email experiment through an Influencer analyzer or report builder by default.",
       "documentation_required": true,
       "exception": null,
       "from": "send-experiment-designer",
@@ -174,74 +260,20 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "action-receipt",
+        "artifact-binding",
         "audit-evidence",
-        "handoff-summary"
+        "evidence-observation",
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "email-quality-auditor",
       "type": "gate"
     },
     {
       "condition_code": "primary",
-      "condition_source": "email/deliver/send-experiment-designer/SKILL.md:135",
-      "condition_text": "Primary: performance-analyzer after the decision owner approves a shipped direction, or email-quality-auditor to gate the program before scale. Reuse roi-calculator for revenue/list-value math and report-generator to package the read-out.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "send-experiment-designer",
-      "gate": null,
-      "id": "send-experiment-designer--performance-analyzer",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "cross-discipline-context",
-        "handoff-summary"
-      ],
-      "to": "performance-analyzer",
-      "type": "cross-discipline"
-    },
-    {
-      "condition_code": "primary",
-      "condition_source": "email/deliver/send-experiment-designer/SKILL.md:135",
-      "condition_text": "Primary: performance-analyzer after the decision owner approves a shipped direction, or email-quality-auditor to gate the program before scale. Reuse roi-calculator for revenue/list-value math and report-generator to package the read-out.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "send-experiment-designer",
-      "gate": null,
-      "id": "send-experiment-designer--report-generator",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "cross-discipline-context",
-        "handoff-summary"
-      ],
-      "to": "report-generator",
-      "type": "cross-discipline"
-    },
-    {
-      "condition_code": "primary",
-      "condition_source": "email/deliver/send-experiment-designer/SKILL.md:135",
-      "condition_text": "Primary: performance-analyzer after the decision owner approves a shipped direction, or email-quality-auditor to gate the program before scale. Reuse roi-calculator for revenue/list-value math and report-generator to package the read-out.",
+      "condition_source": "email/deliver/send-experiment-designer/SKILL.md:136",
+      "condition_text": "Primary: email-quality-auditor to gate the receipt-bound program before scale. If the user separately requests revenue/list-value math after the read-out is complete, use roi-calculator; do not route the email experiment through an Influencer analyzer or report builder by default.",
       "documentation_required": true,
       "exception": null,
       "from": "send-experiment-designer",
@@ -269,7 +301,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "seo-geo/survey/serp-analysis/SKILL.md:127",
+      "condition_source": "seo-geo/survey/serp-analysis/SKILL.md:128",
       "condition_text": "Primary: content-writer.",
       "documentation_required": true,
       "exception": null,
@@ -559,7 +591,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "social/craft/social-calendar-builder/SKILL.md:89",
+      "condition_source": "social/craft/social-calendar-builder/SKILL.md:90",
       "condition_text": "If cadence candidates have accumulated (3+): channel-registry — promote the commitments into calendar-commitments.md.",
       "documentation_required": true,
       "exception": null,
@@ -590,7 +622,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "social/craft/social-calendar-builder/SKILL.md:87",
+      "condition_source": "social/craft/social-calendar-builder/SKILL.md:88",
       "condition_text": "Primary: social-creative-builder — build the platform-native packages for the next batch of slots.",
       "documentation_required": true,
       "exception": null,
@@ -618,7 +650,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "social/craft/social-calendar-builder/SKILL.md:88",
+      "condition_source": "social/craft/social-calendar-builder/SKILL.md:89",
       "condition_text": "If a batch is assembled for the queue: social-quality-auditor — pre-publish mode; SHIP ships, FIX/BLOCK returns the batch.",
       "documentation_required": true,
       "exception": null,
@@ -640,7 +672,10 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "action-intent",
+        "artifact-binding",
         "audit-evidence",
+        "evidence-observation",
         "handoff-summary"
       ],
       "to": "social-quality-auditor",
@@ -648,7 +683,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "social/craft/social-creative-builder/SKILL.md:86",
+      "condition_source": "social/craft/social-creative-builder/SKILL.md:87",
       "condition_text": "If claims carry [needs source] flags: offer-claims-registry — register the claims with evidence, then swap the approved wording back in.",
       "documentation_required": true,
       "exception": null,
@@ -679,7 +714,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "social/craft/social-creative-builder/SKILL.md:87",
+      "condition_source": "social/craft/social-creative-builder/SKILL.md:88",
       "condition_text": "If the packages need slots: social-calendar-builder — place them against the committed cadence.",
       "documentation_required": true,
       "exception": null,
@@ -708,7 +743,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "social/craft/social-creative-builder/SKILL.md:85",
+      "condition_source": "social/craft/social-creative-builder/SKILL.md:86",
       "condition_text": "Primary: social-quality-auditor — run pre-publish mode on the package set before anything ships.",
       "documentation_required": true,
       "exception": null,
@@ -737,37 +772,8 @@
       "type": "gate"
     },
     {
-      "condition_code": "primary",
-      "condition_source": "social/observe/social-measurement-loop/SKILL.md:85",
-      "condition_text": "Primary: report-generator — fold the readout into a stakeholder report with the labels intact.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "social-measurement-loop",
-      "gate": null,
-      "id": "social-measurement-loop--report-generator",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "cross-discipline-context",
-        "handoff-summary"
-      ],
-      "to": "report-generator",
-      "type": "cross-discipline"
-    },
-    {
       "condition_code": "conditional",
-      "condition_source": "social/observe/social-measurement-loop/SKILL.md:86",
+      "condition_source": "social/observe/social-measurement-loop/SKILL.md:87",
       "condition_text": "If the write-back is the point of this run: social-calendar-builder — apply the keep/stop/try list to the next posting cycle.",
       "documentation_required": true,
       "exception": {
@@ -791,17 +797,21 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "artifact-binding",
         "condition-evidence",
+        "cycle-retro",
+        "evidence-observation",
         "failure-evidence",
-        "handoff-summary"
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "social-calendar-builder",
       "type": "reentry"
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "social/observe/social-measurement-loop/SKILL.md:87",
-      "condition_text": "If a denominator switch or proxy-as-Measured issue surfaced: social-quality-auditor — the ECHO-O1 call and any go/no-go belong to the gate, not this loop.",
+      "condition_source": "social/observe/social-measurement-loop/SKILL.md:86",
+      "condition_text": "Primary: social-quality-auditor — verify the receipt-bound ECHO program and any ECHO-O1 denominator-integrity issue.",
       "documentation_required": true,
       "exception": {
         "code": "documented-bounded-reentry",
@@ -825,8 +835,12 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "artifact-binding",
         "audit-evidence",
-        "handoff-summary"
+        "cycle-retro",
+        "evidence-observation",
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "social-quality-auditor",
       "type": "gate"

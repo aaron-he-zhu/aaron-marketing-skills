@@ -4,14 +4,14 @@ slug: creator-content-auditor
 displayName: "Creator Content Auditor · 创作者内容审计"
 summary: "STAR 门：适配/信任/吸引力/回报四维的门控判定，判 FTC 披露与声明真实否决，输出 SQS 与创作者修改反馈"
 description: 'Use when the user asks to "review this influencer content" or "check if this post meets brand guidelines"; runs the typed STAR pre-publish gate, scores Trust and Appeal on the deliverable, folds in the creator Suitability read, computes the profile-weighted SQS, checks the disclosure/claim/brand-safety and fraud/fake-engagement vetoes, and writes constructive revision feedback. Not for drafting the brief — use brief-generator; not for partnership terms — use contract-helper. 达人内容审核/发布前质检'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Activate when an influencer content submission needs a pre-publish gate against the brief, approved claims, disclosure obligations, platform requirements, and the STAR criteria — and a go/no-go SQS."
 argument-hint: "<content submission or link> <platform> <campaign goal>"
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "influencer", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "activate"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "influencer", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "activate"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Creator Content Auditor
@@ -33,7 +33,7 @@ Run the STAR gate; show claim/disclosure blockers, the SQS, and write the creato
 
 ## Skill Contract
 
-**Reads:** one frozen submission; brief/canon version; approved claims/disclosures (substantiation state from `offer-claims-registry`); platform requirements; the `fit-scorer` Suitability read and the `creator-registry` dossier (the audience-authenticity facts behind `STAR-S2`/`S6`); and (for an `actual` re-read) the `roi-calculator` Return evidence. **Writes:** a user report and, only with permission, a v3 artifact. **Done when:** every applicable STAR item is explicit, the typed SQS result is preserved, and feedback maps each requested change to evidence.
+**Reads:** one frozen submission plus its opaque asset/evidence refs; stable `creator_ref`, `reviewer_ref`, and `brief_ref`; brief/canon version; approved claims/disclosures (substantiation state from `offer-claims-registry`); platform requirements; the `fit-scorer` Suitability read and the `creator-registry` dossier (the audience-authenticity facts behind `STAR-S2`/`S6`); and (for an `actual` re-read) the `roi-calculator` Return evidence. Raw creator/reviewer names, handles, profile/content URLs, brief URLs, email addresses, and other delivery locators may be resolved only transiently for the current review or an independently authorized dispatch. **Writes:** a user report inline by default and, only with exact authorization for the validated sink, a v3 artifact. In every persistable template/artifact/handoff, creator, reviewer, and brief identity is represented only by `creator_ref`, `reviewer_ref`, and `brief_ref`; never persist the corresponding raw identity or locator. Creator-facing copy is a transient render and is never part of the durable audit artifact. Artifact approval does not authorize HOT, registry, content, feedback delivery, or any other external mutation. **Done when:** every applicable STAR item is explicit, the typed SQS result is preserved, feedback maps each requested change to evidence, and any durable output satisfies the reference-only identity boundary.
 
 Only this gate computes the profile-weighted SQS; every other influencer skill works one lever and hands off — `fit-scorer` supplies Suitability, `roi-calculator` supplies measured Return, `contract-helper` owns terms. This gate does not adjudicate claims or rights.
 
@@ -79,6 +79,8 @@ Declare target/version, platform, market, goal (`awareness|engagement|conversion
    - `STAR-S6`: verified bought, coordinated, or pod-based engagement.
 5. Create the typed audit run and execute `python3 "$AARON_SKILLS_ROOT/scripts/rubric-score.py" score <run.json>` when the verified runtime is available; the scorer returns the profile-weighted SQS.
 
+The final report consumes the scorer's `status`, `verdict`, `score_state`, `raw_overall_score`, `final_overall_score`, and `cap_applied` exactly. Do not compute a legacy category `/10`, average review-aid ratings, or let a checklist/persona vote override those fields. Use [quality-review-aids.md](references/quality-review-aids.md) only to collect evidence: humanizer/slop signals map to applicable Appeal items and never create a veto or fixed penalty. The complete veto set remains `STAR-S2`, `STAR-S6`, `STAR-T1`, `STAR-T2`, and `STAR-T3`.
+
 Do not let strong production quality compensate for a disclosure, claim, or authenticity failure. Humanizer-style findings are non-veto Appeal evidence only.
 
 ### Creator Feedback
@@ -86,6 +88,8 @@ Do not let strong production quality compensate for a disclosure, claim, or auth
 Begin the audit result with the auditor-runbook's exact typed conversation header. Never replace `status`, `verdict`, or `score_state` with a creator-facing translation; list each explicitly missing qualified item as ``ID: `unknown``` before feedback.
 
 For each change, state the exact location/timecode, observed problem, required correction, acceptable example, owner, and resubmission condition. Keep tone direct and constructive. Do not rewrite testimonial language into a claim the creator did not make or conceal sponsorship.
+
+Persist only the evidence-bound change summary with `creator_ref`, `reviewer_ref`, `brief_ref`, and opaque asset/evidence refs. Render the greeting, creator/reviewer display names, reply path, and complete creator-facing message only transiently. A request to review, save, approve, or generate feedback is not permission to send it. Any email/DM delivery must hand the final transient render to [outreach-manager](../outreach-manager/SKILL.md) and pass its exact single-touch send gate: exact `recipient_ref`, channel, final message, and (when scheduled) one concrete ISO-8601 `dispatch_at` plus timezone must be independently approved, then the live suppression and eligibility checks must run immediately before the provider call. A change to recipient, channel, message, or schedule invalidates that approval.
 
 ## §2 STAR Worked Examples
 
@@ -116,7 +120,7 @@ Use creator-facing decisions as translations only: SHIP → Approved, FIX → Re
 
 ## Persistence
 
-Ask before writing. On approval, validate the complete v3 draft with `validate-audit-artifact.py` against the intended `memory/audits/influencer/YYYY-MM-DD-<topic>.md` relative path, persist only through one full-content Write, and revalidate the target per the auditor runbook. Edit/shell/MCP mutations of the reserved sink are unsupported. Do not autonomously modify claims, contracts, registry records, candidates, or hot cache.
+Ask before writing. Before validation, replace every creator/reviewer/brief name, handle, email, profile/content URL, raw brief URL, recipient locator, and creator-facing message with `creator_ref`, `reviewer_ref`, `brief_ref`, or the required opaque asset/evidence reference. On approval, validate the complete v3 draft with `validate-audit-artifact.py` against the intended `memory/audits/influencer/YYYY-MM-DD-<topic>.md` relative path, persist only through one full-content Write, and revalidate the target per the auditor runbook. Edit/shell/MCP mutations of the reserved sink are unsupported. Audit persistence does not authorize feedback delivery. Do not autonomously modify claims, contracts, registry records, candidates, or hot cache.
 
 ## Reference Materials
 
@@ -124,6 +128,8 @@ Ask before writing. On approval, validate the complete v3 draft with `validate-a
 - [Auditor runbook](../../../references/auditor-runbook.md)
 - [Scoring semantics](../../../references/scoring-semantics.md)
 - [Humanizer controls](../../../references/humanizer-slop.md)
+- [Review templates](references/review-templates.md) — reference-only durable review fields plus the transient creator-feedback render and send boundary.
+- [Quality review aids](references/quality-review-aids.md) — Appeal-only slop evidence, complete veto coverage, and typed-scorer result boundary.
 
 ## Next Best Skill
 

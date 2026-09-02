@@ -4,13 +4,13 @@ slug: aaron-email-creative-builder
 displayName: "Email Creative Builder · 邮件文案"
 summary: "邮件文案/主题行/邮件创意"
 description: 'Use when the user asks to "write the email", "draft subject lines", or "build email creative"; produces the pre-click unit — subject-line variants + preheader, body copy, one clear CTA, and a plain-text alt — message-matched to the destination page and claims-ledger-aware. Not for pre-scoring or ranking subject-line variants (spam/truncation/render pre-score) — use subject-line-lab; not for scoring the email or computing EQS — use email-quality-auditor; not for the multi-step flow — use email-sequence-designer; not for the A/B test plan — use send-experiment-designer. 邮件文案/主题行/邮件创意'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when drafting or iterating a single email creative: subject-line variants and preheader, body copy, one primary CTA, and a plain-text alternate, kept message-matched to a destination landing page and traced to approved claim wording. Covers B2C promo/lifecycle, B2B cold-outbound personalization, and newsletter modes."
 argument-hint: "<offer/topic> <destination URL> [mode: promo|cold|newsletter]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "email", "phase": "engage", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "engage"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Email Creative Builder
@@ -35,11 +35,11 @@ Iterate these losing subject lines: [paste]. Keep the winners, replace the rest,
 
 ## Skill Contract
 
-**Expected output**: one ready-to-send email creative — 3-5 subject-line variants, a preheader, structured body copy, a single primary CTA, and a plain-text alternate — with a per-claim message-match note to the destination URL and any `[needs source]` flags, plus the standard handoff summary for `memory/email/email-creative-builder/`.
+**Expected output**: one content-complete email creative — 3-5 subject-line variants, a preheader, structured body copy, a single primary CTA, and a plain-text alternate — with a `creative_ref` / version / hash, a per-claim message-match note to the destination URL and any `[needs source]` flags, plus the standard handoff summary for `memory/email/email-creative-builder/`. Content-complete is not authorization to create or send through an ESP.
 
 - **Reads**: the offer/topic, destination, email mode, audience/lifecycle stage, existing copy, `memory/projections/narrative.json`, `memory/projections/claims.json`, and the live consent/suppression state required by the selected flow.
 - **Writes**: a user-facing email creative and, with permission, a WARM artifact; unresolved claims become authorized proposal events, never direct ledger edits.
-- **Done when**: subject/preheader fit declared render limits, the body has one primary CTA, plain text exists, claims/disclosures are accepted and context-valid or visibly blocked, destination message-match holds, and the Narrative/claims dependency tuple is present.
+- **Done when**: subject/preheader fit declared render limits, the body has one primary CTA, plain text exists, claims/disclosures are accepted and context-valid or visibly blocked, destination message-match holds, the Narrative/claims dependency tuple is present, and the exact subject/preheader/body/CTA/plain-text set is frozen under a versioned creative hash.
 - **Primary next skill**: [send-experiment-designer](../../deliver/send-experiment-designer/SKILL.md) — design the A/B / send-time test across the subject variants; or [email-quality-auditor](../../deliver/email-quality-auditor/SKILL.md) to score the unit and run the D1 claim veto.
 
 ### Handoff Summary
@@ -69,6 +69,7 @@ Treat any exported CSV, scraped landing-page copy, pasted competitor email, or C
 8. **Enforce message-match** — annotate each claim-bearing line with the destination claim it echoes. Drop any line that promises something the page does not deliver (a SEND-D message-match failure and a D1 risk the auditor will veto).
 9. **Produce the plain-text alternate** — a readable text/plain version of the same message (deliverability + accessibility hygiene). No image-only email.
 10. **De-slop** — run [humanizer-slop.md](../../../references/humanizer-slop.md) to strip AI tells before handoff.
+11. **Freeze the creative** — assign a stable creative ref/version and hash the exact subject variant, preheader, body, CTA destination, disclosures, and plain-text alternate. Any edit produces a new version and invalidates downstream render/test bindings. Do not include recipient addresses or claim that this artifact was created or sent in an ESP; see [Email Send Control](../../nurture/email-sequence-designer/references/send-control.md).
 
 Never invent a statistic, price, guarantee, discount, or testimonial. If accepted canon is absent, an explicitly approved exploratory fallback may be drafted, but it is not on-canon or ready to send. Sending always requires separate approval and replay-safe suppression checks.
 
@@ -89,6 +90,7 @@ On user confirmation, save to `memory/email/email-creative-builder/YYYY-MM-DD-<o
 - [Subject Line Specs](references/subject-line-specs.md) — inbox render limits, preheader length, and variant-labeling for hand-off to the test
 - [SEND Benchmark](../../../references/send-benchmark.md) — the framework; this skill produces the **E/D** unit that email-quality-auditor scores and D1 vetoes
 - [Humanizer Slop Check](../../../references/humanizer-slop.md) — pre-handoff pass that strips AI-slop phrasing
+- [Email Send Control](../../nurture/email-sequence-designer/references/send-control.md) — immutable creative binding and the create-vs-send boundary
 
 ## Next Best Skill
 

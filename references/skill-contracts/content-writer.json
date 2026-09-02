@@ -11,7 +11,7 @@
           "end_char": 155,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 216,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 157
         },
@@ -38,22 +38,22 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 337,
+          "end_char": 400,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 218
         },
-        "text": "both modes report `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`."
+        "text": "both modes report `page_ref`, `content_version`, `content_sha256`, `change_ref`, `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`."
       }
     ],
-    "done_when": "(new) the draft satisfies target intent with natural keyword use, H1/H2 structure, meta description, one snippet-targetable block, and evidence-safe claims; (refresh) decay drivers and concrete updates are documented; both modes report `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`.",
+    "done_when": "(new) the draft satisfies target intent with natural keyword use, H1/H2 structure, meta description, one snippet-targetable block, and evidence-safe claims; (refresh) decay drivers and concrete updates are documented; both modes report `page_ref`, `content_version`, `content_sha256`, `change_ref`, `narrative_canon_id`, `narrative_canon_version`, `claims_projection_offset`, and `dependency_status`.",
     "extraction_status": "classified",
     "source": {
       "path": "seo-geo/implement/content-writer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6"
+      "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 47
       },
       {
@@ -77,21 +77,28 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
-        "source_line": 111
+        "source_line": 112
       },
       {
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
         "source_line": 84
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 43
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/evidence-and-cycle-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "05461e0f16aa0a52f7897f8fc51d3a7907f85f8ae73a21500972a67419fe22f3",
+        "source_line": 111
       },
       {
         "path": "seo-geo/implement/content-writer/references/content-decay-signals.md",
@@ -163,6 +170,11 @@
     ]
   },
   "contract_id": "skill:content-writer",
+  "control_requirements": [
+    "action-intent",
+    "action-receipt",
+    "artifact-binding"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -175,7 +187,7 @@
           "end_char": 168,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -193,7 +205,7 @@
           "end_char": 322,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 169
         },
@@ -211,7 +223,7 @@
           "end_char": 686,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 324
         },
@@ -227,7 +239,7 @@
           "end_char": 715,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 688
         },
@@ -243,7 +255,7 @@
           "end_char": 751,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 717
         },
@@ -256,7 +268,7 @@
     "summary_ref": {
       "path": "seo-geo/implement/content-writer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6"
+      "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -270,8 +282,8 @@
     "name": "content-writer",
     "path": "seo-geo/implement/content-writer/SKILL.md",
     "phase": "implement",
-    "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
-    "version": "20.0.0"
+    "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "[--mode new|refresh] <topic/keyword or URL of existing content>",
@@ -285,7 +297,7 @@
           "end_char": 135,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -297,22 +309,22 @@
         "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 275,
+          "end_char": 332,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 137
         },
-        "text": "those same truth projections plus candidate URL/content, traffic/ranking history, publish/update dates, and competitor examples (refresh)."
+        "text": "those same truth projections plus stable page ref, prior content version/hash, change ref, candidate URL/content, traffic/ranking history, publish/update dates, and competitor examples (refresh)."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "the brief, target keywords, page intent, entity inputs, `memory/projections/narrative.json`, and `memory/projections/claims.json` (new); those same truth projections plus candidate URL/content, traffic/ranking history, publish/update dates, and competitor examples (refresh).",
+    "reads": "the brief, target keywords, page intent, entity inputs, `memory/projections/narrative.json`, and `memory/projections/claims.json` (new); those same truth projections plus stable page ref, prior content version/hash, change ref, candidate URL/content, traffic/ranking history, publish/update dates, and competitor examples (refresh).",
     "source": {
       "path": "seo-geo/implement/content-writer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6"
+      "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80"
     }
   },
   "output_contract": {
@@ -327,7 +339,7 @@
           "end_char": 111,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -343,7 +355,7 @@
           "end_char": 224,
           "path": "seo-geo/implement/content-writer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6",
+          "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80",
           "span_basis": "field-text",
           "start_char": 113
         },
@@ -354,23 +366,27 @@
     "source": {
       "path": "seo-geo/implement/content-writer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6"
+      "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80"
     },
     "summary": "mode `new` → a ready-to-use draft; mode `refresh` → a scored decay diagnosis plus a prioritized update plan (and optional refreshed copy). Both emit the standard handoff summary for `memory/content/`.",
     "summary_source": "expected-output",
     "writes": "a user-facing content deliverable and, with permission, a dated artifact under `memory/content/content-writer/`; unresolved durable claims are submitted through `registry-events.py` as authorized `operation: propose` events."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -379,7 +395,7 @@
     "source": {
       "path": "seo-geo/implement/content-writer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "5f94a55fe34c3cad4a3c5689d6503913c8c5f4b70e944679cdb54842860e03a6"
+      "sha256": "cf0138f710988b2cb698d3be52ee92119f69222710dc7753a843ecfb9b463f80"
     },
     "trigger_phrases": [
       "draft a blog post / landing page",

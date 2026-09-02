@@ -649,18 +649,24 @@ else:
             "skills": rows,
         }
 
-    def make_committed_registry_identity(self, base):
+    def make_committed_registry_identity(self, base, *, use_worktree=False):
         destination = base / "committed-registry-identity"
         plugin_path = destination / ".claude-plugin/plugin.json"
         catalog_path = destination / "references/system-catalog.json"
         plugin_path.parent.mkdir(parents=True)
         catalog_path.parent.mkdir(parents=True)
+
+        def source(relative):
+            if use_worktree:
+                return (ROOT / relative).read_text(encoding="utf-8")
+            return self.git(ROOT, "show", "HEAD:%s" % relative).stdout
+
         plugin_path.write_text(
-            self.git(ROOT, "show", "HEAD:.claude-plugin/plugin.json").stdout,
+            source(".claude-plugin/plugin.json"),
             encoding="utf-8",
         )
         catalog_path.write_text(
-            self.git(ROOT, "show", "HEAD:references/system-catalog.json").stdout,
+            source("references/system-catalog.json"),
             encoding="utf-8",
         )
         plugin = json.loads(plugin_path.read_text(encoding="utf-8"))
@@ -669,7 +675,7 @@ else:
             skill_path = destination / relative / "SKILL.md"
             skill_path.parent.mkdir(parents=True)
             skill_path.write_text(
-                self.git(ROOT, "show", "HEAD:%s/SKILL.md" % relative).stdout,
+                source("%s/SKILL.md" % relative),
                 encoding="utf-8",
             )
         return destination
@@ -1097,10 +1103,11 @@ print("fixture footer **T1** **S1**")
             status_snapshot = base / "registry-status.json"
             status_snapshot.write_text(json.dumps(self.canonical_registry_snapshot(
                 clawhub_behind="narrative-quality-auditor",
+                use_worktree=True,
             )) + "\n", encoding="utf-8")
             environment, mutation_log = self.fake_release_environment(base / "fake")
             environment["FAKE_GIT_SHOW_ROOT"] = str(
-                self.make_committed_registry_identity(base)
+                self.make_committed_registry_identity(base, use_worktree=True)
             )
             # Parent sees A for its two-read gate; the independently gated
             # child sees B and must reject it against the inherited A tuple.

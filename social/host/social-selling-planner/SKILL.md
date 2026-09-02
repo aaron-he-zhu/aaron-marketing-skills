@@ -4,13 +4,13 @@ slug: aaron-social-selling-planner
 displayName: "Social Selling Planner · 社交销售运营块"
 summary: "创始人社交销售日常运营块/热身触达节奏/触发信号剧本/SSI输入诊断"
 description: 'Use when the user asks to "set up my founder social-selling routine", "build a daily engagement block for target accounts", or "turn funding / hiring signals into selling plays"; produces the founder/seller daily operating block — a time-boxed engagement-block spec (substantive value-add comments on target-account posts, never a pitch), warm-touch-before-ask cadence rules, trigger-response plays consuming the social-pulse-monitor B2B trigger watchlist (funding / hiring / launch signals), and a quarterly diagnostic that reads LinkedIn SSI as an input diagnostic only (Estimated, vendor-defined — never a target metric). All volume norms are Estimated/community-derived; all execution is human — zero mass-DM, zero connection-request automation, zero engagement automation (LinkedIn UA §8.2 red line); 1:1 pitch and DM mechanics route to outreach-manager. Not for cold email sequences — use cold-outbound-sequencer. 社交销售/创始人日常互动块/热身触达节奏/触发信号剧本'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when a founder or seller needs the daily social-selling operating block for a B2B founder-led motion: which target-account posts to comment on today and to what quality bar, how many warm touches must precede any ask, what to do the day a watchlist signal fires (funding round, hiring wave, product launch), or the quarterly diagnostic that reads LinkedIn SSI as an input only — never a target. Not the 1:1 pitch/DM mechanics (outreach-manager) and not cold email sequences (cold-outbound-sequencer)."
 argument-hint: "<target-account list or fired trigger signal> [platform] [--quarterly-diagnostic]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Social Selling Planner

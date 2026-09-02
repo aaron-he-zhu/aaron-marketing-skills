@@ -48,26 +48,26 @@ All repository measurements below are UTF-8 bytes, not estimated tokens. Provide
 | Surface | Before | After | Change |
 |---|---:|---:|---:|
 | Root `CLAUDE.md` | 30,776 B | 14,407 B | −53.2% |
-| Required bundle-reference declarations | 126 | 61 | −51.6% |
-| Skills with required bundle references | 63 | 18 | −71.4% |
-| Aggregate required-reference bytes across 120 Skills | 2,809,014 B | 817,601 B | −70.9% |
+| Required bundle-reference declarations | 126 | 63 | −50.0% |
+| Skills with required bundle references | 63 | 19 | −69.8% |
+| Aggregate required-reference bytes across 120 Skills | 2,809,014 B | 841,939 B | −70.0% |
 | Accidental required `CONNECTORS.md` references | 30 | 0 | −100% |
 | Worst valid `/auto` static assembly | 83,385 B | 48,199 B | −42.2% |
-| Model-visible explicit aggregate: Skill + shared contract, all 120 | 3,466,307 B | 1,480,939 B with capsule + kernel | −57.3% |
-| Model-visible explicit median | 29,358 B | 12,331.5 B (~12,332 B) with capsule + kernel | −58.0% |
-| All-selected fixed representation aggregate: Skill + controller-only machine contract + shared contract, all 120 | 5,451,854 B | 1,480,939 B with capsule + kernel | −72.8% |
-| All-selected fixed representation median | 47,494 B | 12,331.5 B (~12,332 B) with capsule + kernel | −74.0% |
+| Model-visible explicit aggregate: Skill + shared contract, all 120 | 3,266,976 B | 1,564,310 B with capsule + kernel | −52.1% |
+| Model-visible explicit median | 27,506.5 B | 12,553 B (~12,553 B) with capsule + kernel | −54.4% |
+| All-selected fixed representation aggregate: Skill + controller-only machine contract + shared contract, all 120 | 5,409,421 B | 1,564,310 B with capsule + kernel | −71.1% |
+| All-selected fixed representation median | 46,308 B | 12,553 B (~12,553 B) with capsule + kernel | −72.9% |
 
-The first two capsule rows are the primary deterministic **model-visible representation** comparison: explicit `Skill + shared contract` bytes versus lean `capsule + kernel` bytes. They are not token or cost measurements, and lean remains unavailable for deployment. The final two rows measure **consumer reclassification** from the former all-selected fixed representation: the machine contract is now controller-only, so the larger 72.8%/74.0% deltas are architectural projection reductions, not model-context savings. Neither comparison is a deployed quality claim; compact prompt profiles remain unavailable until paired evaluation evidence is promoted through a trusted release-attestation path.
+The first two capsule rows are the primary deterministic **model-visible representation** comparison: explicit `Skill + shared contract` bytes versus lean `capsule + kernel` bytes. They are not token or cost measurements, and lean remains unavailable for deployment. The final two rows measure **consumer reclassification** from the former all-selected fixed representation: the machine contract is now controller-only, so the larger 71.1%/72.9% deltas are architectural projection reductions, not model-context savings. Neither comparison is a deployed quality claim; compact prompt profiles remain unavailable until paired evaluation evidence is promoted through a trusted release-attestation path.
 
 The stabilized real-manifest baseline (120 Skills × direct/auto routes) is:
 
 | Metric | Direct | `/auto` |
 |---|---:|---:|
-| Required bytes p50 | 48,512 B | 52,985 B |
-| Required bytes p95 | 78,142 B | 81,713 B |
-| Required bytes max | 152,126 B | 174,235 B |
-| Selected bytes p50 | 137,300 B | 140,912 B |
+| Required bytes p50 | 47,717 B | 52,298 B |
+| Required bytes p95 | 78,749 B | 82,142 B |
+| Required bytes max | 152,131 B | 174,240 B |
+| Selected bytes p50 | 145,684 B | 149,618 B |
 
 `selected_bytes` is resolver capacity accounting, not automatically model-visible context. `scripts/context-assembly.py` is the boundary that records which selected resources are controller bodies, model bodies, tool bodies, metadata-only, or deferred.
 
@@ -291,7 +291,7 @@ enable a non-empty compact binding. The production resolver therefore remains
 reject-all for non-empty bindings; current simulation results do not certify
 deployment.
 
-Provider usage is not required to compare behavior. Complete provider-reported usage is necessary but not sufficient for a token-savings claim: protocol v3 keeps `token_savings_claims_permitted` false until it defines a positive paired candidate-below-control input-token gate and uncertainty treatment. Cost-savings claims are unsupported. No compact binding is pre-populated: all 700 current cases are simulated, the bundled adapter reports both `model_revision: null` and `judge_model_revision: null`, and `certified_bindings` is empty. Evaluation-only assemblies are allowed for experiments but are explicitly non-deployable; `explicit` remains the deployment default.
+Provider usage is not required to compare behavior. Complete provider-reported usage is necessary but not sufficient for a token-savings claim: protocol v3 keeps `token_savings_claims_permitted` false until it defines a positive paired candidate-below-control input-token gate and uncertainty treatment. Cost-savings claims are unsupported. No compact binding is pre-populated: all 734 current cases are simulated, the bundled adapter reports both `model_revision: null` and `judge_model_revision: null`, and `certified_bindings` is empty. Evaluation-only assemblies are allowed for experiments but are explicitly non-deployable; `explicit` remains the deployment default.
 
 ## Evaluation and Telemetry
 
@@ -357,7 +357,7 @@ When changing context behavior:
 
 ## Known Boundaries
 
-- Compact prompt profiles are implemented for evaluation, but the repository has 700 simulated cases, null adapter SUT/judge revisions, zero certified bindings, and therefore no deployable compact profile.
+- Compact prompt profiles are implemented for evaluation, but the repository has 734 simulated cases, null adapter SUT/judge revisions, zero certified bindings, and therefore no deployable compact profile.
 - Provider usage is nullable. Deterministic bytes remain available; protocol v3 permits no token-savings claim until complete paired provider input-token evidence, a positive reduction gate, and uncertainty treatment are implemented. Cost-savings claims are unsupported.
 - A repository-side `standalone-skill` planner profile verifies branch semantics; the actual one-folder standalone payload does not claim the planner/resolver runtime.
 - Filesystem isolation fixes the test environment. It does not relax the production single-link, non-symlink, stable-read safety boundary.

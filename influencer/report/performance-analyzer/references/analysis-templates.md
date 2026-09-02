@@ -40,6 +40,8 @@ Repo-root links from this file use `../../../`.
 
 ### Summary Metrics
 
+`Conversions` and `Revenue` below must reference the reconciled counted total from Step 7 under one deduplicated attribution model; until Step 7 passes, both are `Unknown/NEEDS_INPUT`. State whether reach is platform-reported (potentially overlapping) or deduplicated person-level reach. Recompute aggregate ER, CVR, CPA, and other rates from compatible summed numerators/denominators—never sum or simple-average row rates.
+
 | Metric | Result | Target | vs. Target | vs. Benchmark |
 |--------|--------|--------|------------|---------------|
 | Total Reach | [X] | [X] | [+/-X%] | [+/-X%] |
@@ -52,9 +54,11 @@ Repo-root links from this file use `../../../`.
 | Conversions | [X] | [X] | [+/-X%] | [+/-X%] |
 | Revenue | $[X] | $[X] | [+/-X%] | N/A |
 
-### Performance Score: [X/10]
+### Comparison Status
 
-**Assessment**: [Excellent/Good/Average/Below Average/Poor]
+**Status**: [ABOVE_TARGET / AT_TARGET / BELOW_TARGET / MIXED / UNKNOWN / NOT_COMPARABLE]
+
+Derive this only from the declared metric/target rule and compatible rows above. If a target, source date, window, attribution basis, or better-direction rule is missing, use `UNKNOWN` or `NOT_COMPARABLE`. Do not invent an aggregate `/10` score or adjective verdict.
 
 ### Key Highlights
 
@@ -85,12 +89,13 @@ Repo-root links from this file use `../../../`.
 
 ### Platform Insights
 
-**Best Performing Platform**: [Platform]
-- Why: [analysis]
-- Key content: [what worked]
+**Observed highest platform under the declared comparable metric**: [Platform / NOT_RANKED]
+- Evidence: [metric, window, attribution basis, source_ref]
+- Possible explanation: [explicit hypothesis or `not tested`]
 
-**Underperforming Platform**: [Platform]
-- Why: [analysis]
+**Observed lowest platform under the declared comparable metric**: [Platform / NOT_RANKED]
+- Evidence: [metric, window, attribution basis, source_ref]
+- Possible explanation: [explicit hypothesis or `not tested`]
 - Improvement opportunity: [suggestion]
 
 ### Platform-Specific Metrics
@@ -124,19 +129,19 @@ Repo-root links from this file use `../../../`.
 ```markdown
 ## Influencer Performance
 
-### Influencer Ranking
+### Creator Comparison
 
-| Rank | Influencer | Reach | ER | Conversions | ROI | Score |
-|------|------------|-------|-------|-------------|-----|-------|
-| 1 | @[handle] | [X] | [%] | [X] | [X]:1 | ⭐⭐⭐⭐⭐ |
-| 2 | @[handle] | [X] | [%] | [X] | [X]:1 | ⭐⭐⭐⭐ |
-| 3 | @[handle] | [X] | [%] | [X] | [X]:1 | ⭐⭐⭐⭐ |
-| 4 | @[handle] | [X] | [%] | [X] | [X]:1 | ⭐⭐⭐ |
-| 5 | @[handle] | [X] | [%] | [X] | [X]:1 | ⭐⭐ |
+**Declared ranking metric/rule**: [metric, better direction, window, attribution basis, complete creator scope, decision/significance rule or missing]
 
-### Top Performers Deep Dive
+| Rank/status | Creator ref | Reach | ER | Conversions | ROAS artifact value/ref | Comparability |
+|-------------|-------------|-------|----|-------------|-------------------------|---------------|
+| [1 / NOT_RANKED] | creator-<UUIDv4> | [X] | [%] | [X] | [X]:1 / [roi_ref] | [comparable/gap] |
+| [2 / NOT_RANKED] | creator-<UUIDv4> | [X] | [%] | [X] | [X]:1 / [roi_ref] | [comparable/gap] |
+| [3 / NOT_RANKED] | creator-<UUIDv4> | [X] | [%] | [X] | [X]:1 / [roi_ref] | [comparable/gap] |
 
-#### #1: @[handle]
+### Highest Observed Comparable Row
+
+#### [creator_ref / NOT_RANKED]
 
 | Metric | Result | vs. Campaign Avg |
 |--------|--------|------------------|
@@ -147,10 +152,12 @@ Repo-root links from this file use `../../../`.
 | Conversion Rate | [%] | [+/-X%] |
 | Cost per Conversion | $[X] | [+/-X%] |
 
-**Why They Performed Well**:
-- [Reason 1]
-- [Reason 2]
-- [Reason 3]
+**Observed differences**:
+- [dated metric difference + evidence ref]
+- [dated metric difference + evidence ref]
+
+**Causal explanation**: [supported by supplied experimental/quasi-experimental evidence, or `not established`]
+**Hypothesis for next test**: [one falsifiable hypothesis or none]
 
 **Content Analysis**:
 - Format: [what they posted]
@@ -158,14 +165,15 @@ Repo-root links from this file use `../../../`.
 - Message: [how they communicated]
 - CTA: [what they asked viewers to do]
 
-**Recommendation**: [Renew/Expand/Ambassador potential]
+**Retro decision**: [renew/retest/retire/unknown under the preregistered rule; default unknown]
 
-### Underperformers Analysis
+### Lower Observed Comparable Row
 
-#### @[handle]
+#### [creator_ref / NOT_RANKED]
 
 **Results**: [summary]
-**Why Underperformed**: [analysis]
+**Observed difference**: [dated metric + evidence ref]
+**Causal explanation**: [supported evidence or `not established`]
 **Learning**: [what to do differently]
 ```
 
@@ -178,21 +186,21 @@ Repo-root links from this file use `../../../`.
 
 ### Top Performing Content
 
-| Rank | Creator | Platform | Format | Reach | ER | Key Feature |
-|------|---------|----------|--------|-------|-------|-------------|
-| 1 | @[handle] | [platform] | [format] | [X] | [%] | [why it worked] |
-| 2 | @[handle] | [platform] | [format] | [X] | [%] | [why it worked] |
-| 3 | @[handle] | [platform] | [format] | [X] | [%] | [why it worked] |
+| Rank/status | Creator ref | Platform | Format | Reach | ER | Observed feature |
+|-------------|-------------|----------|--------|-------|----|------------------|
+| [1/NOT_RANKED] | creator-<UUIDv4> | [platform] | [format] | [X] | [%] | [visible feature + source_ref] |
+| [2/NOT_RANKED] | creator-<UUIDv4> | [platform] | [format] | [X] | [%] | [visible feature + source_ref] |
+| [3/NOT_RANKED] | creator-<UUIDv4> | [platform] | [format] | [X] | [%] | [visible feature + source_ref] |
 
 ### Content Format Analysis
 
 | Format | Pieces | Avg Reach | Avg ER | Best Performer |
 |--------|--------|-----------|--------|----------------|
-| Video (Reels/TikTok) | [#] | [X] | [%] | @[handle] |
-| Static Images | [#] | [X] | [%] | @[handle] |
-| Carousels | [#] | [X] | [%] | @[handle] |
-| Stories | [#] | [X] | [%] | @[handle] |
-| YouTube Videos | [#] | [X] | [%] | @[handle] |
+| Video (Reels/TikTok) | [#] | [X] | [%] | [creator_ref] |
+| Static Images | [#] | [X] | [%] | [creator_ref] |
+| Carousels | [#] | [X] | [%] | [creator_ref] |
+| Stories | [#] | [X] | [%] | [creator_ref] |
+| YouTube Videos | [#] | [X] | [%] | [creator_ref] |
 
 ### Content Theme Analysis
 
@@ -204,15 +212,15 @@ Repo-root links from this file use `../../../`.
 | Review | [#] | [%] | [%] | [notes] |
 | Unboxing | [#] | [%] | [%] | [notes] |
 
-### Winning Content Patterns
+### Observed Content Associations
 
-**Hook Patterns That Worked**:
-- [Pattern 1]: [examples]
-- [Pattern 2]: [examples]
+**Hook patterns associated with the observed result**:
+- [Pattern 1]: [examples + comparable metric/evidence]
+- [Pattern 2]: [examples + comparable metric/evidence]
 
-**Messaging That Resonated**:
-- [Message type 1]: [why it worked]
-- [Message type 2]: [why it worked]
+**Messaging associations**:
+- [Message type 1]: [observed result; causality not established / supplied causal evidence]
+- [Message type 2]: [observed result; causality not established / supplied causal evidence]
 
 **Visual Elements That Performed**:
 - [Element 1]
@@ -228,15 +236,17 @@ Repo-root links from this file use `../../../`.
 
 ### Engagement Breakdown
 
-| Type | Volume | % of Total | Quality Assessment |
-|------|--------|------------|-------------------|
-| Likes | [X] | [%] | Passive |
-| Comments | [X] | [%] | [quality] |
-| Saves | [X] | [%] | High intent |
-| Shares | [X] | [%] | High value |
-| Link clicks | [X] | [%] | Direct action |
+| Type | Volume | % of declared sample | Quality state | Rubric/evidence ref |
+|------|--------|----------------------|---------------|---------------------|
+| Likes | [X] | [%] | [typed state or Unknown] | [ref] |
+| Comments | [X] | [%] | [typed state or Unknown] | [ref] |
+| Saves | [X] | [%] | [typed state or Unknown] | [ref] |
+| Shares | [X] | [%] | [typed state or Unknown] | [ref] |
+| Link clicks | [X] | [%] | [typed state or Unknown] | [ref] |
 
 ### Comment Sentiment Analysis
+
+**Sampling/coding contract**: [platform/content scope, start/end, sampled and eligible counts, sampling method, coding rubric/model/version, denominator, source/evidence refs]. Without this contract, sentiment percentages and intent labels are `Unknown/NOT_SCORED`.
 
 | Sentiment | % | Examples |
 |-----------|---|----------|
@@ -259,7 +269,12 @@ Repo-root links from this file use `../../../`.
 | "Just ordered" | [#] | |
 | Tagged friends | [#] | |
 
-### Engagement Quality Score: [X/10]
+### Engagement Quality Read
+
+**Status**: [SUPPORTED / MIXED / UNKNOWN / NOT_SCORED]
+**Rubric/calculation ref**: [supplied rubric + inputs + formula, or none]
+
+Do not emit a `/10` score unless the user supplies the rubric, required inputs, and calculation. Missing comment/source evidence is `UNKNOWN`/`NOT_SCORED`, not an estimated score.
 ```
 
 ---
@@ -272,45 +287,56 @@ Repo-root links from this file use `../../../`.
 ### Conversion Funnel
 
 ```
-Reach        [XXXXXXXXXX] 1,000,000  (100%)
+Reach        [bar from supplied data] [reach]        ([share])
                   ↓
-Engagements  [XXXXXXX   ]   150,000  (15%)
+Engagements  [bar from supplied data] [engagements]  ([rate])
                   ↓
-Link Clicks  [XXX       ]    25,000  (2.5%)
+Link Clicks  [bar from supplied data] [clicks]       ([rate])
                   ↓
-Site Visits  [XX        ]    20,000  (2%)
+Site Visits  [bar from supplied data] [visits]       ([rate])
                   ↓
-Add to Cart  [X         ]     5,000  (0.5%)
+Add to Cart  [bar from supplied data] [adds]         ([rate])
                   ↓
-Purchases    [X         ]     2,000  (0.2%)
+Purchases    [bar from supplied data] [purchases]    ([rate])
 ```
+
+Use `Unknown` for any stage not supplied or observed. Do not infer missing counts from the shape of the illustrative bars.
 
 ### Conversion Metrics
 
-| Metric | Result | Benchmark | Status |
-|--------|--------|-----------|--------|
-| Click-through Rate | [%] | [%] | ✅/❌ |
-| Landing Page CVR | [%] | [%] | ✅/❌ |
-| Overall CVR | [%] | [%] | ✅/❌ |
-| Cost per Click | $[X] | $[X] | ✅/❌ |
-| Cost per Conversion | $[X] | $[X] | ✅/❌ |
+| Metric | Result | Benchmark + source/date | Status |
+|--------|--------|-------------------------|--------|
+| Click-through Rate | [%] | [%] ([source/date]) | [above/below/equal/pending] |
+| Landing Page CVR | [%] | [%] ([source/date]) | [above/below/equal/pending] |
+| Overall CVR | [%] | [%] ([source/date]) | [above/below/equal/pending] |
+| Cost per Click | $[X] | $[X] ([source/date]) | [above/below/equal/pending] |
+| Cost per Conversion | $[X] | $[X] ([source/date]) | [above/below/equal/pending] |
 
-### Attribution by Method
+### Deduplicated Attribution
 
-| Method | Conversions | Revenue | % of Total |
-|--------|-------------|---------|------------|
-| Promo codes | [X] | $[X] | [%] |
-| UTM tracking | [X] | $[X] | [%] |
-| Direct attribution | [X] | $[X] | [%] |
-| Estimated influence | [X] | $[X] | [%] |
+**Declared model/window**: [model + dates]
+**Deduplication key/rule**: [order/event/customer key + precedence rule]
+
+| Mutually exclusive counted bucket | Conversions | Attributed revenue | % of counted total | Evidence refs |
+|-------------------------------------|-------------|--------------------|--------------------|---------------|
+| Promo-only after reconciliation | [X] | $[X] | [%] | [refs] |
+| UTM-only after reconciliation | [X] | $[X] | [%] | [refs] |
+| Other direct bucket under model | [X] | $[X] | [%] | [refs] |
+
+| Non-additive evidence | Value | Status |
+|-----------------------|-------|--------|
+| Overlapping promo + UTM/direct observations | [X] | [reconciled/unresolved] |
+| Estimated influence | [X] | Estimated; excluded from counted total and percentages |
+
+The mutually exclusive counted buckets must sum exactly to the declared counted total. Never add overlapping promo, UTM, and direct observations; unresolved overlaps return `NEEDS_INPUT` for the attribution total.
 
 ### Promo Code Performance
 
-| Code | Influencer | Uses | Revenue | AOV |
-|------|------------|------|---------|-----|
-| [CODE1] | @[handle] | [X] | $[X] | $[X] |
-| [CODE2] | @[handle] | [X] | $[X] | $[X] |
-| [CODE3] | @[handle] | [X] | $[X] | $[X] |
+| Code ref | Creator ref | Uses | Attributed revenue | AOV |
+|----------|-------------|------|--------------------|-----|
+| [opaque code_ref] | [creator_ref] | [X] | $[X] | $[X] |
+| [opaque code_ref] | [creator_ref] | [X] | $[X] | $[X] |
+| [opaque code_ref] | [creator_ref] | [X] | $[X] | $[X] |
 ```
 
 ---
@@ -334,36 +360,35 @@ Purchases    [X         ]     2,000  (0.2%)
 
 [Continue for top 5]
 
-### What Worked
+### Observed Higher Results
 
 | Element | Performance | Recommendation |
 |---------|-------------|----------------|
-| [Element 1] | [metric] | Do more of this |
-| [Element 2] | [metric] | Expand this approach |
+| [Element 1] | [comparable metric + evidence] | [bounded retest or rule-backed action] |
+| [Element 2] | [comparable metric + evidence] | [bounded retest or rule-backed action] |
 
-### What Didn't Work
+### Observed Lower Results
 
 | Element | Performance | Recommendation |
 |---------|-------------|----------------|
-| [Element 1] | [metric] | Adjust or eliminate |
-| [Element 2] | [metric] | Test alternatives |
+| [Element 1] | [comparable metric + evidence] | [bounded retest or stop-rule action] |
+| [Element 2] | [comparable metric + evidence] | [bounded retest or stop-rule action] |
 
 ### Optimization Opportunities
 
-| Opportunity | Expected Impact | Effort | Priority |
-|-------------|-----------------|--------|----------|
-| [Opportunity 1] | [impact] | [effort] | High |
-| [Opportunity 2] | [impact] | [effort] | Medium |
-| [Opportunity 3] | [impact] | [effort] | Low |
+| Opportunity | Impact hypothesis | Evidence/model ref | Effort | Priority rule |
+|-------------|-------------------|--------------------|--------|---------------|
+| [Opportunity 1] | [testable hypothesis] | [ref or Unknown] | [effort] | [declared rule] |
+| [Opportunity 2] | [testable hypothesis] | [ref or Unknown] | [effort] | [declared rule] |
 
 ### Influencer Roster Recommendations
 
-| Influencer | Recommendation | Rationale |
-|------------|----------------|-----------|
-| @[handle1] | Renew/Ambassador | Top performer |
-| @[handle2] | Renew at same level | Solid results |
-| @[handle3] | Don't renew | Below expectations |
-| @[handle4] | Increase investment | High potential |
+| Creator ref | Next-cycle decision | Evidence-backed rationale |
+|-------------|---------------------|---------------------------|
+| [creator_ref] | `renew` | [decision rule cleared + evidence ref] |
+| [creator_ref] | `retest` | [mixed/inconclusive evidence + testable change] |
+| [creator_ref] | `retire` | [declared stop rule or hard constraint + evidence ref] |
+| [creator_ref] | `unknown` | [missing/unaligned evidence] |
 
 ### Future Campaign Recommendations
 
@@ -372,13 +397,30 @@ Purchases    [X         ]     2,000  (0.2%)
 3. **Content Format**: [recommendation]
 4. **Messaging**: [recommendation]
 5. **Budget Allocation**: [recommendation]
+
+### Campaign Retro Card — only with verified current tracker state `measured` or `closed`
+
+Repeat this compact card for each creator decision requested. Do not inherit scope implicitly or trust a bare stage string: cite the current non-forked tracker-state evidence, measurement contract, and decision rule.
+
+- `campaign_id`: [exact campaign ID]
+- `creator_ref`: [exact opaque creator ref]
+- `tracker_state_ref`: [current non-forked state artifact/receipt ref proving measured or closed]
+- `measurement_contract_ref`: [current locked contract ref]
+- `decision_rule_ref`: [precommitted rule ref]
+- `decision`: `renew | retest | retire | unknown`
+- `evidence_backed_rationale`: [decision rule + observed result; cite, do not infer]
+- `evidence_refs`: [[dated source/artifact reference], ...]
+- `next_campaign_hypothesis`: [one falsifiable change to test next, or `none`]
+- `unresolved_limitations`: [[missing source/window/attribution/comparability issue], ...]
 ```
+
+The card is WARM working state, not a STAR/SQS or creator-content-auditor verdict. A missing/mismatched/forked scope or state ref blocks the card; missing comparison/decision evidence forces `unknown`. After the analysis/card is saved with exact authorization, offer a separate handoff to `campaign-planner` to append that artifact reference to the relevant tracker row's `evidence_refs`; do not update the tracker or advance its stage from this skill. An optional next-cycle `fit-scorer` handoff passes only cited evidence and the hypothesis, requires an explicit user choice, and never carries a simulated STAR/SQS verdict.
 
 ---
 
 ## Worked Example (full)
 
-**User**: "Analyze performance of our summer skincare campaign with 10 influencers"
+**User**: "Analyze our summer skincare campaign using this supplied dated export: total reach 2.4M (target 2M) and engagement rate 4.2% (target 3.5%). Attribution artifact `attr-reconciliation-ref-01` covers the complete conversion universe, uses unique `order_id`, the predeclared last-non-direct model/window, and reports a reconciled counted total of 1,847 conversions and $142,500 attributed revenue (targets: 2,000 and $150,000). ROI-calculator artifact `roi-ref-01` reports campaign ROAS 2.8:1 (target 3:1) and creator-ref-01 ROAS 4.2:1 under that same counted universe/cost window. The supplied creator rows say creator-ref-01 has the highest conversion count, creator-ref-02 has the highest ER at 6.8%, and creator-ref-03 has the highest reach per dollar. No matched platform comparison, significance result, complete roster decision rule, or other evidence refs were supplied."
 
 **Output**:
 
@@ -387,27 +429,29 @@ Purchases    [X         ]     2,000  (0.2%)
 
 ## Executive Summary
 
-**Campaign Performance**: Above Average (7.5/10)
+**Campaign Performance**: Mixed against the supplied targets
 
-| Metric | Result | Target | Status |
-|--------|--------|--------|--------|
-| Total Reach | 2.4M | 2M | ✅ +20% |
-| Engagement Rate | 4.2% | 3.5% | ✅ +20% |
-| Conversions | 1,847 | 2,000 | ⚠️ -8% |
-| Revenue | $142,500 | $150,000 | ⚠️ -5% |
-| ROI | 2.8:1 | 3:1 | ⚠️ -7% |
+**Provenance**: reach/engagement results and targets are user-provided from the stated export; conversions/revenue cite `attr-reconciliation-ref-01`; ROAS cites `roi-ref-01`; status deltas are Calculated. This analysis does not promote them to independently verified, causal, or incremental results.
 
-## Top 3 Performers
+| Metric | Result | Target | Status | Evidence ref |
+|--------|--------|--------|--------|--------------|
+| Total Reach | 2.4M | 2M | ✅ +20% | supplied export |
+| Engagement Rate | 4.2% | 3.5% | ✅ +20% | supplied export |
+| Conversions | 1,847 | 2,000 | ⚠️ -7.7% | attr-reconciliation-ref-01 |
+| Revenue | $142,500 | $150,000 | ⚠️ -5% | attr-reconciliation-ref-01 |
+| ROAS | 2.8:1 | 3:1 | ⚠️ -6.7% | roi-ref-01 |
 
-1. **@skincaresarah** - ROI 4.2:1, highest conversions
-2. **@glowwithgrace** - Best engagement (6.8%)
-3. **@beautyreview** - Highest reach per dollar
+## Supplied Creator Highlights
+
+1. **creator-ref-01** — ROAS 4.2:1 from `roi-ref-01`; supplied highest conversion count under `attr-reconciliation-ref-01`
+2. **creator-ref-02** — supplied highest engagement rate, 6.8%
+3. **creator-ref-03** — supplied highest reach per dollar
 
 ## Key Learning
 
-TikTok outperformed Instagram significantly (3.5:1 ROI vs 2.1:1). Recommend shifting 20% of Instagram budget to TikTok for future campaigns.
+**Platform comparison**: `NEEDS_INPUT` — no matched TikTok/Instagram result, comparable attribution basis, or significance test was supplied. A possible platform-mix explanation may be recorded only as a hypothesis for a future test, not as an observed cause.
 
 ## Recommendation
 
-Renew partnerships with top 5 performers. Replace bottom 2 with TikTok-native creators.
+Do not renew, replace, or reallocate from this input alone. Request the full creator/platform breakdown, comparable windows and attribution definitions, evidence refs, and the precommitted decision rule; until then, the creator decision is `unknown` and any next-cycle change is an explicitly labeled hypothesis.
 ```

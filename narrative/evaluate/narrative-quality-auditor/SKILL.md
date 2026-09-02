@@ -4,14 +4,14 @@ slug: aaron-narrative-quality-auditor
 displayName: "Narrative Quality Auditor · 品牌叙事质量门"
 summary: "叙事真实性/系统一致性/效果证据分层审计"
 description: 'Use when the user asks to "audit our brand narrative" or "is this message on-canon"; runs separate typed TALE truth, system, or effectiveness profiles and never averages them into one composite. Checks differentiation, canon, landing consistency, and evidence integrity. Not for launch readiness — use launch-readiness-auditor; not for social operations — use social-quality-auditor. 品牌叙事分层审计/发布前一致性放行'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use for narrative truth, message-system consistency, flagship pre-publish alignment, or measured message-effectiveness review. A full review runs linked profiles separately."
 argument-hint: "<canon/surfaces/experiment> [truth|system|effectiveness|full]"
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Narrative Quality Auditor

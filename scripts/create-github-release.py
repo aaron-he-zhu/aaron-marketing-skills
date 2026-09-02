@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Create or read-only verify the immutable current v19 GitHub release.
+"""Create or read-only verify the immutable current GitHub release.
 
 The default mode is a network-free dry run.  ``--live`` is an owner-only
 operation and requires both an out-of-repository private release receipt and
@@ -23,7 +23,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 REPOSITORY = "aaron-he-zhu/aaron-marketing-skills"
-RELEASE_VERSION = "20.0.0"
+RELEASE_VERSION = "20.1.0"
 TAG = "v" + RELEASE_VERSION
 ASSET_NAMES = (
     "aaron-marketing-skills-%s-lite.tar.gz" % RELEASE_VERSION,

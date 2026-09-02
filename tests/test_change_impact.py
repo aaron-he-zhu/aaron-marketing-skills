@@ -58,6 +58,16 @@ class ChangeImpactTests(unittest.TestCase):
                     "S3",
                 )
 
+    def test_control_binding_ssot_is_always_s3(self):
+        result = change_impact.classify_paths(["references/control-bindings.json"])
+        self.assertEqual("S3", result["severity"])
+        self.assertEqual(
+            "S3",
+            next(item for item in result["paths"] if item["path"].endswith(".json"))[
+                "hard_override"
+            ],
+        )
+
     def test_highest_severity_wins_and_paths_are_deterministic(self):
         result = change_impact.classify_paths(
             [

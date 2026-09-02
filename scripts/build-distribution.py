@@ -45,10 +45,51 @@ HOST_PROFILE_NAMES = (
     "generic-shared-root-host",
     "claude-code-plugin-host",
 )
-DERIVED_OUTPUT_NAMES = ("skill-contract-pack-v1",)
+DERIVED_OUTPUT_NAMES = (
+    "authoring-guide-pointers-v1",
+    "skill-contract-pack-v1",
+)
 SKILL_CONTRACT_TREE = "references/skill-contracts"
 SKILL_CONTRACT_PACK = "references/skill-contracts.pack.json.gz"
 SKILL_CONTRACT_PACK_MAX_BYTES = 1_000_000
+AUTHORING_GUIDE_POINTERS = {
+    "references/context-planning.md": """\
+<!-- distribution-projection: authoring-guide-pointer-v1 -->
+# Context planning — installation pointer
+
+The complete authoring guide remains in the source repository at this path.
+When `distribution-manifest.json.source.commit` is non-null, use that exact
+commit when release-level provenance matters.
+
+Installed behavior is defined only by the selected capability profile and any
+shipped `context-plan.py`, schemas, and machine contracts. This compact pointer
+grants no runtime, persistence, or authority.
+""",
+    "references/context-resolution.md": """\
+<!-- distribution-projection: authoring-guide-pointer-v1 -->
+# Context resolution — installation pointer
+
+The complete authoring guide remains in the source repository at this path.
+When `distribution-manifest.json.source.commit` is non-null, use that exact
+commit when release-level provenance matters.
+
+Installed behavior is defined only by the selected capability profile and any
+shipped context resolver, schemas, and manifest validator. This compact pointer
+grants no runtime, persistence, or authority.
+""",
+    "references/runtime-controller.md": """\
+<!-- distribution-projection: authoring-guide-pointer-v1 -->
+# Runtime controller — installation pointer
+
+The complete authoring guide remains in the source repository at this path.
+When `distribution-manifest.json.source.commit` is non-null, use that exact
+commit when release-level provenance matters.
+
+Installed behavior is defined only by the selected capability profile and any
+shipped runtime controller, event schemas, and validators. This compact pointer
+does not execute an action, grant authority, or create registry truth.
+""",
+}
 ENTRY_KEYS = (
     "root_files", "trees", "runtime_references",
     "runtime_scripts", "runtime_script_trees",
@@ -962,7 +1003,10 @@ def write_distribution_manifest(
     manifest = build_manifest(
         destination, kind, profile, host_profile, source_repository, source_commit,
     )
-    data = canonical_json(manifest)
+    # The manifest is machine-consumed and can dominate the final ceiling once
+    # it lists hundreds of files.  Keep the same closed data and hashes while
+    # avoiding presentation-only indentation in release payloads.
+    data = canonical_compact_json(manifest) + b"\n"
     _validate_package_ceiling(
         manifest["files"], manifest["package_ceiling"],
         manifest_bytes=len(data), include_manifest=True,
@@ -1416,6 +1460,38 @@ def project_prompt_profile_distribution(destination, profile_name):
     return validate_prompt_profile_distribution(destination, profile_name)
 
 
+def project_authoring_guide_pointers(destination):
+    """Replace large maintenance guides with deterministic install pointers."""
+    projected = []
+    for relative, text in sorted(AUTHORING_GUIDE_POINTERS.items()):
+        path = destination / validate_relative(relative)
+        if not path.exists() and not path.is_symlink():
+            continue
+        try:
+            status = path.lstat()
+            built = _read_checked_regular(
+                path, status, "built authoring guide %s" % relative,
+            )
+        except OSError as exc:
+            raise DistributionError(
+                "built authoring guide is unavailable: %s" % relative
+            ) from exc
+        if built != read_source_bytes(relative):
+            raise DistributionError(
+                "built authoring guide differs before projection: %s" % relative
+            )
+        _replace_built_regular(
+            path, status, text.encode("utf-8"),
+            "authoring guide %s" % relative,
+        )
+        projected.append(relative)
+    if not projected:
+        raise DistributionError(
+            "authoring-guide pointer projection had no reachable source guides"
+        )
+    return projected
+
+
 def project_plugin_manifest_for_host(destination, host_profile, expected_skills):
     """Remove the Claude-only command surface from generic-host payloads."""
     if host_profile["routing_surface"] == "slash-commands":
@@ -1499,6 +1575,8 @@ def build_plugin(
             if dependency_allowed(dependency, profile)
         )
     copy_runtime_closure(referenced, destination, profile)
+    if "authoring-guide-pointers-v1" in profile["derived_outputs"]:
+        project_authoring_guide_pointers(destination)
     project_prompt_profile_distribution(destination, profile["profile"])
     for forbidden in distribution["excluded_top_level"]:
         if (destination / forbidden).exists():

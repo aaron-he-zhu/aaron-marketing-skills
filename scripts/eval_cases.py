@@ -712,7 +712,7 @@ def load_cases(
     include_authored: bool = True,
     include_auto: bool = True,
 ) -> list[dict[str, Any]]:
-    """Load the 572 authored and/or 88 authoritative auto-routing cases."""
+    """Load the 606 authored and/or 88 authoritative auto-routing cases."""
     if not include_authored and not include_auto:
         return []
     project = _normalize_root(root)

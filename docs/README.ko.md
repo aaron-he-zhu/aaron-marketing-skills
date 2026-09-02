@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.0.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.1.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -562,7 +562,7 @@ Artifact Gate는 **프레임워크 비의존적**입니다 — 같은 훅이 TAL
 |-------|--------------|
 | **28개의 번들 의존성 없는 커넥터** | 순수 Python 표준 라이브러리 — `pip` 없음, 빌드 단계 없음. keyless 라이브 SERP + JS 렌더 스크래핑(Firecrawl, Tavily), AI 답변 인용 프로브, DNS-over-HTTPS 이메일 인증 가져오기, Wikipedia 주목도 시계열, GDELT 뉴스 언급, 실제 YouTube 크리에이터 지표, IndexNow + Baidu 색인 푸시, Resend ESP 자동화, 그리고 이들 중 무엇이든 전후 비교 시계열로 바꾸는 git 디프 가능한 측정 원장. |
 | **60개 이상의 문서화된 공식/무료 API** | 각 행이 벤더의 **공식 문서**를 링크하고, 검증 날짜를 담으며, 각 링크는 출시 전 HTTP 확인됩니다. 대부분의 도구 목록이 놓치는 경로를 포함: GSC URL Inspection, CrUX History(40주간 필드 CWV), Gmail Postmaster Tools API, Meta의 Ad Library, Microsoft Clarity의 Data Export API. |
-| **벤더 MCP 서버** | 18개 원격 엔드포인트를 카탈로그화(절대 자동 등록되지 않음 — 당신의 `/mcp` 목록은 깨끗하게 유지)하고, Google Analytics, Search Console, **Google Ads**, **Microsoft Clarity**의 공식 셀프호스트 서버 추가. 두 개의 원격 MCP는 키 없이 동작합니다(Firecrawl, Tavily). |
+| **벤더 MCP 서버** | 옵트인 카탈로그 항목은 20개(벤더 호스팅 원격 엔드포인트 19개 + 셀프호스트 OpenSEO 항목 1개)이며 절대 자동 등록되지 않아 `/mcp` 목록이 깨끗하게 유지됩니다. Google Analytics, Search Console, **Google Ads**, **Microsoft Clarity**의 공식 셀프호스트 서버도 문서화되어 있습니다. 두 개의 원격 MCP는 키 없이 동작합니다(Firecrawl, Tavily). |
 
 단지 수가 많은 게 아니라 신뢰할 수 있게 만드는 이유:
 
@@ -579,7 +579,7 @@ Artifact Gate는 **프레임워크 비의존적**입니다 — 같은 훅이 TAL
 
 - **번들 의존성 없는 헬퍼**는 `scripts/connectors/` 아래(Python 표준 라이브러리만)에서 공개/자체 데이터를 로컬로 가져옵니다 — 예: PageSpeed/CrUX, Open PageRank, 페이지 크롤, Wayback CDX, Wikidata SPARQL, Common Crawl, advertools 레시피 — 그리고 **`resend.py`**(이메일 스킬용 Resend ESP 직결 자동화: 무료 티어 키로 도메인 인증 상태, seed-test 발송, 억제 동기화, 브로드캐스트 예약; 변경 서브커맨드는 기본 dry-run이며 `--live` 필요), 그리고 **`firecrawl.py`** + **`tavily.py`**(research 스킬용 keyless 호스트형 페처 자동화: Firecrawl은 라이브 웹 SERP + JS 렌더 페이지 markdown + 사이트맵; Tavily는 점수 검색 + GEO용 AI 답변 엔진 인용 소스 프로브 + URL 추출 — 둘 다 키 없이 무료, 둘 다 로컬 robots.txt 사전 점검 내장).
 - **무료/keyless 소스**를 카테고리별로 문서화: Google Search Console & GA4(자체 데이터), PageSpeed/CrUX, Wikidata, Common Crawl, Open PageRank, Firecrawl keyless SERP/스크래프, Tavily keyless AI 검색, DNS-over-HTTPS 이메일 인증 레코드(`doh.py`), Wikipedia 주목도 시계열(`pageviews.py`), GDELT 뉴스 언급(`gdelt.py`), 무료 키의 YouTube 크리에이터 지표(`youtube.py`), IndexNow + Baidu 색인 푸시(`indexpush.py`, dry-run 게이트), 광고 투명성 라이브러리(Meta/Google/TikTok), 그리고 crt.sh, W3C 검증기, oEmbed, HN Algolia의 레시피 행.
-- **옵트인 MCP 서버**(Ahrefs, Semrush, SE Ranking, SISTRIX, SimilarWeb, 셀프호스트 무료 **OpenSEO** 스위트, Cloudflare, Vercel, HubSpot, Amplitude, Notion, Webflow, Sanity, Contentful, Slack, Resend, keyless Firecrawl과 Tavily)는 [`docs/mcp-catalog.json`](mcp-catalog.json)에 **복사-붙여넣기 참조로만** 카탈로그화되어 있습니다 — 카탈로그는 자동 등록되는 플러그인 루트 `.mcp.json` 경로 밖에 있어 당신을 위해 아무것도 등록되지 않습니다. 원하는 항목을 자신의 MCP 설정에 복사하세요.
+- **옵트인 MCP 서버**(Ahrefs, Semrush, SE Ranking, SISTRIX, SimilarWeb, 셀프호스트 무료 **OpenSEO** 스위트, Cloudflare, Vercel, HubSpot, Amplitude, Notion, Webflow, Sanity, Contentful, Slack, Resend, keyless Firecrawl과 Tavily, Appeeky, Upfluence)는 [`docs/mcp-catalog.json`](mcp-catalog.json)에 **복사-붙여넣기 참조로만** 카탈로그화되어 있습니다 — 카탈로그는 자동 등록되는 플러그인 루트 `.mcp.json` 경로 밖에 있어 당신을 위해 아무것도 등록되지 않습니다. 원하는 항목을 자신의 MCP 설정에 복사하세요.
 
 Paid Ads 스킬은 **자기 계정의 수동 내보내기**(네이티브 광고 관리자 CSV, GA4, ecommerce)로 채점합니다. 키가 필요한 광고 플랫폼 API(Google Ads SDK, Meta Marketing API)는 옵트인 Tier-2/3 전용이며 **결코** Tier 1 요건이 아닙니다. 이메일 스킬도 같은 방식 — **자신의 ESP 내보내기**로 채점 — 이며 각 deliverability 신호는 keyless(DNS 조회, DMARC RUA 리포트, seed-list inbox 테스트)이므로 키가 필요한 ESP API도 결코 Tier 1 요건이 아닙니다; 당신의 ESP가 Resend라면 번들 `resend.py`가 무료 티어에서 같은 루프를 자동화합니다.
 
@@ -697,7 +697,7 @@ docs/            # 현지화된 README (de, es, fr, it, ja, ko, pt, zh, zh-Hant)
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — 오서링 규칙, 기여 체크리스트, 권위 있는 10개 추적 표면 목록.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** — 스킬별 버전 + changelog(현재 번들: `20.0.0`).
+- **[VERSIONS.md](../VERSIONS.md)** — 스킬별 버전 + changelog(현재 번들: `20.1.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — 보안, 프라이버시, 커뮤니티 정책.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — 이 repo의 에이전트용 컨텍스트.

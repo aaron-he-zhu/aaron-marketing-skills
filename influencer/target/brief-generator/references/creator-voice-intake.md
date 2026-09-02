@@ -2,17 +2,20 @@
 
 Capture how the creator (or the brand's founder spokesperson) actually talks before you write the brief. A brief that respects the real voice gets content that needs fewer revisions. Drop the filled-out block into the brief's "Why You" and "Creative Direction" sections, and hand it to `creator-content-auditor` so reviewers check submitted content against the captured voice, not their own taste.
 
+**Persistence boundary**: saved intake blocks and handoffs identify the speaker and provenance only with `creator_ref`, `brand_ref` when applicable, and opaque `voice_source_ref` values. Never persist a raw name, handle, profile/content/source URL, email, phone, provider ID, or hidden identity mapping. Raw locators and any permitted display values may be resolved only transiently while inspecting the authorized source or rendering the final creator-facing brief inside its independently authorized dispatch.
+
 Adapted from an external founder-voice intake template (competitive analysis).
 
 ## Intake Block
 
 Fill this with the creator's real patterns. Specific and honest beats polished. This is not a persona — it is how they already communicate.
 
-### Who This Person Is
+### Reference-Safe Speaker Context
 
 ```
-Name: [creator or founder name]
-Handle: @[platform handle]
+Creator: [creator_ref]
+Brand (for founder spokesperson): [brand_ref or not applicable]
+Voice evidence: [voice_source_ref values]
 What they're known for: [niche, format, audience]
 ```
 
@@ -20,11 +23,13 @@ What they're known for: [niche, format, audience]
 
 Real opinions, not mission statements. Include the contrarian or counterintuitive ones — that is where their voice is strongest.
 
+```text
+- [Paraphrased belief pattern] — source: [voice_source_ref]
+- [Paraphrased counter-position pattern] — source: [voice_source_ref]
+- [Paraphrased changed-mind pattern] — source: [voice_source_ref]
 ```
-- "[A direct opinion they genuinely hold]"
-- "[One that would make some people disagree]"
-- "[Something they changed their mind on]"
-```
+
+Keep verbatim source excerpts transient. Persist only the derived, non-identifying pattern plus its opaque provenance ref unless a separate authorized artifact explicitly permits the quoted text.
 
 ### GOOD vs BAD Sentence Patterns
 
@@ -40,15 +45,15 @@ GOOD: "This actually works. Here's the one step people skip."
 BAD:  "I'm so excited to share this game-changing product with you all!"
 ```
 
-Add 1-2 more pairs from the creator's own posts.
+Add additional **derived pattern** pairs from the authorized `voice_source_ref`; do not save raw post URLs/handles or unattributed copied excerpts.
 
 ### Topic Authority Tied to Proof
 
 What can this person credibly speak on, and what is the proof? No proof, no authority claim.
 
-```
-- [Topic]: [the real experience, result, or number behind it]
-- [Topic]: [same — tie it to something concrete]
+```text
+- [Topic]: [evidence-backed experience/result summary] — [voice_source_ref]
+- [Topic]: [evidence-backed experience/result summary] — [voice_source_ref]
 ```
 
 ### Signature Moves / Tics (pick 3-5)
@@ -73,4 +78,4 @@ The repeatable things that make their content recognizable. Examples to prompt w
 
 ## Handoff
 
-When the voice intake is filled out, pass it forward with the brief. `creator-content-auditor` reads the captured voice and the signature moves to judge whether submitted content sounds like the creator and stays on the proof-backed topics — flagging drift instead of imposing a reviewer's preference.
+When the voice intake is filled out, pass forward only `creator_ref`, applicable `brand_ref`, `voice_source_ref`, and the derived non-identifying patterns with the reference-safe brief. `creator-content-auditor` resolves the authorized voice evidence when needed and judges whether submitted content stays consistent with the captured patterns and proof-backed topics—flagging drift instead of imposing a reviewer's preference. Never put raw names, handles, URLs, contact values, or source locators in the handoff.

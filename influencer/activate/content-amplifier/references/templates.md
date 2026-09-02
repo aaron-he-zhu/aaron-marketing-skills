@@ -2,6 +2,8 @@
 
 Fill-in templates for both modes of [content-amplifier](../SKILL.md). Anchors are mode-prefixed: `paid-*` for the paid-amplification workflow, `repurpose-*` for the UGC-reuse workflow. Links back to repo root use `../../../`.
 
+**Example precondition**: every row or branch that recommends a new activation, edit, or destination is valid only for the exact frozen version approved by `creator-content-auditor` and a current `active`, dated, evidenced, unexpired grant whose channel, territory, format, and use scope covers that action. Paid selection additionally requires dated evidence for organic performance and separate Hook/Message/Quality/CTA observations. If any of those five components or its evidence is missing, the asset is `NOT_SCORED/NEEDS_INPUT`: preserve supplied observations, but emit no `/25`, rank, tier, or spend and never substitute `Estimated`. Replace any missing approval, rights field, quote, or decision threshold with `NEEDS_INPUT`/`Unknown`; do not treat placeholders or illustrative structures as observed facts. Saved artifacts use stable opaque `creator_ref` plus opaque asset/approval/evidence/rights refs only, never a raw handle, creator name, profile/content URL, email, provider ID, or deterministic identity hash.
+
 ---
 
 # Mode: paid
@@ -17,14 +19,16 @@ Templates for extending the reach of organic creator content with paid spend.
 **Total Content Pieces**: [#]
 **Amplification Budget**: $[X]
 
-### Content Performance Overview
+### Approval, Rights, and Performance Overview
 
-| Creator | Platform | Content Type | Organic Reach | ER | Views | Potential |
-|---------|----------|--------------|---------------|----|-------|-----------|
-| @[handle1] | [platform] | [type] | [reach] | [%] | [views] | ⭐⭐⭐⭐⭐ |
-| @[handle2] | [platform] | [type] | [reach] | [%] | [views] | ⭐⭐⭐⭐ |
-| @[handle3] | [platform] | [type] | [reach] | [%] | [views] | ⭐⭐⭐ |
+| Creator Ref | Frozen Asset Ref | Auditor Approval | Rights Preflight | Platform | Content Type | Organic Reach | ER | Views | Organic Evidence |
+|-------------|------------------|------------------|------------------|----------|--------------|---------------|----|-------|------------------|
+| [creator_ref-1] | [approved_asset_ref] | `approved` | `active`; [scope]; [observed time + evidence ref] | [platform] | [type] | [provided/Measured reach or Unknown] | [provided/Measured % or Unknown] | [provided/Measured views or Unknown] | [opaque source_ref + observed_at or gap] |
+| [creator_ref-2] | [approved_asset_ref] | `approved` | `active`; [scope]; [observed time + evidence ref] | [platform] | [type] | [provided/Measured reach or Unknown] | [provided/Measured % or Unknown] | [provided/Measured views or Unknown] | [opaque source_ref + observed_at or gap] |
+| [creator_ref-3] | [approved_asset_ref] | `approved` | `active`; [scope]; [observed time + evidence ref] | [platform] | [type] | [provided/Measured reach or Unknown] | [provided/Measured % or Unknown] | [provided/Measured views or Unknown] | [opaque source_ref + observed_at or gap] |
 ```
+
+Populate selection and allocation only from frozen versions approved by `creator-content-auditor` whose current, dated rights evidence is `active`, unexpired, and scoped to the exact channel, territory, format, and paid use. Otherwise return `NEEDS_INPUT` for that asset. Organic reach/ER/views require a dated opaque evidence ref; missing organic evidence is `Unknown` and makes paid selection `NOT_SCORED/NEEDS_INPUT`, never Estimated.
 
 ## paid-2: Content Selection (Step 2)
 
@@ -33,41 +37,45 @@ Templates for extending the reach of organic creator content with paid spend.
 
 ### Selection Criteria
 
-| Criterion | Weight | Why It Matters |
-|-----------|--------|----------------|
-| Organic performance | [%] | Proven engagement |
-| Hook quality | [%] | Paid attention capture |
-| Message clarity | [%] | Brand communication |
-| Production quality | [%] | Professional impression |
-| CTA effectiveness | [%] | Conversion potential |
+| Criterion | Required observation | Evidence requirement |
+|-----------|----------------------|----------------------|
+| Organic performance | [1-5 or Unknown] | Dated reach/ER/views evidence and declared scoring rule |
+| Hook | [1-5 or Unknown] | Dated observation against the declared hook criterion |
+| Message | [1-5 or Unknown] | Dated observation against the declared message criterion |
+| Quality | [1-5 or Unknown] | Dated observation against the declared production criterion |
+| CTA | [1-5 or Unknown] | Dated observation against the declared CTA criterion |
 
 ### Content Scoring
 
-| Content | Organic | Hook | Message | Quality | CTA | Total | Rank |
-|---------|---------|------|---------|---------|-----|-------|------|
-| @[handle1] | [1-5] | [1-5] | [1-5] | [1-5] | [1-5] | [X/25] | 1 |
-| @[handle2] | [1-5] | [1-5] | [1-5] | [1-5] | [1-5] | [X/25] | 2 |
+| Creator Ref / Asset | Organic | Hook | Message | Quality | CTA | Score State | Total | Rank |
+|---------------------|---------|------|---------|---------|-----|-------------|-------|------|
+| [creator_ref-1 / asset_ref] | [1-5 + source_ref/date] | [1-5 + source_ref/date] | [1-5 + source_ref/date] | [1-5 + source_ref/date] | [1-5 + source_ref/date] | [SCORED only at complete coverage] | [X/25 only if SCORED] | [rank only if SCORED] |
+| [creator_ref-2 / asset_ref] | [value/gap] | [value/gap] | [value/gap] | [value/gap] | [value/gap] | `NOT_SCORED/NEEDS_INPUT` if any gap | — | — |
+
+Do not estimate a missing component, force `/25`, normalize over observed items, or prorate a partial score. An incomplete asset cannot enter a tier or receive spend.
 
 ### Top Picks for Amplification
+
+Only list assets that passed the frozen-approval and active scoped-rights preflight and have complete evidence across all five selection components. A high content score never overrides a missing approval or rights gap; an incomplete score never becomes a tier.
 
 **Tier 1: Must Amplify**
 
 | Content | Reason | Recommended Spend |
 |---------|--------|-------------------|
-| @[handle1] [content] | [why] | $[X] ([%] of budget) |
-| @[handle2] [content] | [why] | $[X] ([%] of budget) |
+| [creator_ref-1 / asset_ref] | [evidence-bound reason] | $[X] ([%] of budget) |
+| [creator_ref-2 / asset_ref] | [evidence-bound reason] | $[X] ([%] of budget) |
 
 **Tier 2: Consider If Budget Allows**
 
 | Content | Reason | Recommended Spend |
 |---------|--------|-------------------|
-| @[handle3] [content] | [why] | $[X] ([%] of budget) |
+| [creator_ref-3 / asset_ref] | [evidence-bound reason] | $[X] ([%] of budget) |
 
 **Do Not Amplify**
 
 | Content | Reason |
 |---------|--------|
-| @[handle4] [content] | [why it's not worth paid spend] |
+| [creator_ref-4 / asset_ref] | [evidence-bound reason, rights block, or NOT_SCORED gap] |
 ```
 
 ## paid-3: Amplification Strategy (Step 3 + method detail)
@@ -88,33 +96,32 @@ Templates for extending the reach of organic creator content with paid spend.
 
 **What it is**: Running ads through the creator's account
 
-| Platform | Format | Requirements | Best For |
-|----------|--------|--------------|----------|
-| Meta Branded Content | Partnership Ads | Creator grants access | Native feel, social proof |
-| TikTok Spark Ads | Spark Ads | Creator authorization | TikTok algorithm, authenticity |
-| YouTube | BrandConnect | Creator approval | Long-form, YouTube search |
+| Platform | Format | Identity / delivery path | Requirements |
+|----------|--------|--------------------------|--------------|
+| Meta | Partnership Ads | Creator identity | Matching frozen approval, active scoped paid rights, and current creator/platform authorization |
+| TikTok | Spark Ads | Existing creator post identity | Matching frozen approval, active scoped paid rights, live post, and current authorization code |
+| YouTube | Supported creator-linked format | Platform-specific identity | Matching frozen approval, active scoped paid rights, and current platform authorization |
 
-**Advantages**: keeps the creator's identity and credibility; better engagement than brand ads; native platform integration; social proof preserved.
-
-**Setup**: [ ] creator access/authorization · [ ] content approved for paid use · [ ] proper disclosure maintained.
+**Setup**: [ ] frozen asset version matches auditor approval · [ ] rights status is evidenced `active` and scope covers this exact use · [ ] creator/platform access or authorization is current · [ ] proper disclosure maintained.
 
 #### Option 2: Brand Account Boosting
 
-**What it is**: Sharing/reposting and boosting from brand accounts.
-**Advantages**: full targeting control; simpler to set up; no creator coordination.
-**Disadvantages**: loses some authenticity; may perform differently than organic.
+**What it is**: Delivering a licensed creator asset under the brand account identity.
+**Requirements**: matching frozen approval, active scoped paid rights, brand ad-account access, and any separately required creator attribution/disclosure.
 
 #### Option 3: Dark Posts
 
-**What it is**: Ads using creator content that don't appear organically.
-**Best for**: testing multiple versions, specific targeting.
+**What it is**: Ads using creator content that do not appear as organic posts.
+**Requirements**: matching frozen approval and active scoped paid rights for every variation, placement, territory, format, and flight.
+
+No method receives a directional engagement, credibility, authenticity, or performance claim by default. Use the user's declared operational constraint or a predeclared comparative test to choose among methods.
 
 ### Recommended Strategy Mix
 
 | Method | % of Budget | Amount | Rationale |
 |--------|-------------|--------|-----------|
 | Whitelisting | [%] | $[X] | [reason] |
-| Brand Boosting | [%] | $[X] | [reason] |
+| Brand-Account Ads | [%] | $[X] | [reason] |
 | Dark Posts | [%] | $[X] | [reason] |
 ```
 
@@ -176,9 +183,9 @@ Templates for extending the reach of organic creator content with paid spend.
 ### By Content
 | Content | Platform | Spend | % | Rationale |
 |---------|----------|-------|---|-----------|
-| @[handle1] video | TikTok | $[X] | [%] | Top performer, high engagement |
-| @[handle2] reel | Instagram | $[X] | [%] | Strong hook, conversion-focused |
-| @[handle3] post | Instagram | $[X] | [%] | Good UGC, authentic feel |
+| [creator_ref-1 / asset_ref] | TikTok | $[X] | [%] | [complete-score evidence and declared objective] |
+| [creator_ref-2 / asset_ref] | Instagram | $[X] | [%] | [complete-score evidence and declared objective] |
+| [creator_ref-3 / asset_ref] | Instagram | $[X] | [%] | [complete-score evidence and declared objective] |
 | Testing pool | Various | $[X] | [%] | A/B testing new content |
 
 ### By Objective
@@ -203,7 +210,9 @@ Templates for extending the reach of organic creator content with paid spend.
 | Days 8+ | $[X]/day | Scaling winners |
 ```
 
-> All allocations must sum to the stated budget. Label every CPM/reach figure Estimated unless read from an ad-platform connector.
+> All allocations must sum to the stated budget. A CPM/reach figure may be Estimated only when its calculation inputs and assumptions were supplied or explicitly approved; show that basis. Otherwise use `Unknown`/`NEEDS_INPUT` rather than an example value.
+
+> Allocate only among assets that passed the frozen-approval and active scoped-rights preflight and have `score_state: SCORED` at complete Organic/Hook/Message/Quality/CTA coverage. If no such asset remains, return `NOT_SCORED/NEEDS_INPUT` rather than a hypothetical allocation.
 
 ## paid-6: Optimization Playbook (Step 6)
 
@@ -222,11 +231,11 @@ Templates for extending the reach of organic creator content with paid spend.
 ### Optimization Schedule
 | Day | Action |
 |-----|--------|
-| Day 1-2 | Let campaigns run, collect data |
-| Day 3 | First optimization: pause underperformers |
-| Day 5 | Audience refinement: expand or narrow |
-| Day 7 | Budget reallocation to winners |
-| Ongoing | Weekly optimization cycles |
+| [learning window] | Let campaigns run and collect the agreed minimum evidence |
+| [first review date] | Apply the supplied scale/pause decision rule |
+| [refinement date] | Test a declared audience hypothesis |
+| [reallocation date] | Reallocate only when the supplied rule is met and action is authorized |
+| [review cadence] | Repeat the approved optimization cycle |
 
 ### A/B Testing Plan
 | Test | Variable A | Variable B | Success Metric |
@@ -234,11 +243,11 @@ Templates for extending the reach of organic creator content with paid spend.
 | [Test 1] | [version A] | [version B] | [metric] |
 
 ### When to Scale
-Scale up when: CPM stable and below target for 3+ days; ROAS consistently above [X]:1; frequency below [X]; engagement maintained.
-Method: increase budget 20-30% every 2-3 days; expand audiences gradually; duplicate winning ad sets.
+Scale up when: [user-supplied target, observation window, minimum sample, guardrails, and decision rule; otherwise NEEDS_INPUT].
+Method: [user-approved budget increment and cadence]; expand audiences or duplicate ad sets only as an explicitly authorized test.
 
 ### When to Pause
-Pause when: CPM 50%+ above target with no improvement; ROAS below [X]:1 for 3+ days; frequency above [X]; engagement declining.
+Pause when: [user-supplied stop threshold, observation window, minimum sample, and guardrails; otherwise NEEDS_INPUT].
 
 ### Creative Refresh
 Refresh when frequency reaches [X]+, engagement declines week-over-week, or CTR drops below [%]. Options: new creator content, different cuts/edits, new hooks, different CTAs.
@@ -249,6 +258,14 @@ Refresh when frequency reaches [X]+, engagement declines week-over-week, or CTR 
 ```markdown
 ## Platform Setup Guides
 
+### Rights and Existing-Placement Preflight
+
+| Content ID | Frozen Asset Ref | Auditor Approval | Rights Status | `status_observed_at` | `status_evidence_ref` | Intended Use | Scope Check |
+|------------|------------------|------------------|---------------|----------------------|-----------------------|--------------|-------------|
+| [asset] | [approved_asset_ref or NEEDS_INPUT] | [approved or NEEDS_INPUT] | [allowed status] | [ISO-8601 time] | [contract/addendum/notice ref or explicit gap ref] | [platform/territory/format/paid use] | [covered/out-of-scope/unknown] |
+
+Only the exact frozen version with auditor status `approved`, plus `active` rights with dated evidence and a matching, unexpired scope, may proceed to setup. Missing approval, `expired`, `revoked`, `disputed`, `unknown`, missing evidence, and out-of-scope grants fail closed for new use with `NEEDS_INPUT`. If a blocked asset already has live placements, copy those placements into the manual removal queue in repurpose step 7; this table does not authorize a pause, deletion, unpublish, or other platform write.
+
 ### Meta (Instagram/Facebook) — Partnership Ads
 1. Creator authorization: Instagram Settings > Business > Branded Content > add your brand as approved partner (or share a post code for specific content).
 2. Create campaign: Ads Manager > Create Campaign > select objective > at ad level pick "Use existing post" > enter branded content ad code > set targeting + budget.
@@ -257,45 +274,48 @@ Best practices: use the creator's caption (edited if needed); maintain disclosur
 ### TikTok — Spark Ads
 1. Creator authorization: video > ... > Ad settings > turn on "Ad authorization" > copy the authorization code (valid 7-365 days).
 2. Create campaign: TikTok Ads Manager > create campaign with chosen objective > at ad level pick "Spark Ads" > enter authorization code > configure targeting.
-Best practices: keep the TikTok native feel; use In-Feed or TopView placements; enable comments for social proof.
+Implementation note: follow the current documented placement/disclosure requirements and treat placement or comment settings as declared test variables, not default performance levers.
 
 ### YouTube — Video Ads
 1. Get content rights or have the creator upload to the brand channel.
 2. Create a Video campaign in Google Ads > select ad format (skippable, non-skippable, etc.) > configure targeting.
-Best practices: first 5 seconds are critical; include brand early for non-skippable; use companion banners.
+Implementation note: use the supplied or current documented format requirements; any hook, brand-timing, or companion-banner choice remains a declared test unless evidence is supplied.
 ```
 
 ## Worked Example — paid
 
-**User**: "We have 5 influencer TikToks from our launch campaign. Which should we amplify with our $5,000 paid budget?"
+**User**: "Use five frozen, auditor-approved TikTok assets mapped to stable `creator_ref` values. A dated organic export supplies views/ER plus its opaque evidence ref, and a separate dated evidence matrix supplies Organic/Hook/Message/Quality/CTA observations for every asset: creator-ref-01 = 5/5/4/4/3; creator-ref-02 = 3/3/4/4/4; creator-ref-03 = 4/4/4/3/3; creator-ref-04 = 4/4/3/3/2; creator-ref-05 = 2/2/3/4/2. Every component has `source_ref` and `observed_at`. The supplied asset manifest has a frozen approval reference for each version, and the rights manifest records each grant as active, dated, evidenced, unexpired, and scoped to the requested US TikTok Spark Ads and Instagram Partnership Ads flight. Allocate our $5,000 budget."
 
 ```markdown
 ## Amplification Recommendation
 
-| Creator | Views | ER | Hook Score | Amplify? | Budget |
-|---------|-------|-----|------------|----------|--------|
-| @creator1 | 245K | 8.2% | 5/5 | Yes | $2,000 |
-| @creator3 | 89K | 6.5% | 4/5 | Yes | $1,500 |
-| @creator4 | 34K | 9.8% | 4/5 | Yes | $800 |
-| @creator2 | 156K | 4.1% | 3/5 | Maybe | $500 |
-| @creator5 | 67K | 2.3% | 2/5 | No | $0 |
+**Evidence basis**: organic metrics, all five selection observations, frozen approval refs, and rights status/scope are user-provided with opaque evidence refs and observation dates. No paid-performance result is Measured by this skill.
+
+| Creator Ref | O/H/M/Q/CTA (provided) | Score State / Total | Approval / rights preflight | Plan Status | Budget |
+|-------------|-------------------------|---------------------|-----------------------------|-------------|--------|
+| creator-ref-01 | 5/5/4/4/3 | SCORED · 21/25 | frozen approved; `active`; scope covered | Include in declared test | $2,000 |
+| creator-ref-02 | 3/3/4/4/4 | SCORED · 18/25 | frozen approved; `active`; scope covered | Include in declared test | $1,000 |
+| creator-ref-03 | 4/4/4/3/3 | SCORED · 18/25 | frozen approved; `active`; scope covered | Include in declared test | $1,000 |
+| creator-ref-04 | 4/4/3/3/2 | SCORED · 16/25 | frozen approved; `active`; scope covered | Include in declared test | $800 |
+| creator-ref-05 | 2/2/3/4/2 | SCORED · 13/25 | frozen approved; `active`; scope covered | No initial spend | $0 |
 
 Recommended strategy ($5,000):
-1. @creator1 ($2,000) — strongest hook, prioritize for awareness.
-2. @creator3 ($1,500) — great product demo, good for consideration.
-3. @creator4 ($800) — high engagement despite lower views, loyal audience.
-4. @creator2 ($500) — test budget only, monitor closely.
+1. creator-ref-01 ($2,000) — highest supplied complete total in this set.
+2. creator-ref-02 ($1,000) — tied supplied complete total; retain as a separately measured variation.
+3. creator-ref-03 ($1,000) — tied supplied complete total; retain as a separately measured variation.
+4. creator-ref-04 ($800) — lower supplied complete total; use the smaller declared test cell.
 5. Testing reserve ($200) — A/B test variations.
 
-Setup priority: get Spark Ads auth from top 3 > awareness campaign for @creator1 >
-traffic campaign for @creator3 > scale winners after the 3-day learning phase.
+Setup priority: obtain any separate platform authorization still required > launch only the frozen approved versions within the evidenced scope > apply the user-approved scale/pause rule. If that rule or its thresholds were not supplied, mark them `NEEDS_INPUT`; do not invent a three-day result or an automatic scale decision.
 ```
+
+If the original terse request were the only input, the correct response would be `NOT_SCORED/NEEDS_INPUT`: request each asset's dated organic metrics/evidence, Hook/Message/Quality/CTA observations/evidence, frozen approval reference, and current rights observation/evidence/scope. Do not emit `/25`, rank, tier, or allocation until every selection component and rights gate is complete.
 
 ## Tips — paid
 
-1. Don't amplify bad content — paid won't fix poor creative.
-2. Start with proven winners — organic success predicts paid success.
-3. Maintain authenticity — whitelisting outperforms brand reposts.
+1. Score only evidence-complete assets — missing selection evidence stays `NOT_SCORED`.
+2. Treat organic results as a test input, not a guarantee of paid performance.
+3. Preserve creator context — test whitelisting against brand reposts instead of assuming either will win.
 4. Test before scaling — small tests before big budgets.
 5. Optimize continuously — paid requires active management.
 
@@ -314,11 +334,11 @@ Templates for reusing one approved asset across paid, website, email, and social
 **Total Content Pieces**: [#]
 **Content Types**: [videos, images, reviews, etc.]
 
-| ID | Creator | Platform | Type | Duration/Format | Rights | Status |
-|----|---------|----------|------|-----------------|--------|--------|
-| 001 | @[handle] | TikTok | Video | 45s | Perpetual | Available |
-| 002 | @[handle] | Instagram | Reel | 30s | 12 months | Available |
-| 003 | @[handle] | Instagram | Carousel | 5 images | Campaign only | Limited |
+| ID | Creator Ref | Frozen Asset Ref | Opaque Source Ref | Auditor Approval | Platform | Type | Duration/Format | Rights Level / Expiry | Rights Status | `status_observed_at` | `status_evidence_ref` |
+|----|-------------|------------------|-------------------|------------------|----------|------|-----------------|-----------------------|---------------|----------------------|-----------------------|
+| 001 | [creator_ref] | [approved_asset_ref] | [opaque authorized source_ref] | `approved` | TikTok | Video | [provided duration] | [grant / future date] | `active` | [ISO-8601 time] | [signed grant ref] |
+| 002 | [creator_ref] | [approved_asset_ref or NEEDS_INPUT] | [opaque source_ref or NEEDS_INPUT] | [approved or NEEDS_INPUT] | Instagram | Reel | [provided duration] | [grant / expired date] | `expired` | [ISO-8601 time] | [grant ref + expiry] |
+| 003 | [creator_ref] | [approved_asset_ref or NEEDS_INPUT] | [opaque source_ref or NEEDS_INPUT] | [approved or NEEDS_INPUT] | Instagram | Carousel | [provided image count] | [unknown] | `unknown` | [ISO-8601 time] | [gap ref: current grant not supplied] |
 
 ### Rights Summary
 
@@ -335,8 +355,12 @@ Templates for reusing one approved asset across paid, website, email, and social
 ```markdown
 ## Repurposing Opportunity Map
 
-### Original Content: @[handle] TikTok Video
-**Original**: 45-second product review video
+### Original Content: [creator_ref / approved_asset_ref] TikTok Video
+**Persistent source identity**: [creator_ref + exact approved_asset_ref + opaque authorized source_ref; raw handle/content URL forbidden]
+**Frozen approved asset ref**: [approved_asset_ref or NEEDS_INPUT]
+**Auditor approval**: [approved or NEEDS_INPUT]
+**Original**: [provided duration and content description]
+**Rights preflight**: [`active` + observed time + evidence ref + unexpired destination scope, or NEEDS_INPUT]
 
 ### Repurposing Options
 
@@ -361,6 +385,8 @@ Original: 45s TikTok Video
  └─ Website/Email: Website Banner · Email Hero
 ```
 
+The tree is a format illustration, not permission. Populate it only with destinations covered by the supplied active grant for the exact frozen approved version; replace every uncovered or unevidenced branch with `NEEDS_INPUT`.
+
 ## repurpose-3: Repurposing Plan (Step 3)
 
 ```markdown
@@ -369,9 +395,9 @@ Original: 45s TikTok Video
 ### Priority Content
 | Rank | Content | Original Performance | Repurpose Priority |
 |------|---------|---------------------|-------------------|
-| 1 | @[handle1] video | [metrics] | Maximize - full rights |
-| 2 | @[handle2] reel | [metrics] | High - strong content |
-| 3 | @[handle3] post | [metrics] | Medium - limited rights |
+| 1 | [creator_ref-1 / asset_ref] video | [provided/observed metrics or Unknown] | [only if frozen approved + active scope covered] |
+| 2 | [creator_ref-2 / asset_ref] reel | [provided/observed metrics or Unknown] | [only if frozen approved + active scope covered] |
+| 3 | [creator_ref-3 / asset_ref] post | [provided/observed metrics or Unknown] | [NEEDS_INPUT when approval or scope is missing] |
 
 ### Channel Distribution Plan
 
@@ -450,15 +476,15 @@ Original: 45s TikTok Video
 ## Channel Repurposing Guidelines
 
 ### Website Usage
-- Product pages: embed video reviews; pull quote testimonials with creator photo; "As seen on @handle" badges.
+- Product pages: within the exact active scope, embed approved video refs, use approved quote refs, and resolve any permitted creator display name only at publication.
 - Homepage: UGC carousel/gallery; video testimonial section; social proof counter.
 - Landing pages: hero video from top creator; testimonial quotes throughout; creator endorsement badges.
 
 Implementation:
 <div class="ugc-testimonial">
-  <video src="[creator-video]" controls></video>
-  <p class="quote">"[Pull quote]"</p>
-  <p class="attribution">@[handle], [platform]</p>
+  <video src="[approved_asset_ref resolved at publication]" controls></video>
+  <p class="quote">"[approved_quote_ref resolved at publication]"</p>
+  <p class="attribution">[creator display name resolved at publication only when rights cover name attribution], [platform]</p>
 </div>
 
 ### Email Marketing
@@ -486,10 +512,10 @@ Reposting: always credit the creator; ask permission even if contractual; add br
 | Day | Content Type | Source |
 |-----|--------------|--------|
 | Mon | Original brand content | Brand |
-| Tue | UGC repost | @[creator1] |
+| Tue | UGC repost | [creator_ref-1 / asset_ref] |
 | Wed | Original brand content | Brand |
-| Thu | UGC Stories | @[creator2] |
-| Fri | UGC repost | @[creator3] |
+| Thu | UGC Stories | [creator_ref-2 / asset_ref] |
+| Fri | UGC repost | [creator_ref-3 / asset_ref] |
 ```
 
 ## repurpose-6: Content Library Structure (Step 6)
@@ -501,29 +527,32 @@ Reposting: always credit the creator; ask permission even if contractual; add br
 /ugc-library/
 ├── /raw/ (/videos/ /images/ /audio/)
 ├── /processed/ (/ads/ [/tiktok/ /meta/ /youtube/] /website/ /email/ /social/)
-├── /creators/ (/@handle1/ /@handle2/ /@handle3/)
+├── /creators/ (/creator_ref-1/ /creator_ref-2/ /creator_ref-3/)
 └── /campaigns/ (/campaign-name-1/ /campaign-name-2/)
 
 ### Asset Naming Convention
-`[campaign]_[creator]_[platform]_[type]_[variation]_[date]`
-Examples:
-- summer2024_sarahfit_tiktok_video_original_20240615
-- summer2024_sarahfit_tiktok_video_15s_20240615
-- summer2024_sarahfit_ig_thumbnail_01_20240615
+`[campaign]_[creator_ref]_[platform]_[type]_[variation]_[date]`
+Illustrative placeholders:
+- [campaign]_[creator_ref]_tiktok_video_[frozen-version]_[YYYYMMDD]
+- [campaign]_[creator_ref]_tiktok_video_15s_[YYYYMMDD]
+- [campaign]_[creator_ref]_ig_thumbnail_01_[YYYYMMDD]
 
 ### Metadata Tracking
-| Field | Description | Example |
-|-------|-------------|---------|
-| Asset ID | Unique identifier | UGC-2024-001 |
-| Creator | @handle | @sarahfit |
-| Original Platform | Where created | TikTok |
-| Content Type | Format | Video |
-| Duration | Length | 45s |
-| Usage Rights | License type | Perpetual |
-| Rights Expiration | If applicable | N/A |
-| Approved Uses | Where can use | All channels |
-| Performance | Original metrics | 250K views, 8% ER |
-| Tags | Searchable keywords | Product, review, demo |
+| Field | Description | Required value/source |
+|-------|-------------|-----------------------|
+| Asset ID | Unique identifier | [asset ID] |
+| Frozen Asset Ref | Exact version approved by the auditor | [approved_asset_ref or NEEDS_INPUT] |
+| Auditor Approval | Approval status for that exact version | [approved or NEEDS_INPUT] |
+| Creator Ref | Stable opaque identity | [creator_ref; never raw handle/name/URL/provider ID] |
+| Original Platform | Where created | [provided platform] |
+| Content Type | Format | [provided format] |
+| Duration | Length | [provided duration or Unknown] |
+| Usage Rights | License type | [from cited grant or NEEDS_INPUT] |
+| Rights Expiration | If applicable | [future date/perpetual from cited grant or NEEDS_INPUT] |
+| Approved Uses | Exact channel/territory/format/use scope | [from cited grant or NEEDS_INPUT] |
+| Rights Status Evidence | Current state | [`active` + observed time + evidence ref, or NEEDS_INPUT] |
+| Performance | Original metrics | [provided/observed values with provenance, or Unknown] |
+| Tags | Searchable keywords | [provided/derived non-factual labels] |
 ```
 
 ## repurpose-7: Usage Rights Tracker (Step 7)
@@ -532,17 +561,29 @@ Examples:
 ## Usage Rights Tracker
 
 ### Rights by Content
-| Content ID | Creator | Rights Level | Paid Use | Website | Email | Expires |
-|------------|---------|--------------|----------|---------|-------|---------|
-| UGC-001 | @handle1 | Full | Yes | Yes | Yes | Never |
-| UGC-002 | @handle2 | Limited | Yes | Yes | No | Dec 2024 |
-| UGC-003 | @handle3 | Organic only | No | No | No | N/A |
+| Content ID | Creator Ref | Frozen Asset Ref | Auditor Approval | Rights Level / Exact Scope | Paid Use | Website | Email | Expires | Rights Status | `status_observed_at` | `status_evidence_ref` |
+|------------|-------------|------------------|------------------|----------------------------|----------|---------|-------|---------|---------------|----------------------|-----------------------|
+| UGC-[id] | [creator_ref-1] | [approved_asset_ref] | `approved` | [cited channel/territory/format/use] | [Yes if cited] | [Yes if cited] | [Yes if cited] | [future date/perpetual] | `active` | [ISO-8601 time] | [signed grant ref] |
+| UGC-[id] | [creator_ref-2] | [approved_asset_ref or NEEDS_INPUT] | [approved or NEEDS_INPUT] | [cited limited scope] | [from grant] | [from grant] | [from grant] | [expired date] | `expired` | [ISO-8601 time] | [grant ref + expiry] |
+| UGC-[id] | [creator_ref-3] | [approved_asset_ref] | `approved` | Organic only; [territory/format] | No | No | No | [from grant] | `active` | [ISO-8601 time] | [signed grant ref] |
+
+Allowed rights status values are deliberately small: `active | expired | revoked | disputed | unknown`. Status describes the currently observed grant state; it does not broaden scope. `active` still requires a matching channel, territory, format, use, and unexpired term. Every status needs `status_observed_at` plus a source or explicit evidence-gap reference.
 
 ### Expiring Rights Alert
-| Content | Creator | Rights Expire | Action Needed |
-|---------|---------|---------------|---------------|
-| UGC-002 | @handle2 | Dec 15, 2024 | Renew or remove |
-| UGC-005 | @handle5 | Jan 30, 2025 | Renew or remove |
+| Content | Creator Ref | Rights Expire | Action Needed |
+|---------|-------------|---------------|---------------|
+| [asset] | [creator_ref] | [date from cited grant] | Renew or remove |
+| [asset] | [creator_ref] | [date from cited grant] | Renew or remove |
+
+### Manual Removal Queue — Existing Placements Only
+
+Derive one row per current placement whose rights are `expired`, `revoked`, `disputed`, `unknown`, or out of scope. This is a manual follow-up view, not an execution queue.
+
+| Content ID | Trigger Status / Evidence | Destination | Owner | `due_at` | `completion_ref` |
+|------------|---------------------------|-------------|-------|----------|------------------|
+| [asset] | [`revoked`; notice ref] | [opaque live-placement ref] | [human role/ref] | [ISO-8601 time] | null |
+
+Leave `completion_ref: null` until separately authorized human/platform action has completed and supplied evidence. Never infer completion from `due_at`, mark a row complete, pause an ad, delete a post, unpublish a page, or write to a platform from this tracker.
 
 ### Rights Expansion Opportunities
 | Content | Current Rights | Potential Upgrade | Est. Cost |
@@ -551,21 +592,23 @@ Examples:
 | UGC-002 | 12 months | Perpetual | $[X] |
 ```
 
-> Never recommend ad/website/email reuse of an asset whose rights level is unknown or `Organic only` — ask for the rights first (see SKILL.md Decision Gates).
+> Never recommend new use unless rights status is evidenced `active` and the grant covers that exact destination. `expired`, `revoked`, `disputed`, and `unknown` fail closed. A newly observed status change may be offered—with separate exact authorization—to the existing creator-registry proposal workflow; this tracker neither writes the proposal nor creates a new registry.
 
 ## Worked Example — repurpose (3 TikTok videos)
 
-**User**: "We have 3 great TikTok videos from our campaign. How should we repurpose them?"
+**User**: "Use these three supplied frozen, auditor-approved assets mapped to `creator_ref-1`, `creator_ref-2`, and `creator_ref-3`. Their supplied rights records are `active`, dated, evidenced, unexpired, and cover the requested derivative edits and US paid, website, email, organic-social, and YouTube destinations for the full 30-day flight. Build the reuse plan without persisting raw creator locators."
 
 ```markdown
 ## Repurposing Plan: 3 TikTok Videos
 
-### Content Overview
-1. @creator1: 45s product demo (best performer)
-2. @creator2: 30s before/after
-3. @creator3: 60s day-in-the-life
+**Evidence basis**: asset descriptions and rank are user-provided; each destination below is limited to the supplied frozen approval and active scoped-rights records.
 
-### Immediate Actions (Week 1) — From @creator1 video (45s demo):
+### Content Overview
+1. creator_ref-1: 45s product demo (user-provided rank 1)
+2. creator_ref-2: 30s before/after
+3. creator_ref-3: 60s day-in-the-life
+
+### Immediate Actions (Week 1) — From creator_ref-1 video (45s demo):
 - TikTok Spark Ad (original)
 - Instagram Reel (repost)
 - Website product page embed
@@ -576,21 +619,23 @@ Total: 1 video → 6 assets
 ### 30-Day Repurposing Calendar
 | Week | Channel | Content | Asset Type |
 |------|---------|---------|------------|
-| 1 | TikTok Ads | @creator1 | Spark Ad |
-| 1 | Instagram | @creator2 | Reel repost |
-| 1 | Website | @creator1 | Embed |
-| 2 | Meta Ads | @creator1 | Video ad |
-| 2 | Email | @creator3 | GIF + quote |
-| 3 | YouTube | @creator2 | Short |
+| 1 | TikTok Ads | creator_ref-1 / asset_ref | Spark Ad |
+| 1 | Instagram | creator_ref-2 / asset_ref | Reel repost |
+| 1 | Website | creator_ref-1 / asset_ref | Embed |
+| 2 | Meta Ads | creator_ref-1 / asset_ref | Video ad |
+| 2 | Email | creator_ref-3 / asset_ref | GIF + quote |
+| 3 | YouTube | creator_ref-2 / asset_ref | Short |
 | 4 | Landing page | All | Testimonials |
 
 ### Asset Checklist
 - [ ] Create 15s cuts from all 3
-- [ ] Pull 2 quote cards from @creator3
+- [ ] Pull 2 quote cards from creator_ref-3 / approved_asset_ref
 - [ ] Design 3 thumbnail images
-- [ ] Convert @creator2 to GIF for email
-- [ ] Add CTA overlay to @creator1 for Meta
+- [ ] Convert creator_ref-2 / approved_asset_ref to GIF for email
+- [ ] Add CTA overlay to creator_ref-1 / approved_asset_ref for Meta
 ```
+
+If the original terse request were the only input, return `NEEDS_INPUT` for the three frozen approval refs and current rights observation/evidence/scope. Do not create cuts, quote cards, a calendar, or destination recommendations until those inputs are supplied.
 
 ## Tips — repurpose
 

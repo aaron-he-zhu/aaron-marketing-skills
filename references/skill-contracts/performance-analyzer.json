@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 82,
+          "end_char": 190,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "- Core metrics are scored against target and benchmark with a performance verdict."
+        "text": "- Core metrics are compared against compatible source-dated targets/benchmarks. Missing or incompatible context is `Unknown`/`NOT_SCORED`, never an invented `/10` score or adjective verdict."
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 181,
+          "end_char": 343,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
-          "start_char": 85
+          "start_char": 193
         },
-        "text": "- Top and bottom performers are ranked with reasons, and content patterns that worked are named."
+        "text": "- Creators/platforms/content are ranked only under a declared metric, compatible window/basis, complete candidate set, and preregistered decision rule"
       },
       {
         "clause_id": "done-03",
@@ -38,22 +38,82 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 293,
+          "end_char": 414,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
-          "start_char": 184
+          "start_char": 345
         },
-        "text": "- Conversions are attributed by method (promo code / UTM / direct / estimated) and 3-5 learnings are written."
+        "text": "descriptive associations and causal hypotheses stay visibly separate."
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 519,
+          "path": "influencer/report/performance-analyzer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
+          "span_basis": "field-text",
+          "start_char": 417
+        },
+        "text": "- Conversions use one declared attribution model with deduplicated, mutually exclusive counted buckets"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 659,
+          "path": "influencer/report/performance-analyzer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
+          "span_basis": "field-text",
+          "start_char": 521
+        },
+        "text": "overlapping promo/UTM/direct observations remain reconciliation evidence, and modeled influence stays Estimated outside the counted total."
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 945,
+          "path": "influencer/report/performance-analyzer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
+          "span_basis": "field-text",
+          "start_char": 662
+        },
+        "text": "- With verified current `measured` or `closed` state, each requested next-cycle decision has a scope-bound Campaign Retro Card with campaign/creator/state/measurement/decision-rule refs, evidence-backed rationale, `evidence_refs`, next-campaign hypothesis, and unresolved limitations"
+      },
+      {
+        "clause_id": "done-07",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 1044,
+          "path": "influencer/report/performance-analyzer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
+          "span_basis": "field-text",
+          "start_char": 947
+        },
+        "text": "insufficient decision evidence resolves to `unknown`, while missing/forked state blocks the card."
       }
     ],
-    "done_when": "- Core metrics are scored against target and benchmark with a performance verdict.\n  - Top and bottom performers are ranked with reasons, and content patterns that worked are named.\n  - Conversions are attributed by method (promo code / UTM / direct / estimated) and 3-5 learnings are written.",
+    "done_when": "- Core metrics are compared against compatible source-dated targets/benchmarks. Missing or incompatible context is `Unknown`/`NOT_SCORED`, never an invented `/10` score or adjective verdict.\n  - Creators/platforms/content are ranked only under a declared metric, compatible window/basis, complete candidate set, and preregistered decision rule; descriptive associations and causal hypotheses stay visibly separate.\n  - Conversions use one declared attribution model with deduplicated, mutually exclusive counted buckets; overlapping promo/UTM/direct observations remain reconciliation evidence, and modeled influence stays Estimated outside the counted total.\n  - With verified current `measured` or `closed` state, each requested next-cycle decision has a scope-bound Campaign Retro Card with campaign/creator/state/measurement/decision-rule refs, evidence-backed rationale, `evidence_refs`, next-campaign hypothesis, and unresolved limitations; insufficient decision evidence resolves to `unknown`, while missing/forked state blocks the card.",
     "extraction_status": "classified",
     "source": {
       "path": "influencer/report/performance-analyzer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691"
+      "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566"
     }
   },
   "context_hints": {
@@ -62,50 +122,50 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
-        "source_line": 48
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "source_line": 49
       },
       {
         "path": "influencer/report/performance-analyzer/references/analysis-templates.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "684a96b4e1250b392c15084cec140dfcc5f227e6a069cbb17f437b744c5fa384",
-        "source_line": 52
+        "sha256": "ab479ecabe7dc920c7d254593aa404922a92b53a0627d902974509fe6f8e3034",
+        "source_line": 53
       },
       {
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
-        "source_line": 63
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
+        "source_line": 64
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
-        "source_line": 33
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
+        "source_line": 34
       },
       {
         "path": "references/star-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "d5e6cec23805026c8371cac0336026fb88ca4262c6ad48f52164b00925768e91",
-        "source_line": 63
+        "source_line": 64
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
-        "source_line": 91
+        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "source_line": 96
       },
       {
         "path": "scripts/connectors/README.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "755816582373b846b95783c125c6d9cd57d5c20bbf4af97bc00aecdbaa557c56",
-        "source_line": 44
+        "source_line": 45
       }
     ],
     "project_paths": [
@@ -120,6 +180,12 @@
     ]
   },
   "contract_id": "skill:performance-analyzer",
+  "control_requirements": [
+    "artifact-binding",
+    "cycle-retro",
+    "evidence-observation",
+    "measurement-contract"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -132,7 +198,7 @@
           "end_char": 146,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -150,7 +216,7 @@
           "end_char": 184,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 148
         },
@@ -166,7 +232,7 @@
           "end_char": 293,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 186
         },
@@ -184,7 +250,7 @@
           "end_char": 412,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 294
         },
@@ -202,7 +268,7 @@
           "end_char": 601,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 414
         },
@@ -218,7 +284,7 @@
           "end_char": 700,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 603
         },
@@ -231,7 +297,7 @@
     "summary_ref": {
       "path": "influencer/report/performance-analyzer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691"
+      "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -246,8 +312,8 @@
     "name": "performance-analyzer",
     "path": "influencer/report/performance-analyzer/SKILL.md",
     "phase": "report",
-    "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
-    "version": "20.0.0"
+    "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<campaign name> [platform or influencer handles]",
@@ -261,7 +327,7 @@
           "end_char": 28,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -276,7 +342,7 @@
           "end_char": 82,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 30
         },
@@ -291,7 +357,7 @@
           "end_char": 126,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 84
         },
@@ -306,7 +372,7 @@
           "end_char": 166,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 128
         },
@@ -321,7 +387,7 @@
           "end_char": 204,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 168
         },
@@ -333,37 +399,67 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 249,
+          "end_char": 290,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 206
         },
-        "text": "targets and benchmarks if the user has them"
+        "text": "targets, benchmarks, and the preregistered decision rule/readback window if supplied"
       },
       {
         "clause_id": "read-07",
         "extraction_status": "partially-classified",
+        "kind": "unclassified",
+        "requirement": "optional",
+        "source": {
+          "end_char": 357,
+          "path": "influencer/report/performance-analyzer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
+          "span_basis": "field-text",
+          "start_char": 292
+        },
+        "text": "the optional lightweight campaign tracker and its `evidence_refs`"
+      },
+      {
+        "clause_id": "read-08",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 544,
+          "path": "influencer/report/performance-analyzer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
+          "span_basis": "field-text",
+          "start_char": 359
+        },
+        "text": "and any ROI/ROAS artifact already computed by [roi-calculator](../roi-calculator/SKILL.md). Reuse each explicit upstream opaque `creator_ref` or a verified creator-registry aggregate ID"
+      },
+      {
+        "clause_id": "read-09",
+        "extraction_status": "partially-classified",
         "kind": "project-resource",
         "requirement": "unclassified",
         "source": {
-          "end_char": 419,
+          "end_char": 834,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
-          "start_char": 251
+          "start_char": 546
         },
-        "text": "per-creator performance baselines from `memory/creators/<handle-slug>.md` ([creator-registry](../../../protocol/creator-registry/SKILL.md) roster records) when present."
+        "text": "a raw handle/name/URL/provider ID is transient lookup input only and never becomes a saved identity. Per-creator baselines come from `memory/creators/<aggregate-id>.md` only when an authorized artifact or verified registry link resolves that ref. Never derive the path from a raw locator."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "campaign name and date range; native platform analytics (reach, views, engagement); influencer-supplied reports or screenshots; website/GA traffic and conversion data; sales and promo-code redemption data; targets and benchmarks if the user has them; per-creator performance baselines from `memory/creators/<handle-slug>.md` ([creator-registry](../../../protocol/creator-registry/SKILL.md) roster records) when present.",
+    "reads": "campaign name and date range; native platform analytics (reach, views, engagement); influencer-supplied reports or screenshots; website/GA traffic and conversion data; sales and promo-code redemption data; targets, benchmarks, and the preregistered decision rule/readback window if supplied; the optional lightweight campaign tracker and its `evidence_refs`; and any ROI/ROAS artifact already computed by [roi-calculator](../roi-calculator/SKILL.md). Reuse each explicit upstream opaque `creator_ref` or a verified creator-registry aggregate ID; a raw handle/name/URL/provider ID is transient lookup input only and never becomes a saved identity. Per-creator baselines come from `memory/creators/<aggregate-id>.md` only when an authorized artifact or verified registry link resolves that ref. Never derive the path from a raw locator.",
     "source": {
       "path": "influencer/report/performance-analyzer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691"
+      "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566"
     }
   },
   "output_contract": {
@@ -375,37 +471,57 @@
         "permission_posture": "permission-required",
         "side_effect": "project-write",
         "source": {
-          "end_char": 248,
+          "end_char": 401,
           "path": "influencer/report/performance-analyzer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "a performance analysis to `memory/influencer/performance-analyzer/YYYY-MM-DD-<campaign>.md` covering core-metric scorecards, platform/influencer/content rankings, engagement-quality and sentiment reads, conversion attribution, and ranked learnings."
+        "text": "return the performance analysis inline by default. When a current non-forked tracker-state artifact proves `measured` or `closed`, include the compact Campaign Retro Card from step 8 bound to that campaign, creator, measurement contract, and decision rule. Save the analysis and card together to `memory/influencer/performance-analyzer/YYYY-MM-DD-<campaign>.md` only with exact WARM-save authorization"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 566,
+          "path": "influencer/report/performance-analyzer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566",
+          "span_basis": "field-text",
+          "start_char": 403
+        },
+        "text": "saved tables, headings, evidence, and handoffs use `creator_ref` plus opaque source refs, never raw handles, names, profile URLs, email addresses, or provider IDs."
       }
     ],
-    "extraction_status": "classified",
+    "extraction_status": "partially-classified",
     "source": {
       "path": "influencer/report/performance-analyzer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691"
+      "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566"
     },
-    "summary": "a performance analysis to `memory/influencer/performance-analyzer/YYYY-MM-DD-<campaign>.md` covering core-metric scorecards, platform/influencer/content rankings, engagement-quality and sentiment reads, conversion attribution, and ranked learnings.",
+    "summary": "return the performance analysis inline by default. When a current non-forked tracker-state artifact proves `measured` or `closed`, include the compact Campaign Retro Card from step 8 bound to that campaign, creator, measurement contract, and decision rule. Save the analysis and card together to `memory/influencer/performance-analyzer/YYYY-MM-DD-<campaign>.md` only with exact WARM-save authorization; saved tables, headings, evidence, and handoffs use `creator_ref` plus opaque source refs, never raw handles, names, profile URLs, email addresses, or provider IDs.",
     "summary_source": "writes-fallback",
-    "writes": "a performance analysis to `memory/influencer/performance-analyzer/YYYY-MM-DD-<campaign>.md` covering core-metric scorecards, platform/influencer/content rankings, engagement-quality and sentiment reads, conversion attribution, and ranked learnings."
+    "writes": "return the performance analysis inline by default. When a current non-forked tracker-state artifact proves `measured` or `closed`, include the compact Campaign Retro Card from step 8 bound to that campaign, creator, measurement contract, and decision rule. Save the analysis and card together to `memory/influencer/performance-analyzer/YYYY-MM-DD-<campaign>.md` only with exact WARM-save authorization; saved tables, headings, evidence, and handoffs use `creator_ref` plus opaque source refs, never raw handles, names, profile URLs, email addresses, or provider IDs."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -414,7 +530,7 @@
     "source": {
       "path": "influencer/report/performance-analyzer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "56dc96faa902efdf6ff991e01c40ec11ba1291a29ec7b81c711808ec7a55d691"
+      "sha256": "9acb990fe127955d95034fa3442595988885e4620e48dea9a72608f0c598e566"
     },
     "trigger_phrases": [
       "analyze influencer campaign performance",

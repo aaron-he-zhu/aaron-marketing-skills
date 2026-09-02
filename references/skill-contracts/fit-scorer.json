@@ -11,7 +11,7 @@
           "end_char": 133,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 219,
+          "end_char": 253,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
           "start_char": 136
         },
-        "text": "- The typed goal/context and the Suitability item states are preserved for the gate"
+        "text": "- Every creator's stable opaque `creator_ref` is preserved from discovery/registry or generated once for this lineage"
       },
       {
         "clause_id": "done-03",
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 257,
+          "end_char": 294,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 221
+          "start_char": 255
         },
-        "text": "Unknown prevents a Suitability read."
+        "text": "raw identity locators remain transient."
       },
       {
         "clause_id": "done-04",
@@ -53,22 +53,82 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 382,
+          "end_char": 380,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 260
+          "start_char": 297
+        },
+        "text": "- The typed goal/context and the Suitability item states are preserved for the gate"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 418,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 382
+        },
+        "text": "Unknown prevents a Suitability read."
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 543,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 421
         },
         "text": "- Any commercial-fit ranking is visibly separate from the Suitability read and cannot override a veto or missing evidence."
+      },
+      {
+        "clause_id": "done-07",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 682,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 546
+        },
+        "text": "- If a Retro Card is supplied, its `next_campaign_hypothesis` is visible only as a falsifiable test constraint/commercial-matrix context"
+      },
+      {
+        "clause_id": "done-08",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 796,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 684
+        },
+        "text": "its `evidence_refs` are pointers for fresh investigation, not STAR item evidence or an automatic selection rule."
       }
     ],
-    "done_when": "- Every creator has all 10 Suitability items `S1`–`S10` explicitly Pass/Partial/Fail/Unknown/N/A with dated evidence or a gap reason.\n  - The typed goal/context and the Suitability item states are preserved for the gate; Unknown prevents a Suitability read.\n  - Any commercial-fit ranking is visibly separate from the Suitability read and cannot override a veto or missing evidence.",
+    "done_when": "- Every creator has all 10 Suitability items `S1`–`S10` explicitly Pass/Partial/Fail/Unknown/N/A with dated evidence or a gap reason.\n  - Every creator's stable opaque `creator_ref` is preserved from discovery/registry or generated once for this lineage; raw identity locators remain transient.\n  - The typed goal/context and the Suitability item states are preserved for the gate; Unknown prevents a Suitability read.\n  - Any commercial-fit ranking is visibly separate from the Suitability read and cannot override a veto or missing evidence.\n  - If a Retro Card is supplied, its `next_campaign_hypothesis` is visible only as a falsifiable test constraint/commercial-matrix context; its `evidence_refs` are pointers for fresh investigation, not STAR item evidence or an automatic selection rule.",
     "extraction_status": "classified",
     "source": {
       "path": "influencer/scout/fit-scorer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e"
+      "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861"
     }
   },
   "context_hints": {
@@ -77,43 +137,43 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
-        "source_line": 46
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "source_line": 48
       },
       {
         "path": "influencer/scout/fit-scorer/references/scoring-templates.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ff4050e24ec0fa6cc3a28482ba70e86e44140e07d843ccd7a45f31868fad6fe2",
-        "source_line": 50
+        "sha256": "116e96c9dbc6d4f386548175a9fc3b6d1128c6699fbdf64a14286d03be26e06f",
+        "source_line": 52
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
-        "source_line": 33
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
+        "source_line": 35
       },
       {
         "path": "references/star-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "d5e6cec23805026c8371cac0336026fb88ca4262c6ad48f52164b00925768e91",
-        "source_line": 54
+        "source_line": 56
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
-        "source_line": 71
+        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "source_line": 73
       },
       {
         "path": "scripts/connectors/README.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "755816582373b846b95783c125c6d9cd57d5c20bbf4af97bc00aecdbaa557c56",
-        "source_line": 44
+        "source_line": 46
       }
     ],
     "project_paths": [
@@ -144,26 +204,30 @@
     ]
   },
   "contract_id": "skill:fit-scorer",
+  "control_requirements": [
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
       {
-        "condition": "before you commit budget.",
+        "condition": null,
         "extraction_status": "classified",
         "item_id": "handoff-01",
         "kind": "primary",
         "source": {
-          "end_char": 186,
+          "end_char": 160,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
           "start_char": 0
         },
         "target_skills": [
-          "competitor-tracker"
+          "campaign-planner"
         ],
-        "text": "**Primary**: [competitor-tracker](../../target/competitor-tracker/SKILL.md) — benchmark your top-scored picks against the creators competitors already work with before you commit budget."
+        "text": "**Primary**: [campaign-planner](../../target/campaign-planner/SKILL.md) — turn the ranked shortlist into the campaign plan, budget, timeline, and approval path."
       },
       {
         "condition": null,
@@ -171,28 +235,96 @@
         "item_id": "handoff-02",
         "kind": "unclassified",
         "source": {
-          "end_char": 222,
+          "end_char": 188,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 188
+          "start_char": 162
         },
         "target_skills": [],
-        "text": "**Alternates** (same scout phase):"
+        "text": "**Conditional next step**:"
       },
       {
-        "condition": "when a complete Suitability read or potential `STAR-S2`/`STAR-S6`/`STAR-T3` control evidence is ready, stop and hand it to this sole STAR gate as a separate invocation",
+        "condition": "when an approved campaign plan already defines the offer, budget, target creator, channel, and outreach approval path",
         "extraction_status": "partially-classified",
         "item_id": "handoff-03",
         "kind": "unclassified",
         "source": {
-          "end_char": 469,
+          "end_char": 376,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 223
+          "start_char": 189
+        },
+        "target_skills": [
+          "outreach-manager"
+        ],
+        "text": "- [outreach-manager](../../activate/outreach-manager/SKILL.md) — only when an approved campaign plan already defines the offer, budget, target creator, channel, and outreach approval path"
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-04",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 417,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 378
+        },
+        "target_skills": [],
+        "text": "this handoff does not authorize a send."
+      },
+      {
+        "condition": null,
+        "extraction_status": "unclassified",
+        "item_id": "handoff-05",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 454,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 419
+        },
+        "target_skills": [],
+        "text": "**Optional checks and alternates**:"
+      },
+      {
+        "condition": "when that evidence would change the selection.",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-06",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 631,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 455
+        },
+        "target_skills": [
+          "competitor-tracker"
+        ],
+        "text": "- [competitor-tracker](../../target/competitor-tracker/SKILL.md) — optionally benchmark top picks against competitor partnerships when that evidence would change the selection."
+      },
+      {
+        "condition": "when a complete Suitability read or potential `STAR-S2`/`STAR-S6`/`STAR-T3` control evidence is ready, stop and hand it to this sole STAR gate as a separate invocation",
+        "extraction_status": "partially-classified",
+        "item_id": "handoff-07",
+        "kind": "unclassified",
+        "source": {
+          "end_char": 878,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Next Best Skill",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 632
         },
         "target_skills": [
           "creator-content-auditor"
@@ -202,15 +334,15 @@
       {
         "condition": null,
         "extraction_status": "unclassified",
-        "item_id": "handoff-04",
+        "item_id": "handoff-08",
         "kind": "unclassified",
         "source": {
-          "end_char": 511,
+          "end_char": 920,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 471
+          "start_char": 880
         },
         "target_skills": [],
         "text": "do not auto-run or simulate its verdict."
@@ -218,15 +350,15 @@
       {
         "condition": "if the shortlist is too thin to rank, source more candidates.",
         "extraction_status": "partially-classified",
-        "item_id": "handoff-05",
+        "item_id": "handoff-09",
         "kind": "unclassified",
         "source": {
-          "end_char": 634,
+          "end_char": 1043,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 512
+          "start_char": 921
         },
         "target_skills": [
           "influencer-discovery"
@@ -236,15 +368,15 @@
       {
         "condition": "if audience-match scores are uncertain, tighten the target-audience definition first.",
         "extraction_status": "partially-classified",
-        "item_id": "handoff-06",
+        "item_id": "handoff-10",
         "kind": "unclassified",
         "source": {
-          "end_char": 771,
+          "end_char": 1180,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 635
+          "start_char": 1044
         },
         "target_skills": [
           "audience-mapper"
@@ -252,35 +384,37 @@
         "text": "- [audience-mapper](../audience-mapper/SKILL.md) — if audience-match scores are uncertain, tighten the target-audience definition first."
       },
       {
-        "condition": "If the recommended next skill has already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops (max-depth 3) and hand back to the user with the saved report path.",
+        "condition": "If the recommended next skill has already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops (max-depth 3) and hand back the inline result plus any separately authorized save path.",
         "extraction_status": "unclassified",
-        "item_id": "handoff-07",
+        "item_id": "handoff-11",
         "kind": "unclassified",
         "source": {
-          "end_char": 1050,
+          "end_char": 1479,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 773
+          "start_char": 1182
         },
         "target_skills": [],
-        "text": "**Termination note**: Track a visited-set of skills invoked this session. If the recommended next skill has already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops (max-depth 3) and hand back to the user with the saved report path."
+        "text": "**Termination note**: Track a visited-set of skills invoked this session. If the recommended next skill has already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops (max-depth 3) and hand back the inline result plus any separately authorized save path."
       }
     ],
-    "next_best": "**Primary**: [competitor-tracker](../../target/competitor-tracker/SKILL.md) — benchmark your top-scored picks against the creators competitors already work with before you commit budget.\n\n**Alternates** (same scout phase):\n- [creator-content-auditor](../../activate/creator-content-auditor/SKILL.md) — when a complete Suitability read or potential `STAR-S2`/`STAR-S6`/`STAR-T3` control evidence is ready, stop and hand it to this sole STAR gate as a separate invocation; do not auto-run or simulate its verdict.\n- [influencer-discovery](../influencer-discovery/SKILL.md) — if the shortlist is too thin to rank, source more candidates.\n- [audience-mapper](../audience-mapper/SKILL.md) — if audience-match scores are uncertain, tighten the target-audience definition first.\n\n**Termination note**: Track a visited-set of skills invoked this session. If the recommended next skill has already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops (max-depth 3) and hand back to the user with the saved report path.",
+    "next_best": "**Primary**: [campaign-planner](../../target/campaign-planner/SKILL.md) — turn the ranked shortlist into the campaign plan, budget, timeline, and approval path.\n\n**Conditional next step**:\n- [outreach-manager](../../activate/outreach-manager/SKILL.md) — only when an approved campaign plan already defines the offer, budget, target creator, channel, and outreach approval path; this handoff does not authorize a send.\n\n**Optional checks and alternates**:\n- [competitor-tracker](../../target/competitor-tracker/SKILL.md) — optionally benchmark top picks against competitor partnerships when that evidence would change the selection.\n- [creator-content-auditor](../../activate/creator-content-auditor/SKILL.md) — when a complete Suitability read or potential `STAR-S2`/`STAR-S6`/`STAR-T3` control evidence is ready, stop and hand it to this sole STAR gate as a separate invocation; do not auto-run or simulate its verdict.\n- [influencer-discovery](../influencer-discovery/SKILL.md) — if the shortlist is too thin to rank, source more candidates.\n- [audience-mapper](../audience-mapper/SKILL.md) — if audience-match scores are uncertain, tighten the target-audience definition first.\n\n**Termination note**: Track a visited-set of skills invoked this session. If the recommended next skill has already run, stop and report the chain complete rather than re-invoking it. Stop after at most 3 hops (max-depth 3) and hand back the inline result plus any separately authorized save path.",
     "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
     "summary_ref": {
       "path": "influencer/scout/fit-scorer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e"
+      "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861"
     },
     "summary_source": "skill-section",
     "target_skills": [
       "audience-mapper",
+      "campaign-planner",
       "competitor-tracker",
       "creator-content-auditor",
-      "influencer-discovery"
+      "influencer-discovery",
+      "outreach-manager"
     ]
   },
   "identity": {
@@ -289,8 +423,8 @@
     "name": "fit-scorer",
     "path": "influencer/scout/fit-scorer/SKILL.md",
     "phase": "scout",
-    "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
-    "version": "20.0.0"
+    "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<brand or campaign> <influencer handle(s)> [campaign goal: awareness|engagement|conversion]",
@@ -301,64 +435,84 @@
         "kind": "project-resource",
         "requirement": "optional",
         "source": {
-          "end_char": 563,
+          "end_char": 792,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "brand/campaign context, target audience definition, campaign goal, and a shortlist of influencer handles (supplied by the user or carried over from `influencer-discovery`). Optional prior audience profiles from `memory/influencer/audience-mapper/` and competitor partner benchmarks from `memory/influencer/competitor-tracker/`. For rostered creators, read partnership history and audience-stat provenance from `memory/creators/<handle-slug>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) roster record — as Partnership Potential inputs."
+        "text": "brand/campaign context, target audience definition, campaign goal, and shortlist entries carrying a stable opaque `creator_ref` plus either transient handles/profile URLs or resolvable opaque handle refs (supplied by the user or carried over from `influencer-discovery`). Optional prior audience profiles from `memory/influencer/audience-mapper/`, competitor partner benchmarks from `memory/influencer/competitor-tracker/`, and a WARM Campaign Retro Card's `evidence_refs` plus `next_campaign_hypothesis` when the user supplies or authorizes that handoff. For rostered creators, read partnership history and audience-stat provenance from `memory/creators/<aggregate-id>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) roster record — as Partnership Potential inputs."
       }
     ],
     "extraction_status": "classified",
-    "reads": "brand/campaign context, target audience definition, campaign goal, and a shortlist of influencer handles (supplied by the user or carried over from `influencer-discovery`). Optional prior audience profiles from `memory/influencer/audience-mapper/` and competitor partner benchmarks from `memory/influencer/competitor-tracker/`. For rostered creators, read partnership history and audience-stat provenance from `memory/creators/<handle-slug>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) roster record — as Partnership Potential inputs.",
+    "reads": "brand/campaign context, target audience definition, campaign goal, and shortlist entries carrying a stable opaque `creator_ref` plus either transient handles/profile URLs or resolvable opaque handle refs (supplied by the user or carried over from `influencer-discovery`). Optional prior audience profiles from `memory/influencer/audience-mapper/`, competitor partner benchmarks from `memory/influencer/competitor-tracker/`, and a WARM Campaign Retro Card's `evidence_refs` plus `next_campaign_hypothesis` when the user supplies or authorizes that handoff. For rostered creators, read partnership history and audience-stat provenance from `memory/creators/<aggregate-id>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) roster record — as Partnership Potential inputs.",
     "source": {
       "path": "influencer/scout/fit-scorer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e"
+      "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861"
     }
   },
   "output_contract": {
     "clauses": [
       {
         "clause_id": "write-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 104,
+          "path": "influencer/scout/fit-scorer/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "return the typed Suitability (S) read and separately labeled commercial-fit comparison inline by default"
+      },
+      {
+        "clause_id": "write-02",
         "extraction_status": "classified",
         "kind": "project-artifact",
         "permission_posture": "permission-required",
         "side_effect": "project-write",
         "source": {
-          "end_char": 193,
+          "end_char": 548,
           "path": "influencer/scout/fit-scorer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e",
+          "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861",
           "span_basis": "field-text",
-          "start_char": 0
+          "start_char": 106
         },
-        "text": "only with explicit authorization, a report containing the typed Suitability (S) read plus a separately labeled commercial-fit comparison at `memory/influencer/fit-scorer/YYYY-MM-DD-<topic>.md`."
+        "text": "when a Retro Card is supplied, preserve its hypothesis as a separately labeled next-cycle test constraint with no score or verdict effect. Save the report to `memory/influencer/fit-scorer/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Saved reports and handoffs retain the stable opaque `creator_ref` and opaque evidence refs, never a raw handle, name, profile URL, email, provider ID, or deterministic hash in `creator_ref`."
       }
     ],
-    "extraction_status": "classified",
+    "extraction_status": "partially-classified",
     "source": {
       "path": "influencer/scout/fit-scorer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e"
+      "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861"
     },
-    "summary": "only with explicit authorization, a report containing the typed Suitability (S) read plus a separately labeled commercial-fit comparison at `memory/influencer/fit-scorer/YYYY-MM-DD-<topic>.md`.",
+    "summary": "return the typed Suitability (S) read and separately labeled commercial-fit comparison inline by default; when a Retro Card is supplied, preserve its hypothesis as a separately labeled next-cycle test constraint with no score or verdict effect. Save the report to `memory/influencer/fit-scorer/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Saved reports and handoffs retain the stable opaque `creator_ref` and opaque evidence refs, never a raw handle, name, profile URL, email, provider ID, or deterministic hash in `creator_ref`.",
     "summary_source": "writes-fallback",
-    "writes": "only with explicit authorization, a report containing the typed Suitability (S) read plus a separately labeled commercial-fit comparison at `memory/influencer/fit-scorer/YYYY-MM-DD-<topic>.md`."
+    "writes": "return the typed Suitability (S) read and separately labeled commercial-fit comparison inline by default; when a Retro Card is supplied, preserve its hypothesis as a separately labeled next-cycle test constraint with no score or verdict effect. Save the report to `memory/influencer/fit-scorer/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Saved reports and handoffs retain the stable opaque `creator_ref` and opaque evidence refs, never a raw handle, name, profile URL, email, provider ID, or deterministic hash in `creator_ref`."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -367,7 +521,7 @@
     "source": {
       "path": "influencer/scout/fit-scorer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "7f413edf8cac76454ede61d9dc2cb9c2848116686ed441cdca947b970d47d99e"
+      "sha256": "70449e24699e875e607f85f7578aba4acfc0e1fb5bbd85581a11a20bb50a0861"
     },
     "trigger_phrases": [
       "rank these creators for our campaign",

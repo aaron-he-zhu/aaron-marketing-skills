@@ -4,13 +4,13 @@ slug: keyword-research
 displayName: "Keyword Research · 关键词研究"
 summary: "关键词研究/内容选题"
 description: 'Use when the user asks to "find keywords", "挖词", or "搜什么词"; prioritizes search volume, keyword difficulty, intent, and topic clusters from provided or connected data. Not for competitor-relative coverage gaps — use content-gap-analysis. 关键词研究/内容选题'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when starting keyword research for a new page, topic, or campaign. Also when the user asks about search volume, keyword difficulty, topic clusters, long-tail keywords, what to write about, 关键词研究, 挖词, 内容选题, or 搜什么词."
 argument-hint: "<topic or seed keyword> [market/language]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "survey", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "survey"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "seo-geo", "phase": "survey", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "seo-geo", "survey"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Keyword Research
@@ -34,7 +34,7 @@ What keywords is [competitor URL] ranking for that I should target?
 - **Reads**: topic or seed keyword, target market/language, business goal, site DR, and any user-provided or tool metrics.
 - **Writes**: a user-facing research deliverable and reusable summary.
 - **Promotes**: durable keyword priorities, competitor facts, and pending strategy decisions to `memory/hot-cache.md`, `memory/open-loops.md`, and `memory/research/`.
-- **Done when**: every shortlisted keyword carries volume + difficulty + intent (or a labeled N/A); keywords are grouped into pillar + cluster hubs; and the deliverable names at least 3 prioritized Quick Win / Growth / GEO opportunities.
+- **Done when**: every shortlisted keyword carries volume + difficulty + intent, each with source ref, observation time/window, market/language, and evidence label; an applicable missing value is `Unknown` with its gap reason, never N/A; keywords are grouped into pillar + cluster hubs; and the deliverable names at least 3 prioritized Quick Win / Growth / GEO opportunities.
 - **Primary next skill**: [competitor-analysis](../competitor-analysis/SKILL.md) when the keyword set is ready for market comparison.
 
 ### Handoff Summary
@@ -66,7 +66,7 @@ When a user requests keyword research, run eight phases and announce each as `[P
 7. **Cluster** — group keywords into pillar + cluster topic hubs.
 8. **Deliver** — output an Executive Summary, Quick Wins / Growth / GEO opportunities, Topic Clusters, Content Calendar, and Next Steps.
 
-Label every metric **Measured** (tool/export), **User-provided**, or **Estimated** (model inference); never present an estimate as measured; if a required metric is unavailable, mark it N/A — do not invent it.
+Label every metric **Measured** (tool/export), **User-provided**, **Calculated**, **Estimated**, **Proxy**, or **Unknown**; retain query, locale, language, source ref, observation time, and window per field. Preserve conflicting sources. If an applicable metric is unavailable, mark it Unknown with a missing reason — N/A is only for a genuinely non-applicable field. An attention proxy never becomes search volume, and an Unknown decision-critical input makes the opportunity score `NOT_SCORED`.
 
 ### Impact × Confidence lens (optional, layers onto Phase 5)
 
@@ -98,6 +98,7 @@ Write path: `memory/research/keyword-research/YYYY-MM-DD-<topic>.md`; promote du
 
 ## Reference Materials
 
+- [SEO/GEO Evidence and Cycle Control Profile](../../evaluate/performance-monitor/references/evidence-and-cycle-control.md) — query/SERP observations, missingness, page bindings, and index receipts
 - [Instructions Detail](references/instructions-detail.md) — Workflow, scoring, cluster template, advanced usage
 - [Keyword Intent Taxonomy](references/keyword-intent-taxonomy.md) — Intent signals and content mapping
 - [Topic Cluster Templates](references/topic-cluster-templates.md) — Pillar and cluster patterns

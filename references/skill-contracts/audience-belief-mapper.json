@@ -11,7 +11,7 @@
           "end_char": 147,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 212,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 149
         },
@@ -41,7 +41,7 @@
           "end_char": 389,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 214
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/trace/audience-belief-mapper/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8"
+      "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -76,7 +76,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
       },
       {
@@ -107,6 +107,7 @@
     ]
   },
   "contract_id": "skill:audience-belief-mapper",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -119,7 +120,7 @@
           "end_char": 174,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -137,7 +138,7 @@
           "end_char": 357,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 175
         },
@@ -155,7 +156,7 @@
           "end_char": 553,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 358
         },
@@ -173,7 +174,7 @@
           "end_char": 906,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 555
         },
@@ -186,7 +187,7 @@
     "summary_ref": {
       "path": "narrative/trace/audience-belief-mapper/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8"
+      "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -201,8 +202,8 @@
     "name": "audience-belief-mapper",
     "path": "narrative/trace/audience-belief-mapper/SKILL.md",
     "phase": "trace",
-    "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
-    "version": "20.0.0"
+    "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / beachhead> [interview / win-loss notes] [known objections]",
@@ -216,7 +217,7 @@
           "end_char": 100,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -231,7 +232,7 @@
           "end_char": 253,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 102
         },
@@ -246,7 +247,7 @@
           "end_char": 376,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 255
         },
@@ -258,7 +259,7 @@
     "source": {
       "path": "narrative/trace/audience-belief-mapper/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8"
+      "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4"
     }
   },
   "output_contract": {
@@ -273,7 +274,7 @@
           "end_char": 77,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -289,7 +290,7 @@
           "end_char": 281,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 79
         },
@@ -305,7 +306,7 @@
           "end_char": 578,
           "path": "narrative/trace/audience-belief-mapper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8",
+          "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4",
           "span_basis": "field-text",
           "start_char": 283
         },
@@ -316,7 +317,7 @@
     "source": {
       "path": "narrative/trace/audience-belief-mapper/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8"
+      "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4"
     },
     "summary": "a belief map for the beachhead — held beliefs / mental models, a recurring-objections table (objection · frequency-source · reframe candidate), and the JTBD four-forces map (push / pull / anxiety / habit, each with the evidence line it came from) — every item labeled Measured / User-provided / Estimated, plus a `[needs source]` list for any unverified quote or comparative claim, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -327,12 +328,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -341,7 +342,7 @@
     "source": {
       "path": "narrative/trace/audience-belief-mapper/SKILL.md",
       "section": "frontmatter",
-      "sha256": "98ef7acff9990ab33583cf1bc50124b1ec74e035c227b7d5a817af832a8313c8"
+      "sha256": "340a907285a837804284a9821106d7112474637a6899e3cccbd6382a52f6abb4"
     },
     "trigger_phrases": [
       "[needs source]",

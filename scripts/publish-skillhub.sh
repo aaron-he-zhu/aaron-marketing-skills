@@ -18,7 +18,7 @@
 #   bash scripts/publish-skillhub.sh                          # dry-run (default): local pre-check, all manifest skills
 #   bash scripts/publish-skillhub.sh --skill keyword-research # dry-run one skill
 #   bash scripts/publish-skillhub.sh --live                   # publish all (changelog 首次发布)
-#   bash scripts/publish-skillhub.sh --live --changelog "v20.0.0 更新说明"
+#   bash scripts/publish-skillhub.sh --live --changelog "v20.1.0 更新说明"
 #   bash scripts/publish-skillhub.sh --live --skill x --attempts 1 --throttle 0
 #                          # orchestrated mode: publish-registries.sh owns retry/pacing
 #

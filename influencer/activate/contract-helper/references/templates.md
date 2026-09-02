@@ -4,6 +4,8 @@ Moved out of `SKILL.md` to keep the skill lean. This file holds the full agreeme
 
 ⚠️ This skill provides general guidance and templates. Always have contracts reviewed by legal counsel before execution.
 
+**Identity and execution boundary**: a saved WARM record is a reference-only contract summary. Its identity/contact fields are limited to `party_ref`, `contact_ref`, `address_ref`, and `signature_ref`, followed by the supplied term summary; never place raw legal names, entity IDs, emails, phones, postal addresses, payment details, signatures, or executable/signed document bytes in WARM. The full execution copy belongs only in the authorized external document/e-sign system. A draft, review, WARM save, or legal approval is not permission to upload or send it. Every signature request needs its own exact authorization bound to the final `recipient_ref`, SHA-256 of the exact document bytes, and delivery channel; any change to one of those values requires new approval.
+
 ---
 
 ## 1. Contract Parameters (gathering form)
@@ -12,8 +14,11 @@ Moved out of `SKILL.md` to keep the skill lean. This file holds the full agreeme
 ### Contract Parameters
 
 **Parties**:
-- Brand/Company: [name]
-- Influencer/Creator: [name or TBD for template]
+- Brand/Company party ref: [party_ref or TBD]
+- Creator party ref: [party_ref or TBD]
+- Delivery contact refs: [contact_ref values or TBD]
+- Notice address refs: [address_ref values or TBD]
+- Signature refs: [signature_ref values or TBD]
 
 **Partnership Details**:
 - Campaign: [name/description]
@@ -30,7 +35,43 @@ Moved out of `SKILL.md` to keep the skill lean. This file holds the full agreeme
 
 ---
 
+### WARM Contract Summary (Persistable)
+
+```yaml
+party_refs: [brand-party-ref, creator-party-ref]
+contact_refs: [brand-contact-ref, creator-contact-ref]
+address_refs: [brand-address-ref, creator-address-ref]
+signature_refs: [brand-signature-ref-or-pending, creator-signature-ref-or-pending]
+term_summary:
+  deliverables: [supplied scope or TBD]
+  compensation: [supplied amount/schedule or TBD]
+  usage_rights: [channel/territory/format/duration/use scope or TBD]
+  exclusivity: [supplied scope/window or TBD]
+  revisions: [supplied count/process or TBD]
+  effective_and_delivery_dates: [supplied dates or TBD]
+  governing_law_and_dispute_process: [supplied terms or TBD]
+  execution_status: [draft | routed | partially-signed | executed]
+```
+
+Do not add raw values or the document bytes/hash to this WARM block. The e-sign provider retains its execution copy and provider audit trail outside WARM.
+
+### E-sign Dispatch Authorization (Transient External Action)
+
+```yaml
+recipient_ref: [exact intended signer/recipient ref]
+document_sha256: [SHA-256 of the exact final execution bytes]
+channel: [exact e-sign/email delivery channel]
+exact_authorization: [approval ref for this tuple or NEEDS_INPUT]
+dispatch_state: [DRAFT_NOT_SENT | AUTHORIZED_PENDING_PROVIDER | SENT_WITH_PROVIDER_EVIDENCE]
+```
+
+Resolve the raw recipient and any legal/address values only inside the authorized provider job. Do not save this dispatch manifest as the WARM contract summary. A different recipient, document byte, or channel invalidates the authorization.
+
+---
+
 ## 2. Full Agreement Template
+
+**External execution copy only — never save this rendered copy to WARM.** Keep the reference-safe WARM summary above locally; resolve legal names, addresses, notices, and signature fields transiently inside the separately authorized external document/e-sign workflow.
 
 ```markdown
 # INFLUENCER PARTNERSHIP AGREEMENT
@@ -39,11 +80,11 @@ Moved out of `SKILL.md` to keep the skill lean. This file holds the full agreeme
 
 **This Agreement** is entered into as of [DATE] ("Effective Date") by and between:
 
-**Company**: [COMPANY NAME], a [STATE] [corporation/LLC] with offices at [ADDRESS] ("Brand")
+**Company**: [legal entity resolved transiently from Brand `party_ref`], a [jurisdiction/entity type from approved terms] with offices at [address resolved transiently from Brand `address_ref`] ("Brand")
 
 and
 
-**Creator**: [INFLUENCER NAME], an individual residing at [ADDRESS/CITY, STATE] ("Influencer")
+**Creator**: [legal party resolved transiently from Creator `party_ref`], [approved entity/person description] residing/registered at [address resolved transiently from Creator `address_ref`] ("Influencer")
 
 Collectively referred to as the "Parties."
 
@@ -111,7 +152,7 @@ OR
 
 Payment will be made via [PAYMENT METHOD] to:
 
-[Payment details to be provided by Influencer]
+[Payment details remain in the authorized payment/provider system; the WARM summary stores no account data]
 
 ### 2.4 Taxes
 
@@ -119,7 +160,7 @@ Influencer is responsible for all applicable taxes. Brand will issue a 1099 form
 
 ### 2.5 Additional Compensation (if applicable)
 
-**Affiliate Commission**: Influencer will receive [PERCENTAGE]% commission on verified sales generated through unique tracking link/code: [CODE/LINK]
+**Affiliate Commission**: Influencer will receive [PERCENTAGE]% commission on verified sales generated through the approved tracking reference: [opaque tracking_ref; rendered link/code only in the execution/delivery surface]
 
 **Performance Bonus**: [If applicable, describe bonus structure]
 
@@ -374,8 +415,8 @@ If any provision is unenforceable, remaining provisions remain in effect.
 
 All notices shall be sent to:
 
-**Brand**: [Address/Email]
-**Influencer**: [Address/Email]
+**Brand**: [notice destination resolved transiently from Brand `contact_ref` / `address_ref`]
+**Influencer**: [notice destination resolved transiently from Creator `contact_ref` / `address_ref`]
 
 ---
 
@@ -383,15 +424,15 @@ All notices shall be sent to:
 
 **BRAND**
 
-Signature: _________________________
-Name: [NAME]
+Signature: [external e-sign field bound to Brand `signature_ref`]
+Name: [legal signer display resolved transiently from Brand `party_ref`]
 Title: [TITLE]
 Date: _____________
 
 **INFLUENCER**
 
-Signature: _________________________
-Name: [NAME]
+Signature: [external e-sign field bound to Creator `signature_ref`]
+Name: [legal signer display resolved transiently from Creator `party_ref`]
 Date: _____________
 
 ---
@@ -466,26 +507,28 @@ Date: _____________
 
 ### Negotiation Points 💡
 
-| Clause | Standard | Negotiate If |
-|--------|----------|--------------|
-| Usage rights | 12-24 months | Perpetual requested |
-| Exclusivity | 30-90 days | 6+ months requested |
-| Revisions | 2 rounds | Unlimited requested |
-| Payment | Net 30 | Net 60+ requested |
-| Whitelisting | Separate fee | Included free |
+| Clause | Counter anchor | Source / status | Negotiate If |
+|--------|----------------|-----------------|--------------|
+| Usage rights | [user-supplied target or sourced range] | [dated jurisdiction/market-compatible source ref or `TBD/NEEDS_INPUT`] | Requested scope exceeds the evidenced target |
+| Exclusivity | [user-supplied target or sourced range] | [dated jurisdiction/market-compatible source ref or `TBD/NEEDS_INPUT`] | Requested scope exceeds the evidenced target |
+| Revisions | [user-supplied count/process or sourced anchor] | [dated compatible source ref or `TBD/NEEDS_INPUT`] | Paper is broader than the evidenced target |
+| Payment | [user-supplied timing or sourced anchor] | [dated compatible source ref or `TBD/NEEDS_INPUT`] | Paper differs from the evidenced target |
+| Whitelisting | [user-supplied fee/terms or sourced anchor] | [dated compatible source ref or `TBD/NEEDS_INPUT`] | Paper differs from the evidenced target |
 ```
+
+Do not label an unsourced range “standard.” If no compatible anchor is supplied, explain the risk dimension and request the user's target or research source without proposing a number.
 
 ---
 
 ## 5. Common Negotiation Points (creator vs brand)
 
-| Term | Creator Usually Wants | Brand Usually Wants | Compromise |
-|------|----------------------|---------------------|------------|
-| Usage rights | Limited time | Perpetual | 12-24 months |
-| Exclusivity | None or paid extra | Category exclusive | 30-60 days, limited category |
-| Revisions | Limited (2) | Unlimited | 2-3 with clear scope |
-| Approval | Quick turnaround | Full control | 48-72 hours |
-| Payment | Upfront | After posting | 50/50 split |
+| Term | Creator position | Brand position | Evidence-bound counter |
+|------|------------------|----------------|------------------------|
+| Usage rights | [quoted/user-supplied] | [quoted/user-supplied] | [user target or dated compatible anchor; otherwise `TBD/NEEDS_INPUT`] |
+| Exclusivity | [quoted/user-supplied] | [quoted/user-supplied] | [user target or dated compatible anchor; otherwise `TBD/NEEDS_INPUT`] |
+| Revisions | [quoted/user-supplied] | [quoted/user-supplied] | [user target or dated compatible anchor; otherwise `TBD/NEEDS_INPUT`] |
+| Approval | [quoted/user-supplied] | [quoted/user-supplied] | [user target or dated compatible anchor; otherwise `TBD/NEEDS_INPUT`] |
+| Payment | [quoted/user-supplied] | [quoted/user-supplied] | [user target or dated compatible anchor; otherwise `TBD/NEEDS_INPUT`] |
 
 ---
 
@@ -503,4 +546,4 @@ Date: _____________
 
 **User**: "Draft a simple agreement for a micro-influencer to create 2 Instagram posts for $500"
 
-**Output**: Simplified agreement appropriate for the scope — deliverables (2 IG posts), payment ($500, schedule), basic non-exclusive usage rights (e.g. 12 months, owned channels only), FTC disclosure (#ad), and a short timeline. Drop the heavier sections (whitelisting, broad exclusivity, multi-round approval) that don't fit a $500 deal.
+**Output**: Simplified agreement containing only the supplied deliverables and fee. Usage duration, channels/territory, revisions, payment timing, approval turnaround, governing law, disclosure rule, and every other omitted term remain `TBD/NEEDS_INPUT` unless the user supplies them or a source-dated jurisdiction/market-compatible anchor. If the user authorizes a WARM save, write only `party_ref`/`contact_ref`/`address_ref`/`signature_ref` plus the term summary above. Keep the executable agreement in the external e-sign system. Before routing it for signature, show the exact `recipient_ref`, SHA-256 of the final document bytes, and channel and obtain a separate exact authorization for that immutable tuple.

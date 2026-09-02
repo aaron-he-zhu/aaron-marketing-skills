@@ -2,6 +2,7 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
+import tempfile
 import unittest
 
 
@@ -31,7 +32,7 @@ class WorkflowGraphTests(unittest.TestCase):
         failures, graph = workflow_graph.check(ROOT)
         self.assertEqual([], failures)
         self.assertEqual(120, graph["counts"]["nodes"])
-        self.assertEqual(376, graph["counts"]["edges"])
+        self.assertEqual(378, graph["counts"]["edges"])
         self.assertEqual(
             {node["id"] for node in workflow_graph.catalog_nodes(self.catalog)},
             {node["id"] for node in graph["nodes"]},
@@ -89,6 +90,95 @@ class WorkflowGraphTests(unittest.TestCase):
         report = edges["paid-measurement-loop--report-generator"]
         self.assertEqual("cross-discipline", report["type"])
         self.assertIn("Trustworthy readback decision", report["condition_text"])
+
+    def test_control_artifacts_are_allowed_as_typed_required_inputs(self):
+        expected = {
+            "action-intent", "action-receipt", "artifact-binding", "cycle-retro",
+            "evidence-observation", "measurement-contract",
+        }
+        self.assertTrue(expected <= workflow_graph.REQUIRED_INPUT_CODES)
+        schema = json.loads(
+            (ROOT / "references/workflow-graph-source.schema.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        allowed = set(
+            schema["$defs"]["edge"]["properties"]["required_inputs"]
+            ["items"]["enum"]
+        )
+        self.assertTrue(expected <= allowed)
+
+    def test_control_handoffs_cover_every_control_type_and_discipline(self):
+        handoffs = workflow_graph.load_control_handoff_requirements(
+            ROOT, self.edges,
+        )
+        self.assertTrue(handoffs)
+        self.assertEqual(
+            workflow_graph.CONTROL_REQUIREMENT_CODES,
+            {item for values in handoffs.values() for item in values},
+        )
+        by_node = {
+            node["id"]: node
+            for node in workflow_graph.catalog_nodes(self.catalog)
+        }
+        self.assertEqual(
+            {
+                "influencer", "email", "social", "ad", "seo-geo", "launch",
+                "narrative",
+            },
+            {
+                by_node[edge_id.split("--", 1)[0]]["discipline"]
+                for edge_id in handoffs
+            },
+        )
+        edge_by_id = {edge["id"]: edge for edge in self.edges}
+        for edge_id, requirements in handoffs.items():
+            with self.subTest(edge=edge_id):
+                self.assertTrue(set(requirements) <= set(
+                    edge_by_id[edge_id]["required_inputs"]
+                ))
+
+    def test_email_and_social_native_handoffs_have_no_legacy_influencer_edges(self):
+        edge_ids = {edge["id"] for edge in self.edges}
+        self.assertIn("send-experiment-designer--email-quality-auditor", edge_ids)
+        self.assertIn("social-measurement-loop--social-quality-auditor", edge_ids)
+        self.assertNotIn("send-experiment-designer--performance-analyzer", edge_ids)
+        self.assertNotIn("send-experiment-designer--report-generator", edge_ids)
+        self.assertNotIn("social-measurement-loop--report-generator", edge_ids)
+
+    def test_control_handoff_rejects_unknown_exact_edge(self):
+        document = json.loads(
+            (ROOT / workflow_graph.CONTROL_BINDINGS_REL).read_text(
+                encoding="utf-8"
+            )
+        )
+        document["handoff_requirements"][
+            "campaign-planner--missing-skill"
+        ] = ["artifact-binding"]
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            target = root / workflow_graph.CONTROL_BINDINGS_REL
+            target.parent.mkdir(parents=True)
+            target.write_text(json.dumps(document), encoding="utf-8")
+            with self.assertRaisesRegex(workflow_graph.GraphError, "unknown edge"):
+                workflow_graph.load_control_handoff_requirements(root, self.edges)
+
+    def test_control_handoff_required_inputs_fail_closed_on_missing_or_extra(self):
+        for mode in ("missing", "extra"):
+            with self.subTest(mode=mode):
+                edges = copy.deepcopy(self.edges)
+                edge = next(
+                    item for item in edges
+                    if item["id"] == "launch-asset-packager--launch-readiness-auditor"
+                )
+                if mode == "missing":
+                    edge["required_inputs"].remove("artifact-binding")
+                else:
+                    edge["required_inputs"].append("action-intent")
+                    edge["required_inputs"].sort()
+                with self.assertRaisesRegex(
+                        workflow_graph.GraphError, "required_inputs drift"):
+                    self.validate(copy.deepcopy(self.source), edges)
 
     def test_rejects_dangling_edge(self):
         edges = copy.deepcopy(self.edges)

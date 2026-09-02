@@ -2,6 +2,8 @@
 
 Fill-in templates, ASCII layouts, HTML snippets, and a full worked example for the [landing-optimizer](../SKILL.md) skill. The numbered headings map to the Instructions steps in `SKILL.md`.
 
+**Creator-reuse precondition**: do not copy, propose, publish, or test a creator name, quote, message excerpt, video, image, thumbnail, embed, screenshot, badge, testimonial, creator-specific path, or creator-linked tracking token unless the exact frozen version has a matching `creator-content-auditor` approval ref and an `active`, dated/evidenced, unexpired rights row covering the exact channel, territory, format, duration, and `paid | organic | both` use for the full test/flight. Missing, stale, expired-during-test, revoked, disputed, unknown, or out-of-scope evidence returns `NEEDS_INPUT`; leave an opaque placeholder and do not copy, publish, or test the reuse. Saved artifacts/handoffs retain only `creator_ref`, `page_ref`, `snapshot_ref`, frozen asset/approval refs, and opaque rights/evidence refs—never a raw creator handle/name, profile/content/page URL, provider ID, embedded media, or copied creator quote.
+
 ---
 
 ## Step 1 — Current-State Audit
@@ -10,8 +12,9 @@ Fill-in templates, ASCII layouts, HTML snippets, and a full worked example for t
 ### Landing Page Audit
 
 **Campaign**: [name]
-**Current URL**: [url]
-**Traffic Source**: [influencer(s)]
+**Transient page locator (never save)**: [URL used only for current inspection]
+**Saved page/snapshot refs**: [opaque page_ref] · [opaque snapshot_ref]
+**Traffic Source**: [creator_ref values]
 **Current Conversion Rate**: [%]
 **Goal**: [what counts as conversion]
 
@@ -19,10 +22,10 @@ Fill-in templates, ASCII layouts, HTML snippets, and a full worked example for t
 
 | Factor | Details |
 |--------|---------|
-| Influencer(s) | @[handles] |
+| Creator Ref(s) | [creator_ref values] |
 | Platform(s) | [platforms] |
 | Content Type | [type] |
-| Key Message | [what influencer says] |
+| Key Message | [approved_asset_ref + approval_ref + approved message ref, or NEEDS_INPUT] |
 | Promo Code | [code if applicable] |
 | Audience | [demographics] |
 ```
@@ -34,11 +37,11 @@ Fill-in templates, ASCII layouts, HTML snippets, and a full worked example for t
 ```markdown
 ## Message Match Analysis
 
-### Influencer Content → Landing Page
+### Frozen Approved Creator Asset → Landing Page
 
-| Element | Influencer Says | Landing Page Shows | Match? |
+| Element | Approved Creator Asset Shows | Landing Page Shows | Match? |
 |---------|-----------------|--------------------|----|
-| Primary message | "[quote]" | "[page headline]" | ✅/⚠️/❌ |
+| Primary message | [approved message ref; quote only when reuse gate passes] | "[page headline from snapshot_ref]" | ✅/⚠️/❌/Unknown |
 | Value prop | "[benefit]" | "[benefit shown]" | ✅/⚠️/❌ |
 | Offer | "[discount/deal]" | "[offer displayed]" | ✅/⚠️/❌ |
 | Product | [shown/mentioned] | [featured] | ✅/⚠️/❌ |
@@ -51,7 +54,7 @@ Fill-in templates, ASCII layouts, HTML snippets, and a full worked example for t
 - [Issue 2]: [how to fix]
 
 **Why This Matters**:
-When users click from an influencer's content, they expect continuity. A mismatch causes confusion and abandonment.
+Record mismatch as a test hypothesis, not a causal result. If the creator-side approval or scoped rights are missing, keep that side `Unknown/NEEDS_INPUT` and do not reproduce its wording.
 ```
 
 ---
@@ -69,10 +72,10 @@ When users click from an influencer's content, they expect continuity. A mismatc
 │  Headline matching influencer message       │
 │  Subheadline with value prop                │
 │  Primary CTA button                         │
-│  [Influencer mention/badge optional]        │
+│  [creator_ref slot; populate only after gate] │
 ├─────────────────────────────────────────────┤
 │              SOCIAL PROOF                   │
-│  "@[influencer] loves it" + video/quote    │
+│  [approved name/asset/quote refs after gate] │
 │  OR: UGC gallery                           │
 ├─────────────────────────────────────────────┤
 │              PRODUCT INFO                   │
@@ -108,7 +111,7 @@ When users click from an influencer's content, they expect continuity. A mismatc
 
 **Example**:
 ```
-Headline: "[Benefit influencer highlighted]"
+Headline: "[Approved message wording, or generic campaign wording if NEEDS_INPUT]"
 Subheadline: "Use code [CODE] for [X]% off"
 CTA: "Shop Now" or "Get [X]% Off"
 ```
@@ -116,15 +119,15 @@ CTA: "Shop Now" or "Get [X]% Off"
 #### Social Proof Section
 
 **Recommendation**:
-- Feature the specific influencer who drove traffic
-- Embed or screenshot their content
-- Include their quote/testimonial
+- Use the driving creator's permitted display name only after the exact reuse gate passes
+- Embed or screenshot only the exact frozen approved asset when rights cover that format, destination, territory, duration, and use class
+- Include only the approved verbatim quote when quote/name attribution is explicitly covered
 
 **Example**:
 ```
-"As seen on @[handle]'s [platform]"
-[Embedded video or quote card]
-"[Pull quote from their content]" - @[handle]
+[creator display name resolved at publication only if rights cover it]
+[approved_asset_ref embed/screenshot/quote-card format covered by rights]
+[approved_quote_ref resolved at publication] — [creator_ref attribution]
 ```
 
 #### Product Section
@@ -145,20 +148,20 @@ CTA: "Shop Now" or "Get [X]% Off"
 
 | Element | Placement | Implementation |
 |---------|-----------|----------------|
-| Creator video | Hero or below | Embed or thumbnail |
-| Pull quote | Hero area | Designed quote card |
-| Creator badge | Near CTA | "As seen on @handle" |
-| UGC gallery | Mid-page | Carousel of content |
+| Creator video | Hero or below | [approved_asset_ref] embed/thumbnail only when exact format is covered |
+| Pull quote | Hero area | [approved_quote_ref] quote card only when exact quote/name format is covered |
+| Creator badge | Near CTA | [creator_ref; display name resolved only at publication when covered] |
+| UGC gallery | Mid-page | Frozen approved asset refs whose individual scopes cover the gallery |
 
 ### Social Proof Hierarchy
 
-**Tier 1: Primary Influencer**
+**Tier 1: Primary Creator Ref**
 - Most prominent placement
-- Their content/quote
+- Their gated approved_asset_ref / approved_quote_ref
 - Their audience = this traffic
 
-**Tier 2: Other Influencers**
-- Supporting testimonials
+**Tier 2: Other Creator Refs**
+- Separately gated supporting testimonials
 - Adds credibility depth
 
 **Tier 3: Customer Reviews**
@@ -177,16 +180,16 @@ CTA: "Shop Now" or "Get [X]% Off"
 **Creator Badge**:
 ```html
 <div class="creator-badge">
-  <img src="creator-photo.jpg" alt="@handle">
-  <span>Loved by @handle</span>
+  <img src="[approved_asset_ref resolved at publication]" alt="[approved alt text]">
+  <span>[approved creator display copy resolved at publication]</span>
 </div>
 ```
 
 **UGC Quote**:
 ```html
 <blockquote class="ugc-quote">
-  <p>"[Their review quote]"</p>
-  <cite>@handle, [Platform]</cite>
+  <p>"[approved_quote_ref resolved at publication]"</p>
+  <cite>[creator display name resolved at publication only when covered], [Platform]</cite>
 </blockquote>
 ```
 
@@ -226,12 +229,12 @@ CTA: "Shop Now" or "Get [X]% Off"
 
 **Implementation**:
 ```
-URL: yoursite.com/landing?code=CREATOR20
+Page: resolve [page_ref] to the implementation URL transiently; save only [page_ref] and [promo_code_ref]
 
 On page load:
-1. Detect code parameter
+1. Detect the approved promo-code parameter
 2. Apply to cart automatically
-3. Display "CREATOR20 applied - you save $X"
+3. Display only the supplied, approved offer terms
 ```
 
 ### Friction Reduction
@@ -268,6 +271,8 @@ On page load:
 
 ```markdown
 ## A/B Testing Recommendations
+
+Any variant containing a creator name, quote, asset, embed, screenshot, badge, or creator-specific path stays `NEEDS_INPUT — DO NOT START` unless the exact frozen approval and active scoped rights cover the full planned test and publication duration.
 
 ### Test Priority Matrix
 
@@ -334,20 +339,20 @@ On page load:
 
 ### Dedicated Page Template
 
-**URL Structure**: yoursite.com/[influencer-handle]
+**Saved page identity**: [opaque page_ref]. Resolve any public creator-name slug only at publication and only when the reuse gate explicitly covers name/path use; otherwise use a generic campaign path.
 
 **Page Elements**:
 ```
 ┌──────────────────────────────────────┐
-│  "Welcome from @[handle]'s page!"   │
-│  [Creator's endorsement/video]      │
+│  [approved creator display copy]    │
+│  [approved_asset_ref]               │
 │  Their exclusive offer: [OFFER]     │
 ├──────────────────────────────────────┤
 │  Product(s) they featured           │
 │  [Images matching their content]    │
 │  [Their specific talking points]    │
 ├──────────────────────────────────────┤
-│  Their review/testimonial           │
+│  [approved_quote_ref/testimonial]   │
 │  [Additional social proof]          │
 ├──────────────────────────────────────┤
 │  Shop + Promo Code Application      │
@@ -358,12 +363,12 @@ On page load:
 
 | Element | Personalization Level |
 |---------|----------------------|
-| URL | /creator-name |
-| Headline | Reference creator |
-| Hero image | Creator's content |
+| Public path | [creator-name slug only if rights cover name/path; otherwise campaign path] |
+| Headline | [approved creator name/message reuse or generic campaign copy] |
+| Hero image | [exact frozen approved asset ref with matching image format rights] |
 | Offer | Their unique code |
 | Products | What they featured |
-| Testimonial | Their quote |
+| Testimonial | [approved verbatim quote ref with matching quote/name rights] |
 ```
 
 ---
@@ -390,7 +395,7 @@ On page load:
 ?utm_source=[platform]
 &utm_medium=influencer
 &utm_campaign=[campaign-name]
-&utm_content=[@handle]
+&utm_content=[opaque creator_ref or campaign-content ref]
 &utm_term=[content-type]
 ```
 
@@ -408,63 +413,71 @@ On page load:
 |--------|----------|
 | UTM parameters | Source tracking |
 | Promo codes | Direct attribution |
-| Unique URLs | Creator-specific tracking |
+| Opaque page refs / approved public paths | Creator-specific tracking without persisting raw URLs |
 | Pixel tracking | Conversion attribution |
 ```
 
 ---
 
-## Worked Example — @fitnessanna Protein Powder Campaign
+## Worked Example — Opaque Creator-Ref Campaign
 
-**User**: "Our landing page for @fitnessanna's protein powder campaign has a 1.2% conversion rate. How can we improve it?"
+**User**: "Use `creator_ref: creator-042`, `page_ref: page-017`, `snapshot_ref: snap-009`, and frozen `approved_asset_ref: asset-v7` with its matching creator-content-auditor `approval_ref`. The supplied rights row is `active`, observed today with an opaque evidence ref, and covers US landing-page name attribution, exact quote, video embed, and screenshot formats for both paid and organic traffic through the full six-week test/flight. Our dated analytics export reports 1.2% CR versus a source-dated 2–3% target. The approved asset emphasizes 'smooth texture'; the snapshot leads with 'high protein content,' omits the asset, does not auto-apply the promo, and places the mobile CTA below the fold. Build the plan without persisting raw names or URLs."
 
 **Output**:
 
 ```markdown
-## Landing Page Optimization: @fitnessanna Campaign
+## Landing Page Optimization: creator-042 Campaign
+
+**Creator reuse preflight**: exact frozen approval matched; rights `active`; status date/evidence present; US web name/quote/embed/screenshot formats and paid+organic six-week duration covered.
 
 ### Diagnosis
 
-**Current CR**: 1.2% (Below benchmark of 2-3% for influencer traffic)
+**Current CR**: 1.2% — user-provided from the dated export
+**Comparable target**: 2–3% — user-provided and source-dated; not independently validated here
 
-### Issues Found
+### Supplied Page Observations
 
-1. **Message Mismatch**: Anna talks about "smooth texture" but landing page leads with "high protein content"
-2. **No Social Proof**: Anna's content isn't featured on the page
-3. **Promo Code Friction**: Code "ANNA20" isn't auto-applied
-4. **Mobile CTA**: Button is below the fold on mobile
+1. **Message Mismatch**: `approved_message_ref` and the headline in `snapshot_ref: snap-009` differ; resolve exact wording only inline or at implementation, not in the saved plan
+2. **Creator Asset Omitted**: the supplied snapshot does not feature `approved_asset_ref: asset-v7`
+3. **Promo Code Friction Hypothesis**: the supplied snapshot says code `ANNA20` is not auto-applied
+4. **Mobile CTA Hypothesis**: the supplied snapshot places the CTA below the fold on mobile
 
 ### Priority Fixes
 
-| Fix | Expected Impact | Effort |
-|-----|-----------------|--------|
-| Add Anna's video to hero | +0.5% CR | Low |
-| Auto-apply promo code | +0.3% CR | Medium |
-| Match headline to her messaging | +0.3% CR | Low |
-| Move CTA above fold mobile | +0.2% CR | Low |
+| Fix | Hypothesis to test | Effort |
+|-----|--------------------|--------|
+| Add the frozen approved video to hero | May improve message continuity; lift is Unknown | [NEEDS_INPUT] |
+| Auto-apply promo code | May reduce entry friction; lift is Unknown | [NEEDS_INPUT] |
+| Match headline to approved messaging | May reduce mismatch; lift is Unknown | [NEEDS_INPUT] |
+| Move CTA above fold on mobile | May make the next action easier to find; lift is Unknown | [NEEDS_INPUT] |
 
-**Combined Expected Impact**: 1.2% → 2.5% CR
+**Expected lift**: `NEEDS_INPUT` — no experiment or comparable lift evidence was supplied. Do not add hypothetical per-fix lifts or sum them into a forecast.
 
 ### Implementation
 
-**New Headline**: "Protein That Actually Tastes Good" (matches Anna's main message)
+**New Headline**: `[headline using only the approved smooth-texture language]`
 
 **Add to Hero**:
 \`\`\`html
 <div class="creator-feature">
-  <video src="anna-testimonial.mp4"></video>
-  <p>"The smoothest protein I've tried" - @fitnessanna</p>
+  <video src="[approved_asset_ref resolved transiently at publication]"></video>
+  <p>"[approved_quote_ref resolved transiently at publication]" — [permitted creator display name resolved transiently]</p>
 </div>
 \`\`\`
 
 **Auto-Apply Code**:
-URL: yoursite.com/protein?code=ANNA20
-Display: "ANNA20 applied! You save 20%"
+Page: `[page_ref; implementation URL resolved transiently]` with `[approved promo_code_ref]`
+Display: `[approved offer copy; NEEDS_INPUT if discount terms were not supplied]`
 
 ### Test Plan
-Week 1: Implement hero changes
-Week 2: A/B test headline variations
-Week 3: Test CTA button copy
+
+- Baseline: 1.2% CR from the supplied dated export
+- Control: current page snapshot
+- Variant: one approved change at a time, or a declared bundled treatment
+- Creator-asset gate: approval and rights must remain active and cover the entire six-week test/flight; otherwise `NEEDS_INPUT — DO NOT START`
+- Primary outcome: conversion rate
+- Sample size, run length, guardrails, and precommitted decision rule: `NEEDS_INPUT`
+- Report only observed results after the experiment; do not claim additive or causal lift from the hypotheses above
 ```
 
 ---
@@ -472,7 +485,7 @@ Week 3: Test CTA button copy
 ## Tips for Better Landing Pages
 
 1. **Match the message** — Continuity from content to page
-2. **Feature the influencer** — They drove the traffic
-3. **Mobile first** — Most influencer traffic is mobile
-4. **Reduce friction** — Every click loses people
-5. **Test continuously** — Small improvements compound
+2. **Gate creator proof** — Approval and exact scoped rights come before reuse
+3. **Check mobile from supplied data** — Do not assume the traffic mix
+4. **Treat friction as a hypothesis** — Measure the declared change
+5. **Test with a decision rule** — Report observed results only

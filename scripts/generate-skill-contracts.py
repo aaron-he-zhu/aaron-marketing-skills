@@ -23,6 +23,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CATALOG_REF = "references/system-catalog.json"
 PLUGIN_REF = ".claude-plugin/plugin.json"
 SHARED_CONTRACT_REF = "references/skill-contract.md"
+CONTROL_BINDINGS_REF = "references/control-bindings.json"
+CONTROL_ARTIFACT_SCHEMA_REF = "references/control-artifact.schema.json"
 CONTRACT_SCHEMA_REF = "references/skill-machine-contract.schema.json"
 INDEX_SCHEMA_REF = "references/skill-machine-contract-index.schema.json"
 OUTPUT_DIR_REF = "references/skill-contracts"
@@ -31,6 +33,14 @@ SCHEMA_VERSION = "1.0"
 
 SAFE_SKILL_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$")
+CONTROL_REQUIREMENTS = {
+    "action-intent",
+    "action-receipt",
+    "artifact-binding",
+    "cycle-retro",
+    "evidence-observation",
+    "measurement-contract",
+}
 QUOTED_TRIGGER_RE = re.compile(r'"([^"\n]{3,})"')
 BOUNDARY_RE = re.compile(r"\bnot\s+for\b", re.I)
 HEADING_RE = re.compile(r"^## ([^\n]+)\s*$", re.M)
@@ -161,6 +171,113 @@ def catalog_skill_paths(catalog):
     names = [item[0] for item in result]
     if len(names) != len(set(names)):
         raise ContractGenerationError("system catalog contains duplicate skill names")
+    return result
+
+
+def load_control_bindings(root, ordered):
+    """Load the central binding SSOT and close it against catalog identities."""
+    value = load_json(root, CONTROL_BINDINGS_REF)
+    required = {
+        "$schema", "schema_version", "authority", "catalog_ref",
+        "control_artifact_schema", "bindings",
+    }
+    optional = {"handoff_requirements"}
+    if (
+            not isinstance(value, dict)
+            or not required <= set(value)
+            or set(value) - required - optional):
+        raise ContractGenerationError("control bindings have invalid top-level fields")
+    if (
+            value["$schema"] != "./control-bindings.schema.json"
+            or value["schema_version"] != "1.0"
+            or value["authority"] != "cross-discipline-control-bindings"
+            or value["catalog_ref"] != CATALOG_REF
+            or value["control_artifact_schema"] != CONTROL_ARTIFACT_SCHEMA_REF):
+        raise ContractGenerationError("control bindings identity is unsupported")
+    raw_bindings = value["bindings"]
+    if not isinstance(raw_bindings, dict) or len(raw_bindings) > len(ordered):
+        raise ContractGenerationError("control bindings must be an object of at most 120 skills")
+    catalog_paths = {
+        skill: "%s/SKILL.md" % skill_dir
+        for skill, skill_dir, _discipline, _phase in ordered
+    }
+    result = {}
+    for skill, binding in sorted(raw_bindings.items()):
+        if not isinstance(skill, str) or not SAFE_SKILL_RE.fullmatch(skill):
+            raise ContractGenerationError("control binding has invalid skill identity")
+        if skill not in catalog_paths:
+            raise ContractGenerationError(
+                "control binding references a non-catalog skill: %s" % skill
+            )
+        if not isinstance(binding, dict) or set(binding) != {
+                "skill_path", "control_requirements"}:
+            raise ContractGenerationError(
+                "control binding %s has invalid fields" % skill
+            )
+        if binding["skill_path"] != catalog_paths[skill]:
+            raise ContractGenerationError(
+                "control binding %s path differs from the system catalog" % skill
+            )
+        requirements = binding["control_requirements"]
+        if (
+                not isinstance(requirements, list)
+                or not 1 <= len(requirements) <= len(CONTROL_REQUIREMENTS)
+                or len(requirements) != len(set(requirements))
+                or requirements != sorted(requirements)
+                or any(item not in CONTROL_REQUIREMENTS for item in requirements)):
+            raise ContractGenerationError(
+                "control binding %s requirements are invalid or not sorted" % skill
+            )
+        result[skill] = list(requirements)
+    validate_handoff_requirements(value.get("handoff_requirements"), result)
+    return result, {
+        "path": CONTROL_BINDINGS_REF,
+        "sha256": sha256_path(root / CONTROL_BINDINGS_REF),
+    }
+
+
+def validate_handoff_requirements(handoffs, skill_bindings):
+    """Validate edge handoffs without importing the heavyweight graph projection.
+
+    Exact edge existence is closed by ``workflow-graph.py``.  This lighter
+    generator check still fails closed on identity, order, enum, and attempts
+    to hand off a control type the source skill is not bound to produce.
+    """
+    if handoffs is None:
+        return {}
+    if not isinstance(handoffs, dict) or not handoffs:
+        raise ContractGenerationError(
+            "control handoff requirements must be a non-empty object when present"
+        )
+    result = {}
+    for edge_id, requirements in handoffs.items():
+        if (
+                not isinstance(edge_id, str)
+                or edge_id.count("--") != 1):
+            raise ContractGenerationError("control handoff has invalid edge identity")
+        source, target = edge_id.split("--", 1)
+        if (
+                not SAFE_SKILL_RE.fullmatch(source)
+                or not SAFE_SKILL_RE.fullmatch(target)):
+            raise ContractGenerationError("control handoff has invalid edge identity")
+        if source not in skill_bindings:
+            raise ContractGenerationError(
+                "control handoff source is not bound: %s" % source
+            )
+        if (
+                not isinstance(requirements, list)
+                or not 1 <= len(requirements) <= len(CONTROL_REQUIREMENTS)
+                or len(requirements) != len(set(requirements))
+                or requirements != sorted(requirements)
+                or any(item not in CONTROL_REQUIREMENTS for item in requirements)):
+            raise ContractGenerationError(
+                "control handoff %s requirements are invalid or not sorted" % edge_id
+            )
+        if not set(requirements) <= set(skill_bindings[source]):
+            raise ContractGenerationError(
+                "control handoff %s exceeds source skill requirements" % edge_id
+            )
+        result[edge_id] = list(requirements)
     return result
 
 
@@ -658,7 +775,8 @@ def handoff_targets(root, skill_ref, next_best, known_skills):
 
 def build_contract(
         root, skill, skill_dir, discipline, phase, catalog_record,
-        shared_record, known_skills):
+        shared_record, control_bindings_record, control_requirements,
+        known_skills):
     skill_ref = skill_dir + "/SKILL.md"
     skill_path = root / skill_ref
     try:
@@ -740,6 +858,15 @@ def build_contract(
     done_items = completion_clauses(fields["done when"], skill_ref, skill_hash)
     next_items = handoff_items(root, skill_ref, skill_hash, next_best, known_skills)
     source = source_locator(skill_ref, skill_hash, "frontmatter")
+    provenance = {
+        "generator": "generate-skill-contracts-v1",
+        "system_catalog": catalog_record,
+        "shared_contract": source_locator(
+            shared_record["path"], shared_record["sha256"], "Skill Contract"
+        ),
+    }
+    if control_requirements:
+        provenance["control_bindings"] = dict(control_bindings_record)
     return {
         "$schema": "../skill-machine-contract.schema.json",
         "schema_version": SCHEMA_VERSION,
@@ -791,17 +918,12 @@ def build_contract(
             "items": next_items,
             "extraction_status": extraction_status(next_items),
         },
+        "control_requirements": list(control_requirements),
         "context_hints": {
             "bundle_references": references,
             "project_paths": project_path_hints(fields["reads"]),
         },
-        "provenance": {
-            "generator": "generate-skill-contracts-v1",
-            "system_catalog": catalog_record,
-            "shared_contract": source_locator(
-                shared_record["path"], shared_record["sha256"], "Skill Contract"
-            ),
-        },
+        "provenance": provenance,
     }
 
 
@@ -810,6 +932,7 @@ def build_contracts(root=ROOT):
     catalog = load_json(root, CATALOG_REF)
     plugin = load_json(root, PLUGIN_REF)
     ordered = catalog_skill_paths(catalog)
+    control_bindings, control_bindings_record = load_control_bindings(root, ordered)
     plugin_paths = [entry.removeprefix("./").rstrip("/") for entry in plugin.get("skills", [])]
     catalog_paths = [item[1] for item in ordered]
     if plugin_paths != catalog_paths:
@@ -830,7 +953,8 @@ def build_contracts(root=ROOT):
     for skill, skill_dir, discipline, phase in ordered:
         contracts.append(build_contract(
             root, skill, skill_dir, discipline, phase, catalog_record,
-            shared_record, known,
+            shared_record, control_bindings_record,
+            control_bindings.get(skill, ()), known,
         ))
     return contracts
 

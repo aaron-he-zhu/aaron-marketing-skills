@@ -51,16 +51,16 @@ class BehaviorProfileTests(unittest.TestCase):
             all(reasons == ["profile:smoke-fixed"] for reasons in result["selection_reasons"].values())
         )
 
-    def test_nightly_selects_all_700_without_truncation(self):
+    def test_nightly_selects_all_734_without_truncation(self):
         result = eval_cases.select_cases(
             ROOT,
             "nightly",
             cases=self.base_cases,
             derived_cases=self.derived_cases,
         )
-        self.assertEqual(len(result["cases"]), 700)
-        self.assertEqual(result["provenance"]["available_count"], 700)
-        self.assertEqual(result["provenance"]["selected_count"], 700)
+        self.assertEqual(len(result["cases"]), 734)
+        self.assertEqual(result["provenance"]["available_count"], 734)
+        self.assertEqual(result["provenance"]["selected_count"], 734)
 
     def test_skill_change_adds_every_case_for_that_target(self):
         result = eval_cases.select_cases(
@@ -201,7 +201,7 @@ class BehaviorProfileTests(unittest.TestCase):
             derived_cases=self.derived_cases,
             changed_paths=["references/system-catalog.json"],
         )
-        self.assertEqual(len(result["cases"]), 700)
+        self.assertEqual(len(result["cases"]), 734)
         self.assertEqual(result["provenance"]["unmatched_paths"], [])
 
     def test_unmatched_change_falls_back_to_smoke_and_is_reported(self):

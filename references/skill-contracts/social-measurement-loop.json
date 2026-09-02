@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 124,
+          "end_char": 97,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "every reported rate names its denominator and matches the prior period's lock (or the switch is declared as a trend restart)"
+        "text": "every included post has a matching human publication receipt or is explicitly excluded as unbound"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 180,
+          "end_char": 154,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 126
+          "start_char": 99
         },
-        "text": "rollups are medians with organic and boosted separated"
+        "text": "every reported rate names and preserves its denominator"
       },
       {
         "clause_id": "done-03",
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 205,
+          "end_char": 206,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 182
+          "start_char": 156
         },
-        "text": "EMV appears in no score"
+        "text": "rollups are medians with organic/boosted separated"
       },
       {
         "clause_id": "done-04",
@@ -53,22 +53,52 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 348,
+          "end_char": 253,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 207
+          "start_char": 208
         },
-        "text": "and the write-back list is explicit enough for [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) to consume next cycle."
+        "text": "the readout binds to its measurement contract"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 278,
+          "path": "social/observe/social-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
+          "span_basis": "field-text",
+          "start_char": 255
+        },
+        "text": "EMV appears in no score"
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "blocking",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 378,
+          "path": "social/observe/social-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
+          "span_basis": "field-text",
+          "start_char": 280
+        },
+        "text": "and keep/stop/try is explicit without treating receipt-less planned content as published evidence."
       }
     ],
-    "done_when": "every reported rate names its denominator and matches the prior period's lock (or the switch is declared as a trend restart); rollups are medians with organic and boosted separated; EMV appears in no score; and the write-back list is explicit enough for [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) to consume next cycle.",
+    "done_when": "every included post has a matching human publication receipt or is explicitly excluded as unbound; every reported rate names and preserves its denominator; rollups are medians with organic/boosted separated; the readout binds to its measurement contract; EMV appears in no score; and keep/stop/try is explicit without treating receipt-less planned content as published evidence.",
     "extraction_status": "classified",
     "source": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba"
+      "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00"
     }
   },
   "context_hints": {
@@ -77,7 +107,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -98,37 +128,33 @@
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
         "source_line": 63
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
-      }
-    ],
-    "project_paths": [
-      {
-        "access": "read",
-        "authority": "working",
-        "kind": "prefix",
-        "path": "memory/channels",
-        "reason_code": "explicit-skill-read",
-        "sensitivity": "confidential"
       },
       {
-        "access": "read",
-        "authority": "working",
-        "kind": "prefix",
-        "path": "memory/social/social-measurement-loop",
-        "reason_code": "explicit-skill-read",
-        "sensitivity": "confidential"
+        "path": "social/craft/social-calendar-builder/references/human-action-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "cb4e4fb48b922adfc32fa648149a44c141afc7fddf4f08bcbbd079d7963f1ad2",
+        "source_line": 46
       }
-    ]
+    ],
+    "project_paths": []
   },
   "contract_id": "skill:social-measurement-loop",
+  "control_requirements": [
+    "artifact-binding",
+    "cycle-retro",
+    "evidence-observation",
+    "measurement-contract"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -138,17 +164,17 @@
         "item_id": "handoff-01",
         "kind": "primary",
         "source": {
-          "end_char": 156,
+          "end_char": 168,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
           "start_char": 0
         },
         "target_skills": [
-          "report-generator"
+          "social-quality-auditor"
         ],
-        "text": "- **Primary**: [report-generator](../../../influencer/report/report-generator/SKILL.md) — fold the readout into a stakeholder report with the labels intact."
+        "text": "- **Primary**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — verify the receipt-bound ECHO program and any ECHO-O1 denominator-integrity issue."
       },
       {
         "condition": "If the write-back is the point of this run**: [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) — apply the keep/stop/try list to the next posting cycle.",
@@ -156,12 +182,12 @@
         "item_id": "handoff-02",
         "kind": "unclassified",
         "source": {
-          "end_char": 336,
+          "end_char": 348,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 157
+          "start_char": 169
         },
         "target_skills": [
           "social-calendar-builder"
@@ -174,12 +200,12 @@
         "item_id": "handoff-03",
         "kind": "unclassified",
         "source": {
-          "end_char": 543,
+          "end_char": 555,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 337
+          "start_char": 349
         },
         "target_skills": [
           "social-quality-auditor"
@@ -192,27 +218,26 @@
         "item_id": "handoff-04",
         "kind": "termination",
         "source": {
-          "end_char": 886,
+          "end_char": 898,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 545
+          "start_char": 557
         },
         "target_skills": [],
         "text": "**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the readout is saved and the write-back list is delivered."
       }
     ],
-    "next_best": "- **Primary**: [report-generator](../../../influencer/report/report-generator/SKILL.md) — fold the readout into a stakeholder report with the labels intact.\n- **If the write-back is the point of this run**: [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) — apply the keep/stop/try list to the next posting cycle.\n- **If a denominator switch or proxy-as-Measured issue surfaced**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — the ECHO-O1 call and any go/no-go belong to the gate, not this loop.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the readout is saved and the write-back list is delivered.",
+    "next_best": "- **Primary**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — verify the receipt-bound ECHO program and any ECHO-O1 denominator-integrity issue.\n- **If the write-back is the point of this run**: [social-calendar-builder](../../craft/social-calendar-builder/SKILL.md) — apply the keep/stop/try list to the next posting cycle.\n- **If a denominator switch or proxy-as-Measured issue surfaced**: [social-quality-auditor](../../host/social-quality-auditor/SKILL.md) — the ECHO-O1 call and any go/no-go belong to the gate, not this loop.\n\n**Termination**: inherits the global rules in [skill-contract.md §Termination rules](../../../references/skill-contract.md) — visited-set check (skip any target already run this chain), `max-depth: 3`, and an ambiguity stop (present the options instead of auto-following). Stop when the readout is saved and the write-back list is delivered.",
     "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
     "summary_ref": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba"
+      "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00"
     },
     "summary_source": "skill-section",
     "target_skills": [
-      "report-generator",
       "social-calendar-builder",
       "social-quality-auditor"
     ]
@@ -223,8 +248,8 @@
     "name": "social-measurement-loop",
     "path": "social/observe/social-measurement-loop/SKILL.md",
     "phase": "observe",
-    "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
-    "version": "20.0.0"
+    "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<period, e.g. 'week of 2026-06-29'> [channels] [exports]",
@@ -235,14 +260,14 @@
         "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 156,
+          "end_char": 42,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "user-exported native analytics per channel (Measured, with as-of date) — closed platforms (X/Instagram/TikTok/LinkedIn/小红书/微信公众号/视频号/抖音) enter this way only"
+        "text": "user-exported native analytics per channel"
       },
       {
         "clause_id": "read-02",
@@ -250,14 +275,14 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 202,
+          "end_char": 69,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 158
+          "start_char": 44
         },
-        "text": "GA4/GSC exports as the own-surface truth set"
+        "text": "GA4/GSC own-surface truth"
       },
       {
         "clause_id": "read-03",
@@ -265,52 +290,82 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 391,
+          "end_char": 95,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 204
+          "start_char": 71
         },
-        "text": "keyless connector series — `discourse.py` (forum JSON for community-health mode), `bluesky.py`, `fediverse.py`, `hn.py`, `pageviews.py`, plus `gdelt.py`/`tavily.py` as proxy-labeled reads"
+        "text": "keyless connector series"
       },
       {
         "clause_id": "read-04",
-        "extraction_status": "partially-classified",
-        "kind": "project-resource",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 475,
+          "end_char": 143,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 393
+          "start_char": 97
         },
-        "text": "the active-channel set and cadence commitments from `memory/channels/` (read-only)"
+        "text": "the active-channel set and cadence commitments"
       },
       {
         "clause_id": "read-05",
-        "extraction_status": "partially-classified",
-        "kind": "project-resource",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 539,
+          "end_char": 159,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
-          "start_char": 477
+          "start_char": 145
         },
-        "text": "prior readouts under `memory/social/social-measurement-loop/`."
+        "text": "prior readouts"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 197,
+          "path": "social/observe/social-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
+          "span_basis": "field-text",
+          "start_char": 161
+        },
+        "text": "the predeclared measurement contract"
+      },
+      {
+        "clause_id": "read-07",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 305,
+          "path": "social/observe/social-measurement-loop/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
+          "span_basis": "field-text",
+          "start_char": 199
+        },
+        "text": "and human publication receipts binding each included package/version/hash to a channel and published time."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "user-exported native analytics per channel (Measured, with as-of date) — closed platforms (X/Instagram/TikTok/LinkedIn/小红书/微信公众号/视频号/抖音) enter this way only; GA4/GSC exports as the own-surface truth set; keyless connector series — `discourse.py` (forum JSON for community-health mode), `bluesky.py`, `fediverse.py`, `hn.py`, `pageviews.py`, plus `gdelt.py`/`tavily.py` as proxy-labeled reads; the active-channel set and cadence commitments from `memory/channels/` (read-only); prior readouts under `memory/social/social-measurement-loop/`.",
+    "reads": "user-exported native analytics per channel; GA4/GSC own-surface truth; keyless connector series; the active-channel set and cadence commitments; prior readouts; the predeclared measurement contract; and human publication receipts binding each included package/version/hash to a channel and published time.",
     "source": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba"
+      "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00"
     }
   },
   "output_contract": {
@@ -325,7 +380,7 @@
           "end_char": 55,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -341,7 +396,7 @@
           "end_char": 212,
           "path": "social/observe/social-measurement-loop/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba",
+          "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00",
           "span_basis": "field-text",
           "start_char": 57
         },
@@ -352,23 +407,27 @@
     "source": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba"
+      "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00"
     },
     "summary": "the period readout — the metric dictionary (each rate with named numerator, denominator, and lock status), median per-post rollups split organic vs boosted per channel, best/worst performers with one hypothesis each, EMV exec-translation only if requested (labeled Estimated, outside every score), the community-health readout where an owned community exists, and an explicit keep/stop/try write-back list — plus the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "the readout to `memory/social/social-measurement-loop/`; cadence-drift or channel-state observations to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -377,7 +436,7 @@
     "source": {
       "path": "social/observe/social-measurement-loop/SKILL.md",
       "section": "frontmatter",
-      "sha256": "08e2a9a75b0580a07843d770caad7ab048ed9764dbcb4495612d83748ac605ba"
+      "sha256": "04411b23f77315bb87e7b01fc02756bd7d822714cad40048dc934cfb396f2e00"
     },
     "trigger_phrases": [
       "run the weekly social readout",

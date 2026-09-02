@@ -4,13 +4,13 @@ slug: aaron-placement-exclusion-manager
 displayName: "Placement Exclusion Manager · 品牌安全"
 summary: "品牌安全/排除位置/否定受众列表"
 description: 'Use when the user asks to "build my brand-safety exclusion lists", "set placement / topic / content exclusions before launch", "add network and audience exclusions", or "prep the A1 brand-safety evidence for the auditor"; produces a placement/network exclusion list, a content-suitability & sensitive-topic block list, an audience/negative-audience exclusion set, and a packaged A1 brand/placement-safety evidence file for the gate. Not for building the audiences you target — use audience-segment-builder; not for computing the RQS or issuing the A1 verdict — use ad-account-auditor. 品牌安全/排除位置/否定受众列表'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use before spend goes live to build brand-safety and exclusion lists: placement/site/app/channel exclusions, network opt-outs (Display/Search-partner/Audience-network), content-suitability and sensitive-topic blocks, and negative-audience/audience exclusions — then package the placements evidence the auditor needs to judge ROAS A1 (brand/placement safety)."
 argument-hint: "<account/campaign goal> [platforms] [placements report path] [brand-safety constraints]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "ad", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "activate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "ad", "phase": "activate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "ad", "activate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Placement Exclusion Manager

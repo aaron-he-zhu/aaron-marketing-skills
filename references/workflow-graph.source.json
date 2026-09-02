@@ -52,7 +52,7 @@
     "note": "Markdown was used only to create the initial explicit edge inventory; normal generation never treats prose as authoritative.",
     "source_surface": "Markdown Next Best Skill declarations"
   },
-  "catalog_version": "20.0.0",
+  "catalog_version": "20.1.0",
   "edge_shards": [
     {
       "edge_count": 40,
@@ -60,7 +60,7 @@
       "id": "edges-00",
       "last_edge_id": "campaign-architect--ad-creative-builder",
       "ref": "references/workflow-graph/edges-00.json",
-      "sha256": "b51401e75c92ab70d0e2c96d0679c2420416fd7bcbb1f56448ddbb75c7ad94bb"
+      "sha256": "0d83520da0716ddcd3d8fce5ed98509d8615bad0f6535f4104bae6ce34ff0b32"
     },
     {
       "edge_count": 40,
@@ -68,71 +68,71 @@
       "id": "edges-01",
       "last_edge_id": "content-quality-auditor--technical-seo-checker",
       "ref": "references/workflow-graph/edges-01.json",
-      "sha256": "996f4bce94a4739e4a9198e647ebdc96bb8e4b7ef626c5af67230ad59254c7e9"
+      "sha256": "5992a6e8637762f0839ca08d88eca24db9a0d8b0dd6b06df07879a6db4e18bfb"
     },
     {
       "edge_count": 40,
       "first_edge_id": "content-writer--content-quality-auditor",
       "id": "edges-02",
-      "last_edge_id": "email-creative-builder--landing-optimizer",
+      "last_edge_id": "email-creative-builder--email-quality-auditor",
       "ref": "references/workflow-graph/edges-02.json",
-      "sha256": "ac8d17830f5559eedc1f80b6711ebe8329988ca70afd6a3fb9b6951953d06332"
+      "sha256": "02398e6d0cb0110e6f0078e008a48d3e2cad1901d55c224cccb446053a0960b8"
     },
     {
       "edge_count": 40,
-      "first_edge_id": "email-creative-builder--offer-claims-registry",
+      "first_edge_id": "email-creative-builder--landing-optimizer",
       "id": "edges-03",
-      "last_edge_id": "keyword-research--serp-analysis",
+      "last_edge_id": "influencer-discovery--fit-scorer",
       "ref": "references/workflow-graph/edges-03.json",
-      "sha256": "9d08ea81ed3ffda4678de75f0f7efc7284a4dcaad4973c2d9c449cd2948c2ccd"
+      "sha256": "fd2f3dfac12383b5290c5d6cb915cacae48c685b76ee2a998423b342d97f0c93"
     },
     {
       "edge_count": 40,
-      "first_edge_id": "landing-experience-checker--ad-account-auditor",
+      "first_edge_id": "keyword-research--competitor-analysis",
       "id": "edges-04",
-      "last_edge_id": "list-hygiene-monitor--email-quality-auditor",
+      "last_edge_id": "list-growth-designer--email-sequence-designer",
       "ref": "references/workflow-graph/edges-04.json",
-      "sha256": "e450f3a8ff7cb4d7505645a4d15a4fb1ce1f95b4c0ff37793443869e264bee2c"
+      "sha256": "2a6473a669163128aefa4419eeac85bb6afe950bebca143aa146146bf0e2d652"
     },
     {
       "edge_count": 40,
-      "first_edge_id": "list-hygiene-monitor--reactivation-specialist",
+      "first_edge_id": "list-growth-designer--landing-optimizer",
       "id": "edges-05",
-      "last_edge_id": "narrative-quality-auditor--narrative-cascade-planner",
+      "last_edge_id": "narrative-enablement-kit--pitch-narrative-builder",
       "ref": "references/workflow-graph/edges-05.json",
-      "sha256": "47798eec0bd9998d2be8ce052fd62a4bafa0cf336fcb538141f04f1b99eaf900"
+      "sha256": "91a0a0ea92245f95360e54421a3454c7202e042de31b74c98f6397d9245bc55f"
     },
     {
       "edge_count": 40,
-      "first_edge_id": "narrative-quality-auditor--positioning-truth-tracer",
+      "first_edge_id": "narrative-quality-auditor--message-system-architect",
       "id": "edges-06",
-      "last_edge_id": "pitch-narrative-builder--narrative-enablement-kit",
+      "last_edge_id": "performance-analyzer--roi-calculator",
       "ref": "references/workflow-graph/edges-06.json",
-      "sha256": "18a1fd76112bf2a8140088408331f3796eb21b7dc0f0ae3febcffefa59a7f945"
+      "sha256": "cea4b46f446c9c532c87c87d5624227e89bd066371654a4945430afaeaa848f9"
     },
     {
       "edge_count": 40,
-      "first_edge_id": "pitch-narrative-builder--narrative-quality-auditor",
+      "first_edge_id": "performance-monitor--content-quality-auditor",
       "id": "edges-07",
-      "last_edge_id": "sales-enablement-kit--cold-outbound-sequencer",
+      "last_edge_id": "roi-calculator--budget-optimizer",
       "ref": "references/workflow-graph/edges-07.json",
-      "sha256": "fa3109c1da79a448304e7ea33280e04a09149290fef481c004e0549c55cd023c"
+      "sha256": "5c6f8e3eba1db7f51484af75ab1d0427356745a770efdeea71868b7494130224"
     },
     {
       "edge_count": 40,
-      "first_edge_id": "sales-enablement-kit--launch-readiness-auditor",
+      "first_edge_id": "roi-calculator--performance-analyzer",
       "id": "edges-08",
       "last_edge_id": "story-bank-builder--narrative-cascade-planner",
       "ref": "references/workflow-graph/edges-08.json",
-      "sha256": "7f913f523ec278df41136a150cdb794c286ef1b1a5c6e815d3f10db692703f6c"
+      "sha256": "cbf5893ed37051b86e4c9762f451cdfa7ca930c7fc93b0ba0fb3eae38f4ca4f5"
     },
     {
-      "edge_count": 16,
+      "edge_count": 18,
       "first_edge_id": "story-bank-builder--offer-claims-registry",
       "id": "edges-09",
-      "last_edge_id": "voice-dossier-builder--social-calendar-builder",
+      "last_edge_id": "campaign-planner--performance-analyzer",
       "ref": "references/workflow-graph/edges-09.json",
-      "sha256": "2ab40d1ab59f1c161a205992e922cd05460a4dc91f3a6b47ea62ff4a961faf48"
+      "sha256": "b047a123ec78458ac8e107ecd71e49dc3188cc7b32d7e00540bd41f09665ccb5"
     }
   ],
   "entrypoint_policy": "all-catalog-skills-directly-routable",

@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 75,
+          "end_char": 19,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the mode is decided (assigned mode carries its risk flags in the blueprint)"
+        "text": "the mode is decided"
       },
       {
         "clause_id": "done-02",
@@ -23,12 +23,12 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 113,
+          "end_char": 57,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
-          "start_char": 77
+          "start_char": 21
         },
         "text": "every roster row has all four fields"
       },
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 177,
+          "end_char": 130,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
-          "start_char": 115
+          "start_char": 59
         },
-        "text": "every share kit has per-person variation and a disclosure line"
+        "text": "each share kit has per-person variation, disclosure, and a version/hash"
       },
       {
         "clause_id": "done-04",
@@ -53,22 +53,52 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 260,
+          "end_char": 161,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
-          "start_char": 179
+          "start_char": 132
         },
-        "text": "and posting windows are staggered with the anti-pod guardrails stated in the kit."
+        "text": "posting windows are staggered"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 219,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
+          "span_basis": "field-text",
+          "start_char": 163
+        },
+        "text": "third-party source assets have active exact-scope rights"
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 323,
+          "path": "social/craft/advocacy-program-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
+          "span_basis": "field-text",
+          "start_char": 221
+        },
+        "text": "and planned/assigned shares remain planned until the advocate returns a matching human-action receipt."
       }
     ],
-    "done_when": "the mode is decided (assigned mode carries its risk flags in the blueprint); every roster row has all four fields; every share kit has per-person variation and a disclosure line; and posting windows are staggered with the anti-pod guardrails stated in the kit.",
+    "done_when": "the mode is decided; every roster row has all four fields; each share kit has per-person variation, disclosure, and a version/hash; posting windows are staggered; third-party source assets have active exact-scope rights; and planned/assigned shares remain planned until the advocate returns a matching human-action receipt.",
     "extraction_status": "classified",
     "source": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db"
+      "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b"
     }
   },
   "context_hints": {
@@ -91,8 +121,15 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
+      },
+      {
+        "path": "social/craft/social-calendar-builder/references/human-action-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "cb4e4fb48b922adfc32fa648149a44c141afc7fddf4f08bcbbd079d7963f1ad2",
+        "source_line": 66
       }
     ],
     "project_paths": [
@@ -115,6 +152,11 @@
     ]
   },
   "contract_id": "skill:advocacy-program-designer",
+  "control_requirements": [
+    "action-receipt",
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -127,7 +169,7 @@
           "end_char": 186,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -145,7 +187,7 @@
           "end_char": 380,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 187
         },
@@ -163,7 +205,7 @@
           "end_char": 579,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 381
         },
@@ -181,7 +223,7 @@
           "end_char": 932,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 581
         },
@@ -194,7 +236,7 @@
     "summary_ref": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db"
+      "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -209,8 +251,8 @@
     "name": "advocacy-program-designer",
     "path": "social/craft/advocacy-program-designer/SKILL.md",
     "phase": "craft",
-    "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
-    "version": "20.0.0"
+    "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<opt-in | assigned> [advocate list / team size] [platforms]",
@@ -224,7 +266,7 @@
           "end_char": 85,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -239,7 +281,7 @@
           "end_char": 255,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 87
         },
@@ -254,7 +296,7 @@
           "end_char": 302,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 257
         },
@@ -269,7 +311,7 @@
           "end_char": 397,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 304
         },
@@ -281,7 +323,7 @@
     "source": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db"
+      "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b"
     }
   },
   "output_contract": {
@@ -296,7 +338,7 @@
           "end_char": 68,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -309,14 +351,14 @@
         "permission_posture": "permission-required",
         "side_effect": "mixed",
         "source": {
-          "end_char": 281,
+          "end_char": 289,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
           "start_char": 70
         },
-        "text": "advocate rows (handle, disclosure line, opt-in date, voluntary-basis evidence — minimal person data) to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only"
+        "text": "advocate rows (`advocate_ref`, disclosure line, opt-in date, voluntary-basis evidence — minimal person data) to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only"
       },
       {
         "clause_id": "write-03",
@@ -325,37 +367,41 @@
         "permission_posture": "permission-required",
         "side_effect": "mixed",
         "source": {
-          "end_char": 451,
+          "end_char": 506,
           "path": "social/craft/advocacy-program-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db",
+          "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b",
           "span_basis": "field-text",
-          "start_char": 283
+          "start_char": 291
         },
-        "text": "product claims lacking approved wording marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+        "text": "product claims lacking approved wording marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`. Do not persist raw handles in these artifacts."
       }
     ],
     "extraction_status": "classified",
     "source": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db"
+      "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b"
     },
-    "summary": "an advocacy program blueprint — mode decision (with assigned-mode risks flagged), voluntary opt-in roster spec, share kits with mandatory per-person variation, staggered human posting windows with anti-pod guardrails, per-person disclosure lines, and a Slack/Teams distribution spec — plus the standard handoff summary.",
+    "summary": "an advocacy program blueprint — mode decision, voluntary opt-in roster spec, versioned share kits with per-person variation, staggered human posting windows, disclosures, a Slack/Teams distribution spec, and a receipt return template for voluntary human posts — plus the standard handoff summary.",
     "summary_source": "expected-output",
-    "writes": "the blueprint and kits to `memory/social/advocacy-program-designer/`; advocate rows (handle, disclosure line, opt-in date, voluntary-basis evidence — minimal person data) to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only; product claims lacking approved wording marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`."
+    "writes": "the blueprint and kits to `memory/social/advocacy-program-designer/`; advocate rows (`advocate_ref`, disclosure line, opt-in date, voluntary-basis evidence — minimal person data) to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` only; product claims lacking approved wording marked `[needs source]` to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py`. Do not persist raw handles in these artifacts."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -364,7 +410,7 @@
     "source": {
       "path": "social/craft/advocacy-program-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "8eb07d15695f65ec0fc015256474d56d75b04a6b7d9580917f922cebce4289db"
+      "sha256": "8e32f9999c48b4cb9d6cadfadba479444c66527267ed0f6233f7f6fbb69c1b7b"
     },
     "trigger_phrases": [
       "build a share kit for the team",

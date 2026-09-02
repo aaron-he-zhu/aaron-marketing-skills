@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.0.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.1.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -562,7 +562,7 @@ Artifact Gate 是**框架无关**的——同一个 hook 校验 CORE-EEAT、CITE
 |----|------------|
 | **28 个内置零依赖连接器** | 纯 Python 标准库——无 `pip`、无构建。keyless 实时 SERP + JS 渲染抓取（Firecrawl、Tavily）、AI 答案引用探针、DNS-over-HTTPS 邮件认证拉取、维基百科关注度序列、GDELT 新闻提及、真实 YouTube 创作者指标、IndexNow + 百度收录推送、Resend ESP 自动化，以及能把任何数据源变成前后对比时间序列的 git 可差分测量台账。 |
 | **60+ 个记录在案的官方/免费 API** | 每一行都链接厂商**官方文档**、带核验日期，且每条链接入库前都经过 HTTP 实测。包含多数工具清单遗漏的路径：GSC URL Inspection、CrUX History（40 周真实用户 CWV）、Gmail Postmaster Tools API、Meta 广告库、微软 Clarity 数据导出 API。 |
-| **厂商 MCP 服务器** | 18 个远程端点入目录（绝不自动注册——你的 `/mcp` 列表保持干净），外加 Google Analytics、Search Console、**Google Ads**、**微软 Clarity** 的官方自托管服务器。其中两个远程 MCP 完全免鉴权（Firecrawl、Tavily）。 |
+| **厂商 MCP 服务器** | 20 个可选目录项（19 个厂商托管的远程端点 + 1 个自托管 OpenSEO 条目）绝不自动注册，因此你的 `/mcp` 列表保持干净。另有 Google Analytics、Search Console、**Google Ads**、**微软 Clarity** 的官方自托管服务器说明。其中两个远程 MCP 完全免鉴权（Firecrawl、Tavily）。 |
 
 让它们可信而不只是数量多的四个理由：
 
@@ -579,7 +579,7 @@ Artifact Gate 是**框架无关**的——同一个 hook 校验 CORE-EEAT、CITE
 
 - **内置零依赖助手** 位于 `scripts/connectors/`（仅 Python 标准库），在本地拉取公开/自有数据——如 PageSpeed/CrUX、Open PageRank、页面抓取、Wayback CDX、Wikidata SPARQL、Common Crawl、advertools 配方——外加 **`resend.py`**：邮件技能直连 Resend ESP 的自动化（免费档 key：发件域认证状态、种子测试投递、抑制名单同步、广播定时发送；变更类子命令默认 dry-run，需 `--live` 才执行）；以及 **`firecrawl.py`** + **`tavily.py`**：研究类技能直连托管抓取器的 keyless 自动化（Firecrawl：实时搜索结果 + JS 渲染页 markdown + 站点 URL 清单；Tavily：带评分的搜索 + AI 答案引擎引用来源探针（GEO 用）+ URL 提取——两者完全无需 key，均内置本地 robots.txt 预检）。
 - **免费/keyless 来源** 按类别记录：Google Search Console 与 GA4（自有数据）、PageSpeed/CrUX、Wikidata、Common Crawl、Open PageRank、Firecrawl keyless SERP/抓取、Tavily keyless AI 搜索、DNS-over-HTTPS 邮件认证记录（`doh.py`）、维基百科关注度序列（`pageviews.py`）、GDELT 新闻提及（`gdelt.py`）、免费 key 的 YouTube 创作者指标（`youtube.py`）、IndexNow + 百度收录推送（`indexpush.py`，dry-run 门控）、广告透明库（Meta/Google/TikTok），以及 crt.sh、W3C 校验器、oEmbed、HN Algolia 的配方行。
-- **可选 MCP 服务器**（Ahrefs、Semrush、SE Ranking、SISTRIX、SimilarWeb、自托管免费的 **OpenSEO** 套件、Cloudflare、Vercel、HubSpot、Amplitude、Notion、Webflow、Sanity、Contentful、Slack、Resend、keyless 的 Firecrawl 与 Tavily）在 [`docs/mcp-catalog.json`](mcp-catalog.json) 中作为**仅复制粘贴参考**——目录位于会被自动注册的插件根 `.mcp.json` 路径之外，不会为你注册任何东西。把你想要的条目复制进自己的 MCP 配置即可。
+- **可选 MCP 服务器**（Ahrefs、Semrush、SE Ranking、SISTRIX、SimilarWeb、自托管免费的 **OpenSEO** 套件、Cloudflare、Vercel、HubSpot、Amplitude、Notion、Webflow、Sanity、Contentful、Slack、Resend、keyless 的 Firecrawl 与 Tavily、Appeeky、Upfluence）在 [`docs/mcp-catalog.json`](mcp-catalog.json) 中作为**仅复制粘贴参考**——目录位于会被自动注册的插件根 `.mcp.json` 路径之外，不会为你注册任何东西。把你想要的条目复制进自己的 MCP 配置即可。
 
 付费广告技能基于你的**自有账户手动导出**（原生广告管理后台 CSV、GA4、电商）评分。带密钥的广告 API（Google Ads SDK、Meta Marketing API）仅是 opt-in Tier-2/3，**绝不**作为 Tier-1 要求。邮件技能同理——基于你**自己的 ESP 导出**评分，所有送达率信号均 keyless（DNS 查询、DMARC RUA 报告、种子收件测试），带密钥的 ESP API 也绝不是 Tier-1 要求；若你的 ESP 是 Resend，内置的 `resend.py` 可在免费档上自动化同一闭环。
 
@@ -697,7 +697,7 @@ docs/            # 本地化 README(zh)
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** —— 撰写规则、贡献清单，以及权威的 10 个追踪面清单。
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`20.0.0`）。
+- **[VERSIONS.md](../VERSIONS.md)** —— 各技能版本 + 变更日志（当前包：`20.1.0`）。
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** —— 安全、隐私、社区政策。
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** —— 面向 Agent 的本仓库上下文。

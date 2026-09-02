@@ -4,9 +4,11 @@ A method for breaking one piece of UGC into reusable "content atoms" — the sma
 
 > Method only. Do NOT install or call whisper, mediapipe, pandas, or any package. If the user has a video, ask them to paste the transcript or captions and work from that text.
 
+**Source identity boundary**: before extraction, bind the transient source text to exactly three persistent fields: stable opaque `creator_ref`, exact frozen `approved_asset_ref`, and an opaque authorized `source_ref`. Never persist a raw handle, creator name, profile/content URL, provider ID, or a raw URL disguised as `source_ref`. If any of the three refs is missing, return `NEEDS_INPUT` and do not save or hand off atom records.
+
 ## 1. The 7 Atom Tiers
 
-Read the source text and pull every standalone unit that fits one of these tiers. One source usually yields 5–15 atoms. Tag each atom with a timestamp (or text position if no timecodes) and the platforms it suits best.
+Read the source text and pull every standalone unit that fits one of these tiers. Tag each atom with a timestamp (or text position if no timecodes) and candidate formats. The tier does not itself rank, score, approve, or choose a paid/hero placement.
 
 | Tier | What it is | Looks like | Suggested platforms |
 |------|-----------|-----------|--------------------|
@@ -25,50 +27,31 @@ Read the source text and pull every standalone unit that fits one of these tiers
   tier: quote
   text: "This is the only one that actually worked."
   timestamp: 00:00:18   # or char-offset / "para 2" if no timecodes
-  source_asset: UGC-001 (@creator1, TikTok)
-  suggested_platforms: [quote card, website testimonial, ad headline]
-  virality_score: 0.71
+  creator_ref: creator-opaque-ref
+  approved_asset_ref: frozen-approved-asset-ref
+  source_ref: opaque-authorized-source-ref
+  candidate_formats: [quote card, website testimonial, ad headline]
+  selection_rule_ref: NEEDS_INPUT
+  selection_score: null
+  score_state: NOT_SCORED
 ```
 
-## 2. Virality Heuristic
+## 2. Selection Rule — No Built-In Score
 
-Score each atom 0–1 so you repurpose the strongest first. Rate three traits on a 0–1 scale by reading the text, then weight them:
+This reference supplies no default “virality” weights, bonuses, cutoff, ranking, or placement priority. Extracting an atom is not evidence that it should receive paid spend or a hero placement.
 
-```
-base = (Novelty × 0.4) + (Controversy × 0.3) + (Utility × 0.3)
-```
+Before assigning any numeric score, rank, keep/drop decision, or placement, require one of:
 
-- **Novelty (0.4)** — how fresh or surprising is the claim? Seen-it-everywhere = low; genuinely new angle = high.
-- **Controversy (0.3)** — does it provoke a reaction or take a side? Neutral = low; "you've been doing it wrong" = high.
-- **Utility (0.3)** — can a viewer act on it? Vague vibe = low; concrete step or result = high.
+- a user-approved rule that explicitly defines criteria, weights, scale, cutoff, intended use, and approval ref; or
+- a source-dated rule whose evidence ref, population/context, date, and intended use are compatible with this campaign.
 
-### Bonuses (additive, then cap the total at 1.0)
+If neither exists, set `selection_rule_ref: NEEDS_INPUT`, `selection_score: null`, and `score_state: NOT_SCORED/NEEDS_INPUT`. Preserve the extracted atoms without ranking them and do not automatically select anything for paid, hero, or another destination.
 
-Atom-type bonus:
+If a qualifying rule exists, copy its criteria and weights exactly, show the calculation inputs and result, and record `selection_rule_ref`. Do not add an atom-type bonus, content bonus, or unstated tie-breaker.
 
-| Atom tier | Bonus |
-|-----------|-------|
-| `controversial_take` | +0.10 |
-| `data_point` | +0.08 |
-| `framework` | +0.06 |
-| `quote` | +0.04 |
-| others | 0 |
+## 3. Near-Duplicate Evidence (No Default Threshold)
 
-Content bonus (each applies once, stack them):
-
-- +0.05 if it names a specific number or timeframe.
-- +0.05 if it directly addresses the viewer ("you", "your").
-- +0.05 if it carries clear emotion (relief, frustration, surprise).
-
-```
-virality_score = min(1.0, base + atom_type_bonus + content_bonuses)
-```
-
-Sort atoms by `virality_score` descending; repurpose the top of the list into paid and hero placements first.
-
-## 3. Near-Duplicate Flag (Jaccard ~0.70)
-
-Before you publish a batch, flag atoms that say almost the same thing so you don't ship five versions of one line.
+Before you publish a batch, you may calculate lexical similarity as descriptive evidence. Similarity alone does not authorize dropping or suppressing an atom.
 
 **Jaccard similarity** = (words shared by both) / (all distinct words across both). Compute it by hand on lowercased word sets, dropping punctuation and common stop-words (the, a, is, and, to, of, it, this).
 
@@ -76,19 +59,23 @@ Before you publish a batch, flag atoms that say almost the same thing so you don
 J(A, B) = |words(A) ∩ words(B)| / |words(A) ∪ words(B)|
 ```
 
-Flag a pair as a near-duplicate when **J ≥ 0.70**.
+Require a user-approved or source-dated compatible `duplicate_rule_ref` before applying a threshold or keep/drop decision. Without it, report the calculated similarity and `duplicate_state: NOT_DECIDED/NEEDS_INPUT`; do not assume a cutoff.
 
 Check in two places:
 
-1. **Within the current batch** — compare every new atom against the others in this run. Keep the higher-virality one; mark the other `dup_of: A-00X`.
-2. **Against recent memory** — read atom records saved in `memory/influencer/content-amplifier/` dated within the last 30 days and compare new atoms against those. If J ≥ 0.70 against a recent atom, flag it as already-used and either skip it or note it as a deliberate refresh.
+1. **Within the current batch** — compare atoms only when requested. Apply a flag/keep/drop action only under the cited `duplicate_rule_ref`; a selection score is unavailable unless its separate rule passed.
+2. **Against recent memory** — read authorized atom records from the user-supplied/source-dated lookback window. Apply an already-used flag or skip action only under the cited `duplicate_rule_ref`.
 
 ```markdown
 - atom_id: A-007
+  creator_ref: creator-opaque-ref
+  approved_asset_ref: frozen-approved-asset-ref
+  source_ref: opaque-authorized-source-ref
   text: "It's the only one that actually worked for me."
-  near_duplicate: true
-  dup_of: A-001            # J = 0.78, within-batch
-  decision: drop (lower virality)
+  jaccard_similarity: 0.71
+  duplicate_rule_ref: NEEDS_INPUT
+  duplicate_state: NOT_DECIDED/NEEDS_INPUT
+  decision: none
 ```
 
-Worked example: `"this is the only one that actually worked"` vs `"the only one that actually worked for me"` — after stop-word removal the sets are {only, one, that, actually, worked} (5) and {only, one, that, actually, worked, for, me} (7); shared = 5, union = 7, so **J = 5/7 ≈ 0.71** — just over the 0.70 line, so flag it.
+Worked calculation: `"this is the only one that actually worked"` vs `"the only one that actually worked for me"` — after the declared tokenization/stop-word treatment, shared = 5 and union = 7, so **J = 5/7 ≈ 0.71**. With no approved `duplicate_rule_ref`, report only that calculated value; do not flag or drop either atom.

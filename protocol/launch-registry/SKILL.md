@@ -4,13 +4,13 @@ slug: aaron-launch-registry
 displayName: "Launch Registry · 发布台账"
 summary: "发布台账/发布日历/阶段与禁运期唯一真相"
 description: 'Use when the user asks to "log this launch", query a launch date/embargo, record a stage transition, or update submissions/outcomes; curates launch facts through the append-only launches event stream with optimistic revisions and derived dossier/calendar views. Not for RAMP scoring — use launch-readiness-auditor; not for planning tier/window — use launch-tier-planner. 发布台账/发布日历/阶段与禁运期记录'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when recording/querying launch tier/type/stage/date/embargo, submission events, manifest version, outcome snapshot, or accepting pending launch proposals."
 argument-hint: "<launch aggregate-id, transition, or pending-proposal review>"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "protocol", "phase": "protocol", "geo-relevance": "low", "hermes": {"tags": ["marketing", "protocol"], "category": "protocol"}, "openclaw": {"emoji": "🗂️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Launch Registry

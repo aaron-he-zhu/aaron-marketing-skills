@@ -211,7 +211,21 @@
           "minItems": 1,
           "uniqueItems": true,
           "items": {
-            "enum": ["handoff-summary", "condition-evidence", "audit-evidence", "registry-proposal", "failure-evidence", "cross-discipline-context", "execution-approval"]
+            "enum": [
+              "action-intent",
+              "action-receipt",
+              "artifact-binding",
+              "audit-evidence",
+              "condition-evidence",
+              "cross-discipline-context",
+              "cycle-retro",
+              "evidence-observation",
+              "execution-approval",
+              "failure-evidence",
+              "handoff-summary",
+              "measurement-contract",
+              "registry-proposal"
+            ]
           }
         },
         "precondition_codes": {

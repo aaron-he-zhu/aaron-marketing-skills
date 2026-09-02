@@ -30,6 +30,7 @@ S3_PREFIXES = (
 )
 S3_EXACT = {
     "SECURITY.md",
+    "references/control-bindings.json",
     "scripts/check-pii.py",
     "scripts/check-stdlib-only.sh",
     "scripts/check-versions.sh",

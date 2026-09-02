@@ -11,7 +11,7 @@
           "end_char": 99,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 227,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 102
         },
@@ -41,7 +41,7 @@
           "end_char": 328,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 230
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657"
+      "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 46
       },
       {
@@ -90,20 +90,21 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 35
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
         "source_line": 75
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:bid-strategy-planner",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -116,7 +117,7 @@
           "end_char": 217,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -134,7 +135,7 @@
           "end_char": 416,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 218
         },
@@ -152,7 +153,7 @@
           "end_char": 623,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 417
         },
@@ -170,7 +171,7 @@
           "end_char": 661,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 625
         },
@@ -186,7 +187,7 @@
           "end_char": 914,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 662
         },
@@ -202,7 +203,7 @@
           "end_char": 1022,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 916
         },
@@ -215,7 +216,7 @@
     "summary_ref": {
       "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657"
+      "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -230,8 +231,8 @@
     "name": "bid-strategy-planner",
     "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
     "phase": "orchestrate",
-    "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
-    "version": "20.0.0"
+    "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<goal: DR|prospecting> [conversion history: CPA/ROAS + volume] [campaign set]",
@@ -245,7 +246,7 @@
           "end_char": 382,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -257,7 +258,7 @@
     "source": {
       "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657"
+      "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08"
     }
   },
   "output_contract": {
@@ -272,7 +273,7 @@
           "end_char": 204,
           "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657",
+          "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -283,7 +284,7 @@
     "source": {
       "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657"
+      "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08"
     },
     "summary": "a bid-strategy recommendation (strategy + starting target + portfolio map + learning-phase entry plan) and a reusable handoff summary. Save path: `memory/ad/bid-strategy-planner/YYYY-MM-DD-<campaign>.md`.",
     "summary_source": "writes-fallback",
@@ -294,12 +295,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -308,7 +309,7 @@
     "source": {
       "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "fa4ec97d9ee5871816cc73151d17fa28614ac36e74ca31dd03ea2c69bb811657"
+      "sha256": "0df1deacc659c5f9a1a95e262b7386cec6084eab740a0488645662d2a0e60e08"
     },
     "trigger_phrases": [
       "pick a bid strategy",

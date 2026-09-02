@@ -11,7 +11,7 @@
           "end_char": 72,
           "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01",
+          "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 138,
           "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01",
+          "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97",
           "span_basis": "field-text",
           "start_char": 74
         },
@@ -41,7 +41,7 @@
           "end_char": 214,
           "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01",
+          "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97",
           "span_basis": "field-text",
           "start_char": 140
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01"
+      "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 32
       },
       {
@@ -76,7 +76,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 28
       },
       {
@@ -118,6 +118,7 @@
     "project_paths": []
   },
   "contract_id": "skill:content-gap-analysis",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -130,7 +131,7 @@
           "end_char": 67,
           "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01",
+          "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -145,7 +146,7 @@
     "summary_ref": {
       "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01"
+      "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -158,8 +159,8 @@
     "name": "content-gap-analysis",
     "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
     "phase": "survey",
-    "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01",
-    "version": "20.0.0"
+    "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<your domain> <competitor domain>",
@@ -173,7 +174,7 @@
           "end_char": 133,
           "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01",
+          "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -185,7 +186,7 @@
     "source": {
       "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01"
+      "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97"
     }
   },
   "output_contract": {
@@ -200,7 +201,7 @@
           "end_char": 44,
           "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01",
+          "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -211,7 +212,7 @@
     "source": {
       "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01"
+      "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97"
     },
     "summary": "a prioritized gap brief plus the standard handoff summary for `memory/research/`.",
     "summary_source": "expected-output",
@@ -222,12 +223,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -236,7 +237,7 @@
     "source": {
       "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
       "section": "frontmatter",
-      "sha256": "938d43bade9286dc2f3f99b26a784d88b5713be4d25fa73323878b06f4287e01"
+      "sha256": "af797cb4e690539a023be90890f1c7c3506bd8b6192e5fc74f8a77b22a7f5a97"
     },
     "trigger_phrases": [
       "find content gaps",

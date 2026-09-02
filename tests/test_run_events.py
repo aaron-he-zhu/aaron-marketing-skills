@@ -121,6 +121,221 @@ class RunEventTests(unittest.TestCase):
         return path
 
     @staticmethod
+    def control_artifact_value(artifact_id="evidence-1"):
+        return {
+            "$schema": "references/control-artifact.schema.json",
+            "schema_version": "1.0",
+            "kind": "evidence-observation",
+            "artifact_id": artifact_id,
+            "created_at": "2026-08-01T12:00:00Z",
+            "authoritative": False,
+            "authority": "non-authoritative-operational-evidence",
+            "registry_effect": False,
+            "external_mutation_authorized": False,
+            "payload": {
+                "target": {
+                    "ref": "opaque:asset-1",
+                    "sha256": "a" * 64,
+                    "version": "v1",
+                },
+                "observation_window": {
+                    "start_at": "2026-07-01T00:00:00Z",
+                    "end_at": "2026-07-31T23:59:59Z",
+                },
+                "fields": [{
+                    "field_id": "conversion_rate",
+                    "state": "observed",
+                    "sources": [{
+                        "evidence_type": "measured",
+                        "ref": "opaque:analytics-export-1",
+                        "observed_at": "2026-08-01T10:00:00Z",
+                        "window": {
+                            "start_at": "2026-07-01T00:00:00Z",
+                            "end_at": "2026-07-31T23:59:59Z",
+                        },
+                    }],
+                    "value_ref": "opaque:metric-value-1",
+                    "freshness": "current",
+                    "missing_reason": None,
+                    "conflict_group": None,
+                }],
+                "readiness": "ready",
+                "unresolved_conflicts": [],
+            },
+        }
+
+    def write_control_artifact(self, relative="memory/control/evidence.json", value=None):
+        path = self.root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            json.dumps(
+                value or self.control_artifact_value(), indent=2,
+                sort_keys=True, ensure_ascii=False, allow_nan=False,
+            ) + "\n",
+            encoding="utf-8",
+        )
+        return path
+
+    @staticmethod
+    def action_intent_value(artifact_id="intent-1"):
+        binding = lambda ref, digest, version: {
+            "ref": ref, "sha256": digest, "version": version,
+        }
+        return {
+            "$schema": "references/control-artifact.schema.json",
+            "schema_version": "1.0",
+            "kind": "action-intent",
+            "artifact_id": artifact_id,
+            "created_at": "2026-08-02T08:00:00Z",
+            "authoritative": False,
+            "authority": "non-authoritative-operational-evidence",
+            "registry_effect": False,
+            "external_mutation_authorized": False,
+            "payload": {
+                "operation": "send",
+                "target": binding("opaque:send-target-1", "d" * 64, "target-v1"),
+                "content": binding("opaque:message-bytes-1", "e" * 64, "message-v1"),
+                "audience_ref": "opaque:segment-1",
+                "channel_ref": "opaque:channel-1",
+                "constraint_refs": ["opaque:schedule-1"],
+                "safety_checks": [],
+                "permission_ref": "opaque:user-request-1",
+                "permission_observed_at": "2026-08-02T07:59:00Z",
+                "permission_effect": "provenance-only",
+                "requested_at": "2026-08-02T08:00:00Z",
+                "expires_at": "2026-08-02T09:00:00Z",
+                "single_use": True,
+            },
+        }
+
+    @staticmethod
+    def action_receipt_value(intent_ref, intent_sha, artifact_id="receipt-1"):
+        intent = RunEventTests.action_intent_value()
+        return {
+            "$schema": "references/control-artifact.schema.json",
+            "schema_version": "1.0",
+            "kind": "action-receipt",
+            "artifact_id": artifact_id,
+            "created_at": "2026-08-02T08:06:00Z",
+            "authoritative": False,
+            "authority": "non-authoritative-operational-evidence",
+            "registry_effect": False,
+            "external_mutation_authorized": False,
+            "payload": {
+                "intent": {
+                    "ref": intent_ref, "sha256": intent_sha, "version": "1.0",
+                },
+                "intent_id": intent["artifact_id"],
+                "operation": intent["payload"]["operation"],
+                "actual_target": intent["payload"]["target"],
+                "actual_content": intent["payload"]["content"],
+                "actual_audience_ref": intent["payload"]["audience_ref"],
+                "actual_channel_ref": intent["payload"]["channel_ref"],
+                "applied_constraint_refs": intent["payload"]["constraint_refs"],
+                "status": "succeeded",
+                "attempted_at": "2026-08-02T08:05:00Z",
+                "completed_at": "2026-08-02T08:06:00Z",
+                "provider_operation_ref": "opaque:provider-operation-1",
+                "evidence": [{
+                    "ref": "opaque:provider-receipt-1",
+                    "sha256": "1" * 64,
+                    "version": "receipt-v1",
+                }],
+                "failure_code": None,
+                "permission_effect": "provenance-only",
+            },
+        }
+
+    def control_validation_request(self, key, parent, artifact, turn_id="turn-1"):
+        return self.request(
+            key, event_type="artifact_validated", parent=parent, turn_id=turn_id,
+            status="succeeded",
+            subject={"kind": "artifact", "ref": "evidence-1"},
+            references=[{
+                "kind": "artifact",
+                "ref": str(artifact.relative_to(self.root)),
+                "sha256": self.digest(artifact),
+            }],
+            dimensions={"validator": runtime.CONTROL_ARTIFACT_VALIDATOR},
+        )
+
+    def test_single_use_intent_receipt_is_unique_per_selected_ancestry(self):
+        _context, snapshot = self.started_snapshot()
+        intent = self.write_control_artifact(
+            "memory/control/intent.json", self.action_intent_value(),
+        )
+        intent_ref = str(intent.relative_to(self.root))
+        first_receipt = self.write_control_artifact(
+            "memory/control/receipt-1.json",
+            self.action_receipt_value(intent_ref, self.digest(intent), "receipt-1"),
+        )
+        first_request = self.control_validation_request(
+            "receipt-first", snapshot["event"]["event_id"], first_receipt,
+        )
+        first = runtime.append_event(self.root, self.run_id, first_request)
+        retried = runtime.append_event(self.root, self.run_id, first_request)
+        self.assertTrue(retried["deduplicated"])
+        self.assertEqual(first["event"]["event_id"], retried["event"]["event_id"])
+
+        second_receipt = self.write_control_artifact(
+            "memory/control/receipt-2.json",
+            self.action_receipt_value(intent_ref, self.digest(intent), "receipt-2"),
+        )
+        second_request = self.control_validation_request(
+            "receipt-second", first["event"]["event_id"], second_receipt,
+        )
+        event_count = len(runtime.load_events(self.root, self.run_id))
+        with self.assertRaisesRegex(
+                runtime.RunEventError, "single-use action-intent already has"):
+            runtime.append_event(self.root, self.run_id, second_request)
+        self.assertEqual(event_count, len(runtime.load_events(self.root, self.run_id)))
+
+        copied_intent = self.write_control_artifact(
+            "memory/control/intent-copy.json",
+            self.action_intent_value(),
+        )
+        copied_receipt = self.write_control_artifact(
+            "memory/control/receipt-copy.json",
+            self.action_receipt_value(
+                str(copied_intent.relative_to(self.root)),
+                self.digest(copied_intent), "receipt-copy",
+            ),
+        )
+        copied_request = self.control_validation_request(
+            "receipt-copied-intent", first["event"]["event_id"], copied_receipt,
+        )
+        with self.assertRaisesRegex(
+                runtime.RunEventError, "single-use action-intent already has"):
+            runtime.append_event(self.root, self.run_id, copied_request)
+
+        # The same intent may be explored on a sibling branch; neither receipt
+        # is an ancestor of the other, and every selected ancestry stays unique.
+        sibling_request = self.control_validation_request(
+            "receipt-sibling", snapshot["event"]["event_id"], second_receipt,
+        )
+        sibling = runtime.append_event(self.root, self.run_id, sibling_request)
+        self.assertFalse(sibling["deduplicated"])
+        runtime.validate_artifact_validation_events(
+            self.root, runtime.load_events(self.root, self.run_id),
+        )
+
+    def started_snapshot(self):
+        root_event = self.start()["event"]
+        runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "turn-start", event_type="turn_started", parent=root_event["event_id"],
+                turn_id="turn-1", status="started",
+                subject={"kind": "turn", "ref": "turn-1"},
+            ),
+        )
+        context = self.context_reference()
+        snapshot = runtime.write_snapshot(
+            self.root, self.run_id, self.snapshot_value(context),
+        )
+        return context, snapshot
+
+    @staticmethod
     def digest(path):
         return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -1586,6 +1801,208 @@ class RunEventTests(unittest.TestCase):
         supported["artifacts"] = [reference]
         saved = runtime.write_save_point(self.root, self.run_id, supported)
         self.assertEqual("save_point_created", saved["event"]["event_type"])
+
+    def test_control_artifact_validation_is_live_and_precedes_event_append(self):
+        _context, snapshot = self.started_snapshot()
+        invalid = self.control_artifact_value()
+        invalid["authoritative"] = True
+        artifact = self.write_control_artifact(value=invalid)
+        request = self.control_validation_request(
+            "control-invalid", snapshot["event"]["event_id"], artifact,
+        )
+        event_count = len(runtime.load_events(self.root, self.run_id))
+        hostile_python = self.root / "hostile-python"
+        hostile_python.mkdir()
+        (hostile_python / "sitecustomize.py").write_text(
+            "import os\nos._exit(0)\n", encoding="utf-8",
+        )
+        with (
+            mock.patch.dict(os.environ, {"PYTHONPATH": str(hostile_python)}),
+            self.assertRaisesRegex(
+                runtime.RunEventError, "control artifact validation failed",
+            ),
+        ):
+            runtime.append_event(self.root, self.run_id, request)
+        events = runtime.load_events(self.root, self.run_id)
+        self.assertEqual(event_count, len(events))
+        self.assertFalse(any(
+            event["idempotency_key"] == "control-invalid" for event in events
+        ))
+
+        mislabeled = self.control_validation_request(
+            "control-mislabeled", snapshot["event"]["event_id"], artifact,
+        )
+        mislabeled["dimensions"]["validator"] = "fixture-validator"
+        with self.assertRaisesRegex(
+                runtime.RunEventError, "requires validator=validate-control-artifact"):
+            runtime.append_event(self.root, self.run_id, mislabeled)
+
+    def test_control_artifact_symlink_and_validator_timeout_fail_before_append(self):
+        _context, snapshot = self.started_snapshot()
+        artifact = self.write_control_artifact("memory/control/source.json")
+        linked = self.root / "memory" / "control" / "linked.json"
+        linked.symlink_to(artifact.name)
+        symlink_request = self.control_validation_request(
+            "control-symlink", snapshot["event"]["event_id"], linked,
+        )
+        event_count = len(runtime.load_events(self.root, self.run_id))
+        with self.assertRaisesRegex(runtime.RunEventError, "symlink|stable"):
+            runtime.append_event(self.root, self.run_id, symlink_request)
+
+        timeout_request = self.control_validation_request(
+            "control-timeout", snapshot["event"]["event_id"], artifact,
+        )
+        real_run = subprocess.run
+
+        def timeout_validator(command, *args, **kwargs):
+            if any(str(item).endswith("validate-control-artifact.py") for item in command):
+                raise subprocess.TimeoutExpired(command, kwargs.get("timeout", 0))
+            return real_run(command, *args, **kwargs)
+
+        with (
+            mock.patch.object(runtime.subprocess, "run", side_effect=timeout_validator),
+            self.assertRaisesRegex(runtime.RunEventError, "validation timed out"),
+        ):
+            runtime.append_event(self.root, self.run_id, timeout_request)
+        self.assertEqual(event_count, len(runtime.load_events(self.root, self.run_id)))
+
+    def test_control_artifact_checkpoint_requires_exact_selected_ancestry(self):
+        context, snapshot = self.started_snapshot()
+        artifact = self.write_control_artifact()
+        validated = runtime.append_event(
+            self.root, self.run_id,
+            self.control_validation_request(
+                "control-sibling", snapshot["event"]["event_id"], artifact,
+            ),
+        )
+        sibling = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "selected-sibling", parent=snapshot["event"]["event_id"],
+                subject={"kind": "context", "ref": "selected-sibling"},
+            ),
+        )
+        self.assertNotIn(
+            validated["event"]["event_id"], sibling["projection"]["selected_path_event_ids"],
+        )
+        save_value = self.save_point_value(
+            snapshot["artifact"], context, sibling["projection"],
+        )
+        save_value["artifacts"] = [{
+            "ref": str(artifact.relative_to(self.root)),
+            "sha256": self.digest(artifact),
+            "validator": runtime.CONTROL_ARTIFACT_VALIDATOR,
+            "validation_status": "valid",
+        }]
+        with self.assertRaisesRegex(
+                runtime.RunEventError, "matching ancestor.*selected ancestry"):
+            runtime.write_save_point(self.root, self.run_id, save_value)
+
+    def test_artifact_validation_append_and_replay_share_the_same_capacity(self):
+        events = []
+        for index in range(runtime.MAX_VALIDATED_ARTIFACTS_PER_BOUNDARY):
+            events.append({
+                "event_type": "artifact_validated",
+                "references": [{
+                    "kind": "artifact",
+                    "ref": "artifacts/%03d.bin" % index,
+                    "sha256": "%064x" % index,
+                }],
+                "dimensions": {"validator": "fixture-validator"},
+            })
+        request = self.request(
+            "artifact-over-capacity", event_type="artifact_validated",
+            parent=str(uuid.uuid4()), turn_id="turn-1", status="succeeded",
+            subject={"kind": "artifact", "ref": "overflow"},
+            references=[{
+                "kind": "artifact", "ref": "artifacts/overflow.bin",
+                "sha256": "f" * 64,
+            }],
+            dimensions={"validator": "fixture-validator"},
+        )
+        with self.assertRaisesRegex(runtime.RunEventError, "128-artifact replay boundary"):
+            runtime.ensure_artifact_validation_capacity(events, request)
+
+    def test_control_artifact_tamper_blocks_checkpoint_and_save_point_replay(self):
+        context, snapshot = self.started_snapshot()
+        artifact = self.write_control_artifact()
+        validated = runtime.append_event(
+            self.root, self.run_id,
+            self.control_validation_request(
+                "control-valid", snapshot["event"]["event_id"], artifact,
+            ),
+        )
+        reference = {
+            "ref": str(artifact.relative_to(self.root)),
+            "sha256": self.digest(artifact),
+            "validator": runtime.CONTROL_ARTIFACT_VALIDATOR,
+            "validation_status": "valid",
+        }
+        save_value = self.save_point_value(
+            snapshot["artifact"], context, validated["projection"],
+        )
+        save_value["artifacts"] = [reference]
+        saved = runtime.write_save_point(self.root, self.run_id, save_value)
+
+        tampered = self.control_artifact_value("evidence-tampered")
+        self.write_control_artifact(value=tampered)
+        with self.assertRaisesRegex(runtime.RunEventError, "hash mismatch"):
+            runtime.validate_save_point_document(
+                self.root, saved["artifact"]["ref"],
+                saved["artifact"]["sha256"], self.run_id,
+            )
+        with self.assertRaisesRegex(runtime.RunEventError, "hash mismatch"):
+            runtime.resume_summary(self.root, self.run_id, 8192)
+        events = runtime.load_events(self.root, self.run_id)
+        with self.assertRaisesRegex(runtime.RunEventError, "hash mismatch"):
+            runtime.validate_artifact_validation_events(self.root, events)
+
+        second_save = self.save_point_value(
+            snapshot["artifact"], context, saved["projection"],
+        )
+        second_save["artifacts"] = [reference]
+        with self.assertRaisesRegex(runtime.RunEventError, "hash mismatch"):
+            runtime.write_save_point(self.root, self.run_id, second_save)
+
+    def test_valid_control_artifact_saves_without_payload_and_terminal_stays_closed(self):
+        context, snapshot = self.started_snapshot()
+        artifact = self.write_control_artifact()
+        validated = runtime.append_event(
+            self.root, self.run_id,
+            self.control_validation_request(
+                "control-valid", snapshot["event"]["event_id"], artifact,
+            ),
+        )
+        self.assertNotIn("payload", validated["event"])
+        self.assertEqual(
+            {"kind", "ref", "sha256"},
+            set(validated["event"]["references"][0]),
+        )
+        save_value = self.save_point_value(
+            snapshot["artifact"], context, validated["projection"],
+        )
+        save_value["artifacts"] = [{
+            "ref": str(artifact.relative_to(self.root)),
+            "sha256": self.digest(artifact),
+            "validator": runtime.CONTROL_ARTIFACT_VALIDATOR,
+            "validation_status": "valid",
+        }]
+        saved = runtime.write_save_point(self.root, self.run_id, save_value)
+        self.assertEqual("save_point_created", saved["event"]["event_type"])
+
+        finished = runtime.finish_run(
+            self.root, self.run_id,
+            self.envelope_value(context, saved["artifact"], saved["projection"]),
+        )
+        event_count = len(runtime.load_events(self.root, self.run_id))
+        with self.assertRaisesRegex(runtime.RunEventError, "terminal run"):
+            runtime.append_event(
+                self.root, self.run_id,
+                self.control_validation_request(
+                    "control-too-late", finished["event"]["event_id"], artifact,
+                ),
+            )
+        self.assertEqual(event_count, len(runtime.load_events(self.root, self.run_id)))
 
     def test_open_tools_are_projected_along_the_selected_branch_only(self):
         root_event = self.start()["event"]

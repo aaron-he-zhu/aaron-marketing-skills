@@ -32,6 +32,9 @@ class RouterFacadeTests(unittest.TestCase):
         self.assertEqual(first, second)
         self.assertEqual(9, len(first))
         manifest = json.loads(first[router.SIDECAR_REF])
+        self.assertEqual(
+            router.compact_json(manifest), first[router.SIDECAR_REF]
+        )
         self.assertEqual(8, manifest["facade_count"])
         self.assertEqual(120, manifest["canonical_business_skill_count"])
         self.assertEqual(
@@ -62,6 +65,9 @@ class RouterFacadeTests(unittest.TestCase):
             text = content.decode("utf-8")
             self.assertIn("canonical_business_skill\":false", text)
             self.assertIn("does not execute domain work", text)
+            self.assertIn("Before selecting, read every plausible target", text)
+            self.assertNotIn("  - Boundary:", text)
+            self.assertNotIn("  - Route when:", text)
 
     def test_facades_are_not_canonical_plugin_or_catalog_skills(self):
         outputs = router.build_outputs(ROOT)

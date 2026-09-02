@@ -35,47 +35,59 @@ VERSION_ROW_RE = re.compile(
     r"([0-9]+\.[0-9]+\.[0-9]+) \| ([0-9]{4}-[0-9]{2}-[0-9]{2}) \|$",
     re.MULTILINE,
 )
+SUPPORTED_RELEASE_VERSIONS_RE = re.compile(
+    r'^SUPPORTED_RELEASE_VERSIONS = \(\n'
+    r'(?P<body>(?:    "[0-9]+\.[0-9]+\.[0-9]+",\n)+)'
+    r'^\)$',
+    re.MULTILINE,
+)
 
 CURRENT_SUMMARY = (
-    "**AI Staff positioning.** The same 120 canonical skills, seven mandatory "
-    "4×4 discipline loops, eight commands, framework IDs, routes, and state "
-    "paths remain intact. The bundle now presents as an installable AI "
-    "marketing staff: the named-bot roster (Grok Bot, Hermes Bot Mode) becomes "
-    "a first-class install surface alongside the plugin and portable skills, "
-    "the README leads vendor-neutral, and the chief bot handle shortens to "
-    "`aaron-chief`. Existing Claude, npx skills, SkillHub, ClawHub, OpenClaw, "
-    "and Hermes surfaces remain separate compatibility channels generated from "
-    "the same canonical source."
+    "**Cross-discipline control plane.** The same 120 canonical skills, seven "
+    "mandatory 4×4 discipline loops, eight commands, framework IDs, routes, "
+    "and state paths remain intact. Forty-nine execution- and measurement-heavy "
+    "skills now share a closed typed artifact protocol for evidence, immutable "
+    "bindings, measurement contracts, action intents and receipts, and cycle "
+    "retros. Governed runtimes validate exact bytes on the selected ancestry; "
+    "Lite, Pro, Portable, and standalone paths fail closed as `NOT_VERIFIED` "
+    "instead of claiming persistence, authority, or execution proof."
 )
 CHANGELOG_BODY = """\
-### v{version} — Agent Plugins v1 Portable Lite ({date})
+### v{version} — Cross-discipline control plane ({date})
 
 All 120 canonical skills align to `{version}` together while the exact 7 ×
 (4 phases × 4 skills) shape, TALE/SITE/ECHO/SEND/ROAS/STAR/RAMP acronym
 symmetry, eight public commands, framework/veto IDs, registry keys, and user
 state paths remain unchanged.
 
-- **Published-package conformance.** A fourth release archive exposes the
-  versioned Agent Plugins 1.0.0 `plugin.json` contract and exactly 120 immediate
-  `skills/<name>/SKILL.md` children. The repository source layout remains the
-  single canonical authoring tree; no committed mirror is introduced.
-- **Strict Agent Skills projection.** Portable frontmatter contains only the
-  standard field set, uses string-valued metadata, and removes platform listing
-  extensions from the generated copy. Source frontmatter remains unchanged for
-  existing registry and client publishers.
-- **Contained static delivery.** Cross-skill and shared-reference links are
-  deterministically rewritten into the package. Client runtimes, hooks,
-  commands, connectors, persistence, and excluded paths degrade to a documented
-  Portable Lite boundary instead of becoming broken or over-claimed behavior.
-- **No implicit MCP authority.** The portable archive deliberately omits
-  `mcp.json`; the 19 documented endpoints remain opt-in client configuration.
-- **Reproducible provenance.** The official Agent Plugins schema, versioned spec
-  identity, Agent Skills baseline, source-to-projection hashes, host profile, and
-  capability ceiling are bound into validation and release manifests.
-- **Compatibility preserved.** The existing Lite, Pro, and Governed archives,
-  Claude commands and hooks, `npx skills`, SkillHub, ClawHub, OpenClaw, and
-  Hermes publication routes remain supported and receive full regression
-  coverage alongside the new portable asset.
+- **One protocol, domain-owned semantics.** A closed control-artifact schema and
+  validator define evidence observations, measurement contracts, action intents,
+  action receipts, cycle retros, and their exact artifact bindings. Discipline
+  references keep freshness, rights, consent, platform, and decision semantics
+  local instead of copying the Influencer tracker or STAR vocabulary.
+- **Seven-discipline adoption.** Forty-nine skills across Narrative, SEO/GEO,
+  Social, Email, Paid Ads, Influencer, and Product Launch declare compact control
+  requirements. External changes remain intent-first and receipt-proven; missing,
+  stale, conflicting, partial, or mismatched evidence fails closed.
+- **Selected-ancestry runtime proof.** Governed run events validate current
+  artifact bytes before recording a ref/hash, revalidate on checkpoint, resume,
+  and replay, and reject sibling-branch or tampered evidence. No artifact,
+  intent, receipt, actor field, tool availability, or projection grants external
+  authority.
+- **Typed handoffs, bounded context.** Workflow edges carry only the control
+  input kinds they truly consume. Machine contracts and capsules project compact
+  enums and source hashes; full schemas stay deferred so discovery and selected
+  context remain inside the existing hard budgets.
+- **Projection and distribution boundaries.** The Influencer Markdown/YAML
+  tracker becomes a deterministic read-only compatibility projection. Governed
+  ships the validator and runtime binding; Lite, Pro, Portable Lite, and
+  standalone paths explicitly degrade to `NOT_VERIFIED` and cannot claim a
+  single head, selected ancestry, validated receipt, consumed permission, or
+  durable state.
+- **Expanded regression surface.** The strict semantic corpus grows to 734
+  cases, including 34 new domain failures, while protocol, runtime recovery,
+  workflow, context, distribution, privacy, and deterministic projection tests
+  enforce the shared boundary without adding a skill, registry, or connector.
 """
 
 
@@ -230,6 +242,115 @@ def _replace_current_text(
     return updated
 
 
+def _supported_rc_schema_pattern(versions: list[str]) -> str:
+    if not versions or any(not SEMVER_RE.fullmatch(version) for version in versions):
+        raise BumpError("release receipt support contains an invalid version")
+    return "^(?:%s)-rc\\.[1-9][0-9]*$" % "|".join(
+        re.escape(version) for version in versions
+    )
+
+
+def _append_python_supported_version(
+    text: str,
+    current: str,
+    target: str,
+    relative: str,
+) -> tuple[str, list[str], list[str]]:
+    matches = list(SUPPORTED_RELEASE_VERSIONS_RE.finditer(text))
+    if len(matches) != 1:
+        raise BumpError(
+            "%s must contain one canonical SUPPORTED_RELEASE_VERSIONS tuple"
+            % relative
+        )
+    match = matches[0]
+    before = re.findall(
+        r'"([0-9]+\.[0-9]+\.[0-9]+)"', match.group("body")
+    )
+    if (
+        not before
+        or len(before) != len(set(before))
+        or before[-1] != current
+        or target in before
+    ):
+        raise BumpError(
+            "%s release support is not aligned to current bundle %s"
+            % (relative, current)
+        )
+    after = before + [target]
+    replacement = "SUPPORTED_RELEASE_VERSIONS = (\n%s)" % "".join(
+        '    "%s",\n' % version for version in after
+    )
+    return text[: match.start()] + replacement + text[match.end() :], before, after
+
+
+def _release_candidate_node(
+    document: dict,
+    path: tuple[str, ...],
+    relative: str,
+) -> dict:
+    node: object = document
+    for key in path:
+        if not isinstance(node, dict) or key not in node:
+            raise BumpError(
+                "%s is missing release-candidate schema path %s"
+                % (relative, ".".join(path))
+            )
+        node = node[key]
+    if not isinstance(node, dict) or not isinstance(node.get("pattern"), str):
+        raise BumpError(
+            "%s release-candidate schema path %s is invalid"
+            % (relative, ".".join(path))
+        )
+    return node
+
+
+def _update_release_candidate_patterns(
+    document: dict,
+    before: list[str],
+    after: list[str],
+    paths: tuple[tuple[str, ...], ...],
+    relative: str,
+) -> None:
+    expected = _supported_rc_schema_pattern(before)
+    replacement = _supported_rc_schema_pattern(after)
+    for path in paths:
+        node = _release_candidate_node(document, path, relative)
+        if node["pattern"] != expected:
+            raise BumpError(
+                "%s release-candidate pattern is not aligned to supported versions"
+                % relative
+            )
+        node["pattern"] = replacement
+
+
+def _extend_release_receipt_schema(
+    document: dict,
+    current: str,
+    target: str,
+    paths: tuple[tuple[str, ...], ...],
+    relative: str,
+) -> tuple[list[str], list[str]]:
+    release_version = document.get("properties", {}).get("release_version")
+    versions = release_version.get("enum") if isinstance(release_version, dict) else None
+    if (
+        not isinstance(versions, list)
+        or not versions
+        or any(not isinstance(version, str) for version in versions)
+        or len(versions) != len(set(versions))
+        or versions[-1] != current
+        or target in versions
+    ):
+        raise BumpError(
+            "%s release_version enum is not aligned to current bundle %s"
+            % (relative, current)
+        )
+    before = list(versions)
+    after = before + [target]
+    release_version["enum"] = after
+    _update_release_candidate_patterns(document, before, after, paths, relative)
+    return before, after
+
+
 def prepare(root: Path, target: str, date: str) -> tuple[dict[Path, str], dict]:
     root = root.resolve()
     if not SEMVER_RE.fullmatch(target):
@@ -314,6 +435,124 @@ def prepare(root: Path, target: str, date: str) -> tuple[dict[Path, str], dict]:
             )
         ],
         "scripts/publish-skillhub.sh",
+    )
+
+    release_verifier_path = root / "scripts" / "verify-release-receipt.py"
+    (
+        release_verifier_text,
+        release_verifier_before,
+        release_verifier_after,
+    ) = _append_python_supported_version(
+        _read(release_verifier_path),
+        current,
+        target,
+        "scripts/verify-release-receipt.py",
+    )
+    changes[release_verifier_path] = release_verifier_text
+
+    profile_verifier_path = root / "scripts" / "verify-profile-outcomes.py"
+    (
+        profile_verifier_text,
+        profile_verifier_before,
+        profile_verifier_after,
+    ) = _append_python_supported_version(
+        _read(profile_verifier_path),
+        current,
+        target,
+        "scripts/verify-profile-outcomes.py",
+    )
+    changes[profile_verifier_path] = profile_verifier_text
+
+    profile_receipt_path = root / "references" / "profile-outcome-receipt.schema.json"
+    profile_receipt, _ = _load_json(profile_receipt_path)
+    profile_schema_before, profile_schema_after = _extend_release_receipt_schema(
+        profile_receipt,
+        current,
+        target,
+        (
+            ("properties", "release_candidate"),
+            (
+                "$defs",
+                "governed_promotion_summary",
+                "properties",
+                "release_candidate",
+            ),
+            (
+                "$defs",
+                "release_pilot_summary",
+                "properties",
+                "release_candidate",
+            ),
+        ),
+        "references/profile-outcome-receipt.schema.json",
+    )
+    changes[profile_receipt_path] = _json_text(profile_receipt)
+
+    engineering_receipt_path = (
+        root / "references" / "engineering-release-receipt.schema.json"
+    )
+    engineering_receipt, _ = _load_json(engineering_receipt_path)
+    engineering_schema_before, engineering_schema_after = (
+        _extend_release_receipt_schema(
+            engineering_receipt,
+            current,
+            target,
+            (("properties", "release_candidate"),),
+            "references/engineering-release-receipt.schema.json",
+        )
+    )
+    changes[engineering_receipt_path] = _json_text(engineering_receipt)
+
+    support_before = (
+        release_verifier_before,
+        profile_verifier_before,
+        profile_schema_before,
+        engineering_schema_before,
+    )
+    support_after = (
+        release_verifier_after,
+        profile_verifier_after,
+        profile_schema_after,
+        engineering_schema_after,
+    )
+    if any(versions != support_before[0] for versions in support_before[1:]) or any(
+        versions != support_after[0] for versions in support_after[1:]
+    ):
+        raise BumpError("release receipt support surfaces disagree")
+
+    profile_evidence_path = root / "references" / "profile-outcome-evidence.schema.json"
+    profile_evidence, _ = _load_json(profile_evidence_path)
+    _update_release_candidate_patterns(
+        profile_evidence,
+        release_verifier_before,
+        release_verifier_after,
+        (("properties", "release_candidate"),),
+        "references/profile-outcome-evidence.schema.json",
+    )
+    changes[profile_evidence_path] = _json_text(profile_evidence)
+
+    issuer_path = root / "scripts" / "issue-engineering-release-receipt.py"
+    changes[issuer_path] = _replace_current_text(
+        _read(issuer_path),
+        [
+            (
+                'RELEASE_VERSION = "%s"' % current,
+                'RELEASE_VERSION = "%s"' % target,
+            )
+        ],
+        "scripts/issue-engineering-release-receipt.py",
+    )
+
+    github_release_path = root / "scripts" / "create-github-release.py"
+    changes[github_release_path] = _replace_current_text(
+        _read(github_release_path),
+        [
+            (
+                'RELEASE_VERSION = "%s"' % current,
+                'RELEASE_VERSION = "%s"' % target,
+            )
+        ],
+        "scripts/create-github-release.py",
     )
 
     effective: dict[Path, str] = {}

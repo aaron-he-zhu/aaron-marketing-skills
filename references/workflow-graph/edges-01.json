@@ -4,7 +4,7 @@
   "edges": [
     {
       "condition_code": "conditional",
-      "condition_source": "ad/research/campaign-architect/SKILL.md:84",
+      "condition_source": "ad/research/campaign-architect/SKILL.md:85",
       "condition_text": "If the launch should run as an experiment: ad-test-designer — design the launch test (hypothesis, single variable, sample/duration) on the new structure.",
       "documentation_required": true,
       "exception": null,
@@ -33,8 +33,8 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "influencer/target/campaign-planner/SKILL.md:94",
-      "condition_text": "Primary: brief-generator — convert the approved plan into concrete influencer briefs.",
+      "condition_source": "influencer/target/campaign-planner/SKILL.md:112",
+      "condition_text": "Plan-authoring primary: brief-generator — convert an approved plan into concrete influencer briefs.",
       "documentation_required": true,
       "exception": null,
       "from": "campaign-planner",
@@ -61,8 +61,8 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/target/campaign-planner/SKILL.md:95",
-      "condition_text": "Alternate: budget-optimizer — pressure-test and optimize the budget split before locking the plan.",
+      "condition_source": "influencer/target/campaign-planner/SKILL.md:113",
+      "condition_text": "Plan-authoring alternates: budget-optimizer to pressure-test the split; influencer-discovery to build or complete the locked creator scope.",
       "documentation_required": true,
       "exception": null,
       "from": "campaign-planner",
@@ -89,8 +89,8 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/target/campaign-planner/SKILL.md:96",
-      "condition_text": "Alternate: influencer-discovery — build the shortlist against the selection criteria defined here.",
+      "condition_source": "influencer/target/campaign-planner/SKILL.md:113",
+      "condition_text": "Plan-authoring alternates: budget-optimizer to pressure-test the split; influencer-discovery to build or complete the locked creator scope.",
       "documentation_required": true,
       "exception": {
         "code": "documented-bounded-reentry",
@@ -508,7 +508,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:83",
+      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:84",
       "condition_text": "If launch day needs an hour-blocked coordinator across all lanes: launch-day-conductor.",
       "documentation_required": true,
       "exception": null,
@@ -537,7 +537,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:82",
+      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:83",
       "condition_text": "Primary: launch-monitor — arm the T-0→T+30 telemetry read on the submitted channels.",
       "documentation_required": true,
       "exception": null,
@@ -565,7 +565,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:84",
+      "condition_source": "launch/mobilize/community-launch-runner/SKILL.md:85",
       "condition_text": "If the media/analyst lane is the next gap: press-media-relations.",
       "documentation_required": true,
       "exception": null,
@@ -916,7 +916,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/activate/content-amplifier/SKILL.md:157",
+      "condition_source": "influencer/activate/content-amplifier/SKILL.md:159",
       "condition_text": "budget-optimizer — reallocate paid budget across the recommended tiers (paid).",
       "documentation_required": true,
       "exception": {
@@ -948,7 +948,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/activate/content-amplifier/SKILL.md:156",
+      "condition_source": "influencer/activate/content-amplifier/SKILL.md:158",
       "condition_text": "contract-helper — secure or expand usage rights before reuse (repurpose).",
       "documentation_required": true,
       "exception": null,
@@ -976,7 +976,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/activate/content-amplifier/SKILL.md:152",
+      "condition_source": "influencer/activate/content-amplifier/SKILL.md:154",
       "condition_text": "*repurpose mode* → landing-optimizer — drop the repurposed testimonials, hero videos, and quote cards onto the pages that convert.",
       "documentation_required": true,
       "exception": null,
@@ -1004,7 +1004,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "influencer/activate/content-amplifier/SKILL.md:151",
+      "condition_source": "influencer/activate/content-amplifier/SKILL.md:153",
       "condition_text": "*paid mode* → performance-analyzer — measure amplification results once campaigns are live.",
       "documentation_required": true,
       "exception": null,

@@ -15,10 +15,14 @@ resolve_root() {
   [ -f "$resolved/references/context-request.schema.json" ] || return 1
   [ -f "$resolved/references/context-manifest.schema.json" ] || return 1
   [ -f "$resolved/references/audit-loop-state.schema.json" ] || return 1
+  [ -f "$resolved/references/control-artifact.schema.json" ] || return 1
+  [ -f "$resolved/references/control-bindings.json" ] || return 1
+  [ -f "$resolved/references/control-bindings.schema.json" ] || return 1
   [ -f "$resolved/scripts/registry-events.py" ] || return 1
   [ -f "$resolved/scripts/run-events.py" ] || return 1
   [ -f "$resolved/scripts/context-resolver.py" ] || return 1
   [ -f "$resolved/scripts/audit-loop.py" ] || return 1
+  [ -f "$resolved/scripts/validate-control-artifact.py" ] || return 1
   printf '%s\n' "$resolved"
 }
 
@@ -47,6 +51,7 @@ python3 "$plugin_resolved/scripts/registry-events.py" --help >/dev/null
 python3 "$plugin_resolved/scripts/run-events.py" --help >/dev/null
 python3 "$plugin_resolved/scripts/context-resolver.py" --help >/dev/null
 python3 "$plugin_resolved/scripts/audit-loop.py" --help >/dev/null
+python3 "$plugin_resolved/scripts/validate-control-artifact.py" --help >/dev/null
 
 # Registry instructions use the same host-root resolution and never leave a
 # runnable working-directory-relative registry command behind.

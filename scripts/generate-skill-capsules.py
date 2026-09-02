@@ -26,6 +26,14 @@ ALWAYS_ON_OVERLAYS = [
     "audit-verdict",
     "release-provenance",
 ]
+CONTROL_REQUIREMENTS = {
+    "action-intent",
+    "action-receipt",
+    "artifact-binding",
+    "cycle-retro",
+    "evidence-observation",
+    "measurement-contract",
+}
 OMITTED_STANDARD_SECTIONS = {
     "Quick Start",
     "Skill Contract",
@@ -217,6 +225,20 @@ def _write_controls(clauses):
     return result
 
 
+def _control_requirements(contract, skill):
+    requirements = contract.get("control_requirements")
+    if (
+            not isinstance(requirements, list)
+            or len(requirements) > len(CONTROL_REQUIREMENTS)
+            or len(requirements) != len(set(requirements))
+            or requirements != sorted(requirements)
+            or any(item not in CONTROL_REQUIREMENTS for item in requirements)):
+        raise CapsuleError(
+            "machine contract control requirements are invalid for %s" % skill
+        )
+    return list(requirements)
+
+
 def _build_capsule(skill, entry, policy_ref):
     contract_path = ROOT / entry["contract_ref"]
     contract_raw = _read_bytes(contract_path, entry["contract_ref"])
@@ -243,6 +265,7 @@ def _build_capsule(skill, entry, policy_ref):
     outputs = contract["output_contract"]
     handoff = contract["handoff_contract"]
     capsule_path = CAPSULE_DIR / ("%s.json" % skill)
+    control_requirements = _control_requirements(contract, skill)
 
     def projected_markdown(value, label):
         if value is None:
@@ -316,6 +339,8 @@ def _build_capsule(skill, entry, policy_ref):
             },
         },
     }
+    if control_requirements:
+        capsule["control_requirements"] = control_requirements
     return capsule
 
 

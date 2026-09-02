@@ -24,6 +24,16 @@ planner = load_module("context_assembly_test_planner", ROOT / "scripts" / "conte
 assembly = load_module(
     "context_assembly_under_test", ROOT / "scripts" / "context-assembly.py"
 )
+distribution_builder = load_module(
+    "context_assembly_distribution_builder",
+    ROOT / "scripts" / "build-distribution.py",
+)
+
+
+def write_distribution_manifest(path, manifest):
+    path.write_bytes(
+        distribution_builder.canonical_compact_json(manifest) + b"\n"
+    )
 
 
 class ContextAssemblyTests(unittest.TestCase):
@@ -160,7 +170,7 @@ class ContextAssemblyTests(unittest.TestCase):
                 else "native-plugin"
             ),
             "routing_sidecar": None,
-            "package_ceiling": {"max_files": 560, "max_bytes": 6500000},
+            "package_ceiling": {"max_files": 560, "max_bytes": 6700000},
             "hash_algorithm": "sha256",
             "manifest_path": "distribution-manifest.json",
             "manifest_excludes": ["distribution-manifest.json"],
@@ -170,10 +180,8 @@ class ContextAssemblyTests(unittest.TestCase):
             ) + "\n").encode("utf-8")).hexdigest(),
             "files": files,
         }
-        (bundle / "distribution-manifest.json").write_text(
-            json.dumps(manifest, ensure_ascii=False, allow_nan=False,
-                       indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
+        write_distribution_manifest(
+            bundle / "distribution-manifest.json", manifest
         )
         return bundle
 
@@ -452,11 +460,7 @@ class ContextAssemblyTests(unittest.TestCase):
             manifest["files"], ensure_ascii=False, allow_nan=False,
             indent=2, sort_keys=True
         ) + "\n").encode("utf-8")).hexdigest()
-        manifest_path.write_text(
-            json.dumps(manifest, ensure_ascii=False, allow_nan=False,
-                       indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
+        write_distribution_manifest(manifest_path, manifest)
         with self.assertRaisesRegex(
                 assembly.ContextAssemblyError, "complete manifest inventory"):
             assembly._distribution_identity(
@@ -479,11 +483,7 @@ class ContextAssemblyTests(unittest.TestCase):
             manifest["files"], ensure_ascii=False, allow_nan=False,
             indent=2, sort_keys=True
         ) + "\n").encode("utf-8")).hexdigest()
-        manifest_path.write_text(
-            json.dumps(manifest, ensure_ascii=False, allow_nan=False,
-                       indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
+        write_distribution_manifest(manifest_path, manifest)
         with self.assertRaisesRegex(
                 assembly.ContextAssemblyError, "executing runtime"):
             assembly._distribution_identity(
@@ -494,11 +494,7 @@ class ContextAssemblyTests(unittest.TestCase):
         manifest_path = relabeled_host_bundle / "distribution-manifest.json"
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         manifest["host_profile"] = "generic-shared-root-host"
-        manifest_path.write_text(
-            json.dumps(manifest, ensure_ascii=False, allow_nan=False,
-                       indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
+        write_distribution_manifest(manifest_path, manifest)
         with self.assertRaisesRegex(
                 assembly.ContextAssemblyError, "typed host catalog"):
             assembly._distribution_identity(

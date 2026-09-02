@@ -1,6 +1,6 @@
-# Budget Optimizer — Templates, Cost Benchmarks & Scenarios
+# Budget Optimizer — Templates, Cost Evidence & Scenarios
 
-Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, optimization strategies, and the mid-campaign reallocation template for [budget-optimizer](../SKILL.md). Each section maps to a numbered Instructions step in the parent skill.
+Fill-in templates, the source-dated cost-evidence intake, scenario A/B/C blocks, optimization strategies, and the mid-campaign reallocation template for [budget-optimizer](../SKILL.md). Each section maps to a numbered Instructions step in the parent skill. This reference supplies no default rate, multiplier, contingency, savings, or amplification percentage.
 
 ## Step 1 — Budget Parameters (intake template)
 
@@ -28,51 +28,24 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 - Minimum influencers: [#]
 ```
 
-## Step 2 — Cost Benchmarks
+## Step 2 — Cost Evidence
 
-### Influencer Cost by Tier & Platform
+Numerical allocation begins only after at least one compatible user-provided,
+first-party, quoted, or source-dated market anchor is available. Keep
+incompatible evidence for context; do not silently transfer it across markets,
+platforms, tiers, deliverables, rights, or dates.
 
-#### Instagram
+```markdown
+### Cost / Comparator Evidence Inventory
 
-| Tier | Followers | Cost/Post | Cost/Story | Cost/Reel |
-|------|-----------|-----------|------------|-----------|
-| Nano | 1K-10K | $50-250 | $25-100 | $75-300 |
-| Micro | 10K-100K | $250-1,000 | $100-500 | $300-1,500 |
-| Mid-tier | 100K-500K | $1,000-5,000 | $500-2,000 | $1,500-7,500 |
-| Macro | 500K-1M | $5,000-10,000 | $2,000-5,000 | $7,500-15,000 |
-| Mega | 1M+ | $10,000+ | $5,000+ | $15,000+ |
+| Input | Value | Source ref | Published/retrieved | Market | Platform/tier | Deliverable + rights/exclusivity | Currency/FX date | Evidence window | Compatibility | Label |
+|-------|-------|------------|---------------------|--------|---------------|----------------------------------|------------------|-----------------|---------------|-------|
+| [quote/history/comparator] | [amount/range] | [opaque ref] | [date] | [market] | [scope] | [scope] | [currency/date] | [window] | compatible/context-only | User-provided/Measured/Estimated |
 
-#### TikTok
-
-| Tier | Followers | Cost/Video | Notes |
-|------|-----------|------------|-------|
-| Nano | 1K-10K | $50-200 | High engagement typical |
-| Micro | 10K-100K | $200-1,000 | Sweet spot for many brands |
-| Mid-tier | 100K-500K | $1,000-3,000 | Viral potential |
-| Macro | 500K-1M | $3,000-7,500 | Established creators |
-| Mega | 1M+ | $7,500+ | Celebrity tier |
-
-#### YouTube
-
-| Tier | Subscribers | Dedicated Video | Integration | Mention |
-|------|-------------|-----------------|-------------|---------|
-| Micro | 10K-100K | $1,000-5,000 | $500-2,000 | $200-500 |
-| Mid-tier | 100K-500K | $5,000-15,000 | $2,000-7,500 | $500-2,000 |
-| Macro | 500K-1M | $15,000-30,000 | $7,500-15,000 | $2,000-5,000 |
-| Mega | 1M+ | $30,000+ | $15,000+ | $5,000+ |
-
-### Industry Adjustments
-
-| Industry | Cost Multiplier | Notes |
-|----------|-----------------|-------|
-| Beauty/Fashion | 1.2-1.5x | High demand, competitive |
-| Tech | 1.1-1.3x | Specialized expertise |
-| Food/Beverage | 1.0x | Standard rates |
-| Finance | 1.3-1.5x | Compliance requirements |
-| Health/Wellness | 1.2-1.4x | Trust requirements |
-| Gaming | 0.9-1.1x | Platform dependent |
-| Travel | 1.0-1.2x | Seasonal variations |
-| Parenting | 1.0-1.1x | Engaged audiences |
+**Unsupported inputs**: [missing rate, multiplier, or comparator]
+**Status**: [READY_FOR_MODELING / NEEDS_INPUT]
+**Exact query/request plan**: [which rate cards, comparable campaign history, or approved assumptions are needed]
+```
 
 ## Step 3 — Budget Allocation Recommendation
 
@@ -114,39 +87,42 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 | Product/Gifting | $[X] | [%] | [notes] |
 | Content Amplification | $[X] | [%] | Boosting top content |
 | Tools/Software | $[X] | [%] | [tools] |
-| Contingency | $[X] | [%] | 5-10% buffer |
+| Contingency | $[X/TBD] | [%/TBD] | [user rule or source-dated anchor ref; otherwise TBD] |
 ```
 
-## Step 4 — ROI Projections
+## Step 4 — Return Projections
 
 ```markdown
-## ROI Projections
+## Return Projections
 
 ### Expected Results
 
-| Metric | Projection | Methodology |
-|--------|------------|-------------|
-| Total Reach | [X] | [calculation] |
-| Impressions | [X] | Reach × [frequency] |
-| Engagements | [X] | Reach × [ER%] |
-| Video Views | [X] | [if applicable] |
-| Link Clicks | [X] | [click rate] |
-| EMV | $[X] | Impressions × CPM |
+| Metric | Projection | Formula | Input refs | Window | Label |
+|--------|------------|---------|------------|--------|-------|
+| Total Reach | [X/TBD] | [formula] | [refs] | [window] | [label] |
+| Impressions | [X/TBD] | Reach × frequency | [refs] | [window] | Estimated/NEEDS_INPUT |
+| Engagements | [X/TBD] | Reach × ER | [refs] | [window] | Estimated/NEEDS_INPUT |
+| Video Views | [X/TBD] | [formula] | [refs] | [window] | [label] |
+| Link Clicks | [X/TBD] | impressions × CTR | [refs] | [window] | Estimated/NEEDS_INPUT |
+| EMV (separate non-revenue scenario) | $[X/TBD] | impressions ÷ 1,000 × declared equivalency CPM | [refs] | [window] | Estimated/NEEDS_INPUT |
 
 ### Cost Efficiency Metrics
 
-| Metric | Projected | Industry Avg | vs. Avg |
-|--------|-----------|--------------|---------|
-| CPM | $[X] | $[Y] | [better/worse] |
-| CPE | $[X] | $[Y] | [better/worse] |
-| Cost per Video View | $[X] | $[Y] | [better/worse] |
-| Cost per Click | $[X] | $[Y] | [better/worse] |
+| Metric | Projected | Declared comparator | Comparator source/date/scope | Comparison |
+|--------|-----------|---------------------|------------------------------|------------|
+| CPM | $[X/TBD] | $[Y/TBD] | [ref/date/scope] | [better/worse/NOT_COMPARABLE] |
+| CPE | $[X/TBD] | $[Y/TBD] | [ref/date/scope] | [better/worse/NOT_COMPARABLE] |
+| Cost per Video View | $[X/TBD] | $[Y/TBD] | [ref/date/scope] | [better/worse/NOT_COMPARABLE] |
+| Cost per Click | $[X/TBD] | $[Y/TBD] | [ref/date/scope] | [better/worse/NOT_COMPARABLE] |
 
-### ROI Calculation
+### Revenue-basis return calculation
 
-**Investment**: $[X]
-**Expected Value**: $[X] (EMV + direct value)
-**Projected ROI**: [X]:1
+- **Investment**: $[X]
+- **Projected attributed revenue**: $[X/TBD] — [input refs + attribution method/window]
+- **Projected ROAS**: [X:1/TBD] = attributed revenue ÷ spend
+- **Arithmetic ROI**: [X%/TBD] = (attributed revenue - spend) ÷ spend × 100%
+- **Profit/incrementality status**: [NOT_CLAIMED / supported by named cost and incrementality evidence]
+- **EMV**: report separately above; never add it to attributed revenue or cash return.
 
 ### Conversion Projections (if applicable)
 
@@ -157,7 +133,7 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 | Site Visits | [X] | [%] | Bounce considered |
 | Conversions | [X] | [%] | Conversion rate |
 | Revenue | $[X] | [AOV] | Average order value |
-| **ROAS** | **[X]:1** | | Return on ad spend |
+| **ROAS** | **[X]:1/TBD** | attributed revenue ÷ spend | Not ROI and not proof of profit or incrementality |
 ```
 
 ## Step 5 — Budget Scenarios
@@ -175,8 +151,9 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 | Est. Reach | [X] | [X] | [X] |
 | Est. Engagements | [X] | [X] | [X] |
 | Projected CPM | $[X] | $[X] | $[X] |
-| Projected ROI | [X]:1 | [X]:1 | [X]:1 |
-| Risk Level | Low | Medium | Higher |
+| Projected ROAS | [X:1/TBD] | [X:1/TBD] | [X:1/TBD] |
+| Arithmetic ROI | [X%/TBD] | [X%/TBD] | [X%/TBD] |
+| Evidence completeness | [state] | [state] | [state] |
 
 ### Scenario A: Conservative ($[X])
 
@@ -187,8 +164,7 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 | Micro | [#] | $[X] | [#] posts |
 | Nano | [#] | $[X] | [#] posts |
 
-**Pros**: Lower risk; higher engagement rates; more content pieces.
-**Cons**: Limited reach; less brand awareness impact; slower momentum.
+**Pros / cons**: [supported trade-offs; cite the input or label as hypothesis]
 
 ---
 
@@ -202,8 +178,7 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 | Micro | [#] | $[X] | [#] posts |
 | Nano | [#] | $[X] | [#] posts |
 
-**Pros**: Balanced reach and engagement; credibility from macro names; volume from micro/nano.
-**Cons**: More complex management; medium budget commitment.
+**Pros / cons**: [supported trade-offs; cite the input or label as hypothesis]
 
 ---
 
@@ -217,8 +192,7 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 | Macro | [#] | $[X] | [#] posts |
 | Micro | [#] | $[X] | [#] posts |
 
-**Pros**: Maximum reach; strong brand association; potential viral moments.
-**Cons**: Higher cost per engagement; concentration risk; less authentic feel.
+**Pros / cons**: [supported trade-offs; cite the input or label as hypothesis]
 
 ---
 
@@ -235,27 +209,27 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 
 ### Cost Reduction Strategies
 
-| Strategy | Potential Savings | Trade-offs |
-|----------|-------------------|------------|
-| Negotiate multi-post deals | 15-25% | Commitment required |
-| Product-only compensation | 50-80% | Limited to nano/small micro |
-| Affiliate-heavy model | Variable | Performance-dependent |
-| Long-term ambassadors | 20-30% | Less variety |
-| Emerging influencers | 40-60% | Less proven |
-| Off-peak timing | 10-20% | Less competitive periods |
+| Strategy | Modeled savings | Evidence/assumption ref | Trade-offs |
+|----------|-----------------|-------------------------|------------|
+| Negotiate multi-post deals | [TBD/%] | [user/source-dated anchor] | Commitment required |
+| Product-inclusive compensation | [TBD/%] | [user/source-dated anchor] | Creator acceptance and fair-value review required |
+| Affiliate-heavy model | [TBD/%] | [user/source-dated anchor] | Performance-dependent |
+| Long-term ambassadors | [TBD/%] | [user/source-dated anchor] | Less variety |
+| Emerging creators | [TBD/%] | [user/source-dated anchor] | Less history |
+| Off-peak timing | [TBD/%] | [user/source-dated anchor] | Timing trade-off |
 
 ### Value Maximization Strategies
 
-1. **Bundle deliverables**: Negotiate package deals (e.g. "Post + Stories + Reel" vs. separate pricing). Typical savings: 15-20%.
-2. **Usage rights negotiation**: Get whitelisting and repurposing rights — value add without major cost increase.
+1. **Bundle deliverables**: Model any package savings only from a quote, first-party history, or source-dated compatible anchor.
+2. **Usage rights scope**: Default whitelisting and repurposing rights to a defined term, named channels, and territory; price extensions separately.
 3. **Performance incentives**: Base fee + performance bonus to align interests and motivate quality content.
-4. **Content amplification**: Allocate 10-20% for paid amplification to extend reach of best content.
-5. **UGC rights**: Negotiate perpetual rights to repurpose across channels.
+4. **Content amplification**: Allocate only the user-approved or source-dated amount and keep creator licensing/authorization separate.
+5. **Expanded UGC rights**: Treat perpetual, global, or all-channel rights as an exception that requires incremental pricing and legal review before agreement.
 
 ### Budget Red Flags
 
-- >40% of budget on a single influencer
-- CPM significantly above industry average
+- Concentration above the user-approved or source-dated threshold
+- CPM above a declared compatible comparator
 - No contingency allocated
 - All budget on unproven creators
 - Ignoring content amplification
@@ -278,26 +252,23 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 
 ### Top Performers
 
-| Influencer | Spend | Results | ROI | Recommendation |
-|------------|-------|---------|-----|----------------|
-| @[handle1] | $[X] | [results] | [X]:1 | Increase investment |
-| @[handle2] | $[X] | [results] | [X]:1 | Increase investment |
+| Creator ref | Spend | Comparable result | Return metric | Decision-rule status |
+|-------------|-------|-------------------|---------------|----------------------|
+| [creator-<UUIDv4>] | $[X] | [result + source/window] | [ROAS x:1 or ROI %] | [CLEARED/KEEP_TESTING/NEEDS_INPUT] |
 
 ### Underperformers
 
-| Influencer | Spend | Results | ROI | Recommendation |
-|------------|-------|---------|-----|----------------|
-| @[handle3] | $[X] | [results] | [X]:1 | Reduce/cut |
-| @[handle4] | $[X] | [results] | [X]:1 | Reduce/cut |
+| Creator ref | Spend | Comparable result | Return metric | Decision-rule status |
+|-------------|-------|-------------------|---------------|----------------------|
+| [creator-<UUIDv4>] | $[X] | [result + source/window] | [ROAS x:1 or ROI %] | [CLEARED/KEEP_TESTING/NEEDS_INPUT] |
 
 ### Reallocation Recommendation
 
-| From | To | Amount | Rationale |
-|------|----|--------|-----------|
-| [Source] | [Destination] | $[X] | [why] |
-| [Source] | [Destination] | $[X] | [why] |
+| From creator_ref/pool | To creator_ref/pool | Amount | Preregistered rule + evidence | Authorization status |
+|-----------------------|---------------------|--------|-------------------------------|----------------------|
+| [ref] | [ref] | $[X/TBD] | [rule/window/refs] | PROPOSED_ONLY / AUTHORIZED |
 
-**Expected Impact**: additional reach [X]; improved ROI [X]:1 → [Y]:1.
+**Expected impact**: [Unknown unless supported by approved modeled inputs]. A cleared recommendation still does not move spend without separate action authorization.
 ```
 
 ## Optimization tips
@@ -313,32 +284,12 @@ Fill-in templates, the built-in cost benchmark tables, scenario A/B/C blocks, op
 ```markdown
 ## Budget Allocation: $30,000 Skincare Launch
 
-### Recommended Distribution
+**Status**: NEEDS_INPUT
 
-| Category | Allocation | Notes |
-|----------|------------|-------|
-| TikTok Influencers | $15,000 (50%) | Primary for Gen Z |
-| Instagram Influencers | $9,000 (30%) | Credibility + visual |
-| Content Amplification | $4,500 (15%) | Boost top performers |
-| Contingency | $1,500 (5%) | Flexibility |
-
-### Influencer Mix
-
-| Platform | Tier | # | Cost Each | Total | Content |
-|----------|------|---|-----------|-------|---------|
-| TikTok | Micro (50-100K) | 5 | $1,500 | $7,500 | 5 videos |
-| TikTok | Nano (10-50K) | 15 | $500 | $7,500 | 15 videos |
-| Instagram | Micro (50-100K) | 3 | $2,000 | $6,000 | 3 Reels + Stories |
-| Instagram | Nano (10-50K) | 6 | $500 | $3,000 | 6 posts |
-
-**Total Influencers**: 29 · **Total Content Pieces**: 29+ (excluding stories)
-
-### Projected Results
-
-- Reach: 2.8M - 3.5M (Estimated)
-- Engagements: 280K - 400K (Estimated)
-- CPM: $8.50 - $10.70 (Estimated)
-- Projected ROI: 3.5:1 (Estimated)
-
-Prioritizes TikTok for viral potential while using Instagram for credibility and detailed product showcase.
+Only the total, audience, goal, and platforms were supplied. Return the 100%
+allocation worksheet with all rate-, quantity-, contingency-, and projection-
+dependent cells marked `TBD`. Request dated compatible creator quotes (including
+deliverable and rights scope), comparable reach/engagement history, and approved
+conversion/AOV/attribution inputs. Do not invent a split, creator count, CPM,
+EMV, ROAS, or ROI from this prompt.
 ```

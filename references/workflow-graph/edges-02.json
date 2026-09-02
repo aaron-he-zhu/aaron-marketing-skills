@@ -4,7 +4,7 @@
   "edges": [
     {
       "condition_code": "quality-gate",
-      "condition_source": "seo-geo/implement/content-writer/SKILL.md:133",
+      "condition_source": "seo-geo/implement/content-writer/SKILL.md:134",
       "condition_text": "Primary: content-quality-auditor — gate the draft (new) or re-score the refreshed page (refresh) before publishing.",
       "documentation_required": true,
       "exception": null,
@@ -34,7 +34,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "seo-geo/implement/content-writer/SKILL.md:134",
+      "condition_source": "seo-geo/implement/content-writer/SKILL.md:135",
       "condition_text": "Conditional: geo-content-optimizer when the draft is ready but AI-citation/GEO readiness is the open question.",
       "documentation_required": true,
       "exception": null,
@@ -63,8 +63,40 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "influencer/activate/contract-helper/SKILL.md:85",
-      "condition_text": "Primary: content-amplifier — once the agreement is signed and usage rights are locked, amplify the licensed content into paid and owned channels.",
+      "condition_source": "influencer/activate/contract-helper/SKILL.md:90",
+      "condition_text": "Primary: brief-generator — create or finalize the creator-ready brief after signature.",
+      "documentation_required": true,
+      "exception": {
+        "code": "documented-bounded-reentry",
+        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
+      },
+      "from": "contract-helper",
+      "gate": null,
+      "id": "contract-helper--brief-generator",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "failure-evidence",
+        "handoff-summary"
+      ],
+      "to": "brief-generator",
+      "type": "reentry"
+    },
+    {
+      "condition_code": "alternate",
+      "condition_source": "influencer/activate/contract-helper/SKILL.md:94",
+      "condition_text": "Asset approved for reuse: use content-amplifier only after confirming the frozen asset is auditor-approved and covered by active rights for the intended use; require a matching live post only for Spark/boost or another existing-post method.",
       "documentation_required": true,
       "exception": null,
       "from": "contract-helper",
@@ -91,8 +123,8 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "influencer/activate/contract-helper/SKILL.md:88",
-      "condition_text": "creator-content-auditor — run the approval workflow the contract defines.",
+      "condition_source": "influencer/activate/contract-helper/SKILL.md:93",
+      "condition_text": "Brief already final: proceed with creator fulfillment; when content is submitted, use creator-content-auditor to run the approval workflow the contract defines.",
       "documentation_required": true,
       "exception": null,
       "from": "contract-helper",
@@ -121,7 +153,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "influencer/activate/contract-helper/SKILL.md:89",
+      "condition_source": "influencer/activate/contract-helper/SKILL.md:95",
       "condition_text": "outreach-manager — if terms stall, return to negotiation before re-drafting.",
       "documentation_required": true,
       "exception": null,
@@ -150,7 +182,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "ad/activate/conversion-signal-qa/SKILL.md:80",
+      "condition_source": "ad/activate/conversion-signal-qa/SKILL.md:83",
       "condition_text": "Primary: ad-account-auditor — once the plumbing is launch-ready, the auditor scores R1/R2 and the full RQS before any budget increase.",
       "documentation_required": true,
       "exception": null,
@@ -266,7 +298,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:130",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:136",
       "condition_text": "Brief mismatch: brief-generator",
       "documentation_required": true,
       "exception": {
@@ -298,7 +330,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:133",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:139",
       "condition_text": "Approved asset amplification: content-amplifier",
       "documentation_required": true,
       "exception": null,
@@ -326,7 +358,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:132",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:138",
       "condition_text": "Rights/terms: contract-helper",
       "documentation_required": true,
       "exception": null,
@@ -354,7 +386,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:131",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:137",
       "condition_text": "Claim fix: offer-claims-registry",
       "documentation_required": true,
       "exception": null,
@@ -502,7 +534,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "social/host/crisis-response-planner/SKILL.md:85",
+      "condition_source": "social/host/crisis-response-planner/SKILL.md:86",
       "condition_text": "If pause/un-pause markers are pending: channel-registry — reconcile the incident's state markers into the channel dossiers.",
       "documentation_required": true,
       "exception": null,
@@ -533,7 +565,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "social/host/crisis-response-planner/SKILL.md:86",
+      "condition_source": "social/host/crisis-response-planner/SKILL.md:87",
       "condition_text": "If the incident exposed a missing or stale baseline: social-pulse-monitor — rebuild the 7-day baseline and spike thresholds the ladder depends on.",
       "documentation_required": true,
       "exception": null,
@@ -561,7 +593,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "social/host/crisis-response-planner/SKILL.md:84",
+      "condition_source": "social/host/crisis-response-planner/SKILL.md:85",
       "condition_text": "Primary: social-quality-auditor — after the all-clear, re-run pre-publish mode on the paused queue before anything ships again.",
       "documentation_required": true,
       "exception": null,
@@ -1132,7 +1164,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "email/engage/email-creative-builder/SKILL.md:96",
+      "condition_source": "email/engage/email-creative-builder/SKILL.md:98",
       "condition_text": "To score + run the claim veto: email-quality-auditor — computes the profile-weighted EQS and enforces D1 (claim integrity) plus the other vetoes. This skill does neither.",
       "documentation_required": true,
       "exception": null,
@@ -1159,36 +1191,6 @@
       ],
       "to": "email-quality-auditor",
       "type": "gate"
-    },
-    {
-      "condition_code": "remediation",
-      "condition_source": "email/engage/email-creative-builder/SKILL.md:98",
-      "condition_text": "If the destination URL is weak or missing (NEEDS_INPUT): landing-optimizer — fix the post-click page so message-match is achievable, then return here.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "email-creative-builder",
-      "gate": null,
-      "id": "email-creative-builder--landing-optimizer",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "cross-discipline-context",
-        "failure-evidence",
-        "handoff-summary"
-      ],
-      "to": "landing-optimizer",
-      "type": "cross-discipline"
     }
   ],
   "schema_version": "1.0",

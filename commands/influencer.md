@@ -13,7 +13,7 @@ Infer the phase from the goal (or honor `--phase`) and route to the matching ski
 
 - **Scout** — audience-mapper (audience/niche modes), trend-spotter, influencer-discovery, fit-scorer (STAR Suitability); creator-registry dedupes candidates against the roster
 - **Target** — competitor-tracker, campaign-planner, brief-generator, budget-optimizer
-- **Activate** — outreach-manager, creator-content-auditor (STAR gate), contract-helper, content-amplifier (paid whitelisting / UGC repurpose modes) — consult creator-registry's dossier (`memory/creators/<handle-slug>.md`: contact path, last agreed rate, exclusivity, compliance history) before outreach or contracting
+- **Activate** — outreach-manager, creator-content-auditor (STAR gate), contract-helper, content-amplifier (paid whitelisting / UGC repurpose modes) — resolve the carried opaque `creator_ref` through an authorized artifact or verified registry link, then consult the creator-registry projection (`memory/creators/<aggregate-id>.md`: contact path, last agreed rate, exclusivity, compliance history) before outreach or contracting; never derive the path from a raw handle
 - **Report** — landing-optimizer (post-click), performance-analyzer, roi-calculator (STAR Return), report-generator
 
 ## Rules
@@ -27,7 +27,7 @@ Infer the phase from the goal (or honor `--phase`) and route to the matching ski
 - Tier 1 by default — works from user-provided data; connectors only automate retrieval. Compliance checks are guidance, not legal advice.
 - Follow each skill's Next Best Skill handoff; stop at the documented termination rules rather than auto-chaining the whole discipline.
 - **Scope edge — creators vs adjacent lanes**: "launch a product with creators" starts at [campaign-planner](../influencer/target/campaign-planner/SKILL.md) while the launch itself runs on RAMP via [/aaron-marketing:launch](launch.md); "boost / repurpose this" is [content-amplifier](../influencer/activate/content-amplifier/SKILL.md) with paid execution handed to [/aaron-marketing:ad](ad.md); the always-on social calendar belongs to ECHO ([social-calendar-builder](../social/craft/social-calendar-builder/SKILL.md)); contract/rate/exclusivity *records* live in [creator-registry](../protocol/creator-registry/SKILL.md), and any email opt-in evidence in [consent-registry](../protocol/consent-registry/SKILL.md).
-- **Paid creator whitelisting order**: first run `/aaron-marketing:influencer --phase activate` through `creator-content-auditor` (STAR-T1 disclosure + STAR-T2 claim integrity), `contract-helper` for exact paid usage/whitelisting rights, and `content-amplifier` in its paid-planning mode. Then hand paid execution to `/aaron-marketing:ad --phase activate`, where `ad-account-auditor` gates before spend. Stop for explicit spend approval; neither the creator audit nor an amplification plan authorizes activation.
+- **Paid creator whitelisting order**: after the partner is confirmed, run `contract-helper` first for exact paid usage/whitelisting rights, then `brief-generator` for the governing brief. Only after the agreement/brief and draft asset exist, run `creator-content-auditor` (STAR-T1 disclosure + STAR-T2 claim integrity), followed by `content-amplifier` in its paid-planning mode. Then hand paid execution to `/aaron-marketing:ad --phase activate`, where `ad-account-auditor` gates before spend. Stop for explicit spend approval; no contract, creator audit, or amplification plan authorizes activation by itself.
 
 ## Output
 

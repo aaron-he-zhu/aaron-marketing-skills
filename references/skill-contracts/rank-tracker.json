@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 86,
+          "end_char": 138,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc",
+          "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "every tracked keyword shows current position vs baseline with a labeled delta (or N/A)"
+        "text": "every tracked keyword shows a current, context-matched position vs baseline with a labeled delta, or Unknown/NEEDS_REFRESH with its reason"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 160,
+          "end_char": 269,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc",
+          "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392",
           "span_basis": "field-text",
-          "start_char": 88
+          "start_char": 140
         },
-        "text": "each position cites its source (tool export / user-provided / estimated)"
+        "text": "each observation cites its source ref, observed time, window, locale/language/device/engine, evidence label, and ranking page ref"
       },
       {
         "clause_id": "done-03",
@@ -38,22 +38,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 209,
+          "end_char": 295,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc",
+          "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392",
           "span_basis": "field-text",
-          "start_char": 162
+          "start_char": 271
+        },
+        "text": "conflicts remain visible"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 344,
+          "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392",
+          "span_basis": "field-text",
+          "start_char": 297
         },
         "text": "and biggest movers and likely causes are named."
       }
     ],
-    "done_when": "every tracked keyword shows current position vs baseline with a labeled delta (or N/A); each position cites its source (tool export / user-provided / estimated); and biggest movers and likely causes are named.",
+    "done_when": "every tracked keyword shows a current, context-matched position vs baseline with a labeled delta, or Unknown/NEEDS_REFRESH with its reason; each observation cites its source ref, observed time, window, locale/language/device/engine, evidence label, and ranking page ref; conflicts remain visible; and biggest movers and likely causes are named.",
     "extraction_status": "classified",
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc"
+      "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392"
     }
   },
   "context_hints": {
@@ -62,21 +77,21 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 32
       },
       {
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
         "source_line": 34
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 28
       },
       {
@@ -85,6 +100,13 @@
         "requirement": "optional",
         "sha256": "755816582373b846b95783c125c6d9cd57d5c20bbf4af97bc00aecdbaa557c56",
         "source_line": 34
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/evidence-and-cycle-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "05461e0f16aa0a52f7897f8fc51d3a7907f85f8ae73a21500972a67419fe22f3",
+        "source_line": 49
       },
       {
         "path": "seo-geo/evaluate/rank-tracker/references/ranking-analysis-templates.md",
@@ -104,6 +126,10 @@
     "project_paths": []
   },
   "contract_id": "skill:rank-tracker",
+  "control_requirements": [
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -116,7 +142,7 @@
           "end_char": 220,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc",
+          "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -131,7 +157,7 @@
     "summary_ref": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc"
+      "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -144,34 +170,34 @@
     "name": "rank-tracker",
     "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
     "phase": "evaluate",
-    "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc",
-    "version": "20.0.0"
+    "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<domain> [keyword list]",
     "clauses": [
       {
         "clause_id": "read-01",
-        "extraction_status": "unclassified",
-        "kind": "unclassified",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 109,
+          "end_char": 204,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc",
+          "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "current rankings, prior baselines, target keyword list, market/device, and any user-provided or tool metrics."
+        "text": "current rankings, prior baselines, target keyword list, locale/language/device/engine, snapshot/source refs, observation times/windows, stable page/content bindings, and any user-provided or tool metrics."
       }
     ],
-    "extraction_status": "unclassified",
-    "reads": "current rankings, prior baselines, target keyword list, market/device, and any user-provided or tool metrics.",
+    "extraction_status": "partially-classified",
+    "reads": "current rankings, prior baselines, target keyword list, locale/language/device/engine, snapshot/source refs, observation times/windows, stable page/content bindings, and any user-provided or tool metrics.",
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc"
+      "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392"
     }
   },
   "output_contract": {
@@ -186,7 +212,7 @@
           "end_char": 58,
           "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc",
+          "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -197,23 +223,27 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc"
+      "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392"
     },
     "summary": "a ranking report or delta summary plus the standard handoff summary for `memory/monitoring/`.",
     "summary_source": "expected-output",
     "writes": "a user-facing monitoring deliverable and reusable summary."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -222,7 +252,7 @@
     "source": {
       "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
       "section": "frontmatter",
-      "sha256": "7d7f35a4a8a305bda5b7886394bfb08ab803e424c61a209388fbcd755b9228cc"
+      "sha256": "1dc8d9994e9dcccf983ce2d17b65940b071e8885b67d699e1e018cda9d716392"
     },
     "trigger_phrases": [
       "track rankings",

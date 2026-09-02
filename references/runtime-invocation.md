@@ -52,6 +52,7 @@ The feature-specific runtime requirements are:
 | scoring | Lite | `rubric-score.py`, framework/scoring catalogs |
 | audit validation | Lite | `validate-audit-artifact.py`, audit schemas |
 | connectors / saved audit | Pro | requested connector or validator plus its schema |
+| cross-discipline control validation | Governed | `control-artifact.schema.json`, `control-bindings.json` plus its schema, and `validate-control-artifact.py` |
 | canonical registry write | Governed | `registry-events.py`, registry schema/catalog |
 | run evidence | Governed | `run-events.py` and run artifact schemas |
 | context planning | Governed | contract index, `context-plan.py`, `context-resolver.py` |
@@ -61,6 +62,27 @@ All profiles keep consent, claims, PII/secrets, external-mutation approval,
 audit-verdict integrity, and release provenance enabled. A profile enables a
 mechanism; it never grants owner authority or permission for a real-world
 mutation. See [`capability-profiles.md`](capability-profiles.md).
+
+The control-artifact schema may also appear in a static distribution as shape
+guidance. That does not make validation available. Without both the Governed
+bindings and validator, preserve the authored discipline semantics but mark the
+artifact or projection `NOT_VERIFIED`; do not claim selected ancestry, a unique
+current head, a verified receipt, consumed permission, compare-and-swap
+success, or persistence. With Governed selected, validate the exact immutable
+bytes, then reference that observation through the existing
+`artifact_validated` run event. Selected-ancestry, current-head, checkpoint,
+and recovery guarantees belong to the run runtime—not to the artifact file.
+
+No validation path grants external-action authority. In particular,
+`action-intent.permission_ref` is provenance-only and a matching
+`action-receipt` observes what an executor reported; the live executor must
+re-check current exact user/host authority and operation-specific controls.
+
+Governed workflow execution reads the packaged compiled graph, authoritative
+source/shards, and schemas through `workflow-loop.py` / `workflow_loop.py`.
+`scripts/workflow-graph.py` is a full-repository authoring/CI generator and is
+not part of the Governed runtime archive; runtime verification must never import
+or execute it.
 
 A nonterminal stream without the v19 runtime identity returns
 `LEGACY_RUN_BLOCKED`. Lite inline/read-only work may continue, but v19 must not
@@ -84,12 +106,14 @@ Standalone degradation is fail-closed:
 - Registry skills may prepare a bounded proposal for later review, but cannot append, accept/reject, verify, project, or claim canonical truth. The deny-only consent `suppress` path is the exception to **proposal degradation**, not to runtime verification: when the root runtime is absent, return an exact immediate-suppress runtime handoff and `NEEDS_INPUT`, never convert the suppression into a proposal or route it through another skill, and never claim the mutation occurred.
 - Hosts without the run runtime may still perform the authored workflow, but must not claim a verified event chain, turn snapshot, save point, or run envelope. Operational traces never substitute for a registry or audit verdict.
 - Hosts without the context resolver may assemble supplied context, but must not claim a resolver-verified manifest, deterministic omission/conflict result, or stable context signature.
+- Hosts without the Governed control bindings and validator may still follow the authored evidence/measurement/action/retro procedure, but every control artifact, tracker, or projection remains `NOT_VERIFIED`. They must not claim selected ancestry, one current head, a verified receipt, permission consumption, compare-and-swap success, or persisted control state.
 
 Repository/plugin calls use the resolved absolute path, for example:
 
 ```bash
 python3 "$AARON_SKILLS_ROOT/scripts/rubric-score.py" score run.json
 python3 "$AARON_SKILLS_ROOT/scripts/validate-audit-artifact.py" artifact.md --relative-path memory/audits/content/artifact.md
+python3 "$AARON_SKILLS_ROOT/scripts/validate-control-artifact.py" control.json --project-root "$PROJECT_ROOT"
 python3 "$AARON_SKILLS_ROOT/scripts/context-resolver.py" resolve --request context-request.json --project-root "$PROJECT_ROOT" --output "$CONTEXT_MANIFEST"
 python3 "$AARON_SKILLS_ROOT/scripts/runtime-controller.py" --root "$PROJECT_ROOT" --bundle-root "$AARON_SKILLS_ROOT" --profile governed start controller-start.json
 python3 "$AARON_SKILLS_ROOT/scripts/registry-events.py" verify consent

@@ -310,7 +310,7 @@ def main():
             "auto-routing": sum(case["source_group"] == "auto-routing" for case in strict_cases),
             "derived-auditor": len(derived_cases),
         }
-        if counts != {"authored": 572, "auto-routing": 88, "derived-auditor": 40}:
+        if counts != {"authored": 606, "auto-routing": 88, "derived-auditor": 40}:
             fail("strict eval corpus count drifted: %s" % counts)
         print(
             "== strict eval parser: %d authored + %d auto-routing + %d derived = %d cases =="

@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 67,
+          "end_char": 90,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "every pre-flight item is marked pass/fail/needs-input from evidence"
+        "text": "every pre-flight item is marked pass/fail/needs-input from source- and time-bound evidence"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 108,
+          "end_char": 150,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
-          "start_char": 69
+          "start_char": 92
         },
-        "text": "the UTM scheme + event spec are written"
+        "text": "the UTM scheme + event spec have a stable ref/version/hash"
       },
       {
         "clause_id": "done-03",
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 178,
+          "end_char": 186,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
-          "start_char": 110
+          "start_char": 152
         },
-        "text": "dedup rules and attribution-window alignment are stated per platform"
+        "text": "conflicting sources remain visible"
       },
       {
         "clause_id": "done-04",
@@ -53,14 +53,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 244,
+          "end_char": 256,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
-          "start_char": 180
+          "start_char": 188
         },
-        "text": "offline/iOS-ATT modeled gaps are flagged (never silently passed)"
+        "text": "dedup rules and attribution-window alignment are stated per platform"
       },
       {
         "clause_id": "done-05",
@@ -68,22 +68,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 324,
+          "end_char": 322,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
-          "start_char": 246
+          "start_char": 258
+        },
+        "text": "offline/iOS-ATT modeled gaps are flagged (never silently passed)"
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 402,
+          "path": "ad/activate/conversion-signal-qa/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
+          "span_basis": "field-text",
+          "start_char": 324
         },
         "text": "and the report says the plumbing is launch-ready or names exactly what to fix."
       }
     ],
-    "done_when": "every pre-flight item is marked pass/fail/needs-input from evidence; the UTM scheme + event spec are written; dedup rules and attribution-window alignment are stated per platform; offline/iOS-ATT modeled gaps are flagged (never silently passed); and the report says the plumbing is launch-ready or names exactly what to fix.",
+    "done_when": "every pre-flight item is marked pass/fail/needs-input from source- and time-bound evidence; the UTM scheme + event spec have a stable ref/version/hash; conflicting sources remain visible; dedup rules and attribution-window alignment are stated per platform; offline/iOS-ATT modeled gaps are flagged (never silently passed); and the report says the plumbing is launch-ready or names exactly what to fix.",
     "extraction_status": "classified",
     "source": {
       "path": "ad/activate/conversion-signal-qa/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac"
+      "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc"
     }
   },
   "context_hints": {
@@ -92,7 +107,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 36
       },
       {
@@ -117,23 +132,34 @@
         "source_line": 45
       },
       {
+        "path": "ad/orchestrate/ad-test-designer/references/measurement-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "8adc01c733b8e9e3d86e55737edadb4bb8a71d56dae4470f6f7c8249338fcc2c",
+        "source_line": 51
+      },
+      {
         "path": "references/roas-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
-        "source_line": 59
+        "source_line": 62
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 32
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:conversion-signal-qa",
+  "control_requirements": [
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -146,7 +172,7 @@
           "end_char": 172,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -161,7 +187,7 @@
     "summary_ref": {
       "path": "ad/activate/conversion-signal-qa/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac"
+      "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -174,8 +200,8 @@
     "name": "conversion-signal-qa",
     "path": "ad/activate/conversion-signal-qa/SKILL.md",
     "phase": "activate",
-    "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
-    "version": "20.0.0"
+    "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<site/account topic> [platforms] [GA4 conversions + traffic-acquisition export]",
@@ -189,7 +215,7 @@
           "end_char": 32,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -204,7 +230,7 @@
           "end_char": 52,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
           "start_char": 34
         },
@@ -216,7 +242,7 @@
     "source": {
       "path": "ad/activate/conversion-signal-qa/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac"
+      "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc"
     }
   },
   "output_contract": {
@@ -231,7 +257,7 @@
           "end_char": 100,
           "path": "ad/activate/conversion-signal-qa/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac",
+          "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -242,23 +268,27 @@
     "source": {
       "path": "ad/activate/conversion-signal-qa/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac"
+      "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc"
     },
-    "summary": "a tracking pre-flight checklist (pass/fail/needs-input per item), a UTM/event-spec builder block (naming convention + the conversion-event spec table), cross-platform dedup + attribution-window alignment notes, offline/iOS-ATT modeled-gap flags, and the standard handoff summary.",
+    "summary": "a tracking pre-flight checklist (pass/fail/needs-input per item), field-level evidence observations, a versioned UTM/event-spec binding (naming convention + conversion-event table + exact ref/hash), cross-platform dedup + attribution-window alignment notes, offline/iOS-ATT modeled-gap flags, and the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "a user-facing pre-flight report plus a reusable UTM/event spec to `memory/ad/conversion-signal-qa/`."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -267,7 +297,7 @@
     "source": {
       "path": "ad/activate/conversion-signal-qa/SKILL.md",
       "section": "frontmatter",
-      "sha256": "6452e211ae2b04b4572b945ef93932ef1216afe0c5e35d276c318a99341d19ac"
+      "sha256": "6964befb1838a9ad1758e55d8f47ba2a45a9dada1353d5ce03e3c87771e471dc"
     },
     "trigger_phrases": [
       "QA my conversion tracking before launch",

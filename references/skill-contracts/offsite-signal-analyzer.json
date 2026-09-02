@@ -11,7 +11,7 @@
           "end_char": 209,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
+          "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 438,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
+          "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
           "span_basis": "field-text",
           "start_char": 212
         },
@@ -38,7 +38,7 @@
     "source": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce"
+      "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98"
     }
   },
   "context_hints": {
@@ -47,7 +47,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 50
       },
       {
@@ -68,14 +68,14 @@
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
         "source_line": 119
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 42
       },
       {
@@ -110,6 +110,7 @@
     "project_paths": []
   },
   "contract_id": "skill:offsite-signal-analyzer",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -122,7 +123,7 @@
           "end_char": 167,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
+          "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -140,7 +141,7 @@
           "end_char": 320,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
+          "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
           "span_basis": "field-text",
           "start_char": 168
         },
@@ -158,7 +159,7 @@
           "end_char": 630,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
+          "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
           "span_basis": "field-text",
           "start_char": 322
         },
@@ -171,7 +172,7 @@
     "summary_ref": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce"
+      "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -185,8 +186,8 @@
     "name": "offsite-signal-analyzer",
     "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
     "phase": "evaluate",
-    "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
-    "version": "20.0.0"
+    "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<domain or URL> [--mode backlinks|ai-referrals] [date range]",
@@ -200,7 +201,7 @@
           "end_char": 133,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
+          "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -215,7 +216,7 @@
           "end_char": 313,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
+          "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
           "span_basis": "field-text",
           "start_char": 136
         },
@@ -227,7 +228,7 @@
     "source": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce"
+      "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98"
     }
   },
   "output_contract": {
@@ -242,7 +243,7 @@
           "end_char": 95,
           "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce",
+          "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -253,7 +254,7 @@
     "source": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce"
+      "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98"
     },
     "summary": "for `backlinks`, a backlink report (profile overview, quality/anchors/toxicity, competitive gap, change tracking) or delta summary; for `ai-referrals`, an AI-referral channel definition plus trend, top landing pages, and AI-vs-organic conversion. Both plus the standard handoff summary ready for `memory/monitoring/`.",
     "summary_source": "expected-output",
@@ -264,12 +265,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -278,7 +279,7 @@
     "source": {
       "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "7d382139226e8701197e2469916adddeabb7c2b08a58ad023e063a6b4a6758ce"
+      "sha256": "31683928d60c0cb4c453001f35216da749b239317cc508a79a48f1586f657e98"
     },
     "trigger_phrases": [
       "analyze backlinks",

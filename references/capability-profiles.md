@@ -13,7 +13,7 @@ configuration conforms to
 |---|---|---|
 | **Lite** | Most briefs, drafts, plans, analysis, and inline scoring | All 120 authored skills, the unchanged eight-command router, deterministic scoring, inline delivery, and read-only use of existing canonical state |
 | **Pro** | Work that needs a connector or an explicitly requested saved audit | Everything in Lite, plus connectors and audit persistence |
-| **Governed** | Stateful or independently verifiable operations | Everything in Pro, plus working-memory and registry writes, run evidence, deterministic context planning, the runtime controller, workflow/audit loops, and owner-capability integration |
+| **Governed** | Stateful or independently verifiable operations | Everything in Pro, plus working-memory and registry writes, run evidence, deterministic context planning, cross-discipline control-artifact validation, the runtime controller, workflow/audit loops, and owner-capability integration |
 
 Consent, claims, PII/secret handling, external-mutation approval, audit-verdict
 integrity, and release provenance are always-on overlays. Missing verification
@@ -79,6 +79,39 @@ bounded `references/skill-contracts.pack.json.gz`. Runtime lookup preserves the
 same logical paths and fails closed unless every record hash and the aggregate
 hash verify. The pack is a derived distribution artifact, not another source
 of truth.
+
+### Cross-discipline control verification
+
+The complete authored evidence/measurement/action/retro semantics remain in
+every profile. Their machine-verification surface is Governed-only: the
+Governed archive includes the generated `control-bindings` catalog and schema,
+the control-artifact schema, and `validate-control-artifact.py`. Lite and Pro
+do not include the bindings or validator. Portable or other static projections
+may include the schema as reference material, but a schema file is not an
+executed validation result.
+
+| Effective environment | Required result label | Claims that remain unavailable |
+|---|---|---|
+| Governed, exact bytes validated and bound to the selected run ancestry | `VERIFIED` only for the specific artifact checks that actually passed | The validator, intent, receipt, and `artifact_validated` event still do not grant external-action authority or create registry truth |
+| Lite or Pro | `NOT_VERIFIED` | Selected ancestry, unique current head, verified receipt, permission consumption, compare-and-swap success, or persisted control state |
+| Portable Lite, named-bot, or standalone | `NOT_VERIFIED` | The same claims, plus any claim that a local runtime/controller executed |
+
+For a Governed run, record successful validation with the existing
+`artifact_validated` event and rely on the run runtime for selected ancestry,
+compare-and-swap current-head checks, checkpoints, and recovery. A sibling
+branch, editable tracker, or rendered projection cannot replace the selected
+artifact chain. `action-intent.permission_ref` is provenance-only and an
+`action-receipt` is observed executor evidence; the executor must obtain and
+re-check current exact authority before the real mutation.
+
+The Governed runtime carries the compiled workflow graph, its authoritative
+source/shards and schemas, and the workflow-loop executors. The separate
+`scripts/workflow-graph.py` generator remains in the full repository for
+authoring and CI and is not required by a packaged execution or verification
+path. Complete context-planning, context-resolution, and runtime-controller
+prose guides follow the same repository-only boundary. Packages keep compact
+deterministic pointers at those paths so local links remain closed; Governed
+retains the corresponding schemas and executable runtimes.
 
 ## Selecting a profile
 
@@ -169,3 +202,9 @@ auditor verdict that requires missing runtime support. Exact fail-closed
 handoffs for scoring, registries, consent suppression, context, and run
 evidence are defined in
 [`runtime-invocation.md`](runtime-invocation.md).
+
+It likewise cannot machine-validate cross-discipline control artifacts.
+Preserve the authored fields and discipline rules, but mark every
+artifact/tracker/view `NOT_VERIFIED`; do not claim selected ancestry, one
+current head, a verified receipt, permission consumption, compare-and-swap
+success, or persistence.

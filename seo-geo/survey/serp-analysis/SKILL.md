@@ -4,14 +4,14 @@ slug: serp-analysis
 displayName: "SERP Analysis · SERP分析"
 summary: "SERP分析/搜索结果"
 description: 'Use when the user asks to "analyze the SERP" or "SERP分析"; maps SERP features, layout, ranking factors, search intent, AI Overviews, and snippet opportunities for a query. Not for keyword demand discovery — use keyword-research. SERP分析/搜索结果'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when analyzing search engine results pages, SERP features, featured snippets, People Also Ask, or understanding ranking patterns for a query."
 argument-hint: "<keyword or query>"
 allowed-tools: WebFetch
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "seo-geo", "phase": "survey", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "survey"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "seo-geo", "phase": "survey", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "survey"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # SERP Analysis
@@ -32,10 +32,10 @@ What does it take to rank for [keyword]?
 
 **Expected output**: a prioritized SERP brief plus the standard handoff summary for `memory/research/`.
 
-- **Reads**: target keyword(s), location/language, device, any SERP screenshots or top-10 URLs, and search context.
+- **Reads**: target keyword(s), location/language, device, engine/answer surface, SERP snapshot ref, observation time, any SERP screenshots or top-10 URLs, and search context.
 - **Writes**: a user-facing analysis and reusable summary.
 - **Promotes**: durable keyword priorities, competitor facts, and pending strategy decisions to `memory/hot-cache.md`, `memory/open-loops.md`, and `memory/research/`.
-- **Done when**: the SERP composition and top-result ranking factors are documented from a verified live/provided SERP; dominant intent is named with evidence; and a True Difficulty score (0-100, weighted inputs per the template) plus per-site-stage fit is stated.
+- **Done when**: the SERP composition and top-result ranking factors are documented from a source-, time-, locale-, language-, device-, and engine-bound live/provided snapshot; dominant intent is named with evidence; conflicts remain visible; and a True Difficulty score plus per-site-stage fit is stated only at complete applicable coverage, otherwise `NEEDS_REFRESH/NOT_SCORED`.
 - **Primary next skill**: [content-writer](../../implement/content-writer/SKILL.md) when the user is ready to build against the observed SERP.
 
 ### Handoff Summary
@@ -56,7 +56,7 @@ Optional integrations: ~~SEO tool, ~~search console, ~~AI monitor. Before fetchi
 
 When a user requests SERP analysis:
 
-1. **Understand the Query** — confirm target keyword(s), location/language, device, and any specific SERP questions.
+1. **Understand and bind the Query** — confirm target keyword(s), location/language, device, engine, snapshot/source ref, observation time, and any specific SERP questions. Apply the [SEO/GEO Evidence and Cycle Control Profile](../../evaluate/performance-monitor/references/evidence-and-cycle-control.md); stale or mismatched observations are `NEEDS_REFRESH`, not current evidence.
 2. **Map SERP Composition** — document AI Overviews, ads, snippets, organic results, PAA, knowledge panel, image/video packs, local packs, shopping, news, sitelinks, and related searches.
 3. **Analyze Top Ranking Pages** — capture URL, authority, format, freshness, on-page factors, structure, and why each page ranks.
 4. **Identify Ranking Patterns** — compare common traits across the top results.
@@ -65,7 +65,7 @@ When a user requests SERP analysis:
 7. **Calculate True Difficulty** — score overall difficulty 0-100 using the weighted inputs defined in [Analysis Templates §3](references/analysis-templates.md) (Top-10 authority 25%, page authority/links 20%, content-quality bar 20%, backlinks required 20%, SERP stability 15%); give separate advice for new, growing, and established sites.
 8. **Generate Recommendations** — summarize Key Findings, minimum Content Requirements to Rank, SERP Feature Strategy, a Recommended Content Outline, and Next Steps.
 
-Label every metric **Measured** (tool/export), **User-provided**, or **Estimated** (model inference); never present an estimate as measured; if a required metric is unavailable, mark it N/A — do not invent it.
+Label every metric **Measured**, **User-provided**, **Calculated**, **Estimated**, **Proxy**, or **Unknown**; never present an estimate or proxy as measured. Preserve disagreements between engines as separate observations. An applicable missing input is Unknown with its gap reason and prevents a partial True Difficulty score; N/A is reserved for genuinely non-applicable features.
 
 **Quality bar**: every difficulty and intent claim cites evidence from the live or provided SERP (which features, which top results) — never assert a score without the inputs behind it.
 
@@ -117,6 +117,7 @@ Write path: `memory/research/serp-analysis/YYYY-MM-DD-<topic>.md`; promote durab
 
 ## Reference Materials
 
+- [SEO/GEO Evidence and Cycle Control Profile](../../evaluate/performance-monitor/references/evidence-and-cycle-control.md) — exact query/SERP observation and freshness fields
 - [Analysis Templates](references/analysis-templates.md) — Step-by-step analysis templates
 - [SERP Feature Taxonomy](references/serp-feature-taxonomy.md) — Feature taxonomy and intent signals
 - [Example Report](references/example-report.md) — Worked sample

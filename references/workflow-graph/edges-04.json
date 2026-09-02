@@ -3,6 +3,90 @@
   "authority": "authoritative-workflow-graph-source-shard",
   "edges": [
     {
+      "condition_code": "primary",
+      "condition_source": "seo-geo/survey/keyword-research/SKILL.md:110",
+      "condition_text": "Primary: competitor-analysis. Also: content-gap-analysis and serp-analysis.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "keyword-research",
+      "gate": null,
+      "id": "keyword-research--competitor-analysis",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "competitor-analysis",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "seo-geo/survey/keyword-research/SKILL.md:110",
+      "condition_text": "Primary: competitor-analysis. Also: content-gap-analysis and serp-analysis.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "keyword-research",
+      "gate": null,
+      "id": "keyword-research--content-gap-analysis",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "content-gap-analysis",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "primary",
+      "condition_source": "seo-geo/survey/keyword-research/SKILL.md:110",
+      "condition_text": "Primary: competitor-analysis. Also: content-gap-analysis and serp-analysis.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "keyword-research",
+      "gate": null,
+      "id": "keyword-research--serp-analysis",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "acyclic"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "handoff-summary"
+      ],
+      "to": "serp-analysis",
+      "type": "conditional"
+    },
+    {
       "condition_code": "quality-gate",
       "condition_source": "ad/orchestrate/landing-experience-checker/SKILL.md:83",
       "condition_text": "Primary: ad-account-auditor — once the page passes preflight, score the account against ROAS and run the launch go/no-go (it computes the RQS and the O1/O2 vetoes; this skill does not).",
@@ -95,7 +179,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/report/landing-optimizer/SKILL.md:108",
+      "condition_source": "influencer/report/landing-optimizer/SKILL.md:111",
       "condition_text": "content-amplifier — when the audit shows the page needs more creator content to feature.",
       "documentation_required": true,
       "exception": {
@@ -127,7 +211,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "influencer/report/landing-optimizer/SKILL.md:104",
+      "condition_source": "influencer/report/landing-optimizer/SKILL.md:107",
       "condition_text": "Primary: performance-analyzer — measure whether the optimizations actually moved conversion, AOV, and attribution.",
       "documentation_required": true,
       "exception": null,
@@ -155,7 +239,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/report/landing-optimizer/SKILL.md:109",
+      "condition_source": "influencer/report/landing-optimizer/SKILL.md:112",
       "condition_text": "roi-calculator — when the page's conversion is validated and you want to translate it into ROI and payback math.",
       "documentation_required": true,
       "exception": null,
@@ -183,7 +267,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:89",
+      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:90",
       "condition_text": "If community / directory submissions are the next gap: community-launch-runner — per-platform submission under platform rules.",
       "documentation_required": true,
       "exception": null,
@@ -212,7 +296,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:87",
+      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:88",
       "condition_text": "Primary: launch-readiness-auditor — run the appropriate RAMP preflight profile before the launch window opens.",
       "documentation_required": true,
       "exception": null,
@@ -234,6 +318,7 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "artifact-binding",
         "audit-evidence",
         "handoff-summary"
       ],
@@ -242,7 +327,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:88",
+      "condition_source": "launch/assemble/launch-asset-packager/SKILL.md:89",
       "condition_text": "If the press kit is final and the media motion starts: press-media-relations — pitch and embargo mechanics on top of the finished kit.",
       "documentation_required": true,
       "exception": null,
@@ -271,7 +356,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:85",
+      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:86",
       "condition_text": "If feedback and threads piled up during the day: launch-feedback-synthesizer — triage themes before they go stale.",
       "documentation_required": true,
       "exception": null,
@@ -300,7 +385,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:84",
+      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:85",
       "condition_text": "Primary: launch-monitor — track the sustained T-0 to T+30 window with the D0 snapshot as baseline.",
       "documentation_required": true,
       "exception": null,
@@ -321,6 +406,9 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation",
         "handoff-summary"
       ],
       "to": "launch-monitor",
@@ -328,7 +416,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:86",
+      "condition_source": "launch/mobilize/launch-day-conductor/SKILL.md:87",
       "condition_text": "For each submitted proposal: launch-registry — resolve by event ID and offset while preserving the original occurrence time and source.",
       "documentation_required": true,
       "exception": null,
@@ -446,7 +534,7 @@
     },
     {
       "condition_code": "conditional",
-      "condition_source": "launch/prove/launch-monitor/SKILL.md:87",
+      "condition_source": "launch/prove/launch-monitor/SKILL.md:88",
       "condition_text": "If feedback themes are piling up mid-window: launch-feedback-synthesizer — triage themes and harvest compliant social proof.",
       "documentation_required": true,
       "exception": null,
@@ -475,7 +563,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "launch/prove/launch-monitor/SKILL.md:86",
+      "condition_source": "launch/prove/launch-monitor/SKILL.md:87",
       "condition_text": "Primary: launch-retro-analyzer — run the D1/W1/M1 retro on the snapshots once the window closes.",
       "documentation_required": true,
       "exception": null,
@@ -496,14 +584,18 @@
         "target-not-visited"
       ],
       "required_inputs": [
-        "handoff-summary"
+        "action-receipt",
+        "artifact-binding",
+        "evidence-observation",
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "launch-retro-analyzer",
       "type": "conditional"
     },
     {
       "condition_code": "alternate",
-      "condition_source": "launch/prove/launch-monitor/SKILL.md:88",
+      "condition_source": "launch/prove/launch-monitor/SKILL.md:89",
       "condition_text": "If the window is over and monitoring should continue: performance-monitor — the long-run watch outside launch scope.",
       "documentation_required": true,
       "exception": null,
@@ -772,7 +864,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:89",
+      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:91",
       "condition_text": "If the launch memory should be closed out: memory-management — archive the campaign records once the registry has attached the outcome snapshot.",
       "documentation_required": true,
       "exception": null,
@@ -802,7 +894,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:87",
+      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:89",
       "condition_text": "Primary: momentum-planner — turn the keep decisions into the T+1→T+30 momentum plan and identify the next launch moment.",
       "documentation_required": true,
       "exception": null,
@@ -823,14 +915,18 @@
         "target-not-visited"
       ],
       "required_inputs": [
-        "handoff-summary"
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "momentum-planner",
       "type": "conditional"
     },
     {
       "condition_code": "alternate",
-      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:88",
+      "condition_source": "launch/prove/launch-retro-analyzer/SKILL.md:90",
       "condition_text": "If stakeholders need a formatted writeup: report-generator — package the retro into a stakeholder-facing report.",
       "documentation_required": true,
       "exception": null,
@@ -1094,95 +1190,6 @@
       ],
       "to": "email-sequence-designer",
       "type": "sequential"
-    },
-    {
-      "condition_code": "conditional",
-      "condition_source": "email/setup/list-growth-designer/SKILL.md:86",
-      "condition_text": "If the signup page / popup needs building: landing-optimizer — the post-click / capture-surface UX.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "list-growth-designer",
-      "gate": null,
-      "id": "list-growth-designer--landing-optimizer",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "condition-evidence",
-        "cross-discipline-context",
-        "handoff-summary"
-      ],
-      "to": "landing-optimizer",
-      "type": "cross-discipline"
-    },
-    {
-      "condition_code": "conditional",
-      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:85",
-      "condition_text": "If the point-in-time send signal needs verifying before the next campaign: deliverability-qa — the one-time S1 auth pre-flight (a different job from this ongoing watch).",
-      "documentation_required": true,
-      "exception": null,
-      "from": "list-hygiene-monitor",
-      "gate": null,
-      "id": "list-hygiene-monitor--deliverability-qa",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "condition-evidence",
-        "handoff-summary"
-      ],
-      "to": "deliverability-qa",
-      "type": "conditional"
-    },
-    {
-      "condition_code": "quality-gate",
-      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:86",
-      "condition_text": "If the hygiene reads are ready to roll into a verdict: email-quality-auditor — score the full EQS and enforce S1/S2/N1/D1, including the suppression-leakage N1 candidate this run flagged.",
-      "documentation_required": true,
-      "exception": null,
-      "from": "list-hygiene-monitor",
-      "gate": "email-quality-auditor",
-      "id": "list-hygiene-monitor--email-quality-auditor",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "gate-evidence-ready",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "audit-evidence",
-        "handoff-summary"
-      ],
-      "to": "email-quality-auditor",
-      "type": "gate"
     }
   ],
   "schema_version": "1.0",

@@ -11,7 +11,7 @@
           "end_char": 111,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 236,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 113
         },
@@ -41,7 +41,7 @@
           "end_char": 364,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 238
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "launch/mobilize/press-media-relations/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca"
+      "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294"
     }
   },
   "context_hints": {
@@ -62,7 +62,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -83,7 +83,7 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
       }
     ],
@@ -107,6 +107,7 @@
     ]
   },
   "contract_id": "skill:press-media-relations",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -119,7 +120,7 @@
           "end_char": 176,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -137,7 +138,7 @@
           "end_char": 346,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 177
         },
@@ -155,7 +156,7 @@
           "end_char": 475,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 347
         },
@@ -173,7 +174,7 @@
           "end_char": 836,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 477
         },
@@ -186,7 +187,7 @@
     "summary_ref": {
       "path": "launch/mobilize/press-media-relations/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca"
+      "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -201,8 +202,8 @@
     "name": "press-media-relations",
     "path": "launch/mobilize/press-media-relations/SKILL.md",
     "phase": "mobilize",
-    "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
-    "version": "20.0.0"
+    "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<product / launch moment> [target verticals] [launch tier] [launch date]",
@@ -216,7 +217,7 @@
           "end_char": 148,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -231,7 +232,7 @@
           "end_char": 270,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 150
         },
@@ -246,7 +247,7 @@
           "end_char": 332,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 272
         },
@@ -261,7 +262,7 @@
           "end_char": 412,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 334
         },
@@ -276,7 +277,7 @@
           "end_char": 479,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 414
         },
@@ -288,7 +289,7 @@
     "source": {
       "path": "launch/mobilize/press-media-relations/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca"
+      "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294"
     }
   },
   "output_contract": {
@@ -303,7 +304,7 @@
           "end_char": 82,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -319,7 +320,7 @@
           "end_char": 323,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 84
         },
@@ -335,7 +336,7 @@
           "end_char": 497,
           "path": "launch/mobilize/press-media-relations/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca",
+          "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294",
           "span_basis": "field-text",
           "start_char": 325
         },
@@ -346,7 +347,7 @@
     "source": {
       "path": "launch/mobilize/press-media-relations/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca"
+      "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294"
     },
     "summary": "a three-tier media/analyst list (Tier 1 exclusive candidates, Tier 2 vertical press, Tier 3 communities and newsletters) with a per-contact angle, embargo terms plus a pitch timing skeleton (cadence labeled Estimated; lift moment from the launch-registry record), a press-release draft with zero fabricated quotes or numbers, an analyst briefing outline, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -357,12 +358,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -371,7 +372,7 @@
     "source": {
       "path": "launch/mobilize/press-media-relations/SKILL.md",
       "section": "frontmatter",
-      "sha256": "d919a1b555269d6837440c2f4b08d482d3d6be987006891af3ebf73a4f0ae0ca"
+      "sha256": "11bc9a49ef39045c8ba99c266ff75ac0e59f986fbf927d79a7eaea604d002294"
     },
     "trigger_phrases": [
       "build a media list for my launch",

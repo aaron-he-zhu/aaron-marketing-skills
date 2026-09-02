@@ -4,6 +4,10 @@ Full templates and worked variations for the brief-generator skill. The skill's 
 
 Back to the skill: [SKILL.md](../SKILL.md)
 
+**Persistence and delivery boundary**: a saved brief or handoff uses `creator_ref`, `brand_ref`, `page_ref`, `shipping_ref`, `contact_ref`, and `voice_source_ref` for creator/brand identity, page destination, shipping destination, contact path, and voice provenance. Never persist the corresponding raw name, handle, profile/page/source URL, postal address, email, phone, provider ID, or a hidden mapping. The creator-facing render may resolve those values only transiently inside an authorized dispatch. A `Send` label, finished brief, or WARM-save approval is not delivery permission: route the single final render through `outreach-manager`'s independent exact send gate and fresh suppression/eligibility preflight.
+
+**Platform-spec boundary**: use a dated official platform source for every format limit, duration, frame count, or placement rule. If the applicable current spec is unavailable, write `TBD/NEEDS_INPUT`; do not fill a remembered “optimal” or “typical” number.
+
 ---
 
 ## Brief Input Capture
@@ -13,9 +17,17 @@ Gather these before generating (Instructions step 1):
 ```markdown
 ### Brief Requirements
 
+**Reference-safe identity and routing**:
+- Creator: [creator_ref]
+- Brand: [brand_ref]
+- Landing destination: [page_ref or not applicable]
+- Shipping destination: [shipping_ref or not applicable]
+- Contact path: [contact_ref]
+- Voice provenance: [voice_source_ref or not applicable]
+
 **Campaign Information**:
 - Campaign Name: [name]
-- Brand: [brand]
+- Brand display value: [resolve from brand_ref only in transient creator-facing render]
 - Product/Service: [description]
 
 **Deliverables**:
@@ -41,12 +53,14 @@ Gather these before generating (Instructions step 1):
 
 ## Campaign: [Campaign Name]
 
+**Creator**: [creator_ref] · **Brand**: [brand_ref] · **Page**: [page_ref] · **Shipping**: [shipping_ref] · **Contact**: [contact_ref] · **Voice source**: [voice_source_ref]
+
 ---
 
 ## 📋 Overview
 
 ### Brand
-**[Brand Name]** - [One-line brand description]
+**[brand display name resolved transiently from brand_ref at dispatch]** - [One-line brand description]
 
 [2-3 sentences about the brand, its values, and what makes it unique]
 
@@ -63,7 +77,7 @@ Gather these before generating (Instructions step 1):
 [Clear statement of what this campaign aims to achieve]
 
 ### Why You
-[Personalized note on why this influencer was selected - makes creators feel valued]
+[Evidence-backed personalization for creator_ref; raw creator display name is inserted only in the transient dispatch render]
 
 ---
 
@@ -111,9 +125,9 @@ Gather these before generating (Instructions step 1):
 - File format: [formats]
 
 **Caption Requirements**:
-- Include: [@brand mention, #hashtags, disclosure]
-- Character limit: [platform limit]
-- Link: [yes/no, where]
+- Include: [brand_ref mention requirement, hashtag_ref values, disclosure_ref]
+- Character limit: [value from dated official platform_spec_ref or TBD/NEEDS_INPUT]
+- Destination/placement: [page_ref + placement from dated platform_spec_ref, or TBD/NEEDS_INPUT]
 
 **Additional Elements**:
 - [ ] [Element 1]
@@ -133,8 +147,8 @@ Gather these before generating (Instructions step 1):
 
 ### Content Structure Suggestion
 
-**Hook** (first 1-3 seconds):
-[Suggestion for attention-grabbing opening]
+**Hook window**: [user-approved timing or source-dated performance/platform rule; otherwise `TBD/NEEDS_INPUT`]
+[Evidence-backed opening suggestion]
 
 **Body**:
 [What the main content should cover]
@@ -150,8 +164,8 @@ Gather these before generating (Instructions step 1):
 ### Inspiration
 
 **Reference Examples**:
-- [Link/description of example 1]
-- [Link/description of example 2]
+- [voice_source_ref or other opaque approved source ref + description]
+- [voice_source_ref or other opaque approved source ref + description]
 
 **What we love about these**:
 - [What makes them effective]
@@ -179,7 +193,7 @@ Gather these before generating (Instructions step 1):
 - [Product 2] - [description/variant]
 
 **Shipping Timeline**: [Expected delivery date]
-**Shipping Address**: [Confirm address with influencer]
+**Shipping Destination**: [shipping_ref; raw address resolves only in the authorized fulfillment/dispatch system]
 
 ### Product Key Features
 
@@ -202,15 +216,15 @@ Gather these before generating (Instructions step 1):
 
 | Element | Details |
 |---------|---------|
-| Brand Handle | @[handle] |
-| Campaign Hashtag | #[hashtag] |
-| Branded Hashtag | #[hashtag] |
-| Landing Page | [URL] |
-| Promo Code | [CODE] - [discount details] |
-| UTM Link | [full tracking URL] |
+| Brand identity/mention | [brand_ref; raw display name/handle resolves only in transient dispatch render] |
+| Campaign Hashtag | [hashtag_ref; raw hashtag resolves only in transient dispatch render] |
+| Branded Hashtag | [hashtag_ref; raw hashtag resolves only in transient dispatch render] |
+| Landing Page | [page_ref; raw URL resolves only in transient dispatch render] |
+| Promo Code | [promo_code_ref; approved code/terms resolve only in transient dispatch render] |
+| UTM destination | [page_ref; approved tracking parameters resolve only at dispatch] |
 
 ### Brand Assets (if needed)
-[Link to brand asset folder with logos, images, etc.]
+[brand_asset_ref values; raw asset-folder URLs resolve only in the transient dispatch render]
 
 ---
 
@@ -226,7 +240,7 @@ Gather these before generating (Instructions step 1):
 | Revisions Due | [date] | If needed |
 | Final Approval | [date] | |
 | Content Goes Live | [date] | [time window if specific] |
-| Insights/Analytics Due | [date] | 48-72 hours post |
+| Insights/Analytics Due | [user-supplied or source-dated due date; otherwise `TBD/NEEDS_INPUT`] | [source/basis] |
 
 **Posting Window**: [specific dates/times if applicable]
 
@@ -245,11 +259,11 @@ Gather these before generating (Instructions step 1):
    - [ ] Draft caption with all required elements
 
 3. **After posting**:
-   - [ ] Live content link
-   - [ ] Screenshots of insights (48-72 hours post)
+   - [ ] Opaque live placement/page ref (raw link remains transient)
+   - [ ] Screenshots of insights at the user-supplied/source-dated due time
 
 ### Submission Method
-[How to submit: email, platform, tool]
+[contact_ref + approved channel; raw email/account resolves only in the independently authorized dispatch]
 
 ### Review Timeline
 - Initial review: [X] business days
@@ -269,8 +283,8 @@ Gather these before generating (Instructions step 1):
 **Acceptable disclosures**:
 - #ad (required)
 - #sponsored
-- "Paid partnership with [Brand]" (platform feature)
-- Verbal disclosure in video: "This video is sponsored by [Brand]"
+- "Paid partnership with [brand display name resolved transiently from brand_ref]" (only when required by the dated applicable rule)
+- Verbal disclosure using [brand_ref resolved transiently] when required by the dated applicable rule
 
 **Placement**: Disclosure must be:
 - Visible without clicking "more"
@@ -287,15 +301,15 @@ Gather these before generating (Instructions step 1):
 
 ### Usage Rights
 
-**[Brand] is granted the following rights**:
+**[brand_ref; display name resolved transiently] is granted the following rights**:
 - [ ] Repost on brand social channels
 - [ ] Use in paid advertising
 - [ ] Use on website
 - [ ] Use in email marketing
 - [ ] Use in presentations/sales materials
 
-**Duration**: [e.g., perpetual / 12 months / campaign duration]
-**Territories**: [e.g., worldwide / US only]
+**Duration**: [user-supplied contractual duration or `TBD/NEEDS_INPUT`]
+**Territories**: [user-supplied contractual territory or `TBD/NEEDS_INPUT`]
 
 ---
 
@@ -310,7 +324,7 @@ Gather these before generating (Instructions step 1):
 | **Total** | **$[X]** |
 
 **Payment Method**: [method]
-**Payment Timeline**: [e.g., Net 30 after content goes live]
+**Payment Timeline**: [user-supplied contract term or `TBD/NEEDS_INPUT`]
 **Invoice Requirements**: [what to include]
 
 ### Additional Compensation
@@ -324,14 +338,13 @@ Gather these before generating (Instructions step 1):
 
 ### Your Point of Contact
 
-**Name**: [Contact name]
-**Role**: [Title]
-**Email**: [email]
-**Phone**: [phone - for urgent matters]
+**Contact Ref**: [contact_ref]
+**Role**: [non-identifying role]
+**Delivery details**: [resolve raw name/email/phone transiently only inside the authorized dispatch]
 **Response Time**: [expected response time]
 
 ### Escalation Contact
-[Secondary contact for urgent issues]
+[secondary contact_ref; raw details resolve transiently only at dispatch]
 
 ---
 
@@ -364,7 +377,7 @@ By proceeding with this collaboration, you confirm:
 
 ---
 
-*Thank you for partnering with [Brand]! We're excited to work with you. Don't hesitate to reach out with any questions.*
+*Thank you for partnering with [brand display name resolved transiently from brand_ref]! We're excited to work with you. Don't hesitate to reach out through [contact_ref resolved transiently at dispatch].*
 
 ---
 ```
@@ -381,12 +394,12 @@ For different content types, adjust:
 ### TikTok Video Brief
 - Emphasize: Hook importance, trending sounds, native feel
 - Include: Sound/music options, trending formats to consider
-- Duration: 15-60 seconds optimal
+- Duration/format: [dated official TikTok spec ref; otherwise `TBD/NEEDS_INPUT`]
 
 ### Instagram Reels Brief
 - Emphasize: Visual quality, cover image, carousel option
 - Include: Reel vs. Feed placement, Stories cross-posting
-- Duration: 15-30 seconds optimal
+- Duration/format: [dated official Instagram Reels spec ref; otherwise `TBD/NEEDS_INPUT`]
 
 ### Instagram Feed Post Brief
 - Emphasize: High-quality imagery, detailed caption
@@ -396,7 +409,7 @@ For different content types, adjust:
 ### Instagram Stories Brief
 - Emphasize: Authenticity, multiple frames, swipe-up/link
 - Include: Story frames breakdown, poll/questions use
-- Duration: 3-7 story frames typical
+- Frame count/format: [dated official Instagram Stories spec ref; otherwise `TBD/NEEDS_INPUT`]
 
 ### YouTube Video Brief
 - Emphasize: Integration style (dedicated vs. mention), SEO

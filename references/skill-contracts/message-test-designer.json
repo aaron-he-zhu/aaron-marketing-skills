@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 256,
+          "end_char": 182,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the spec names a measurable hypothesis and pass threshold, a target panel with recruit criteria, and a stop/revise rule that sends a failed test back to [message-system-architect](../../architect/message-system-architect/SKILL.md) rather than to more spend"
+        "text": "the spec names a measurable hypothesis and pass threshold, target panel, precommitted measurement contract, exact canon/stimulus hashes, selected current head, and a stop/revise rule"
       },
       {
         "clause_id": "done-02",
@@ -23,22 +23,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 375,
+          "end_char": 218,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
-          "start_char": 258
+          "start_char": 184
         },
-        "text": "and every claim in the stimulus set is either approved in the ledger or marked `[needs source]` as pending proposals."
+        "text": "every claim is approved or pending"
+      },
+      {
+        "clause_id": "done-03",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 470,
+          "path": "narrative/evaluate/message-test-designer/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
+          "span_basis": "field-text",
+          "start_char": 220
+        },
+        "text": "and the result cannot be applied unless its shared `evidence-observation` references the same [Narrative Truth, Stimulus, and Retro Binding](references/stimulus-binding.md). Any changed canon, stimulus, panel, protocol, or contract starts a new test."
       }
     ],
-    "done_when": "the spec names a measurable hypothesis and pass threshold, a target panel with recruit criteria, and a stop/revise rule that sends a failed test back to [message-system-architect](../../architect/message-system-architect/SKILL.md) rather than to more spend; and every claim in the stimulus set is either approved in the ledger or marked `[needs source]` as pending proposals.",
+    "done_when": "the spec names a measurable hypothesis and pass threshold, target panel, precommitted measurement contract, exact canon/stimulus hashes, selected current head, and a stop/revise rule; every claim is approved or pending; and the result cannot be applied unless its shared `evidence-observation` references the same [Narrative Truth, Stimulus, and Retro Binding](references/stimulus-binding.md). Any changed canon, stimulus, panel, protocol, or contract starts a new test.",
     "extraction_status": "classified",
     "source": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378"
+      "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74"
     }
   },
   "context_hints": {
@@ -47,7 +62,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -58,10 +73,17 @@
         "source_line": 44
       },
       {
+        "path": "narrative/evaluate/message-test-designer/references/stimulus-binding.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "4acf5b2b7e15cfeaff6a9fda2de08b14a92c11a80499af5a2216a54baefd878f",
+        "source_line": 29
+      },
+      {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
       },
       {
@@ -80,26 +102,15 @@
         "path": "memory/claims/claims-ledger.md",
         "reason_code": "explicit-skill-read",
         "sensitivity": "confidential"
-      },
-      {
-        "access": "read",
-        "authority": "working",
-        "kind": "prefix",
-        "path": "memory/narrative-registry",
-        "reason_code": "explicit-skill-read",
-        "sensitivity": "confidential"
-      },
-      {
-        "access": "read",
-        "authority": "working",
-        "kind": "prefix",
-        "path": "memory/narrative/narrative-cascade-planner",
-        "reason_code": "explicit-skill-read",
-        "sensitivity": "confidential"
       }
     ]
   },
   "contract_id": "skill:message-test-designer",
+  "control_requirements": [
+    "artifact-binding",
+    "evidence-observation",
+    "measurement-contract"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -112,7 +123,7 @@
           "end_char": 173,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -130,7 +141,7 @@
           "end_char": 421,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
           "start_char": 174
         },
@@ -149,7 +160,7 @@
           "end_char": 620,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
           "start_char": 422
         },
@@ -167,7 +178,7 @@
           "end_char": 967,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
           "start_char": 622
         },
@@ -180,7 +191,7 @@
     "summary_ref": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378"
+      "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -196,64 +207,109 @@
     "name": "message-test-designer",
     "path": "narrative/evaluate/message-test-designer/SKILL.md",
     "phase": "evaluate",
-    "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
-    "version": "20.0.0"
+    "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<message / tagline / surface> [target panel] [candidate variants]",
     "clauses": [
       {
         "clause_id": "read-01",
-        "extraction_status": "partially-classified",
-        "kind": "project-resource",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 192,
+          "end_char": 70,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "the durable message house and canon from [message-system-architect](../../architect/message-system-architect/SKILL.md) output and `memory/narrative-registry/` (canon lexicon, pillars, tagline)"
+        "text": "the durable message house and exact canon ID/version/hash/current head"
       },
       {
         "clause_id": "read-02",
-        "extraction_status": "partially-classified",
-        "kind": "project-resource",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 320,
+          "end_char": 147,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
-          "start_char": 194
+          "start_char": 72
         },
-        "text": "the candidate variants or per-surface message-match spec (User-provided or from `memory/narrative/narrative-cascade-planner/`)"
+        "text": "the exact candidate stimulus-set ref/hash or per-surface message-match spec"
       },
       {
         "clause_id": "read-03",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 172,
+          "path": "narrative/evaluate/message-test-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
+          "span_basis": "field-text",
+          "start_char": 149
+        },
+        "text": "panel/cohort definition"
+      },
+      {
+        "clause_id": "read-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 182,
+          "path": "narrative/evaluate/message-test-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
+          "span_basis": "field-text",
+          "start_char": 174
+        },
+        "text": "protocol"
+      },
+      {
+        "clause_id": "read-05",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 213,
+          "path": "narrative/evaluate/message-test-designer/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
+          "span_basis": "field-text",
+          "start_char": 184
+        },
+        "text": "measurement-contract ref/hash"
+      },
+      {
+        "clause_id": "read-06",
         "extraction_status": "partially-classified",
         "kind": "project-resource",
         "requirement": "unclassified",
         "source": {
-          "end_char": 393,
+          "end_char": 278,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
-          "start_char": 322
+          "start_char": 215
         },
-        "text": "approved claim wording in `memory/claims/claims-ledger.md` (read-only)."
+        "text": "and approved claim wording in `memory/claims/claims-ledger.md`."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "the durable message house and canon from [message-system-architect](../../architect/message-system-architect/SKILL.md) output and `memory/narrative-registry/` (canon lexicon, pillars, tagline); the candidate variants or per-surface message-match spec (User-provided or from `memory/narrative/narrative-cascade-planner/`); approved claim wording in `memory/claims/claims-ledger.md` (read-only).",
+    "reads": "the durable message house and exact canon ID/version/hash/current head; the exact candidate stimulus-set ref/hash or per-surface message-match spec; panel/cohort definition; protocol; measurement-contract ref/hash; and approved claim wording in `memory/claims/claims-ledger.md`.",
     "source": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378"
+      "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74"
     }
   },
   "output_contract": {
@@ -268,7 +324,7 @@
           "end_char": 65,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -284,7 +340,7 @@
           "end_char": 295,
           "path": "narrative/evaluate/message-test-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378",
+          "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74",
           "span_basis": "field-text",
           "start_char": 67
         },
@@ -295,23 +351,27 @@
     "source": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378"
+      "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74"
     },
-    "summary": "a message-test design spec — the hypothesis (what \"lands\" means, stated measurably), the target panel and recruit criteria, the chosen protocol (comprehension / 5-second recall / message-market-fit), the stimulus set drawn verbatim from the canon with any unverifiable claim marked `[needs source]`, success thresholds, the sample-size / panel-size note (labeled Estimated with its assumption), the stop/revise decision rule, and the standard handoff summary naming the execution builder.",
+    "summary": "a message-test design spec — the hypothesis, panel/cohort, protocol, an immutable canon/stimulus/measurement binding, the stimulus set drawn verbatim from canon, success thresholds, panel-size note, stop/revise rule, result-observation requirements, and the standard handoff summary naming the execution builder.",
     "summary_source": "expected-output",
     "writes": "the test design spec to `memory/narrative/message-test-designer/`; any unverifiable claim found in a stimulus to `memory/events/claims.ndjson` via an authorized `operation: propose` request to `registry-events.py` tagged `[needs source]` — never to the claims ledger, and never adjudicated here."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -320,7 +380,7 @@
     "source": {
       "path": "narrative/evaluate/message-test-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "dd5a96e9b415980435a52fe187e87bdb9cef90945d3d7a8377e2ea98e143a378"
+      "sha256": "ec7ffb03a792ecadfa1aea7acc8bff0ab8e67b9a8d1ce77b1cb13f79e1249d74"
     },
     "trigger_phrases": [
       "design a message-market-fit panel",

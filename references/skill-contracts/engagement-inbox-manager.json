@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 62,
+          "end_char": 34,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "every batch item has register + class + tier (or monitor-only)"
+        "text": "every item has register/class/tier"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 131,
+          "end_char": 128,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
-          "start_char": 64
+          "start_char": 36
         },
-        "text": "every draft has a channel, an SLA deadline, and voice-card register"
+        "text": "every draft has channel/SLA/register and remains draft until a matching human receipt exists"
       },
       {
         "clause_id": "done-03",
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 187,
+          "end_char": 172,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
-          "start_char": 133
+          "start_char": 130
         },
-        "text": "every tripped escalation row names its owner and route"
+        "text": "every tripped escalation names owner/route"
       },
       {
         "clause_id": "done-04",
@@ -53,22 +53,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 287,
+          "end_char": 264,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
-          "start_char": 189
+          "start_char": 174
         },
-        "text": "and every permission entry carries all eight fields with an evidence link, appended to candidates."
+        "text": "each UGC entry carries exact scope, status, start/expiry, last-verified time, and evidence"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 354,
+          "path": "social/host/engagement-inbox-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
+          "span_basis": "field-text",
+          "start_char": 266
+        },
+        "text": "and each requested takedown stays open until every live placement has a removal receipt."
       }
     ],
-    "done_when": "every batch item has register + class + tier (or monitor-only); every draft has a channel, an SLA deadline, and voice-card register; every tripped escalation row names its owner and route; and every permission entry carries all eight fields with an evidence link, appended to candidates.",
+    "done_when": "every item has register/class/tier; every draft has channel/SLA/register and remains draft until a matching human receipt exists; every tripped escalation names owner/route; each UGC entry carries exact scope, status, start/expiry, last-verified time, and evidence; and each requested takedown stays open until every live placement has a removal receipt.",
     "extraction_status": "classified",
     "source": {
       "path": "social/host/engagement-inbox-manager/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2"
+      "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2"
     }
   },
   "context_hints": {
@@ -77,7 +92,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 38
       },
       {
@@ -98,8 +113,15 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 34
+      },
+      {
+        "path": "social/craft/social-calendar-builder/references/human-action-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "cb4e4fb48b922adfc32fa648149a44c141afc7fddf4f08bcbbd079d7963f1ad2",
+        "source_line": 50
       }
     ],
     "project_paths": [
@@ -122,6 +144,11 @@
     ]
   },
   "contract_id": "skill:engagement-inbox-manager",
+  "control_requirements": [
+    "action-receipt",
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -134,7 +161,7 @@
           "end_char": 198,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -152,7 +179,7 @@
           "end_char": 356,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 199
         },
@@ -170,7 +197,7 @@
           "end_char": 397,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 358
         },
@@ -186,7 +213,7 @@
           "end_char": 604,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 398
         },
@@ -204,7 +231,7 @@
           "end_char": 958,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 606
         },
@@ -217,7 +244,7 @@
     "summary_ref": {
       "path": "social/host/engagement-inbox-manager/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2"
+      "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -232,8 +259,8 @@
     "name": "engagement-inbox-manager",
     "path": "social/host/engagement-inbox-manager/SKILL.md",
     "phase": "host",
-    "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
-    "version": "20.0.0"
+    "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<channel + exported comment/DM/mention batch> [--slas | --house-rules | --ugc-rights]",
@@ -247,7 +274,7 @@
           "end_char": 117,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -262,7 +289,7 @@
           "end_char": 255,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 119
         },
@@ -277,7 +304,7 @@
           "end_char": 393,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 257
         },
@@ -292,7 +319,7 @@
           "end_char": 458,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 395
         },
@@ -304,7 +331,7 @@
     "source": {
       "path": "social/host/engagement-inbox-manager/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2"
+      "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2"
     }
   },
   "output_contract": {
@@ -319,7 +346,7 @@
           "end_char": 84,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -335,7 +362,7 @@
           "end_char": 312,
           "path": "social/host/engagement-inbox-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2",
+          "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2",
           "span_basis": "field-text",
           "start_char": 86
         },
@@ -346,23 +373,27 @@
     "source": {
       "path": "social/host/engagement-inbox-manager/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2"
+      "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2"
     },
-    "summary": "a triage report — every item tagged with register + commenter class + response tier (or monitor-only), ranked DRAFT replies with SLA deadlines, tripped escalation rows with named owners, moderation/house-rules updates where an owned space is in scope, UGC permission entries appended to candidates — plus the standard handoff summary.",
+    "summary": "a triage report — every item classified, ranked DRAFT replies with SLA deadlines, escalation rows with owners, moderation updates, human reply/moderation receipts when actions were actually completed, and UGC permission entries with scope/status/expiry/removal state — plus the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "the triage report and draft-reply queue to `memory/social/engagement-inbox-manager/`; dated permission entries and intra-day activity lines submitted as proposal events to `memory/events/channels.ndjson` via an authorized `operation: propose` request to `registry-events.py` (never to registry records directly)."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -371,7 +402,7 @@
     "source": {
       "path": "social/host/engagement-inbox-manager/SKILL.md",
       "section": "frontmatter",
-      "sha256": "fecf25fee82dfffd1086483204c310166a5cef5e1315b8697dbe3d42466931a2"
+      "sha256": "b990a916e21a1f95b7e288f85ec7c06e64d0eb14dcf424e94ef58a3af9ce9bc2"
     },
     "trigger_phrases": [
       "can we repost this fan post",

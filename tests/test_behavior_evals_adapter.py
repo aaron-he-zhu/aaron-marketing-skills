@@ -483,20 +483,20 @@ class AdapterTests(unittest.TestCase):
         self.assertNotIn("evals/auto-routing-scenarios.source.md", references)
         self.assertNotIn("references/auto-routing/ad.md", references)
 
-    def test_nightly_700_requests_are_constructible_with_bounded_refs(self):
+    def test_nightly_734_requests_are_constructible_with_bounded_refs(self):
         selection = self.module.select_semantic_cases("nightly", set())
         self.assertEqual("nightly", selection["profile"])
-        self.assertEqual(700, len(selection["cases"]))
+        self.assertEqual(734, len(selection["cases"]))
 
         requests = self.module.build_v2_requests(
             selection["cases"], selection["profile"], selection["selection_reasons"]
         )
-        self.assertEqual(700, len(requests))
+        self.assertEqual(734, len(requests))
         self.assertEqual(
             [case["id"] for case in selection["cases"]],
             [request["case"]["id"] for request in requests],
         )
-        self.assertEqual(700, len({request["request_sha256"] for request in requests}))
+        self.assertEqual(734, len({request["request_sha256"] for request in requests}))
         for request in requests:
             references = [
                 item["ref"] for item in request["prompt_contract"]["source_refs"]
@@ -681,7 +681,7 @@ class AdapterTests(unittest.TestCase):
                     self.run_v2_with(source)
                 self.assertIn("cannot be retryable", str(ctx.exception))
 
-    def test_v2_700_case_batches_are_persisted_without_loss(self):
+    def test_v2_734_case_batches_are_persisted_without_loss(self):
         with tempfile.TemporaryDirectory() as tmp:
             base = Path(tmp)
             evidence_root = base / "evidence-root"
@@ -689,7 +689,7 @@ class AdapterTests(unittest.TestCase):
             script = base / "adapter.py"
             script.write_text(textwrap.dedent(PASS_V2_ADAPTER), encoding="utf-8")
             run_id = "123e4567-e89b-42d3-a456-426614174000"
-            selection = self.v2_selection(700)
+            selection = self.v2_selection(734)
             self.assertEqual(
                 [],
                 self.module.run_adapter_v2(
@@ -700,12 +700,12 @@ class AdapterTests(unittest.TestCase):
             evidence = evidence_root / "memory" / "runs" / run_id / "semantic-eval"
             completion = json.loads((evidence / "completion.json").read_text(encoding="utf-8"))
             manifest = json.loads((evidence / "manifest.json").read_text(encoding="utf-8"))
-            self.assertEqual(700, completion["request_count"])
-            self.assertEqual(700, completion["attempt_count"])
-            self.assertEqual(700, completion["terminal_count"])
+            self.assertEqual(734, completion["request_count"])
+            self.assertEqual(734, completion["attempt_count"])
+            self.assertEqual(734, completion["terminal_count"])
             self.assertTrue(completion["complete"])
-            self.assertEqual(700, len((evidence / "requests.ndjson").read_text(encoding="utf-8").splitlines()))
-            self.assertEqual(700, len((evidence / "results.ndjson").read_text(encoding="utf-8").splitlines()))
+            self.assertEqual(734, len((evidence / "requests.ndjson").read_text(encoding="utf-8").splitlines()))
+            self.assertEqual(734, len((evidence / "results.ndjson").read_text(encoding="utf-8").splitlines()))
             self.assertEqual(
                 hashlib.sha256(script.read_bytes()).hexdigest(),
                 manifest["adapter_command_identity"]["implementation"]["sha256"],

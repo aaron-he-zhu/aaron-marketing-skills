@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 86,
+          "end_char": 129,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "instrumentation is verified per surface before T-0 (or the gaps are named as blockers)"
+        "text": "instrumentation is verified per surface against the current manifest (pre-launch actions are explicitly not-yet-due, not missing)"
       },
       {
         "clause_id": "done-02",
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 224,
+          "end_char": 253,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
-          "start_char": 88
+          "start_char": 131
         },
-        "text": "each snapshot states actuals vs targets with own analytics as attribution truth and platform self-reported numbers marked reference-only"
+        "text": "every window/outcome snapshot binds to the measurement contract and matched receipts for actions that are due or attempted"
       },
       {
         "clause_id": "done-03",
@@ -38,22 +38,52 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 306,
+          "end_char": 334,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
-          "start_char": 226
+          "start_char": 255
         },
-        "text": "and every alert names the threshold it breached and which KPI target it maps to."
+        "text": "missing/partial/unknown due receipts keep the affected lane and close join open"
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 386,
+          "path": "launch/prove/launch-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
+          "span_basis": "field-text",
+          "start_char": 336
+        },
+        "text": "actuals vs targets preserve truth/reference labels"
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 439,
+          "path": "launch/prove/launch-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
+          "span_basis": "field-text",
+          "start_char": 388
+        },
+        "text": "and every alert names its threshold and KPI target."
       }
     ],
-    "done_when": "instrumentation is verified per surface before T-0 (or the gaps are named as blockers); each snapshot states actuals vs targets with own analytics as attribution truth and platform self-reported numbers marked reference-only; and every alert names the threshold it breached and which KPI target it maps to.",
+    "done_when": "instrumentation is verified per surface against the current manifest (pre-launch actions are explicitly not-yet-due, not missing); every window/outcome snapshot binds to the measurement contract and matched receipts for actions that are due or attempted; missing/partial/unknown due receipts keep the affected lane and close join open; actuals vs targets preserve truth/reference labels; and every alert names its threshold and KPI target.",
     "extraction_status": "classified",
     "source": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
+      "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91"
     }
   },
   "context_hints": {
@@ -62,7 +92,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 40
       },
       {
@@ -71,6 +101,13 @@
         "requirement": "optional",
         "sha256": "0b56f9e86b2df29e835eb10c483be8b82749f7f5c4047d3f1d9681b53251901a",
         "source_line": 44
+      },
+      {
+        "path": "launch/assemble/launch-asset-packager/references/action-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "bfd006baaad6458795c334d1ba61d66123ab8de6ee81c341d3b9e7efe0376bdd",
+        "source_line": 46
       },
       {
         "path": "references/ramp-benchmark.md",
@@ -83,13 +120,19 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 36
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:launch-monitor",
+  "control_requirements": [
+    "action-receipt",
+    "artifact-binding",
+    "evidence-observation",
+    "measurement-contract"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -102,7 +145,7 @@
           "end_char": 139,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -120,7 +163,7 @@
           "end_char": 313,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
           "start_char": 140
         },
@@ -138,7 +181,7 @@
           "end_char": 494,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
           "start_char": 314
         },
@@ -156,7 +199,7 @@
           "end_char": 843,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
           "start_char": 496
         },
@@ -169,7 +212,7 @@
     "summary_ref": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
+      "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -184,41 +227,41 @@
     "name": "launch-monitor",
     "path": "launch/prove/launch-monitor/SKILL.md",
     "phase": "prove",
-    "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
-    "version": "20.0.0"
+    "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<launch date / platforms> [KPI targets] [--pre-launch | --snapshot D0|W1|M1]",
     "clauses": [
       {
         "clause_id": "read-01",
-        "extraction_status": "partially-classified",
-        "kind": "evidence-input",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 106,
+          "end_char": 28,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "launch date, tier, and stage from the [launch-registry](../../../protocol/launch-registry/SKILL.md) record"
+        "text": "launch date, tier, and stage"
       },
       {
         "clause_id": "read-02",
         "extraction_status": "partially-classified",
-        "kind": "evidence-input",
-        "requirement": "unclassified",
+        "kind": "unclassified",
+        "requirement": "required",
         "source": {
-          "end_char": 207,
+          "end_char": 87,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
-          "start_char": 108
+          "start_char": 30
         },
-        "text": "KPI targets from [launch-tier-planner](../../research/launch-tier-planner/SKILL.md) (User-provided)"
+        "text": "the current manifest version/hash and required action IDs"
       },
       {
         "clause_id": "read-03",
@@ -226,29 +269,29 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 360,
+          "end_char": 141,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
-          "start_char": 209
+          "start_char": 89
         },
-        "text": "platform telemetry via `scripts/connectors/hn.py`, `scripts/connectors/producthunt.py`, `scripts/connectors/appstore.py`, `scripts/connectors/gdelt.py`"
+        "text": "the predeclared measurement contract and KPI targets"
       },
       {
         "clause_id": "read-04",
-        "extraction_status": "partially-classified",
-        "kind": "evidence-input",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 410,
+          "end_char": 222,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
-          "start_char": 362
+          "start_char": 143
         },
-        "text": "own `~~web analytics` export (the UTM truth set)"
+        "text": "in window/outcome mode, each due action receipt from launch-day/community lanes"
       },
       {
         "clause_id": "read-05",
@@ -256,22 +299,37 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 468,
+          "end_char": 242,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
-          "start_char": 412
+          "start_char": 224
         },
-        "text": "pasted platform numbers when connectors are unavailable."
+        "text": "platform telemetry"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 284,
+          "path": "launch/prove/launch-monitor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
+          "span_basis": "field-text",
+          "start_char": 244
+        },
+        "text": "and own `~~web analytics` UTM truth set."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "launch date, tier, and stage from the [launch-registry](../../../protocol/launch-registry/SKILL.md) record; KPI targets from [launch-tier-planner](../../research/launch-tier-planner/SKILL.md) (User-provided); platform telemetry via `scripts/connectors/hn.py`, `scripts/connectors/producthunt.py`, `scripts/connectors/appstore.py`, `scripts/connectors/gdelt.py`; own `~~web analytics` export (the UTM truth set); pasted platform numbers when connectors are unavailable.",
+    "reads": "launch date, tier, and stage; the current manifest version/hash and required action IDs; the predeclared measurement contract and KPI targets; in window/outcome mode, each due action receipt from launch-day/community lanes; platform telemetry; and own `~~web analytics` UTM truth set.",
     "source": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
+      "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91"
     }
   },
   "output_contract": {
@@ -286,7 +344,7 @@
           "end_char": 65,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -302,7 +360,7 @@
           "end_char": 319,
           "path": "launch/prove/launch-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31",
+          "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91",
           "span_basis": "field-text",
           "start_char": 67
         },
@@ -313,23 +371,27 @@
     "source": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
+      "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91"
     },
     "summary": "a pre-launch instrumentation verification report (per-surface UTM/event pass-fail) or a window telemetry read — polling log, flamewar/anomaly alerts, D0/W1/M1 KPI snapshot vs targets, spike-vs-sustain and owned-capture reads — every number labeled Measured / User-provided / Estimated, plus the standard handoff summary.",
     "summary_source": "expected-output",
     "writes": "snapshots + a reusable summary to `memory/launch/launch-monitor/`; the outcome-snapshot facts (peak rank, D0/W1/M1 actuals, window close) are submitted to `memory/events/launches.ndjson` via an authorized `operation: propose` request to `registry-events.py` — this skill never writes `memory/launch-registry/` directly."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -338,7 +400,7 @@
     "source": {
       "path": "launch/prove/launch-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "e565ab16991a5dcfd77010f50b60588fb894029d782d808f9e4febb952f6af31"
+      "sha256": "4a37b962d726b04eaa5439bc264cb868371264e10166f44ad624c33b9eefaf91"
     },
     "trigger_phrases": [
       "monitor my launch",

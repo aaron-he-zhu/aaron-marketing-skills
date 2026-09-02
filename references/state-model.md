@@ -15,6 +15,8 @@ This document defines the v18 project-state architecture. Runtime state is priva
 | Turn snapshot | Invocation provenance | `memory/runs/<run-id>/turns/<turn-id>/snapshot.json` | Immutable metadata/hash freeze for one turn |
 | Save point | Verified runtime resume pointer | `memory/runs/<run-id>/save-points/<id>.json` | Immutable; re-verify stream, artifacts, permissions, and registries before use |
 | Run envelope | Portable run summary | `memory/runs/<run-id>/envelopes/<head-id>.json` | Immutable summary; not canonical truth or approval |
+| Control artifact | Non-authoritative operational evidence | Authorized discipline WARM path or referenced run artifact | Immutable canonical JSON; normal WARM/run retention applies |
+| Control projection | Disposable read model | Standard output or caller-owned temporary view | Rebuild from validated sources; never state, authority, or permission |
 | HOT index | Retrieval pointer | `memory/hot-cache.md` | 80 lines and 25 KB maximum |
 | Session checkpoint | Resume pointer | `memory/session-checkpoint.md` | 40 lines and 8 KB maximum; refreshed after each handoff; untrusted hint, re-verified against live projections |
 | WARM artifact | Dated working evidence | Discipline/skill path under `memory/` | On-demand; archive review after 90 days |
@@ -113,6 +115,18 @@ same unit + field + meaning, newer equal-or-higher authority evidence
 ```
 
 If unit, time window, source meaning, or authority differs, preserve both and open a conflict. Registry facts change only through an event with the current revision.
+
+### Control Artifact Bindings and Current Heads
+
+The five typed controls in [`control-artifact.schema.json`](control-artifact.schema.json) are exactly `evidence-observation`, `measurement-contract`, `action-intent`, `action-receipt`, and `cycle-retro`; there is no authorization kind. A bare reference is an immutable `opaque:<id>`. A local project path is valid only inside an exact `{ref, sha256, version}` artifact binding. The validator anchors that path under the supplied project root, checks the bytes and embedded version, and applies the shared sensitive-field/direct-PII rules to the referenced text before accepting the binding. A bare local `source_observation.ref`, `decision_rule_ref`, or other `*_ref`, a digest/version mismatch, an unreadable or missing target, an unsafe locator, or a non-canonical linked control artifact fails closed. An opaque reference remains reported provenance rather than verified local bytes.
+
+That privacy check is content-aware, not a generic web-data ban: a URL, domain, or search query in a versioned local evidence artifact is not PII merely because of its data type. Raw email, phone, IP, credential/secret fields, direct identity fields, and the existing sensitive keys still fail. Control-envelope ref fields remain locator-free: preserve a web locator only inside the versioned bound evidence artifact or resolve it transiently to an opaque ID.
+
+Control artifacts are append-by-replacement evidence: never edit an earlier observation, contract, intent, receipt, or retro in place. Preserve the earlier bytes and emit a new artifact. When comparable working evidence changes, use the surrounding WARM/run ancestry to record supersession; do not infer a new current head merely from a later filename or timestamp.
+
+A `cycle-retro` is valid only against the exact `measurement-contract` digest and its exact target binding. It declares `is_current: true`, `fork_count: 0`, and a `selected_ancestry_ref`; the semantic validator checks those bindings and the preregistered read date. The declaration does not prove external currentness by itself. The caller must still verify the selected live runtime ancestry or discipline source before acting. A sibling/fork, changed target hash, or changed measurement contract requires a new reconciliation/retro rather than silent reuse.
+
+Late provider results, attribution changes, or corrections are new evidence. Append a new observation or receipt and, when the decision may change, bind a new retro to the still-current measurement target. A bounded reopen never overwrites the earlier receipt or retro and never mutates registry truth. The read-only projection is derived solely from validated source artifacts; changing or deleting a rendered projection has no backflow into those sources.
 
 ## Decisions and Permission
 

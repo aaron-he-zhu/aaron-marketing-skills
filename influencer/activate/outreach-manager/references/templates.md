@@ -1,6 +1,6 @@
 # Outreach Manager — Templates
 
-Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md). Copy the block you need and replace the bracketed placeholders. Apply the hard copy rules in [cold-copy-rules.md](cold-copy-rules.md) before sending.
+Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md). Copy the block you need and replace the bracketed placeholders. Apply the hard copy rules in [cold-copy-rules.md](cold-copy-rules.md) before sending. Drafts may retain explicit placeholders; no message may send or schedule until the eligibility, approval, and live-suppression gates below pass. Resolve a raw handle, profile/content URL, email, phone, or recipient name only transiently for research or the exact send gate. Reuse an explicitly carried opaque `creator_ref`, or a creator-registry aggregate ID only when its identity link is verified; otherwise generate one random `creator-<UUIDv4>` once for this lineage. Never derive that ref from a raw locator or deterministic hash. Before saving a template or handoff, replace direct identifiers and raw URLs throughout—including evidence, headings, subject lines, pipeline rows, signatures, and notes—with the stable `creator_ref`, resolvable opaque `handle_ref` / `recipient_ref` / `contact_source_ref` / `source_ref`, or dispatch-time placeholders. If no authorized artifact or verified registry link resolves those opaque refs, record `identity_status: unresolved`, persist no hidden locator mapping, set `cross_session_locator_required: true`, and request the raw locator again at dispatch.
 
 ## Step 1 — Outreach Parameters
 
@@ -13,11 +13,35 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md). Copy
 - Product: [product]
 - Value proposition for influencer: [why they should care]
 
-**Target Influencer(s)**:
-- Handle(s): @[handle]
+**Transient lookup inputs (never save)**:
+- Raw handle/profile URL: [resolve only for research or the exact dispatch]
+- Raw content URL: [resolve only for evidence review; never persist as `source_ref`]
+
+**Saved target identity**:
+- Creator ref: [explicit upstream opaque ref / verified registry aggregate ID / random creator-<UUIDv4>]
+- Identity status: [resolved/unresolved/conflict]
+- Handle ref: [resolvable opaque handle_ref or unknown]
+- Recipient ref: [resolvable opaque recipient_ref or unresolved]
+- Contact source ref: [resolvable opaque contact_source_ref or unknown]
+- Cross-session locator required: [true/false]
 - Platform: [platform]
 - Followers: [count]
 - Niche: [category]
+
+**Contact Eligibility (required before send/schedule)**:
+- Pseudonymous subject ID: [non-PII subject-id used by consent-registry]
+- Recipient ref: [resolvable opaque exact creator/management recipient; not a segment or placeholder]
+- Jurisdiction: [region code or Unknown]
+- Intended channel: [email/DM/etc.]
+- Contact source ref: [opaque reference to where the contact path came from]
+- Lawful basis: [basis or Unknown]
+- Basis/evidence reference: [opaque source_ref; never a raw URL/handle]
+- Contact eligibility: [Eligible/Ineligible/Unknown]
+- Eligibility evidence: [opaque source_ref] · observed_at: [YYYY-MM-DD or ISO 8601]
+- Negative signal on file: [none/scoped decline/stop-contact/unsubscribe/verified spam-provider complaint/consent withdrawal + opaque source_ref]
+- Live suppression result: [PENDING until immediately before dispatch; result + query time]
+- Exact approval for the single currently due touch: [recipient_ref + channel + final message + concrete ISO-8601 dispatch_at/timezone if scheduled + approval_ref]
+- Later cadence touches: [DRAFT — NOT SCHEDULED; each requires fresh approval and checks when due]
 
 **Outreach Details**:
 - Compensation type: [ad/gifted/affiliate]
@@ -29,58 +53,44 @@ Fill-in templates for each Instructions step in [../SKILL.md](../SKILL.md). Copy
 ## Step 2 — Personalized Outreach
 
 ```markdown
-## Outreach Message for @[handle]
+## Outreach Message for [creator_ref]
+
+**Dispatch identity:** [resolvable opaque recipient_ref / unresolved until dispatch]
+
+**Status:** DRAFT — NOT SENT
 
 ### Personalization Research
 
 Before crafting the message, note these personalization points:
 
-| Element | Details | Use In Message |
-|---------|---------|----------------|
-| Recent content | [specific post] | Reference as ice-breaker |
-| Content style | [description] | Explain why they're perfect fit |
-| Audience | [demographics] | Connect to campaign |
-| Values | [what they care about] | Align with brand values |
-| Past partnerships | [brands] | Mention similar work |
+| Element | Verifiable detail | source_ref | observed_at | Use In Message |
+|---------|-------------------|------------|-------------|----------------|
+| Recent content | [specific asset and observable detail] | [resolvable opaque evidence ref] | [date/ISO 8601] | Reference as ice-breaker |
+| Content style | [observable format or pattern] | [opaque evidence/export refs] | [date/ISO 8601] | Explain the campaign criterion match |
+| Audience | [measured demographic fact, if supplied] | [opaque analytics/export ref] | [date/ISO 8601] | Connect to campaign |
+| Values | [explicit statement, not inference] | [opaque evidence ref] | [date/ISO 8601] | Align with an approved brand criterion |
+| Past partnerships | [verified brand refs] | [opaque evidence/portfolio ref] | [date/ISO 8601] | Mention only when relevant |
+
+If either `source_ref` or `observed_at` is missing, omit the fact or leave a bracketed placeholder. Do not convert an inference into a creator belief, and do not invent first-person viewing, purchasing, product-use, or relationship history for the sender.
 
 ### Primary Outreach Message
 
 **Subject Line Options**:
-1. "[Name], love your [specific content] – collab idea"
-2. "Partnership opportunity with [Brand] 🤝"
-3. "[Brand] x @[handle] – let's create something amazing"
+1. "[Evidence-backed content topic] — a [Brand] collaboration idea"
+2. "[Approved campaign name] — proposed [deliverable]"
+3. "A collaboration question from [Brand]"
 
 ---
 
 **Message:**
 
-Hi [Name],
+[Recipient name], your [specific asset] [verifiable observation supported by opaque source_ref].
 
-[PERSONALIZED OPENER - Reference specific content]
-I've been following your content for a while and absolutely loved your [specific post/video]. The way you [specific thing they did] really resonated with me.
+I'm [sender resolved at dispatch] at [Brand]; [approved one-sentence offer naming the campaign, deliverable, and compensation].
 
-[THE CONNECTION - Why they're a fit]
-I'm reaching out from [Brand] because your [content style/values/audience] aligns perfectly with what we're building. We [brief brand description].
+Open to the brief?
 
-[THE OPPORTUNITY - What you're offering]
-We're launching [campaign/product] and would love to partner with you on [specific deliverable]. We're looking for [what you need] and think your authentic style would be perfect.
-
-[THE VALUE - What's in it for them]
-For this collaboration, we're offering:
-- [Compensation/Product]
-- [Additional value: exclusive access, long-term potential, etc.]
-- [Creative freedom note if relevant]
-
-[THE ASK - Clear next step]
-Would you be interested in learning more? I'd love to share our full campaign brief and answer any questions.
-
-Looking forward to hearing from you!
-
-Best,
-[Your Name]
-[Title]
-[Brand]
-[Contact info]
+[Approved sender signature resolved transiently at dispatch]
 
 ---
 
@@ -88,28 +98,23 @@ Best,
 
 **Shorter Version (DM-friendly):**
 
-Hey [Name]! 👋
+[Recipient name], your [specific asset] [verifiable observation supported by opaque source_ref].
 
-Loved your recent [content] – [specific compliment]. I'm [Name] from [Brand] and we'd love to work with you on [campaign].
+[Brand] is proposing [approved compensation] for [approved deliverable] in [campaign].
 
-We're offering [compensation] for [deliverable]. Interested in hearing more?
+Open to the brief?
 
 ---
 
 **More Formal Version (Email/Management):**
 
-Dear [Name/Management],
+[Recipient/management name resolved transiently at dispatch], [creator display name resolved transiently at dispatch]'s [specific asset] [verifiable observation supported by opaque source_ref], matching [named campaign criterion].
 
-I hope this message finds you well. My name is [Name], and I represent [Brand], a [brief description].
+[Brand] proposes [approved compensation] for [approved deliverable] in [campaign].
 
-We have been impressed by [Influencer Name]'s content, particularly [specific examples], and believe there is a strong alignment between their creative style and our brand values.
+Would reviewing the brief be useful?
 
-We are currently planning [campaign] and would like to explore a potential partnership. Our proposal includes [compensation and deliverables].
-
-Please let me know if [Influencer Name] would be interested in discussing this opportunity further.
-
-Best regards,
-[Full signature]
+[Approved sender signature resolved transiently at dispatch]
 ```
 
 ## Step 3 — Follow-Up Sequence
@@ -117,64 +122,61 @@ Best regards,
 ```markdown
 ## Follow-Up Sequence
 
+**Status:** DRAFT — NOT SENT
+
 ### Timing Strategy
 
-| Touch | Timing | Channel | Purpose |
-|-------|--------|---------|---------|
-| Initial | Day 0 | [Email/DM] | First outreach |
-| Follow-up 1 | Day 3-4 | Same channel | Gentle reminder |
-| Follow-up 2 | Day 7-8 | Different channel | Try alternate contact |
-| Follow-up 3 | Day 14 | Original channel | Final attempt |
-| Archive | Day 21 | - | Move to "not now" list |
+| Touch | Draft window | Exact `dispatch_at` + timezone | Channel | Purpose |
+|-------|--------------|------------------------------------------------------------|---------|---------|
+| Initial | Day 0 | [fill only when this is the single due touch; otherwise unresolved] | [Email/DM] | First outreach |
+| Follow-up 1 | Day 3-4 | [fill only when this is the single due touch; otherwise unresolved] | Same channel | Add one approved detail |
+| Follow-up 2 | Day 7-8 | [fill only when this is the single due touch; otherwise unresolved] | Same approved eligible channel | Add a different approved detail |
+| Follow-up 3 | Day 14 | [fill only when this is the single due touch; otherwise unresolved] | Original channel | Close the loop |
+| Archive | Day 21 | N/A — not a dispatch | - | Archive the draft cadence |
+
+Never fill or approve multiple future timestamps as a batch. All touches except the single currently due one remain `DRAFT — NOT SCHEDULED`.
 
 ### Follow-Up Messages
 
 **Follow-Up #1 (Day 3-4):**
 
-Subject: Quick follow-up – [Brand] x @[handle]
+Subject: [Campaign] — one additional detail
 
-Hi [Name],
+[Recipient name], following up on [campaign] with one detail not included in the first note.
 
-Just wanted to bump this to the top of your inbox in case you missed it! 
+[Approved new detail supported by claims-or-brief ref].
 
-We'd love to work with you on [campaign] and think you'd be a perfect fit. Happy to answer any questions or hop on a quick call to discuss.
+Worth a look?
 
-Let me know if you're interested!
-
-Best,
-[Name]
+[Approved sender signature resolved transiently at dispatch]
 
 ---
 
 **Follow-Up #2 (Day 7-8):**
 
-Subject: Still interested in partnering?
+Subject: [Campaign] — [approved new value detail]
 
-Hi [Name],
+[Recipient name], one more relevant detail for [campaign]: [approved new value or scope detail].
 
-I know your inbox is probably overflowing, so I'll keep this brief!
+[Approved compensation/deliverable remains unchanged, or state the exact approved change].
 
-[Brand] would love to collaborate with you on [specific opportunity]. We're impressed by your content and think our [product] would resonate with your audience.
+Open to the brief, or should I close this offer?
 
-If the timing isn't right, no worries at all – just let me know and I won't bother you again. But if you're interested, I'd love to chat!
-
-[Name]
+[Approved sender signature resolved transiently at dispatch]
 
 ---
 
 **Follow-Up #3 (Day 14 - Final):**
 
-Subject: Last call – [Brand] partnership
+Subject: Closing the loop on [campaign]
 
-Hi [Name],
+[Recipient name], closing the loop on [campaign] with [final approved useful detail].
 
-I'll make this my last message – I don't want to spam you!
+I won't send another message about this exact offer unless you reopen it.
 
-If partnering with [Brand] isn't right for you right now, I completely understand. If things change in the future or you'd like to connect down the road, my door is always open.
+If you want the brief later, reply here.
 
-Wishing you all the best with your content!
-
-[Name]
+[Approved sender signature resolved transiently at dispatch]
 
 ---
 
@@ -182,10 +184,14 @@ Wishing you all the best with your content!
 
 **Do:**
 - Add new value in each follow-up
-- Acknowledge their busy schedule
+- Keep the note neutral; never assume their inbox volume, schedule, interest, or reaction
 - Make it easy to say no
-- Try different channels
+- Stay on the approved eligible channel; treat any new channel as a new eligibility and approval decision
 - Keep messages shorter each time
+- Stop the current offer cadence on a clear offer decline and record its exact campaign/offer/category scope, `observed_at`, and opaque `source_ref` inline; persist it only with separate exact authorization. A later cadence inside that scope needs newer cited reopening evidence. Do not globally suppress a scoped decline or commercial objection
+- Map explicit consent signals exactly: stop-contact → `user-request`; unsubscribe → `unsubscribe`; verified channel/provider spam complaint → `complaint`; consent withdrawal → `withdrawal`
+- Before every actual dispatch, re-resolve and verify the root runtime/schema and re-run live consent-registry `is-suppressed` inside the delivery job; never rely on the Day 0 result for later touches
+- Keep every future touch unscheduled and approve/check/dispatch only the single currently due touch, regardless of provider features
 
 **Don't:**
 - Follow up more than 3-4 times
@@ -193,6 +199,7 @@ Wishing you all the best with your content!
 - Send identical messages
 - Follow up daily
 - Guilt trip for not responding
+- Treat `not suppressed` as proof of lawful basis or permission to contact
 ```
 
 ## Step 4 — Negotiation Guide
@@ -204,7 +211,8 @@ Wishing you all the best with your content!
 
 | Factor | Details |
 |--------|---------|
-| Influencer | @[handle] |
+| Creator ref | [creator_ref] |
+| Recipient | [recipient_ref] |
 | Their ask | $[X] |
 | Our budget | $[Y] |
 | Gap | $[Z] |
@@ -218,10 +226,10 @@ Instead of increasing cash, offer additional value:
 
 | Offer | Value | Script |
 |-------|-------|--------|
-| Extended usage rights | [$X value] | "We'd love to feature your content on our channels too – would whitelisting rights for [duration] help bridge the gap?" |
-| Additional product | [$X value] | "We can include [additional products] worth $[X] for you and your audience" |
-| Affiliate commission | [%] | "What if we added [X%] commission on sales through your code?" |
-| Long-term commitment | [future value] | "If this goes well, we'd love to make you an ambassador with guaranteed [X] partnerships per year" |
+| Extended usage rights | [$X value supported by source_ref] | "Would separately documented whitelisting rights for [exact channels/duration/territory] at $[X] help bridge the gap? No rights activate until contract-helper records the agreement." |
+| Additional product | [$X value supported by source_ref] | "We can include [approved additional products] with a documented value of $[X]." |
+| Affiliate commission | [approved %] | "Would an approved [X%] commission on attributed sales through the agreed tracking method help?" |
+| Long-term commitment | [future value] | "If this goes well, we'd be open to discussing an ambassador plan with [X] potential partnerships per year; any commitment would be agreed separately in writing." |
 
 ---
 
@@ -235,15 +243,15 @@ Modify deliverables to fit budget:
 | Dedicated video | Integration mention | Reduces cost [%] |
 | Exclusive content | Non-exclusive | Reduces cost [%] |
 
-**Script**: "We really want to work with you but $[X] is above our budget for this campaign. Would you be open to [modified scope] for $[Y]?"
+**Script**: "Your quoted $[X] is above the approved $[Y] budget for this campaign. Would you be open to [modified scope] for $[Y]?"
 
 ---
 
 **Strategy 3: Future Value**
 
-Emphasize long-term relationship potential:
+Describe future discussion as conditional, not promised value:
 
-**Script**: "While we can't meet $[X] for this campaign, we're building a roster of long-term partners. Starting at $[Y] would let us prove the ROI internally and open doors to bigger budgets and more frequent partnerships. Would that work?"
+**Script**: "We can't meet $[X] for this campaign. We can offer $[Y] for the stated scope and evaluate the measured results afterward; any future campaign or budget would require a separate written agreement. Would that work?"
 
 ---
 
@@ -251,7 +259,7 @@ Emphasize long-term relationship potential:
 
 **Their ask is too high:**
 
-"Thank you for getting back to me with your rates. We love your content and really want to make this work. Our budget for this campaign is $[Y]. Is there flexibility on your end, or could we adjust the scope to make it fit? We're also happy to discuss additional value like [whitelisting/affiliate/long-term]."
+"Thank you for sharing the $[X] rate. The approved budget for this campaign is $[Y]. Is there flexibility, or should we compare a reduced scope and any separately priced rights?"
 
 **They want more deliverables:**
 
@@ -259,7 +267,7 @@ Emphasize long-term relationship potential:
 
 **They're hesitant about the brand:**
 
-"I completely understand wanting to make sure it's the right fit. Here's what some other creators have said about working with us: [testimonials]. We prioritize creator relationships and creative freedom. Would it help to have a quick call to discuss the campaign?"
+"That makes sense. The approved brand evidence available for review is [opaque claims/testimonial/campaign ref; omit if not supplied]. Would the evidence pack or campaign brief answer the immediate question?"
 
 **They want exclusivity:**
 
@@ -272,11 +280,11 @@ Emphasize long-term relationship potential:
 | Objection | Response |
 |-----------|----------|
 | "Your rate is too low" | [Value exchange or scope adjustment] |
-| "I don't do sponsored content" | "We're actually looking for authentic integrations, not ads. Full creative control..." |
-| "I've never heard of your brand" | "We're [brief credibility]. Here's some of our past work with [influencers]..." |
-| "Bad timing right now" | "Totally understand. Can I check back in [timeframe]? When would be better?" |
-| "I need to check with my manager" | "Of course! Happy to send over a formal proposal. What email should I use?" |
-| "I only work with my agency" | "Great! What's the best contact there? I'll reach out directly." |
+| "I don't do sponsored content" | "Understood — thanks for letting me know. I won't follow up about sponsored work." Stop the sponsored cadence and record a scoped creator preference; suppress consent only for a separate explicit stop-contact (`user-request`), unsubscribe (`unsubscribe`), verified spam/provider complaint (`complaint`), or consent withdrawal (`withdrawal`). |
+| "I've never heard of your brand" | "The approved brand evidence available is [opaque claims/testimonial/campaign ref; omit if absent]. Would the evidence pack be useful?" |
+| "Bad timing right now" | "Understood. Should I close this offer, or is there one exact date on which you authorize a single follow-up?" Do not invent a cooling period or schedule without the reply. |
+| "I need to check with my manager" | "Of course. Share the preferred management contact path; we'll retain only its pseudonymous contact-source reference and resolve the raw address at dispatch." |
+| "I only work with my agency" | "Understood. Share the agency contact path; we'll retain only its pseudonymous contact-source reference and resolve the raw address at dispatch." |
 ```
 
 ## Step 5 — Outreach Pipeline Tracker
@@ -293,68 +301,64 @@ Emphasize long-term relationship potential:
 | Responded | [#] | [%] from contacted |
 | Negotiating | [#] | [%] from responded |
 | Confirmed | [#] | [%] from negotiating |
-| Declined/No Response | [#] | - |
+| Declined/No Contact/No Response | [#] | - |
 
 ### Detailed Pipeline
 
-| Influencer | Platform | Status | Last Contact | Next Action | Due | Notes |
-|------------|----------|--------|--------------|-------------|-----|-------|
-| @[handle1] | [platform] | Negotiating | [date] | Send revised offer | [date] | Wants more $ |
-| @[handle2] | [platform] | Awaiting Response | [date] | Follow-up #2 | [date] | No response yet |
-| @[handle3] | [platform] | Confirmed | [date] | Send contract | [date] | Agreed to terms |
-| @[handle4] | [platform] | Declined | [date] | Archive | - | Not taking sponsors |
+| Creator ref | Identity status | Recipient ref | Platform | Status | Last Contact | Next Action | Due | Notes |
+|-------------|-----------------|---------------|----------|--------|--------------|-------------|-----|-------|
+| [creator_ref-1] | [resolved/unresolved] | [recipient_ref/unknown] | [platform] | Negotiating | [date] | Send revised offer | [date] | Ask: $[X] |
+| [creator_ref-2] | [resolved/unresolved] | [recipient_ref/unknown] | [platform] | Awaiting Response | [date] | Prepare Follow-up #2 draft; do not schedule | [draft window] | No response observed |
+| [creator_ref-3] | resolved | [recipient_ref] | [platform] | Confirmed | [date] | Handoff to contract-helper | [date] | Agreed terms ref: [opaque ref] |
+| [creator_ref-4] | [resolved/unresolved] | [recipient_ref/unknown] | [platform] | Declined — scoped offer preference | [date] | None | - | Scope: [campaign/offer/category]; source_ref: [opaque ref]; newer reopening evidence: [opaque ref/none]; no global suppression |
+| [creator_ref-5] | [resolved/unresolved] | [recipient_ref/unknown] | [platform] | No contact — global suppression [recorded/pending] | [date] | None | - | Exact signal/reason code: [stop-contact/user-request | unsubscribe/unsubscribe | verified spam-provider complaint/complaint | consent withdrawal/withdrawal]; event/handoff: [opaque ref] |
 
 ### Today's Actions
 
-| Priority | Influencer | Action | Notes |
-|----------|------------|--------|-------|
-| 🔴 High | @[handle] | [action] | [notes] |
-| 🟡 Medium | @[handle] | [action] | [notes] |
-| 🟢 Low | @[handle] | [action] | [notes] |
+| Priority | Creator ref | Recipient ref | Action | Notes |
+|----------|-------------|---------------|--------|-------|
+| 🔴 High | [creator_ref] | [recipient_ref/unknown] | [action] | [notes] |
+| 🟡 Medium | [creator_ref] | [recipient_ref/unknown] | [action] | [notes] |
+| 🟢 Low | [creator_ref] | [recipient_ref/unknown] | [action] | [notes] |
 
 ### Pipeline Health
 
-- **Response rate**: [%] (Industry avg: 15-25%)
-- **Confirmation rate**: [%] (Industry avg: 20-40% of responses)
+- **Response rate**: [% or Unknown] ([Measured from supplied campaign/CRM data] or [Estimated source-dated comparator + source_ref/window])
+- **Confirmation rate**: [% or Unknown] ([Measured from supplied campaign/CRM data] or [Estimated source-dated comparator + source_ref/window])
 - **Average time to confirm**: [X days]
 - **Top objection**: [most common reason for decline]
 ```
 
-## Worked Example — eco creator
+## Worked Example — evidence-bound placeholders
 
-**User**: "Write outreach for @sustainablesarah (45K Instagram followers, posts about eco-friendly lifestyle) for our organic skincare launch"
+**User**: "Write outreach for `creator_ref: creator-042`. Evidence supplied: transient content locator `[raw URL—do not save]`, `source_ref: [opaque authorized artifact ref]`, `observed_at: [ISO 8601]`, and `observable_detail: [exact visible detail]`. Approved campaign, product, deliverable, and compensation wording is in `[claims-or-brief-ref]`."
 
 **Output**:
 
 ```markdown
-## Outreach for @sustainablesarah
+## Outreach for `creator_ref: creator-042`
 
 ### Personalization Points
-- Recent post: "5 swaps for a zero-waste bathroom"
-- Style: Educational, lifestyle, authentic
-- Past partners: Grove Collaborative, Public Goods
+- Content item: `[content title or format supported by evidence]` · source_ref: `[opaque authorized artifact ref]` · observed_at: `[ISO 8601]`
+- Observable detail: `[exact visible detail from supplied evidence]` · source_ref: `[same opaque authorized artifact ref]` · observed_at: `[ISO 8601]`
+- Past partners: not supplied — omit rather than infer
 
 ### Primary Message
 
-Subject: Love your zero-waste content – collab with [Brand]?
+Subject: `[evidence-backed content topic]` — collaboration idea from `[Brand]`
 
-Hi Sarah!
+[Recipient name resolved transiently at dispatch], your `[content item]` `[observable detail supported by opaque source_ref]`.
 
-I just watched your "zero-waste bathroom" post and immediately added reusable cotton rounds to my shopping list 😊 Your content has such a genuine approach to sustainability – it's refreshing!
+I'm `[sender resolved transiently at dispatch]` at `[Brand]`; `[approved one-sentence offer naming campaign, deliverable, and compensation]`.
 
-I'm [Name] from [Brand], and we make organic skincare with fully compostable packaging (yes, even the jar!). We're launching our new collection and immediately thought of you.
+Open to the brief?
 
-We'd love to send you our full line to try, and if you love it, partner on a sponsored post + Stories showing your skincare routine. We're offering $[X] plus product and full creative freedom.
-
-Would you be interested? Happy to share more details!
-
-Best,
-[Name]
+[Approved sender signature resolved transiently at dispatch]
 ```
 
 ## Tips for Successful Outreach
 
-1. **Do your research** — reference specific content.
+1. **Do your research** — use a specific observation backed by an opaque authorized evidence ref.
 2. **Lead with value** — what's in it for them?
 3. **Be concise** — busy creators skim.
 4. **Be professional but human** — not corporate-speak.

@@ -11,7 +11,7 @@
           "end_char": 87,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 173,
+          "end_char": 157,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
           "start_char": 90
         },
-        "text": "- A follow-up cadence and pipeline status are recorded for every contacted creator."
+        "text": "- Every personalization fact records `source_ref` and `observed_at`"
       },
       {
         "clause_id": "done-03",
@@ -38,22 +38,82 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 239,
+          "end_char": 213,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 176
+          "start_char": 159
+        },
+        "text": "unverifiable facts remain placeholders or are omitted."
+      },
+      {
+        "clause_id": "done-04",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 337,
+          "path": "influencer/activate/outreach-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "span_basis": "field-text",
+          "start_char": 216
+        },
+        "text": "- A follow-up cadence and pipeline status are recorded for every contacted creator, including terminal no-contact states."
+      },
+      {
+        "clause_id": "done-05",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 415,
+          "path": "influencer/activate/outreach-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "span_basis": "field-text",
+          "start_char": 340
+        },
+        "text": "- Jurisdiction, channel, lawful basis, and contact eligibility are explicit"
+      },
+      {
+        "clause_id": "done-06",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 496,
+          "path": "influencer/activate/outreach-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "span_basis": "field-text",
+          "start_char": 417
+        },
+        "text": "any send/schedule remains gated by exact approval and a live suppression check."
+      },
+      {
+        "clause_id": "done-07",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 562,
+          "path": "influencer/activate/outreach-manager/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "span_basis": "field-text",
+          "start_char": 499
         },
         "text": "- Confirmed partners are flagged with agreed terms for handoff."
       }
     ],
-    "done_when": "- A personalized pitch (plus at least one variation) exists for each target influencer.\n  - A follow-up cadence and pipeline status are recorded for every contacted creator.\n  - Confirmed partners are flagged with agreed terms for handoff.",
+    "done_when": "- A personalized pitch (plus at least one variation) exists for each target influencer.\n  - Every personalization fact records `source_ref` and `observed_at`; unverifiable facts remain placeholders or are omitted.\n  - A follow-up cadence and pipeline status are recorded for every contacted creator, including terminal no-contact states.\n  - Jurisdiction, channel, lawful basis, and contact eligibility are explicit; any send/schedule remains gated by exact approval and a live suppression check.\n  - Confirmed partners are flagged with agreed terms for handoff.",
     "extraction_status": "classified",
     "source": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59"
+      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
     }
   },
   "context_hints": {
@@ -62,50 +122,64 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
-        "source_line": 46
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "source_line": 48
       },
       {
         "path": "influencer/activate/outreach-manager/references/cold-copy-rules.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "15bb5ded3f174ae91ae57fe575f49922ba3e9b72c8f22009b39ccf916bc3189b",
-        "source_line": 50
+        "sha256": "8a9049ad581391d99d3565d704d7e3e6ac0388885a3656384efd3808c505ed00",
+        "source_line": 59
       },
       {
         "path": "influencer/activate/outreach-manager/references/templates.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "0bb8bf79de2e058907f2275ca85ba844295899d7a849632fcadf79a590a6f39c",
-        "source_line": 50
+        "sha256": "13bc949ac936e5dffb89a2db05b5b00f70e25200e2a37f13abcc0abb30350e0b",
+        "source_line": 59
       },
       {
         "path": "references/expert-panel.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "d1703ab6b1a5992398021d31454001ab66a6fa8fa6faa84f4b357233541ea77f",
-        "source_line": 88
+        "source_line": 137
+      },
+      {
+        "path": "references/registry-event-protocol.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "5ed3ad1d8d449ca29415a529381ede97d39dd95963258be1b0f825f0f91781ab",
+        "source_line": 55
+      },
+      {
+        "path": "references/runtime-invocation.md",
+        "reason_code": "explicit-runtime-read",
+        "requirement": "required",
+        "sha256": "9aed49f657df95e95d34d6d46beaf32d8be49d19b28a073e00f40b721f588cc6",
+        "source_line": 54
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
-        "source_line": 33
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
+        "source_line": 35
       },
       {
         "path": "references/star-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "d5e6cec23805026c8371cac0336026fb88ca4262c6ad48f52164b00925768e91",
-        "source_line": 87
+        "source_line": 136
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
-        "source_line": 85
+        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "source_line": 133
       }
     ],
     "project_paths": [
@@ -120,44 +194,50 @@
     ]
   },
   "contract_id": "skill:outreach-manager",
+  "control_requirements": [
+    "action-intent",
+    "action-receipt",
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
       {
-        "condition": "before it ships.",
+        "condition": "before content production.",
         "extraction_status": "classified",
         "item_id": "handoff-01",
         "kind": "primary",
         "source": {
-          "end_char": 180,
+          "end_char": 182,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
           "start_char": 0
         },
         "target_skills": [
-          "creator-content-auditor"
+          "contract-helper"
         ],
-        "text": "- **Primary**: [creator-content-auditor](../creator-content-auditor/SKILL.md) — once a partner is confirmed and creates content, review the draft against the brief before it ships."
+        "text": "- **Primary**: [contract-helper](../contract-helper/SKILL.md) — once a partner is confirmed, turn the agreed commercial terms and rights into the agreement before content production."
       },
       {
-        "condition": null,
+        "condition": "after the agreement/brief exists and the creator has produced draft content, review that content before it ships.",
         "extraction_status": "partially-classified",
         "item_id": "handoff-02",
         "kind": "unclassified",
         "source": {
-          "end_char": 298,
+          "end_char": 383,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 181
+          "start_char": 183
         },
         "target_skills": [
-          "contract-helper"
+          "creator-content-auditor"
         ],
-        "text": "- **Alternate**: [contract-helper](../contract-helper/SKILL.md) — finalize agreed terms into a partnership agreement."
+        "text": "- **Alternate**: [creator-content-auditor](../creator-content-auditor/SKILL.md) — only after the agreement/brief exists and the creator has produced draft content, review that content before it ships."
       },
       {
         "condition": null,
@@ -165,12 +245,12 @@
         "item_id": "handoff-03",
         "kind": "unclassified",
         "source": {
-          "end_char": 441,
+          "end_char": 526,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 299
+          "start_char": 384
         },
         "target_skills": [
           "brief-generator"
@@ -183,23 +263,23 @@
         "item_id": "handoff-04",
         "kind": "unclassified",
         "source": {
-          "end_char": 621,
+          "end_char": 706,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 443
+          "start_char": 528
         },
         "target_skills": [],
         "text": "Termination note: keep a visited-set. If a skill in this chain was already invoked this session, stop and report chain-complete rather than re-running it. Max handoff depth is 3."
       }
     ],
-    "next_best": "- **Primary**: [creator-content-auditor](../creator-content-auditor/SKILL.md) — once a partner is confirmed and creates content, review the draft against the brief before it ships.\n- **Alternate**: [contract-helper](../contract-helper/SKILL.md) — finalize agreed terms into a partnership agreement.\n- **Alternate**: [brief-generator](../../target/brief-generator/SKILL.md) — send a full campaign brief to a creator who asked for more detail.\n\nTermination note: keep a visited-set. If a skill in this chain was already invoked this session, stop and report chain-complete rather than re-running it. Max handoff depth is 3.",
+    "next_best": "- **Primary**: [contract-helper](../contract-helper/SKILL.md) — once a partner is confirmed, turn the agreed commercial terms and rights into the agreement before content production.\n- **Alternate**: [creator-content-auditor](../creator-content-auditor/SKILL.md) — only after the agreement/brief exists and the creator has produced draft content, review that content before it ships.\n- **Alternate**: [brief-generator](../../target/brief-generator/SKILL.md) — send a full campaign brief to a creator who asked for more detail.\n\nTermination note: keep a visited-set. If a skill in this chain was already invoked this session, stop and report chain-complete rather than re-running it. Max handoff depth is 3.",
     "summary": "> Emit the standard shape from [skill-contract.md §Handoff Summary Format](../../../references/skill-contract.md).",
     "summary_ref": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59"
+      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -214,26 +294,26 @@
     "name": "outreach-manager",
     "path": "influencer/activate/outreach-manager/SKILL.md",
     "phase": "activate",
-    "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
-    "version": "20.0.0"
+    "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<influencer handle or list> [platform] [budget]",
     "clauses": [
       {
         "clause_id": "read-01",
-        "extraction_status": "unclassified",
-        "kind": "unclassified",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 60,
+          "end_char": 166,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "target influencer handle(s), platform, follower count, niche"
+        "text": "a stable opaque `creator_ref` when one is carried by an authorized upstream artifact, plus transient target handle/profile locator(s), platform, follower count, niche"
       },
       {
         "clause_id": "read-02",
@@ -241,12 +321,12 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 90,
+          "end_char": 196,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 62
+          "start_char": 168
         },
         "text": "campaign and product context"
       },
@@ -256,12 +336,12 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 120,
+          "end_char": 226,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 92
+          "start_char": 198
         },
         "text": "compensation type and budget"
       },
@@ -271,79 +351,146 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 147,
+          "end_char": 253,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 122
+          "start_char": 228
         },
         "text": "deliverables and timeline"
       },
       {
         "clause_id": "read-05",
         "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 383,
+          "path": "influencer/activate/outreach-manager/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "span_basis": "field-text",
+          "start_char": 255
+        },
+        "text": "jurisdiction, intended channel, lawful-basis reference, contact-source/eligibility evidence, and pseudonymous consent subject ID"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "partially-classified",
         "kind": "project-resource",
         "requirement": "unclassified",
         "source": {
-          "end_char": 450,
+          "end_char": 882,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 149
+          "start_char": 385
         },
-        "text": "any prior contact history supplied by the user or loaded from memory. Before any outreach, check `memory/creators/<handle-slug>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) roster record — for the confirmed contact path, last agreed rate, and negotiation/response history."
+        "text": "any prior contact history supplied by the user or loaded from memory. For a rostered creator, reuse a creator-registry aggregate ID only when its identity link is verified, resolve it through the authorized artifact or verified registry link, then check `memory/creators/<aggregate-id>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) projection — for the confirmed contact path, last agreed rate, and negotiation/response history. Never derive the path from a raw handle."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "target influencer handle(s), platform, follower count, niche; campaign and product context; compensation type and budget; deliverables and timeline; any prior contact history supplied by the user or loaded from memory. Before any outreach, check `memory/creators/<handle-slug>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) roster record — for the confirmed contact path, last agreed rate, and negotiation/response history.",
+    "reads": "a stable opaque `creator_ref` when one is carried by an authorized upstream artifact, plus transient target handle/profile locator(s), platform, follower count, niche; campaign and product context; compensation type and budget; deliverables and timeline; jurisdiction, intended channel, lawful-basis reference, contact-source/eligibility evidence, and pseudonymous consent subject ID; any prior contact history supplied by the user or loaded from memory. For a rostered creator, reuse a creator-registry aggregate ID only when its identity link is verified, resolve it through the authorized artifact or verified registry link, then check `memory/creators/<aggregate-id>.md` — the [creator-registry](../../../protocol/creator-registry/SKILL.md) projection — for the confirmed contact path, last agreed rate, and negotiation/response history. Never derive the path from a raw handle.",
     "source": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59"
+      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
     }
   },
   "output_contract": {
     "clauses": [
       {
         "clause_id": "write-01",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 46,
+          "path": "influencer/activate/outreach-manager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "span_basis": "field-text",
+          "start_char": 0
+        },
+        "text": "return the outreach artifact inline by default"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "classified",
+        "kind": "project-artifact",
+        "permission_posture": "permission-required",
+        "side_effect": "project-write",
+        "source": {
+          "end_char": 252,
+          "path": "influencer/activate/outreach-manager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "span_basis": "field-text",
+          "start_char": 48
+        },
+        "text": "save it to `memory/influencer/outreach-manager/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Reuse an explicitly carried opaque `creator_ref`, or a verified creator-registry aggregate ID"
+      },
+      {
+        "clause_id": "write-03",
         "extraction_status": "classified",
         "kind": "mixed",
         "permission_posture": "permission-required",
         "side_effect": "mixed",
         "source": {
-          "end_char": 440,
+          "end_char": 1299,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
           "span_basis": "field-text",
-          "start_char": 0
+          "start_char": 254
         },
-        "text": "outreach artifact (pitches, follow-up sequence, negotiation guide, pipeline tracker) to `memory/influencer/outreach-manager/YYYY-MM-DD-<topic>.md`. When a cycle closes, the closed outcome (final agreed rate, response history, confirmed contact path) goes as a one-line update to `memory/events/creators.ndjson` via an authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical roster records."
+        "text": "otherwise generate one random `creator-<UUIDv4>` once for this lineage. Never derive `creator_ref` from a raw handle, name, profile URL, email, provider ID, or deterministic hash. Before saving, replace raw locators and resolved recipient identities with the stable `creator_ref` and resolvable opaque `recipient_ref`, `contact_source_ref`, `handle_ref`, and evidence/approval references. A raw URL or handle is never a persisted `source_ref`. When no authorized source artifact or verified registry link can resolve an opaque identity/contact ref, set `identity_status: unresolved`, save no hidden raw-locator mapping, set `cross_session_locator_required: true`, and request the transient locator again at dispatch. Never persist a raw handle, name, profile URL, email, phone, postal address, provider ID, or credential. When a cycle closes, each outcome update (final agreed rate, response history, confirmed contact-path reference) requires a separate exact authorization for an `operation: propose` request to `memory/events/creators.ndjson`"
+      },
+      {
+        "clause_id": "write-04",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 1357,
+          "path": "influencer/activate/outreach-manager/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "span_basis": "field-text",
+          "start_char": 1301
+        },
+        "text": "only `creator-registry` writes canonical roster records."
       }
     ],
-    "extraction_status": "classified",
+    "extraction_status": "partially-classified",
     "source": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59"
+      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
     },
-    "summary": "outreach artifact (pitches, follow-up sequence, negotiation guide, pipeline tracker) to `memory/influencer/outreach-manager/YYYY-MM-DD-<topic>.md`. When a cycle closes, the closed outcome (final agreed rate, response history, confirmed contact path) goes as a one-line update to `memory/events/creators.ndjson` via an authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical roster records.",
+    "summary": "return the outreach artifact inline by default; save it to `memory/influencer/outreach-manager/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Reuse an explicitly carried opaque `creator_ref`, or a verified creator-registry aggregate ID; otherwise generate one random `creator-<UUIDv4>` once for this lineage. Never derive `creator_ref` from a raw handle, name, profile URL, email, provider ID, or deterministic hash. Before saving, replace raw locators and resolved recipient identities with the stable `creator_ref` and resolvable opaque `recipient_ref`, `contact_source_ref`, `handle_ref`, and evidence/approval references. A raw URL or handle is never a persisted `source_ref`. When no authorized source artifact or verified registry link can resolve an opaque identity/contact ref, set `identity_status: unresolved`, save no hidden raw-locator mapping, set `cross_session_locator_required: true`, and request the transient locator again at dispatch. Never persist a raw handle, name, profile URL, email, phone, postal address, provider ID, or credential. When a cycle closes, each outcome update (final agreed rate, response history, confirmed contact-path reference) requires a separate exact authorization for an `operation: propose` request to `memory/events/creators.ndjson`; only `creator-registry` writes canonical roster records.",
     "summary_source": "writes-fallback",
-    "writes": "outreach artifact (pitches, follow-up sequence, negotiation guide, pipeline tracker) to `memory/influencer/outreach-manager/YYYY-MM-DD-<topic>.md`. When a cycle closes, the closed outcome (final agreed rate, response history, confirmed contact path) goes as a one-line update to `memory/events/creators.ndjson` via an authorized `operation: propose` request to `registry-events.py` — only `creator-registry` writes canonical roster records."
+    "writes": "return the outreach artifact inline by default; save it to `memory/influencer/outreach-manager/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Reuse an explicitly carried opaque `creator_ref`, or a verified creator-registry aggregate ID; otherwise generate one random `creator-<UUIDv4>` once for this lineage. Never derive `creator_ref` from a raw handle, name, profile URL, email, provider ID, or deterministic hash. Before saving, replace raw locators and resolved recipient identities with the stable `creator_ref` and resolvable opaque `recipient_ref`, `contact_source_ref`, `handle_ref`, and evidence/approval references. A raw URL or handle is never a persisted `source_ref`. When no authorized source artifact or verified registry link can resolve an opaque identity/contact ref, set `identity_status: unresolved`, save no hidden raw-locator mapping, set `cross_session_locator_required: true`, and request the transient locator again at dispatch. Never persist a raw handle, name, profile URL, email, phone, postal address, provider ID, or credential. When a cycle closes, each outcome update (final agreed rate, response history, confirmed contact-path reference) requires a separate exact authorization for an `operation: propose` request to `memory/events/creators.ndjson`; only `creator-registry` writes canonical roster records."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -352,7 +499,7 @@
     "source": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "frontmatter",
-      "sha256": "d55343c49271cfe1ad782d697343f5a9e5c0d9fccd73203bd5b99d1c27a9be59"
+      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
     },
     "trigger_phrases": [
       "follow up with a creator",

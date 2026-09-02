@@ -3,8 +3,97 @@
   "authority": "authoritative-workflow-graph-source-shard",
   "edges": [
     {
+      "condition_code": "conditional",
+      "condition_source": "email/setup/list-growth-designer/SKILL.md:86",
+      "condition_text": "If the signup page / popup needs building: landing-optimizer — the post-click / capture-surface UX.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-growth-designer",
+      "gate": null,
+      "id": "list-growth-designer--landing-optimizer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "cross-discipline-context",
+        "handoff-summary"
+      ],
+      "to": "landing-optimizer",
+      "type": "cross-discipline"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:86",
+      "condition_text": "If the point-in-time send signal needs verifying before the next campaign: deliverability-qa — the one-time S1 auth pre-flight (a different job from this ongoing watch).",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-hygiene-monitor",
+      "gate": null,
+      "id": "list-hygiene-monitor--deliverability-qa",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "condition-evidence",
+        "handoff-summary"
+      ],
+      "to": "deliverability-qa",
+      "type": "conditional"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:87",
+      "condition_text": "If the hygiene reads are ready to roll into a verdict: email-quality-auditor — score the full EQS and enforce S1/S2/N1/D1, including the suppression-leakage N1 candidate this run flagged.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "list-hygiene-monitor",
+      "gate": "email-quality-auditor",
+      "id": "list-hygiene-monitor--email-quality-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "audit-evidence",
+        "handoff-summary"
+      ],
+      "to": "email-quality-auditor",
+      "type": "gate"
+    },
+    {
       "condition_code": "primary",
-      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:84",
+      "condition_source": "email/setup/list-hygiene-monitor/SKILL.md:85",
       "condition_text": "Primary: reactivation-specialist — run the win-back / re-permission campaign against the re-permission cohort this worklist sizes (SEND-N lifecycle).",
       "documentation_required": true,
       "exception": null,
@@ -32,7 +121,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "email/setup/list-segment-builder/SKILL.md:86",
+      "condition_source": "email/setup/list-segment-builder/SKILL.md:88",
       "condition_text": "If consent records are missing or stale for a cohort: consent-registry — record lawful basis and opt-in facts before that cohort is mailable (registry is the sole writer of memory/consent/).",
       "documentation_required": true,
       "exception": null,
@@ -64,7 +153,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "email/setup/list-segment-builder/SKILL.md:85",
+      "condition_source": "email/setup/list-segment-builder/SKILL.md:87",
       "condition_text": "Primary: email-creative-builder — compose a message-matched unit for the top segment; or email-sequence-designer when the next gap is a lifecycle flow per stage.",
       "documentation_required": true,
       "exception": null,
@@ -92,7 +181,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "email/setup/list-segment-builder/SKILL.md:87",
+      "condition_source": "email/setup/list-segment-builder/SKILL.md:89",
       "condition_text": "Termination: apply the global rule from skill-contract.md §Termination rules — visited-set check (do not re-invoke a skill already run in this chain), max-depth: 3, and stop-and-report when routing is ambiguous (e.g. both creative and sequence are equally the next gap). Segmentation is upstream of the EQS gate: hand off to a compose/flow skill, then stop; do not self-invoke email-quality-auditor — the gate is triggered separately.",
       "documentation_required": true,
       "exception": null,
@@ -122,7 +211,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "email/setup/list-segment-builder/SKILL.md:85",
+      "condition_source": "email/setup/list-segment-builder/SKILL.md:87",
       "condition_text": "Primary: email-creative-builder — compose a message-matched unit for the top segment; or email-sequence-designer when the next gap is a lifecycle flow per stage.",
       "documentation_required": true,
       "exception": null,
@@ -456,7 +545,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "narrative/architect/message-system-architect/SKILL.md:86",
+      "condition_source": "narrative/architect/message-system-architect/SKILL.md:87",
       "condition_text": "Primary: brand-language-codifier — codify the voice, tone, banned phrases, and naming tax the message house is written in.",
       "documentation_required": true,
       "exception": null,
@@ -484,7 +573,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "narrative/architect/message-system-architect/SKILL.md:88",
+      "condition_source": "narrative/architect/message-system-architect/SKILL.md:89",
       "condition_text": "If the canon-grade block is ready to become the record: narrative-registry — promote the candidate into canon.md and record the version.",
       "documentation_required": true,
       "exception": null,
@@ -515,7 +604,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "narrative/architect/message-system-architect/SKILL.md:87",
+      "condition_source": "narrative/architect/message-system-architect/SKILL.md:88",
       "condition_text": "If 3+ claims are pending as proposals: offer-claims-registry — substantiate or reject them before the house seeds the canon.",
       "documentation_required": true,
       "exception": null,
@@ -546,7 +635,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:88",
+      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:89",
       "condition_text": "If the test is ready to run now: send-experiment-designer or ad-test-designer — execute the panel/experiment this spec designed.",
       "documentation_required": true,
       "exception": null,
@@ -575,7 +664,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:87",
+      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:88",
       "condition_text": "Primary: narrative-resonance-monitor — after the tested message ships, measure echo rate and AI-answer perception in-market.",
       "documentation_required": true,
       "exception": null,
@@ -603,7 +692,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:89",
+      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:90",
       "condition_text": "If 3+ claims are pending as proposals: offer-claims-registry — substantiate or reject the stimulus claims before any test ships the wording.",
       "documentation_required": true,
       "exception": null,
@@ -634,7 +723,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:88",
+      "condition_source": "narrative/evaluate/message-test-designer/SKILL.md:89",
       "condition_text": "If the test is ready to run now: send-experiment-designer or ad-test-designer — execute the panel/experiment this spec designed.",
       "documentation_required": true,
       "exception": null,
@@ -655,8 +744,11 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "artifact-binding",
         "cross-discipline-context",
-        "handoff-summary"
+        "evidence-observation",
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "send-experiment-designer",
       "type": "cross-discipline"
@@ -931,7 +1023,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:84",
+      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:85",
       "condition_text": "If a repositioning trigger genuinely fired: message-system-architect — re-author the durable message hierarchy, which the registry then re-versions atomically.",
       "documentation_required": true,
       "exception": {
@@ -955,15 +1047,19 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "artifact-binding",
+        "cycle-retro",
+        "evidence-observation",
         "failure-evidence",
-        "handoff-summary"
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "message-system-architect",
       "type": "reentry"
     },
     {
       "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:85",
+      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:86",
       "condition_text": "If drifted surfaces need re-cascading to their creative builders: narrative-cascade-planner — refresh the per-surface message-match specs before the copy is rewritten.",
       "documentation_required": true,
       "exception": {
@@ -995,7 +1091,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:83",
+      "condition_source": "narrative/evaluate/narrative-drift-monitor/SKILL.md:84",
       "condition_text": "Primary: narrative-quality-auditor — re-audit the drifted surfaces against the canon and compute the TALE profile result with the current vetoes.",
       "documentation_required": true,
       "exception": null,
@@ -1017,8 +1113,12 @@
         "target-not-visited"
       ],
       "required_inputs": [
+        "artifact-binding",
         "audit-evidence",
-        "handoff-summary"
+        "cycle-retro",
+        "evidence-observation",
+        "handoff-summary",
+        "measurement-contract"
       ],
       "to": "narrative-quality-auditor",
       "type": "gate"
@@ -1112,98 +1212,6 @@
       ],
       "to": "pitch-narrative-builder",
       "type": "conditional"
-    },
-    {
-      "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:128",
-      "condition_text": "Architecture repair: message-system-architect",
-      "documentation_required": true,
-      "exception": {
-        "code": "documented-bounded-reentry",
-        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
-      },
-      "from": "narrative-quality-auditor",
-      "gate": null,
-      "id": "narrative-quality-auditor--message-system-architect",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "failure-evidence",
-        "handoff-summary"
-      ],
-      "to": "message-system-architect",
-      "type": "reentry"
-    },
-    {
-      "condition_code": "unclassified",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:130",
-      "condition_text": "Effectiveness evidence: message-test-designer",
-      "documentation_required": true,
-      "exception": null,
-      "from": "narrative-quality-auditor",
-      "gate": null,
-      "id": "narrative-quality-auditor--message-test-designer",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "handoff-summary"
-      ],
-      "to": "message-test-designer",
-      "type": "conditional"
-    },
-    {
-      "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:129",
-      "condition_text": "Landing repair: narrative-cascade-planner",
-      "documentation_required": true,
-      "exception": {
-        "code": "documented-bounded-reentry",
-        "reason": "Remediation returns to an earlier phase and remains bounded by the graph-level visited set and three-automatic-handoff cap."
-      },
-      "from": "narrative-quality-auditor",
-      "gate": null,
-      "id": "narrative-quality-auditor--narrative-cascade-planner",
-      "loop_policy": {
-        "max_traversals": 1,
-        "mode": "visited-set"
-      },
-      "permissions": [
-        "none"
-      ],
-      "precondition_codes": [
-        "automatic-handoff-cap-available",
-        "handoff-unambiguous",
-        "required-inputs-present",
-        "target-not-visited"
-      ],
-      "required_inputs": [
-        "failure-evidence",
-        "handoff-summary"
-      ],
-      "to": "narrative-cascade-planner",
-      "type": "reentry"
     }
   ],
   "schema_version": "1.0",

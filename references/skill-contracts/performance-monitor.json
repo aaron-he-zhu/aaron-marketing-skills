@@ -11,7 +11,7 @@
           "end_char": 130,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,14 +23,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 194,
+          "end_char": 230,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 132
         },
-        "text": "every metric is source-tagged and compared to the prior period"
+        "text": "every metric is source-, time-, window-, and target-bound and compared to the prior period/control"
       },
       {
         "clause_id": "done-03",
@@ -38,14 +38,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 255,
+          "end_char": 326,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
-          "start_char": 196
+          "start_char": 232
         },
-        "text": "recommendations carry owner, priority, and expected impact."
+        "text": "each changed page records the current page/content/change and measurement-contract refs/hashes"
       },
       {
         "clause_id": "done-04",
@@ -53,14 +53,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 340,
+          "end_char": 387,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
-          "start_char": 258
+          "start_char": 328
         },
-        "text": "- `alert`: each chosen alert category has a named trigger, threshold, and priority"
+        "text": "recommendations carry owner, priority, and expected impact."
       },
       {
         "clause_id": "done-05",
@@ -68,14 +68,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 415,
+          "end_char": 472,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
-          "start_char": 342
+          "start_char": 390
         },
-        "text": "a Critical/High/Medium/Low response plan and delivery routing are defined"
+        "text": "- `alert`: each chosen alert category has a named trigger, threshold, and priority"
       },
       {
         "clause_id": "done-06",
@@ -83,22 +83,37 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 479,
+          "end_char": 547,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
-          "start_char": 417
+          "start_char": 474
+        },
+        "text": "a Critical/High/Medium/Low response plan and delivery routing are defined"
+      },
+      {
+        "clause_id": "done-07",
+        "condition_kind": "success",
+        "extraction_status": "classified",
+        "requirement": "required",
+        "source": {
+          "end_char": 611,
+          "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+          "section": "Skill Contract/Done when",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
+          "span_basis": "field-text",
+          "start_char": 549
         },
         "text": "thresholds are tuned to the metric's stated normal volatility."
       }
     ],
-    "done_when": "- `report`: each in-scope section (traffic, rankings, GEO, authority, backlinks, content) is present or marked \"Not yet evaluated\"; every metric is source-tagged and compared to the prior period; recommendations carry owner, priority, and expected impact.\n  - `alert`: each chosen alert category has a named trigger, threshold, and priority; a Critical/High/Medium/Low response plan and delivery routing are defined; thresholds are tuned to the metric's stated normal volatility.",
+    "done_when": "- `report`: each in-scope section (traffic, rankings, GEO, authority, backlinks, content) is present or marked \"Not yet evaluated\"; every metric is source-, time-, window-, and target-bound and compared to the prior period/control; each changed page records the current page/content/change and measurement-contract refs/hashes; recommendations carry owner, priority, and expected impact.\n  - `alert`: each chosen alert category has a named trigger, threshold, and priority; a Critical/High/Medium/Low response plan and delivery routing are defined; thresholds are tuned to the metric's stated normal volatility.",
     "extraction_status": "classified",
     "source": {
       "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4"
+      "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09"
     }
   },
   "context_hints": {
@@ -107,21 +122,21 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 44
       },
       {
         "path": "references/measurement-protocol.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "6b802eebfd10a8ab7957f31777ee32e7cf6cdd42072aebe9e1038e985c8c9d75",
+        "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
         "source_line": 49
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 40
       },
       {
@@ -143,14 +158,21 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "2f5f240e3f7537111df434fc3142377e6fdc67c2cadfa6e065239a8d99babc44",
-        "source_line": 136
+        "source_line": 138
+      },
+      {
+        "path": "seo-geo/evaluate/performance-monitor/references/evidence-and-cycle-control.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "05461e0f16aa0a52f7897f8fc51d3a7907f85f8ae73a21500972a67419fe22f3",
+        "source_line": 117
       },
       {
         "path": "seo-geo/evaluate/performance-monitor/references/kpi-definitions.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "74d71ac579c3112f211b86d8b831f568eddd6b2d11ffbd81db6442e682fdf1b6",
-        "source_line": 133
+        "source_line": 135
       },
       {
         "path": "seo-geo/evaluate/performance-monitor/references/report-output-templates.md",
@@ -164,12 +186,19 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "cb515fc2ed257b62bb5d348f126638abdea754c4b8050e0ce42297c5ae78efad",
-        "source_line": 134
+        "source_line": 136
       }
     ],
     "project_paths": []
   },
   "contract_id": "skill:performance-monitor",
+  "control_requirements": [
+    "action-receipt",
+    "artifact-binding",
+    "cycle-retro",
+    "evidence-observation",
+    "measurement-contract"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -182,7 +211,7 @@
           "end_char": 32,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -198,7 +227,7 @@
           "end_char": 240,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 34
         },
@@ -216,7 +245,7 @@
           "end_char": 377,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 242
         },
@@ -234,7 +263,7 @@
           "end_char": 500,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 378
         },
@@ -250,7 +279,7 @@
           "end_char": 738,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 502
         },
@@ -266,7 +295,7 @@
           "end_char": 820,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 740
         },
@@ -279,7 +308,7 @@
     "summary_ref": {
       "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4"
+      "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -293,8 +322,8 @@
     "name": "performance-monitor",
     "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
     "phase": "evaluate",
-    "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
-    "version": "20.0.0"
+    "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<domain> [--mode report|alert] [date range | metric]",
@@ -308,7 +337,7 @@
           "end_char": 310,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -320,7 +349,7 @@
     "source": {
       "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4"
+      "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09"
     }
   },
   "output_contract": {
@@ -335,7 +364,7 @@
           "end_char": 97,
           "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4",
+          "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -346,23 +375,27 @@
     "source": {
       "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4"
+      "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09"
     },
-    "summary": "mode `report` → a delta-based multi-metric report/dashboard; mode `alert` → an alert configuration summary. Both include the standard handoff summary for `memory/monitoring/`.",
+    "summary": "mode `report` → a delta-based multi-metric report/dashboard plus per-change Cycle Retro; mode `alert` → an alert configuration summary that opens a bound readback rather than declaring an instant outcome. Both include exact page/change/measurement bindings, evidence refs, and the standard handoff summary for `memory/monitoring/`.",
     "summary_source": "expected-output",
     "writes": "a user-facing monitoring deliverable plus a reusable summary storable under `memory/monitoring/`."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -371,7 +404,7 @@
     "source": {
       "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "7a3a165f5bb89597b611f1314551e924d3c473e20a7d67f4d200024658be2ae4"
+      "sha256": "64041054d895a965c2a5377486cf6ecdc999d78492eea9f9afbce5829614aa09"
     },
     "trigger_phrases": [
       "generate an SEO report",

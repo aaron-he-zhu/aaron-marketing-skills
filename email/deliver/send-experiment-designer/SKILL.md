@@ -4,13 +4,13 @@ slug: aaron-send-experiment-designer
 displayName: "Send Experiment Designer · 邮件AB测试设计"
 summary: "邮件AB测试设计/多变量测试/发送时间测试/留出组/显著性判定"
 description: 'Use when the user asks to "design an email A/B test", "set up a multivariate subject/CTA test", "run a send-time test", "build a hold-out group", or "is this email result statistically and practically material?"; produces a falsifiable hypothesis, one-variable-per-cell matrix, sample-size/MDE/duration/power plan, and an effect/uncertainty read from own ESP data. Applies only a precommitted owner-approved action rule; the helper never chooses a business action. Not for EQS/vetoes or writing the email. 邮件AB测试设计/多变量测试/发送时间测试/留出组/显著性判定'
-version: "20.0.0"
+version: "20.1.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when designing an email A/B, multivariate, send-time, or hold-out experiment, or when reading effect size, uncertainty, and guardrails from a finished ESP export. Apply an action only under a precommitted rule with a named owner; otherwise return decision UNDECIDED. Not for EQS/vetoes or writing the email."
 argument-hint: "<what to test / results export> [mode: a-b|multivariate|send-time|hold-out] [profile: promotional|retention|cold-outbound|newsletter] [baseline] [alpha/power/MDE]"
-metadata: {"author": "aaron-he-zhu", "version": "20.0.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "email", "phase": "deliver", "geo-relevance": "low", "hermes": {"tags": ["marketing", "email", "deliver"], "category": "email"}, "openclaw": {"emoji": "✉️", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Send Experiment Designer
@@ -49,11 +49,11 @@ Output: a test-design doc (mode, hypothesis, variant matrix, primary/secondary/g
 
 ## Skill Contract
 
-- **Reads**: the mode, what the user wants to test, SEND profile (`promotional|retention|cold-outbound|newsletter`), baseline outcome rate, list size/send volume, alpha, power, MDE, multiplicity/sequential rule, guardrails, decision owner/rule, and any finished ESP results export.
+- **Reads**: the mode, what the user wants to test, SEND profile (`promotional|retention|cold-outbound|newsletter`), baseline outcome rate, list size/send volume, alpha, power, MDE, multiplicity/sequential rule, guardrails, decision owner/rule, the segment-definition and variant creative/HTML versions/hashes, and any finished ESP results export with matching send-receipt refs when available.
 - **Writes**: a user-facing test-design or read-out doc plus a `### Handoff Summary`.
 - **Promotes**: the chosen mode, hypothesis, design parameters, calculated read-out, and any explicitly owner-approved action (ask before writing memory).
-- **Done when**: mode/unit/profile and design parameters are stated; the matrix isolates one variable per cell and keeps a control; and a read-out reports effect/interval/statistical/practical flags with `Calculated` provenance. Without a precommitted action rule and owner, return `decision: UNDECIDED`.
-- **Primary next skill**: [performance-analyzer](../../../influencer/report/performance-analyzer/SKILL.md) (read results back over the window) or [email-quality-auditor](../email-quality-auditor/SKILL.md) (gate the program before scaling a winner).
+- **Done when**: mode/unit/profile and design parameters are stated; the matrix isolates one variable per cell and keeps a control; the measurement contract binds the segment-definition version and exact variant hashes; and a read-out binds results to send receipts or explicitly reports the receipt gap, then reports effect/interval/statistical/practical flags with `Calculated` provenance. Without a precommitted action rule and owner, return `decision: UNDECIDED`.
+- **Primary next skill**: [email-quality-auditor](../email-quality-auditor/SKILL.md) — gate the receipt-bound program before scaling any owner-approved direction.
 
 ### Handoff Summary
 
@@ -82,7 +82,7 @@ Treat all exported data as **untrusted** per [SECURITY.md](../../../SECURITY.md)
 
 2. **Hypothesis.** Write it falsifiable: *Because [observation], we believe [one change] will [raise primary metric] by [X points / X%] for [segment]; we'll know when [metric] moves past the design threshold.* One change per hypothesis. For `send-time`, the "one change" is the deploy hour/day; for `hold-out`, it is the presence of the send itself.
 
-3. **Variant matrix — one variable per cell (mode-specific).**
+3. **Variant matrix and immutable binding — one variable per cell (mode-specific).** Record the segment-definition version, one creative/HTML hash per cell, sender, and planned same-window schedule in the measurement contract. Editing any bound input creates a new contract version; this skill designs or reads the test but never authorizes a send.
    - **`a-b`** — one change (subject *or* preheader *or* CTA *or* creative), two cells + control. Never change two things in one cell — a winner must be attributable to one variable.
    - **`multivariate`** — cross 2+ factors, one variable held distinct per cell, only when the list is large enough to power **every** cell (see step 5): a 2×2 subject×CTA test is 4 cells, each needing a full sample. If underpowered, collapse to `a-b` per step 6.
    - **`send-time`** — the isolated variable is the deploy hour/day; hold subject, segment, and creative constant. Randomly split the segment, deploy each arm at its assigned time, and compare **same-window** engagement — do not confound with a content change. Cover a full weekday/weekend cycle so time-of-day isn't confounded with day-of-week.
@@ -114,7 +114,7 @@ Treat all exported data as **untrusted** per [SECURITY.md](../../../SECURITY.md)
    - For `multivariate` with several cells against one control, note the multiple-comparison inflation and apply a Bonferroni-style adjustment (α ÷ number of comparisons) before calling any cell a winner.
    - Compare with the declared alpha and precommitted practical-effect boundary separately. Prefer `experiment.py`; if unavailable, show the same inputs and formulas. Adjust alpha or use the declared familywise procedure for multiple cells, and do not treat an unplanned early look as a terminal read.
 
-8. **Apply decision ownership.** Report direction, effect/interval, statistical flag, practical flag, sample completion, and every guardrail first. Name the decision owner and precommitted rule. Apply that rule only if both exist; otherwise emit `decision: UNDECIDED`. An early unplanned look is incomplete evidence, and a guardrail triggers an action only under its declared stop/escalation rule.
+8. **Bind the read-out and apply decision ownership.** Match each arm to its send receipt, segment-definition version, and variant hash before calculating. A partial receipt uses only its evidenced accepted/delivered scope and keeps rejected/deferred rows open; a results export without matching receipts is labeled User-provided with `binding_status: incomplete`, never silently treated as the planned test. Report direction, effect/interval, statistical flag, practical flag, sample completion, and every guardrail first. Name the decision owner and precommitted rule. Apply that rule only if both exist; otherwise emit `decision: UNDECIDED`.
 
 9. **Label provenance.** Export counts and baselines are `User-provided` (or `Measured` only when directly instrumented under the repository convention); p-values, intervals, power, and effects are `Calculated`; assumptions and table lookups are `Estimated`. Reference [measurement-protocol.md](../../../references/measurement-protocol.md) and [send-benchmark.md](../../../references/send-benchmark.md).
 
@@ -126,12 +126,13 @@ After delivering, ask "Save this test design / read-out for future sessions?" If
 
 - [SEND Benchmark](../../../references/send-benchmark.md) — SEND-E context and the four typed program profiles
 - [measurement-protocol.md](../../../references/measurement-protocol.md) — preregistration, multiplicity/sequential controls, practical effects, provenance, and decision ownership
+- [Email Send Control](../../nurture/email-sequence-designer/references/send-control.md) — segment/variant binding, send-receipt matching, and partial-send read-out semantics
 - [skill-contract.md](../../../references/skill-contract.md) — shared contract, Handoff Summary Format, Output Voice, termination rules
 - [CONNECTORS.md](../../../CONNECTORS.md) — `~~email platform`, `~~web analytics`, `~~ecommerce` own-data export recipes
 - [SECURITY.md](../../../SECURITY.md) — untrusted-data boundary for exported results
 
 ## Next Best Skill
 
-Primary: [performance-analyzer](../../../influencer/report/performance-analyzer/SKILL.md) after the decision owner approves a shipped direction, or [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the program before scale. Reuse [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md) for revenue/list-value math and [report-generator](../../../influencer/report/report-generator/SKILL.md) to package the read-out.
+Primary: [email-quality-auditor](../email-quality-auditor/SKILL.md) to gate the receipt-bound program before scale. If the user separately requests revenue/list-value math after the read-out is complete, use [roi-calculator](../../../influencer/report/roi-calculator/SKILL.md); do not route the email experiment through an Influencer analyzer or report builder by default.
 
 **Termination**: global rules apply per [skill-contract.md](../../../references/skill-contract.md). If the owner/action rule is missing or the planned read is incomplete, stop with `decision: UNDECIDED`; do not auto-chain or manufacture a winner.

@@ -2,6 +2,8 @@
 
 Fill-in templates for each methodology in [../SKILL.md](../SKILL.md) Instructions, plus the worked example and benchmark-evidence contract. Each block maps to a numbered step.
 
+**Identity, scope, and division guard**: saved/copyable rows use only the exact `campaign_id`, complete locked `creator_ref` scope, and opaque evidence refs. Raw handles, names, URLs, emails, and provider IDs are transient only. Before any ratio, verify numerator/denominator windows and units match and the denominator is numeric and `> 0`; otherwise output `undefined`/`NEEDS_INPUT`. Never simple-average creator/tier ratios or add overlapping attribution, EMV, or LTV scenarios.
+
 ## Step 1 — ROI Calculation Inputs
 
 ```markdown
@@ -11,6 +13,9 @@ Fill-in templates for each methodology in [../SKILL.md](../SKILL.md) Instruction
 - Campaign: [name]
 - Duration: [dates]
 - Objective: [awareness/consideration/conversion]
+- Attribution method/window: [method + dates or Unknown]
+- Results source/status: [source_ref + observed_at + Measured/User-provided/Estimated]
+- Cost-basis completeness: [complete/incomplete/unknown + included/excluded categories]
 
 **Investment (Total Spend)**:
 | Category | Amount |
@@ -45,9 +50,9 @@ Fill-in templates for each methodology in [../SKILL.md](../SKILL.md) Instruction
 **Formula**: (Revenue - Investment) / Investment × 100
 
 ```
-Revenue:     $[X]
-Investment:  $[X]
-Profit:      $[X]
+Revenue used in calculation: $[X] ([source/status/window])
+Investment used in calculation: $[X] ([cost basis/source])
+Net return under declared formula: $[X]
 
 ROI = ($[Revenue] - $[Investment]) / $[Investment] × 100
 ROI = [X]%
@@ -61,7 +66,7 @@ ROI = [X]%
 ROAS = $[Revenue] / $[Investment]
 ROAS = [X]:1
 
-Interpretation: For every $1 spent, generated $[X] in revenue
+Interpretation: On the declared attribution and cost basis, supplied revenue equals $[X] per $1 of supplied spend; this is not an incremental-revenue claim
 ```
 
 ### Direct ROI Summary
@@ -70,9 +75,9 @@ Interpretation: For every $1 spent, generated $[X] in revenue
 |--------|-------|-------------------------------|------------|
 | ROI % | [X]% | [X]% ([source], [date]) | [above/below/equal/pending] |
 | ROAS | [X]:1 | [X]:1 ([source], [date]) | [above/below/equal/pending] |
-| Profit | $[X] | Not applicable | Descriptive |
+| Net return under declared formula | $[X] | Not applicable | Descriptive |
 
-**Assessment**: [Profitable/Break-even/Loss]
+**Assessment**: [positive/zero/negative arithmetic return on the declared basis] · **Verification**: [verified/results-unverified]
 ```
 
 ## Step 3 — Earned Media Value (EMV)
@@ -108,27 +113,29 @@ EMV estimates the equivalent paid media cost to achieve the same results.
 | Video Views | [X] | $[X] | $[X] |
 | **Total** | - | - | **$[X]** |
 
-### Combined EMV
+### EMV Method Selection
 
-| Method | Value |
-|--------|-------|
-| Impression EMV | $[X] |
-| Engagement EMV | $[X] |
-| **Average EMV** | **$[X]** |
+| Method | Value | Comparator source/date | Applicability |
+|--------|-------|------------------------|---------------|
+| Impression EMV | $[X] or NEEDS_INPUT | [source/date or missing] | [applicable/not applicable/unknown] |
+| Engagement EMV | $[X] or NEEDS_INPUT | [source/date or missing] | [applicable/not applicable/unknown] |
+| **Declared valuation result** | **$[X] or NEEDS_INPUT** | [predeclared method/weighting rule] | [why this rule avoids overlap] |
+
+Report the methods separately unless a supplied predeclared rule specifies how to select or weight them and explains why the inputs do not double-count the same exposure. Never average or add impression- and engagement-based EMV by default. If no compatible source-dated CPM/CPE exists, return `NEEDS_INPUT` instead of inventing one.
 
 ### EMV ROI
 
 ```
-EMV Generated: $[X]
+Calculated EMV scenario: $[X]
 Investment:    $[X]
 EMV Multiple:  [X]x
 
-For every $1 spent, earned $[X] in equivalent media value
+Under the declared comparator assumptions, the scenario equals $[X] in equivalent media value per $1 spent; it is not observed revenue
 ```
 
 ### EMV Caveats
 
-⚠️ **Note**: EMV is an estimate and varies by methodology. Use for directional comparison, not absolute measurement.
+⚠️ **Note**: EMV is an Estimated scenario and varies by methodology. Use only with explicitly supplied or cited inputs, label all assumptions, and do not present it as observed or causal return.
 ```
 
 ## Step 4 — Cost Efficiency Analysis
@@ -181,46 +188,51 @@ Normalize currency, included costs, observation window, and attribution before c
 ```markdown
 ## Attribution Analysis
 
-### Attribution Methods
+### Attribution Lock
 
-| Method | Description | Result | Notes |
-|--------|-------------|--------|-------|
-| First Touch | All credit to first interaction | $[X] | Awareness focus |
-| Last Touch | All credit to last interaction | $[X] | Conversion focus |
-| Linear | Equal credit across touchpoints | $[X] | Balanced view |
-| Time Decay | More credit to recent touches | $[X] | Recency bias |
-| Position Based | 40/20/40 first/middle/last | $[X] | Common B2C model |
+| Required lock | Value |
+|---------------|-------|
+| Deduplicated conversion universe | [count + exact source/window] |
+| Order/event/customer dedupe key | [key + collision/refund rule] |
+| Complete eligible journey/channel set | [scope + completeness evidence] |
+| Predeclared controlling model | [first/last/linear/time-decay/position/custom + rule ref] |
+| Allocation parameters | [exact parameters fixed before readback] |
+| Model-selection authorization | [owner/ref/date] |
+
+If any lock is absent, return `NEEDS_INPUT`; do not emit attributed revenue. A model may be omitted entirely when journey completeness is unknown.
 
 ### Attributed Revenue by Model
 
-| Model | Attributed Revenue | ROI |
-|-------|-------------------|-----|
-| First Touch | $[X] | [X]% |
-| Last Touch | $[X] | [X]% |
-| Linear | $[X] | [X]% |
-| Time Decay | $[X] | [X]% |
-| Position Based | $[X] | [X]% |
+| Scenario | Attributed revenue | ROI | Status |
+|----------|--------------------|-----|--------|
+| Predeclared controlling model | $[X] | [X]% | controlling; exact model/rule ref |
+| Optional alternative model | $[X] | [X]% | non-additive sensitivity only |
+| Optional alternative model | $[X] | [X]% | non-additive sensitivity only |
 
-### Recommended Model for Your Business
+All scenarios must use the same deduplicated conversion universe. Never add them, call every scenario observed revenue, or select the highest result after readback.
 
-**Recommended**: [Model]
-**Rationale**: [Why this model fits your customer journey]
+### Model Decision
+
+**Controlling model**: [predeclared model + rule/authorization ref, or NEEDS_INPUT]
+**Rationale fixed before readback**: [journey/business rule]
 
 ### Multi-Touch Journey Example
+
+Illustrative structure only. Replace every touchpoint and allocation with supplied journey data and the declared attribution model; otherwise use `NEEDS_INPUT`.
 
 ```
 Customer Journey:
 
-Day 1: Sees @creator1 TikTok (Awareness) ─────┐
-Day 3: Sees @creator2 Instagram Reel ─────────┤
-Day 5: Clicks @creator1's link (Consideration)┼── Purchase Day 7
-Day 7: Uses @creator2's code (Conversion) ────┘
+Day 1: Sees [creator_ref-1] TikTok asset (Awareness) ─────┐
+Day 3: Sees [creator_ref-2] Instagram asset ──────────────┤
+Day 5: Clicks [creator_ref-1] link ref (Consideration)┼── Purchase Day 7
+Day 7: Uses [creator_ref-2] code ref (Conversion) ─────┘
 
 Attribution:
-Last Touch:     100% to @creator2
-First Touch:    100% to @creator1
+Last Touch:     100% to [creator_ref-2]
+First Touch:    100% to [creator_ref-1]
 Linear:         50% each
-Position Based: 40% @creator1, 40% @creator2, 20% repeat exposure
+Position Based: 40% [creator_ref-1], 40% [creator_ref-2], 20% repeat exposure
 ```
 ```
 
@@ -231,6 +243,8 @@ Position Based: 40% @creator1, 40% @creator2, 20% repeat exposure
 
 ### New Customer Metrics
 
+Use only new customers deduplicated against the controlling attribution universe. Declare whether first-order revenue is already included in LTV and never add it twice.
+
 | Metric | Influencer Acquired | Overall Average |
 |--------|--------------------|--------------------|
 | New customers | [X] | - |
@@ -238,9 +252,20 @@ Position Based: 40% @creator1, 40% @creator2, 20% repeat exposure
 | Repeat purchase rate | [%] | [%] |
 | Customer lifetime value | $[X] | $[X] |
 
+| LTV economic-basis field | Required value |
+|--------------------------|----------------|
+| Basis | [revenue LTV / contribution-margin LTV] |
+| Acquisition cohort and horizon | [cohort definition + months/years] |
+| Retention/churn method | [method + source] |
+| Returns/refunds/cancellations | [treatment] |
+| Gross/contribution margin | [rate/source or not applicable for revenue scenario] |
+| Discount rate / timing | [rate and convention] |
+| First-order inclusion | [included/excluded; exact no-double-count rule] |
+| Status | [Measured/User-provided/Estimated + source/date] |
+
 ### LTV-Based ROI
 
-**Formula**: (New Customers × Avg LTV) - Investment / Investment
+**Formula**: ((New Customers × Avg LTV) - Investment) / Investment × 100
 
 ```
 New Customers:     [X]
@@ -248,18 +273,22 @@ Average LTV:       $[X]
 Total LTV:         $[X]
 Investment:        $[X]
 
-LTV-Based ROI = ($[X] - $[X]) / $[X] × 100
-LTV-Based ROI = [X]%
+LTV-Based ROI = ($[contribution-margin LTV total] - $[investment]) / $[investment] × 100
+LTV-Based ROI = [X]% or NEEDS_INPUT
 ```
+
+Only contribution-margin LTV with the complete fields above may support an economic ROI label. Revenue LTV produces an **Estimated revenue-basis scenario**, not profit, and must never be added to direct attributed revenue or another LTV horizon.
 
 ### Short-term vs. Long-term View
 
-| Timeframe | Revenue | ROI |
-|-----------|---------|-----|
-| Immediate (this campaign) | $[X] | [X]% |
-| 6-month projected | $[X] | [X]% |
-| 12-month projected | $[X] | [X]% |
-| Lifetime projected | $[X] | [X]% |
+Keep horizons as separate, non-additive scenarios. Each row names its economic basis and status; never put a revenue-LTV projection in an ROI column.
+
+| Timeframe | Basis | Status | Result | Evidence ref |
+|-----------|-------|--------|--------|--------------|
+| Immediate (this campaign) | Direct attributed revenue under complete cost basis | [Measured/User-provided/Calculated/NEEDS_INPUT] | [direct ROI % or NEEDS_INPUT] | [opaque ref] |
+| 6-month projected | [contribution-margin LTV / revenue LTV] | [Estimated + source/date or NEEDS_INPUT] | [LTV-Based ROI % only for complete contribution-margin basis; otherwise Estimated revenue-basis $ scenario] | [opaque ref] |
+| 12-month projected | [contribution-margin LTV / revenue LTV] | [Estimated + source/date or NEEDS_INPUT] | [LTV-Based ROI % only for complete contribution-margin basis; otherwise Estimated revenue-basis $ scenario] | [opaque ref] |
+| Lifetime projected | [contribution-margin LTV / revenue LTV] | [Estimated + source/date or NEEDS_INPUT] | [LTV-Based ROI % only for complete contribution-margin basis; otherwise Estimated revenue-basis $ scenario] | [opaque ref] |
 
 ### Customer Quality Indicators
 
@@ -276,44 +305,49 @@ LTV-Based ROI = [X]%
 ```markdown
 ## Influencer-Level ROI
 
+**Locked creator scope**: [campaign_id + exact non-empty creator_ref list + scope ref]
+**Comparability/attribution**: [same window, cost basis, currency, controlling deduplicated attribution model]
+**Ranking rule**: [metric + better direction + minimum coverage + preregistered rule, or NOT_RANKED]
+
 ### Individual Influencer Performance
 
-| Influencer | Investment | Revenue | ROI | ROAS | Rank |
-|------------|------------|---------|-----|------|------|
-| @[handle1] | $[X] | $[X] | [X]% | [X]:1 | 1 |
-| @[handle2] | $[X] | $[X] | [X]% | [X]:1 | 2 |
-| @[handle3] | $[X] | $[X] | [X]% | [X]:1 | 3 |
-| @[handle4] | $[X] | $[X] | [X]% | [X]:1 | 4 |
-| @[handle5] | $[X] | $[X] | [X]% | [X]:1 | 5 |
+| Creator ref | Investment | Attributed revenue | ROI | ROAS | Rank |
+|-------------|------------|--------------------|-----|------|------|
+| creator-<UUIDv4> | $[X] | $[X] | [X]% | [X]:1 | 1 |
+| creator-<UUIDv4> | $[X] | $[X] | [X]% | [X]:1 | 2 |
+| creator-<UUIDv4> | $[X] | $[X] | [X]% | [X]:1 | 3 |
+| creator-<UUIDv4> | $[X] | $[X] | [X]% | [X]:1 | 4 |
+| creator-<UUIDv4> | $[X] | $[X] | [X]% | [X]:1 | 5 |
 
 ### ROI Distribution
 
 ```
 Influencer ROI Distribution:
 
-@handle1  |████████████████████| 320%
-@handle2  |██████████████      | 180%
-@handle3  |████████████        | 150%
-@handle4  |██████              | 75%
-@handle5  |████                | 45%
+creator-<UUIDv4>  |[bar from supplied data]| [ROI]%
+creator-<UUIDv4>  |[bar from supplied data]| [ROI]%
+creator-<UUIDv4>  |[bar from supplied data]| [ROI]%
+creator-<UUIDv4>  |[bar from supplied data]| [ROI]%
+creator-<UUIDv4>  |[bar from supplied data]| [ROI]%
 
-Campaign Average: 180%
+Campaign ROI = (sum attributed revenue - sum spend) / sum spend × 100 = [X]%
+Campaign ROAS = sum attributed revenue / sum spend = [X]:1
 ```
 
 ### Investment Efficiency
 
-| Influencer | % of Budget | % of Revenue | Efficiency |
-|------------|-------------|--------------|------------|
-| @[handle1] | [%] | [%] | [X]x |
-| @[handle2] | [%] | [%] | [X]x |
+| Creator ref | % of Budget | % of Attributed Revenue | Efficiency |
+|-------------|-------------|-------------------------|------------|
+| creator-<UUIDv4> | [%] | [%] | [X]x |
+| creator-<UUIDv4> | [%] | [%] | [X]x |
 
 ### ROI by Tier
 
-| Tier | Investment | Revenue | ROI | Avg ROAS |
-|------|------------|---------|-----|----------|
-| Macro | $[X] | $[X] | [%] | [X]:1 |
-| Micro | $[X] | $[X] | [%] | [X]:1 |
-| Nano | $[X] | $[X] | [%] | [X]:1 |
+| Tier | Sum investment | Sum attributed revenue | Aggregate ROI | Aggregate ROAS |
+|------|----------------|------------------------|---------------|----------------|
+| Macro | $[X] | $[X] | [%] | [sum revenue / sum spend]:1 |
+| Micro | $[X] | $[X] | [%] | [sum revenue / sum spend]:1 |
+| Nano | $[X] | $[X] | [%] | [sum revenue / sum spend]:1 |
 ```
 
 ## Step 8 — ROI Summary Report
@@ -340,8 +374,8 @@ Campaign Average: 180%
 
 | Return Type | Value |
 |-------------|-------|
-| Direct Revenue | $[X] |
-| Earned Media Value | $[X] |
+| Attributed Revenue | $[X] ([source/status/window]) |
+| Earned Media Value | $[X] or NEEDS_INPUT ([comparator source/date + declared method]) |
 | New Customers | [X] |
 | Projected LTV | $[X] |
 
@@ -349,10 +383,11 @@ Campaign Average: 180%
 
 | Methodology | ROI | Notes |
 |-------------|-----|-------|
-| Direct Revenue ROI | [X]% | Hard returns |
+| Attributed Revenue ROI | [X]% | Verified only when source, window, attribution, and cost basis are evidenced |
 | ROAS | [X]:1 | Revenue per dollar |
-| EMV Multiple | [X]x | Media value generated |
-| LTV-Based ROI | [X]% | Long-term value |
+| EMV Multiple | [X]x | Estimated media-value scenario |
+| LTV-Based ROI | [X]% or NEEDS_INPUT | Economic ROI only from complete contribution-margin LTV; include cohort/horizon/basis/status and no double count |
+| Estimated revenue-basis LTV scenario | $[X] or NEEDS_INPUT | Non-additive scenario only; not ROI or profit, with cohort/horizon/source/date |
 
 ## Key Metrics
 
@@ -366,10 +401,10 @@ Campaign Average: 180%
 
 **Investment**: $[X]
 **Return**: $[X]
-**Net Profit**: $[X]
+**Net return under declared formula**: $[X]
 **ROI**: [X]%
 
-**Assessment**: [Campaign was profitable/broke even/lost money]
+**Assessment**: [positive/zero/negative arithmetic return on the declared basis] · **Verification**: [verified/results-unverified]
 
 ## Recommendations
 
@@ -386,41 +421,43 @@ Campaign Average: 180%
 
 ## Worked Example
 
-**User**: "Calculate ROI for our influencer campaign: $25K spend, $72K revenue, 2.1M reach"
+**User**: "Calculate ROI from these team-provided values: $25K campaign spend, $72K attributed revenue, and 2.1M reach. No source export, observation date, attribution window, conversion count, incrementality evidence, comparable CPM, or decision rule is supplied."
 
 **Output**:
 
 ```markdown
 # ROI Calculation Summary
 
+**Verification status**: `results-unverified` — the values below are user-provided, and this skill has not verified their source, date, attribution, or incrementality.
+
 ## Investment & Returns
 
-| Item | Value |
-|------|-------|
-| Total Investment | $25,000 |
-| Direct Revenue | $72,000 |
-| Total Reach | 2,100,000 |
+| Item | Value | Provenance |
+|------|-------|------------|
+| Campaign spend used in calculation | $25,000 | User-provided; cost basis unverified |
+| Attributed revenue used in calculation | $72,000 | User-provided; source/window/incrementality unverified |
+| Total reach | 2,100,000 | User-provided; source/date unverified |
 
 ## ROI Results
 
-### Direct ROI
-- **Profit**: $47,000
+### Arithmetic ROI on the Supplied Basis
+- **Net return under the declared formula**: $47,000
 - **ROI**: 188%
 - **ROAS**: 2.88:1
 
-For every $1 spent, you generated $2.88 in revenue.
+The supplied values equal $2.88 in attributed revenue per $1 of supplied spend. This is arithmetic, not a claim that the campaign generated incremental revenue or profit.
 
 ### Earned Media Value
-- **EMV** (directional scenario at a declared $8 CPM): $16,800
-- **EMV Multiple**: 0.67x
+- **EMV**: `NEEDS_INPUT` — no comparable CPM or other declared valuation input was supplied
+- **EMV Multiple**: `NEEDS_INPUT`
 
 ### Cost Efficiency
-- **CPM**: $11.90
+- **CPM**: $11.90 (Calculated from supplied spend and reach; results-unverified)
 - **CPA**: Unknown (conversion count was not supplied)
 
-## Assessment: Profitable on the supplied direct-revenue basis
+## Assessment: Positive arithmetic return on the supplied basis; profitability and causality unverified
 
-Direct revenue exceeds the supplied investment, but no source-dated peer target or incrementality evidence was provided. Do not infer benchmark outperformance or authorize a scale decision from this read alone; obtain verified conversions, attribution evidence, and the campaign owner's precommitted decision rule first.
+Supplied attributed revenue exceeds supplied campaign spend under the declared formula, but no source-dated target, complete cost basis, attribution evidence, or incrementality evidence was provided. Do not infer profitability, causal lift, benchmark outperformance, or authorize a scale decision from this read alone; obtain verified conversions, sources/windows, attribution evidence, and the campaign owner's precommitted decision rule first.
 ```
 
 ## Benchmark Evidence Template

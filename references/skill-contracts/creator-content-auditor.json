@@ -8,14 +8,14 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 127,
+          "end_char": 194,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "every applicable STAR item is explicit, the typed SQS result is preserved, and feedback maps each requested change to evidence."
+        "text": "every applicable STAR item is explicit, the typed SQS result is preserved, feedback maps each requested change to evidence, and any durable output satisfies the reference-only identity boundary."
       },
       {
         "clause_id": "done-02",
@@ -23,12 +23,12 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 177,
+          "end_char": 244,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
-          "start_char": 129
+          "start_char": 196
         },
         "text": "Only this gate computes the profile-weighted SQS"
       },
@@ -38,22 +38,22 @@
         "extraction_status": "classified",
         "requirement": "required",
         "source": {
-          "end_char": 395,
+          "end_char": 462,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
-          "start_char": 179
+          "start_char": 246
         },
         "text": "every other influencer skill works one lever and hands off — `fit-scorer` supplies Suitability, `roi-calculator` supplies measured Return, `contract-helper` owns terms. This gate does not adjudicate claims or rights."
       }
     ],
-    "done_when": "every applicable STAR item is explicit, the typed SQS result is preserved, and feedback maps each requested change to evidence.\n\nOnly this gate computes the profile-weighted SQS; every other influencer skill works one lever and hands off — `fit-scorer` supplies Suitability, `roi-calculator` supplies measured Return, `contract-helper` owns terms. This gate does not adjudicate claims or rights.",
+    "done_when": "every applicable STAR item is explicit, the typed SQS result is preserved, feedback maps each requested change to evidence, and any durable output satisfies the reference-only identity boundary.\n\nOnly this gate computes the profile-weighted SQS; every other influencer skill works one lever and hands off — `fit-scorer` supplies Suitability, `roi-calculator` supplies measured Return, `contract-helper` owns terms. This gate does not adjudicate claims or rights.",
     "extraction_status": "classified",
     "source": {
       "path": "influencer/activate/creator-content-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689"
+      "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6"
     }
   },
   "context_hints": {
@@ -62,14 +62,28 @@
         "path": "influencer/activate/creator-content-auditor/references/auditor-runtime.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "e358c4655a6f35f02042c4b414364628d31a9240ee55365103c98b25e48696a6",
+        "sha256": "5594491a1510bfcd38b4054fbeee0259ed540edecdb2ccd121bebc63a1ab3ace",
         "source_line": 46
+      },
+      {
+        "path": "influencer/activate/creator-content-auditor/references/quality-review-aids.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "d5b2165fc632df087ac7aa0b29ac20733df80fca3abb09e2489adca20da8e405",
+        "source_line": 67
+      },
+      {
+        "path": "influencer/activate/creator-content-auditor/references/review-templates.md",
+        "reason_code": "authored-reference",
+        "requirement": "optional",
+        "sha256": "3fe99a07502ee6d4000d1845c6cb29ad0e01250c25d3783a3341b11c950e1d96",
+        "source_line": 116
       },
       {
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "1bdafd8e080bfd77ec933b67221dcc2652bf350f0e73b0ecafdeb57136195474",
+        "sha256": "028a87012aa8cded04d9b7fb70f44a2b0eb3475b7984251050e1ec281c60a3ec",
         "source_line": 42
       },
       {
@@ -77,13 +91,13 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "a86def55461973f26aa591565b533432ade268f6ae2e24ac3824411fec4f8d39",
-        "source_line": 111
+        "source_line": 115
       },
       {
         "path": "references/runtime-invocation.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "14300423dab41622ac40f5f736a1bb8b00d34d549385e71bf376da6a3a02baee",
+        "sha256": "9aed49f657df95e95d34d6d46beaf32d8be49d19b28a073e00f40b721f588cc6",
         "source_line": 45
       },
       {
@@ -104,6 +118,10 @@
     "project_paths": []
   },
   "contract_id": "skill:creator-content-auditor",
+  "control_requirements": [
+    "artifact-binding",
+    "evidence-observation"
+  ],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -116,7 +134,7 @@
           "end_char": 78,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -134,7 +152,7 @@
           "end_char": 169,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
           "start_char": 79
         },
@@ -152,7 +170,7 @@
           "end_char": 236,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
           "start_char": 170
         },
@@ -170,7 +188,7 @@
           "end_char": 323,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
           "start_char": 237
         },
@@ -185,7 +203,7 @@
     "summary_ref": {
       "path": "references/skill-contract.md",
       "section": "Handoff Summary Format",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "summary_source": "shared-skill-contract",
     "target_skills": [
@@ -201,56 +219,56 @@
     "name": "creator-content-auditor",
     "path": "influencer/activate/creator-content-auditor/SKILL.md",
     "phase": "activate",
-    "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
-    "version": "20.0.0"
+    "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<content submission or link> <platform> <campaign goal>",
     "clauses": [
       {
         "clause_id": "read-01",
-        "extraction_status": "unclassified",
-        "kind": "unclassified",
-        "requirement": "unclassified",
-        "source": {
-          "end_char": 21,
-          "path": "influencer/activate/creator-content-auditor/SKILL.md",
-          "section": "Skill Contract/Reads",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
-          "span_basis": "field-text",
-          "start_char": 0
-        },
-        "text": "one frozen submission"
-      },
-      {
-        "clause_id": "read-02",
         "extraction_status": "partially-classified",
         "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 42,
+          "end_char": 57,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
-          "start_char": 23
+          "start_char": 0
         },
-        "text": "brief/canon version"
+        "text": "one frozen submission plus its opaque asset/evidence refs"
       },
       {
-        "clause_id": "read-03",
+        "clause_id": "read-02",
         "extraction_status": "unclassified",
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 123,
+          "end_char": 112,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
-          "start_char": 44
+          "start_char": 59
         },
-        "text": "approved claims/disclosures (substantiation state from `offer-claims-registry`)"
+        "text": "stable `creator_ref`, `reviewer_ref`, and `brief_ref`"
+      },
+      {
+        "clause_id": "read-03",
+        "extraction_status": "partially-classified",
+        "kind": "evidence-input",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 133,
+          "path": "influencer/activate/creator-content-auditor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
+          "span_basis": "field-text",
+          "start_char": 114
+        },
+        "text": "brief/canon version"
       },
       {
         "clause_id": "read-04",
@@ -258,14 +276,14 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 146,
+          "end_char": 214,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
-          "start_char": 125
+          "start_char": 135
         },
-        "text": "platform requirements"
+        "text": "approved claims/disclosures (substantiation state from `offer-claims-registry`)"
       },
       {
         "clause_id": "read-05",
@@ -273,79 +291,114 @@
         "kind": "unclassified",
         "requirement": "unclassified",
         "source": {
-          "end_char": 272,
+          "end_char": 237,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
-          "start_char": 148
+          "start_char": 216
+        },
+        "text": "platform requirements"
+      },
+      {
+        "clause_id": "read-06",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "requirement": "unclassified",
+        "source": {
+          "end_char": 363,
+          "path": "influencer/activate/creator-content-auditor/SKILL.md",
+          "section": "Skill Contract/Reads",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
+          "span_basis": "field-text",
+          "start_char": 239
         },
         "text": "the `fit-scorer` Suitability read and the `creator-registry` dossier (the audience-authenticity facts behind `STAR-S2`/`S6`)"
       },
       {
-        "clause_id": "read-06",
+        "clause_id": "read-07",
         "extraction_status": "partially-classified",
         "kind": "evidence-input",
         "requirement": "unclassified",
         "source": {
-          "end_char": 341,
+          "end_char": 645,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
-          "start_char": 274
+          "start_char": 365
         },
-        "text": "and (for an `actual` re-read) the `roi-calculator` Return evidence."
+        "text": "and (for an `actual` re-read) the `roi-calculator` Return evidence. Raw creator/reviewer names, handles, profile/content URLs, brief URLs, email addresses, and other delivery locators may be resolved only transiently for the current review or an independently authorized dispatch."
       }
     ],
     "extraction_status": "partially-classified",
-    "reads": "one frozen submission; brief/canon version; approved claims/disclosures (substantiation state from `offer-claims-registry`); platform requirements; the `fit-scorer` Suitability read and the `creator-registry` dossier (the audience-authenticity facts behind `STAR-S2`/`S6`); and (for an `actual` re-read) the `roi-calculator` Return evidence.",
+    "reads": "one frozen submission plus its opaque asset/evidence refs; stable `creator_ref`, `reviewer_ref`, and `brief_ref`; brief/canon version; approved claims/disclosures (substantiation state from `offer-claims-registry`); platform requirements; the `fit-scorer` Suitability read and the `creator-registry` dossier (the audience-authenticity facts behind `STAR-S2`/`S6`); and (for an `actual` re-read) the `roi-calculator` Return evidence. Raw creator/reviewer names, handles, profile/content URLs, brief URLs, email addresses, and other delivery locators may be resolved only transiently for the current review or an independently authorized dispatch.",
     "source": {
       "path": "influencer/activate/creator-content-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689"
+      "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6"
     }
   },
   "output_contract": {
     "clauses": [
       {
         "clause_id": "write-01",
-        "extraction_status": "partially-classified",
+        "extraction_status": "unclassified",
         "kind": "unclassified",
-        "permission_posture": "permission-required",
+        "permission_posture": "unclassified",
         "side_effect": "unclassified",
         "source": {
-          "end_char": 55,
+          "end_char": 261,
           "path": "influencer/activate/creator-content-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
           "span_basis": "field-text",
           "start_char": 0
         },
-        "text": "a user report and, only with permission, a v3 artifact."
+        "text": "a user report inline by default and, only with exact authorization for the validated sink, a v3 artifact. In every persistable template/artifact/handoff, creator, reviewer, and brief identity is represented only by `creator_ref`, `reviewer_ref`, and `brief_ref`"
+      },
+      {
+        "clause_id": "write-02",
+        "extraction_status": "unclassified",
+        "kind": "unclassified",
+        "permission_posture": "unclassified",
+        "side_effect": "unclassified",
+        "source": {
+          "end_char": 522,
+          "path": "influencer/activate/creator-content-auditor/SKILL.md",
+          "section": "Skill Contract/Writes",
+          "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6",
+          "span_basis": "field-text",
+          "start_char": 263
+        },
+        "text": "never persist the corresponding raw identity or locator. Creator-facing copy is a transient render and is never part of the durable audit artifact. Artifact approval does not authorize HOT, registry, content, feedback delivery, or any other external mutation."
       }
     ],
-    "extraction_status": "partially-classified",
+    "extraction_status": "unclassified",
     "source": {
       "path": "influencer/activate/creator-content-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689"
+      "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6"
     },
-    "summary": "a user report and, only with permission, a v3 artifact.",
+    "summary": "a user report inline by default and, only with exact authorization for the validated sink, a v3 artifact. In every persistable template/artifact/handoff, creator, reviewer, and brief identity is represented only by `creator_ref`, `reviewer_ref`, and `brief_ref`; never persist the corresponding raw identity or locator. Creator-facing copy is a transient render and is never part of the durable audit artifact. Artifact approval does not authorize HOT, registry, content, feedback delivery, or any other external mutation.",
     "summary_source": "writes-fallback",
-    "writes": "a user report and, only with permission, a v3 artifact."
+    "writes": "a user report inline by default and, only with exact authorization for the validated sink, a v3 artifact. In every persistable template/artifact/handoff, creator, reviewer, and brief identity is represented only by `creator_ref`, `reviewer_ref`, and `brief_ref`; never persist the corresponding raw identity or locator. Creator-facing copy is a transient render and is never part of the durable audit artifact. Artifact approval does not authorize HOT, registry, content, feedback delivery, or any other external mutation."
   },
   "provenance": {
+    "control_bindings": {
+      "path": "references/control-bindings.json",
+      "sha256": "70fbf645a095d87676bc77522dd6838a0f9dceb2214cc4c64823f39ecf6bd0f1"
+    },
     "generator": "generate-skill-contracts-v1",
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -354,7 +407,7 @@
     "source": {
       "path": "influencer/activate/creator-content-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "0d4c80143c375066fb82bce7cc5789b665e14aa6785dbddb8d3c6957faf5a689"
+      "sha256": "8bf0aaf017b399e89c92301a315e75dba610f210328b7d1b0c3cf24f132596c6"
     },
     "trigger_phrases": [
       "check if this post meets brand guidelines",

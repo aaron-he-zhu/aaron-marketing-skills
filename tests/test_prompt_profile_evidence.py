@@ -279,7 +279,7 @@ class PromptProfileEvidenceTests(unittest.TestCase):
 
     def test_current_corpus_has_no_release_eligible_real_cases(self):
         cases = MODULE.current_case_index(ROOT)
-        self.assertEqual(700, len(cases))
+        self.assertEqual(734, len(cases))
         self.assertTrue(all(case["case_provenance"] == "simulated" for case in cases.values()))
         self.assertTrue(all(case["evidence_binding"] is None for case in cases.values()))
 

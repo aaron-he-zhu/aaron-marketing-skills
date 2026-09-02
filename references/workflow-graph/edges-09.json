@@ -305,7 +305,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/scout/trend-spotter/SKILL.md:97",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:99",
       "condition_text": "Alternate: audience-mapper — confirm which trends actually resonate with your audience before committing.",
       "documentation_required": true,
       "exception": null,
@@ -333,7 +333,7 @@
     },
     {
       "condition_code": "alternate",
-      "condition_source": "influencer/scout/trend-spotter/SKILL.md:98",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:100",
       "condition_text": "Alternate: fit-scorer — score which creators fit the chosen trends and the brand before committing.",
       "documentation_required": true,
       "exception": null,
@@ -361,7 +361,7 @@
     },
     {
       "condition_code": "primary",
-      "condition_source": "influencer/scout/trend-spotter/SKILL.md:96",
+      "condition_source": "influencer/scout/trend-spotter/SKILL.md:98",
       "condition_text": "Primary: influencer-discovery — turn the chosen trends into a shortlist of creators who can execute them.",
       "documentation_required": true,
       "exception": null,
@@ -471,6 +471,72 @@
         "handoff-summary"
       ],
       "to": "social-calendar-builder",
+      "type": "sequential"
+    },
+    {
+      "condition_code": "quality-gate",
+      "condition_source": "influencer/target/campaign-planner/SKILL.md:114",
+      "condition_text": "Tracker-only, publication/approval blocker: creator-content-auditor — verify the cited live post against the frozen approved asset; this does not authorize an edit or amplification.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "campaign-planner",
+      "gate": "creator-content-auditor",
+      "id": "campaign-planner--creator-content-auditor",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "gate-evidence-ready",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "action-receipt",
+        "artifact-binding",
+        "audit-evidence",
+        "evidence-observation",
+        "handoff-summary"
+      ],
+      "to": "creator-content-auditor",
+      "type": "gate"
+    },
+    {
+      "condition_code": "conditional",
+      "condition_source": "influencer/target/campaign-planner/SKILL.md:115",
+      "condition_text": "Tracker-only, readback/reconciliation due: performance-analyzer — produce the dated §8 readback artifact; final reporting may package that artifact only after the evidence exists.",
+      "documentation_required": true,
+      "exception": null,
+      "from": "campaign-planner",
+      "gate": null,
+      "id": "campaign-planner--performance-analyzer",
+      "loop_policy": {
+        "max_traversals": 1,
+        "mode": "visited-set"
+      },
+      "permissions": [
+        "none"
+      ],
+      "precondition_codes": [
+        "automatic-handoff-cap-available",
+        "handoff-unambiguous",
+        "required-inputs-present",
+        "target-not-visited"
+      ],
+      "required_inputs": [
+        "action-receipt",
+        "artifact-binding",
+        "condition-evidence",
+        "evidence-observation",
+        "handoff-summary",
+        "measurement-contract"
+      ],
+      "to": "performance-analyzer",
       "type": "sequential"
     }
   ],

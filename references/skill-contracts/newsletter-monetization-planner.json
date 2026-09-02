@@ -11,7 +11,7 @@
           "end_char": 166,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 335,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 169
         },
@@ -41,7 +41,7 @@
           "end_char": 455,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 338
         },
@@ -56,7 +56,7 @@
           "end_char": 621,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 458
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6"
+      "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5"
     }
   },
   "context_hints": {
@@ -77,7 +77,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5d552b77c4e55838122185895bf39fb90135b3d33de485d8a862ee510f7271ff",
+        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
         "source_line": 50
       },
       {
@@ -98,14 +98,14 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e",
+        "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f",
         "source_line": 38
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e16cbd8c7d22999536b7c5dceb76e01842eb17dac843350993f912ceeafcd647",
+        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
         "source_line": 81
       }
     ],
@@ -137,6 +137,7 @@
     ]
   },
   "contract_id": "skill:newsletter-monetization-planner",
+  "control_requirements": [],
   "handoff_contract": {
     "extraction_status": "partially-classified",
     "items": [
@@ -149,7 +150,7 @@
           "end_char": 191,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -167,7 +168,7 @@
           "end_char": 226,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 193
         },
@@ -183,7 +184,7 @@
           "end_char": 467,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 227
         },
@@ -201,7 +202,7 @@
           "end_char": 717,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 468
         },
@@ -219,7 +220,7 @@
           "end_char": 910,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 718
         },
@@ -237,7 +238,7 @@
           "end_char": 1326,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 912
         },
@@ -250,7 +251,7 @@
     "summary_ref": {
       "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6"
+      "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -266,8 +267,8 @@
     "name": "newsletter-monetization-planner",
     "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
     "phase": "nurture",
-    "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
-    "version": "20.0.0"
+    "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
+    "version": "20.1.0"
   },
   "input_contract": {
     "argument_hint": "<newsletter/list size> [goal: paid-subs|sponsorship|both] [open/click rates]",
@@ -281,7 +282,7 @@
           "end_char": 654,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -293,7 +294,7 @@
     "source": {
       "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6"
+      "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5"
     }
   },
   "output_contract": {
@@ -308,7 +309,7 @@
           "end_char": 216,
           "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6",
+          "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -319,7 +320,7 @@
     "source": {
       "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6"
+      "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5"
     },
     "summary": "a user-facing revenue model and growth ↔ revenue projection plus the disclosure/honest-offer checklist, and a reusable handoff summary. Save path: `memory/email/newsletter-monetization-planner/YYYY-MM-DD-<topic>.md`.",
     "summary_source": "writes-fallback",
@@ -330,12 +331,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "54c83f016ae66079e735e058ce5829523eb53ad370999eb4c8efa5180979253e"
+      "sha256": "2e3e9a6ad8344610631af490153270dc9baae1c033be3cdd20222a035e713d3f"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "f94c526bbbb97bdc6d0a74983e34f5dfad4c8c194a6c92fa83f7d7ad8faf93c7",
-      "version": "20.0.0"
+      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
+      "version": "20.1.0"
     }
   },
   "routing_contract": {
@@ -344,7 +345,7 @@
     "source": {
       "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
       "section": "frontmatter",
-      "sha256": "93eaf217b05af2c797dd42dfb19a07ab6bccc9e4df3643dfc91d908ebea02de6"
+      "sha256": "e38e5914781b08640ec40058b6848af97db1ea4e69ca5f518f74c0bde1121fc5"
     },
     "trigger_phrases": [
       "build a sponsorship rate card",

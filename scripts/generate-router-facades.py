@@ -30,6 +30,7 @@ ROUTER_PROFILE = "generic-shared-root-host"
 SAFE_ID_RE = re.compile(r"^[a-z][a-z0-9-]*$")
 SEMVER_RE = re.compile(r"^[0-9]+\.[0-9]+\.[0-9]+(?:[-+][A-Za-z0-9.-]+)?$")
 BOUNDARY_RE = re.compile(r"(?:^|\s)(Not for\b.*)$", re.I)
+QUOTED_TRIGGER_RE = re.compile(r'"([^"\n]+)"')
 
 
 class RouterFacadeError(ValueError):
@@ -43,6 +44,16 @@ def canonical_json(value):
         ) + "\n").encode("utf-8")
     except (TypeError, ValueError) as exc:
         raise RouterFacadeError("cannot encode canonical JSON: %s" % exc) from exc
+
+
+def compact_json(value):
+    try:
+        return (json.dumps(
+            value, ensure_ascii=False, allow_nan=False, sort_keys=True,
+            separators=(",", ":"),
+        ) + "\n").encode("utf-8")
+    except (TypeError, ValueError) as exc:
+        raise RouterFacadeError("cannot encode compact JSON: %s" % exc) from exc
 
 
 def sha256_bytes(content):
@@ -215,6 +226,16 @@ def _boundary(description, relative):
     return match.group(1).strip()
 
 
+def _route_summary(description):
+    """Keep discovery triggers compact; the linked Skill owns full scope."""
+    boundary = BOUNDARY_RE.search(description)
+    positive = description[:boundary.start()] if boundary else description
+    triggers = QUOTED_TRIGGER_RE.findall(positive)
+    if triggers:
+        return "; ".join(triggers)
+    return re.sub(r"^Use when\s+", "", positive.strip(), flags=re.I).rstrip(" .;")
+
+
 def _target(root, discipline, phase, name, relative):
     if not SAFE_ID_RE.fullmatch(name):
         raise RouterFacadeError("catalog contains invalid skill name %r" % name)
@@ -238,7 +259,7 @@ def _target(root, discipline, phase, name, relative):
         "phase": phase,
         "version": frontmatter["version"],
         "skill_sha256": sha256_bytes(content),
-        "when_to_use": frontmatter["when_to_use"].strip(),
+        "route_summary": _route_summary(frontmatter["description"].strip()),
         "boundary": _boundary(frontmatter["description"].strip(), relative),
     }
 
@@ -349,15 +370,13 @@ def render_facade(group, bundle_version):
         "",
         "# %s Router" % display_name,
         "",
-        "> Generated distribution facade. It is not one of the 120 canonical business skills, "
-        "does not execute domain work, and must not be promoted into the repository skill catalog.",
-        "",
         "## Routing Contract",
         "",
-        "Choose exactly one target below. Read and invoke that target's `SKILL.md`; the target's "
-        "scope, evidence, permission, completion, and handoff rules take precedence. Never combine "
-        "two targets into a synthetic workflow. If two targets remain equally plausible or the "
-        "request crosses disciplines, return the candidates and stop for user selection.",
+        "This generated, non-canonical facade does not execute domain work. Use the compact phrases "
+        "below only to shortlist. Before selecting, read every plausible "
+        "target's linked `SKILL.md` frontmatter and enforce its complete `description`, `when_to_use`, "
+        "and `Not for` boundary. The target's scope and safety rules take precedence. Choose exactly "
+        "one; if candidates remain equally plausible or cross disciplines, stop for user selection.",
         "",
         "## Targets",
     ]
@@ -370,16 +389,12 @@ def render_facade(group, bundle_version):
             link = "../../%s" % target["path"]
             lines.extend([
                 "",
-                "- [`%s`](%s)" % (target["name"], link),
-                "  - Route when: %s" % target["when_to_use"],
-                "  - Boundary: %s" % target["boundary"],
+                "- [`%s`](%s) — Trigger phrases: %s"
+                % (target["name"], link, target["route_summary"]),
             ])
     lines.extend([
         "",
-        "## Output",
-        "",
-        "Return `target_skill`, `target_path`, `reason`, `blocking_inputs`, and "
-        "`ambiguity: none|needs-user-selection`. Then hand off without performing the target's work.",
+        "Return `target_skill`, `target_path`, `reason`, `blocking_inputs`, and `ambiguity`; then hand off.",
         "",
     ])
     return ("\n".join(lines)).encode("utf-8")
@@ -579,7 +594,10 @@ def build_outputs(root=ROOT, host_profile=ROUTER_PROFILE):
         expected_host_profile_sha256=host_sha256,
         expected_catalog_sha256=sidecar["catalog"]["sha256"],
     )
-    outputs[SIDECAR_REF] = canonical_json(sidecar)
+    # The sidecar is a machine-verification inventory, not prompt context.
+    # Compact serialization preserves every binding while avoiding whitespace
+    # overhead in generic-host distributions.
+    outputs[SIDECAR_REF] = compact_json(sidecar)
     return outputs
 
 

@@ -26,6 +26,7 @@ SOURCE_REL = Path("references/workflow-graph.source.json")
 GRAPH_REL = Path("references/workflow-graph.json")
 DOC_REL = Path("docs/workflow-graph.md")
 CATALOG_REL = Path("references/system-catalog.json")
+CONTROL_BINDINGS_REL = Path("references/control-bindings.json")
 EDGE_SHARD_DIR = Path("references/workflow-graph")
 EDGE_SHARD_SCHEMA = "../workflow-graph-edge-shard.schema.json"
 EDGE_SHARD_AUTHORITY = "authoritative-workflow-graph-source-shard"
@@ -51,7 +52,11 @@ CONDITION_CODES = {
     "primary", "conditional", "alternate", "quality-gate", "governance",
     "remediation", "unclassified",
 }
-REQUIRED_INPUT_CODES = {
+CONTROL_REQUIREMENT_CODES = {
+    "action-intent", "action-receipt", "artifact-binding",
+    "cycle-retro", "evidence-observation", "measurement-contract",
+}
+REQUIRED_INPUT_CODES = CONTROL_REQUIREMENT_CODES | {
     "handoff-summary", "condition-evidence", "audit-evidence",
     "registry-proposal", "failure-evidence", "cross-discipline-context",
     "execution-approval",
@@ -111,6 +116,102 @@ def load_json(path, label=None):
     except OSError as exc:
         raise GraphError("cannot read %s: %s" % (label or path, exc)) from exc
     return strict_json_loads(raw.decode("utf-8"), label or str(path)), raw
+
+
+def load_control_handoff_requirements(root, edges=None):
+    """Load and close the edge-specific control handoff SSOT.
+
+    The central document may omit ``handoff_requirements`` for compatibility.
+    When present, every row is sorted, source-producible, and—when ``edges``
+    are supplied—bound to one exact authoritative edge.
+    """
+    document, _raw = load_json(
+        root / CONTROL_BINDINGS_REL, CONTROL_BINDINGS_REL.as_posix(),
+    )
+    required = {
+        "$schema", "schema_version", "authority", "catalog_ref",
+        "control_artifact_schema", "bindings",
+    }
+    optional = {"handoff_requirements"}
+    _exact_keys(document, required, optional, "control bindings")
+    if (
+            document["$schema"] != "./control-bindings.schema.json"
+            or document["schema_version"] != "1.0"
+            or document["authority"] != "cross-discipline-control-bindings"
+            or document["catalog_ref"] != CATALOG_REL.as_posix()
+            or document["control_artifact_schema"]
+            != "references/control-artifact.schema.json"):
+        raise GraphError("control bindings identity is unsupported")
+    bindings = document["bindings"]
+    if not isinstance(bindings, dict):
+        raise GraphError("control bindings.bindings must be an object")
+    source_requirements = {}
+    for skill_id, binding in bindings.items():
+        if not isinstance(skill_id, str) or not SAFE_ID_RE.fullmatch(skill_id):
+            raise GraphError("control binding has an invalid skill identity")
+        _exact_keys(
+            binding, {"skill_path", "control_requirements"}, set(),
+            "control binding %s" % skill_id,
+        )
+        requirements = binding["control_requirements"]
+        if (
+                not isinstance(requirements, list)
+                or not 1 <= len(requirements) <= len(CONTROL_REQUIREMENT_CODES)
+                or requirements != sorted(requirements)
+                or len(requirements) != len(set(requirements))
+                or any(item not in CONTROL_REQUIREMENT_CODES for item in requirements)):
+            raise GraphError(
+                "control binding %s requirements are invalid or not sorted" % skill_id
+            )
+        source_requirements[skill_id] = set(requirements)
+
+    handoffs = document.get("handoff_requirements")
+    if handoffs is None:
+        return {}
+    if not isinstance(handoffs, dict) or not handoffs:
+        raise GraphError(
+            "control handoff requirements must be a non-empty object when present"
+        )
+    edge_by_id = None
+    if edges is not None:
+        edge_by_id = {
+            edge.get("id"): edge for edge in edges
+            if isinstance(edge, dict) and isinstance(edge.get("id"), str)
+        }
+    result = {}
+    for edge_id, requirements in handoffs.items():
+        if not isinstance(edge_id, str) or edge_id.count("--") != 1:
+            raise GraphError("control handoff has invalid edge identity")
+        source, target = edge_id.split("--", 1)
+        if not SAFE_ID_RE.fullmatch(source) or not SAFE_ID_RE.fullmatch(target):
+            raise GraphError("control handoff has invalid edge identity")
+        if (
+                not isinstance(requirements, list)
+                or not 1 <= len(requirements) <= len(CONTROL_REQUIREMENT_CODES)
+                or requirements != sorted(requirements)
+                or len(requirements) != len(set(requirements))
+                or any(item not in CONTROL_REQUIREMENT_CODES for item in requirements)):
+            raise GraphError(
+                "control handoff %s requirements are invalid or not sorted" % edge_id
+            )
+        if source not in source_requirements:
+            raise GraphError("control handoff source is not bound: %s" % source)
+        if not set(requirements) <= source_requirements[source]:
+            raise GraphError(
+                "control handoff %s exceeds source skill requirements" % edge_id
+            )
+        if edge_by_id is not None:
+            edge = edge_by_id.get(edge_id)
+            if edge is None:
+                raise GraphError(
+                    "control handoff references an unknown edge: %s" % edge_id
+                )
+            if edge.get("from") != source or edge.get("to") != target:
+                raise GraphError(
+                    "control handoff identity differs from edge endpoints: %s" % edge_id
+                )
+        result[edge_id] = list(requirements)
+    return result
 
 
 def catalog_nodes(catalog):
@@ -181,7 +282,8 @@ def _condition_code(text, edge_type, target_id, auditors):
     return "unclassified"
 
 
-def _required_inputs(edge_type, condition_code, permissions=None):
+def _required_inputs(
+        edge_type, condition_code, permissions=None, control_requirements=None):
     values = {"handoff-summary"}
     if condition_code == "conditional":
         values.add("condition-evidence")
@@ -195,6 +297,7 @@ def _required_inputs(edge_type, condition_code, permissions=None):
         values.add("cross-discipline-context")
     if "external-action-approval" in (permissions or []):
         values.add("execution-approval")
+    values.update(control_requirements or ())
     return sorted(values)
 
 
@@ -445,6 +548,13 @@ def bootstrap_source(root):
                     ),
                 }
             edges.append(edge)
+
+    handoff_requirements = load_control_handoff_requirements(root, edges)
+    for edge in edges:
+        edge["required_inputs"] = _required_inputs(
+            edge["type"], edge["condition_code"], edge["permissions"],
+            handoff_requirements.get(edge["id"]),
+        )
 
     components = _strongly_connected_components(by_id, edges)
     cyclic_pairs = set()
@@ -733,6 +843,7 @@ def validate_source(source, catalog, root, edges):
                 not isinstance(edge["required_inputs"], list)
                 or not edge["required_inputs"]
                 or len(edge["required_inputs"]) != len(set(edge["required_inputs"]))
+                or edge["required_inputs"] != sorted(edge["required_inputs"])
                 or any(value not in REQUIRED_INPUT_CODES for value in edge["required_inputs"])):
             raise GraphError("%s required_inputs are invalid" % label)
         if (
@@ -788,6 +899,18 @@ def validate_source(source, catalog, root, edges):
             raise GraphError("illegal phase inversion on %s requires an explicit exception" % edge["id"])
         if not inversion and exception is not None:
             raise GraphError("%s exception is unnecessary outside a phase reentry" % edge["id"])
+
+    handoff_requirements = load_control_handoff_requirements(root, edges)
+    for edge in edges:
+        expected_inputs = _required_inputs(
+            edge["type"], edge["condition_code"], edge["permissions"],
+            handoff_requirements.get(edge["id"]),
+        )
+        if edge["required_inputs"] != expected_inputs:
+            raise GraphError(
+                "edge %s required_inputs drift from derived semantics and control handoff"
+                % edge["id"]
+            )
 
     override_ids = set()
     for item in provenance["curation_overrides"]:
@@ -872,6 +995,7 @@ def validate_source(source, catalog, root, edges):
         )
         expected_inputs = _required_inputs(
             edge["type"], expected_code, edge["permissions"],
+            handoff_requirements.get(edge["id"]),
         )
         expected_preconditions = _precondition_codes(
             edge["type"], edge["permissions"], expected_code,
@@ -1232,6 +1356,7 @@ def upgrade_edge_semantics(root):
     edge_pairs = {(edge["from"], edge["to"]) for edge in edges}
     if declared_pairs != edge_pairs:
         raise GraphError("cannot upgrade while Markdown/source edge identities drift")
+    handoff_requirements = load_control_handoff_requirements(root, edges)
 
     components = _strongly_connected_components(by_id, edges)
     cyclic_pairs = set()
@@ -1257,6 +1382,7 @@ def upgrade_edge_semantics(root):
         edge["condition_source"] = detail["condition_source"]
         edge["required_inputs"] = _required_inputs(
             edge["type"], code, edge["permissions"],
+            handoff_requirements.get(edge["id"]),
         )
         edge["precondition_codes"] = _precondition_codes(
             edge["type"], edge["permissions"], code,
