@@ -218,6 +218,7 @@ Short pointers only. Long-form essays belong on the [docs hub](https://aaronmark
 - **Architecture** — L1 Narrative → L2 channels → L3 Launch → L4 Protocol. Shared contract: [skill-contract.md](references/skill-contract.md). Four-layer map: [system-architecture.md](docs/system-architecture.md).
 - **Quality** — eight frameworks, eight auditor gates (`SHIP` / `FIX` / `BLOCK` / `UNDECIDED`). Runbook: [auditor-runbook.md](references/auditor-runbook.md).
 - **Capability profiles** — fresh projects run **Lite**. Pro / Governed add connectors or stateful writes; they never drop consent, claims, or audit integrity. Details: [capability-profiles.md](references/capability-profiles.md).
+  **v19 validation status:** this is an **engineering-validated** release. CI, package checks, and real-provider runs over simulated fixtures are not real-project outcome evidence; **real-project outcomes remain unvalidated**. **Lite remains** the fresh-project **default**. Governed availability does not validate Governed outcomes or Governed-by-default. That promotion needs the post-release cohort of **14** pilots + **70** paired Lite/Governed projects + **28** shadow projects.
 - **Connectors** — `~~category` placeholders; Tier 1 is keyless. Recipes: [CONNECTORS.md](CONNECTORS.md). Add one: [connector-playbook.md](docs/connector-playbook.md).
 - **Workflows** — `/aaron-marketing:auto` for cross-channel goals; each discipline guide lists its 4-phase loop.
 - **Design** — skills are content; keyless first; surgical/MECE; no invented numbers; compliance is guidance, not law.
