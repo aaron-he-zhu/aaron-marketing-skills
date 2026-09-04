@@ -279,26 +279,27 @@ Every release-time **live** mutation entrypoint (`publish-clawhub.sh`,
 `publish-skillhub.sh`, `publish-package.sh`, `publish-registries.sh`,
 `sync-about.sh`, and `sync-family.sh`) requires a completely clean tree,
 successfully refreshes `origin/main`, and proves HEAD is reachable from it.
-For v19 and later it also validates the private engineering receipt together
-with its exact maturity report and original raw semantic-evidence chain,
-immutable final tag, non-draft GitHub Release, exact six downloaded release
-assets, and a successful owner-run release-validation workflow on the same
-commit. These private inputs are read locally and never uploaded. The
-registry parent passes a commit/receipt-bound gate token to its children so this
-expensive read-only verification runs once without weakening direct
-per-publisher calls.
+For v19 and later it also validates the immutable final tag (must resolve to
+HEAD), non-draft GitHub Release, exact six downloaded release assets, and a
+successful owner-run release-validation workflow on the same commit. Live
+publishers do not require `AARON_RELEASE_RECEIPT`,
+`AARON_RELEASE_MATURITY_REPORT`, or `AARON_RELEASE_EVIDENCE_ROOT`. Those
+private inputs remain required only for `create-github-release.py --live` and
+are never uploaded. The registry parent passes a commit-bound gate token to its
+children so this expensive read-only verification runs once without weakening
+direct per-publisher calls.
 Receipt issuance and `create-github-release.py --live` always enforce the
-24-hour current-freshness gate. A later publisher resume first proves the
-immutable final tag, non-draft Release, exact six downloaded assets, and owner
-workflow, and only then internally selects the explicit
-`--post-release-continuation` verifier mode. That mode relaxes only the
+24-hour current-freshness gate. The verifier's `--post-release-continuation`
+mode remains available for owner-local receipt revalidation after that
+immutable final Release exists. That mode relaxes only the
 wall-clock-since-issuance check: issuance-time 24-hour freshness plus every
 receipt, report, raw-chain, tool, policy, source, commit, and version binding
 still must pass. Continuation is bounded by the committed semantic policy
 (`maximum_age_days`, currently 30); it is not a release-creation option or an
-independent authorization flag. If that policy window expires, collect fresh
-provider evidence against the same immutable release commit and issue a new
-private report/receipt before resuming.
+independent authorization flag. Live publishers do not invoke that mode. If
+that policy window expires, collect fresh provider evidence against the same
+immutable release commit and issue a new private report/receipt before calling
+`create-github-release.py --live` again.
 The origin itself must be a canonical `github.com` HTTPS, SSH, or scp URL;
 lookalike hosts, local paths, non-HTTPS web URLs, and Git `insteadOf` rewrites
 fail closed. The fetch uses that already-validated literal URL rather than
@@ -401,8 +402,9 @@ bytes and binds the current
 issuer/verifier/checker/rubric/policy bytes, real execution, distinct judge,
 complete 24-case smoke cohort, all five 100/100 maturity dimensions, and
 P19/P20/H20. Keep both outputs private and never overwrite them; export
-the complete three-part verification bundle before any live release or
-distribution command:
+the complete three-part verification bundle before `create-github-release.py --live`.
+Later live publishers (`sync-about.sh`, `sync-family.sh`, `publish-*.sh`) do not
+read that bundle:
 
 ```bash
 export AARON_RELEASE_RECEIPT="/private/path/v19-engineering-release-receipt.json"
@@ -523,12 +525,15 @@ repos, and all six release assets agree.
 > stops at `--skillhub-budget` (default 90), retries a rate-limit once, defers the
 > skill, and aborts the pass after 2 consecutive deferrals. A 120-skill full
 > re-release is by design a **two-day publish**: ~90 on day one, the rest after
-> the window rolls. Deferred runs exit 8, not 1. The resumed publisher may reuse
-> the original private evidence bundle after 24 hours only because it first
-> re-proves the immutable final Release gates and remains inside the committed
-> semantic-policy window (currently 30 days). Past that window, rerun the
-> real-provider smoke against the same release commit and issue a new report and
-> receipt.
+> the window rolls. Deferred runs exit 8, not 1. The resumed publisher may
+> continue after 24 hours because it re-proves the immutable final Release
+> gates (tag resolves to HEAD, non-draft release, assets, and green owner
+> workflow) and does not require the private `AARON_RELEASE_*` bundle. The
+> verifier `--post-release-continuation` mode remains available for owner-local
+> receipt revalidation inside the committed semantic-policy window (currently
+> 30 days). Past that window, rerun the real-provider smoke against the same
+> immutable release commit and issue a new report and receipt before creating
+> another GitHub release.
 
 ## Gotchas (learned the hard way)
 

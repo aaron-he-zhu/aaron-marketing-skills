@@ -195,22 +195,31 @@ python3 scripts/verify-release-receipt.py "$AARON_RELEASE_RECEIPT" \
   --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT"
 ```
 
-Every v19 live publisher requires all three variables and rapidly revalidates
-the receipt, the exact report bytes, and the original semantic event chain with
-the current verifier. Receipt issuance and `create-github-release.py --live`
-always enforce the strict 24-hour freshness gate for the receipt and semantic
-evidence.
-After the immutable final tag, non-draft Release, exact six assets, and owner
-workflow have all been verified, publisher entrypoints may internally use the
-explicit post-release-continuation verifier mode: it relaxes only the current
-wall-clock check, still proves issuance-time freshness and every
-receipt/report/raw-evidence/tool/source hash, and remains bounded by the
-committed semantic policy (currently 30 days). Do not invoke that mode to create
-or authorize a release. If the policy window expires, run fresh provider
+`create-github-release.py --live` still takes the private receipt, maturity
+report, and evidence root as CLI flags and rapidly revalidates the receipt, the
+exact report bytes, and the original semantic event chain with the current
+verifier. Live publishers do not require `AARON_RELEASE_RECEIPT`,
+`AARON_RELEASE_MATURITY_REPORT`, or `AARON_RELEASE_EVIDENCE_ROOT`
+(`sync-about.sh`, `sync-family.sh`, and the `publish-*.sh` family). They still
+require a clean worktree, a canonical `github.com` origin, no Git
+`url.*.insteadOf` rewrites, and — for v19 and later — an immutable final tag
+that resolves to HEAD, a non-draft/non-prerelease GitHub Release, exact
+downloaded assets, and a green owner-run release-validation workflow on that
+commit.
+Receipt issuance and `create-github-release.py --live` always enforce the
+strict 24-hour freshness gate for the receipt and semantic evidence.
+The verifier's `--post-release-continuation` mode remains available for
+owner-local receipt revalidation after the immutable final tag exists: it
+relaxes only the current wall-clock check, still proves issuance-time freshness
+and every receipt/report/raw-evidence/tool/source hash, and remains bounded by
+the committed semantic policy (currently 30 days). Live publishers do not
+invoke that mode and do not read the private bundle. Do not invoke that mode to
+create or authorize a release. If the policy window expires, run fresh provider
 evidence against the same immutable release commit and issue a new private
-report/receipt before resuming distribution. The evidence root may be a real
-directory outside the repository, or the repository's absolute root only when
-the bound `memory/runs/<run-id>` directory is Git-ignored and wholly untracked.
+report/receipt before calling `create-github-release.py --live` again. The
+evidence root may be a real directory outside the repository, or the
+repository's absolute root only when the bound `memory/runs/<run-id>` directory
+is Git-ignored and wholly untracked.
 Never upload the receipt, report, or raw evidence. The real-provider smoke run
 executes real models, but its cases are simulated semantic fixtures. It proves
 engineering conformance, not customer or real-project outcomes; the public

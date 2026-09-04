@@ -1,4 +1,3 @@
-import datetime as dt
 import hashlib
 import json
 import os
@@ -21,15 +20,6 @@ DISCIPLINES = (
     "influencer",
     "launch",
 )
-ENGINEERING_TOOL_REFS = {
-    "issuer": "scripts/issue-engineering-release-receipt.py",
-    "release_verifier": "scripts/verify-release-receipt.py",
-    "maturity_checker": "scripts/check-engineering-maturity.py",
-    "semantic_verifier": "scripts/verify-semantic-evidence.py",
-    "maturity_rubric": "references/engineering-maturity-rubric.json",
-    "semantic_policy": "evals/semantic-evidence-policy.json",
-    "receipt_schema": "references/engineering-release-receipt.schema.json",
-}
 MOCK_SEMANTIC_VERIFIER = """#!/usr/bin/env python3
 from pathlib import Path
 import sys
@@ -97,103 +87,6 @@ def pilot_release_receipt(commit="a" * 40, version="19.0.0"):
             "safety_failure_count": 0,
             "passed": True,
             "errors": [],
-        },
-    }
-
-
-def engineering_release_receipt(
-    *,
-    source_tree_sha256,
-    release_root=ROOT,
-    commit="a" * 40,
-    version="19.0.0",
-):
-    stamp = (
-        dt.datetime.now(dt.timezone.utc)
-        .replace(microsecond=0)
-        .isoformat()
-        .replace("+00:00", "Z")
-    )
-    return {
-        "$schema": "references/engineering-release-receipt.schema.json",
-        "schema_version": "1.0",
-        "gate": "engineering-validation-v19",
-        "passed": True,
-        "release_version": version,
-        "release_candidate": version + "-rc.1",
-        "source_commit": commit,
-        "issued_at": stamp,
-        "repository": {
-            "branch": "fixture",
-            "worktree_clean": True,
-            "source_tree_sha256": source_tree_sha256,
-        },
-        "tools": {
-            name: {
-                "ref": reference,
-                "sha256": hashlib.sha256(
-                    (release_root / reference).read_bytes()
-                ).hexdigest(),
-            }
-            for name, reference in ENGINEERING_TOOL_REFS.items()
-        },
-        "maturity": {
-            "evaluated_at": stamp,
-            "report_sha256": "1" * 64,
-            "target_score": 95,
-            "achieved": True,
-            "dimension_scores": {
-                name: 100
-                for name in ("prompt", "context", "harness", "loop", "graph")
-            },
-            "required_hard_gates": {
-                "P19": True,
-                "P20": True,
-                "H20": True,
-            },
-        },
-        "semantic_evidence": {
-            "schema_version": "1.0",
-            "valid": True,
-            "run_id": "12345678-1234-1234-1234-123456789abc",
-            "profile": "smoke",
-            "case_count": 24,
-            "case_provenance": {"simulated": 24},
-            "execution_mode": "real",
-            "model_provider": "fixture-provider",
-            "model_id": "fixture-model",
-            "judge_model_id": "fixture-judge",
-            "distinct_judge_model": True,
-            "total_judge_attempts": 24,
-            "retried_cases": 0,
-            "judge_protocol_retries": 0,
-            "host_name": "fixture-host",
-            "host_version": "1",
-            "adapter_name": "fixture-adapter",
-            "adapter_implementation_sha256": "2" * 64,
-            "runner_sha256": "3" * 64,
-            "selection_sha256": "4" * 64,
-            "protocol_schema_sha256": "5" * 64,
-            "request_stream_sha256": "6" * 64,
-            "result_stream_sha256": "7" * 64,
-            "head_record_hash": "8" * 64,
-            "completion_sha256": "9" * 64,
-            "oldest_result_at": stamp,
-            "newest_evidence_at": stamp,
-            "age_seconds": 0,
-        },
-        "claims": {
-            "validation_scope": "engineering-only",
-            "evidence_provenance": "simulated-semantic-cases",
-            "real_project_outcomes_validated": False,
-            "default_profile": "lite",
-            "governed_outcome_claims_allowed": False,
-            "governed_default_promotion_allowed": False,
-        },
-        "attestation": {
-            "method": "explicit-owner-engineering-only-authorization",
-            "statement": "release-v19-without-real-project-outcomes",
-            "accepted_at": stamp,
         },
     }
 
@@ -447,96 +340,24 @@ else:
         release_version = json.loads(
             (ROOT / ".claude-plugin/plugin.json").read_text(encoding="utf-8")
         )["version"]
+        for name in (
+            "AARON_RELEASE_RECEIPT",
+            "AARON_RELEASE_MATURITY_REPORT",
+            "AARON_RELEASE_EVIDENCE_ROOT",
+        ):
+            environment.pop(name, None)
         if int(release_version.split(".", 1)[0]) >= 19:
-            receipt_path = base / "private-release-receipt.json"
-            receipt = engineering_release_receipt(
-                version=release_version,
-                release_root=release_root,
-                source_tree_sha256=hashlib.sha256(
-                    environment["FAKE_GIT_LS_TREE"].encode("utf-8")
-                ).hexdigest(),
-            )
-            rubric = json.loads(
-                (
-                    release_root
-                    / "references"
-                    / "engineering-maturity-rubric.json"
-                ).read_text(encoding="utf-8")
-            )
-            report = {
-                "$schema": "references/engineering-maturity-report.schema.json",
-                "schema_version": "1.0",
-                "evaluated_at": receipt["maturity"]["evaluated_at"],
-                "repository": {
-                    "git_available": True,
-                    "commit": "a" * 40,
-                    "branch": "fixture",
-                    "worktree_clean": True,
-                },
-                "checker": receipt["tools"]["maturity_checker"],
-                "rubric_sha256": receipt["tools"]["maturity_rubric"]["sha256"],
-                "target_score": 95,
-                "achieved": True,
-                "semantic_evidence_run_id": receipt["semantic_evidence"]["run_id"],
-                "semantic_evidence": receipt["semantic_evidence"],
-                "dimensions": {
-                    name: {
-                        "raw_score": 100,
-                        "final_score": 100,
-                        "score_10": 10.0,
-                        "target_met": True,
-                        "failed_hard_gates": [],
-                        "failed_controls": [],
-                        "controls": [
-                            {
-                                **control,
-                                "passed": True,
-                                "points": 5,
-                                "evidence": "mocked publisher gate boundary",
-                            }
-                            for control in controls
-                        ],
-                    }
-                    for name, controls in rubric["dimensions"].items()
-                },
-            }
-            report_path = base / "private-maturity-report.json"
-            report_raw = (
-                json.dumps(report, indent=2, sort_keys=True, ensure_ascii=False)
-                + "\n"
-            ).encode("utf-8")
-            report_path.write_bytes(report_raw)
-            report_path.chmod(0o600)
-            receipt["maturity"]["report_sha256"] = hashlib.sha256(
-                report_raw
-            ).hexdigest()
-            evidence_root = base / "mock-raw-evidence-boundary"
-            evidence_root.mkdir(mode=0o700)
-            (evidence_root / "mock-revalidated-summary.json").write_text(
-                json.dumps(receipt["semantic_evidence"], sort_keys=True) + "\n",
-                encoding="utf-8",
-            )
-            receipt_path.write_text(
-                json.dumps(receipt, indent=2, sort_keys=True) + "\n",
-                encoding="utf-8",
-            )
-            os.chmod(receipt_path, 0o600)
-            receipt_sha = hashlib.sha256(receipt_path.read_bytes()).hexdigest()
             gate_token = hashlib.sha256(
                 "\0".join(
                     (
                         "aaron-he-zhu/aaron-marketing-skills",
                         "a" * 40,
                         release_version,
-                        receipt_sha,
                     )
                 ).encode("utf-8")
             ).hexdigest()
             environment.update(
                 {
-                    "AARON_RELEASE_RECEIPT": str(receipt_path),
-                    "AARON_RELEASE_MATURITY_REPORT": str(report_path),
-                    "AARON_RELEASE_EVIDENCE_ROOT": str(evidence_root),
                     "AARON_PUBLISH_EXPECTED_REPO": (
                         "aaron-he-zhu/aaron-marketing-skills"
                     ),

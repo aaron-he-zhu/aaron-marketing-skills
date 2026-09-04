@@ -58,6 +58,14 @@ class ReleasePolicyDocumentationTests(unittest.TestCase):
                 self.assertIn("same immutable release commit", text)
                 self.assertIn("neither authorizes a release", text)
                 self.assertIn("simulated semantic fixtures", text)
+                self.assertIn(
+                    "live publishers do not require `aaron_release_receipt`",
+                    text,
+                )
+                self.assertIn(
+                    "`aaron_release_maturity_report`, or `aaron_release_evidence_root`",
+                    text,
+                )
 
     def test_owner_workflow_reminder_does_not_claim_project_validation(self):
         text = self.normalized(".github/workflows/release-validation.yml")
@@ -73,6 +81,10 @@ class ReleasePolicyDocumentationTests(unittest.TestCase):
         self.assertIn("aaron_release_receipt", text)
         self.assertIn("aaron_release_maturity_report", text)
         self.assertIn("aaron_release_evidence_root", text)
+        self.assertIn(
+            "live publishers do not require `aaron_release_receipt`",
+            text,
+        )
         self.assertIn("git-ignored and wholly untracked", text)
         self.assertIn("does **not** receive or upload", text)
         self.assertIn("strict 24-hour freshness gate", text)
