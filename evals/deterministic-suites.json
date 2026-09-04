@@ -153,6 +153,16 @@
       "timeout_seconds": 60
     },
     {
+      "id": "routing-retrieval",
+      "command": ["{python}", "scripts/check-routing-retrieval.py"],
+      "timeout_seconds": 60
+    },
+    {
+      "id": "maintenance-wiki",
+      "command": ["{python}", "scripts/check-wiki.py"],
+      "timeout_seconds": 60
+    },
+    {
       "id": "routing-lint-regressions",
       "command": ["{python}", "tests/test_routing.py"],
       "timeout_seconds": 60

@@ -166,6 +166,9 @@ jobs:
       - name: Local Markdown link targets
         run: python3 scripts/check-local-links.py
 
+      - name: Maintenance wiki lint
+        run: python3 scripts/check-wiki.py
+
       # S1 validates only directly changed skills, then plans the semantically
       # affected cases. S2/S3 also run these checks before full validation.
       - name: Validate changed skills

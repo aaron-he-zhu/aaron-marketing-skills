@@ -1,5 +1,12 @@
 # Skill Quality & Regression Cases
 
+| Provenance | Value |
+|---|---|
+| `status` | active |
+| `generated` | false |
+| `sources` | `evals/structure-manifest.json`, `evals/deterministic-suites.json`, `references/wiki/okf-terminology.md` |
+| `stale_after` | 2027-03-04 |
+
 **Status**: deterministic conformance suites plus provenance-bound semantic profiles
 
 **Scope**: quality and regression review examples covering all 120 skills (16 SEO/GEO + 16 influencer + 16 paid ads + 16 email + 16 launch + 16 social + 16 narrative + 8 protocol) and the `/aaron-marketing:auto`/`/aaron-marketing:auto --deep` natural-language router
@@ -25,6 +32,8 @@ failure_modes: ["Regression"]
 Routing cases use the same schema and live in the target skill's `cases.md`. Use `id: routing-...`, keep `target_skill` as a real skill slug, and encode route order, required gates, handoffs, `NEEDS_INPUT`, or `BLOCKED` behavior in `expected_behavior`.
 
 The `/aaron-marketing:auto` routing scenarios are maintained in `evals/auto-routing-scenarios.source.md` as a YAML `eval-case` bundle with real `target_skill` values plus `scenario_family`, `risk_gates`, `expected_route`, `blocking_inputs`, and `must_not`. For command-only scenarios, `target_skill` is the risk/state owner and `expected_route` is command truth. After changing that source, run `python3 scripts/generate-auto-routing-shards.py --write`; never hand-edit the generated runtime index or shards.
+
+A separate maintainer suite, [`evals/routing-retrieval/`](routing-retrieval/README.md), maps natural-language intents to a focused expected Skill set (≤3). It is **not** part of the 734-case semantic corpus and does not add a Skill. **Guidance:** focused ≤3 modules beat exhaustive dumps. Run `python3 scripts/check-routing-retrieval.py` (also hooked from `evals/deterministic-suites.json`).
 
 ## Evidence Rule
 

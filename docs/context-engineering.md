@@ -6,6 +6,11 @@ The operational rule is:
 
 > Give the model the smallest sufficient decision context. Keep authority, integrity, state, validation, observability, and recovery in the controller.
 
+Focused ≤3 modules beat exhaustive dumps. The maintainer wiki at
+[`references/wiki/`](../references/wiki/index.md) is **not** part of this
+assembly. Runtime must not inject wiki; open it only for Accept / evolution
+work. See [`evals/routing-retrieval/`](../evals/routing-retrieval/README.md).
+
 ## Outcome
 
 The v19 refactor establishes five independently testable layers:
@@ -335,6 +340,8 @@ python3 scripts/context-profile-resolver.py --validate
 python3 scripts/check-context-budget.py
 python3 scripts/check-context-efficiency.py
 python3 scripts/check-routing.py
+python3 scripts/check-routing-retrieval.py
+python3 scripts/check-wiki.py
 python3 scripts/check-architecture.py
 python3 scripts/run-isolated-evals.py --help
 ./scripts/check-versions.sh

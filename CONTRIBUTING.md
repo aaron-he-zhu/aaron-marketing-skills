@@ -269,6 +269,16 @@ prior-release `aaron-marketing-skills-<ver>-agent-plugin-v1-lite.tar.gz` asset.
 
 Keep changes focused. Bump both top-level `version` and `metadata.version` together. Update `VERSIONS.md`. Put new reference docs in the skill's `references/` subdirectory.
 
+### Wiki-first evolution (path-safe)
+
+Do not rename, move, or re-slug an existing Skill. Do not add a 121st Skill.
+Compile the lesson into [`references/wiki/`](references/wiki/index.md) first
+(one atomic pattern + log row), then optionally open a Skill-body PR that
+cites the pattern id. Use
+[`references/wiki/skill-evolution-proposal.md`](references/wiki/skill-evolution-proposal.md).
+The wiki is maintenance-time only — never add it to `### Runtime Reads` or
+context-assembly defaults. Schema: [`references/wiki/SCHEMA.md`](references/wiki/SCHEMA.md).
+
 ## Craft Checklist
 
 Beyond the mechanical checks, every skill should pass the senior self-test from [skill-contract.md §Skill Authoring Discipline](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/references/skill-contract.md):

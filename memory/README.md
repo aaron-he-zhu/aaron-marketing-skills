@@ -1,8 +1,19 @@
 # Runtime Memory
 
-`memory/` is the local operational state used by the protocol layer. It can contain consent,
-creator, customer, campaign, claim, and audit data, so runtime contents are **ignored by Git by
-default**.
+| Provenance | Value |
+|---|---|
+| `status` | active |
+| `generated` | false |
+| `sources` | `protocol/memory-management/SKILL.md`, `references/runtime-protocol.md`, `references/wiki/SCHEMA.md` |
+| `stale_after` | 2027-03-04 |
+
+`memory/` is the local operational state used by the protocol layer. The
+maintenance wiki at [`references/wiki/`](../references/wiki/index.md) sits
+beside this tree. It does not replace HOT/WARM/COLD files, registry events,
+or run evidence, and runtime assembly must not inject it.
+
+Live files can contain consent, creator, customer, campaign, claim, and audit
+data, so runtime contents are **ignored by Git by default**.
 
 The tracked files under `memory/templates/` are inert examples. `memory-management` creates live
 files from those templates only after the user approves a memory write. The registry event runtime

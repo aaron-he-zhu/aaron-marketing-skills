@@ -83,6 +83,8 @@ jobs:
           python3 scripts/check-pii.py --tracked
           bash scripts/check-stdlib-only.sh
           python3 scripts/check-local-links.py
+          python3 scripts/check-wiki.py
+          python3 scripts/check-routing-retrieval.py
           find . -path ./.git -prune -o -path ./.planning -prune -o -name '*.json' -type f -print0 |
             xargs -0 -n1 python3 -m json.tool >/dev/null
           python3 -m py_compile scripts/*.py scripts/connectors/*.py scripts/adapters/*.py
