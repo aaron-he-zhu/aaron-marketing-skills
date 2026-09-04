@@ -295,8 +295,8 @@ immutable final Release exists. That mode relaxes only the
 wall-clock-since-issuance check: issuance-time 24-hour freshness plus every
 receipt, report, raw-chain, tool, policy, source, commit, and version binding
 still must pass. Continuation is bounded by the committed semantic policy
-(`maximum_age_days`, currently 30); it is not a release-creation option or an
-independent authorization flag. Live publishers do not invoke that mode. If
+(`maximum_age_days`, currently 30 days); it is not a release-creation option or
+an independent authorization flag. Live publishers do not invoke that mode. If
 that policy window expires, collect fresh provider evidence against the same
 immutable release commit and issue a new private report/receipt before calling
 `create-github-release.py --live` again.
@@ -530,8 +530,8 @@ repos, and all six release assets agree.
 > gates (tag resolves to HEAD, non-draft release, assets, and green owner
 > workflow) and does not require the private `AARON_RELEASE_*` bundle. The
 > verifier `--post-release-continuation` mode remains available for owner-local
-> receipt revalidation inside the committed semantic-policy window (currently
-> 30 days). Past that window, rerun the real-provider smoke against the same
+> receipt revalidation inside the committed semantic-policy window (currently 30 days).
+> Past that window, rerun the real-provider smoke against the same
 > immutable release commit and issue a new report and receipt before creating
 > another GitHub release.
 

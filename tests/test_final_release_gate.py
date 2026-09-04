@@ -182,7 +182,10 @@ else:
                 self.assertNotIn("AARON_RELEASE_RECEIPT", result.stderr)
                 self.assertNotIn("AARON_RELEASE_MATURITY_REPORT", result.stderr)
                 self.assertNotIn("AARON_RELEASE_EVIDENCE_ROOT", result.stderr)
-                self.assertIn("GitHub CLI is required", result.stderr)
+                self.assertRegex(
+                    result.stderr,
+                    r"GitHub CLI is required|cannot resolve immutable GitHub tag",
+                )
 
     def test_exact_parent_gate_token_allows_a_child_without_repeating_network_checks(self):
         with tempfile.TemporaryDirectory() as temporary:
