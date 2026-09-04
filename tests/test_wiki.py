@@ -2,6 +2,7 @@
 """Behavioral tests for scripts/check-wiki.py and the runtime-exclusion rule."""
 from __future__ import annotations
 
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
@@ -14,6 +15,7 @@ SCHEMA = ROOT / "references" / "wiki" / "SCHEMA.md"
 PLUGIN = ROOT / ".claude-plugin" / "plugin.json"
 MODULES = ROOT / "references" / "context-modules.json"
 DISTRIBUTION = ROOT / "references" / "distribution-files.json"
+BUILDER = ROOT / "scripts" / "build-distribution.py"
 
 
 class WikiLintTest(unittest.TestCase):
@@ -36,6 +38,27 @@ class WikiLintTest(unittest.TestCase):
         self.assertNotIn("references/wiki", modules)
         distribution = DISTRIBUTION.read_text(encoding="utf-8")
         self.assertNotIn("references/wiki", distribution)
+
+    def test_governed_closure_rejects_wiki_and_check_scripts(self):
+        spec = importlib.util.spec_from_file_location("wiki_builder_test", BUILDER)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        profile = module.resolve_plugin_profile(
+            module.load_json(module.MANIFEST), "governed")
+        self.assertIn("references/wiki", module.MAINTENANCE_TREES)
+        self.assertIn("scripts/check-wiki.py", module.MAINTENANCE_EXACT)
+        self.assertIn("scripts/check-routing-retrieval.py", module.MAINTENANCE_EXACT)
+        self.assertFalse(module.dependency_allowed("references/wiki/index.md", profile))
+        self.assertFalse(module.dependency_allowed("scripts/check-wiki.py", profile))
+        self.assertFalse(
+            module.dependency_allowed("scripts/check-routing-retrieval.py", profile))
+        readme_deps = module.runtime_dependencies("README.md")
+        shipped = [
+            dep for dep in readme_deps
+            if module.dependency_allowed(dep, profile)
+            and (dep.startswith("references/wiki") or dep.startswith("scripts/check-"))
+        ]
+        self.assertEqual([], shipped)
 
 
 if __name__ == "__main__":

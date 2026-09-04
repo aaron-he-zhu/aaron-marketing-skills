@@ -10,6 +10,7 @@ Usage:
 """
 from __future__ import annotations
 
+import importlib.util
 import json
 from datetime import date
 from pathlib import Path
@@ -23,6 +24,11 @@ INDEX = WIKI / "index.md"
 PLUGIN = ROOT / ".claude-plugin" / "plugin.json"
 CONTEXT_MODULES = ROOT / "references" / "context-modules.json"
 DISTRIBUTION = ROOT / "references" / "distribution-files.json"
+BUILDER = ROOT / "scripts" / "build-distribution.py"
+MAINTENANCE_SCRIPTS = (
+    "scripts/check-wiki.py",
+    "scripts/check-routing-retrieval.py",
+)
 RUNTIME_READS = re.compile(r"^### Runtime Reads\s*$(.*?)(?=^#{2,3} |\Z)", re.M | re.S)
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 REQUIRED_RUNTIME_SENTENCE = "Runtime must not inject wiki."
@@ -47,6 +53,15 @@ def load_json(path: Path):
 
 def wiki_markdown():
     return sorted(path for path in WIKI.rglob("*.md") if path.is_file())
+
+
+def load_builder():
+    spec = importlib.util.spec_from_file_location("wiki_distribution_builder", BUILDER)
+    if spec is None or spec.loader is None:
+        raise WikiError("cannot load scripts/build-distribution.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def parse_frontmatter(text: str, rel: str):
@@ -228,11 +243,55 @@ def main():
     except WikiError as exc:
         fail(str(exc))
     try:
-        dist_hits = walk_json_for_wiki(load_json(DISTRIBUTION))
+        dist = load_json(DISTRIBUTION)
+        dist_hits = walk_json_for_wiki(dist)
         if dist_hits:
             fail("distribution-files.json allowlists wiki: %s" % "; ".join(dist_hits))
+        declared = []
+        plugin = dist.get("plugin") if isinstance(dist, dict) else None
+        shared = plugin.get("shared") if isinstance(plugin, dict) else {}
+        for key in ("root_files", "trees", "runtime_references", "runtime_scripts",
+                    "runtime_script_trees"):
+            declared.extend(shared.get(key) or [])
+        for spec in (plugin.get("profiles") or {}).values() if isinstance(plugin, dict) else []:
+            added = spec.get("add") if isinstance(spec, dict) else {}
+            for key in ("root_files", "trees", "runtime_references", "runtime_scripts",
+                        "runtime_script_trees"):
+                declared.extend(added.get(key) or [])
+        for relative in MAINTENANCE_SCRIPTS:
+            if relative in declared:
+                fail("distribution-files.json allowlists maintenance script %s" % relative)
     except WikiError as exc:
         fail(str(exc))
+
+    try:
+        builder = load_builder()
+        if "references/wiki" not in builder.MAINTENANCE_TREES:
+            fail("build-distribution.py MAINTENANCE_TREES must include references/wiki")
+        missing_scripts = [
+            relative for relative in MAINTENANCE_SCRIPTS
+            if relative not in builder.MAINTENANCE_EXACT
+        ]
+        if missing_scripts:
+            fail("build-distribution.py MAINTENANCE_EXACT missing %s" % missing_scripts)
+        profile = builder.resolve_plugin_profile(builder.load_json(builder.MANIFEST), "governed")
+        for path in pages:
+            rel = str(path.relative_to(ROOT))
+            if builder.dependency_allowed(rel, profile):
+                fail("governed closure would ship wiki page %s" % rel)
+        for relative in MAINTENANCE_SCRIPTS:
+            if builder.dependency_allowed(relative, profile):
+                fail("governed closure would ship maintenance script %s" % relative)
+        readme_deps = builder.runtime_dependencies("README.md")
+        leaked = [
+            dep for dep in sorted(readme_deps)
+            if builder.dependency_allowed(dep, profile)
+            and (dep.startswith("references/wiki") or dep in MAINTENANCE_SCRIPTS)
+        ]
+        if leaked:
+            fail("README runtime closure would ship maintenance paths: %s" % leaked)
+    except (WikiError, Exception) as exc:
+        fail("distribution-closure check failed: %s" % exc)
 
     if fails:
         print("\nWIKI LINT FAILED — %d issue(s)." % len(fails))
