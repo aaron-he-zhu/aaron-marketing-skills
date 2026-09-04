@@ -1,8 +1,15 @@
 name: Skill Request
-description: Suggest a new skill for Aaron Marketing Skills (SEO/GEO, influencer, or paid ads/ROAS)
+description: Propose a rare new skill only after showing why an existing skill or wiki pattern cannot cover it. Path and slug changes are forbidden.
 title: "[Skill Request] "
 labels: ["skill-request"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        The bundle is a closed **120-skill** shape (16 × 7 + 8 protocol). New
+        skills are exceptional. Prefer a mode on an existing skill, or compile
+        the lesson into `references/wiki/` first. Do not rename, move, or
+        re-slug any Skill.
   - type: input
     id: skill-name
     attributes:
@@ -48,7 +55,7 @@ body:
     id: existing-gaps
     attributes:
       label: Why can't existing skills cover this?
-      description: Explain why the 69 existing skills don't address this need.
+      description: Explain why the existing 120 skills (or a mode of one) cannot address this need.
       placeholder: "The closest existing skill is X, but it doesn't handle..."
     validations:
       required: true

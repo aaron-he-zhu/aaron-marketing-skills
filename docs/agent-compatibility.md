@@ -156,6 +156,11 @@ there is no second hand-maintained inventory.
 python3 scripts/generate-bot-projections.py --output /private/path/aaron-bot-roster
 ```
 
+Operator steps (generate → Hermes `profile install` vs Grok semi-manual
+cards): **[AI Staff install](ai-staff-install.md)**. Long-form narrative
+belongs on the [docs hub / AI Staff](https://aaronmarketing.ai/docs/ai-staff)
+(placeholder hub path). This section keeps host caveats and the smoke split.
+
 The generator writes, into a private directory **outside the repository**
 (outputs are release/deployment artifacts and are never committed):
 
@@ -198,18 +203,30 @@ Deployment boundaries, in both hosts:
   catalog stay untouched; each generated bundle manifest binds the selected
   profile definition by SHA-256.
 
-### Named-bot / Grok smoke backlog (owner-run)
+### Named-bot / Grok smoke backlog
 
-Same contract as the Agent Plugins backlog above: a `Pending` row blocks only
-the *verified* claim, never the generated artifact, and only the owner flips a
-row after recording the evidence.
+Two layers. Automated smoke never flips an owner-run row and never claims a
+public template publish, vendor contact, or verified client install.
 
-| Surface | Status | Required evidence before marking verified |
-|---|---|---|
-| Grok Build (filesystem skills) | Pending | Client version + OS; skills placed in `.grok/skills/` or `~/.agents/skills/`; discovery confirmed; one skill invoked; unknown frontmatter keys ignored without error. |
-| Grok Bot (managed bots) | Pending | App version + platform; one bot created from `bot-cards.md`; one skill saved from written instructions; per-bot enable list applied; a send/publish dry-run stopped at the approval boundary. |
-| Hermes Bot Mode (profile distributions) | Pending | `hermes --version` + OS; one generated bundle installed via `hermes profile install`; bundle SHA-256 recorded; bundled skill count discovered (16, or 8 for `aaron-chief`); one skill invoked as a slash command; no MCP server registered. |
-| Hermes `skills.external_dirs` (local bulk) | Pending | `hermes --version` + OS; unpacked Portable Lite SHA-256; 120/120 discovery from the external dir; one skill invoked; profile-over-external shadowing observed as documented. |
+**Automated (CI / local, hermetic):**
+`python3 scripts/smoke-bot-projections.py` generates into a temp directory and
+asserts roster completeness — 8 bots, exact catalog skill partition, Hermes
+bundle shape, Grok artifacts present, hash-bound manifests, no secret/state
+paths. Wired into the validate workflow baseline. This is **not** a host
+install smoke.
+
+**Owner-run (still Pending):** same contract as the Agent Plugins backlog
+above. A `Pending` row blocks only the *verified* host claim, never the
+generated artifact, and only the owner flips a row after recording the
+evidence. Connector attach (Option C) is deferred.
+
+| Surface | Status | Who runs it | Required evidence before marking verified |
+|---|---|---|---|
+| Generator roster contract | **Automated** | CI `scripts/smoke-bot-projections.py` | 8 bots; exact 120-skill partition; `hermes/` + `grok/` artifacts; SHA-256 manifests; no `.env` / `auth.json` / `memories/` / `sessions/`. |
+| Grok Build (filesystem skills) | Pending | Owner-run | Client version + OS; skills placed in `.grok/skills/` or `~/.agents/skills/`; discovery confirmed; one skill invoked; unknown frontmatter keys ignored without error. |
+| Grok Bot (managed bots) | Pending | Owner-run | App version + platform; one bot created from `bot-cards.md`; one skill saved from written instructions; per-bot enable list applied; a send/publish dry-run stopped at the approval boundary. |
+| Hermes Bot Mode (profile distributions) | Pending | Owner-run | `hermes --version` + OS; one generated bundle installed via `hermes profile install`; bundle SHA-256 recorded; bundled skill count discovered (16, or 8 for `aaron-chief`); one skill invoked as a slash command; no MCP server registered. |
+| Hermes `skills.external_dirs` (local bulk) | Pending | Owner-run | `hermes --version` + OS; unpacked Portable Lite SHA-256; 120/120 discovery from the external dir; one skill invoked; profile-over-external shadowing observed as documented. |
 
 ## Frontmatter portability
 

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 import posixpath
@@ -13,6 +14,13 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+SMOKE_SPEC = importlib.util.spec_from_file_location(
+    "smoke_bot_projections", ROOT / "scripts" / "smoke-bot-projections.py"
+)
+assert SMOKE_SPEC and SMOKE_SPEC.loader
+smoke = importlib.util.module_from_spec(SMOKE_SPEC)
+sys.modules[SMOKE_SPEC.name] = smoke
+SMOKE_SPEC.loader.exec_module(smoke)
 GENERATOR = ROOT / "scripts" / "generate-bot-projections.py"
 CATALOG = ROOT / "references" / "system-catalog.json"
 BOT_PREFIX = "aaron-"
@@ -313,6 +321,11 @@ class BotProjectionTests(unittest.TestCase):
         self.assertNotEqual(0, result.returncode)
         self.assertIn("outside the repository", result.stderr)
         self.assertFalse((ROOT / "tmp-bot-roster-refused").exists())
+
+    def test_smoke_assertions_cover_generated_roster(self):
+        smoke.assert_roster_complete(
+            self.output, self.catalog, self.roster, self.build_result
+        )
 
 
 if __name__ == "__main__":

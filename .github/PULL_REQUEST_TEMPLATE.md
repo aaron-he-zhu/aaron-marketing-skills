@@ -4,24 +4,23 @@
 
 ## Type of change
 
-- [ ] New skill
-- [ ] Skill update
-- [ ] Documentation
+Prefer a focused PR. New skills are rare and path-safe only — do not add a
+121st Skill or rename/move/re-slug an existing Skill.
+
+- [ ] Documentation (README / in-repo docs / docs-hub pointer)
+- [ ] AI Staff install or smoke
+- [ ] Skill update (existing skill body only — no path / slug / `name` change)
 - [ ] Bug fix
+- [ ] CI / guard
 - [ ] Other
 
 ## Checklist
 
-### For new skills:
-- [ ] `name` field matches directory name exactly
-- [ ] `description` includes trigger phrases AND scope boundaries
-- [ ] Placed in the correct phase directory (SEO/GEO: survey/implement/tune/evaluate · protocol: protocol · influencer: scout/target/activate/report · paid: `ad/<phase>/` — research/orchestrate/activate/scale)
-- [ ] Uses `~~placeholder` pattern for tool references
-- [ ] Includes validation checkpoints
-- [ ] Includes at least one concrete example
-- [ ] Related skills are linked correctly
-- [ ] Has `evals/<skill>/cases.md` (eval structural-lint gate), incl. NEEDS_INPUT / BLOCKED cases where relevant
-- [ ] Runs at Tier 1 keyless; any new `~~category` has a free/own-data fallback in CONNECTORS.md
+### For documentation / AI Staff / smoke:
+- [ ] No Skill URL, directory, slug, or `name` change
+- [ ] Wiki is not wired into runtime assembly, context-modules, or `### Runtime Reads`
+- [ ] Maintenance scripts named from docs stay out of the plugin payload
+- [ ] Staff changes stay generate-only (output outside the repo; no Gateway / Web UI / billing)
 
 ### For Skill-evolution / wiki proposals:
 - [ ] Path-safe: no Skill URL / directory / slug / `name` change and no 121st Skill
@@ -29,21 +28,23 @@
 - [ ] Wiki is not wired into runtime assembly or `### Runtime Reads`
 - [ ] Checklist: `references/wiki/skill-evolution-proposal.md`
 
+### For skill-body updates:
+- [ ] `name` field still matches directory name exactly
+- [ ] `description` still includes trigger phrases AND scope boundaries
+- [ ] Uses `~~placeholder` pattern for tool references
+- [ ] Related skills are linked correctly
+- [ ] Eval cases still valid (`evals/<skill>/cases.md`)
+- [ ] Still runs at Tier 1 keyless
+
 ### For all changes:
 - [ ] Follows the [Agent Skills specification](https://agentskills.io/specification.md)
-- [ ] `VERSIONS.md` updated with new version and date
-- [ ] `marketplace.json` (repo root) skills array updated (if adding a new skill)
-- [ ] `.claude-plugin/marketplace.json` byte-identical to root (`cp marketplace.json .claude-plugin/marketplace.json` — CI only diff-checks and fails on mismatch, it never copies)
-- [ ] `.claude-plugin/plugin.json` skills array updated (if adding a new skill)
-- [ ] Agent Plugins v1 impact reviewed for Skill/static-reference changes: Portable Lite builds and `python3 scripts/validate-agent-plugin.py <unpacked-package-dir>` passes with 120/120 strict Skills
-- [ ] No generated root `skills/` mirror was added; the discipline/phase source tree remains authoritative
+- [ ] `VERSIONS.md` updated when a skill or bundle version changes
+- [ ] Marketplace / plugin arrays updated only if a skill is added (avoid this)
+- [ ] `.claude-plugin/marketplace.json` byte-identical to root when those files change
+- [ ] Agent Plugins v1 impact reviewed for Skill/static-reference changes
+- [ ] No generated root `skills/` mirror was added
 - [ ] Portable Lite still contains no `mcp.json`, commands, hooks, connector helpers, or executable repository runtime
-- [ ] `README.md` skills table updated (if adding a new skill)
-- [ ] `CLAUDE.md` category table updated (if counts/structure changed)
-- [ ] `AGENTS.md` name/count line updated (if counts/structure changed)
-- [ ] `docs/README.zh.md` counts + version badge updated (if counts/structure changed)
 - [ ] No CORE-EEAT, CITE, STAR, ROAS, veto, cap, BLOCKED, or artifact-gate standard was weakened
-- [ ] No new pip / third-party dependency in core/plugin/distribution or guard-scanned Python surfaces (stdlib-only; eval-only probes must stay isolated, locked, and non-distributed)
+- [ ] No new pip / third-party dependency in core/plugin/distribution or guard-scanned Python surfaces
 - [ ] No secrets / PII introduced (`scripts/check-pii.py` clean)
-- [ ] Eval structure intact (`scripts/check-evals.py`; `--update` the manifest if skills changed)
 - [ ] Human maintainer review completed before merge
