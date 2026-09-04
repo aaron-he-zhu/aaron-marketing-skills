@@ -48,6 +48,7 @@ class WikiLintTest(unittest.TestCase):
         self.assertIn("references/wiki", module.MAINTENANCE_TREES)
         self.assertIn("scripts/check-wiki.py", module.MAINTENANCE_EXACT)
         self.assertIn("scripts/check-routing-retrieval.py", module.MAINTENANCE_EXACT)
+        self.assertNotIn("scripts/smoke-bot-projections.py", module.MAINTENANCE_EXACT)
         self.assertFalse(module.dependency_allowed("references/wiki/index.md", profile))
         self.assertFalse(module.dependency_allowed("scripts/check-wiki.py", profile))
         self.assertFalse(

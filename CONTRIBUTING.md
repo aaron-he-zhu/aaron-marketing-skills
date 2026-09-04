@@ -308,6 +308,26 @@ Before submitting a PR:
 
 - Fork, create a `feature/your-skill-name` branch, and submit a PR.
 
+## Team conventions
+
+These sit on top of the authoring rules above; they do not replace the
+10-surface list, the validator, or wiki-first evolution.
+
+- **Branch naming:** `feature/<skill-or-topic>`, `fix/<skill-or-topic>`,
+  `docs/<description>` — lowercase, one concern. Matches the existing
+  `feature/your-skill-name` submitting rule.
+- **PR size:** Keep Staff/docs/smoke, skill-body, and connector work on
+  separate PRs when they do not share a single contract change.
+- **Merge:** Squash-merge after AaronMarketing.ai review. Do not merge a
+  contributor PR without that review.
+- **Skill path freeze:** Do not rename, move, or re-slug an existing Skill.
+  Do not add a 121st Skill. Compile lessons in `references/wiki/` first.
+- **AI Staff:** generate into a private directory outside the repository.
+  Phase 1 has no Usage Gateway, billing, Web UI, or cloud hosting.
+- **Wiki / maintenance scripts:** never add `references/wiki/` or
+  `scripts/check-wiki.py` to runtime assembly, `### Runtime Reads`, or the
+  plugin distribution allowlist.
+
 ## Code of Conduct
 
 Be respectful, constructive, and focused on making the library better for everyone.

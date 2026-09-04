@@ -5,7 +5,10 @@ contact_links:
     about: Learn the skill format before creating or requesting a skill
   - name: Contributing Guide
     url: https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/CONTRIBUTING.md
-    about: How to contribute a new skill to this repository
+    about: Authoring rules, path-safe skill updates, and team conventions
+  - name: AI Staff install
+    url: https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/docs/ai-staff-install.md
+    about: Generate the 8-bot roster and install on Hermes or Grok
   - name: Skills.sh Marketplace
     url: https://skills.sh/aaron-he-zhu/aaron-marketing-skills
     about: Browse and install the skills — SEO/GEO, influencer, and paid ads (ROAS) — via skills.sh

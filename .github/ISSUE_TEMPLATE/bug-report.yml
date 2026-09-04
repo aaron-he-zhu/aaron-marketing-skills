@@ -22,6 +22,8 @@ body:
         - Tests (tests/)
         - Reference / framework doc (references/*)
         - Docs (README / CONNECTORS / CONTRIBUTING / etc.)
+        - AI Staff generator / Hermes / Grok install
+        - Automated roster smoke (`smoke-bot-projections.py`)
         - Other
     validations:
       required: true

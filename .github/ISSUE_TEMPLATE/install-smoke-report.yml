@@ -1,0 +1,76 @@
+name: Install / smoke report
+description: Report a plugin, Portable Lite, or AI Staff (Hermes / Grok) install or smoke failure.
+title: "[install/smoke] <short summary>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for install UX or smoke gaps — not for a new Skill.
+        Automated roster smoke is `python3 scripts/smoke-bot-projections.py`.
+        Host install rows in docs/agent-compatibility.md stay owner-run Pending
+        until the owner records evidence. Do not treat this issue as a public
+        template publish or vendor contact.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - AI Staff generator (`generate-bot-projections.py`)
+        - Automated roster smoke (`smoke-bot-projections.py`)
+        - Hermes `profile install`
+        - Grok Bot (cards / enable lists / checklist)
+        - Grok Build (filesystem skills)
+        - Hermes `skills.external_dirs`
+        - Claude Code plugin
+        - `npx skills` / portable host
+        - Agent Plugins v1 Portable Lite
+        - Docs / README install copy
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: host
+    attributes:
+      label: Host and version
+      description: e.g. `hermes 0.x`, Grok Bot iOS, Claude Code, Cursor
+      placeholder: host + version + OS
+    validations:
+      required: false
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or steps
+      description: Exact generate / install / smoke command. Redact secrets.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: dropdown
+    id: automated_vs_owner
+    attributes:
+      label: Which smoke layer?
+      options:
+        - Automated (generator / CI smoke)
+        - Owner-run host smoke (still Pending in agent-compatibility.md)
+        - Unsure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Bundle version
+      placeholder: 20.1.0
+    validations:
+      required: false
