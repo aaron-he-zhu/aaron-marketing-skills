@@ -125,6 +125,12 @@ def assert_hermes_shape(output: Path, roster: dict) -> None:
             path = bundle / filename
             if not path.is_file():
                 raise SmokeError("missing %s" % path)
+        readme = (bundle / "README.md").read_text(encoding="utf-8")
+        if "Hermes profile distribution" not in readme:
+            raise SmokeError(
+                "%s README.md must be the generated profile README, not the repo README"
+                % bot["bot"]
+            )
         yaml_text = (bundle / "distribution.yaml").read_text(encoding="utf-8")
         if 'name: "%s"' % bot["bot"] not in yaml_text:
             raise SmokeError("%s distribution.yaml missing bot name" % bot["bot"])

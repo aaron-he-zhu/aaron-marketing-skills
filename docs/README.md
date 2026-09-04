@@ -20,8 +20,8 @@ stay in the repo. This index does **not** migrate or delete the trees below.
 | [system-architecture.md](system-architecture.md) | Generated four-layer map (from the typed catalog) |
 | [workflow-graph.md](workflow-graph.md) | Generated workflow graph view |
 | [mcp-catalog.json](mcp-catalog.json) | Copy-paste MCP reference (not auto-registered) |
-| Root [CONTRIBUTING.md](../CONTRIBUTING.md) | Authoring + team conventions + 10 tracking surfaces |
-| Root [SECURITY.md](../SECURITY.md) · [PRIVACY.md](../PRIVACY.md) | Policy |
+| Root `CONTRIBUTING.md` | Authoring + team conventions + 10 tracking surfaces |
+| Root `SECURITY.md` · `PRIVACY.md` | Policy |
 
 ## Site-hub destined (keep in repo this PR)
 
@@ -32,7 +32,7 @@ here; the hub is the intended long-form home.
 |-----|-------|
 | [context-engineering.md](context-engineering.md) | Long-form context / certification narrative |
 | Root README Architecture / workflows / philosophy (now collapsed) | Pointers remain; full essay belongs on the hub |
-| [README.zh.md](README.zh.md) and other `README.*.md` | Authored translations — not mass-rewritten in Phase 1 |
+| Localized `docs/README.*.md` (not linked from this index) | Authored translations — not mass-rewritten in Phase 1. Those files link to the repo-root README; keep them out of bot-roster static closure. |
 | [aaronmarketing.ai/docs/ai-staff](https://aaronmarketing.ai/docs/ai-staff) | Placeholder Staff narrative/SEO path |
 
 ## Not docs (do not inject)
