@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "k": 3,
+  "guidance": "Focused ≤3 modules beat exhaustive dumps. Description-only retrieval is the CI bar; body-aware is a comparison arm and must not regress it.",
+  "cases": [
+    {
+      "id": "rr-keyword-001",
+      "intent": "find keywords for our SaaS blog topic cluster",
+      "expected_skills": ["keyword-research"],
+      "must_not_primary": ["content-gap-analysis"]
+    },
+    {
+      "id": "rr-outreach-001",
+      "intent": "write influencer outreach for the shortlisted creators",
+      "expected_skills": ["outreach-manager"],
+      "must_not_primary": ["contract-helper"]
+    },
+    {
+      "id": "rr-paid-structure-001",
+      "intent": "plan my paid account structure and pick Search vs PMax",
+      "expected_skills": ["campaign-architect"],
+      "must_not_primary": ["ad-account-auditor"]
+    },
+    {
+      "id": "rr-deliverability-001",
+      "intent": "run a deliverability pre-flight before I send this campaign",
+      "expected_skills": ["deliverability-qa"],
+      "must_not_primary": ["email-quality-auditor"]
+    },
+    {
+      "id": "rr-launch-gate-001",
+      "intent": "audit our launch plan — are we ready to launch",
+      "expected_skills": ["launch-readiness-auditor"],
+      "must_not_primary": ["launch-day-conductor"]
+    },
+    {
+      "id": "rr-social-cal-001",
+      "intent": "build our social posting calendar and set weekly slots",
+      "expected_skills": ["social-calendar-builder"],
+      "must_not_primary": ["content-amplifier"]
+    },
+    {
+      "id": "rr-narrative-001",
+      "intent": "audit our brand narrative and check if this message is on-canon",
+      "expected_skills": ["narrative-quality-auditor"],
+      "must_not_primary": ["launch-readiness-auditor"]
+    },
+    {
+      "id": "rr-memory-001",
+      "intent": "remember project context from this working session",
+      "expected_skills": ["memory-management"],
+      "must_not_primary": ["entity-registry"]
+    },
+    {
+      "id": "rr-cqa-001",
+      "intent": "auditing content quality, E-E-A-T, or publish readiness with a typed 80-item CORE-EEAT profile",
+      "expected_skills": ["content-quality-auditor"],
+      "must_not_primary": ["domain-authority-auditor"]
+    },
+    {
+      "id": "rr-conversion-001",
+      "intent": "QA my conversion tracking before launch and check my UTMs",
+      "expected_skills": ["conversion-signal-qa"],
+      "must_not_primary": ["campaign-architect"]
+    },
+    {
+      "id": "rr-paid-audit-001",
+      "intent": "audit this paid ad account for wasted spend before scaling",
+      "expected_skills": ["ad-account-auditor"],
+      "must_not_primary": ["campaign-architect"]
+    },
+    {
+      "id": "rr-roi-001",
+      "intent": "calculate influencer ROI and prove campaign value",
+      "expected_skills": ["roi-calculator"],
+      "must_not_primary": ["report-generator"]
+    },
+    {
+      "id": "rr-email-gate-001",
+      "intent": "audit an email program — is this campaign safe to send",
+      "expected_skills": ["email-quality-auditor"],
+      "must_not_primary": ["deliverability-qa"]
+    },
+    {
+      "id": "rr-cite-001",
+      "intent": "audit domain authority, trust, and citation credibility",
+      "expected_skills": ["domain-authority-auditor"],
+      "must_not_primary": ["offsite-signal-analyzer"]
+    },
+    {
+      "id": "rr-perf-roi-001",
+      "intent": "analyze influencer campaign performance then calculate influencer ROI",
+      "expected_skills": ["performance-analyzer", "roi-calculator"],
+      "must_not_primary": ["report-generator"]
+    },
+    {
+      "id": "rr-paid-launch-001",
+      "intent": "QA my conversion tracking before launch then audit the paid ad account for measurement integrity",
+      "expected_skills": ["conversion-signal-qa", "ad-account-auditor"],
+      "must_not_primary": ["campaign-architect"]
+    }
+  ]
+}

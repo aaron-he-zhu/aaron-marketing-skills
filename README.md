@@ -73,6 +73,7 @@ The authoritative typed topology is [`references/system-catalog.json`](reference
 - [Design philosophy](#design-philosophy)
 - [Quality guards (CI)](#quality-guards-ci)
 - [Contributing & project docs](#contributing--project-docs)
+- [Maintenance wiki](#maintenance-wiki)
 - [Disclaimer](#disclaimer)
 - [License](#license)
 
@@ -705,6 +706,7 @@ social/explore|craft|host|observe/                   # Social — ECHO (16, incl
 protocol/                                            # Protocol layer (8) — truth registries + memory
 commands/        # 8 slash commands (auto, narrative, seo-geo, influencer, ad, email, launch, social)
 references/      # shared contract, state model, the 8 benchmarks, auditor runbook, platform packs
+references/wiki/ # maintenance-time knowledge wiki (not a Skill; not a runtime default)
 evals/           # per-skill structural eval cases + structure-manifest.json
 hooks/           # Claude lifecycle wiring + bounded privacy/artifact/run-context runner
 scripts/         # stdlib deterministic runtimes, validators/generators, connectors, and CI guards
@@ -736,6 +738,8 @@ Every change runs against a set of fail-closed guards (all in `scripts/` and `te
 | `validate-skill.sh` | Frontmatter, required sections, version consistency, plugin-relative links across all 120 skills. |
 | `golden-auditor-math.py` | Deterministic weight-sum + worked-example arithmetic for **all eight** frameworks. |
 | `check-evals.py` | Strict 734-case parser, evidence provenance, routing lint, and `structure-manifest.json` (120/120 skills carry eval cases). |
+| `check-routing-retrieval.py` | Intent → ≤3 Skill retrieval; description-only CI bar vs light body-aware comparison. Not a 121st Skill. |
+| `check-wiki.py` | Maintenance-wiki frontmatter, stale/orphan links, and runtime-exclusion (wiki is never a default assembly input). |
 | `check-pii.py` | Blocks committed secrets / PII (token-level allowlist, fail-closed). |
 | `check-stdlib-only.sh` | Dependency-creep guard + the Paid-Ads keyed-API red line. |
 | `check-versions.sh` | Version-sync guard: system catalog, plugin/marketplace/OpenClaw manifests, root + localized README badges, AGENTS/CLAUDE/VERSIONS, GitHub About, and all 120 skill versions stay aligned. |
@@ -769,6 +773,10 @@ Live endpoint drift is sampled separately by the **manual** [`scripts/connectors
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](SECURITY.md)** · **[PRIVACY.md](PRIVACY.md)** · **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)** — security, privacy, and community policy.
 - **[CLAUDE.md](CLAUDE.md)** / **[AGENTS.md](AGENTS.md)** — agent-facing context for this repo.
+
+## Maintenance wiki
+
+Maintainer knowledge lives in [`references/wiki/`](references/wiki/index.md) (schema: [`SCHEMA.md`](references/wiki/SCHEMA.md)). It sits beside `memory/`, the registries, and `evals/` — it does not replace them, is not a 121st Skill, and is **not** injected into runtime context assembly. Compile Accept lessons there first; Skill path/slug changes stay forbidden.
 
 ---
 

@@ -94,6 +94,13 @@ ENTRY_KEYS = (
     "root_files", "trees", "runtime_references",
     "runtime_scripts", "runtime_script_trees",
 )
+# Maintenance-only paths may be named from shipped root docs (README)
+# but must never enter a plugin or Portable Lite payload.
+MAINTENANCE_TREES = ("references/wiki",)
+MAINTENANCE_EXACT = (
+    "scripts/check-wiki.py",
+    "scripts/check-routing-retrieval.py",
+)
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 BACKUP_FILE = re.compile(r".+ [0-9]+\.[A-Za-z0-9]+$")
 RUNTIME_PATH = re.compile(
@@ -555,8 +562,18 @@ def _under_tree(relative, tree):
     return path == parent or parent in path.parents
 
 
+def _is_maintenance_tree(relative):
+    return any(_under_tree(relative, tree) for tree in MAINTENANCE_TREES)
+
+
+def _is_maintenance_path(relative):
+    return relative in MAINTENANCE_EXACT or _is_maintenance_tree(relative)
+
+
 def dependency_allowed(relative, profile):
     """Keep closure inside the selected monotonic capability boundary."""
+    if _is_maintenance_path(relative):
+        return False
     if relative in profile["reserved_exact"]:
         return relative in {
             value for key in ("root_files", "runtime_references", "runtime_scripts")
@@ -1581,6 +1598,12 @@ def build_plugin(
     for forbidden in distribution["excluded_top_level"]:
         if (destination / forbidden).exists():
             raise DistributionError("maintenance path leaked into plugin: %s" % forbidden)
+    for tree in MAINTENANCE_TREES:
+        if (destination / tree).exists():
+            raise DistributionError("maintenance path leaked into plugin: %s" % tree)
+    for relative in MAINTENANCE_EXACT:
+        if (destination / relative).exists():
+            raise DistributionError("maintenance path leaked into plugin: %s" % relative)
     if slim_frontmatter:
         for skill in skills:
             slim_skill_frontmatter(destination / skill / "SKILL.md")

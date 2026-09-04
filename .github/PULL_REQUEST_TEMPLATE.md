@@ -23,6 +23,12 @@
 - [ ] Has `evals/<skill>/cases.md` (eval structural-lint gate), incl. NEEDS_INPUT / BLOCKED cases where relevant
 - [ ] Runs at Tier 1 keyless; any new `~~category` has a free/own-data fallback in CONNECTORS.md
 
+### For Skill-evolution / wiki proposals:
+- [ ] Path-safe: no Skill URL / directory / slug / `name` change and no 121st Skill
+- [ ] Pattern id cited (`AMS-P-…`) or this PR is wiki-only ingest
+- [ ] Wiki is not wired into runtime assembly or `### Runtime Reads`
+- [ ] Checklist: `references/wiki/skill-evolution-proposal.md`
+
 ### For all changes:
 - [ ] Follows the [Agent Skills specification](https://agentskills.io/specification.md)
 - [ ] `VERSIONS.md` updated with new version and date
