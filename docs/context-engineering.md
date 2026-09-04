@@ -53,10 +53,10 @@ All repository measurements below are UTF-8 bytes, not estimated tokens. Provide
 | Aggregate required-reference bytes across 120 Skills | 2,809,014 B | 841,939 B | −70.0% |
 | Accidental required `CONNECTORS.md` references | 30 | 0 | −100% |
 | Worst valid `/auto` static assembly | 83,385 B | 48,199 B | −42.2% |
-| Model-visible explicit aggregate: Skill + shared contract, all 120 | 3,266,976 B | 1,564,310 B with capsule + kernel | −52.1% |
-| Model-visible explicit median | 27,506.5 B | 12,553 B (~12,553 B) with capsule + kernel | −54.4% |
-| All-selected fixed representation aggregate: Skill + controller-only machine contract + shared contract, all 120 | 5,409,421 B | 1,564,310 B with capsule + kernel | −71.1% |
-| All-selected fixed representation median | 46,308 B | 12,553 B (~12,553 B) with capsule + kernel | −72.9% |
+| Model-visible explicit aggregate: Skill + shared contract, all 120 | 3,267,456 B | 1,564,310 B with capsule + kernel | −52.1% |
+| Model-visible explicit median | 27,510.5 B | 12,553 B (~12,553 B) with capsule + kernel | −54.4% |
+| All-selected fixed representation aggregate: Skill + controller-only machine contract + shared contract, all 120 | 5,409,901 B | 1,564,310 B with capsule + kernel | −71.1% |
+| All-selected fixed representation median | 46,312 B | 12,553 B (~12,553 B) with capsule + kernel | −72.9% |
 
 The first two capsule rows are the primary deterministic **model-visible representation** comparison: explicit `Skill + shared contract` bytes versus lean `capsule + kernel` bytes. They are not token or cost measurements, and lean remains unavailable for deployment. The final two rows measure **consumer reclassification** from the former all-selected fixed representation: the machine contract is now controller-only, so the larger 71.1%/72.9% deltas are architectural projection reductions, not model-context savings. Neither comparison is a deployed quality claim; compact prompt profiles remain unavailable until paired evaluation evidence is promoted through a trusted release-attestation path.
 
