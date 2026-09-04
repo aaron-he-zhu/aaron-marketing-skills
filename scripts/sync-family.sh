@@ -242,9 +242,8 @@ check_marker_target brand-narrative-agent-skills 'plugin.json#narrative' "$TMP/g
 
 check_ids_target core-eeat-content-benchmark "$SOURCE_ROOT/references/core-eeat-benchmark.md" README.md
 check_ids_target cite-domain-rating "$SOURCE_ROOT/references/cite-domain-rating.md" README.md
-# v18 replaced the C3 split with the single references/star-benchmark.md (STAR framework).
-# OWNER ACTION: rename the GitHub mirror influencer-marketing-c3-benchmark ->
-# influencer-marketing-star-benchmark before the next sync, or this target will 404.
+# v18 replaced the C3 split with the single references/star-benchmark.md (STAR).
+# The GitHub mirror is already influencer-marketing-star-benchmark (ids-mode).
 check_ids_target influencer-marketing-star-benchmark \
   "$SOURCE_ROOT/references/star-benchmark.md" \
   README.md star-benchmark.md

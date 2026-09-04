@@ -468,13 +468,15 @@ package.
 
 ## Release-time distribution (the full push→distribution runbook, in order)
 
-Validated end-to-end at v18.0.0 (2026-07-13/14). Every step is resumable: a killed
+The ritual below is current. The first end-to-end validation of this sequence
+was at **v18.0.0 (2026-07-13/14)** and is a **historical** measurement, not the
+current release identity. Every step is resumable: a killed
 session loses at most one in-flight skill — re-run the same command.
 
 1. **Gate**: refresh/rebase deliberately, freeze one clean RC commit, pass the exact 120/120 version and complete local validation gates, run the current-source real-provider engineering-maturity gate, retain the original raw evidence root, issue the private maturity report plus engineering release receipt, and build two byte-identical release-asset sets against that exact commit.
 2. **Push and remote validation**: push the exact RC ref → require its ordinary PR CI → owner-dispatch release validation for that already-pushed ref/commit → integrate through the reviewed default-branch path without changing the RC tree. The release-validation workflow rejects a missing or differently resolved remote ref. The RC commit must remain reachable from refreshed `origin/main`; do not squash or rebase it during integration.
 3. **Release**: preview with `python3 scripts/create-github-release.py`, then run `python3 scripts/create-github-release.py --live --receipt "$AARON_RELEASE_RECEIPT" --maturity-report "$AARON_RELEASE_MATURITY_REPORT" --evidence-root "$AARON_RELEASE_EVIDENCE_ROOT" --asset-dir /private/path/v20.1.0-release-assets`. The owner-run command rapidly revalidates the private three-part evidence bundle and original semantic chain, then rechecks the exact six assets, green release workflow, clean/main-reachable source, annotated tag, `VERSIONS.md` notes, and downloaded GitHub assets. It never uploads the private inputs, resumes a same-commit tag safely, and treats an existing release as read-only; it never moves a tag or replaces assets.
-4. **About**: `bash scripts/sync-about.sh` → review → `--live` — projects `.github/repo-about.json` onto the GitHub sidebar. *This step was silently skipped at v18.0.0 and the About kept advertising the previous release's framework names — it is part of the ritual, not an extra.*
+4. **About**: `bash scripts/sync-about.sh` → review → `--live` — projects `.github/repo-about.json` onto the GitHub sidebar. *Historical note from v18.0.0: this step was silently skipped then and the About kept advertising the previous release's framework names — it is part of the ritual, not an extra.*
 5. **Family prerequisites** (only when the release renamed/reshaped a family repo): rename the mirror first, then manually reconcile any `ids`-mode mirror's content (README + standard file + CHANGELOG + CITATION) — `ids` targets are verify-only and never auto-pushed.
 6. **Family**: `bash scripts/sync-family.sh` → review → `--live` → re-run the dry-run until all 15 report ✓.
 7. **Package**: `bash scripts/publish-package.sh --from-build` → review → `bash scripts/publish-package.sh --from-build --live`. This publishes the Governed-ceiling package whose fresh logical default remains Lite. On a transport error after upload the script accepts success only when `package inspect --json` returns the exact source repository/commit and the remotely served distribution manifest has the attempted build's `files_sha256`; an older CLI without those fields fails closed.
@@ -515,7 +517,7 @@ Report that state explicitly and resume after the window rolls; do not call the
 release fully distributed until `registry-status.sh`, the package, About, family
 repos, and all six release assets agree.
 
-> **SkillHub quota (measured, v18.0.0)**: ~**100 publishes per 24h rolling window,
+> **SkillHub quota (historical measurement from v18.0.0; not the current release identity)**: ~**100 publishes per 24h rolling window,
 > account-wide**. Past it, every skill returns 发布频率过高 and *retries keep the
 > window hot* — never grind retries against it. `publish-registries.sh` therefore
 > stops at `--skillhub-budget` (default 90), retries a rate-limit once, defers the

@@ -11,7 +11,7 @@ This repository (`aaron-marketing-skills`) is the **single source of truth (SSOT
 | [aaron-marketing-skills](https://github.com/aaron-he-zhu/aaron-marketing-skills) | **SSOT** | active development | — | — |
 | [core-eeat-content-benchmark](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) | published standard | live mirror | `ids` | `references/core-eeat-benchmark.md` |
 | [cite-domain-rating](https://github.com/aaron-he-zhu/cite-domain-rating) | published standard | live mirror | `ids` | `references/cite-domain-rating.md` |
-| [influencer-marketing-star-benchmark](https://github.com/aaron-he-zhu/influencer-marketing-star-benchmark) | published standard | live mirror | `ids` | `references/star-benchmark.md` (v18 STAR reframe replaced the C3 split; **owner must rename the GitHub mirror from `influencer-marketing-c3-benchmark` before the next sync**) |
+| [influencer-marketing-star-benchmark](https://github.com/aaron-he-zhu/influencer-marketing-star-benchmark) | published standard | live mirror | `ids` | `references/star-benchmark.md` (v18 STAR reframe replaced the C3 split; the GitHub mirror is already `influencer-marketing-star-benchmark`) |
 | [paid-ads-roas-benchmark](https://github.com/aaron-he-zhu/paid-ads-roas-benchmark) | published standard | live mirror | `body` | `references/roas-benchmark.md` |
 | [email-marketing-send-benchmark](https://github.com/aaron-he-zhu/email-marketing-send-benchmark) | published standard | live mirror | `body` | `references/send-benchmark.md` |
 | [launch-marketing-ramp-benchmark](https://github.com/aaron-he-zhu/launch-marketing-ramp-benchmark) | published standard | live mirror | `body` | `references/ramp-benchmark.md` |

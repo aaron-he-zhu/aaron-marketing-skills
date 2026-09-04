@@ -98,7 +98,7 @@ La topología tipada autoritativa es [`references/system-catalog.json`](../refer
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` y luego `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [más de 70 hosts](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Clientes Agent Plugins v1 · Portable Lite** | Descarga `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` de la [versión v20.0.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0), descomprímelo e instala el directorio del plugin extraído |
+| **Clientes Agent Plugins v1 · Portable Lite** | Descarga `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz` de la [versión v20.1.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0), descomprímelo e instala el directorio del plugin extraído |
 | **Grok Bot · Hermes Bot Mode (AI Staff)** | Genera el roster de 8 bots: `python3 scripts/generate-bot-projections.py --output <private-dir>` — 7 especialistas + `aaron-chief`. Ver [AI Staff](#ai-staff) |
 | **[SkillHub.cn](https://skillhub.cn) (comunidad china)** | `skillhub install <frontmatter-slug>` (p. ej. `keyword-research`) |
 | **Cualquier host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
