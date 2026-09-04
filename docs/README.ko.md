@@ -98,7 +98,7 @@ Claude Code, 임의의 Agent Skills 호환 호스트, 또는 단순한 `git clon
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` 후 `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ 호스트](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Agent Plugins v1 클라이언트 · Portable Lite** | [v20.0.0 릴리스](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0)에서 `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz`를 내려받아 압축을 풀고 추출된 플러그인 디렉터리를 설치 |
+| **Agent Plugins v1 클라이언트 · Portable Lite** | [v20.1.0 릴리스](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0)에서 `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz`를 내려받아 압축을 풀고 추출된 플러그인 디렉터리를 설치 |
 | **Grok Bot · Hermes Bot Mode (AI Staff)** | 8봇 명단 생성: `python3 scripts/generate-bot-projections.py --output <private-dir>` — 전문가 7명 + `aaron-chief`. [AI Staff](#ai-staff) 참고 |
 | **[SkillHub.cn](https://skillhub.cn)(중국어 커뮤니티)** | `skillhub install <frontmatter-slug>`(예: `keyword-research`) |
 | **임의의 호스트** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |

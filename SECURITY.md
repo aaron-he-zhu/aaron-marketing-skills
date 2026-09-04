@@ -51,7 +51,7 @@ security concerns are:
 ### Agent Plugins v1 Portable Lite boundary
 
 The release asset
-`aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` is a generated,
+`aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz` is a generated,
 static Skills package. It contains the 120 strict `SKILL.md` projections and
 only their reachable static references. It does **not** contain commands, hooks,
 connector helpers, controllers, scoring/state runtimes, other executable

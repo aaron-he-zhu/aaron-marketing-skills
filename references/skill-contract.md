@@ -1,6 +1,6 @@
 # Skill Contract
 
-This is the shared v18 execution contract for all 120 skills. A skill is a bounded capability with explicit inputs, authority, evidence, output, persistence, and handoff behavior. Markdown explains the behavior; typed schemas and runtimes enforce the parts that must not drift.
+This is the shared v20.1.0 execution contract for all 120 skills. A skill is a bounded capability with explicit inputs, authority, evidence, output, persistence, and handoff behavior. Markdown explains the behavior; typed schemas and runtimes enforce the parts that must not drift.
 
 ## Skill Authoring Discipline
 

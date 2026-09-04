@@ -22,6 +22,10 @@
 #   5. SECURITY.md names the bundle major as the only supported major line and
 #      marks every earlier major unsupported. This is a release-policy guard,
 #      not an additional skill-authoring tracking surface.
+#   6. Live Portable Lite install rows (README / localized READMEs /
+#      docs/agent-compatibility.md / registry-submissions / SECURITY.md) that
+#      hardcode `aaron-marketing-skills-<ver>-agent-plugin-v1-lite.tar.gz` must
+#      name the current bundle, not a prior release tag.
 #
 # ``--release-all-current`` adds the coordinated-major-release invariant:
 # exactly 120 unique skills must all equal the bundle version and every
@@ -149,6 +153,34 @@ FRAMEWORKS
   else
     err "openclaw.plugin.json missing — the OpenClaw bundle manifest is a locked surface"
   fi
+  # Portable Lite install rows must name the current release asset, not a
+  # prior tag. Historical changelog (VERSIONS.md) may mention older asset
+  # names; this guard only covers the live install surfaces. A file that
+  # never names a versioned lite tarball is skipped so fixtures stay valid.
+  check_portable_lite_asset() {
+    local f="$1" found stale
+    [ -f "$f" ] || return 0
+    found=$(grep -oE 'aaron-marketing-skills-[0-9]+\.[0-9]+\.[0-9]+-agent-plugin-v1-lite\.tar\.gz' "$f" || true)
+    [ -n "$found" ] || return 0
+    stale=$(printf '%s\n' "$found" | grep -Fvx "aaron-marketing-skills-$BUNDLE-agent-plugin-v1-lite.tar.gz" || true)
+    if [ -n "$stale" ]; then
+      err "$f names a stale Portable Lite asset (want $BUNDLE): $(printf '%s' "$stale" | tr '\n' ' ')"
+    fi
+    if grep -E 'aaron-marketing-skills-[0-9.]+-agent-plugin-v1-lite\.tar\.gz' "$f" \
+         | grep -E 'releases/tag/v[0-9]+\.[0-9]+\.[0-9]+' \
+         | grep -v "releases/tag/v$BUNDLE" | grep -q .; then
+      err "$f Portable Lite release URL != v$BUNDLE"
+    fi
+  }
+  check_portable_lite_asset README.md
+  check_portable_lite_asset docs/agent-compatibility.md
+  check_portable_lite_asset docs/registry-submissions.md
+  check_portable_lite_asset SECURITY.md
+  for lf in docs/README.zh.md docs/README.de.md docs/README.es.md docs/README.fr.md \
+            docs/README.it.md docs/README.ja.md docs/README.ko.md docs/README.pt.md \
+            docs/README.zh-Hant.md; do
+    check_portable_lite_asset "$lf"
+  done
 fi
 
 # ---- 2. catalog-derived product inventory + per-skill sync ------------------

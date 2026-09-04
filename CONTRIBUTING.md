@@ -251,6 +251,8 @@ drift, and `scripts/check-versions.sh` validates product-version bindings and
 each skill row. A coordinated cut additionally runs
 `bash scripts/check-versions.sh --release-all-current`, which requires exactly
 120/120 skills on the same bundle version/date. Run both locally before pushing.
+`check-versions.sh` also fails if a live Portable Lite install row still names a
+prior-release `aaron-marketing-skills-<ver>-agent-plugin-v1-lite.tar.gz` asset.
 
 **Adding a connector?** Follow [docs/connector-playbook.md](docs/connector-playbook.md) — the end-to-end pipeline (qualify → verify → implement → test → wire → document → track → regress → record) with the safety-class gate table and the connector-vs-recipe decision rule.
 

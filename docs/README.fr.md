@@ -98,7 +98,7 @@ Utilisez-la avec Claude Code, n'importe quel host compatible Agent Skills ou un 
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` puis `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ hosts](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Clients Agent Plugins v1 · Portable Lite** | Téléchargez `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` depuis la [release v20.0.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0), décompressez-le puis installez le répertoire du plugin extrait |
+| **Clients Agent Plugins v1 · Portable Lite** | Téléchargez `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz` depuis la [release v20.1.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0), décompressez-le puis installez le répertoire du plugin extrait |
 | **Grok Bot · Hermes Bot Mode (AI Staff)** | Générez le roster 8 bots : `python3 scripts/generate-bot-projections.py --output <private-dir>` — 7 spécialistes + `aaron-chief`. Voir [AI Staff](#ai-staff) |
 | **[SkillHub.cn](https://skillhub.cn) (communauté chinoise)** | `skillhub install <frontmatter-slug>` (p. ex. `keyword-research`) |
 | **N'importe quel host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |

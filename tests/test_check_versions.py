@@ -483,6 +483,34 @@ class CheckVersionsTests(unittest.TestCase):
         self.assertIn("Current release date is invalid: 2026-99-99", out)
         self.assertIn("has an invalid date: 2026-99-99", out)
 
+    def test_stale_portable_lite_tarball_fails(self):
+        def mutate(root):
+            path = root / "README.md"
+            path.write_text(
+                path.read_text(encoding="utf-8")
+                + "\nDownload `aaron-marketing-skills-0.9.0-agent-plugin-v1-lite.tar.gz` "
+                  "from the [v0.9.0 release](https://example.test/releases/tag/v0.9.0)\n",
+                encoding="utf-8",
+            )
+        code, out = self.run_guard(mutate)
+        self.assertEqual(1, code, out)
+        self.assertIn("stale Portable Lite asset", out)
+        self.assertIn("0.9.0", out)
+
+    def test_current_portable_lite_tarball_passes(self):
+        def mutate(root):
+            path = root / "README.md"
+            path.write_text(
+                path.read_text(encoding="utf-8")
+                + "\nDownload `aaron-marketing-skills-%s-agent-plugin-v1-lite.tar.gz` "
+                  "from the [v%s release](https://example.test/releases/tag/v%s)\n"
+                  % (BUNDLE, BUNDLE, BUNDLE),
+                encoding="utf-8",
+            )
+        code, out = self.run_guard(mutate)
+        self.assertEqual(0, code, out)
+        self.assertIn("version-sync clean", out)
+
     def test_unknown_flag_fails_closed(self):
         code, out = self.run_guard(args=["--surprise"])
         self.assertEqual(2, code, out)

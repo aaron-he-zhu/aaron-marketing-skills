@@ -98,7 +98,7 @@ Claude Code、Agent Skills 互換の任意のホスト、あるいは単純な `
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` の後に `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ ホスト](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Agent Plugins v1 クライアント · Portable Lite** | [v20.0.0 リリース](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0)から `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz` をダウンロードして展開し、抽出されたプラグインディレクトリをインストール |
+| **Agent Plugins v1 クライアント · Portable Lite** | [v20.1.0 リリース](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0)から `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz` をダウンロードして展開し、抽出されたプラグインディレクトリをインストール |
 | **Grok Bot · Hermes Bot Mode (AI Staff)** | 8 ボットの名簿を生成：`python3 scripts/generate-bot-projections.py --output <private-dir>` — 7 専門家 + `aaron-chief`。[AI Staff](#ai-staff) を参照 |
 | **[SkillHub.cn](https://skillhub.cn)（中国語コミュニティ）** | `skillhub install <frontmatter-slug>`（例：`keyword-research`） |
 | **任意のホスト** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |

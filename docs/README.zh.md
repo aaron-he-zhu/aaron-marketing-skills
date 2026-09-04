@@ -98,7 +98,7 @@
 |------|------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` 然后 `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ 宿主](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Agent Plugins v1 客户端 · Portable Lite** | 从 [v20.0.0 Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.0.0)下载 `aaron-marketing-skills-20.0.0-agent-plugin-v1-lite.tar.gz`，解压后安装其中的插件目录 |
+| **Agent Plugins v1 客户端 · Portable Lite** | 从 [v20.1.0 Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0)下载 `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz`，解压后安装其中的插件目录 |
 | **Grok Bot · Hermes Bot Mode（AI Staff）** | 生成 8-bot 花名册：`python3 scripts/generate-bot-projections.py --output <private-dir>` —— 7 个专科 + `aaron-chief`。见 [AI Staff](#ai-staff) |
 | **[SkillHub.cn](https://skillhub.cn)(中文社区)** | `skillhub install <frontmatter-slug>`(如 `keyword-research`) |
 | **任意宿主** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
