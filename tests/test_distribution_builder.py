@@ -350,6 +350,7 @@ class DistributionBuilderTests(unittest.TestCase):
         for path in ("tests", "evals", ".github", ".githooks", "AGENTS.md", "CONTRIBUTING.md"):
             self.assertFalse((output / path).exists(), path)
         self.assertFalse((output / "docs").exists())
+        self.assertFalse((output / "references/wiki").exists())
         self.assertFalse((output / "references/workflow-graph-protocol.md").exists())
         self.assertEqual(10, len(list((output / "references/workflow-graph").glob("edges-*.json"))))
         self.assertFalse(any(path.name == "__pycache__" for path in output.rglob("*")))

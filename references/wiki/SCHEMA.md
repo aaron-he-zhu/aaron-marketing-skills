@@ -102,7 +102,9 @@ The following must remain true:
 1. No `### Runtime Reads` bullet may name `references/wiki/`.
 2. `references/context-modules.json` must not list a wiki module.
 3. `references/distribution-files.json` must not allowlist this tree into a
-   plugin or Portable Lite payload.
+   plugin or Portable Lite payload. The distribution builder treats
+   `references/wiki/` as a maintenance tree: README may link here, but the
+   runtime closure must not copy it.
 4. Context assembly defaults (`explicit` / `balanced` / `lean`) must not
    attach wiki pages as model or controller bodies.
 5. Adding a page here must not create a 121st installable Skill package.
