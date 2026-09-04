@@ -141,7 +141,7 @@ print(value)
 }
 
 publish_final_gate_token() {
-  /usr/bin/python3 - "$1" "$2" "$3" "$4" <<'PY'
+  /usr/bin/python3 - "$1" "$2" "$3" <<'PY'
 import hashlib
 import sys
 
@@ -150,6 +150,8 @@ PY
 }
 
 publish_verify_distribution_receipt() {
+  # Optional owner-local helper. Live publishers no longer call this: the
+  # private AARON_RELEASE_* bundle is not a distribution hard gate.
   local receipt commit version maturity_report evidence_root
   receipt="$1"
   commit="$2"
@@ -168,8 +170,7 @@ publish_verify_distribution_receipt() {
 }
 
 publish_require_final_release() {
-  local repo commit version receipt maturity_report evidence_root
-  local receipt_identity receipt_sha release_candidate receipt_commit
+  local repo commit version
   local gate_token inherited_token tag tag_commit release_json runs_json asset_root
   repo="$1"
   commit="$2"
@@ -177,34 +178,13 @@ publish_require_final_release() {
   if [ "${version%%.*}" -lt 19 ]; then
     return 0
   fi
-  receipt="${AARON_RELEASE_RECEIPT:-}"
-  [ -n "$receipt" ] || {
-    echo "FAIL: v19 live distribution requires AARON_RELEASE_RECEIPT" >&2
-    return 1
-  }
-  maturity_report="${AARON_RELEASE_MATURITY_REPORT:-}"
-  [ -n "$maturity_report" ] || {
-    echo "FAIL: v19 live distribution requires AARON_RELEASE_MATURITY_REPORT" >&2
-    return 1
-  }
-  evidence_root="${AARON_RELEASE_EVIDENCE_ROOT:-}"
-  [ -n "$evidence_root" ] || {
-    echo "FAIL: v19 live distribution requires AARON_RELEASE_EVIDENCE_ROOT" >&2
-    return 1
-  }
+  # Live publishers do not read AARON_RELEASE_RECEIPT,
+  # AARON_RELEASE_MATURITY_REPORT, or AARON_RELEASE_EVIDENCE_ROOT. Those
+  # private files remain inputs to create-github-release.py --live only.
   inherited_token="${AARON_PUBLISH_PARENT_FINAL_GATE_TOKEN:-}"
   if [ -n "$inherited_token" ]; then
-    receipt_identity="$(publish_verify_distribution_receipt \
-      "$receipt" "$commit" "$version" "$maturity_report" "$evidence_root")" \
-      || return 1
-    IFS=$'\t' read -r receipt_sha release_candidate receipt_commit <<< "$receipt_identity"
-    [ -n "$receipt_sha" ] && [ -n "$release_candidate" ] \
-      && [ "$receipt_commit" = "$commit" ] || {
-      echo "FAIL: private release receipt identity is malformed" >&2
-      return 1
-    }
     gate_token="$(publish_final_gate_token \
-      "$repo" "$commit" "$version" "$receipt_sha")" || return 1
+      "$repo" "$commit" "$version")" || return 1
     [ -n "${AARON_PUBLISH_EXPECTED_REPO:-}" ] \
       && [ -n "${AARON_PUBLISH_EXPECTED_COMMIT:-}" ] \
       && [ "$repo" = "$AARON_PUBLISH_EXPECTED_REPO" ] \
@@ -300,24 +280,10 @@ PY
   fi
   rm -rf -- "$asset_root"
 
-  # Only an already-created immutable final release may relax the wall-clock
-  # freshness check for a resumed distribution pass.  Receipt/report/raw-chain
-  # hashes, source identity, issuance-time freshness, and the current semantic
-  # policy window are still revalidated.  create-github-release.py never uses
-  # this continuation mode and therefore keeps the strict 24-hour release gate.
-  receipt_identity="$(publish_verify_distribution_receipt \
-    "$receipt" "$commit" "$version" "$maturity_report" "$evidence_root")" \
-    || return 1
-  IFS=$'\t' read -r receipt_sha release_candidate receipt_commit <<< "$receipt_identity"
-  [ -n "$receipt_sha" ] && [ -n "$release_candidate" ] \
-    && [ "$receipt_commit" = "$commit" ] || {
-    echo "FAIL: private release receipt identity is malformed" >&2
-    return 1
-  }
   gate_token="$(publish_final_gate_token \
-    "$repo" "$commit" "$version" "$receipt_sha")" || return 1
+    "$repo" "$commit" "$version")" || return 1
   PUBLISH_FINAL_GATE_TOKEN="$gate_token"
-  echo "Final release gate: $repo@$commit ($tag, $release_candidate, assets and CI verified)" >&2
+  echo "Final release gate: $repo@$commit ($tag, assets and CI verified)" >&2
 }
 
 publish_require_release_provenance() {
