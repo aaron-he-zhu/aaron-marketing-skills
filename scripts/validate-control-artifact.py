@@ -1283,6 +1283,15 @@ def project_artifacts(
         except (OSError, ValueError) as exc:
             errors.append("cannot resolve projection source %s: %s" % (path_text, exc))
             continue
+        # Filesystem names do not inherit the artifact's reference validation.
+        # Apply the project_ref contract before using a path in either YAML or
+        # Markdown; in particular, no quotes, backticks, or line breaks survive.
+        if len(source_ref) > 512 or not PROJECT_REF.fullmatch(source_ref):
+            errors.append(
+                "projection source ref must be a safe project-relative artifact "
+                "path of at most 512 characters"
+            )
+            continue
         record, validation_errors, digest = validate(str(path), root)
         if validation_errors:
             errors.extend("%s: %s" % (source_ref, item) for item in validation_errors)
@@ -1327,23 +1336,23 @@ def project_artifacts(
         'schema_version: "1.0"',
         "authoritative: false",
         "source_count: %d" % len(sources),
-        'sources_sha256: "%s"' % manifest_sha,
+        "sources_sha256: %s" % json.dumps(manifest_sha),
         "source_refs:",
     ]
     for item in source_manifest:
         lines.extend([
-            '  - ref: "%s"' % item["ref"],
-            '    sha256: "%s"' % item["sha256"],
-            '    artifact_id: "%s"' % item["artifact_id"],
-            '    kind: "%s"' % item["kind"],
+            "  - ref: %s" % json.dumps(item["ref"]),
+            "    sha256: %s" % json.dumps(item["sha256"]),
+            "    artifact_id: %s" % json.dumps(item["artifact_id"]),
+            "    kind: %s" % json.dumps(item["kind"]),
         ])
     if heads:
         lines.append("current_heads:")
         for head in heads:
             lines.extend([
-                '  - ref: "%s"' % head["ref"],
-                '    sha256: "%s"' % head["sha256"],
-                '    version: "%s"' % head["version"],
+                "  - ref: %s" % json.dumps(head["ref"]),
+                "    sha256: %s" % json.dumps(head["sha256"]),
+                "    version: %s" % json.dumps(head["version"]),
             ])
     else:
         lines.append("current_heads: []")

@@ -339,7 +339,8 @@ class WorkflowLoopTests(unittest.TestCase):
         record["created_at"] = "2026-08-02T08:06:00Z"
         return record
 
-    def control_evidence(self, node, kinds, prefix="control", parent=None):
+    def control_evidence(self, node, kinds, prefix="control", parent=None,
+                         receipt_status="succeeded"):
         route = self.append_route(node, parent=parent, prefix=prefix + "-route")
         parent_id = route["event_id"]
         evidence = []
@@ -366,6 +367,11 @@ class WorkflowLoopTests(unittest.TestCase):
                     artifact_id, intent_relative.as_posix(),
                     hashlib.sha256(intent_path.read_bytes()).hexdigest(), intent,
                 )
+                if receipt_status != "succeeded":
+                    record["payload"]["status"] = receipt_status
+                    record["payload"]["failure_code"] = "provider-" + receipt_status
+                    if receipt_status == "unknown":
+                        record["payload"]["completed_at"] = None
             else:
                 raise AssertionError("unsupported control fixture kind %s" % kind)
             relative = Path("memory/control") / (
@@ -2004,6 +2010,123 @@ class WorkflowLoopTests(unittest.TestCase):
                     "node": "launch-monitor", "evidence": missing_measurement,
                 }, "reject-missing-measurement", loop_id="required-controls",
             )
+
+    def test_unsuccessful_receipts_cannot_release_completion_edges(self):
+        result = self.plan()
+        for node in self.WORKFLOW_NODES[:4]:
+            result = self.complete_action(result, node, "receipt-setup-" + node)
+        paths = workflow_loop._workflow_paths(
+            self.root, self.run_id, "launch-loop",
+        )
+        for node, successor, kinds in (
+                ("launch-day-conductor", "launch-monitor",
+                 ["action-receipt", "evidence-observation"]),
+                ("launch-monitor", "launch-retro-analyzer",
+                 ["action-receipt", "evidence-observation", "measurement-contract"])):
+            before_events = paths["events"].read_bytes()
+            before_state = paths["state"].read_bytes()
+            for status in ("failed", "partial", "unknown"):
+                prefix = node + "-" + status
+                evidence = self.control_evidence(
+                    node, kinds, prefix=prefix, receipt_status=status,
+                )
+                # The unsuccessful receipt itself is valid, persisted evidence.
+                events = run_events.load_events(self.root, self.run_id)
+                receipt_event = next(
+                    event for event in events if event["event_id"] == evidence[0]["ref"]
+                )
+                self.assertEqual("succeeded", receipt_event["status"])
+                for mixed in (False, True):
+                    if mixed:
+                        evidence += self.control_evidence(
+                            node, ["action-receipt"], prefix=prefix + "-successful",
+                        )
+                    with self.subTest(node=node, status=status, mixed=mixed):
+                        with self.assertRaisesRegex(
+                                workflow_loop.WorkflowLoopError,
+                                "requires succeeded action-receipt evidence"):
+                            self.advance(
+                                result, "action-completed",
+                                {"node": node, "evidence": evidence},
+                                prefix + ("-mixed" if mixed else "-alone"),
+                            )
+                        self.assertEqual(before_events, paths["events"].read_bytes())
+                        self.assertEqual(before_state, paths["state"].read_bytes())
+                        self.assertIn(node, result["state"]["frontier"])
+                        self.assertNotIn(successor, result["state"]["frontier"])
+            # A fresh success can still progress after rejected completion attempts.
+            result = self.complete_action(result, node, node + "-recovered")
+            self.assertIn(successor, result["state"]["frontier"])
+        self.assertTrue(workflow_loop.verify(
+            self.root, self.run_id, "launch-loop",
+        )["valid"])
+
+    def test_unsuccessful_receipt_completion_is_rejected_on_replay(self):
+        result = self.plan()
+        for node in self.WORKFLOW_NODES[:4]:
+            result = self.complete_action(result, node, "replay-setup-" + node)
+        evidence = self.control_evidence(
+            "launch-day-conductor", ["action-receipt", "evidence-observation"],
+            prefix="historical-failure", receipt_status="failed",
+        )
+        # Model a correctly hash-chained stream accepted by the former kind-only gate.
+        with mock.patch.object(
+                workflow_loop, "_validate_control_release_evidence", return_value=None):
+            result, request = self.advance(
+                result, "action-completed",
+                {"node": "launch-day-conductor", "evidence": evidence},
+                "historical-failure-completed",
+            )
+        paths = workflow_loop._workflow_paths(
+            self.root, self.run_id, "launch-loop",
+        )
+        before_events = paths["events"].read_bytes()
+        before_state = paths["state"].read_bytes()
+        for repair in (False, True):
+            with self.subTest(repair=repair):
+                with self.assertRaisesRegex(
+                        workflow_loop.WorkflowLoopError,
+                        "requires succeeded action-receipt evidence"):
+                    workflow_loop.verify(
+                        self.root, self.run_id, "launch-loop", repair_projection=repair,
+                    )
+        with self.assertRaisesRegex(
+                workflow_loop.WorkflowLoopError,
+                "requires succeeded action-receipt evidence"):
+            workflow_loop.advance(self.root, request)
+        # A fresh successor must not advance the same invalid historical head.
+        with self.assertRaisesRegex(
+                workflow_loop.WorkflowLoopError,
+                "requires succeeded action-receipt evidence"):
+            self.complete_action(
+                result, "launch-monitor", "historical-failure-new-key",
+            )
+        self.assertEqual(before_events, paths["events"].read_bytes())
+        self.assertEqual(before_state, paths["state"].read_bytes())
+
+    def test_failed_receipt_remains_available_for_failure_handling(self):
+        result = self.plan()
+        for node in self.WORKFLOW_NODES[:4]:
+            result = self.complete_action(result, node, "failure-setup-" + node)
+        evidence = self.control_evidence(
+            "launch-day-conductor", ["action-receipt"],
+            prefix="recorded-failure", receipt_status="failed",
+        )
+        evidence.append(self.action_evidence(
+            "launch-day-conductor", failed=True, prefix="failed-turn",
+        ))
+        result, _ = self.advance(
+            result, "action-failed", {
+                "node": "launch-day-conductor", "failure_code": "provider-failed",
+                "retryable": False, "evidence": evidence,
+            }, "record-action-failure",
+        )
+        self.assertEqual("escalation-required", result["state"]["stage"])
+        self.assertEqual([], result["state"]["frontier"])
+        self.assertEqual(evidence, result["state"]["failed_actions"][-1]["evidence"])
+        self.assertTrue(workflow_loop.verify(
+            self.root, self.run_id, "launch-loop",
+        )["valid"])
 
     def test_required_control_artifact_must_be_selected_and_untampered(self):
         result = self.plan("selected-control")

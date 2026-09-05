@@ -266,7 +266,7 @@ def build_spec(args):
         return {"request": build_request("/emails/batch", method="POST", body=payload,
                                          headers=hdrs), "mutating": True}
     if cmd == "cancel-email":
-        return {"request": build_request("/emails/%s" % _seg(args.id), method="DELETE"),
+        return {"request": build_request("/emails/%s/cancel" % _seg(args.id), method="POST"),
                 "mutating": True}
     if cmd == "add-contact":
         body = {"email": args.email}

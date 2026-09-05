@@ -918,6 +918,42 @@ class ResendSpecTests(unittest.TestCase):
                      ["cancel-email", "e1"], ["broadcast-send", "b1"]):
             self.assertTrue(self._spec(argv)["mutating"], argv)
 
+    def test_cancel_email_posts_to_encoded_cancel_endpoint(self):
+        spec = self._spec(["cancel-email", "email/1 ?#"])
+        self.assertTrue(spec["mutating"])
+        self.assertEqual(spec["request"]["method"], "POST")
+        self.assertEqual(spec["request"]["url"],
+                         resend.API_BASE + "/emails/email%2F1%20%3F%23/cancel")
+        self.assertIsNone(spec["request"]["body"])
+
+    def test_cancel_email_defaults_to_dry_run_without_network(self):
+        import contextlib
+        import json
+
+        output = io.StringIO()
+        with mock.patch.object(resend, "call") as call, contextlib.redirect_stdout(output):
+            rc = resend.main(["cancel-email", "scheduled-1"])
+        self.assertEqual(rc, 0)
+        call.assert_not_called()
+        result = json.loads(output.getvalue())
+        self.assertTrue(result["dry_run"])
+        self.assertEqual(result["request"]["method"], "POST")
+        self.assertEqual(result["request"]["url"],
+                         resend.API_BASE + "/emails/scheduled-1/cancel")
+
+    def test_cancel_email_live_request_stays_single_shot(self):
+        import contextlib
+
+        with mock.patch.object(resend._http, "get_json", return_value={
+                "status": 200, "json": {"id": "scheduled-1"}}) as request, \
+                contextlib.redirect_stdout(io.StringIO()):
+            rc = resend.main(["--key", "test-only", "cancel-email", "scheduled-1", "--live"])
+        self.assertEqual(rc, 0)
+        self.assertEqual(request.call_args.args[0],
+                         resend.API_BASE + "/emails/scheduled-1/cancel")
+        self.assertEqual(request.call_args.kwargs["method"], "POST")
+        self.assertEqual(request.call_args.kwargs["retries"], 1)
+
     def test_seed_expands_one_message_per_recipient(self):
         spec = self._spec(["seed", "--from", "me@x.dev",
                            "--to", "s1@gmail.com, s2@outlook.com",
@@ -1520,6 +1556,83 @@ class ExperimentTests(unittest.TestCase):
         self.assertTrue(3000 < ss["n_per_variant"] < 4500)
         mde = experiment.min_detectable_effect(0.10, ss["n_per_variant"])
         self.assertAlmostEqual(mde["mde_absolute"], 0.02, places=3)
+
+    def test_mde_returns_a_feasible_inverse_within_tolerance(self):
+        for baseline, effect, tolerance in (
+                (0.1, 0.02, 1e-10), (0.7, 0.05, 1e-10),
+                (0.99, 0.005, 1e-10), (0.99999999, 5e-9, 1e-15)):
+            with self.subTest(baseline=baseline):
+                n = experiment.sample_size(baseline, effect)["n_per_variant"]
+                result = experiment.min_detectable_effect(baseline, n, tol=tolerance)
+                lift = result["mde_absolute"]
+                self.assertGreater(lift, 0)
+                self.assertLess(baseline + lift, 1)
+                self.assertLessEqual(experiment.sample_size(baseline, lift)["n_per_variant"], n)
+                self.assertLessEqual(lift, effect + tolerance)
+                self.assertGreater(experiment.sample_size(
+                    baseline, lift - 2 * tolerance)["n_per_variant"], n)
+
+    def test_mde_rejects_insufficient_samples_and_unrepresentable_rate(self):
+        import math
+
+        for n in (100, 779):
+            with self.subTest(n=n), self.assertRaisesRegex(ValueError, "no positive lift"):
+                experiment.min_detectable_effect(0.99, n)
+        result = experiment.min_detectable_effect(0.99, 780)
+        self.assertLessEqual(experiment.sample_size(
+            0.99, result["mde_absolute"])["n_per_variant"], 780)
+        with self.assertRaisesRegex(ValueError, "no representable higher rate"):
+            experiment.min_detectable_effect(math.nextafter(1.0, 0.0), 10**18)
+
+    def test_mde_low_power_checks_the_interior_minimum(self):
+        # For this supported design, the rate ceiling requires four samples,
+        # but an interior lift needs three; an endpoint-only check is wrong.
+        for power, n in ((0.1, 3), (0.001, 1)):
+            with self.subTest(power=power):
+                result = experiment.min_detectable_effect(0.001, n, alpha=0.01, power=power)
+                lift = result["mde_absolute"]
+                self.assertLessEqual(experiment.sample_size(
+                    0.001, lift, alpha=0.01, power=power)["n_per_variant"], n)
+                self.assertGreater(experiment.sample_size(
+                    0.001, lift - 2e-6, alpha=0.01, power=power)["n_per_variant"], n)
+        with self.assertRaisesRegex(ValueError, "no positive lift"):
+            experiment.min_detectable_effect(0.001, 2, alpha=0.01, power=0.1)
+        # Quantile cancellation gives a zero infimum, not a positive MDE.
+        with self.assertRaisesRegex(ValueError, "zero MDE infimum"):
+            experiment.min_detectable_effect(0.001, 1, alpha=0.01, power=0.005)
+
+    def test_mde_tolerance_is_precision_not_a_rate_margin(self):
+        for bad in (0.0, -1e-6, float("nan"), float("inf")):
+            with self.subTest(tol=bad), self.assertRaises(ValueError):
+                experiment.min_detectable_effect(0.1, 4000, tol=bad)
+        with self.assertRaisesRegex(ValueError, "below floating-point resolution"):
+            experiment.min_detectable_effect(0.1, 4000, tol=1e-30)
+        for baseline, n, tolerance in (
+                (0.1, 4000, 2.0), (0.99999999, 10**10, 1e-6),
+                (0.3, 1000, 1e-6)):
+            with self.subTest(baseline=baseline):
+                result = experiment.min_detectable_effect(baseline, n, tol=tolerance)
+                self.assertLess(baseline + result["mde_absolute"], 1)
+                self.assertLessEqual(experiment.sample_size(
+                    baseline, result["mde_absolute"])["n_per_variant"], n)
+
+    def test_mde_cli_rejects_infeasible_n_without_success_json(self):
+        import contextlib
+        import json
+
+        output, errors = io.StringIO(), io.StringIO()
+        with contextlib.redirect_stdout(output), contextlib.redirect_stderr(errors):
+            rc = experiment.main(["samplesize", "--baseline", "0.99", "--n", "100"])
+        self.assertEqual(rc, 1)
+        self.assertEqual(output.getvalue(), "")
+        self.assertIn("no positive lift", errors.getvalue())
+        output = io.StringIO()
+        with contextlib.redirect_stdout(output):
+            rc = experiment.main(["samplesize", "--baseline", "0.99", "--n", "780"])
+        self.assertEqual(rc, 0)
+        result = json.loads(output.getvalue())
+        self.assertLessEqual(experiment.sample_size(
+            0.99, result["mde_absolute"])["n_per_variant"], 780)
 
     def test_bootstrap_deterministic(self):
         a, b = [1, 2, 3, 4, 5], [3, 4, 5, 6, 7]
