@@ -739,7 +739,34 @@ class ControlArtifactTests(unittest.TestCase):
                     self.assertEqual([relative], [json.loads(ref) for ref in refs])
                     self.assertEqual(1, frontmatter.count("authoritative: false"))
                     self.assertNotIn("authoritative: true", frontmatter)
-                    self.assertIn("; `%s`;" % relative, output)
+                    self.assertIn("; %s;" % validator.markdown_code_span(relative), output)
+
+    def test_markdown_code_span_escapes_paths_that_would_break_markup(self):
+        self.assertEqual("`memory/control/evidence.json`",
+                         validator.markdown_code_span("memory/control/evidence.json"))
+        self.assertEqual("``memory/control/evidence`injected`.json``",
+                         validator.markdown_code_span("memory/control/evidence`injected`.json"))
+        self.assertEqual("```memory/control/``nested``.json```",
+                         validator.markdown_code_span("memory/control/``nested``.json"))
+        self.assertEqual("`` `starts.json ``",
+                         validator.markdown_code_span("`starts.json"))
+        self.assertEqual("`memory/control/evidence\\n.json`",
+                         validator.markdown_code_span("memory/control/evidence\n.json"))
+        self.assertEqual("`memory/control/evidence\\r.json`",
+                         validator.markdown_code_span("memory/control/evidence\r.json"))
+        self.assertEqual("`memory/control/evidence\\u2028.json`",
+                         validator.markdown_code_span("memory/control/evidence\u2028.json"))
+        rendered = "- %s — %s; %s; %s" % (
+            validator.markdown_code_span("evidence-1"),
+            validator.markdown_code_span("evidence-observation"),
+            validator.markdown_code_span("memory/control/evidence`injected`.json"),
+            validator.markdown_code_span("sha256:" + ("a" * 64)),
+        )
+        self.assertEqual(1, rendered.count("\n") + 1)
+        self.assertNotIn("\n# ", rendered)
+        self.assertNotIn("\n- ", rendered)
+        self.assertTrue(rendered.startswith("- `"))
+        self.assertIn("``memory/control/evidence`injected`.json``", rendered)
 
     def test_projection_rejects_filename_injection_in_yaml_and_markdown(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -2218,5 +2218,26 @@ class WorkflowLoopTests(unittest.TestCase):
         self.assertEqual("exhausted", result["state"]["terminal"]["outcome"])
 
 
+class WorkflowLoopHelperTests(unittest.TestCase):
+    def test_receipt_business_status_raises_workflow_loop_error(self):
+        for record in (
+                None, {}, {"payload": None}, {"payload": {}},
+                {"payload": {"status": "other"}}, {"payload": {"status": 1}}):
+            with self.subTest(record=record):
+                with self.assertRaises(workflow_loop.WorkflowLoopError) as caught:
+                    workflow_loop._receipt_business_status(record)
+                self.assertNotIsInstance(caught.exception, KeyError)
+                self.assertNotIsInstance(caught.exception, TypeError)
+                self.assertIn("supported business status", str(caught.exception))
+        for status in ("succeeded", "failed", "partial", "unknown"):
+            with self.subTest(status=status):
+                self.assertEqual(
+                    status,
+                    workflow_loop._receipt_business_status(
+                        {"payload": {"status": status}},
+                    ),
+                )
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -71,6 +71,7 @@ CONTROL_REQUIRED_INPUTS = {
     "artifact-binding", "evidence-observation", "measurement-contract",
     "action-intent", "action-receipt", "cycle-retro",
 }
+RECEIPT_STATUSES = {"succeeded", "failed", "partial", "unknown"}
 MAX_JSON_BYTES = 2_000_000
 MAX_EVENT_BYTES = 64_000
 MAX_ARTIFACT_BYTES = 32_000_000
@@ -471,8 +472,19 @@ def _validated_control_identity(root, event, session):
         "validator": event["dimensions"]["validator"],
     }
     if record["kind"] == "action-receipt":
-        identity["receipt_status"] = record["payload"]["status"]
+        identity["receipt_status"] = _receipt_business_status(record)
     return identity
+
+
+def _receipt_business_status(record):
+    """Read a typed receipt status; never fail with a generic KeyError."""
+    payload = record.get("payload") if isinstance(record, dict) else None
+    status = payload.get("status") if isinstance(payload, dict) else None
+    if status not in RECEIPT_STATUSES:
+        raise WorkflowLoopError(
+            "action-receipt evidence is missing a supported business status"
+        )
+    return status
 
 
 def _validate_control_release_evidence(
