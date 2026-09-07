@@ -338,7 +338,7 @@ def sample_size(baseline, mde, alpha=0.05, power=0.8):
 
 
 def min_detectable_effect(baseline, n, alpha=0.05, power=0.8, tol=1e-6):
-    """Smallest absolute lift detectable with `n` per variant (inverts sample_size)."""
+    """Invert sample_size to absolute accuracy `tol`; reject an infeasible n."""
     _require_finite("MDE inputs", baseline, n, alpha, power, tol)
     if not (0.0 < baseline < 1.0) or n <= 0:
         raise ValueError("baseline in (0,1) and n > 0 required")
@@ -346,16 +346,55 @@ def min_detectable_effect(baseline, n, alpha=0.05, power=0.8, tol=1e-6):
         raise ValueError("alpha must be in (0, 1), got %r" % (alpha,))
     if not (0.0 < power < 1.0):
         raise ValueError("power must be in (0, 1), got %r" % (power,))
-    lo, hi = tol, 1.0 - baseline - tol
-    for _ in range(200):
+    if tol <= 0:
+        raise ValueError("tol must be > 0")
+
+    # Keep the upper rate strictly below one without using the search precision
+    # as a probability margin (which excluded valid lifts near either endpoint).
+    lo, hi = 0.0, math.nextafter(1.0, 0.0) - baseline
+    while baseline + hi >= 1.0:
+        hi = math.nextafter(hi, 0.0)
+    if hi <= 0:
+        raise ValueError("no representable higher rate below 1 for this baseline")
+    z_a, z_b = norm_ppf(1.0 - alpha / 2.0), norm_ppf(power)
+    if z_b < 0:
+        # Write required n as (z_a*sqrt(x*x + 1/2) + z_b*x)**2,
+        # where x*x = 2*p*(1-p)/lift**2 + (1-2*p)/lift - 1.
+        # x decreases with lift. A negative z_b can put the minimum inside
+        # the rate domain; search only up to that minimum, not past it.
+        difference = z_a * z_a - z_b * z_b
+        if difference == 0:
+            raise ValueError("alpha and power give a zero MDE infimum, not a positive minimum")
+        x_squared = (z_b * z_b if difference > 0 else z_a * z_a) / (
+            2.0 * abs(difference))
+        slope = 1.0 - 2.0 * baseline
+        variance = 2.0 * baseline * (1.0 - baseline)
+        radical = math.sqrt(slope * slope + 4.0 * (1.0 + x_squared) * variance)
+        minimum_lift = ((slope + radical) / (2.0 * (1.0 + x_squared))
+                        if slope >= 0 else 2.0 * variance / (radical - slope))
+        hi = min(hi, minimum_lift)
+
+    def required(effect):
+        try:
+            return sample_size(baseline, effect, alpha, power)["n_per_variant"]
+        except (OverflowError, ZeroDivisionError):
+            # A tiny trial lift can exceed the finite sample-size range.
+            return math.inf
+
+    if required(hi) > n:
+        raise ValueError("no positive lift below a rate of 1 is detectable at this n")
+    while hi - lo > tol:
         mid = (lo + hi) / 2.0
-        need = sample_size(baseline, mid, alpha, power)["n_per_variant"]
+        if mid == lo or mid == hi:
+            raise ValueError("tol is below floating-point resolution at this lift")
+        need = required(mid)
         if need > n:
             lo = mid
         else:
             hi = mid
     return {"baseline": baseline, "n_per_variant": n, "alpha": alpha, "power": power,
-            "mde_absolute": hi, "note": "Smallest absolute lift detectable at this n."}
+            "mde_absolute": hi,
+            "note": "Smallest absolute lift detectable at this n, within absolute tolerance %g." % tol}
 
 
 # --------------------------------------------------------------------------- #

@@ -724,6 +724,72 @@ class ControlArtifactTests(unittest.TestCase):
             self.assertIsNone(output)
             self.assertTrue(any("symlink" in error for error in errors))
 
+    def test_projection_source_refs_preserve_valid_paths_as_quoted_strings(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for relative in (
+                    "evidence.json", "memory/control/2026-08-01_Evidence.v1.json",
+                    "a/" * 249 + "evidence1.json"):
+                with self.subTest(relative=relative):
+                    source = self.write(directory, relative, evidence_artifact())
+                    output, errors = validator.project_artifacts([str(source)], directory)
+                    self.assertEqual([], errors)
+                    frontmatter = output.split("---\n", 2)[1].splitlines()
+                    refs = [line.removeprefix("  - ref: ") for line in frontmatter
+                            if line.startswith("  - ref: ")]
+                    self.assertEqual([relative], [json.loads(ref) for ref in refs])
+                    self.assertEqual(1, frontmatter.count("authoritative: false"))
+                    self.assertNotIn("authoritative: true", frontmatter)
+                    self.assertIn("; %s;" % validator.markdown_code_span(relative), output)
+
+    def test_markdown_code_span_escapes_paths_that_would_break_markup(self):
+        self.assertEqual("`memory/control/evidence.json`",
+                         validator.markdown_code_span("memory/control/evidence.json"))
+        self.assertEqual("``memory/control/evidence`injected`.json``",
+                         validator.markdown_code_span("memory/control/evidence`injected`.json"))
+        self.assertEqual("```memory/control/``nested``.json```",
+                         validator.markdown_code_span("memory/control/``nested``.json"))
+        self.assertEqual("`` `starts.json ``",
+                         validator.markdown_code_span("`starts.json"))
+        self.assertEqual("`memory/control/evidence\\n.json`",
+                         validator.markdown_code_span("memory/control/evidence\n.json"))
+        self.assertEqual("`memory/control/evidence\\r.json`",
+                         validator.markdown_code_span("memory/control/evidence\r.json"))
+        self.assertEqual("`memory/control/evidence\\u2028.json`",
+                         validator.markdown_code_span("memory/control/evidence\u2028.json"))
+        rendered = "- %s — %s; %s; %s" % (
+            validator.markdown_code_span("evidence-1"),
+            validator.markdown_code_span("evidence-observation"),
+            validator.markdown_code_span("memory/control/evidence`injected`.json"),
+            validator.markdown_code_span("sha256:" + ("a" * 64)),
+        )
+        self.assertEqual(1, rendered.count("\n") + 1)
+        self.assertNotIn("\n# ", rendered)
+        self.assertNotIn("\n- ", rendered)
+        self.assertTrue(rendered.startswith("- `"))
+        self.assertIn("``memory/control/evidence`injected`.json``", rendered)
+
+    def test_projection_rejects_filename_injection_in_yaml_and_markdown(self):
+        with tempfile.TemporaryDirectory() as directory:
+            for relative in (
+                    'a"\n    sha256: "fake"\nauthoritative: true\n'
+                    'source_refs:\n  - ref: "b.json',
+                    'memory/control/evidence".json',
+                    "memory/control/evidence\n.json",
+                    "memory/control/evidence\r.json",
+                    "memory/control/evidence\t.json",
+                    "memory/control/evidence\\n.json",
+                    "memory/control/evidence\u2028.json",
+                    "memory/control/evidence`injected`.json",
+                    "memory/control/evidence [injected].json",
+                    "opaque:source.json",
+                    "a/" * 250 + "evidence.json"):
+                with self.subTest(relative=relative):
+                    source = self.write(directory, relative, evidence_artifact())
+                    self.assertEqual([], validator.validate(str(source), directory)[1])
+                    output, errors = validator.project_artifacts([str(source)], directory)
+                    self.assertIsNone(output)
+                    self.assertTrue(any("projection source ref" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

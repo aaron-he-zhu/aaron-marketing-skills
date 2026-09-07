@@ -71,6 +71,7 @@ CONTROL_REQUIRED_INPUTS = {
     "artifact-binding", "evidence-observation", "measurement-contract",
     "action-intent", "action-receipt", "cycle-retro",
 }
+RECEIPT_STATUSES = {"succeeded", "failed", "partial", "unknown"}
 MAX_JSON_BYTES = 2_000_000
 MAX_EVENT_BYTES = 64_000
 MAX_ARTIFACT_BYTES = 32_000_000
@@ -462,7 +463,7 @@ def _validated_control_identity(root, event, session):
             or record.get("kind") not in CONTROL_REQUIRED_INPUTS - {"artifact-binding"}
             or record.get("schema_version") != "1.0"):
         raise WorkflowLoopError("workflow control artifact identity is invalid")
-    return {
+    identity = {
         "kind": record["kind"],
         "artifact_id": record["artifact_id"],
         "ref": reference["ref"],
@@ -470,6 +471,20 @@ def _validated_control_identity(root, event, session):
         "version": record["schema_version"],
         "validator": event["dimensions"]["validator"],
     }
+    if record["kind"] == "action-receipt":
+        identity["receipt_status"] = _receipt_business_status(record)
+    return identity
+
+
+def _receipt_business_status(record):
+    """Read a typed receipt status; never fail with a generic KeyError."""
+    payload = record.get("payload") if isinstance(record, dict) else None
+    status = payload.get("status") if isinstance(payload, dict) else None
+    if status not in RECEIPT_STATUSES:
+        raise WorkflowLoopError(
+            "action-receipt evidence is missing a supported business status"
+        )
+    return status
 
 
 def _validate_control_release_evidence(
@@ -498,6 +513,22 @@ def _validate_control_release_evidence(
         if route_state is None or route_state["skill"] != node:
             continue
         identities.append(_validated_control_identity(root, event, session))
+
+    # A successful validation attests the record, not the external operation.
+    # Every required receipt cited for successful completion must succeed;
+    # one successful receipt cannot hide another unsuccessful operation.
+    if "action-receipt" in required:
+        unsuccessful = sorted(
+            identity["artifact_id"] + ":" + identity["receipt_status"]
+            for identity in identities
+            if identity["kind"] == "action-receipt"
+            and identity["receipt_status"] != "succeeded"
+        )
+        if unsuccessful:
+            raise WorkflowLoopError(
+                "action completion requires succeeded action-receipt evidence; "
+                "unsuccessful receipt(s): %s" % ",".join(unsuccessful)
+            )
 
     available = {identity["kind"] for identity in identities}
     if identities:
@@ -2167,11 +2198,14 @@ def _validate_event_evidence(root, plan_value, event):
 def _append_locked(root, paths, plan_value, events, request):
     request_hash = sha256_json(request)
     existing = [event for event in events if event["idempotency_key"] == request["idempotency_key"]]
+    if existing and (len(existing) != 1 or existing[0]["request_hash"] != request_hash):
+        raise WorkflowLoopError("idempotency_key was already used with a different request")
+    # New keys and identical retries must both revalidate the history they use.
+    # A previously accepted completion cannot bypass current evidence checks
+    # merely by requesting a successor instead of replaying its original key.
+    for event in events:
+        _validate_event_evidence(root, plan_value, event)
     if existing:
-        if len(existing) != 1 or existing[0]["request_hash"] != request_hash:
-            raise WorkflowLoopError("idempotency_key was already used with a different request")
-        for event in events:
-            _validate_event_evidence(root, plan_value, event)
         _validate_run_action_evidence_consumption(root, plan_value, events)
         projected = _project(plan_value, events)
         _atomic_write(paths["state"], pretty_json(projected))

@@ -1238,6 +1238,37 @@ def validate(path: str, project_root: str | os.PathLike | None = None):
     return record, sorted(set(errors)), digest
 
 
+def markdown_code_span(value: str) -> str:
+    """Render a CommonMark code span that cannot break surrounding markup.
+
+    A longer backtick fence wraps any embedded backticks. Leading or trailing
+    backticks or spaces get one space of padding so the fence stays intact.
+    Line breaks are escaped so they cannot terminate the span or inject a
+    heading or list marker on a following line.
+    """
+    if not isinstance(value, str):
+        raise TypeError("markdown code span value must be a string")
+    escaped = (
+        value.replace("\r\n", "\n")
+        .replace("\r", "\\r")
+        .replace("\n", "\\n")
+        .replace("\u2028", "\\u2028")
+        .replace("\u2029", "\\u2029")
+    )
+    longest = 0
+    run = 0
+    for char in escaped:
+        if char == "`":
+            run += 1
+            longest = max(longest, run)
+        else:
+            run = 0
+    fence = "`" * (longest + 1)
+    if not escaped or escaped[0] in " `" or escaped[-1] in " `":
+        return "%s %s %s" % (fence, escaped, fence)
+    return "%s%s%s" % (fence, escaped, fence)
+
+
 def project_artifacts(
     paths: list[str], project_root: str | os.PathLike,
 ) -> tuple[str | None, list[str]]:
@@ -1283,6 +1314,15 @@ def project_artifacts(
         except (OSError, ValueError) as exc:
             errors.append("cannot resolve projection source %s: %s" % (path_text, exc))
             continue
+        # Filesystem names do not inherit the artifact's reference validation.
+        # Apply the project_ref contract before using a path in either YAML or
+        # Markdown; in particular, no quotes, backticks, or line breaks survive.
+        if len(source_ref) > 512 or not PROJECT_REF.fullmatch(source_ref):
+            errors.append(
+                "projection source ref must be a safe project-relative artifact "
+                "path of at most 512 characters"
+            )
+            continue
         record, validation_errors, digest = validate(str(path), root)
         if validation_errors:
             errors.extend("%s: %s" % (source_ref, item) for item in validation_errors)
@@ -1327,23 +1367,23 @@ def project_artifacts(
         'schema_version: "1.0"',
         "authoritative: false",
         "source_count: %d" % len(sources),
-        'sources_sha256: "%s"' % manifest_sha,
+        "sources_sha256: %s" % json.dumps(manifest_sha),
         "source_refs:",
     ]
     for item in source_manifest:
         lines.extend([
-            '  - ref: "%s"' % item["ref"],
-            '    sha256: "%s"' % item["sha256"],
-            '    artifact_id: "%s"' % item["artifact_id"],
-            '    kind: "%s"' % item["kind"],
+            "  - ref: %s" % json.dumps(item["ref"]),
+            "    sha256: %s" % json.dumps(item["sha256"]),
+            "    artifact_id: %s" % json.dumps(item["artifact_id"]),
+            "    kind: %s" % json.dumps(item["kind"]),
         ])
     if heads:
         lines.append("current_heads:")
         for head in heads:
             lines.extend([
-                '  - ref: "%s"' % head["ref"],
-                '    sha256: "%s"' % head["sha256"],
-                '    version: "%s"' % head["version"],
+                "  - ref: %s" % json.dumps(head["ref"]),
+                "    sha256: %s" % json.dumps(head["sha256"]),
+                "    version: %s" % json.dumps(head["version"]),
             ])
     else:
         lines.append("current_heads: []")
@@ -1359,15 +1399,24 @@ def project_artifacts(
     ])
     for item in source_manifest:
         lines.append(
-            "- `%s` — `%s`; `%s`; `sha256:%s`"
-            % (item["artifact_id"], item["kind"], item["ref"], item["sha256"])
+            "- %s — %s; %s; %s"
+            % (
+                markdown_code_span(item["artifact_id"]),
+                markdown_code_span(item["kind"]),
+                markdown_code_span(item["ref"]),
+                markdown_code_span("sha256:" + item["sha256"]),
+            )
         )
     lines.extend(["", "## Current heads", ""])
     if heads:
         for head in heads:
             lines.append(
-                "- `%s` at version `%s`; `sha256:%s`"
-                % (head["ref"], head["version"], head["sha256"])
+                "- %s at version %s; %s"
+                % (
+                    markdown_code_span(head["ref"]),
+                    markdown_code_span(head["version"]),
+                    markdown_code_span("sha256:" + head["sha256"]),
+                )
             )
     else:
         lines.append("- None declared by a validated `cycle-retro` input.")
