@@ -19,6 +19,7 @@ stay in the repo. This index does **not** migrate or delete the trees below.
 | [repo-family.md](repo-family.md) | Sibling signpost-repo policy |
 | [system-architecture.md](system-architecture.md) | Generated four-layer map (from the typed catalog) |
 | [workflow-graph.md](workflow-graph.md) | Generated workflow graph view |
+| [skill-dashboard.md](skill-dashboard.md) | Local optional **Skill Dashboard** — not an OSS install surface / not a hosted Web product |
 | [mcp-catalog.json](mcp-catalog.json) | Copy-paste MCP reference (not auto-registered) |
 | Root `CONTRIBUTING.md` | Authoring + team conventions + 10 tracking surfaces |
 | Root `SECURITY.md` · `PRIVACY.md` | Policy |
@@ -42,6 +43,9 @@ here; the hub is the intended long-form home.
 - `scripts/check-wiki.py` and other maintenance scripts — named from root
   docs when useful; `MAINTENANCE_TREES` / `MAINTENANCE_EXACT` keep them out of
   the plugin payload.
+- `scripts/skill-dashboard.py` / [skill-dashboard.md](skill-dashboard.md) —
+  local optional **Skill Dashboard**. Not a Skill, not an OSS install surface,
+  not a hosted Web product, and not a Gateway.
 - Generated bot-roster output — outside the repository by design.
 
 ## Localized READMEs

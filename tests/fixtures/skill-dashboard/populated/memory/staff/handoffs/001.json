@@ -1,0 +1,9 @@
+{
+  "kind": "staff-handoff",
+  "from_bot": "aaron-ad",
+  "to_bot": "aaron-chief",
+  "skill": "paid-measurement-loop",
+  "recommended_skill": "roi-calculator",
+  "status": "proposed",
+  "occurred_at": "2026-08-16T11:55:00Z"
+}

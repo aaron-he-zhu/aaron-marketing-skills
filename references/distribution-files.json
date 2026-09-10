@@ -198,6 +198,7 @@
     ".github",
     ".githooks",
     ".planning",
+    "apps",
     "badges",
     "evals",
     "reference-oss",

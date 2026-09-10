@@ -1,0 +1,39 @@
+name: Skill Dashboard feedback
+description: Report a local Skill Dashboard projection, empty-state, or packaging leak. This is not a hosted product.
+title: "[Skill Dashboard] <short summary>"
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Skill Dashboard** is a local optional generator. It is not a Skill,
+        not an OSS install surface, not a hosted Web product, and not a Gateway.
+        Do not attach secrets or live customer exports.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Projection (Next / Usage / Delta / Outcomes / Decisions / Trust / Coverage / Staff / Timeline)
+        - Outcomes empty state / unbound numbers
+        - Discovery path
+        - Packaging leak (plugin / Portable Lite / governed)
+        - Docs
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What the local HTML/MD/JSON showed versus the artifacts on disk.
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command
+      description: e.g. `python3 scripts/skill-dashboard.py --root . --json --md`
+      render: shell
+    validations:
+      required: false

@@ -96,10 +96,14 @@ ENTRY_KEYS = (
 )
 # Maintenance-only paths may be named from shipped root docs (README)
 # but must never enter a plugin or Portable Lite payload.
-MAINTENANCE_TREES = ("references/wiki",)
+MAINTENANCE_TREES = ("references/wiki", "apps")
 MAINTENANCE_EXACT = (
     "scripts/check-wiki.py",
     "scripts/check-routing-retrieval.py",
+    "scripts/check-skill-dashboard.py",
+    "scripts/skill-dashboard.py",
+    "references/skill-dashboard.schema.json",
+    "docs/skill-dashboard.md",
 )
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 BACKUP_FILE = re.compile(r".+ [0-9]+\.[A-Za-z0-9]+$")

@@ -169,6 +169,9 @@ jobs:
       - name: Maintenance wiki lint
         run: python3 scripts/check-wiki.py
 
+      - name: Skill Dashboard exclusion lint
+        run: python3 scripts/check-skill-dashboard.py
+
       - name: AI Staff bot-roster smoke
         run: python3 scripts/smoke-bot-projections.py
 

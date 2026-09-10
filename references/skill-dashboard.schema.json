@@ -1,0 +1,669 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aaron-he-zhu/aaron-marketing-skills/references/skill-dashboard.schema.json",
+  "title": "Skill Dashboard view projection",
+  "description": "Read-only local view of one project's skill-run artifacts. This is a projection, not canonical state, not a Skill, not an OSS install surface, and not a hosted Web product. Numeric outcome before/after values are allowed only when a measurement-contract is present; otherwise the Outcomes module uses a fixed unbound empty state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "product",
+    "generated_at",
+    "root",
+    "boundaries",
+    "source_summary",
+    "modules"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "product": {
+      "const": "Skill Dashboard"
+    },
+    "generated_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "install_surface",
+        "hosted_web_product",
+        "gateway",
+        "billing",
+        "social_signal_monitoring"
+      ],
+      "properties": {
+        "install_surface": {
+          "const": false
+        },
+        "hosted_web_product": {
+          "const": false
+        },
+        "gateway": {
+          "const": false
+        },
+        "billing": {
+          "const": false
+        },
+        "social_signal_monitoring": {
+          "const": false
+        }
+      }
+    },
+    "source_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runs",
+        "envelopes",
+        "save_points",
+        "audits",
+        "control_artifacts",
+        "events",
+        "staff_handoffs",
+        "notes",
+        "errors"
+      ],
+      "properties": {
+        "runs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "envelopes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "save_points": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "audits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "control_artifacts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "events": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "staff_handoffs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "modules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "next",
+        "usage",
+        "delta",
+        "outcomes",
+        "decisions",
+        "trust",
+        "coverage",
+        "staff"
+      ],
+      "properties": {
+        "next": {
+          "$ref": "#/$defs/next"
+        },
+        "usage": {
+          "$ref": "#/$defs/usage"
+        },
+        "delta": {
+          "$ref": "#/$defs/delta"
+        },
+        "outcomes": {
+          "$ref": "#/$defs/outcomes"
+        },
+        "decisions": {
+          "$ref": "#/$defs/decisions"
+        },
+        "trust": {
+          "$ref": "#/$defs/trust"
+        },
+        "coverage": {
+          "$ref": "#/$defs/coverage"
+        },
+        "staff": {
+          "$ref": "#/$defs/staff"
+        },
+        "timeline": {
+          "$ref": "#/$defs/timeline"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "nullable_string": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "nullable_number": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "string_list": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "next": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "next_action",
+        "open_loops",
+        "blockers",
+        "empty"
+      ],
+      "properties": {
+        "next_action": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "open_loops": {
+          "$ref": "#/$defs/string_list"
+        },
+        "blockers": {
+          "$ref": "#/$defs/string_list"
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "runs",
+        "empty"
+      ],
+      "properties": {
+        "runs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/usage_run"
+          }
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "usage_run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "status",
+        "started_at",
+        "ended_at",
+        "skill",
+        "visited_skills",
+        "evidence_mode"
+      ],
+      "properties": {
+        "run_id": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "started_at": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "ended_at": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "skill": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "visited_skills": {
+          "$ref": "#/$defs/string_list"
+        },
+        "evidence_mode": {
+          "$ref": "#/$defs/nullable_string"
+        }
+      }
+    },
+    "delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "work",
+        "quality",
+        "empty"
+      ],
+      "properties": {
+        "work": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "before",
+            "after"
+          ],
+          "properties": {
+            "before": {
+              "$ref": "#/$defs/string_list"
+            },
+            "after": {
+              "$ref": "#/$defs/string_list"
+            }
+          }
+        },
+        "quality": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/quality_delta"
+          }
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "quality_delta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "framework",
+        "before",
+        "after"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "framework": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "before": {
+          "$ref": "#/$defs/quality_state"
+        },
+        "after": {
+          "$ref": "#/$defs/quality_state"
+        }
+      }
+    },
+    "quality_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "verdict",
+        "score_state",
+        "observed_at"
+      ],
+      "properties": {
+        "verdict": {
+          "enum": [
+            "SHIP",
+            "FIX",
+            "BLOCK",
+            "UNDECIDED",
+            "NOT_SCORED"
+          ]
+        },
+        "score_state": {
+          "enum": [
+            "SCORED",
+            "NOT_SCORED"
+          ]
+        },
+        "observed_at": {
+          "$ref": "#/$defs/nullable_string"
+        }
+      }
+    },
+    "outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bound",
+        "empty_state",
+        "contracts",
+        "readings"
+      ],
+      "properties": {
+        "bound": {
+          "type": "boolean"
+        },
+        "empty_state": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "contracts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/outcome_contract"
+          }
+        },
+        "readings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/outcome_reading"
+          }
+        }
+      }
+    },
+    "outcome_contract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "metric_id",
+        "unit",
+        "direction",
+        "exploratory",
+        "supporting"
+      ],
+      "properties": {
+        "artifact_id": {
+          "type": "string"
+        },
+        "metric_id": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "unit": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "direction": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "exploratory": {
+          "type": "boolean"
+        },
+        "supporting": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "evidence_observation",
+            "action_receipt",
+            "cycle_retro"
+          ],
+          "properties": {
+            "evidence_observation": {
+              "type": "boolean"
+            },
+            "action_receipt": {
+              "type": "boolean"
+            },
+            "cycle_retro": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "outcome_reading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "metric_id",
+        "unit",
+        "before",
+        "after",
+        "delta",
+        "numeric_state",
+        "sources"
+      ],
+      "properties": {
+        "metric_id": {
+          "type": "string"
+        },
+        "unit": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "before": {
+          "$ref": "#/$defs/nullable_number"
+        },
+        "after": {
+          "$ref": "#/$defs/nullable_number"
+        },
+        "delta": {
+          "$ref": "#/$defs/nullable_number"
+        },
+        "numeric_state": {
+          "enum": [
+            "measured",
+            "referenced-not-inlined",
+            "unbound"
+          ]
+        },
+        "sources": {
+          "$ref": "#/$defs/string_list"
+        }
+      }
+    },
+    "decisions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "propose",
+        "accept",
+        "empty"
+      ],
+      "properties": {
+        "propose": {
+          "$ref": "#/$defs/string_list"
+        },
+        "accept": {
+          "$ref": "#/$defs/string_list"
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "trust": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gaps",
+        "conflicts",
+        "confidence",
+        "empty"
+      ],
+      "properties": {
+        "gaps": {
+          "$ref": "#/$defs/string_list"
+        },
+        "conflicts": {
+          "$ref": "#/$defs/string_list"
+        },
+        "confidence": {
+          "$ref": "#/$defs/string_list"
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog_available",
+        "visited",
+        "disciplines",
+        "empty"
+      ],
+      "properties": {
+        "catalog_available": {
+          "type": "boolean"
+        },
+        "visited": {
+          "$ref": "#/$defs/string_list"
+        },
+        "disciplines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/coverage_discipline"
+          }
+        },
+        "empty": {
+          "type": "boolean"
+        }
+      }
+    },
+    "coverage_discipline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "discipline",
+        "visited",
+        "catalog_count",
+        "visited_count"
+      ],
+      "properties": {
+        "discipline": {
+          "type": "string"
+        },
+        "visited": {
+          "$ref": "#/$defs/string_list"
+        },
+        "catalog_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "visited_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "staff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "present",
+        "empty_state",
+        "bots",
+        "handoffs"
+      ],
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "empty_state": {
+          "$ref": "#/$defs/nullable_string"
+        },
+        "bots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "bot",
+              "kind",
+              "discipline"
+            ],
+            "properties": {
+              "bot": {
+                "type": "string"
+              },
+              "kind": {
+                "$ref": "#/$defs/nullable_string"
+              },
+              "discipline": {
+                "$ref": "#/$defs/nullable_string"
+              }
+            }
+          }
+        },
+        "handoffs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "from_bot",
+              "to_bot",
+              "skill",
+              "status"
+            ],
+            "properties": {
+              "from_bot": {
+                "$ref": "#/$defs/nullable_string"
+              },
+              "to_bot": {
+                "$ref": "#/$defs/nullable_string"
+              },
+              "skill": {
+                "$ref": "#/$defs/nullable_string"
+              },
+              "status": {
+                "$ref": "#/$defs/nullable_string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "timeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "present",
+        "events"
+      ],
+      "properties": {
+        "present": {
+          "type": "boolean"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "occurred_at",
+              "event_type",
+              "status"
+            ],
+            "properties": {
+              "occurred_at": {
+                "$ref": "#/$defs/nullable_string"
+              },
+              "event_type": {
+                "$ref": "#/$defs/nullable_string"
+              },
+              "status": {
+                "$ref": "#/$defs/nullable_string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

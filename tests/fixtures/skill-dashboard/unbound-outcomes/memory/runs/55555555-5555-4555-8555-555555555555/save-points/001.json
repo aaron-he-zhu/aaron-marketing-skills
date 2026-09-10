@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "save_point_id": "77777777-7777-4777-8777-777777777777",
+  "run_id": "55555555-5555-4555-8555-555555555555",
+  "turn_id": "turn-1",
+  "created_at": "2026-08-10T09:15:00Z",
+  "last_event_id": "66666666-6666-4666-8666-666666666666",
+  "last_event_offset": 1,
+  "last_event_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "complete",
+  "turn_snapshot": {
+    "ref": "memory/runs/55555555-5555-4555-8555-555555555555/turns/turn-1/snapshot.json",
+    "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "context_manifest": {
+    "ref": "memory/runs/55555555-5555-4555-8555-555555555555/turns/turn-1/context-manifest.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "context_signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  },
+  "artifacts": [],
+  "registry_offsets": {
+    "entities": null,
+    "creators": null,
+    "claims": null,
+    "consent": null,
+    "launches": null,
+    "channels": null,
+    "narrative": null
+  },
+  "visited_skills": [
+    "content-writer"
+  ],
+  "chain_depth": 0,
+  "pending_handoff": null,
+  "next_action": null
+}

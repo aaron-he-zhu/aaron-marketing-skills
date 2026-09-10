@@ -1,0 +1,17 @@
+{
+  "$schema": "references/control-artifact.schema.json",
+  "schema_version": "1.0",
+  "kind": "action-receipt",
+  "artifact_id": "receipt-1",
+  "created_at": "2026-08-02T08:06:00Z",
+  "authoritative": false,
+  "authority": "non-authoritative-operational-evidence",
+  "registry_effect": false,
+  "external_mutation_authorized": false,
+  "payload": {
+    "intent_id": "intent-1",
+    "operation": "send",
+    "status": "succeeded",
+    "permission_effect": "provenance-only"
+  }
+}

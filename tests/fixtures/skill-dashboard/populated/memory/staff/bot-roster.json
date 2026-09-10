@@ -1,0 +1,14 @@
+{
+  "kind": "bot-roster",
+  "schema_version": "1.0",
+  "bots": [
+    {"bot": "aaron-narrative", "kind": "discipline", "discipline": "narrative"},
+    {"bot": "aaron-seo-geo", "kind": "discipline", "discipline": "seo-geo"},
+    {"bot": "aaron-social", "kind": "discipline", "discipline": "social"},
+    {"bot": "aaron-email", "kind": "discipline", "discipline": "email"},
+    {"bot": "aaron-ad", "kind": "discipline", "discipline": "ad"},
+    {"bot": "aaron-influencer", "kind": "discipline", "discipline": "influencer"},
+    {"bot": "aaron-launch", "kind": "discipline", "discipline": "launch"},
+    {"bot": "aaron-chief", "kind": "chief-of-staff", "discipline": "protocol"}
+  ]
+}
