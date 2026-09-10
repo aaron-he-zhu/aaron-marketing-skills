@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0",
+  "run_id": "55555555-5555-4555-8555-555555555555",
+  "parent_run_id": null,
+  "started_at": "2026-08-10T09:00:00Z",
+  "ended_at": "2026-08-10T09:20:00Z",
+  "status": "succeeded",
+  "evidence_mode": "simulated",
+  "route": {
+    "skill": "content-writer",
+    "version": "1.0.0",
+    "reason_code": "fixture"
+  },
+  "context_manifests": [],
+  "last_event_id": "66666666-6666-4666-8666-666666666666",
+  "last_event_offset": 1,
+  "last_event_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "save_point": null,
+  "registry_offsets": {
+    "entities": null,
+    "creators": null,
+    "claims": null,
+    "consent": null,
+    "launches": null,
+    "channels": null,
+    "narrative": null
+  },
+  "artifacts": [],
+  "metrics": {
+    "conversion_rate": 0.99,
+    "revenue": 12000
+  },
+  "failure_class": null,
+  "next_action": null
+}

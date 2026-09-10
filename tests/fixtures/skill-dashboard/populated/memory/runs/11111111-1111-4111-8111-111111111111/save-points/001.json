@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "save_point_id": "33333333-3333-4333-8333-333333333333",
+  "run_id": "11111111-1111-4111-8111-111111111111",
+  "turn_id": "turn-1",
+  "created_at": "2026-08-02T10:05:00Z",
+  "last_event_id": "22222222-2222-4222-8222-222222222222",
+  "last_event_offset": 1,
+  "last_event_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "status": "ready",
+  "turn_snapshot": {
+    "ref": "memory/runs/11111111-1111-4111-8111-111111111111/turns/turn-1/snapshot.json",
+    "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+  },
+  "context_manifest": {
+    "ref": "memory/runs/11111111-1111-4111-8111-111111111111/turns/turn-1/context-manifest.json",
+    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "context_signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+  },
+  "artifacts": [
+    {
+      "ref": "memory/ad/campaign-draft.md",
+      "sha256": "1111111111111111111111111111111111111111111111111111111111111111",
+      "validator": "none",
+      "validation_status": "not-required"
+    }
+  ],
+  "registry_offsets": {
+    "entities": null,
+    "creators": null,
+    "claims": null,
+    "consent": null,
+    "launches": null,
+    "channels": null,
+    "narrative": null
+  },
+  "visited_skills": [
+    "ad-creative-builder"
+  ],
+  "chain_depth": 0,
+  "pending_handoff": null,
+  "next_action": {
+    "code": "continue"
+  }
+}

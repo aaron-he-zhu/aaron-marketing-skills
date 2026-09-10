@@ -163,6 +163,11 @@
       "timeout_seconds": 60
     },
     {
+      "id": "maintenance-skill-dashboard",
+      "command": ["{python}", "scripts/check-skill-dashboard.py"],
+      "timeout_seconds": 60
+    },
+    {
       "id": "routing-lint-regressions",
       "command": ["{python}", "tests/test_routing.py"],
       "timeout_seconds": 60
