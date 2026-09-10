@@ -42,6 +42,7 @@
         "references/prompt-profiles.schema.json",
         "references/router-facade-sidecar.schema.json",
         "references/scoring-semantics.md",
+        "references/skill-dashboard.schema.json",
         "references/system-catalog.json",
         "scripts/connectors/README.md",
         "seo-geo/evaluate/performance-monitor/references/evidence-and-cycle-control.md",
@@ -50,7 +51,8 @@
       "runtime_scripts": [
         "scripts/context-profile-resolver.py",
         "scripts/profile-resolver.py",
-        "scripts/rubric-score.py"
+        "scripts/rubric-score.py",
+        "scripts/skill-dashboard.py"
       ],
       "runtime_script_trees": []
     },
@@ -117,7 +119,7 @@
         ],
         "package_ceiling": {
           "max_files": 560,
-          "max_bytes": 6700000
+          "max_bytes": 6710000
         },
         "add": {
           "root_files": [],

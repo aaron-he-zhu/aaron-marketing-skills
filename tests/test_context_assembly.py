@@ -170,7 +170,7 @@ class ContextAssemblyTests(unittest.TestCase):
                 else "native-plugin"
             ),
             "routing_sidecar": None,
-            "package_ceiling": {"max_files": 560, "max_bytes": 6700000},
+            "package_ceiling": {"max_files": 560, "max_bytes": 6710000},
             "hash_algorithm": "sha256",
             "manifest_path": "distribution-manifest.json",
             "manifest_excludes": ["distribution-manifest.json"],

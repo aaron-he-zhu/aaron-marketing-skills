@@ -294,6 +294,8 @@ class DistributionBuilderTests(unittest.TestCase):
             "scripts/validate-control-artifact.py",
             "scripts/workflow-loop.py",
             "scripts/workflow_loop.py",
+            "scripts/skill-dashboard.py",
+            "references/skill-dashboard.schema.json",
             "references/context-request.schema.json",
             "references/context-manifest.schema.json",
             "references/context-assembly.schema.json",
@@ -353,10 +355,12 @@ class DistributionBuilderTests(unittest.TestCase):
         self.assertFalse((output / "references/wiki").exists())
         self.assertFalse((output / "scripts/check-wiki.py").exists())
         self.assertFalse((output / "scripts/check-routing-retrieval.py").exists())
-        self.assertFalse((output / "scripts/skill-dashboard.py").exists())
+        self.assertTrue((output / "scripts/skill-dashboard.py").is_file())
+        self.assertTrue((output / "references/skill-dashboard.schema.json").is_file())
         self.assertFalse((output / "scripts/check-skill-dashboard.py").exists())
-        self.assertFalse((output / "references/skill-dashboard.schema.json").exists())
         self.assertFalse((output / "docs/skill-dashboard.md").exists())
+        self.assertFalse((output / "tests").exists())
+        self.assertFalse((output / ".github").exists())
         self.assertFalse((output / "apps").exists())
         self.assertFalse((output / "scripts/smoke-bot-projections.py").exists())
         self.assertFalse((output / "scripts/generate-bot-projections.py").exists())
@@ -540,7 +544,7 @@ class DistributionBuilderTests(unittest.TestCase):
         expected_ceilings = {
             "lite": {"max_files": 350, "max_bytes": 3_450_000},
             "pro": {"max_files": 400, "max_bytes": 3_950_000},
-            "governed": {"max_files": 560, "max_bytes": 6_700_000},
+            "governed": {"max_files": 560, "max_bytes": 6_710_000},
         }
         source_bindings = json.loads(
             (ROOT / "references/prompt-profiles.json").read_text()
@@ -565,6 +569,11 @@ class DistributionBuilderTests(unittest.TestCase):
             )
             ceiling = manifest["package_ceiling"]
             self.assertEqual(expected_ceilings[profile], ceiling)
+            self.assertTrue((output / "scripts/skill-dashboard.py").is_file())
+            self.assertTrue((output / "references/skill-dashboard.schema.json").is_file())
+            self.assertFalse((output / "scripts/check-skill-dashboard.py").exists())
+            self.assertFalse((output / "docs/skill-dashboard.md").exists())
+            self.assertFalse((output / "tests/fixtures/skill-dashboard").exists())
             self.assertLessEqual(len(manifest["files"]) + 1, ceiling["max_files"])
             self.assertLessEqual(
                 sum(item["bytes"] for item in manifest["files"])

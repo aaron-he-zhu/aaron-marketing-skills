@@ -7,7 +7,8 @@ body:
     attributes:
       value: |
         **Skill Dashboard** is a local optional generator. It is not a Skill,
-        not an OSS install surface, not a hosted Web product, and not a Gateway.
+        not a hosted Web product, and not a Gateway. The generator ships in
+        the plugin install surface; generated HTML is user-local.
         Do not attach secrets or live customer exports.
   - type: dropdown
     id: area

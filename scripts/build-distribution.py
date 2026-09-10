@@ -96,13 +96,13 @@ ENTRY_KEYS = (
 )
 # Maintenance-only paths may be named from shipped root docs (README)
 # but must never enter a plugin or Portable Lite payload.
+# Skill Dashboard's generator + schema are allowlisted install-surface files
+# (see plugin.shared); only the lint/guide stay maintenance-excluded.
 MAINTENANCE_TREES = ("references/wiki", "apps")
 MAINTENANCE_EXACT = (
     "scripts/check-wiki.py",
     "scripts/check-routing-retrieval.py",
     "scripts/check-skill-dashboard.py",
-    "scripts/skill-dashboard.py",
-    "references/skill-dashboard.schema.json",
     "docs/skill-dashboard.md",
 )
 MARKDOWN_LINK = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")

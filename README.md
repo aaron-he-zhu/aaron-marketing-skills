@@ -47,6 +47,7 @@ An **AI marketing staff you install, not prompt** — 120 agent skills as one pl
 - [Install](#install)
   - [AI Staff](#ai-staff--8-named-bots)
 - [First run](#first-run)
+- [Skill Dashboard](#skill-dashboard)
 - [Skill catalog](#skill-catalog)
 - [Commands](#commands)
 - [More](#more)
@@ -114,6 +115,23 @@ Or use a slash command — `/auto` to route, or a discipline entrypoint:
 ```
 
 Every skill works with pasted data. Optional tools: [CONNECTORS.md](CONNECTORS.md).
+
+---
+
+## Skill Dashboard
+
+After install, project **your own** skill-run artifacts into a local page:
+**Next**, **Usage**, **Delta**, **Outcomes**, **Decisions**, **Trust**,
+**Coverage**, **Staff**, and optional **Timeline**.
+
+```bash
+python3 scripts/skill-dashboard.py --root .
+```
+
+Point `--root` at the project that holds `memory/`, not at a plugin checkout
+unless that *is* the working project. The command writes `skill-dashboard.html`
+beside that root. This is a local generated page — **not** a hosted workbench
+and **not** a Gateway. Operator guide: [docs/skill-dashboard.md](docs/skill-dashboard.md).
 
 ---
 
@@ -224,10 +242,10 @@ Short pointers only. Long-form essays belong on the [docs hub](https://aaronmark
 - **Design** — skills are content; keyless first; surgical/MECE; no invented numbers; compliance is guidance, not law.
 - **Hooks** (Claude Code plugin): `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PostToolUseFailure`, `PostToolBatch`, and `Stop`. The **Artifact Gate** is framework-agnostic.
 - **Layout** — discipline/phase trees, `commands/`, `references/`, `hooks/`, `scripts/`, `memory/`, `docs/`. `references/wiki/` is maintainer knowledge, not a Skill and not a runtime default.
-- **Skill Dashboard** — optional local generator that reads your project `memory/` run, audit, and control artifacts and writes HTML/MD/JSON. It is **not** an OSS install surface, **not** a hosted Web product, and **not** a Gateway. Operator guide: [docs/skill-dashboard.md](docs/skill-dashboard.md). Run: `python3 scripts/skill-dashboard.py --root . --out skill-dashboard.html`.
+- **Skill Dashboard** — local generator + schema in the plugin install surface. See [Skill Dashboard](#skill-dashboard).
 - **CI** — `validate-skill.sh`, golden math, evals, routing, `check-wiki.py` (wiki stays out of assembly), PII, stdlib-only, versions, and `python3 scripts/smoke-bot-projections.py` for the AI Staff roster. Full guard list: [CONTRIBUTING.md](CONTRIBUTING.md).
 
-Distributions are allowlisted by [`references/distribution-files.json`](references/distribution-files.json). Maintenance scripts named here (`check-wiki.py`, `skill-dashboard.py`, and friends) stay in `MAINTENANCE_EXACT` and do **not** enter the plugin payload.
+Distributions are allowlisted by [`references/distribution-files.json`](references/distribution-files.json). Maintenance scripts named here (`check-wiki.py` and friends) stay in `MAINTENANCE_EXACT` and do **not** enter the plugin payload. `scripts/skill-dashboard.py` and `references/skill-dashboard.schema.json` are allowlisted install-surface files.
 
 ---
 

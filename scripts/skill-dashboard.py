@@ -3,8 +3,8 @@
 
 Python 3 stdlib only. Reads existing run/memory/audit/control files under a
 project root and writes HTML (default), plus optional JSON/Markdown. This is
-not a Skill, not an OSS install surface, not a hosted Web product, and not a
-Gateway.
+not a Skill, not a hosted Web product, and not a Gateway. The generator
+ships in the plugin install surface; generated HTML is a user-local output.
 
 Usage:
   python3 scripts/skill-dashboard.py --root PATH [--out skill-dashboard.html]
@@ -852,7 +852,7 @@ def render_md(view):
     lines = [
         "# %s" % PRODUCT,
         "",
-        "Local optional view. Not an OSS install surface, not a hosted Web product, and not a Gateway.",
+        "Local optional view. Not a hosted workbench or Gateway.",
         "",
         "Generated: %s" % view["generated_at"],
         "Root: `%s`" % view["root"],
@@ -1248,7 +1248,7 @@ code { font-family:ui-monospace,monospace; }
 <body>
 <header>
 <h1>%(title)s</h1>
-<p>Local optional view of your own skill runs. Not an OSS install surface, not a hosted Web product, and not a Gateway.</p>
+<p>Local optional view of your own skill runs. Not a hosted workbench or Gateway.</p>
 <p>Generated %(generated)s · root <code>%(root)s</code></p>
 </header>
 <nav>%(nav)s</nav>
