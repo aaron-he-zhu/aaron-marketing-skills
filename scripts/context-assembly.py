@@ -46,7 +46,7 @@ ASSEMBLY_PROFILE_FIELDS = {
 PLUGIN_PACKAGE_CEILINGS = {
     "lite": {"max_files": 350, "max_bytes": 3_450_000},
     "pro": {"max_files": 400, "max_bytes": 3_950_000},
-    "governed": {"max_files": 560, "max_bytes": 6_700_000},
+    "governed": {"max_files": 560, "max_bytes": 6_710_000},
 }
 MAX_DISTRIBUTION_SCAN_ENTRIES = 2048
 

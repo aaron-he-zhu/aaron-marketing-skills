@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Fail-closed Skill Dashboard exclusion lint — Python 3 stdlib only.
+"""Fail-closed Skill Dashboard packaging lint — Python 3 stdlib only.
 
-Keeps the local Skill Dashboard generator out of plugin / Portable Lite /
-governed payloads, and keeps the official product name stable.
+Keeps the official product name stable, ships the allowlisted generator and
+schema in the plugin / governed package, and keeps dashboard fluff out.
 
 Usage:
   python3 scripts/check-skill-dashboard.py   # CI; exit 1 on fail
@@ -23,13 +23,22 @@ BUILDER = ROOT / "scripts" / "build-distribution.py"
 SCHEMA = ROOT / "references" / "skill-dashboard.schema.json"
 DOC = ROOT / "docs" / "skill-dashboard.md"
 GENERATOR = ROOT / "scripts" / "skill-dashboard.py"
-GUARD = Path(__file__).resolve()
 
-MAINTENANCE_PATHS = (
+ALLOWLISTED_PATHS = (
     "scripts/skill-dashboard.py",
-    "scripts/check-skill-dashboard.py",
     "references/skill-dashboard.schema.json",
+)
+MAINTENANCE_EXCLUDED = (
+    "scripts/check-skill-dashboard.py",
     "docs/skill-dashboard.md",
+)
+FLUFF_PATHS = (
+    "scripts/check-skill-dashboard.py",
+    "docs/skill-dashboard.md",
+    "apps/skill-dashboard/index.html",
+    "tests/fixtures/skill-dashboard/empty/.keep",
+    "tests/test_skill_dashboard.py",
+    ".github/ISSUE_TEMPLATE/skill-dashboard-feedback.yml",
 )
 PRODUCT = "Skill Dashboard"
 FORBIDDEN_TITLES = (
@@ -40,10 +49,6 @@ FORBIDDEN_TITLES = (
 )
 REQUIRED_MODULES = (
     "next", "usage", "delta", "outcomes", "decisions", "trust", "coverage", "staff",
-)
-DASHBOARD_MARKERS = (
-    "skill-dashboard",
-    "Skill Dashboard",
 )
 
 
@@ -65,17 +70,6 @@ def load_builder():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
-
-
-def contains_dashboard(value):
-    if isinstance(value, str):
-        lowered = value.lower()
-        return "skill-dashboard" in lowered or "usage-board" in lowered
-    if isinstance(value, list):
-        return any(contains_dashboard(item) for item in value)
-    if isinstance(value, dict):
-        return any(contains_dashboard(item) for item in value.values())
-    return False
 
 
 def walk_allowlist(dist):
@@ -124,15 +118,25 @@ def main():
         fail("context-modules.json must not wire Skill Dashboard")
 
     dist = load_json(DISTRIBUTION)
-    if contains_dashboard(dist.get("plugin")):
-        fail("distribution-files.json allowlists Skill Dashboard")
     excluded = dist.get("excluded_top_level") or []
-    if "apps" not in excluded:
-        fail("distribution-files.json excluded_top_level must include apps")
+    for tree in ("apps", "tests", ".github"):
+        if tree not in excluded:
+            fail("distribution-files.json excluded_top_level must include %s" % tree)
+    shared = (dist.get("plugin") or {}).get("shared") or {}
+    if "scripts/skill-dashboard.py" not in (shared.get("runtime_scripts") or []):
+        fail("plugin.shared.runtime_scripts must allowlist scripts/skill-dashboard.py")
+    if "references/skill-dashboard.schema.json" not in (shared.get("runtime_references") or []):
+        fail(
+            "plugin.shared.runtime_references must allowlist "
+            "references/skill-dashboard.schema.json"
+        )
     declared = walk_allowlist(dist)
-    for relative in MAINTENANCE_PATHS:
+    for relative in ALLOWLISTED_PATHS:
+        if relative not in declared:
+            fail("distribution-files.json must allowlist %s" % relative)
+    for relative in FLUFF_PATHS:
         if relative in declared:
-            fail("distribution-files.json allowlists maintenance path %s" % relative)
+            fail("distribution-files.json allowlists dashboard fluff %s" % relative)
 
     schema = load_json(SCHEMA)
     if schema.get("title") != "Skill Dashboard view projection":
@@ -160,39 +164,59 @@ def main():
         fail("docs/skill-dashboard.md must keep Gateway as a boundary, not a feature")
     if "local optional" not in doc.lower() and "optional local" not in doc.lower():
         fail("docs/skill-dashboard.md must state the local optional-tool boundary")
+    if "install-surface" not in doc.lower() and "install surface" not in doc.lower():
+        fail("docs/skill-dashboard.md must state the plugin install-surface shipping rule")
 
     builder = load_builder()
     if "apps" not in builder.MAINTENANCE_TREES:
         fail("build-distribution.py MAINTENANCE_TREES must include apps")
     missing_exact = [
-        relative for relative in MAINTENANCE_PATHS
+        relative for relative in MAINTENANCE_EXCLUDED
         if relative not in builder.MAINTENANCE_EXACT
     ]
     if missing_exact:
         fail("build-distribution.py MAINTENANCE_EXACT missing %s" % missing_exact)
-    profile = builder.resolve_plugin_profile(builder.load_json(builder.MANIFEST), "governed")
-    for relative in MAINTENANCE_PATHS:
-        if builder.dependency_allowed(relative, profile):
-            fail("governed closure would ship %s" % relative)
-    if builder.dependency_allowed("docs/skill-dashboard.md", profile):
-        fail("governed closure would ship docs/skill-dashboard.md")
-    if builder.dependency_allowed("apps/skill-dashboard/index.html", profile):
-        fail("governed closure would ship apps/skill-dashboard")
+    leaked_exact = [
+        relative for relative in ALLOWLISTED_PATHS
+        if relative in builder.MAINTENANCE_EXACT
+    ]
+    if leaked_exact:
+        fail("build-distribution.py MAINTENANCE_EXACT still excludes %s" % leaked_exact)
+
+    for name in ("lite", "pro", "governed"):
+        profile = builder.resolve_plugin_profile(builder.load_json(builder.MANIFEST), name)
+        for relative in ALLOWLISTED_PATHS:
+            if not builder.dependency_allowed(relative, profile):
+                fail("%s closure would omit allowlisted %s" % (name, relative))
+        for relative in MAINTENANCE_EXCLUDED:
+            if builder.dependency_allowed(relative, profile):
+                fail("%s closure would ship maintenance path %s" % (name, relative))
+        if builder.dependency_allowed("apps/skill-dashboard/index.html", profile):
+            fail("%s closure would ship apps/skill-dashboard" % name)
+
+    governed = builder.resolve_plugin_profile(builder.load_json(builder.MANIFEST), "governed")
     readme_deps = builder.runtime_dependencies("README.md")
     leaked = [
         dep for dep in sorted(readme_deps)
-        if builder.dependency_allowed(dep, profile)
-        and (dep in MAINTENANCE_PATHS or "skill-dashboard" in dep or "usage-board" in dep)
+        if builder.dependency_allowed(dep, governed)
+        and "skill-dashboard" in dep
+        and dep not in ALLOWLISTED_PATHS
     ]
     if leaked:
-        fail("README runtime closure would ship Skill Dashboard paths: %s" % leaked)
+        fail("README runtime closure would ship Skill Dashboard fluff: %s" % leaked)
+    missing_readme = [
+        relative for relative in ALLOWLISTED_PATHS
+        if relative.startswith("scripts/") and relative not in readme_deps
+    ]
+    if missing_readme:
+        fail("README must name allowlisted Skill Dashboard runtime %s" % missing_readme)
 
     if fails:
         print("\nSKILL DASHBOARD LINT FAILED — %d issue(s)." % len(fails))
         return 1
     print(
         "Skill Dashboard lint passed: product name holds, 120 skills unchanged, "
-        "runtime exclusion holds."
+        "allowlisted files ship in the plugin, fluff stays out."
     )
     return 0
 

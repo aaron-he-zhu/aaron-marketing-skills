@@ -147,42 +147,66 @@ class SkillDashboardProjectionTests(unittest.TestCase):
             self.assertIn("## Staff", markdown)
 
 
-class SkillDashboardExclusionTests(unittest.TestCase):
+class SkillDashboardPackagingTests(unittest.TestCase):
     def test_guard_passes_on_the_real_repository(self):
         result = subprocess.run(
             ["python3", str(GUARD)], capture_output=True, text=True, cwd=ROOT
         )
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
-        self.assertIn("runtime exclusion holds", result.stdout)
+        self.assertIn("allowlisted files ship in the plugin", result.stdout)
+        self.assertIn("fluff stays out", result.stdout)
 
-    def test_dashboard_is_not_a_skill_and_stays_out_of_governed_closure(self):
+    def test_dashboard_is_not_a_skill_and_allowlisted_files_ship(self):
         plugin = json.loads(PLUGIN.read_text(encoding="utf-8"))
         self.assertEqual(120, len(plugin["skills"]))
         spec = importlib.util.spec_from_file_location("dashboard_builder_test", BUILDER)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        profile = module.resolve_plugin_profile(
-            module.load_json(module.MANIFEST), "governed"
+        allowlisted = (
+            "scripts/skill-dashboard.py",
+            "references/skill-dashboard.schema.json",
+        )
+        excluded = (
+            "scripts/check-skill-dashboard.py",
+            "docs/skill-dashboard.md",
         )
         self.assertIn("apps", module.MAINTENANCE_TREES)
-        for relative in (
-            "scripts/skill-dashboard.py",
-            "scripts/check-skill-dashboard.py",
-            "references/skill-dashboard.schema.json",
-            "docs/skill-dashboard.md",
-        ):
+        for relative in excluded:
             self.assertIn(relative, module.MAINTENANCE_EXACT)
-            self.assertFalse(module.dependency_allowed(relative, profile))
-        self.assertFalse(
-            module.dependency_allowed("apps/skill-dashboard/index.html", profile)
+        for relative in allowlisted:
+            self.assertNotIn(relative, module.MAINTENANCE_EXACT)
+        for name in ("lite", "pro", "governed"):
+            profile = module.resolve_plugin_profile(
+                module.load_json(module.MANIFEST), name
+            )
+            for relative in allowlisted:
+                self.assertTrue(
+                    module.dependency_allowed(relative, profile),
+                    "%s should ship %s" % (name, relative),
+                )
+            for relative in excluded:
+                self.assertFalse(
+                    module.dependency_allowed(relative, profile),
+                    "%s should omit %s" % (name, relative),
+                )
+            self.assertFalse(
+                module.dependency_allowed("apps/skill-dashboard/index.html", profile)
+            )
+        governed = module.resolve_plugin_profile(
+            module.load_json(module.MANIFEST), "governed"
         )
         leaked = [
             dep
             for dep in module.runtime_dependencies("README.md")
-            if module.dependency_allowed(dep, profile)
+            if module.dependency_allowed(dep, governed)
             and "skill-dashboard" in dep
+            and dep not in allowlisted
         ]
         self.assertEqual([], leaked)
+        self.assertIn(
+            "scripts/skill-dashboard.py",
+            module.runtime_dependencies("README.md"),
+        )
 
     def test_user_facing_copy_keeps_the_official_product_name(self):
         for relative in (
