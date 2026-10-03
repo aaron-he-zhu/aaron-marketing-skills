@@ -38,7 +38,9 @@ def load_capability_profiles(catalog):
         profiles = json.loads(content)
     except (OSError, ValueError) as exc:
         raise ValueError("cannot load capability profiles: %s" % exc) from exc
-    actual_digest = hashlib.sha256(content).hexdigest()
+    # Match Git's canonical text form so Windows CRLF checkouts keep the same
+    # content identity as the LF bytes stored in the repository.
+    actual_digest = hashlib.sha256(content.replace(b"\r\n", b"\n")).hexdigest()
     if actual_digest != reference["sha256"]:
         raise ValueError(
             "capability profile digest drift: catalog=%s actual=%s"
@@ -307,7 +309,8 @@ def main(argv=None):
             atomic_write(OUTPUT_PATH, expected)
             print("wrote %s" % OUTPUT_PATH.relative_to(ROOT))
             return 0
-        if not OUTPUT_PATH.is_file() or OUTPUT_PATH.read_bytes() != expected:
+        current = OUTPUT_PATH.read_bytes().replace(b"\r\n", b"\n") if OUTPUT_PATH.is_file() else None
+        if current != expected:
             raise ValueError("generated system architecture is missing or stale; run with --write")
     except (OSError, ValueError, KeyError) as exc:
         print("error: %s" % exc, file=sys.stderr)

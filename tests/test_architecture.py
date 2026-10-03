@@ -66,6 +66,32 @@ class GeneratorAtomicWriteTests(unittest.TestCase):
             close.assert_called_once()
             self.assertEqual(list(Path(tmp).iterdir()), [])
 
+    def test_generated_view_check_accepts_crlf_checkout(self):
+        module = load_generator_module()
+        catalog_bytes = (ROOT / "references" / "system-catalog.json").read_bytes()
+        profiles_bytes = (ROOT / "references" / "capability-profiles.json").read_bytes()
+        def as_crlf(data):
+            return data.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            temp_root = Path(tmp)
+            references = temp_root / "references"
+            docs = temp_root / "docs"
+            references.mkdir()
+            docs.mkdir()
+            catalog_path = references / "system-catalog.json"
+            profiles_path = references / "capability-profiles.json"
+            output_path = docs / "system-architecture.md"
+            catalog_path.write_bytes(as_crlf(catalog_bytes))
+            profiles_path.write_bytes(as_crlf(profiles_bytes))
+            catalog = json.loads(catalog_bytes)
+            profiles = json.loads(profiles_bytes)
+            output_path.write_bytes(as_crlf(module.render(catalog, profiles)))
+            with mock.patch.object(module, "ROOT", temp_root), mock.patch.object(
+                module, "CATALOG_PATH", catalog_path
+            ), mock.patch.object(module, "OUTPUT_PATH", output_path):
+                self.assertEqual(0, module.main(["--check"]))
+
 
 class CatalogLayerTests(unittest.TestCase):
     @classmethod
@@ -82,6 +108,14 @@ class CatalogLayerTests(unittest.TestCase):
 
     def test_current_layer_declarations_match_membership(self):
         self.assertEqual([], self.failures_for(copy.deepcopy(self.catalog)))
+
+    def test_discovered_skill_paths_use_portable_catalog_separators(self):
+        failures = []
+        expected = self.module.expected_skill_paths(self.catalog, failures)
+        discovered = self.module.discover_skill_paths(self.catalog)
+        self.assertEqual([], failures)
+        self.assertEqual(sorted(expected), discovered)
+        self.assertTrue(all("\\" not in path for path in discovered))
 
     def test_discipline_layer_declaration_cannot_contradict_membership(self):
         catalog = copy.deepcopy(self.catalog)
@@ -141,6 +175,21 @@ class CapabilityProfileReferenceTests(unittest.TestCase):
 
     def test_current_reference_and_lattice_are_valid(self):
         self.assertEqual([], self.failures_for(copy.deepcopy(self.catalog)))
+
+    def test_profile_digest_is_stable_for_crlf_checkouts(self):
+        source = (ROOT / "references" / "capability-profiles.json").read_bytes()
+        crlf_source = source.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+        with tempfile.TemporaryDirectory() as tmp:
+            temp_root = Path(tmp)
+            references = temp_root / "references"
+            references.mkdir()
+            (references / "capability-profiles.json").write_bytes(crlf_source)
+            catalog = copy.deepcopy(self.catalog)
+            with mock.patch.object(self.module, "ROOT", temp_root), mock.patch.object(
+                self.generator, "ROOT", temp_root
+            ):
+                self.assertEqual([], self.failures_for(catalog))
+                self.assertTrue(self.generator.load_capability_profiles(catalog))
 
     def test_digest_drift_fails_closed(self):
         catalog = copy.deepcopy(self.catalog)
