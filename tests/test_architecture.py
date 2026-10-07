@@ -38,6 +38,14 @@ class GeneratorAtomicWriteTests(unittest.TestCase):
     def setUpClass(cls):
         cls.module = load_generator_module()
 
+    def test_atomic_write_replaces_existing_content(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "generated.md"
+            target.write_bytes(b"old")
+            self.module.atomic_write(target, b"new")
+            self.assertEqual(target.read_bytes(), b"new")
+
+    @unittest.skipUnless(os.name == "posix", "POSIX permissions required")
     def test_atomic_write_preserves_existing_permissions(self):
         with tempfile.TemporaryDirectory() as tmp:
             target = Path(tmp) / "generated.md"
