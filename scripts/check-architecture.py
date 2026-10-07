@@ -58,22 +58,27 @@ class ArchitectureError(ValueError):
     pass
 
 
+def root_relative(path):
+    """Return a stable repository-relative path for catalogs and diagnostics."""
+    return path.relative_to(ROOT).as_posix()
+
+
 def load_json(path):
     try:
         with path.open(encoding="utf-8") as handle:
             return json.load(handle)
     except (OSError, ValueError) as exc:
-        raise ArchitectureError("cannot load %s: %s" % (path.relative_to(ROOT), exc)) from exc
+        raise ArchitectureError("cannot load %s: %s" % (root_relative(path), exc)) from exc
 
 
 def frontmatter(path):
     lines = path.read_text(encoding="utf-8").splitlines()
     if not lines or lines[0].strip() != "---":
-        raise ArchitectureError("%s has no frontmatter" % path.relative_to(ROOT))
+        raise ArchitectureError("%s has no frontmatter" % root_relative(path))
     try:
         end = lines.index("---", 1)
     except ValueError as exc:
-        raise ArchitectureError("%s has unterminated frontmatter" % path.relative_to(ROOT)) from exc
+        raise ArchitectureError("%s has unterminated frontmatter" % root_relative(path)) from exc
     values = {}
     for line in lines[1:end]:
         matched = re.match(r"^([A-Za-z][A-Za-z0-9_-]*):\s*(.*)$", line)
@@ -81,11 +86,11 @@ def frontmatter(path):
             values[matched.group(1)] = matched.group(2).strip().strip('"\'')
     metadata_line = next((line for line in lines[1:end] if line.startswith("metadata:")), None)
     if metadata_line is None:
-        raise ArchitectureError("%s has no metadata" % path.relative_to(ROOT))
+        raise ArchitectureError("%s has no metadata" % root_relative(path))
     try:
         metadata = json.loads(metadata_line.split(":", 1)[1].strip())
     except ValueError as exc:
-        raise ArchitectureError("%s metadata is not strict JSON" % path.relative_to(ROOT)) from exc
+        raise ArchitectureError("%s metadata is not strict JSON" % root_relative(path)) from exc
     return values, metadata
 
 
@@ -125,9 +130,9 @@ def discover_skill_paths(catalog):
     paths = []
     for discipline in catalog.get("disciplines", {}):
         for skill_file in ROOT.glob("%s/*/*/SKILL.md" % discipline):
-            paths.append(str(skill_file.parent.relative_to(ROOT)))
+            paths.append(root_relative(skill_file.parent))
     for skill_file in ROOT.glob("protocol/*/SKILL.md"):
-        paths.append(str(skill_file.parent.relative_to(ROOT)))
+        paths.append(root_relative(skill_file.parent))
     return sorted(paths)
 
 
@@ -204,7 +209,10 @@ def check_capability_profiles(catalog, failures):
     if not source_path.is_file():
         failures.append("capability profile SSOT is missing: %s" % CAPABILITY_PROFILE_SOURCE)
         return
-    actual_digest = hashlib.sha256(source_path.read_bytes()).hexdigest()
+    # Hash the Git-normalized form so core.autocrlf cannot make an unchanged
+    # checked-in JSON source look like a catalog drift on Windows.
+    content = source_path.read_bytes().replace(b"\r\n", b"\n")
+    actual_digest = hashlib.sha256(content).hexdigest()
     if actual_digest != expected_digest:
         failures.append(
             "capability profile SSOT digest drift: catalog=%s actual=%s"
@@ -334,9 +342,9 @@ def check_distribution(catalog, expected_paths, failures):
         marketplace = load_json(marketplace_path)
         plugins = marketplace.get("plugins", [])
         if len(plugins) != 1 or plugins[0].get("skills") != expected_plugin:
-            failures.append("%s skill list must exactly follow catalog order" % marketplace_path.relative_to(ROOT))
+            failures.append("%s skill list must exactly follow catalog order" % root_relative(marketplace_path))
         if plugins and plugins[0].get("description") != plugin.get("description"):
-            failures.append("%s plugin description differs from plugin.json" % marketplace_path.relative_to(ROOT))
+            failures.append("%s plugin description differs from plugin.json" % root_relative(marketplace_path))
     if MARKETPLACE_PATHS[0].read_bytes() != MARKETPLACE_PATHS[1].read_bytes():
         failures.append("marketplace mirrors are not byte-identical")
     openclaw = load_json(OPENCLAW_PATH)
@@ -743,7 +751,7 @@ def check_isolated_dependency_trees(failures):
 def check_recursive_markdown(failures):
     for path in markdown_files():
         text = path.read_text(encoding="utf-8")
-        relative = str(path.relative_to(ROOT))
+        relative = root_relative(path)
         if BARE_ROOT_RUNTIME_COMMAND.search(text):
             failures.append(
                 "root runtime command does not resolve AARON_SKILLS_ROOT in %s" % relative
@@ -765,7 +773,7 @@ def check_legacy_and_producers(catalog, failures):
         "social/host/social-quality-auditor/SKILL.md",
         "narrative/evaluate/narrative-quality-auditor/SKILL.md",
     ]
-    normative.extend(str(path.relative_to(ROOT)) for path in sorted((ROOT / "docs").glob("README.*.md")))
+    normative.extend(root_relative(path) for path in sorted((ROOT / "docs").glob("README.*.md")))
     for relative in normative:
         text = (ROOT / relative).read_text(encoding="utf-8")
         if LEGACY_COMPOSITE.search(text):
@@ -775,7 +783,7 @@ def check_legacy_and_producers(catalog, failures):
     readmes = [ROOT / "README.md", *sorted((ROOT / "docs").glob("README.*.md"))]
     for path in readmes:
         text = path.read_text(encoding="utf-8")
-        relative = str(path.relative_to(ROOT))
+        relative = root_relative(path)
         missing_hook_terms = [
             term for term in (
                 "PreToolUse", "PostToolUse", "PostToolUseFailure", "PostToolBatch",
@@ -796,7 +804,7 @@ def check_legacy_and_producers(catalog, failures):
     ]
     for path in experiment_contracts:
         text = path.read_text(encoding="utf-8")
-        relative = str(path.relative_to(ROOT))
+        relative = root_relative(path)
         for token in ("Calculated", "decision: UNDECIDED", "precommitted", "helper"):
             if token not in text:
                 failures.append("%s experiment contract is missing %r" % (relative, token))
@@ -807,7 +815,7 @@ def check_legacy_and_producers(catalog, failures):
     auditor_paths = {auditor["path"] + "/SKILL.md" for auditor in catalog["auditors"]}
     skill_paths = [*ROOT.glob("*/*/*/SKILL.md"), *ROOT.glob("protocol/*/SKILL.md")]
     for skill_path in skill_paths:
-        relative = str(skill_path.relative_to(ROOT))
+        relative = root_relative(skill_path)
         text = skill_path.read_text(encoding="utf-8")
         if relative not in auditor_paths:
             for line_number, line in enumerate(text.splitlines(), 1):
