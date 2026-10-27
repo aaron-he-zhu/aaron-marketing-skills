@@ -84,171 +84,6 @@ class DistributionBuilderTests(unittest.TestCase):
             separators=(",", ":"),
         ).encode("utf-8")
 
-    def _prompt_projection_fixture(self):
-        temporary = tempfile.TemporaryDirectory()
-        self.addCleanup(temporary.cleanup)
-        base = Path(temporary.name)
-        source = base / "source"
-        output = base / "output"
-        source_references = source / "references"
-        output_references = output / "references"
-        source_references.mkdir(parents=True)
-        output_references.mkdir(parents=True)
-        for relative in (
-            "references/host-capability-profiles.json",
-            "references/context-modules.json",
-            "references/system-catalog.json",
-            "references/skill-capsules/index.json",
-            "references/skill-contracts/index.json",
-            "scripts/context-assembly.py",
-        ):
-            target = output / relative
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(ROOT / relative, target)
-
-        catalog = json.loads(
-            (ROOT / "references/prompt-profiles.json").read_text(encoding="utf-8")
-        )
-        catalog["certified_bindings"] = []
-        policy_projection = json.loads(json.dumps(catalog))
-        policy_projection["certified_bindings"] = []
-        gates = {
-            key: True for key in (
-                "minimum_cases", "minimum_repeats", "minimum_coverage_strata",
-                "complete_pairs", "real_execution", "real_case_evidence",
-                "immutable_model_identity", "immutable_judge_identity",
-                "adapter_provenance",
-                "assembly_source_equivalence", "minimum_candidate_reduction",
-                "same_invariants", "current_age", "routing_noninferior",
-                "minimum_control_routing_accuracy",
-                "minimum_candidate_routing_accuracy",
-                "minimum_control_quality_pass_rate",
-                "minimum_candidate_quality_pass_rate",
-                "quality_noninferior", "zero_safety_regressions",
-                "zero_candidate_safety_failures",
-            )
-        }
-        certificate = {
-            "$schema": "../prompt-profile-release-certificate.schema.json",
-            "schema_version": "1.0",
-            "kind": "prompt-profile-release-certificate",
-            "protocol_version": "3.0",
-            "certificate_id": "certificate:distribution-fixture",
-            "paired_evidence": {
-                "evidence_id": "distribution-fixture", "sha256": "1" * 64,
-                "arm_run_set_sha256": "7" * 64,
-            },
-            "distribution_profile": "governed",
-            "host": {
-                "host_profile": "claude-code-plugin-host",
-                "host_name": "fixture-host",
-                "host_version": "fixture-host-1",
-            },
-            "model": {
-                "provider": "fixture-provider",
-                "model_id": "fixture/model-1",
-                "judge_model_id": "fixture/judge-1",
-                "model_revision": "immutable-snapshot-2026-08-01",
-                "judge_provider": "fixture-provider",
-                "judge_model_revision": "immutable-judge-snapshot-2026-08-01",
-            },
-            "profiles": {"control": "explicit", "candidate": "balanced"},
-            "catalogs": {
-                "prompt_policy_sha256": hashlib.sha256(
-                    self._compact_json(policy_projection)
-                ).hexdigest(),
-                "host_catalog_sha256": hashlib.sha256(
-                    (output / "references/host-capability-profiles.json").read_bytes()
-                ).hexdigest(),
-                "context_modules_sha256": hashlib.sha256(
-                    (output / "references/context-modules.json").read_bytes()
-                ).hexdigest(),
-                "system_catalog_sha256": hashlib.sha256(
-                    (output / "references/system-catalog.json").read_bytes()
-                ).hexdigest(),
-                "skill_contract_index_sha256": hashlib.sha256(
-                    (output / "references/skill-contracts/index.json").read_bytes()
-                ).hexdigest(),
-                "capsule_index_sha256": hashlib.sha256(
-                    (output / "references/skill-capsules/index.json").read_bytes()
-                ).hexdigest(),
-                "context_assembly_sha256": hashlib.sha256(
-                    (output / "scripts/context-assembly.py").read_bytes()
-                ).hexdigest(),
-                "behavior_protocol_base_sha256": "3" * 64,
-                "behavior_protocol_sha256": "4" * 64,
-                "behavior_adapter_sha256": "5" * 64,
-                "eval_case_runtime_sha256": "6" * 64,
-            },
-            "policy_snapshot_sha256": hashlib.sha256(
-                self._compact_json(catalog["certification_policy"])
-            ).hexdigest(),
-            "evaluated_at": "2026-08-01T00:02:00Z",
-            "expires_at": "2026-10-30T00:02:00Z",
-            "aggregate": {
-                "case_count": 40,
-                "pair_count": 120,
-                "coverage_stratum_count": 8,
-                "arm_run_set_sha256": "7" * 64,
-                "repeats": 3,
-                "advisories": {
-                    "paired_model_body_above_target_maximum": 0,
-                    "harness_only_above_target_maximum": 0,
-                    "provider_telemetry_incomplete": True,
-                },
-                "evidence_scope": "context-bytes-and-behavior",
-                "gates": gates,
-            },
-            "decision": {
-                "valid": True,
-                "reasons": [],
-                "evidence_scope": "context-bytes-and-behavior",
-                "token_savings_claims_permitted": False,
-                "cost_savings_claims_permitted": False,
-            },
-            "promotion": {
-                "verifier_ref": "scripts/verify-prompt-profile-release.py",
-                "verifier_sha256": "2" * 64,
-                "promoted_at": "2026-08-02T00:00:00Z",
-            },
-        }
-        certificate_raw = (
-            json.dumps(certificate, ensure_ascii=False, indent=2, sort_keys=True)
-            + "\n"
-        ).encode("utf-8")
-        evidence_ref = "references/prompt-profile-evidence/test-balanced.json"
-        binding = {
-            "binding_id": "distribution-test-balanced",
-            "distribution_profile": "governed",
-            "host_profile": "claude-code-plugin-host",
-            "model_id": "fixture/model-1",
-            "model_revision": "immutable-snapshot-2026-08-01",
-            "prompt_profile": "balanced",
-            "evidence_ref": evidence_ref,
-            "evidence_sha256": hashlib.sha256(certificate_raw).hexdigest(),
-            "certified_at": certificate["evaluated_at"],
-            "expires_at": certificate["expires_at"],
-        }
-        catalog["certified_bindings"] = [binding]
-        catalog_raw = BUILDER_MODULE.canonical_json(catalog)
-        (source / "references/prompt-profiles.json").write_bytes(catalog_raw)
-        (output / "references/prompt-profiles.json").write_bytes(catalog_raw)
-        source_evidence = source / evidence_ref
-        source_evidence.parent.mkdir(parents=True)
-        source_evidence.write_bytes(certificate_raw)
-        shutil.copy2(
-            ROOT / "references/prompt-profile-release-certificate.schema.json",
-            output / "references/prompt-profile-release-certificate.schema.json",
-        )
-        # Cache the trusted resolver before tests temporarily redirect builder ROOT.
-        BUILDER_MODULE.context_profile_module()
-        return source, output, catalog, binding, source_evidence
-
-    @staticmethod
-    def _write_fixture_catalog(source, output, catalog):
-        raw = BUILDER_MODULE.canonical_json(catalog)
-        (source / "references/prompt-profiles.json").write_bytes(raw)
-        (output / "references/prompt-profiles.json").write_bytes(raw)
 
     def test_plugin_contains_runtime_and_excludes_maintenance(self):
         output = self.build("--plugin", "--profile", "governed")
@@ -320,16 +155,11 @@ class DistributionBuilderTests(unittest.TestCase):
             "references/workflow-loop-request.schema.json",
             "references/workflow-loop-state.schema.json",
             "references/save-point.schema.json",
-            "references/skill-capsule-index.schema.json",
-            "references/skill-capsule.schema.json",
-            "references/skill-capsules/index.json",
-            "references/skill-capsules/content-writer.json",
             "references/run-envelope.schema.json",
             "references/runtime-protocol.md",
             "references/host-capability-profiles.json",
             "references/host-capability-profiles.schema.json",
             "references/policy-kernel.md",
-            "references/prompt-profile-release-certificate.schema.json",
             "references/prompt-profiles.json",
             "references/prompt-profiles.schema.json",
             "references/router-facade-sidecar.schema.json",
@@ -546,9 +376,6 @@ class DistributionBuilderTests(unittest.TestCase):
             "pro": {"max_files": 400, "max_bytes": 3_950_000},
             "governed": {"max_files": 560, "max_bytes": 6_710_000},
         }
-        source_bindings = json.loads(
-            (ROOT / "references/prompt-profiles.json").read_text()
-        )["certified_bindings"]
         for profile, output in outputs.items():
             plugin = json.loads((output / ".claude-plugin/plugin.json").read_text())
             self.assertEqual(120, len(plugin["skills"]))
@@ -586,26 +413,10 @@ class DistributionBuilderTests(unittest.TestCase):
             prompt_catalog = json.loads(
                 (output / "references/prompt-profiles.json").read_text()
             )
-            self.assertEqual(
-                source_bindings if profile == "governed" else [],
-                prompt_catalog["certified_bindings"],
-            )
-            evidence_root = output / "references/prompt-profile-evidence"
-            certificate_paths = {
-                path.relative_to(output).as_posix()
-                for path in evidence_root.rglob("*.json")
-            } if evidence_root.exists() else set()
-            self.assertEqual(
-                {
-                    binding["evidence_ref"]
-                    for binding in prompt_catalog["certified_bindings"]
-                },
-                certificate_paths,
-            )
-            self.assertEqual(
-                profile == "governed",
-                (output / "references/prompt-profile-release-certificate.schema.json").is_file(),
-            )
+            self.assertEqual(["explicit"], prompt_catalog["profile_order"])
+            self.assertNotIn("certified_bindings", prompt_catalog)
+            self.assertFalse((output / "references/skill-capsules").exists())
+            self.assertFalse((output / "references/prompt-profile-release-certificate.schema.json").exists())
             for relative in BUILDER_MODULE.AUTHORING_GUIDE_POINTERS:
                 path = output / relative
                 if path.is_file():
@@ -676,13 +487,7 @@ class DistributionBuilderTests(unittest.TestCase):
             (governed / "references/skill-contracts.pack.json.gz").is_file()
         )
         self.assertFalse((governed / "references/skill-contracts").exists())
-        capsules = list((governed / "references/skill-capsules").glob("*.json"))
-        self.assertEqual(121, len(capsules))
-        self.assertFalse(any(
-            path.name == "SKILL.md"
-            for path in (governed / "references/skill-capsules").rglob("*")
-            if path.is_file()
-        ))
+        self.assertFalse((governed / "references/skill-capsules").exists())
         self.assertFalse((lite / "references/skill-capsules").exists())
         self.assertFalse((pro / "references/skill-capsules").exists())
         self.assertLessEqual(
@@ -872,7 +677,7 @@ class DistributionBuilderTests(unittest.TestCase):
                 8, len(list((output / "router-facades").glob("*/SKILL.md")))
             )
             self.assertEqual(
-                profile == "governed",
+                False,
                 (output / "references/skill-capsules/index.json").is_file(),
             )
             self.assertEqual(
@@ -882,42 +687,21 @@ class DistributionBuilderTests(unittest.TestCase):
             prompt_catalog = json.loads(
                 (output / "references/prompt-profiles.json").read_text()
             )
-            source_bindings = json.loads(
-                (ROOT / "references/prompt-profiles.json").read_text()
-            )["certified_bindings"]
-            self.assertEqual(
-                source_bindings if profile == "governed" else [],
-                prompt_catalog["certified_bindings"],
-            )
-            self.assertEqual(
-                profile == "governed",
-                (output / "references/prompt-profile-release-certificate.schema.json").is_file(),
-            )
+            self.assertEqual(["explicit"], prompt_catalog["profile_order"])
+            self.assertNotIn("certified_bindings", prompt_catalog)
+            self.assertFalse((output / "references/prompt-profile-release-certificate.schema.json").exists())
 
-    def test_hand_forged_prompt_binding_is_rejected_by_every_distribution(self):
-        """A self-consistent certificate is not a production trust anchor."""
+    def test_retired_prompt_fields_are_rejected_by_every_distribution(self):
         for profile in ("lite", "pro", "governed"):
             with self.subTest(profile=profile):
-                source, output, _catalog, binding, _evidence = (
-                    self._prompt_projection_fixture()
-                )
-                with mock.patch.object(BUILDER_MODULE, "ROOT", source):
-                    with self.assertRaisesRegex(
-                            BUILDER_MODULE.DistributionError,
-                            "non-empty certified_bindings are not distributable"):
-                        BUILDER_MODULE.project_prompt_profile_distribution(
-                            output, profile
-                        )
-                self.assertFalse((output / binding["evidence_ref"]).exists())
+                output = self.build("--plugin", "--profile", profile)
+                path = output / "references/prompt-profiles.json"
+                catalog = json.loads(path.read_text())
+                catalog["certified_bindings"] = [{"hand_forged": True}]
+                path.write_bytes(BUILDER_MODULE.canonical_json(catalog))
+                with self.assertRaisesRegex(BUILDER_MODULE.DistributionError, "unknown or missing fields"):
+                    BUILDER_MODULE.validate_prompt_profile_distribution(output, profile)
 
-    def test_manifest_verification_rejects_hand_forged_prompt_binding(self):
-        _source, output, _catalog, _binding, _evidence = (
-            self._prompt_projection_fixture()
-        )
-        with self.assertRaisesRegex(
-                BUILDER_MODULE.DistributionError,
-                "non-empty certified_bindings require a signed release-attestation"):
-            BUILDER_MODULE.validate_prompt_profile_distribution(output, "governed")
 
     def test_host_profile_distribution_compatibility_fails_closed(self):
         cases = (
@@ -1026,36 +810,6 @@ class DistributionBuilderTests(unittest.TestCase):
                             missing.append(
                                 "%s -> %s" % (source.relative_to(output), target)
                             )
-            if profile_name == "governed":
-                capsule_link_count = 0
-                for capsule_path in sorted(
-                        (output / "references/skill-capsules").glob("*.json")):
-                    if capsule_path.name == "index.json":
-                        continue
-                    capsule = json.loads(capsule_path.read_text(encoding="utf-8"))
-                    for field, text in projected_strings(capsule):
-                        for raw in MARKDOWN_LINK.findall(text):
-                            target = raw.strip().lstrip("<").rstrip(">").split(
-                                "#", 1
-                            )[0]
-                            if (not target or re.match(
-                                    r"^[A-Za-z][A-Za-z0-9+.-]*:", target)):
-                                continue
-                            capsule_link_count += 1
-                            resolved = (capsule_path.parent / target).resolve()
-                            label = "capsule:%s.%s -> %s" % (
-                                capsule_path.relative_to(output),
-                                ".".join(map(str, field)),
-                                target,
-                            )
-                            try:
-                                resolved.relative_to(output.resolve())
-                            except ValueError:
-                                missing.append(label)
-                            else:
-                                if not resolved.exists():
-                                    missing.append(label)
-                self.assertGreater(capsule_link_count, 1200)
             self.assertEqual([], missing, profile_name)
 
     def test_unknown_skill_fails(self):
@@ -1263,7 +1017,7 @@ class DistributionBuilderTests(unittest.TestCase):
         manifest_path.write_bytes(BUILDER_MODULE.canonical_json(manifest))
         with self.assertRaisesRegex(
                 BUILDER_MODULE.DistributionError,
-                "non-empty certified_bindings are not distributable"):
+                "unknown or missing fields"):
             BUILDER_MODULE.verify_distribution_manifest(output)
 
     def test_manifest_profile_and_ceiling_are_enforced(self):
@@ -1340,6 +1094,20 @@ class DistributionBuilderTests(unittest.TestCase):
             )
         self.assertNotEqual(0, result.returncode)
         self.assertIn("must be supplied together", result.stderr)
+
+    def test_generated_modes_are_independent_of_a_restrictive_umask(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            prior = os.umask(0o077)
+            try:
+                BUILDER_MODULE._install_generated_file(output, "generated.json", b"{}\n", mode=0o644)
+                target = output / "generated.json"
+                self.assertEqual(0o644, target.stat().st_mode & 0o777)
+                BUILDER_MODULE._replace_built_regular(target, target.stat(), b"{\"updated\": true}\n", "fixture")
+                self.assertEqual(0o644, target.stat().st_mode & 0o777)
+            finally:
+                os.umask(prior)
+
 
 
 if __name__ == "__main__":

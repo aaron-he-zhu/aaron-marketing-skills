@@ -88,10 +88,6 @@ class WorkflowLoopError(ValueError):
     """The workflow loop request or persisted state violates its contract."""
 
 
-class EventCommittedError(WorkflowLoopError):
-    """The event is durable but its rebuildable projection was not installed."""
-
-
 def canonical_json(value):
     try:
         return json.dumps(
@@ -1492,7 +1488,7 @@ def _workflow_paths(root, run_id, loop_id, create=False):
                 raise WorkflowLoopError("workflow runtime path must be a real directory")
             path.mkdir(mode=0o700, parents=False, exist_ok=True)
             os.chmod(path, 0o700)
-    elif not work.is_dir() or work.is_symlink():
+    elif base.is_symlink() or not base.is_dir() or not work.is_dir() or work.is_symlink():
         raise WorkflowLoopError("workflow loop does not exist: %s" % loop_id)
     return {
         "dir": work,
@@ -1606,6 +1602,10 @@ def _load_plan(path):
         raise WorkflowLoopError("workflow plan authority contract is invalid")
     _uuid(value["run_id"], "plan run_id")
     _safe_id(value["loop_id"], "plan loop_id")
+    base = "memory/runs/%s/workflow-plans/%s" % (value["run_id"], value["loop_id"])
+    for field, filename in (("state_ref", "state.json"), ("events_ref", "events.ndjson")):
+        if value[field] != base + "/" + filename:
+            raise WorkflowLoopError("plan %s must use its canonical workflow path" % field)
     _safe_id(value["workflow_id"], "plan workflow_id", slug=True)
     _timestamp(value["created_at"], "plan created_at")
     _timestamp(value["deadline"], "plan deadline")
@@ -2208,7 +2208,6 @@ def _append_locked(root, paths, plan_value, events, request):
     if existing:
         _validate_run_action_evidence_consumption(root, plan_value, events)
         projected = _project(plan_value, events)
-        _atomic_write(paths["state"], pretty_json(projected))
         return {"deduplicated": True, "event": existing[0], "state": projected}
     head = events[-1]["event_hash"] if events else ZERO_HASH
     if request["expected_head_sha256"] != head:
@@ -2235,14 +2234,6 @@ def _append_locked(root, paths, plan_value, events, request):
     )
     projected = _apply_event(_project(plan_value, events), event, plan_value)
     _append_line(paths["events"], event)
-    try:
-        _atomic_write(paths["state"], pretty_json(projected))
-    except Exception as exc:
-        raise EventCommittedError(
-            "event_committed=true event_id=%s: projection install failed (%s); "
-            "retry the identical idempotency_key to rebuild state"
-            % (event["event_id"], exc)
-        ) from exc
     return {"deduplicated": False, "event": event, "state": projected}
 
 
@@ -2359,7 +2350,7 @@ def advance(root, request):
 
 
 def verify(root, run_id, loop_id, repair_projection=False):
-    """Validate the plan, run anchor, evidence, stream, and state projection."""
+    """Replay verified facts; optionally export the disposable state projection."""
     root = Path(root).resolve()
     paths = _workflow_paths(root, run_id, loop_id, create=False)
     module = _run_events_module()
@@ -2386,15 +2377,31 @@ def verify(root, run_id, loop_id, repair_projection=False):
                 _validate_run_action_evidence_consumption(root, plan_value, events)
                 projected = _project(plan_value, events)
                 projection_current = False
-                if paths["state"].exists():
-                    stored, _ = read_json(paths["state"], "workflow state projection")
-                    projection_current = stored == projected
-                if not projection_current:
-                    if not repair_projection:
-                        raise WorkflowLoopError(
-                            "workflow state projection is missing or stale"
+                try:
+                    metadata = paths["state"].lstat()
+                except FileNotFoundError:
+                    metadata = None
+                if metadata is not None:
+                    if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:
+                        raise WorkflowLoopError("workflow state projection must be a regular single-link file")
+                    if metadata.st_size <= MAX_JSON_BYTES:
+                        _path, raw, _metadata = module._stable_project_read(
+                            root, plan_value["state_ref"], MAX_JSON_BYTES,
+                            "workflow state projection",
                         )
-                    _atomic_write(paths["state"], pretty_json(projected))
+                        try:
+                            stored = strict_json_loads(raw.decode("utf-8"), "workflow state projection")
+                            projection_current = stored == projected
+                        except (WorkflowLoopError, UnicodeDecodeError):
+                            # Invalid derived JSON cannot invalidate verified history.
+                            pass
+                if repair_projection:
+                    try:
+                        _atomic_write(paths["state"], pretty_json(projected))
+                    except OSError as exc:
+                        raise WorkflowLoopError(
+                            "projection export failed; committed event history is unchanged: %s" % exc
+                        ) from exc
                     projection_current = True
                 current_graph_match = False
                 try:

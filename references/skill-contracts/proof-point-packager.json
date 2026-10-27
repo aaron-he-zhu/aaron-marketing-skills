@@ -11,7 +11,7 @@
           "end_char": 112,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 222,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 114
         },
@@ -41,7 +41,7 @@
           "end_char": 303,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 224
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/land/proof-point-packager/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e"
+      "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a"
     }
   },
   "context_hints": {
@@ -62,28 +62,28 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 42
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 34
       },
       {
         "path": "references/tale-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "sha256": "4139c9e8dd7b7c4c7be5afa2c304a27508698c31940213424de53c38cb3d579b",
         "source_line": 4
       }
     ],
@@ -128,7 +128,7 @@
           "end_char": 177,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -146,7 +146,7 @@
           "end_char": 388,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 178
         },
@@ -164,7 +164,7 @@
           "end_char": 609,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 389
         },
@@ -182,7 +182,7 @@
           "end_char": 1015,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 611
         },
@@ -195,7 +195,7 @@
     "summary_ref": {
       "path": "narrative/land/proof-point-packager/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e"
+      "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -210,8 +210,8 @@
     "name": "proof-point-packager",
     "path": "narrative/land/proof-point-packager/SKILL.md",
     "phase": "land",
-    "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
-    "version": "20.1.0"
+    "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<product / brand> [pillar or claim IDs] [proof material paths]",
@@ -225,7 +225,7 @@
           "end_char": 93,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -240,7 +240,7 @@
           "end_char": 232,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 95
         },
@@ -255,7 +255,7 @@
           "end_char": 484,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 234
         },
@@ -270,7 +270,7 @@
           "end_char": 570,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 486
         },
@@ -282,7 +282,7 @@
     "source": {
       "path": "narrative/land/proof-point-packager/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e"
+      "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a"
     }
   },
   "output_contract": {
@@ -297,7 +297,7 @@
           "end_char": 64,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -313,7 +313,7 @@
           "end_char": 482,
           "path": "narrative/land/proof-point-packager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e",
+          "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a",
           "span_basis": "field-text",
           "start_char": 66
         },
@@ -324,7 +324,7 @@
     "source": {
       "path": "narrative/land/proof-point-packager/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e"
+      "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a"
     },
     "summary": "a proof module set — stat cards, case snippets, testimonial blocks, and comparison proofs — each tagged with its message-house pillar, the `memory/claims/claims-ledger.md` claim ID it substantiates, and a Measured / User-provided label with as-of date; plus a",
     "summary_source": "expected-output",
@@ -335,12 +335,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -349,7 +349,7 @@
     "source": {
       "path": "narrative/land/proof-point-packager/SKILL.md",
       "section": "frontmatter",
-      "sha256": "f5fade009615323723b64b14a4556dc6ba449b7f2ad93de520c8a34f0404698e"
+      "sha256": "80816096b7dc0fa61461cfe50fdb097fdb2648c3bb0d5c98c8b642249344343a"
     },
     "trigger_phrases": [
       "build reusable stat cards and case snippets",

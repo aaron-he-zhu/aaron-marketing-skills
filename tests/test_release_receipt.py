@@ -259,7 +259,7 @@ def mocked_semantic_revalidator(**arguments):
 class ReleaseReceiptTests(unittest.TestCase):
     def test_supported_release_versions_keep_history_and_include_current(self):
         self.assertEqual(
-            ("19.0.0", "19.1.0", "19.2.0", "20.0.0", "20.1.0"),
+            ("19.0.0", "19.1.0", "19.2.0", "20.0.0", "20.1.0", "20.2.0"),
             release_receipt.SUPPORTED_RELEASE_VERSIONS,
         )
 

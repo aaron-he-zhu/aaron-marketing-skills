@@ -1,5 +1,7 @@
 # ROAS Benchmark — Paid Ads Evaluation Standard
 
+**Human-anchor revision: 2026-10-27-a.** The delimited item tables own criteria; detailed boundaries and examples below interpret those same IDs. Profiles, applicability, weights, veto identity, coverage and rounding remain in the typed catalog/scorer. This revision is not outcome calibration; preserve prior audit source digests and do not relabel historical observations.
+
 ROAS evaluates **incremental paid-media contribution and operating quality under declared business constraints**. The mnemonic remains Return · Offer · Audience · Spend Efficiency, but the objective is not to maximize a platform-reported ROAS ratio. A high reported ratio can coexist with weak incrementality, under-spending, attribution inflation, or poor profit.
 
 The framework is advisory. Executable items, profiles, context, and vetoes live in [`framework-catalog.json`](framework-catalog.json); common evidence, missingness, score, status, and verdict rules live in [`scoring-semantics.md`](scoring-semantics.md).
@@ -12,36 +14,48 @@ Score one account or campaign portfolio for one currency, normalized attribution
 
 ## The 20 Items
 
+<!-- AUDITOR-ITEMS:BEGIN -->
+
 | ID | Dimension | Criterion |
 |---|---|---|
 | `R1` | Return | Conversion instrumentation is verified against an own-data truth set. |
-| `R2` | Return | Cross-platform attribution is deduplicated; windows and currency are normalized. |
-| `R3` | Return | Incremental contribution or profit is measured against the declared target/control. |
-| `R4` | Return | CAC/CPA and payback satisfy the declared business constraint. |
-| `R5` | Return | Marginal return is read after conversion lag with uncertainty stated. |
+| `R2` | Return | Cross-platform attribution is deduplicated; attribution windows and currency are normalized. |
+| `R3` | Return | Incremental contribution/profit is evaluated against the declared target/control; platform-attributed ROAS alone leaves incrementality Unknown, a labeled proxy is not a causal result. |
+| `R4` | Return | CAC/CPA and payback meet the declared business constraints on normalized own-data outcomes; absent constraint/truth set is Unknown. |
+| `R5` | Return | Marginal return uses a completed declared lag window and stated uncertainty; average historical ROAS cannot establish the return on additional spend. |
 | `O1` | Offer | Claims and required disclosures are substantiated. |
 | `O2` | Offer | Platform policy and restricted-category requirements are satisfied. |
-| `O3` | Offer | Economics, eligibility, terms, and availability are explicit. |
+| `O3` | Offer | Offer economics, eligibility, terms, and availability are explicit. |
 | `O4` | Offer | Ad-to-landing message and intent match. |
-| `O5` | Offer | Hook, format, accessibility, and fatigue state fit the placement. |
-| `A1` | Audience | Brand and placement safety are verified from placement evidence. |
+| `O5` | Offer | Creative hook, format, accessibility, and fatigue state fit the placement. |
+| `A1` | Audience | Brand and placement safety are verified from the placement evidence. |
 | `A2` | Audience | Targeting and query/audience intent fit. |
 | `A3` | Audience | Negative keywords, exclusions, and suppression controls are maintained. |
-| `A4` | Audience | Account structure supports the objective without avoidable overlap. |
-| `A5` | Audience | Reach, overlap, and audience saturation are measured. |
+| `A4` | Audience | Campaign/account structure supports the declared objective without avoidable overlap. |
+| `A5` | Audience | Reach, overlap and audience saturation use audience-level evidence on one window; frequency alone cannot establish saturation. |
 | `S1` | Spend Efficiency | Budget pacing remains within the declared plan and constraints. |
 | `S2` | Spend Efficiency | Bid strategy and learning-state changes are governed. |
-| `S3` | Spend Efficiency | Marginal CPC/CPM/CTR/CVR efficiency uses a normalized window. |
-| `S4` | Spend Efficiency | Frequency and creative decay are separated from audience saturation. |
+| `S3` | Spend Efficiency | Marginal CPC/CPM/CTR/CVR efficiency is compared on a normalized window. |
+| `S4` | Spend Efficiency | Creative-level frequency/decay is separated from audience saturation; aggregate frequency alone cannot establish creative fatigue. |
 | `S5` | Spend Efficiency | Paid/organic and cross-campaign cannibalization are assessed. |
+
+<!-- AUDITOR-ITEMS:END -->
 
 ## Profiles and Scoring
 
-| Profile | R | O | A | S | Use |
-|---|---:|---:|---:|---:|---|
-| `direct-response` | .40 | .20 | .15 | .25 | Conversion program under an explicit CAC/payback constraint |
-| `prospecting` | .15 | .30 | .30 | .25 | Reach/consideration program with a declared downstream outcome |
-| `incremental-profit` | .50 | .15 | .10 | .25 | Holdout or causal design centered on contribution/profit |
+<!-- GENERATED:BEGIN auditor-policy:profiles -->
+
+| Profile | Dimension weights | Context match | Item subset |
+|---|---|---|---|
+| `direct-response` | R 40% · O 20% · A 15% · S 25% | {"goal": "direct-response"} | all items in included dimensions |
+| `prospecting` | R 15% · O 30% · A 30% · S 25% | {"goal": "prospecting"} | all items in included dimensions |
+| `incremental-profit` | R 50% · O 15% · A 10% · S 25% | {"goal": "incremental-profit"} | all items in included dimensions |
+
+<!-- GENERATED:END auditor-policy:profiles -->
+
+- `direct-response`: Conversion program under an explicit CAC/payback constraint.
+- `prospecting`: Reach/consideration program with a declared downstream outcome.
+- `incremental-profit`: Holdout or causal design centered on contribution/profit.
 
 Per item: Pass = 10, Partial = 5, Fail = 0. The Paid Ads Index (`RQS`) is the floor-rounded profile-weighted mean after 100% applicable evidence coverage. `RQS` is not the literal ROAS ratio and profiles are not interchangeable.
 
@@ -72,6 +86,16 @@ Premature scaling and learning-phase disruption are high-severity `S2` findings,
 | Profit constraint | Margin, fulfillment, CAC/payback, and contribution assumptions with provenance |
 
 Use `~~web analytics`, `~~ecommerce`, and `~~ad platform` connector categories from [`CONNECTORS.md`](../CONNECTORS.md). Keep raw platform metrics, calculated reconciliations, and estimates visibly distinct.
+
+## Fixed Boundary Cases (2026-10-27-a)
+
+See the [fixed factual examples for ROAS](benchmark-boundary-examples.md#roas) when calibrating a disputed boundary. These examples are lookup material; retain the item anchors and complete evidence rules above for execution.
+
+## Evidence Reuse and Targeted Review
+
+Normalize one own-data order/lead, spend, placement and lag batch for the portfolio. Reuse it for reconciliation and business-constraint checks while keeping incrementality, audience saturation and creative decay separate. Reassess changed tracking/claims/creative and dependencies, then submit the complete profile to the scorer.
+
+Follow the existing [auditor runbook](auditor-runbook.md) for evidence, authority and final complete-coverage scoring; reuse does not create independent corroboration.
 
 ## Skill Ownership
 

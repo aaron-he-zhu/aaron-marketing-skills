@@ -385,7 +385,7 @@ class EngineeringMaturityTests(unittest.TestCase):
                 self.assertIn("policy:%s" % key, fact.evidence)
 
         fact = evaluate(ci_text=ci.replace(
-            "tests.test_semantic_evidence_verifier", "removed-h19-ci-test",
+            "python3 scripts/run-behavior-evals.py --with-unittest-discovery", "python3 -c 'pass'",
         ))
         self.assertFalse(fact.passed)
         self.assertIn("ci:semantic-evidence-verifier", fact.evidence)
@@ -405,12 +405,36 @@ class EngineeringMaturityTests(unittest.TestCase):
         suites = json.loads(
             (ROOT / "evals/deterministic-suites.json").read_text(encoding="utf-8")
         )
-        self.assertIn("tests.test_semantic_evidence_verifier", ci)
+        self.assertTrue(maturity.ci_wires_tests(ci, suites, {"tests.test_semantic_evidence_verifier"}))
         maturity_suite = next(
             item for item in suites["suites"]
             if item["id"] == "five-engineering-maturity-contract"
         )
         self.assertIn("tests.test_semantic_evidence_verifier", maturity_suite["command"])
+
+    def test_ci_comments_and_unreachable_steps_do_not_prove_test_execution(self):
+        suites = {"suites": []}
+        for ci in (
+                '      - name: comments\n        run: |\n          # python3 -m unittest tests.test_runtime_controller\n',
+                '      - name: disabled\n        if: false\n        run: python3 scripts/run-behavior-evals.py --with-unittest-discovery\n',
+                "      - name: small tier\n        if: needs.classify.outputs.tier == 'S1'\n"
+                '        run: python3 scripts/run-behavior-evals.py --with-unittest-discovery\n',
+                '      - name: filtered away\n        run: python3 -m unittest -k absent tests.test_runtime_controller\n',
+                '      - name: text only\n        run: |\n          cat <<TESTS\n'
+                '          python3 -m unittest tests.test_runtime_controller\n          TESTS\n',
+                '      - name: shell disabled\n        run: |\n          if false; then\n'
+                '            python3 -m unittest tests.test_runtime_controller\n          fi\n',
+                '      - name: plan only\n        run: python3 scripts/run-behavior-evals.py --adapter-only --list-cases\n'):
+            with self.subTest(ci=ci):
+                self.assertFalse(maturity.ci_wires_tests(ci, suites, {"tests.test_runtime_controller"}))
+
+    def test_ci_full_discovery_resolves_real_test_files_and_keeps_independent_checks(self):
+        ci = '      - name: complete\n        run: python3 scripts/run-behavior-evals.py --with-unittest-discovery\n'
+        suites = {"suites": [{"command": ["{python}", "scripts/golden-auditor-math.py"]}]}
+        self.assertTrue(maturity.ci_wires_tests(ci, suites, {"tests.test_runtime_controller"}))
+        self.assertFalse(maturity.ci_wires_tests(ci, suites, {"tests.test_nonexistent_module"}))
+        self.assertTrue(maturity.ci_wires_command(ci, suites, ["python3", "scripts/golden-auditor-math.py"]))
+        self.assertFalse(maturity.ci_wires_command(ci, {"suites": []}, ["python3", "scripts/golden-auditor-math.py"]))
 
     def test_private_report_write_is_atomic_mode_0600_and_rejects_symlink(self):
         result = {"bounded": True}

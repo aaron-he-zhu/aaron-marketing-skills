@@ -121,6 +121,7 @@ jobs:
           python3 -c "import json; json.load(open('hooks/hooks.json'))"
 
       - name: Universal safety contracts
+        if: needs.classify.outputs.tier == 'S0' || needs.classify.outputs.tier == 'S1'
         run: |
           set -euo pipefail
           python3 -m unittest \
@@ -137,6 +138,10 @@ jobs:
             tests.test_publish_state \
             tests.test_runtime_controller
           bash tests/test_hook_artifact_gate.sh
+
+      - name: Fixed safety semantic plan
+        run: |
+          set -euo pipefail
           python3 scripts/run-behavior-evals.py \
             --adapter-only \
             --adapter-protocol 2 \
@@ -157,30 +162,41 @@ jobs:
           set -euo pipefail
           bash scripts/check-versions.sh
           python3 scripts/generate-release-surfaces.py --check
-          # These three generated Markdown projections otherwise resemble S0
-          # docs. Keep their cheap drift checks in the baseline.
-          python3 scripts/generate-system-docs.py --check
-          python3 scripts/generate-auditor-runtime.py --check
           python3 scripts/workflow-graph.py --check
 
+      - name: Generated Markdown baseline for smaller changes
+        if: needs.classify.outputs.tier == 'S0' || needs.classify.outputs.tier == 'S1'
+        run: |
+          set -euo pipefail
+          # Full tiers execute these exact checks through the conformance manifest.
+          python3 scripts/generate-system-docs.py --check
+          python3 scripts/generate-auditor-runtime.py --check
+
       - name: Local Markdown link targets
+        if: needs.classify.outputs.tier == 'S0' || needs.classify.outputs.tier == 'S1'
         run: python3 scripts/check-local-links.py
 
       - name: Maintenance wiki lint
+        if: needs.classify.outputs.tier == 'S0' || needs.classify.outputs.tier == 'S1'
         run: python3 scripts/check-wiki.py
 
       - name: Skill Dashboard exclusion lint
+        if: needs.classify.outputs.tier == 'S0' || needs.classify.outputs.tier == 'S1'
         run: python3 scripts/check-skill-dashboard.py
 
       - name: AI Staff bot-roster smoke
         run: python3 scripts/smoke-bot-projections.py
 
-      # S1 validates only directly changed skills, then plans the semantically
-      # affected cases. S2/S3 also run these checks before full validation.
+      # Full tiers validate catalog paths below; preserve direct validation for
+      # changed paths outside that inventory, including newly added Skills.
       - name: Validate changed skills
         if: needs.classify.outputs.tier != 'S0'
+        env:
+          CI_VALIDATION_TIER: ${{ needs.classify.outputs.tier }}
         run: |
           set -euo pipefail
+          ci_catalog_output="$(python3 -c 'import json; print("\n".join(p.removeprefix("./") + "/SKILL.md" for p in json.load(open(".claude-plugin/plugin.json"))["skills"]))')"
+          mapfile -t ci_catalog_paths <<< "$ci_catalog_output"
           # Derive the paths again from the immutable range so a newly added,
           # not-yet-catalogued skill cannot disappear from changed_skills.
           git diff --name-only -z --diff-filter=ACMR "$BASE_REF" "$HEAD_REF" -- |
@@ -188,13 +204,20 @@ jobs:
               case "$path" in
                 */SKILL.md)
                   [ -f "$path" ] || continue
+                  if [ "$CI_VALIDATION_TIER" = S2 ] || [ "$CI_VALIDATION_TIER" = S3 ]; then
+                    ci_known_skill=0
+                    for ci_catalog_path in "${ci_catalog_paths[@]}"; do
+                      [ "$path" != "$ci_catalog_path" ] || ci_known_skill=1
+                    done
+                    [ "$ci_known_skill" -eq 0 ] || continue
+                  fi
                   bash scripts/validate-skill.sh "$(dirname "$path")"
                   ;;
               esac
             done
 
-      - name: Changed-surface contracts and semantic plan
-        if: needs.classify.outputs.tier != 'S0'
+      - name: Changed-surface contracts
+        if: needs.classify.outputs.tier == 'S1'
         run: |
           set -euo pipefail
           # The symmetry/topology contract is mandatory even for a one-skill S1
@@ -207,6 +230,11 @@ jobs:
           python3 scripts/check-routing.py
           python3 scripts/check-evals.py
           python3 scripts/run-behavior-evals.py
+
+      - name: Changed-surface semantic plan
+        if: needs.classify.outputs.tier != 'S0'
+        run: |
+          set -euo pipefail
           python3 scripts/run-behavior-evals.py \
             --adapter-only \
             --adapter-protocol 2 \
@@ -231,37 +259,21 @@ jobs:
         if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
         run: |
           set -euo pipefail
-          python3 scripts/check-architecture.py
-          python3 scripts/generate-release-surfaces.py --check
-          python3 scripts/generate-system-docs.py --check
-          python3 scripts/generate-auditor-runtime.py --check
           python3 scripts/generate-auditor-prompt-contracts.py --check
           python3 scripts/generate-auto-routing-shards.py --check
           python3 scripts/generate-skill-contracts.py --check
-          python3 scripts/generate-skill-capsules.py --check
-          python3 scripts/workflow-graph.py --check
+          python3 scripts/generate-claude-index.py --check
 
-      - name: Full unit and runtime suites
+      - name: Full unittest discovery and independent conformance
         if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
         run: |
           set -euo pipefail
-          # The discovery command makes every module mandatory, including the
-          # maturity contract's statically audited wiring markers:
-          # tests.test_semantic_evidence_verifier tests.test_skill_contracts
-          # tests.test_context_plan tests.test_context_resolver
-          # tests.test_runtime_controller tests.test_distribution_builder
-          # tests.test_publish_release tests.test_workflow_loop
-          # tests.test_workflow_graph
-          python3 -m unittest discover -s tests -p 'test_*.py'
-          bash tests/test_runtime_distribution.sh
-          bash tests/test_hook_artifact_gate.sh
+          python3 scripts/run-behavior-evals.py --with-unittest-discovery
 
       - name: Full behavior and 734-case credential-free plan
         if: needs.classify.outputs.tier == 'S2' || needs.classify.outputs.tier == 'S3'
         run: |
           set -euo pipefail
-          python3 scripts/run-behavior-evals.py
-          python3 scripts/check-evals.py
           python3 scripts/run-behavior-evals.py \
             --adapter-only \
             --adapter-protocol 2 \

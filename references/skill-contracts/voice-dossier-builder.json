@@ -11,7 +11,7 @@
           "end_char": 69,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 141,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 71
         },
@@ -41,7 +41,7 @@
           "end_char": 193,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 143
         },
@@ -56,7 +56,7 @@
           "end_char": 331,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 195
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "social/explore/voice-dossier-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb"
+      "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c"
     }
   },
   "context_hints": {
@@ -77,28 +77,28 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 42
       },
       {
         "path": "references/echo-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "sha256": "a685aab57c6d3278067e1be97ce9b5ca879f54d7f59b4a32ed4bc2b09cbbbfc3",
         "source_line": 4
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 34
       }
     ],
@@ -118,7 +118,7 @@
           "end_char": 108,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -136,7 +136,7 @@
           "end_char": 195,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 110
         },
@@ -152,7 +152,7 @@
           "end_char": 367,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 196
         },
@@ -170,7 +170,7 @@
           "end_char": 531,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 368
         },
@@ -188,7 +188,7 @@
           "end_char": 874,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 533
         },
@@ -201,7 +201,7 @@
     "summary_ref": {
       "path": "social/explore/voice-dossier-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb"
+      "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -216,8 +216,8 @@
     "name": "voice-dossier-builder",
     "path": "social/explore/voice-dossier-builder/SKILL.md",
     "phase": "explore",
-    "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
-    "version": "20.1.0"
+    "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<brand / founder> [own posts, emails, decks to extract from]",
@@ -231,7 +231,7 @@
           "end_char": 33,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -246,7 +246,7 @@
           "end_char": 88,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 35
         },
@@ -261,7 +261,7 @@
           "end_char": 148,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 90
         },
@@ -276,7 +276,7 @@
           "end_char": 166,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 150
         },
@@ -291,7 +291,7 @@
           "end_char": 199,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 168
         },
@@ -306,7 +306,7 @@
           "end_char": 245,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 201
         },
@@ -318,7 +318,7 @@
     "source": {
       "path": "social/explore/voice-dossier-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb"
+      "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c"
     }
   },
   "output_contract": {
@@ -333,7 +333,7 @@
           "end_char": 61,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -349,7 +349,7 @@
           "end_char": 321,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 63
         },
@@ -365,7 +365,7 @@
           "end_char": 494,
           "path": "social/explore/voice-dossier-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb",
+          "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c",
           "span_basis": "field-text",
           "start_char": 323
         },
@@ -376,7 +376,7 @@
     "source": {
       "path": "social/explore/voice-dossier-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb"
+      "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c"
     },
     "summary": "a versioned voice dossier — brand + founder per-platform register map, banned phrases, per-context disclosure lines, a few-shot bank citing own posts only, and 3-5 content pillars with Estimated %-allocations — plus the candidates submission and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -387,12 +387,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -401,7 +401,7 @@
     "source": {
       "path": "social/explore/voice-dossier-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "e58f840fb1262319b88ef22432b9bb4e250e3828adcce93f2a95dd30564e68cb"
+      "sha256": "72d77fded198938ad4e1fc57a3b16db0b91468ef9afeb1e96596952a15af866c"
     },
     "trigger_phrases": [
       "build a founder voice dossier",

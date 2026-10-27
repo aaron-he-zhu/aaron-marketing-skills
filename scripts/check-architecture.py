@@ -43,17 +43,6 @@ AUDIT_WRITE_NEGATION = re.compile(r"\b(?:never|must not|does not|do not|reserved
 EXCLUDED_MARKDOWN_PARTS = {
     ".git", ".planning", ".agents", ".codex", "reference-oss",
 }
-ISOLATED_DEPENDENCY_TREES = (("evals", "pi-agent-poc"),)
-
-
-def in_dependency_tree(parts):
-    for tree in ISOLATED_DEPENDENCY_TREES:
-        if (len(parts) > len(tree) and parts[:len(tree)] == tuple(tree)
-                and parts[len(tree)] == "node_modules"):
-            return True
-    return False
-
-
 class ArchitectureError(ValueError):
     pass
 
@@ -728,8 +717,6 @@ def markdown_files():
         relative = path.relative_to(ROOT)
         if any(part in EXCLUDED_MARKDOWN_PARTS for part in relative.parts):
             continue
-        if in_dependency_tree(relative.parts):
-            continue
         if re.search(r"(?:^| )\d+\.md$", path.name) or " 2" in path.name:
             continue
         yield path
@@ -740,10 +727,6 @@ def check_isolated_dependency_trees(failures):
         relative = path.relative_to(ROOT)
         parts = relative.parts
         if any(part in EXCLUDED_MARKDOWN_PARTS for part in parts):
-            continue
-        if in_dependency_tree(parts):
-            continue
-        if tuple(parts[:-1]) in ISOLATED_DEPENDENCY_TREES:
             continue
         failures.append("undeclared dependency tree manifest: %s" % relative)
 

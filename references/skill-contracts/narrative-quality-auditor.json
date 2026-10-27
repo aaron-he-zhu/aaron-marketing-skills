@@ -11,7 +11,7 @@
           "end_char": 122,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 228,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 124
         },
@@ -41,7 +41,7 @@
           "end_char": 286,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 230
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3"
+      "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7"
     }
   },
   "context_hints": {
@@ -62,14 +62,14 @@
         "path": "narrative/evaluate/narrative-quality-auditor/references/auditor-runtime.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "266dcdeb826e8ca0ac2f4d681a2e5ec78a9400401c5835f8d145b5c31bd7426c",
+        "sha256": "b6e94e82c98e8f08ec1b089eda7a23b102b358914fe41cb9bf12d85d904452d6",
         "source_line": 45
       },
       {
         "path": "references/auditor-runbook.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "028a87012aa8cded04d9b7fb70f44a2b0eb3475b7984251050e1ec281c60a3ec",
+        "sha256": "2fddd2dd19dd4b95676715bec812c8e3866bac9e3399b204977b37c017cf70c4",
         "source_line": 41
       },
       {
@@ -77,7 +77,7 @@
         "reason_code": "authored-reference",
         "requirement": "optional",
         "sha256": "968a81503e7e9a3ebd748481daa1143d0d60c975511632dd32a553b2325aa030",
-        "source_line": 108
+        "source_line": 122
       },
       {
         "path": "references/runtime-invocation.md",
@@ -97,7 +97,7 @@
         "path": "references/tale-benchmark.md",
         "reason_code": "explicit-runtime-read",
         "requirement": "required",
-        "sha256": "ee3a3b810a5226ce382b3deed0dff4240aaeb7993d6955e566dade6bf63d0d52",
+        "sha256": "4139c9e8dd7b7c4c7be5afa2c304a27508698c31940213424de53c38cb3d579b",
         "source_line": 43
       }
     ],
@@ -117,7 +117,7 @@
           "end_char": 93,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -135,7 +135,7 @@
           "end_char": 198,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 94
         },
@@ -153,7 +153,7 @@
           "end_char": 295,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 199
         },
@@ -171,7 +171,7 @@
           "end_char": 384,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 296
         },
@@ -186,7 +186,7 @@
     "summary_ref": {
       "path": "references/skill-contract.md",
       "section": "Handoff Summary Format",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "summary_source": "shared-skill-contract",
     "target_skills": [
@@ -202,8 +202,8 @@
     "name": "narrative-quality-auditor",
     "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
     "phase": "evaluate",
-    "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
-    "version": "20.1.0"
+    "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<canon/surfaces/experiment> [truth|system|effectiveness|full]",
@@ -217,7 +217,7 @@
           "end_char": 80,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -229,7 +229,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3"
+      "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7"
     }
   },
   "output_contract": {
@@ -244,7 +244,7 @@
           "end_char": 31,
           "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3",
+          "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -255,7 +255,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3"
+      "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7"
     },
     "summary": "only permissioned v3 artifacts.",
     "summary_source": "writes-fallback",
@@ -266,12 +266,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -280,7 +280,7 @@
     "source": {
       "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "820fd8a9b962c1fe8ad09268f71ff9ed6e660047e00d5c9debf3a56c2ce303d3"
+      "sha256": "1ab81ad5e107e5077bf648274ff842e8e335e8c0f79edc8ed71726c5e44d76b7"
     },
     "trigger_phrases": [
       "audit our brand narrative",

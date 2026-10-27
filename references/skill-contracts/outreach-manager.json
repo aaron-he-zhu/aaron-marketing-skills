@@ -11,7 +11,7 @@
           "end_char": 87,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 157,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 90
         },
@@ -41,7 +41,7 @@
           "end_char": 213,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 159
         },
@@ -56,7 +56,7 @@
           "end_char": 337,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 216
         },
@@ -71,7 +71,7 @@
           "end_char": 415,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 340
         },
@@ -86,7 +86,7 @@
           "end_char": 496,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 417
         },
@@ -101,7 +101,7 @@
           "end_char": 562,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 499
         },
@@ -113,7 +113,7 @@
     "source": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
+      "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b"
     }
   },
   "context_hints": {
@@ -122,7 +122,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 48
       },
       {
@@ -164,21 +164,21 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 35
       },
       {
         "path": "references/star-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "d5e6cec23805026c8371cac0336026fb88ca4262c6ad48f52164b00925768e91",
+        "sha256": "d242dd10063eedf6716766e316312b10388198869bf08d9736d6a49f731a8e68",
         "source_line": 136
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "sha256": "46ca45bc943bb84448542c537f05e7fb0b0b3f05650db70ec9d00c68230f60d7",
         "source_line": 133
       }
     ],
@@ -212,7 +212,7 @@
           "end_char": 182,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -230,7 +230,7 @@
           "end_char": 383,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 183
         },
@@ -248,7 +248,7 @@
           "end_char": 526,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 384
         },
@@ -266,7 +266,7 @@
           "end_char": 706,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 528
         },
@@ -279,7 +279,7 @@
     "summary_ref": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
+      "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -294,8 +294,8 @@
     "name": "outreach-manager",
     "path": "influencer/activate/outreach-manager/SKILL.md",
     "phase": "activate",
-    "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
-    "version": "20.1.0"
+    "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<influencer handle or list> [platform] [budget]",
@@ -309,7 +309,7 @@
           "end_char": 166,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -324,7 +324,7 @@
           "end_char": 196,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 168
         },
@@ -339,7 +339,7 @@
           "end_char": 226,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 198
         },
@@ -354,7 +354,7 @@
           "end_char": 253,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 228
         },
@@ -369,7 +369,7 @@
           "end_char": 383,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 255
         },
@@ -384,7 +384,7 @@
           "end_char": 882,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 385
         },
@@ -396,7 +396,7 @@
     "source": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
+      "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b"
     }
   },
   "output_contract": {
@@ -411,7 +411,7 @@
           "end_char": 46,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -427,7 +427,7 @@
           "end_char": 252,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 48
         },
@@ -443,7 +443,7 @@
           "end_char": 1299,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 254
         },
@@ -459,7 +459,7 @@
           "end_char": 1357,
           "path": "influencer/activate/outreach-manager/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0",
+          "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b",
           "span_basis": "field-text",
           "start_char": 1301
         },
@@ -470,7 +470,7 @@
     "source": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
+      "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b"
     },
     "summary": "return the outreach artifact inline by default; save it to `memory/influencer/outreach-manager/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization. Reuse an explicitly carried opaque `creator_ref`, or a verified creator-registry aggregate ID; otherwise generate one random `creator-<UUIDv4>` once for this lineage. Never derive `creator_ref` from a raw handle, name, profile URL, email, provider ID, or deterministic hash. Before saving, replace raw locators and resolved recipient identities with the stable `creator_ref` and resolvable opaque `recipient_ref`, `contact_source_ref`, `handle_ref`, and evidence/approval references. A raw URL or handle is never a persisted `source_ref`. When no authorized source artifact or verified registry link can resolve an opaque identity/contact ref, set `identity_status: unresolved`, save no hidden raw-locator mapping, set `cross_session_locator_required: true`, and request the transient locator again at dispatch. Never persist a raw handle, name, profile URL, email, phone, postal address, provider ID, or credential. When a cycle closes, each outcome update (final agreed rate, response history, confirmed contact-path reference) requires a separate exact authorization for an `operation: propose` request to `memory/events/creators.ndjson`; only `creator-registry` writes canonical roster records.",
     "summary_source": "writes-fallback",
@@ -485,12 +485,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -499,7 +499,7 @@
     "source": {
       "path": "influencer/activate/outreach-manager/SKILL.md",
       "section": "frontmatter",
-      "sha256": "30e4d0e00e759488235c54b9918513f622fc76d1f199bfeaea75860cc49ccaf0"
+      "sha256": "dbcc863a13b124e8a17ade5a91667d2ef881c3e045dd35e779cf0053fa7ec48b"
     },
     "trigger_phrases": [
       "follow up with a creator",

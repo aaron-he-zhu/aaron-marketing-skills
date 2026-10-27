@@ -11,7 +11,7 @@
           "end_char": 153,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 256,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 156
         },
@@ -41,7 +41,7 @@
           "end_char": 394,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 259
         },
@@ -56,7 +56,7 @@
           "end_char": 444,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 396
         },
@@ -71,7 +71,7 @@
           "end_char": 622,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 447
         },
@@ -83,7 +83,7 @@
     "source": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
+      "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056"
     }
   },
   "context_hints": {
@@ -92,7 +92,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 43
       },
       {
@@ -106,14 +106,14 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 31
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "sha256": "46ca45bc943bb84448542c537f05e7fb0b0b3f05650db70ec9d00c68230f60d7",
         "source_line": 70
       }
     ],
@@ -146,7 +146,7 @@
           "end_char": 131,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -164,7 +164,7 @@
           "end_char": 160,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 133
         },
@@ -180,7 +180,7 @@
           "end_char": 220,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 161
         },
@@ -196,7 +196,7 @@
           "end_char": 366,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 222
         },
@@ -214,7 +214,7 @@
           "end_char": 562,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 367
         },
@@ -232,7 +232,7 @@
           "end_char": 646,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 564
         },
@@ -248,7 +248,7 @@
           "end_char": 757,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 647
         },
@@ -266,7 +266,7 @@
           "end_char": 939,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 759
         },
@@ -282,7 +282,7 @@
           "end_char": 991,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 941
         },
@@ -295,7 +295,7 @@
     "summary_ref": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
+      "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -311,8 +311,8 @@
     "name": "contract-helper",
     "path": "influencer/activate/contract-helper/SKILL.md",
     "phase": "activate",
-    "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
-    "version": "20.1.0"
+    "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<deliverables and compensation> [platform] | review <pasted terms>",
@@ -326,7 +326,7 @@
           "end_char": 896,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -338,7 +338,7 @@
     "source": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
+      "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056"
     }
   },
   "output_contract": {
@@ -353,7 +353,7 @@
           "end_char": 256,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -369,7 +369,7 @@
           "end_char": 624,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 258
         },
@@ -385,7 +385,7 @@
           "end_char": 682,
           "path": "influencer/activate/contract-helper/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe",
+          "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056",
           "span_basis": "field-text",
           "start_char": 626
         },
@@ -396,7 +396,7 @@
     "source": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
+      "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056"
     },
     "summary": "return the drafted agreement or review memo inline by default. With exact WARM-save authorization, `memory/influencer/contract-helper/YYYY-MM-DD-<topic>.md` stores only `party_ref`, `contact_ref`, `address_ref`, `signature_ref`, and a non-PII terms summary; it never stores raw party/contact/address/signature values, payment details, or the executable/signed document bytes. The e-sign execution copy remains in the authorized external document/e-sign system. Each signed-term update requires a separate exact authorization for an `operation: propose` request through `registry-events.py` to `memory/events/creators.ndjson`; only `creator-registry` writes canonical roster records.",
     "summary_source": "writes-fallback",
@@ -411,12 +411,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -425,7 +425,7 @@
     "source": {
       "path": "influencer/activate/contract-helper/SKILL.md",
       "section": "frontmatter",
-      "sha256": "86d03689d0645ea30615cf80ab19cc5e67bf100ab6fbf5e990817b6e8dca47fe"
+      "sha256": "a076082f2f46ed50951d2b3259a98142fe8ad376cb97a66513adcd1a7361d056"
     },
     "trigger_phrases": [
       "build a partnership template",

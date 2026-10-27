@@ -106,6 +106,18 @@ def build_fixture(root: Path, markdown_surfaces=None, readme=None) -> None:
         "references/publication-metadata.json",
         json.dumps(metadata(markdown_surfaces), ensure_ascii=False, indent=2) + "\n",
     )
+    write(root, "references/distribution-files.json", json.dumps({"plugin": {
+        "profile_order": ["lite", "pro", "governed"],
+        "profiles": {profile: {"package_ceiling": {"max_files": count, "max_bytes": count * 1000}}
+                     for profile, count in (("lite", 3), ("pro", 4), ("governed", 5))},
+    }}))
+    write(root, "scripts/context-assembly.py", (
+        "# unrelated runtime before\n"
+        "# GENERATED:BEGIN plugin-package-ceilings\n"
+        "PLUGIN_PACKAGE_CEILINGS = {}\n"
+        "# GENERATED:END plugin-package-ceilings\n"
+        "# unrelated runtime after\n"
+    ))
     for directory in (".claude-plugin", ".github"):
         (root / directory).mkdir(parents=True, exist_ok=True)
     if readme is not None:
@@ -113,6 +125,43 @@ def build_fixture(root: Path, markdown_surfaces=None, readme=None) -> None:
 
 
 class ReleaseSurfaceTests(unittest.TestCase):
+    def test_portable_install_version_is_derived_without_rewriting_authored_tables(self):
+        marker = 'portable-install'
+        template = '| Portable Lite | aaron-marketing-skills-{bundle_version}-agent-plugin-v1-lite.tar.gz from v{bundle_version} |'
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            build_fixture(root, markdown_surfaces=[{
+                'path': 'README.md', 'marker': marker, 'template': template,
+            }], readme='unchanged introduction\n<!-- GENERATED:BEGIN release-surface:portable-install -->\nold\n<!-- GENERATED:END release-surface:portable-install -->\nunchanged footer\n')
+            generator.write_outputs(root)
+            path = root / 'README.md'
+            self.assertIn('aaron-marketing-skills-1.2.3-agent-plugin-v1-lite.tar.gz from v1.2.3', path.read_text())
+            spec = catalog()
+            spec['bundle_version'] = '2.3.4'
+            write(root, 'references/system-catalog.json', json.dumps(spec))
+            self.assertTrue(generator.check_outputs(root))
+            generator.write_outputs(root)
+            result = path.read_text()
+            self.assertIn('aaron-marketing-skills-2.3.4-agent-plugin-v1-lite.tar.gz from v2.3.4', result)
+            self.assertTrue(result.startswith('unchanged introduction\n'))
+            self.assertTrue(result.endswith('unchanged footer\n'))
+
+    def test_catalog_membership_cannot_drift_while_keeping_the_same_count(self):
+        duplicate = catalog()
+        duplicate["protocol"]["skills"] = ["fixture-skill"]
+        with self.assertRaisesRegex(generator.GenerationError, "more than once"):
+            generator._catalog_skill_inventory(duplicate)
+
+        unlisted = catalog()
+        unlisted["disciplines"]["narrative"]["phases"]["hidden"] = ["hidden-skill"]
+        with self.assertRaisesRegex(generator.GenerationError, "phases"):
+            generator._catalog_skill_inventory(unlisted)
+
+        traversal = catalog()
+        traversal["protocol"]["skills"] = ["../outside"]
+        with self.assertRaisesRegex(generator.GenerationError, "target list"):
+            generator._catalog_skill_inventory(traversal)
+
     def test_current_repository_json_projections_have_zero_drift(self):
         self.assertEqual([], generator.check_outputs(ROOT))
 
@@ -120,7 +169,7 @@ class ReleaseSurfaceTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             build_fixture(root)
-            self.assertEqual(6, generator.write_outputs(root))
+            self.assertEqual(7, generator.write_outputs(root))
             self.assertEqual(0, generator.write_outputs(root))
             self.assertEqual([], generator.check_outputs(root))
             marketplace = (root / "marketplace.json").read_bytes()
@@ -180,6 +229,35 @@ class ReleaseSurfaceTests(unittest.TestCase):
                 "unmarked historical prose\n",
                 (root / "README.md").read_text(encoding="utf-8"),
             )
+            self.assertFalse((root / ".claude-plugin/plugin.json").exists())
+
+    def test_runtime_ceiling_projection_checks_drift_and_preserves_surrounding_code(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            build_fixture(root)
+            generator.write_outputs(root)
+            target = root / "scripts/context-assembly.py"
+            source = target.read_text()
+            self.assertTrue(source.startswith("# unrelated runtime before\n"))
+            self.assertTrue(source.endswith("# unrelated runtime after\n"))
+            self.assertIn('"lite": {"max_files": 3, "max_bytes": 3_000}', source)
+            target.write_text(source.replace('"max_files": 3', '"max_files": 999'))
+            drifted = target.read_bytes()
+            self.assertIn("stale release projection: scripts/context-assembly.py",
+                          generator.check_outputs(root))
+            self.assertEqual(drifted, target.read_bytes())
+            self.assertEqual(1, generator.write_outputs(root))
+            self.assertEqual(source, target.read_text())
+
+    def test_missing_runtime_ceiling_markers_fail_before_any_projection_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            build_fixture(root)
+            target = root / "scripts/context-assembly.py"
+            target.write_text("unmarked runtime\n")
+            with self.assertRaisesRegex(generator.GenerationError, "requires exactly one marker pair"):
+                generator.write_outputs(root)
+            self.assertEqual("unmarked runtime\n", target.read_text())
             self.assertFalse((root / ".claude-plugin/plugin.json").exists())
 
     def test_unallowlisted_markdown_target_is_rejected(self):

@@ -11,7 +11,7 @@
           "end_char": 118,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 163,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 120
         },
@@ -41,7 +41,7 @@
           "end_char": 227,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 165
         },
@@ -56,7 +56,7 @@
           "end_char": 362,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 229
         },
@@ -71,7 +71,7 @@
           "end_char": 405,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 364
         },
@@ -86,7 +86,7 @@
           "end_char": 460,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 407
         },
@@ -98,7 +98,7 @@
     "source": {
       "path": "email/setup/list-segment-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a"
+      "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7"
     }
   },
   "context_hints": {
@@ -107,14 +107,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 36
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 42
       },
       {
@@ -128,14 +128,14 @@
         "path": "references/send-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "sha256": "7ac0765f58f3438da1c413647c9dfd7cabec0d8e206507b199116af2e0258fe6",
         "source_line": 44
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 32
       },
       {
@@ -174,7 +174,7 @@
           "end_char": 138,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -192,7 +192,7 @@
           "end_char": 265,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 140
         },
@@ -210,7 +210,7 @@
           "end_char": 511,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 266
         },
@@ -228,7 +228,7 @@
           "end_char": 917,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 512
         },
@@ -244,7 +244,7 @@
           "end_char": 1043,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 919
         },
@@ -259,7 +259,7 @@
     "summary_ref": {
       "path": "email/setup/list-segment-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a"
+      "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -275,8 +275,8 @@
     "name": "list-segment-builder",
     "path": "email/setup/list-segment-builder/SKILL.md",
     "phase": "setup",
-    "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
-    "version": "20.1.0"
+    "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<list/CRM CSV or GA4/ecommerce export> [goal: promo|retention|cold] [ESP]",
@@ -290,7 +290,7 @@
           "end_char": 202,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -305,7 +305,7 @@
           "end_char": 247,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 204
         },
@@ -320,7 +320,7 @@
           "end_char": 449,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 249
         },
@@ -335,7 +335,7 @@
           "end_char": 480,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 451
         },
@@ -347,7 +347,7 @@
     "source": {
       "path": "email/setup/list-segment-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a"
+      "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7"
     }
   },
   "output_contract": {
@@ -362,7 +362,7 @@
           "end_char": 87,
           "path": "email/setup/list-segment-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a",
+          "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -373,7 +373,7 @@
     "source": {
       "path": "email/setup/list-segment-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a"
+      "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7"
     },
     "summary": "a",
     "summary_source": "expected-output",
@@ -388,12 +388,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -402,7 +402,7 @@
     "source": {
       "path": "email/setup/list-segment-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "57339f08db92556cdc34ec551bade5587a658f9c53c1de1c8c761570d6e1621a"
+      "sha256": "39565d9fbb0223ee708ac1afa8d3be5d5e446462793d487483451c1045a5cda7"
     },
     "trigger_phrases": [
       "build a suppression list of unsubscribes and bounces",

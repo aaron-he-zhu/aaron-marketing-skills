@@ -4,7 +4,7 @@ slug: content-quality-auditor
 displayName: "Content Quality Auditor · 内容质量"
 summary: "内容质量/EEAT评分"
 description: 'Use when auditing content quality, E-E-A-T, or publish readiness; runs a typed 80-item CORE-EEAT profile with evidence coverage, veto checks, and a fix plan. Not for structural tags/headers alone — use on-page-seo-checker; not for domain/citation trust — use domain-authority-auditor. 内容质量/EEAT评分'
-version: "20.1.0"
+version: "20.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -12,7 +12,7 @@ when_to_use: "Use when auditing content quality before publishing. Runs a typed 
 argument-hint: "<URL or paste content> [content type] [market]"
 allowed-tools: WebFetch
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.2.0", "discipline": "seo-geo", "phase": "tune", "geo-relevance": "high", "hermes": {"tags": ["marketing", "seo-geo", "tune"], "category": "seo-geo"}, "openclaw": {"emoji": "🔍", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Content Quality Auditor
@@ -51,14 +51,17 @@ Use this skill for the content artifact and its source-credibility evidence. Use
 
 ### Runtime Contract
 
-At activation, read these repository files:
-
-1. `../../../references/auditor-runbook.md`
-2. `../../../references/scoring-semantics.md`
-3. `../../../references/core-eeat-benchmark.md`
-4. `../../../references/framework-catalog.json` (`CORE-EEAT` entry)
-
-For a standalone installation, read the bundled immutable `references/auditor-runtime.md` instead. Never fetch a mutable branch or continue with a guessed contract. Before deterministic calls, follow [`runtime-invocation.md`](../../../references/runtime-invocation.md), resolve `AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`, and require the scorer, validator, and typed catalogs. If they are absent, return `score_state: NOT_SCORED` / `score_confidence: not_scored` with no gate verdict or persistent artifact. Record `schema_version: 3.0`, `runbook_version: 3.0.0`, and catalog version in the report.
+<!-- GENERATED:BEGIN auditor-shared:activation -->
+Read the declared root runtime sources and selected framework/catalog entry.
+Standalone installs use the bundled immutable `references/auditor-runtime.md`;
+never fetch mutable `main` or guess missing policy. Before deterministic calls,
+follow `runtime-invocation.md` and resolve
+`AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`.
+Require the scorer, validator and typed catalogs. If unavailable, collect the
+selected profile's typed observations and Unknowns, but return
+`score_state: NOT_SCORED` / `score_confidence: not_scored` without a gate verdict
+or persistent artifact. Record the bound schema, runbook and catalog versions.
+<!-- GENERATED:END auditor-shared:activation -->
 
 ### Required Setup
 
@@ -101,6 +104,12 @@ Missing evidence prevents a total. Report the scorer's interval, coverage, and e
 For medical, legal, financial, safety, or other material-risk content, verify source currency, market, reviewer identity/qualification, claim boundaries, and required disclaimers. This skill audits evidence and presentation; it does not provide professional advice or fabricate expert review.
 
 ## Report
+
+<!-- GENERATED:BEGIN auditor-shared:result-header -->
+Begin with the auditor-runbook's exact typed conversation header. Never replace
+`status`, `verdict`, or `score_state` with prose; list each explicitly missing
+qualified item as ``ID: `unknown``` before findings.
+<!-- GENERATED:END auditor-shared:result-header -->
 
 Lead with:
 

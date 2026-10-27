@@ -13,13 +13,13 @@ work. See [`evals/routing-retrieval/`](../evals/routing-retrieval/README.md).
 
 ## Outcome
 
-The v19 refactor establishes five independently testable layers:
+The context path has five independently testable parts:
 
 1. **Compact root navigation** — `CLAUDE.md` points to authoritative sources and carries a generated discovery index instead of duplicating full discipline manuals.
 2. **Explicit runtime dependencies** — only an exact `### Runtime Reads` block creates a required Skill reference.
 3. **Consumer-separated assembly** — controller, model, tool, and deferred bytes are accounted separately.
-4. **Progressive disclosure artifacts** — runtime `/auto` projections, generated Skill capsules, router facades, and connector sidecars expose only the current decision surface.
-5. **Evidence-gated prompt profiles** — explicit context remains the default; balanced/lean profiles require paired, model+host-specific evidence and zero safety regressions.
+4. **Progressive disclosure artifacts** — runtime `/auto` projections, router facades, and connector sidecars expose only the current decision surface.
+5. **One explicit representation** — full Skill content and the applicable host policy follow one supported assembly path; host and capability boundaries still apply.
 
 ```mermaid
 flowchart LR
@@ -33,8 +33,8 @@ flowchart LR
     C --> C2["Schemas, hashes, permissions"]
     C --> C3["State, validation, recovery"]
 
-    M --> M1["Full Skill or certified capsule"]
-    M --> M2["Full policy or policy kernel"]
+    M --> M1["Full selected Skill"]
+    M --> M2["Shared contract or standalone embedded policy"]
     M --> M3["Declared runtime reads"]
     M --> M4["Relevant evidence + discovery-only route shard"]
 
@@ -48,7 +48,7 @@ flowchart LR
 
 ## Measured Baseline and Changes
 
-All repository measurements below are UTF-8 bytes, not estimated tokens. Provider token fields stay `null` until a provider reports them.
+The following v19 measurements are historical, fixed at [the pre-v3 source commit](https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/cac58547bc84ed2af865b68b90c5cfbb79b63978). They are UTF-8 bytes, not estimated tokens or a current-v3 performance claim. Provider token fields stay `null` until a provider reports them.
 
 | Surface | Before | After | Change |
 |---|---:|---:|---:|
@@ -58,14 +58,7 @@ All repository measurements below are UTF-8 bytes, not estimated tokens. Provide
 | Aggregate required-reference bytes across 120 Skills | 2,809,014 B | 841,939 B | −70.0% |
 | Accidental required `CONNECTORS.md` references | 30 | 0 | −100% |
 | Worst valid `/auto` static assembly | 83,385 B | 48,199 B | −42.2% |
-| Model-visible explicit aggregate: Skill + shared contract, all 120 | 3,267,456 B | 1,564,310 B with capsule + kernel | −52.1% |
-| Model-visible explicit median | 27,510.5 B | 12,553 B (~12,553 B) with capsule + kernel | −54.4% |
-| All-selected fixed representation aggregate: Skill + controller-only machine contract + shared contract, all 120 | 5,409,901 B | 1,564,310 B with capsule + kernel | −71.1% |
-| All-selected fixed representation median | 46,312 B | 12,553 B (~12,553 B) with capsule + kernel | −72.9% |
-
-The first two capsule rows are the primary deterministic **model-visible representation** comparison: explicit `Skill + shared contract` bytes versus lean `capsule + kernel` bytes. They are not token or cost measurements, and lean remains unavailable for deployment. The final two rows measure **consumer reclassification** from the former all-selected fixed representation: the machine contract is now controller-only, so the larger 71.1%/72.9% deltas are architectural projection reductions, not model-context savings. Neither comparison is a deployed quality claim; compact prompt profiles remain unavailable until paired evaluation evidence is promoted through a trusted release-attestation path.
-
-The stabilized real-manifest baseline (120 Skills × direct/auto routes) is:
+The same historical real-manifest baseline (120 Skills × direct/auto routes) was:
 
 | Metric | Direct | `/auto` |
 |---|---:|---:|
@@ -83,19 +76,17 @@ The stabilized real-manifest baseline (120 Skills × direct/auto routes) is:
 | Business Skill topology | `references/system-catalog.json` |
 | Capability tiers | `references/capability-profiles.json` |
 | Host capabilities | `references/host-capability-profiles.json` |
-| Prompt detail profiles and certification policy | `references/prompt-profiles.json` |
+| Explicit prompt representation and invariant overlays | `references/prompt-profiles.json` |
 | Controller/model/tool modules | `references/context-modules.json` |
 | Full shared behavior | `references/skill-contract.md` |
 | Compact non-reducible behavior | `references/policy-kernel.md` |
 | Per-Skill source-derived controller contracts | `references/skill-contracts/` |
-| Per-Skill model capsules | `references/skill-capsules/` |
 | Context request/manifest | `references/context-request.schema.json`, `references/context-manifest.schema.json` |
 | Consumer-separated assembly | `references/context-assembly.schema.json` |
 | Context telemetry | `evals/context-usage-v1.schema.json` |
 | Semantic behavior protocols | `evals/behavior-adapter-v2.schema.json`, `evals/behavior-adapter-v3.schema.json` |
-| Paired compact-profile evidence | `references/prompt-profile-paired-evidence.schema.json`, `scripts/prompt_profile_evidence.py` |
 
-Generated views never become independent truth. Every capsule binds the live Skill hash, machine-contract hash, policy-kernel hash, and generated index. Every router sidecar binds its host profile, catalog, facade, and target Skill hashes.
+Generated views never become independent truth. Machine contracts bind their source Skill and dependency hashes. Every router sidecar binds its host profile, catalog, facade, and target Skill hashes.
 
 ## Consumer Separation
 
@@ -104,7 +95,7 @@ Generated views never become independent truth. Every capsule binds the live Ski
 The controller can inspect full authoritative material without injecting it into the model prompt. Its responsibilities include:
 
 - validating route and distribution identity;
-- verifying live Skill, contract, catalog, capsule, and reference hashes;
+- verifying live Skill, contract, catalog, and reference hashes;
 - enforcing byte/resource/sensitivity ceilings;
 - applying conditional/XOR selection before reading an inactive branch;
 - enforcing permission, path, capability, registry, audit, and release boundaries;
@@ -117,7 +108,7 @@ Inside a built distribution, assembly identity comes from the verified
 `distribution-manifest.json`, never from a caller-supplied profile label. The
 controller verifies the manifest inventory plus the hashes of the host and
 prompt catalogs, context-module catalog, resolver, and assembler before it
-selects any compact representation. A repository checkout without a
+assembles explicit context for the resolved host. A repository checkout without a
 distribution manifest is explicitly identified as `repository`.
 
 Assembly binds three independent identities after host resolution: the
@@ -134,8 +125,8 @@ the one-folder package does not ship the trusted planner/assembler runtime.
 
 The model receives only material necessary for the current reasoning step:
 
-- the selected full Skill (`explicit`/`balanced`) or its certified capsule (`lean`);
-- the full shared contract (`explicit`) or policy kernel (`balanced`/`lean`);
+- the selected full Skill;
+- the full shared contract, or the standalone Skill's embedded policy;
 - exact runtime reads declared by the Skill;
 - the active `/auto` shard only while route selection is the current reasoning step;
 - selected project evidence relevant to the active step;
@@ -152,9 +143,7 @@ Claude Code plugin hosts project the selected Skill plus
 `references/skill-contract.md`. A repository-side standalone evaluation instead uses
 `model-policy-standalone-embedded`: the non-reducible policy is already embedded
 in its selected `SKILL.md`, so assembly projects and counts that Skill body once
-and does not add a second shared-contract body. Standalone hosts have no exact
-`balanced` or `lean` representation; compact deployment and evaluation both
-fail closed for that host rather than borrowing shared-root modules. This
+and does not add a second shared-contract body. This repository-side
 projection requires a serialized `distribution_evaluation_only` flag plus a
 bounded evaluation run identity, is included in the assembly hash, and is
 always `deployment_eligible=false`.
@@ -178,14 +167,13 @@ This prevents 30 historically accidental `CONNECTORS.md` dependencies from reapp
 | `activation` | Load when a specific Skill/route is selected |
 | `conditional` | Load only after its closed condition is satisfied |
 | `lookup-only` | Expose metadata/discovery first; body is read on demand |
-| `fallback` | Safe downgrade path; never a simultaneous duplicate of the primary representation |
 
 Two model XOR groups guarantee one applicable primary representation:
 
 - `model-skill-representation`
 - `model-policy-representation`
 
-For compact-profile failure, the system downgrades to explicit context or stops. It never continues with a missing policy representation.
+Prompt and module catalogs use schema 2.0 with `explicit` as their only representation. Non-explicit requests fail clearly; the resolver never substitutes a missing policy or borrows unavailable host capabilities.
 
 ## Explicit Runtime Reads
 
@@ -201,23 +189,6 @@ Every required bundle reference must appear in one exact closed section:
 The parser accepts one repository-local `.md`/`.json` path per bullet. It rejects duplicate blocks, empty blocks, prose mixed into the block, external/unsafe paths, `SKILL.md`, duplicates, and invalid extensions. A fenced-code example has no control meaning.
 
 Ordinary Markdown links, `**Reads:**`, `read-only`, `readout`, and lexical occurrences of “read” remain optional authored references. `scripts/generate-skill-contracts.py` is the source-derived projection and fails closed on malformed declarations.
-
-## Skill Capsules
-
-`scripts/generate-skill-capsules.py` generates exactly 120 compact JSON capsules. A capsule keeps:
-
-- Skill identity, version, discipline, phase, and class;
-- argument hint and routing boundary;
-- reads, writes, write-control semantics, and done criteria;
-- operational sections such as `Instructions`, decision gates, modes, and examples that are not standard repeated harness sections;
-- exact runtime-read hashes;
-- typed handoff items;
-- policy-kernel identity and always-on overlays;
-- live Skill and machine-contract provenance.
-
-It deliberately omits the repeated top-level `Quick Start`, `Skill Contract`, `Data Sources`, `Reference Materials`, `Save Results`, and `Next Best Skill` harness sections after projecting their non-redundant control semantics.
-
-The generator writes individual files rather than swapping the whole directory; this avoids cloud-sync conflict renames. CI requires 120 unique capsules and caps each capsule+kernel model representation at 24 KB.
 
 ## Distribution and Host Profiles
 
@@ -240,7 +211,7 @@ Auditor activation uses a separate distribution XOR:
 - both branches must exist in the request, but the resolver removes the inactive branch before reading;
 - selected resources and typed omissions must cover every candidate exactly once.
 
-Measured examples after XOR:
+Historical examples after XOR at the same pre-v3 source commit:
 
 | Auditor | Repository/plugin required | Standalone required |
 |---|---:|---:|
@@ -250,57 +221,21 @@ Measured examples after XOR:
 
 The standalone auditor remains `NOT_SCORED/UNDECIDED`; it cannot hand-calculate a score, persist an audit, or claim root runtime capabilities.
 
-## Prompt Profiles and Certification
+## Prompt Representation
 
-| Profile | Intent | Deployment status by default |
-|---|---|---|
-| `explicit` | Full workflow detail, examples, templates, rationale, repeated boundary reminders | Enabled |
-| `balanced` | Complete selected Skill with the compact policy kernel replacing repeated shared policy | Disabled pending exact binding evidence |
-| `lean` | Source-derived operational capsule plus policy kernel; repeated standard harness sections are omitted | Disabled pending exact binding evidence |
+`explicit` is the only supported representation. Shared-root hosts receive the complete selected Skill and shared contract; standalone evaluation counts the full Skill and its embedded policy once. Controller, model, and tool resources remain separate, and physical distribution capabilities still limit which runtime may execute.
 
-Only workflow detail, examples, templates, rationale, and reminder density are reducible. Consent, claims, PII/secrets, external mutation, audit verdict, and release provenance are invariant.
+Consent, claims, PII/secrets, external mutation, audit verdict, and release provenance are invariant. A profile label, successful schema validation, or prior experiment never grants authority.
 
-A deployable compact profile is a Governed-distribution binding to an exact host profile, model ID, and immutable model revision. Certification requires:
+## Historical Research
 
-- protocol v3 paired evidence built from canonical real cases, never a simulated-case label;
-- at least 40 cases, at least 3 repeats, and at least 8 verifier-derived coverage strata: `auto:<canonical source scenario_family>` for auto-routing cases and `discipline:<current system-catalog discipline>` for authored or derived-auditor cases;
-- one distinct, evidence-wide-unique stored protocol-v3 run UUID for every control and candidate arm;
-- explicit control and compact candidate with equivalent case/task inputs, host, immutable SUT revision, independent immutable judge identity, and toolset; the judge model ID must differ, and two aliases from the same provider may not resolve to the same non-null revision;
-- stored protocol-v3 request/result provenance and a verifiable hash chain for every arm; capture rebuilds the entire request from the current canonical case and current runner—including public scenario/input, judge contract, and all 120 routing entries—and requires canonical byte equality before the full result validator may project outcomes;
-- public candidate cases containing neither `coverage_stratum` nor `scenario_family`, and post-route arm assemblies containing no routing shard;
-- exact adapter, assembly, and selected-source equivalence; each post-route model resource set must equal the current host/distribution branch's complete required/`explicit-runtime-read` closure rather than an attacker-chosen subset; the profile's minimum context reduction is computed from full paired `model_body_bytes`, while the representation-only harness ratio is advisory;
-- absolute floors for both arms (routing accuracy ≥ 95%, quality pass rate ≥ 90%), so two equally failing arms cannot pass merely because their regression delta is zero;
-- routing-accuracy regression ≤ 1 percentage point;
-- quality-pass-rate regression ≤ 2 percentage points;
-- zero candidate safety failures and zero safety regressions;
-- a monotonic wrapper/arm timeline and evidence no older than 90 days when measured from the latest actual arm end, not a regenerated wrapper timestamp;
-- a certificate-bound hash of the complete unique arm-run set, with prior-certificate inputs checked for replay and duplicate promotion-ledger entries;
-- catalog, prompt, toolset, context-profile, runner, protocol, and evidence hashes that verify live.
+Balanced/lean assemblies, the 120-Skill capsule generator, certification schemas, and paired-ablation tools were undeployed research and are retired from the current tree and default authoring/release chain. The fixed [pre-v3 commit `cac58547bc84ed2af865b68b90c5cfbb79b63978`](https://github.com/aaron-he-zhu/aaron-marketing-skills/tree/cac58547bc84ed2af865b68b90c5cfbb79b63978) retains their source and limitations. This retirement removes maintenance and package bytes; it proves no deployed model token, cost, or quality improvement.
 
-At resolution time, a compact certificate is re-anchored to the package-visible
-host catalog, context-module catalog, system catalog, capsule index, context
-assembler, and Skill-contract index (whether the index is shipped directly or
-inside the deterministic gzip pack). A certificate copied from another package
-therefore cannot activate a compact profile merely because its outer JSON is
-well-formed. The local evidence hash chain proves integrity and replay identity
-for the stored bytes; it is not independent provider or operator attestation.
-Package-local certificates remain non-deployable until a signed release
-attestation can make provider provenance and promotion authority externally
-trustworthy and revalidatable.
-
-The current certification math is deterministic but does not yet implement
-confidence intervals, an exact paired significance test such as McNemar, or
-100% required-case gates for high-risk, auditor, and protocol subsets. Those
-uncertainty and subgroup gates are required before any signed trust path may
-enable a non-empty compact binding. The production resolver therefore remains
-reject-all for non-empty bindings; current simulation results do not certify
-deployment.
-
-Provider usage is not required to compare behavior. Complete provider-reported usage is necessary but not sufficient for a token-savings claim: protocol v3 keeps `token_savings_claims_permitted` false until it defines a positive paired candidate-below-control input-token gate and uncertainty treatment. Cost-savings claims are unsupported. No compact binding is pre-populated: all 734 current cases are simulated, the bundled adapter reports both `model_revision: null` and `judge_model_revision: null`, and `certified_bindings` is empty. Evaluation-only assemblies are allowed for experiments but are explicitly non-deployable; `explicit` remains the deployment default.
+Revalidate historical results with their matching fixed runtime, schemas, and source materials. Protocol v3.0 results cannot be relabeled as current v3.1 records, and historical research does not authorize compact deployment. New runtime source digests intentionally differ; historical hashes are never rewritten.
 
 ## Evaluation and Telemetry
 
-Protocol v2 and v3 have separate jobs. Protocol v2 is the current-source real-provider smoke used by the engineering-maturity gate. Protocol v3 is the blind-discovery and paired compact-profile evaluation protocol.
+Protocol v2.0 remains the current-source real-provider smoke used by the engineering-maturity gate. Protocol v3.1 retains blind discovery and source isolation with explicit context only; it has no capsule-index binding or compact certification path.
 
 ### Blind routing
 
@@ -313,16 +248,9 @@ The behavior protocol separates four views:
 
 Leakage auditing is a release gate. Simulated cases test harness plumbing but cannot certify a real model profile.
 
-### Paired ablation
+### Usage and outcomes
 
-Each pair records one canonical case identity, host, model revision, and toolset while varying the prompt/context profile. A deterministic seeded order is recorded for review; it is not represented as proof that a host executed the arms in that wall-clock order. Repeats expose variance. Records distinguish:
-
-- deterministic UTF-8 bytes;
-- nullable provider-reported input/output/total tokens, latency, and tool calls;
-- routing, task-quality, and safety outcomes;
-- exact assembly, selected-source, adapter, and result hashes.
-
-Unavailable provider values remain `null`. The system never relabels a byte proxy or local wall time as provider usage. Complete provider usage is required before a token-savings claim; cost savings are not supported by protocol v3.
+Records distinguish deterministic UTF-8 bytes, nullable provider-reported tokens/latency/tool calls, routing/task-quality/safety outcomes, and exact assembly/source/adapter/result hashes. Unavailable provider values stay `null`. Byte counts and local wall time are not provider usage, and these records do not establish token or cost savings.
 
 ### Isolated execution
 
@@ -335,7 +263,6 @@ The main local checks are:
 ```bash
 python3 scripts/generate-claude-index.py --check
 python3 scripts/generate-skill-contracts.py --check
-python3 scripts/generate-skill-capsules.py --check
 python3 scripts/context-profile-resolver.py --validate
 python3 scripts/check-context-budget.py
 python3 scripts/check-context-efficiency.py
@@ -347,7 +274,7 @@ python3 scripts/run-isolated-evals.py --help
 ./scripts/check-versions.sh
 ```
 
-The release path must also run behavior, golden-math, distribution supply-chain, local-link, PII, standard-library, workflow graph/loop, protocol-v2 semantic evidence, and—whenever a compact binding is proposed—protocol-v3 paired prompt-profile evidence gates. Generated sources are checked after every upstream Skill/catalog change.
+The release path must also run behavior, golden-math, distribution supply-chain, local-link, PII, standard-library, workflow graph/loop, and protocol-v2 semantic evidence gates. Retained v3.1 blind-routing checks preserve candidate/judge isolation and exact source bindings. Generated sources are checked after every upstream Skill/catalog change.
 
 ## Authoring Rules
 
@@ -358,14 +285,14 @@ When changing context behavior:
 3. Do not add another business-Skill mirror for a host adapter.
 4. Keep controller metadata out of model context unless the model must reason over it.
 5. Keep tool descriptions out until discovery/invocation.
-6. Preserve a full explicit fallback for unknown models/hosts.
-7. Prove removals one group at a time with paired evaluation; do not target an arbitrary percentage.
+6. Keep explicit assembly and the resolved host capability boundary intact.
+7. Verify structural removals against frozen inputs and independent checks; version intentional semantic changes separately.
 8. Treat provider/product claims as hypotheses until measured on this repository's workloads.
 
 ## Known Boundaries
 
-- Compact prompt profiles are implemented for evaluation, but the repository has 734 simulated cases, null adapter SUT/judge revisions, zero certified bindings, and therefore no deployable compact profile.
-- Provider usage is nullable. Deterministic bytes remain available; protocol v3 permits no token-savings claim until complete paired provider input-token evidence, a positive reduction gate, and uncertainty treatment are implemented. Cost-savings claims are unsupported.
+- Current prompt assembly is explicit-only. Retired research requires its fixed historical runtime; it does not remain a selectable production or evaluation profile.
+- Provider usage is nullable. Deterministic bytes alone establish no token, cost, or business-quality improvement.
 - A repository-side `standalone-skill` planner profile verifies branch semantics; the actual one-folder standalone payload does not claim the planner/resolver runtime.
 - Filesystem isolation fixes the test environment. It does not relax the production single-link, non-symlink, stable-read safety boundary.
 - Context reduction is only successful when route quality, task quality, safety, provenance, and recovery remain at or above the declared thresholds.

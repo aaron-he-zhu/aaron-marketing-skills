@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.1.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.2.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -59,14 +59,16 @@ An **AI marketing staff you install, not prompt** — 120 agent skills as one pl
 
 ## Install
 
+<!-- GENERATED:BEGIN release-surface:portable-install -->
 | Host | Install |
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` then `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ hosts](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Agent Plugins v1 clients · Portable Lite** | Download `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz` from the [v20.1.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0), unpack it, and install the extracted plugin directory |
+| **Agent Plugins v1 clients · Portable Lite** | Download `aaron-marketing-skills-20.2.0-agent-plugin-v1-lite.tar.gz` from the [v20.2.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.2.0), unpack it, and install the extracted plugin directory |
 | **Grok Bot · Hermes Bot Mode (AI Staff)** | Generate, then install: Hermes = `profile install`; Grok = semi-manual cards. See [AI Staff](#ai-staff--8-named-bots) |
 | **[SkillHub.cn](https://skillhub.cn) (中文社区)** | `skillhub install <frontmatter-slug>` |
 | **Any host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
+<!-- GENERATED:END release-surface:portable-install -->
 
 Claude Code: `marketplace add` only registers the catalog — run `/plugin install aaron-marketing@aaron` to enable skills and commands. Single skill: `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research`. Per-agent quirks: [docs/agent-compatibility.md](docs/agent-compatibility.md) (verified 120/120 installable, 2026-07).
 
@@ -253,7 +255,7 @@ Distributions are allowlisted by [`references/distribution-files.json`](referenc
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — authoring rules, the 10 tracking surfaces, and team conventions.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](VERSIONS.md)** — per-skill versions + changelog (current bundle: `20.1.0`).
+- **[VERSIONS.md](VERSIONS.md)** — per-skill versions + changelog (current bundle: `20.2.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](SECURITY.md)** · **[PRIVACY.md](PRIVACY.md)** · **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)**
 - **[CLAUDE.md](CLAUDE.md)** / **[AGENTS.md](AGENTS.md)** — agent-facing context.

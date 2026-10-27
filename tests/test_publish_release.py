@@ -170,7 +170,8 @@ class PublishReleaseTests(unittest.TestCase):
                 ".planning",
                 "__pycache__",
             ),
-            copy_function=os.link,
+            # An independent fixture must work across filesystems and must not
+            # share mutable inodes with the real checkout.
         )
         mock_semantic_verifier = (
             release_root / "scripts" / "verify-semantic-evidence.py"

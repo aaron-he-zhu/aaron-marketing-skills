@@ -11,7 +11,7 @@
           "end_char": 86,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 181,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 88
         },
@@ -41,7 +41,7 @@
           "end_char": 250,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 183
         },
@@ -56,7 +56,7 @@
           "end_char": 286,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 252
         },
@@ -71,7 +71,7 @@
           "end_char": 319,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 288
         },
@@ -86,7 +86,7 @@
           "end_char": 416,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 321
         },
@@ -98,7 +98,7 @@
     "source": {
       "path": "email/nurture/email-sequence-designer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c"
+      "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4"
     }
   },
   "context_hints": {
@@ -107,14 +107,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 36
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 42
       },
       {
@@ -128,14 +128,14 @@
         "path": "references/send-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "sha256": "7ac0765f58f3438da1c413647c9dfd7cabec0d8e206507b199116af2e0258fe6",
         "source_line": 44
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 32
       },
       {
@@ -167,7 +167,7 @@
           "end_char": 164,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -185,7 +185,7 @@
           "end_char": 373,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 165
         },
@@ -203,7 +203,7 @@
           "end_char": 611,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 374
         },
@@ -221,7 +221,7 @@
           "end_char": 654,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 613
         },
@@ -237,7 +237,7 @@
           "end_char": 873,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 655
         },
@@ -255,7 +255,7 @@
           "end_char": 1112,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 874
         },
@@ -273,7 +273,7 @@
           "end_char": 1661,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 1114
         },
@@ -286,7 +286,7 @@
     "summary_ref": {
       "path": "email/nurture/email-sequence-designer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c"
+      "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -303,8 +303,8 @@
     "name": "email-sequence-designer",
     "path": "email/nurture/email-sequence-designer/SKILL.md",
     "phase": "nurture",
-    "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
-    "version": "20.1.0"
+    "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<flow type or lifecycle goal> [platform/ESP] [trigger event] [audience/segment]",
@@ -318,7 +318,7 @@
           "end_char": 449,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -330,7 +330,7 @@
     "source": {
       "path": "email/nurture/email-sequence-designer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c"
+      "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4"
     }
   },
   "output_contract": {
@@ -345,7 +345,7 @@
           "end_char": 140,
           "path": "email/nurture/email-sequence-designer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c",
+          "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -356,7 +356,7 @@
     "source": {
       "path": "email/nurture/email-sequence-designer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c"
+      "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4"
     },
     "summary": "a set of lifecycle flow maps (trigger, per-step timing, branch/exit conditions, goal per flow), a frequency-governance block (global send cap, quiet hours, fatigue guardrail), a re-engagement/sunset path, a SEND **N** dimension score with sub-item notes and the typed profile named, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -371,12 +371,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -385,7 +385,7 @@
     "source": {
       "path": "email/nurture/email-sequence-designer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "c6461154d48b4af76ae0013513c0d282c7b3e462404aeb78974b7dd86dedab2c"
+      "sha256": "0b9ca3cd4c6a6e283df9c1f252a637e3492b1c069f2bc35e6007c17352aa4ab4"
     },
     "trigger_phrases": [
       "build a light re-engagement branch inside a lifecycle flow",

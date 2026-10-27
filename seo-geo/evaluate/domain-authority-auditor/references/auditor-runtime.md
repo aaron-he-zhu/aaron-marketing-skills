@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 20.1.0
+- **Catalog version:** 20.2.0
 - **Framework:** CITE
 - **Auditor:** domain-authority-auditor
 - **Complete item definitions:** 40
-- **Source digest:** `sha256:f8a8ff35ee4c5cc38ff955956237cefee123777bbcac14e2b920f545bc4022e5`
+- **Source digest:** `sha256:bc426cb218f37524b9b62fec39f5e5a1b354f58bb513e9304750226c3d3bc193`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "20.1.0",
+  "catalog_version": "20.2.0",
   "frameworks": {
     "CITE": {
       "benchmark_mode": "peer-relative; absolute thresholds are diagnostic starting points only",
@@ -87,7 +87,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
       },
       "items": {
         "C01": {
-          "criterion": ">=500 unique referring domains",
+          "criterion": "Referring-domain volume against a dated, frozen cohort-specific criterion; absent comparison basis is Unknown, never an automatic small-domain Fail.",
           "dimension": "C",
           "name": "Referring Domains Volume",
           "policy": {},
@@ -624,7 +624,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 ## Standalone Execution Policy
 
 1. Select exactly one declared profile from the typed snapshot and record it with the catalog version and source digest above.
-2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Every non-unknown state needs evidence; never convert missing evidence into a pass.
+2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Observed pass/partial/fail states need evidence. Unknown needs a gap reason; catalog-authorized na needs a reason and no evidence. Never convert missing evidence into a pass.
 3. Record veto observations by their qualified framework item IDs, but do not calculate dimension, raw, capped, or final scores without the root deterministic scorer.
 4. Return `status: NEEDS_INPUT` or `status: BLOCKED` with `verdict: UNDECIDED`, `score_state: NOT_SCORED`, and `score_confidence: not_scored`. Clearly identify the unavailable root runtime as the reason.
 5. Do not write under `memory/audits/`, mutate registries, or claim a publish/ship decision. Offer the observation set for later execution in a full plugin or repository install.

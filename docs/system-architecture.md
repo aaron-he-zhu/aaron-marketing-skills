@@ -4,9 +4,9 @@
 
 This is the generated human view of [`references/system-catalog.json`](../references/system-catalog.json). The JSON catalog is authoritative.
 
-- Architecture contract: `20.1.0`
-- Bundle version: `20.1.0`
-- Catalog digest: `sha256:38a87fdc30667d0acbda235e92f1dd24313c4d16da7900cbe51f8a77238b2ac8`
+- Architecture contract: `20.2.0`
+- Bundle version: `20.2.0`
+- Catalog digest: `sha256:42dd426e3a858d03e2d6ee8cae2cacd39a95d1058a1d114d45f2e38473609535`
 - Shape: **112 discipline skills across 7 disciplines + 8 protocol skills = 120 skills; 8 commands**
 
 ## Runtime Capability Profiles

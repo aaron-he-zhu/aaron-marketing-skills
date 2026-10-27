@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 20.1.0
+- **Catalog version:** 20.2.0
 - **Framework:** SEND
 - **Auditor:** email-quality-auditor
 - **Complete item definitions:** 20
-- **Source digest:** `sha256:ded4a142419835eed344552e2c58d9ee9a8cf65ee3c974fe3d58a0c35d956de9`
+- **Source digest:** `sha256:1cfcefb4597722c02ee7973d3d78eb1ac7cf3600002dff88cb327378615ea01d`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "20.1.0",
+  "catalog_version": "20.2.0",
   "frameworks": {
     "SEND": {
       "construct": "email program integrity, engagement, lifecycle fit, and declared business outcome",
@@ -44,28 +44,6 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "item_prefix": "S",
           "name": "Sender Integrity"
         }
-      },
-      "item_definitions": {
-        "D1": "claims, disclosures, and offer terms match the claims ledger",
-        "D2": "the declared outcome truth set is measured: revenue, pipeline, subscription, sponsorship, or another named outcome",
-        "D3": "offer and CTA are clear for the declared program",
-        "D4": "email-to-destination message match holds",
-        "D5": "outcome attribution is reconciled outside provider self-reporting",
-        "E1": "click or downstream action rate is the primary engagement signal",
-        "E2": "open/CTOR is used only with MPP segmentation and an explicit proxy caveat",
-        "E3": "subject, preheader, and body promise match",
-        "E4": "send timing and frequency fit preference and capacity",
-        "E5": "engagement decay and reactivation/sunset logic are measured",
-        "N1": "one-click opt-out works and live suppression tombstones are honored",
-        "N2": "entry, confirmation, and welcome/first-touch logic fit the program",
-        "N3": "applicable lifecycle journeys exist for the declared program type",
-        "N4": "segmentation and progression logic use relevant evidence",
-        "N5": "preference and frequency controls are available where applicable",
-        "S1": "SPF/DKIM/DMARC alignment verified from DNS and aggregate evidence",
-        "S2": "consent/lawful basis and acquisition provenance are on file",
-        "S3": "inbox placement is measured on a declared provider/seed panel",
-        "S4": "hard-bounce and complaint rates are normalized by cohort/window",
-        "S5": "suppression, hygiene, and sunset controls are active"
       },
       "item_policies": {
         "D1": {
@@ -111,7 +89,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": true
         },
         "D2": {
-          "criterion": "The declared outcome truth set is measured.",
+          "criterion": "Measure the declared program truth set: ecommerce revenue/value, CRM pipeline, subscription, sponsorship or a named equivalent; opens and provider attribution alone do not establish it.",
           "dimension": "D",
           "name": null,
           "policy": {
@@ -121,7 +99,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "D3": {
-          "criterion": "Offer and CTA are clear for this program.",
+          "criterion": "Offer and CTA are clear for the declared program.",
           "dimension": "D",
           "name": null,
           "policy": {},
@@ -153,7 +131,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "E2": {
-          "criterion": "Open/CTOR is used only with MPP segmentation and an explicit proxy caveat.",
+          "criterion": "If opens/CTOR are used, require MPP segmentation and an explicit proxy caveat; unused metrics permit catalog-authorized N/A with reason, missing segmentation is Unknown.",
           "dimension": "E",
           "name": null,
           "policy": {
@@ -172,7 +150,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "E4": {
-          "criterion": "Timing and frequency fit preferences and operating capacity.",
+          "criterion": "Send timing and frequency fit user preferences and operating capacity.",
           "dimension": "E",
           "name": null,
           "policy": {},
@@ -180,7 +158,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "E5": {
-          "criterion": "Engagement decay and reactivation/sunset behavior are measured.",
+          "criterion": "Engagement decay and reactivation/sunset logic are measured.",
           "dimension": "E",
           "name": null,
           "policy": {},
@@ -188,7 +166,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "N1": {
-          "criterion": "One-click opt-out works and live suppression tombstones are honored.",
+          "criterion": "Required one-click opt-out works and current suppression tombstones are honored; a verified delivery after a recorded effective suppression Fails, missing logs are Unknown.",
           "dimension": "N",
           "name": null,
           "policy": {
@@ -207,7 +185,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "N3": {
-          "criterion": "Journeys applicable to the declared program type exist and work.",
+          "criterion": "Applicable lifecycle journeys exist and work for the declared program type.",
           "dimension": "N",
           "name": null,
           "policy": {
@@ -226,7 +204,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "N5": {
-          "criterion": "Preference/frequency controls exist where recurring sends make them applicable.",
+          "criterion": "Preference and frequency controls are available where the declared program offers recurring sends or configurable frequency.",
           "dimension": "N",
           "name": null,
           "policy": {
@@ -445,7 +423,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 ## Standalone Execution Policy
 
 1. Select exactly one declared profile from the typed snapshot and record it with the catalog version and source digest above.
-2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Every non-unknown state needs evidence; never convert missing evidence into a pass.
+2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Observed pass/partial/fail states need evidence. Unknown needs a gap reason; catalog-authorized na needs a reason and no evidence. Never convert missing evidence into a pass.
 3. Record veto observations by their qualified framework item IDs, but do not calculate dimension, raw, capped, or final scores without the root deterministic scorer.
 4. Return `status: NEEDS_INPUT` or `status: BLOCKED` with `verdict: UNDECIDED`, `score_state: NOT_SCORED`, and `score_confidence: not_scored`. Clearly identify the unavailable root runtime as the reason.
 5. Do not write under `memory/audits/`, mutate registries, or claim a publish/ship decision. Offer the observation set for later execution in a full plugin or repository install.

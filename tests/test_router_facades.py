@@ -3,6 +3,9 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
+import sys
+import tempfile
 import unittest
 
 
@@ -14,6 +17,25 @@ SPEC.loader.exec_module(router)
 
 
 class RouterFacadeTests(unittest.TestCase):
+    def test_output_files_keep_the_declared_mode_under_a_restrictive_umask(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            output = Path(tmp) / "facades"
+            # Change umask only in the writer subprocess, never the test process.
+            script = (
+                "import os, runpy, sys\n"
+                "os.umask(0o077)\n"
+                "sys.argv = sys.argv[1:]\n"
+                "runpy.run_path(sys.argv[0], run_name='__main__')\n"
+            )
+            result = subprocess.run(
+                [sys.executable, "-c", script, str(GENERATOR), "--output", str(output)],
+                text=True, capture_output=True, check=False,
+            )
+            self.assertEqual(0, result.returncode, result.stderr)
+            files = [path for path in output.rglob("*") if path.is_file()]
+            self.assertEqual(9, len(files))
+            self.assertTrue(all(path.stat().st_mode & 0o777 == 0o644 for path in files))
+
     @staticmethod
     def catalog_names(catalog):
         names = []

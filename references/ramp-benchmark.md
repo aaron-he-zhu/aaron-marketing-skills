@@ -1,5 +1,7 @@
 # RAMP Benchmark — Product Launch Evaluation Standard
 
+**Human-anchor revision: 2026-10-27-a.** The delimited item tables own criteria; detailed boundaries and examples below interpret those same IDs. Profiles, applicability, weights, veto identity, coverage and rounding remain in the typed catalog/scorer. This revision is not outcome calibration; preserve prior audit source digests and do not relabel historical observations.
+
 RAMP evaluates a launch through four lenses: **Readiness · Assets · Momentum · Proof**. These lenses occur at different times, so v18 reports three distinct reads rather than one temporally incoherent Launch Quality Score.
 
 The framework is advisory. Executable profiles, item identity, context, and vetoes live in [`framework-catalog.json`](framework-catalog.json); shared scoring semantics live in [`scoring-semantics.md`](scoring-semantics.md).
@@ -12,31 +14,87 @@ Score one launch at one declared `lifecycle_read`, market, launch type, and acce
 
 ## Profiles
 
-| Profile | Included evidence | Intended time | Decision supported |
+<!-- GENERATED:BEGIN auditor-policy:profiles -->
+
+| Profile | Dimension weights | Context match | Item subset |
 |---|---|---|---|
-| `preflight` | R 40% + A 40% + policy/embargo item M1 10% + instrumentation item P1 10% | Before release | Ready/fix/block before committing the moment |
-| `execution` | M 100% | During/just after the launch window | Whether the plan was executed safely and coherently |
-| `outcome` | P2–P10 100% | After the declared lag | What was observed and learned |
+| `preflight` | R 40% · A 40% · M 10% · P 10% | {"lifecycle_read": "preflight"} | include_items: {"M": ["M1"], "P": ["P1"]} |
+| `execution` | M 100% | {"lifecycle_read": "execution"} | all items in included dimensions |
+| `outcome` | P 100% | {"lifecycle_read": "outcome"} | exclude_items: {"P": ["P1"]} |
+
+<!-- GENERATED:END auditor-policy:profiles -->
+
+- `preflight`: Before release; Ready/fix/block before committing the moment.
+- `execution`: During/just after the launch window; Whether the plan was executed safely and coherently.
+- `outcome`: After the declared lag; What was observed and learned.
 
 Outcome evidence is not backfilled into preflight. Preflight plans are not scored as realized outcomes.
 
 ## Stable Item Anchors
 
+<!-- AUDITOR-ITEMS:BEGIN -->
+
 ### Readiness (`R1`–`R10`)
 
-`R1` stage truth against declared access/eligibility · `R2` positioning and alternatives · `R3` ICP/beachhead fit · `R4` tier/type and effort · `R5` timing/window · `R6` competitor launch evidence · `R7` early-access graduation where applicable · `R8` risk/rollback register · `R9` internal ownership/escalation · `R10` preregistered D0/W1/M1 targets.
+| ID | Dimension | Criterion |
+|---|---|---|
+| `R1` | Readiness | stage truth against declared access/eligibility |
+| `R2` | Readiness | positioning and alternatives |
+| `R3` | Readiness | ICP/beachhead fit |
+| `R4` | Readiness | tier/type and effort |
+| `R5` | Readiness | timing/window |
+| `R6` | Readiness | competitor launch evidence |
+| `R7` | Readiness | early-access graduation where applicable |
+| `R8` | Readiness | risk/rollback register |
+| `R9` | Readiness | internal ownership/escalation |
+| `R10` | Readiness | preregistered D0/W1/M1 targets |
 
 ### Assets (`A1`–`A10`)
 
-`A1` claim/disclosure integrity · `A2` narrative/message architecture · `A3` proof-point completeness · `A4` press/facts asset manifest · `A5` channel-specific asset compliance · `A6` pricing/offer terms where applicable · `A7` sales/support enablement where applicable · `A8` announcement/landing/offer match · `A9` technical go-live verification · `A10` localization/regional readiness where applicable.
+| ID | Dimension | Criterion |
+|---|---|---|
+| `A1` | Assets | claim/disclosure integrity |
+| `A2` | Assets | narrative/message architecture |
+| `A3` | Assets | proof-point completeness |
+| `A4` | Assets | press/facts asset manifest |
+| `A5` | Assets | channel-specific asset compliance |
+| `A6` | Assets | pricing/offer terms where applicable |
+| `A7` | Assets | sales/support enablement where applicable |
+| `A8` | Assets | announcement/landing/offer match |
+| `A9` | Assets | technical go-live verification |
+| `A10` | Assets | localization/regional readiness where applicable |
 
 ### Momentum (`M1`–`M10`)
 
-`M1` platform/embargo integrity · `M2` channel mix and dependency risk · `M3` T-minus execution · `M4` authoritative date/commitment coordination · `M5` owned-channel sequence · `M6` media/partner activation · `M7` community response operation · `M8` live monitoring/alerts · `M9` go/rollback observation windows · `M10` launch-spacing/capacity guardrail.
+| ID | Dimension | Criterion |
+|---|---|---|
+| `M1` | Momentum Execution | platform/embargo integrity |
+| `M2` | Momentum Execution | channel mix and dependency risk |
+| `M3` | Momentum Execution | T-minus execution |
+| `M4` | Momentum Execution | authoritative date/commitment coordination |
+| `M5` | Momentum Execution | owned-channel sequence |
+| `M6` | Momentum Execution | media/partner activation |
+| `M7` | Momentum Execution | community response operation |
+| `M8` | Momentum Execution | live monitoring/alerts |
+| `M9` | Momentum Execution | go/rollback observation windows |
+| `M10` | Momentum Execution | launch-spacing/capacity guardrail |
 
 ### Proof (`P1`–`P10`)
 
-`P1` preflight instrumentation verification · `P2` actuals vs preregistered targets · `P3` attribution reconciliation · `P4` spike-to-sustain retention · `P5` owned-capture rate · `P6` feedback loop closure · `P7` compliant social-proof pipeline · `P8` causal retro/uncertainty · `P9` registry learning/outcome writeback · `P10` T+1→T+30 momentum plan and next decision.
+| ID | Dimension | Criterion |
+|---|---|---|
+| `P1` | Proof Outcomes | preflight instrumentation verification |
+| `P2` | Proof Outcomes | actuals vs preregistered targets |
+| `P3` | Proof Outcomes | attribution reconciliation |
+| `P4` | Proof Outcomes | spike-to-sustain retention |
+| `P5` | Proof Outcomes | owned-capture rate |
+| `P6` | Proof Outcomes | Feedback loop closure: trace feedback to an owned disposition and reporter follow-up; a collected queue without disposition is Partial, verified abandonment Fails, inaccessible records are Unknown. |
+| `P7` | Proof Outcomes | compliant social-proof pipeline |
+| `P8` | Proof Outcomes | causal retro/uncertainty |
+| `P9` | Proof Outcomes | registry learning/outcome writeback |
+| `P10` | Proof Outcomes | T+1→T+30 momentum plan and next decision |
+
+<!-- AUDITOR-ITEMS:END -->
 
 Per item: Pass = 10, Partial = 5, Fail = 0. Each profile requires 100% coverage of its applicable items. The common bands describe each profile only; v18 defines no cross-lifecycle composite.
 
@@ -63,6 +121,16 @@ Veto policy applies within the profile that contains the item: `R1/A1/M1/P1` at 
 | Public echo | `hn.py`, `producthunt.py`, `appstore.py`, `gdelt.py`, each provenance-labeled |
 
 Public telemetry is supporting evidence, not a substitute for own conversion/outcome data. Platform folklore remains dated `estimated` guidance outside the rubric.
+
+## Fixed Boundary Cases (2026-10-27-a)
+
+See the [fixed factual examples for RAMP](benchmark-boundary-examples.md#ramp) when calibrating a disputed boundary. These examples are lookup material; retain the item anchors and complete evidence rules above for execution.
+
+## Evidence Reuse and Targeted Review
+
+Reuse the versioned launch registry, claims/asset manifest and event-QA capture across their relevant checks. Preflight, execution and outcome remain separate dated runs; resolve feedback in its existing owned record and link its disposition/follow-up rather than introducing a new launch state.
+
+Follow the existing [auditor runbook](auditor-runbook.md) for evidence, authority and final complete-coverage scoring; reuse does not create independent corroboration.
 
 ## Skill Ownership
 

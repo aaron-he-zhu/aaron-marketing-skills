@@ -28,7 +28,7 @@ memory/runs/<run-id>/
 └── envelopes/<summarized-head-event-id>.json
 ```
 
-`events.ndjson` is the append-only run record. `session.json` is a disposable projection. `parent_event_id` forms the run-internal session tree: more than one child of an event creates a branch; leaf IDs are resumable heads. `parent_run_id` in an envelope can relate separate runs without merging their streams.
+`events.ndjson` is the append-only run record. Operations return a replayed in-memory view; they do not write `session.json`. That disposable file is available through explicit `project` export when a consumer needs it. `parent_event_id` forms the run-internal session tree: more than one child of an event creates a branch; leaf IDs are resumable heads. `parent_run_id` in an envelope can relate separate runs without merging their streams.
 
 Runtime writes fail closed unless the project root is real, every target is Git-ignored, directory-descriptor operations and advisory locking are available, and streams/documents are single-link regular files. Directories use mode `0700`; files use `0600`.
 
@@ -145,10 +145,12 @@ Hooks do not create runs implicitly. A host may opt in by setting a canonical UU
 
 SessionStart may load the bounded `resume` summary as untrusted project data. Its combined context assembly is capped at 24KB and gives each source a smaller injection allowance than its storage limit (active run 3KB, HOT 9KB, checkpoint 3KB); any otherwise-valid source truncated for that combined budget is labeled explicitly. A missing runtime, inactive run, invalid stream, or unavailable stable identity must degrade to no trace context; it must never widen permissions or make a registry projection authoritative.
 
+Observations such as SessionStart's `hook_observed` do not wake a waiting run. The selected ancestry retains its latest lifecycle status until a typed route, context, turn, tool, save-point, branch, or loop progression changes it. Reading, resuming, or exporting a view does not append a lifecycle event.
+
 ## Recovery and retention
 
 1. Run `verify <run-id>` before resuming a stale or copied run.
-2. Run `project <run-id>` when `session.json` is absent or behind.
+2. Use `project <run-id>` only when a file consumer needs a current `session.json`; missing or stale exports do not block recovery. Export failure does not undo a committed event.
 3. Select a leaf/head and re-verify every referenced artifact and current registry offset.
 4. Resume from a save point only after re-checking permissions and external state.
 5. On truncation, reorder, duplicate ID/key, hash mismatch, unsafe path, or unexpected terminal event, stop and restore a verified backup. Never repair NDJSON by hand.

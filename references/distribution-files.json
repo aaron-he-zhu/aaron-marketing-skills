@@ -27,6 +27,7 @@
         "references/audit-run.schema.json",
         "references/auditor-runbook.md",
         "references/auto-routing-scenarios.md",
+        "references/benchmark-boundary-examples.md",
         "references/capability-profiles.json",
         "references/capability-profiles.md",
         "references/capability-profiles.schema.json",
@@ -126,7 +127,6 @@
           "trees": [
             "hooks",
             "memory/templates",
-            "references/skill-capsules",
             "references/workflow-graph"
           ],
           "runtime_references": [
@@ -138,7 +138,6 @@
             "references/context-assembly.schema.json",
             "references/context-manifest.schema.json",
             "references/context-request.schema.json",
-            "references/prompt-profile-release-certificate.schema.json",
             "references/registry-event-protocol.md",
             "references/registry-event.schema.json",
             "references/run-envelope.schema.json",
@@ -146,8 +145,6 @@
             "references/runtime-controller-request.schema.json",
             "references/runtime-protocol.md",
             "references/save-point.schema.json",
-            "references/skill-capsule-index.schema.json",
-            "references/skill-capsule.schema.json",
             "references/skill-machine-contract-index.schema.json",
             "references/skill-machine-contract.schema.json",
             "references/turn-snapshot.schema.json",

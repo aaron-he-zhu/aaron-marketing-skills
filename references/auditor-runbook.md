@@ -33,6 +33,21 @@ Every auditor follows this order:
 6. Render findings and the gate result in conversation.
 7. Write a durable artifact only when write permission exists. Assemble the complete content first. Under Claude Code, only a single full-content `Write` is supported in `memory/audits/`; PreToolUse validates it before the target lands, and Edit/notebook/shell/MCP mutations are denied when identifiable. On other hosts, validate a draft against the intended `--relative-path` before passing that exact content to the host's full-content writer. Revalidate the target before claiming it was saved.
 
+The following shared activation text is projected into the eight original
+auditor Skills by the existing runtime generator. Edit it here once.
+
+<!-- AUTHORING:BEGIN auditor-shared:activation -->
+Read the declared root runtime sources and selected framework/catalog entry.
+Standalone installs use the bundled immutable `references/auditor-runtime.md`;
+never fetch mutable `main` or guess missing policy. Before deterministic calls,
+follow `runtime-invocation.md` and resolve
+`AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`.
+Require the scorer, validator and typed catalogs. If unavailable, collect the
+selected profile's typed observations and Unknowns, but return
+`score_state: NOT_SCORED` / `score_confidence: not_scored` without a gate verdict
+or persistent artifact. Record the bound schema, runbook and catalog versions.
+<!-- AUTHORING:END auditor-shared:activation -->
+
 Use this fail-closed root resolution before scoring:
 
 ```bash
@@ -68,7 +83,9 @@ All eight frameworks use the common item states, evidence taxonomy, 100% applica
 - Two or more failed vetoes: `verdict: BLOCK`, `cap_applied: false`, and no `final_overall_score`.
 - Incomplete applicable evidence: no raw/final score. Preserve coverage, interval/gaps in the typed scorer result, and normally use `verdict: UNDECIDED`.
 
-Qualified veto sets:
+Qualified veto sets (generated from the executable catalog):
+
+<!-- GENERATED:BEGIN auditor-policy:vetoes -->
 
 | Framework | Veto IDs |
 |---|---|
@@ -80,6 +97,8 @@ Qualified veto sets:
 | RAMP | `RAMP-R1`, `RAMP-A1`, `RAMP-M1`, `RAMP-P1` |
 | ECHO | `ECHO-E1`, `ECHO-C1`, `ECHO-C2`, `ECHO-H1`, `ECHO-H2`, `ECHO-O1` |
 | TALE | `TALE-T1`, `TALE-A1`, `TALE-L1`, `TALE-E1` |
+
+<!-- GENERATED:END auditor-policy:vetoes -->
 
 Always qualify IDs outside a single-framework table. Item definitions remain in the benchmark/catalog, not this runbook.
 
@@ -97,6 +116,12 @@ Always qualify IDs outside a single-framework table. Item definitions remain in 
 `status: BLOCKED` must never mean “the business gate said no.” Conversely, `status: DONE` does not imply `SHIP`.
 
 ### Conversation Result Header
+
+<!-- AUTHORING:BEGIN auditor-shared:result-header -->
+Begin with the auditor-runbook's exact typed conversation header. Never replace
+`status`, `verdict`, or `score_state` with prose; list each explicitly missing
+qualified item as ``ID: `unknown``` before findings.
+<!-- AUTHORING:END auditor-shared:result-header -->
 
 Every user-facing audit result must begin with these exact typed fields; prose
 translations may follow but never replace them:
@@ -129,7 +154,7 @@ The durable Markdown artifact uses scalar YAML frontmatter plus a deterministic 
 class: auditor-output
 schema_version: 3.0
 runbook_version: 3.0.0
-catalog_version: 20.1.0
+catalog_version: 20.2.0
 framework: ROAS
 profile: direct-response
 ---

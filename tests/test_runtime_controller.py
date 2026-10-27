@@ -192,6 +192,11 @@ class RuntimeControllerTests(unittest.TestCase):
         self.assertEqual(len(events), 5)
         self.assertEqual(controller.runtime.project_events(request["run_id"], events)["status"], "active")
 
+    def test_start_resolves_the_verified_source_closure_once(self):
+        with mock.patch.object(controller.resolver, "resolve_context", wraps=controller.resolver.resolve_context) as resolve:
+            controller.start_run(self.project, self.start_request())
+        self.assertEqual(1, resolve.call_count)
+
     def test_contract_drift_fails_before_a_run_is_created(self):
         request = self.start_request()
         bundle, entry = self.copy_selected_bundle()
@@ -277,6 +282,33 @@ class RuntimeControllerTests(unittest.TestCase):
                 controller.runtime.RunEventError,
                 "project candidate discovery differs from planned candidates"):
             controller.resume_run(self.project, request["run_id"])
+
+    def test_resume_uses_one_verified_prefix_during_concurrent_append(self):
+        request = self.start_request()
+        started = controller.start_run(self.project, request)
+        checkpoint = controller.checkpoint_run(
+            self.project, request["run_id"], self.checkpoint_request(started["head"]),
+        )
+        original_load = controller.runtime.load_events
+
+        def load_then_append(root, run_id):
+            events = original_load(root, run_id)
+            controller.runtime.append_event(root, run_id, controller._event_request(
+                run_id, "concurrent-observation", "hook_observed",
+                "2026-07-22T13:02:00Z", events[-1]["event_id"], "succeeded",
+                {"kind": "hook", "ref": "session-start"},
+            ))
+            return events
+
+        with mock.patch.object(controller.runtime, "load_events", side_effect=load_then_append) as load:
+            with mock.patch.object(controller.runtime, "validate_save_point_document", wraps=controller.runtime.validate_save_point_document) as save:
+                resumed = controller.resume_run(self.project, request["run_id"])
+        self.assertEqual(1, load.call_count)
+        self.assertEqual(1, save.call_count)
+        self.assertEqual(checkpoint["head"], resumed["head"])
+        self.assertEqual(resumed["head"]["event_id"], resumed["verified_summary"]["head_event_id"])
+        self.assertEqual("turn-1", resumed["latest_binding"]["turn_id"])
+        self.assertNotEqual(resumed["head"]["event_id"], original_load(self.project, request["run_id"])[-1]["event_id"])
 
     def test_success_rejects_open_tool_and_start_failure_is_typed(self):
         request = self.start_request()

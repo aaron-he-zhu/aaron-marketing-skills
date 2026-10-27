@@ -26,12 +26,6 @@ CONTEXT_PROFILE_RESOLVER = ROOT / "scripts" / "context-profile-resolver.py"
 AGENT_PLUGIN_BUILDER = ROOT / "scripts" / "agent_plugin_builder.py"
 ROUTER_FACADE_SIDECAR = "router-facades/sidecar-manifest.json"
 PROMPT_PROFILES_REF = "references/prompt-profiles.json"
-PROMPT_EVIDENCE_PREFIX = "references/prompt-profile-evidence/"
-PROMPT_RELEASE_CERTIFICATE_SCHEMA_REF = (
-    "references/prompt-profile-release-certificate.schema.json"
-)
-MAX_DISTRIBUTED_PROMPT_BINDINGS = 8
-MAX_PROMPT_CERTIFICATE_BYTES = 8_000_000
 IGNORED_NAMES = {".DS_Store", "__pycache__"}
 IGNORED_SUFFIXES = {".pyc", ".pyo"}
 DISTRIBUTION_MANIFEST = "distribution-manifest.json"
@@ -111,10 +105,6 @@ RUNTIME_PATH = re.compile(
     r"(?<![A-Za-z0-9_.-])(?:\$\{CLAUDE_PLUGIN_ROOT\}/)?"
     r"((?:references|scripts/connectors)/[A-Za-z0-9_./-]+\.(?:md|json|py)"
     r"|scripts/[A-Za-z0-9_-]+\.py)"  # top-level runtimes referenced in prose ship too
-)
-SAFE_PROMPT_EVIDENCE_REF = re.compile(
-    r"^references/prompt-profile-evidence/"
-    r"[A-Za-z0-9][A-Za-z0-9._/-]*\.json$"
 )
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
@@ -1257,10 +1247,8 @@ def verify_distribution_manifest(
     actual_files = _distribution_files(destination)
     if manifest["files"] != actual_files:
         raise DistributionError("distribution files do not match the SHA-256 manifest")
-    if manifest["kind"] == "plugin":
-        _reject_untrusted_prompt_bindings(destination)
-    if schema_version == MANIFEST_SCHEMA_VERSION and manifest["kind"] == "plugin":
-        validate_prompt_profile_distribution(destination, manifest["profile"])
+    if manifest["kind"] == "plugin" and (destination / PROMPT_PROFILES_REF).exists():
+        validate_prompt_profile_distribution(destination, manifest.get("profile", "governed"))
     if schema_version in {PROFILE_MANIFEST_SCHEMA_VERSION, MANIFEST_SCHEMA_VERSION}:
         _validate_package_ceiling(
             actual_files, manifest["package_ceiling"],
@@ -1287,54 +1275,12 @@ def _install_generated_file(destination, relative, content, mode=0o644):
     try:
         descriptor = os.open(target, flags, mode)
         with os.fdopen(descriptor, "wb", closefd=True) as handle:
+            os.fchmod(handle.fileno(), mode)
             handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())
     except OSError as exc:
         raise DistributionError("cannot install generated %s: %s" % (relative, exc)) from exc
-
-
-def _safe_prompt_evidence_ref(value):
-    if (not isinstance(value, str) or len(value) > 512
-            or not SAFE_PROMPT_EVIDENCE_REF.fullmatch(value)):
-        raise DistributionError("prompt binding evidence_ref is unsafe: %r" % value)
-    relative = validate_relative(value)
-    if (relative.as_posix() != value
-            or len(relative.parts) < 3
-            or relative.parts[:2] != ("references", "prompt-profile-evidence")):
-        raise DistributionError("prompt binding evidence_ref is unsafe: %r" % value)
-    return relative
-
-
-def _built_prompt_catalog(destination):
-    path = destination / PROMPT_PROFILES_REF
-    try:
-        status = path.lstat()
-        raw = _read_checked_regular(path, status, "built prompt profile catalog")
-    except OSError as exc:
-        raise DistributionError("built prompt profile catalog is unavailable: %s" % exc) from exc
-    return strict_json_bytes(raw, "built prompt profile catalog"), raw, path, status
-
-
-def _reject_untrusted_prompt_bindings(destination):
-    """Reject compact bindings even when verifying a legacy manifest.
-
-    Manifest 1.0/1.1 remains readable for historical assets, but schema
-    downgrading must not bypass the current production trust boundary. Old
-    packages without a prompt catalog are unaffected.
-    """
-    path = destination / PROMPT_PROFILES_REF
-    if not path.exists() and not path.is_symlink():
-        return
-    catalog, _raw, _path, _status = _built_prompt_catalog(destination)
-    bindings = catalog.get("certified_bindings")
-    if not isinstance(bindings, list):
-        raise DistributionError("built certified_bindings must be an array")
-    if bindings:
-        raise DistributionError(
-            "non-empty certified_bindings are not distributable until a signed "
-            "release-attestation trust path is implemented"
-        )
 
 
 def _replace_built_regular(path, status, content, label):
@@ -1345,6 +1291,7 @@ def _replace_built_regular(path, status, content, label):
     try:
         descriptor = os.open(temporary, flags, stat.S_IMODE(status.st_mode) or 0o644)
         with os.fdopen(descriptor, "wb", closefd=True) as handle:
+            os.fchmod(handle.fileno(), stat.S_IMODE(status.st_mode) or 0o644)
             handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())
@@ -1368,117 +1315,8 @@ def validate_prompt_profile_distribution(destination, profile_name):
         raise DistributionError(
             "built prompt profile projection is invalid: %s" % exc
         ) from exc
-    bindings = prompt_catalog["certified_bindings"]
-    if bindings:
-        raise DistributionError(
-            "non-empty certified_bindings are not distributable until a signed "
-            "release-attestation trust path is implemented"
-        )
-    if profile_name in {"lite", "pro"}:
-        if bindings != []:
-            raise DistributionError(
-                "%s prompt profile projection must remove all certified bindings"
-                % profile_name
-            )
-    elif len(bindings) > MAX_DISTRIBUTED_PROMPT_BINDINGS:
-        raise DistributionError(
-            "governed prompt profile projection exceeds %d certified bindings"
-            % MAX_DISTRIBUTED_PROMPT_BINDINGS
-        )
-
-    expected = {}
-    for binding in bindings:
-        relative = _safe_prompt_evidence_ref(binding.get("evidence_ref"))
-        digest = binding.get("evidence_sha256")
-        if not isinstance(digest, str) or not SHA256.fullmatch(digest):
-            raise DistributionError("prompt binding evidence_sha256 is invalid")
-        key = relative.as_posix()
-        if key in expected and expected[key] != digest:
-            raise DistributionError("prompt bindings disagree on evidence hash: %s" % key)
-        expected[key] = digest
-
-    records = _distribution_files(destination)
-    actual = {
-        item["path"]: item["sha256"]
-        for item in records
-        if item["path"].startswith(PROMPT_EVIDENCE_PREFIX)
-    }
-    if set(actual) != set(expected):
-        raise DistributionError(
-            "built prompt certificate set does not exactly match catalog references"
-        )
-    for relative, digest in expected.items():
-        if actual[relative] != digest:
-            raise DistributionError(
-                "built prompt certificate hash differs from catalog: %s" % relative
-            )
-    paths = {item["path"] for item in records}
-    schema_present = PROMPT_RELEASE_CERTIFICATE_SCHEMA_REF in paths
-    if schema_present != (profile_name == "governed"):
-        raise DistributionError(
-            "prompt release-certificate schema must ship only in governed"
-        )
+    module.load_context_module_catalog(destination, host_catalog, prompt_catalog)
     return prompt_catalog
-
-
-def project_prompt_profile_distribution(destination, profile_name):
-    source_raw = read_source_bytes(PROMPT_PROFILES_REF)
-    source_catalog = strict_json_bytes(source_raw, "source prompt profile catalog")
-    built_catalog, built_raw, built_path, built_status = _built_prompt_catalog(destination)
-    if built_raw != source_raw or built_catalog != source_catalog:
-        raise DistributionError(
-            "built prompt profile catalog differs before distribution projection"
-        )
-    bindings = source_catalog.get("certified_bindings")
-    if not isinstance(bindings, list):
-        raise DistributionError("source certified_bindings must be an array")
-    if bindings:
-        # A hash-bound compact certificate can be made self-consistent by the
-        # party that authored it.  Until distributions carry either the full
-        # paired evidence for trusted revalidation or a signed release
-        # attestation, no compact prompt binding is a production authority.
-        raise DistributionError(
-            "non-empty certified_bindings are not distributable until a signed "
-            "release-attestation trust path is implemented"
-        )
-
-    if profile_name in {"lite", "pro"}:
-        projected = dict(source_catalog)
-        projected["certified_bindings"] = []
-        _replace_built_regular(
-            built_path, built_status, canonical_json(projected),
-            "%s prompt profile" % profile_name,
-        )
-    elif profile_name == "governed":
-        if len(bindings) > MAX_DISTRIBUTED_PROMPT_BINDINGS:
-            raise DistributionError(
-                "governed source has %d certified bindings; maximum is %d"
-                % (len(bindings), MAX_DISTRIBUTED_PROMPT_BINDINGS)
-            )
-        copied = set()
-        for binding in bindings:
-            if not isinstance(binding, dict):
-                raise DistributionError("governed certified binding must be an object")
-            relative = _safe_prompt_evidence_ref(binding.get("evidence_ref"))
-            digest = binding.get("evidence_sha256")
-            if not isinstance(digest, str) or not SHA256.fullmatch(digest):
-                raise DistributionError("prompt binding evidence_sha256 is invalid")
-            content = read_source_bytes(relative)
-            if len(content) > MAX_PROMPT_CERTIFICATE_BYTES:
-                raise DistributionError(
-                    "prompt release certificate exceeds %d bytes: %s"
-                    % (MAX_PROMPT_CERTIFICATE_BYTES, relative)
-                )
-            if hashlib.sha256(content).hexdigest() != digest:
-                raise DistributionError(
-                    "prompt release certificate hash differs from binding: %s" % relative
-                )
-            if relative.as_posix() not in copied:
-                copy_entry(relative, destination, allow_untracked=True)
-                copied.add(relative.as_posix())
-    else:
-        raise DistributionError("unknown prompt-profile distribution: %s" % profile_name)
-    return validate_prompt_profile_distribution(destination, profile_name)
 
 
 def project_authoring_guide_pointers(destination):
@@ -1531,23 +1369,7 @@ def project_plugin_manifest_for_host(destination, host_profile, expected_skills)
         raise DistributionError("source plugin manifest cannot be projected safely")
     value["commands"] = []
     replacement = canonical_json(value)
-    temporary = path.with_name(".%s.host-projection" % path.name)
-    if temporary.exists() or temporary.is_symlink():
-        raise DistributionError("plugin-manifest projection residue exists")
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    try:
-        descriptor = os.open(temporary, flags, stat.S_IMODE(status.st_mode) or 0o644)
-        with os.fdopen(descriptor, "wb", closefd=True) as handle:
-            handle.write(replacement)
-            handle.flush()
-            os.fsync(handle.fileno())
-        os.replace(temporary, path)
-    except OSError as exc:
-        try:
-            temporary.unlink()
-        except FileNotFoundError:
-            pass
-        raise DistributionError("cannot install plugin-manifest host projection: %s" % exc) from exc
+    _replace_built_regular(path, status, replacement, "plugin-manifest host")
 
 
 def install_router_facades(destination, host_profile):
@@ -1598,7 +1420,7 @@ def build_plugin(
     copy_runtime_closure(referenced, destination, profile)
     if "authoring-guide-pointers-v1" in profile["derived_outputs"]:
         project_authoring_guide_pointers(destination)
-    project_prompt_profile_distribution(destination, profile["profile"])
+    validate_prompt_profile_distribution(destination, profile["profile"])
     for forbidden in distribution["excluded_top_level"]:
         if (destination / forbidden).exists():
             raise DistributionError("maintenance path leaked into plugin: %s" % forbidden)
@@ -1695,19 +1517,7 @@ def build_skill_contract_pack(destination):
             "compact skill-contract pack is %d bytes (limit %d)"
             % (len(compressed), SKILL_CONTRACT_PACK_MAX_BYTES)
         )
-    target = destination / SKILL_CONTRACT_PACK
-    target.parent.mkdir(parents=True, exist_ok=True)
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    try:
-        descriptor = os.open(target, flags, 0o644)
-        with os.fdopen(descriptor, "wb", closefd=True) as handle:
-            handle.write(compressed)
-            handle.flush()
-            os.fsync(handle.fileno())
-    except OSError as exc:
-        raise DistributionError(
-            "cannot install compact skill-contract pack: %s" % exc
-        ) from exc
+    _install_generated_file(destination, SKILL_CONTRACT_PACK, compressed, mode=0o644)
 
 
 # Frontmatter keys that exist only for publishing-time registries (SkillHub's
