@@ -29,7 +29,7 @@ jobs:
       source_repository: ${{ steps.provenance.outputs.source_repository }}
       source_commit: ${{ steps.provenance.outputs.source_commit }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
           ref: ${{ inputs.source_commit }}
@@ -201,7 +201,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Upload verified release-candidate assets
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ${{ steps.release_assets.outputs.artifact_name }}
           path: ${{ steps.release_assets.outputs.assets_dir }}/*

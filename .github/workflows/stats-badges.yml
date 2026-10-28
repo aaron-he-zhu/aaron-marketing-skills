@@ -23,7 +23,7 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Generate badge JSONs
         run: python3 scripts/stats-dashboard.py --badges badges

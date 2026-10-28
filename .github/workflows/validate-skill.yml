@@ -22,7 +22,7 @@ jobs:
       base_ref: ${{ steps.refs.outputs.base_ref }}
       head_ref: ${{ steps.refs.outputs.head_ref }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           # The classifier compares immutable commit IDs and fails closed when
           # either side of the change range is unavailable.
@@ -80,7 +80,7 @@ jobs:
       BASE_REF: ${{ needs.classify.outputs.base_ref }}
       HEAD_REF: ${{ needs.classify.outputs.head_ref }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
