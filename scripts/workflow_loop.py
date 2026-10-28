@@ -2385,10 +2385,15 @@ def verify(root, run_id, loop_id, repair_projection=False):
                     if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:
                         raise WorkflowLoopError("workflow state projection must be a regular single-link file")
                     if metadata.st_size <= MAX_JSON_BYTES:
-                        _path, raw, _metadata = module._stable_project_read(
-                            root, plan_value["state_ref"], MAX_JSON_BYTES,
-                            "workflow state projection",
-                        )
+                        try:
+                            _path, raw, _metadata = module._stable_project_read(
+                                root, plan_value["state_ref"], MAX_JSON_BYTES,
+                                "workflow state projection",
+                            )
+                        except module.RunEventError as exc:
+                            # Keep path-safety failures fail-closed, but do not
+                            # report them as a coordinator-lock failure.
+                            raise WorkflowLoopError(str(exc)) from exc
                         try:
                             stored = strict_json_loads(raw.decode("utf-8"), "workflow state projection")
                             projection_current = stored == projected

@@ -1630,7 +1630,7 @@ class WorkflowLoopTests(unittest.TestCase):
             workflow_loop.advance(self.root, stale)
         self.assertEqual(2, result["state"]["counts"]["events"])
 
-    def test_optional_projection_export_and_history_tampering(self):
+    def test_projection_failure_recovers_and_tampering_fails_closed(self):
         result = self.plan()
         evidence = self.action_evidence("launch-asset-packager", prefix="durable")
         request = {
@@ -1696,6 +1696,22 @@ class WorkflowLoopTests(unittest.TestCase):
         self.assertEqual(result["state"], json.loads(paths["state"].read_text(encoding="utf-8")))
         self.assertEqual(original_plan, paths["plan"].read_bytes())
         self.assertEqual(original_events, paths["events"].read_bytes())
+
+        run_events = workflow_loop._run_events_module()
+        original_read = run_events._stable_project_read
+
+        def unstable_state_read(root, reference, limit, label):
+            if reference == plan["state_ref"]:
+                raise run_events.RunEventError(
+                    "workflow state projection changed during inspection"
+                )
+            return original_read(root, reference, limit, label)
+
+        with mock.patch.object(run_events, "_stable_project_read", side_effect=unstable_state_read):
+            with self.assertRaisesRegex(
+                    workflow_loop.WorkflowLoopError,
+                    "^workflow state projection changed during inspection$"):
+                workflow_loop.verify(self.root, self.run_id, "launch-loop")
 
         plan["state_ref"] = "memory/other-run-state.json"
         paths["plan"].write_text(json.dumps(plan), encoding="utf-8")

@@ -1247,7 +1247,11 @@ def verify_distribution_manifest(
     actual_files = _distribution_files(destination)
     if manifest["files"] != actual_files:
         raise DistributionError("distribution files do not match the SHA-256 manifest")
-    if manifest["kind"] == "plugin" and (destination / PROMPT_PROFILES_REF).exists():
+    # Current-schema plugins must carry the explicit catalog; older manifests
+    # are checked only when they still ship one.
+    if manifest["kind"] == "plugin" and (
+            schema_version == MANIFEST_SCHEMA_VERSION
+            or (destination / PROMPT_PROFILES_REF).exists()):
         validate_prompt_profile_distribution(destination, manifest.get("profile", "governed"))
     if schema_version in {PROFILE_MANIFEST_SCHEMA_VERSION, MANIFEST_SCHEMA_VERSION}:
         _validate_package_ceiling(
@@ -1311,11 +1315,11 @@ def validate_prompt_profile_distribution(destination, profile_name):
     try:
         host_catalog, _ = module.load_host_catalog(destination)
         prompt_catalog, _ = module.load_prompt_catalog(destination, host_catalog)
+        module.load_context_module_catalog(destination, host_catalog, prompt_catalog)
     except module.ContextProfileError as exc:
         raise DistributionError(
             "built prompt profile projection is invalid: %s" % exc
         ) from exc
-    module.load_context_module_catalog(destination, host_catalog, prompt_catalog)
     return prompt_catalog
 
 

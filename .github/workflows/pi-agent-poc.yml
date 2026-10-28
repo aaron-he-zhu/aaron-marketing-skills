@@ -3,18 +3,14 @@ name: Pi agent PoC (isolated)
 # The historical Node probe is retired. Preserve this check identity until the
 # repository owner can verify that branch protection does not require `probe`.
 # It now exercises the retained local compatibility and guard boundaries.
+# No paths filter: the old filter only matched the retired evals/pi-agent-poc
+# tree, and this ~10s job must report on every PR in case `probe` is required.
 
 on:
   push:
     branches: [main]
-    paths:
-      - "evals/pi-agent-poc/**"
-      - ".github/workflows/pi-agent-poc.yml"
   pull_request:
     branches: [main]
-    paths:
-      - "evals/pi-agent-poc/**"
-      - ".github/workflows/pi-agent-poc.yml"
   workflow_dispatch:
 
 permissions:

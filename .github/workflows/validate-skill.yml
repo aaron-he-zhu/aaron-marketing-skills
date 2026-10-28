@@ -224,7 +224,6 @@ jobs:
           # change, so additions/deletions cannot evade the exact 4x4 catalog.
           python3 scripts/check-architecture.py
           python3 scripts/generate-skill-contracts.py --check
-          python3 scripts/generate-skill-capsules.py --check
           python3 scripts/check-context-budget.py
           python3 scripts/check-context-efficiency.py --check
           python3 scripts/check-routing.py

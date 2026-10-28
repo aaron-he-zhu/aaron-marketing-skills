@@ -160,3 +160,33 @@ All four planned stages are implemented and their local acceptance checks pass.
 No implementation blocker remains. External required-status access, real
 provider/outcome studies and publication/deployment remain explicitly outside
 this completed cloud implementation.
+
+## Post-review fixes (2026-10-28)
+
+An independent review of the draft PR, plus a rerun of the engineering
+maturity checker against main, led to these follow-up changes:
+
+- The S1 `Changed-surface contracts` CI step still called the deleted
+  `scripts/generate-skill-capsules.py`, so every S1 PR would have failed the
+  protected `validate` check. That line is removed; full tiers never ran it.
+- The v3 rename of `test_projection_failure_recovers_and_tampering_fails_closed`
+  dropped the token that maturity fact L15 scans for, which lowered the loop
+  score below main and would fail the owner-run release gate. The original
+  test name is restored; the loop score is back to 10.0, as on main.
+- `verify_distribution_manifest` again requires the explicit prompt catalog
+  for current-schema (1.2) plugins; older manifests are checked only when they
+  still ship one. Context-module catalog errors now surface as
+  `DistributionError` instead of an uncaught traceback.
+- `workflow verify` reports a projection-read failure as itself instead of as
+  a run-coordinator lock failure; it still fails closed.
+- `pi-agent-poc.yml` no longer has a paths filter. The old filter matched only
+  the retired `evals/pi-agent-poc/**` tree, so the retained `probe` would
+  otherwise run only when the workflow file itself changes.
+
+Re-run: `python3 scripts/run-behavior-evals.py --with-unittest-discovery` ran
+**1143 tests**. The only failure was
+`test_inaccessible_suppression_path_fails_closed_in_cli`, which also fails on
+the unmodified branch in this container because it runs as root (a `chmod 0`
+directory stays readable to root); CI runs as a normal user. The maturity
+checker matches main on every fact; P19/P20/H20 need a semantic evidence run
+and fail the same way on main.

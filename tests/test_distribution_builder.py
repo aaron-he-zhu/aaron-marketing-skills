@@ -1020,6 +1020,31 @@ class DistributionBuilderTests(unittest.TestCase):
                 "unknown or missing fields"):
             BUILDER_MODULE.verify_distribution_manifest(output)
 
+    def test_current_manifest_requires_prompt_catalog(self):
+        output = self.build("--plugin", "--profile", "governed")
+        (output / BUILDER_MODULE.PROMPT_PROFILES_REF).unlink()
+
+        manifest_path = output / "distribution-manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        records = BUILDER_MODULE._distribution_files(output)
+        manifest["files"] = records
+        manifest["files_sha256"] = hashlib.sha256(
+            BUILDER_MODULE.canonical_json(records)
+        ).hexdigest()
+        manifest_path.write_bytes(BUILDER_MODULE.canonical_json(manifest))
+        with self.assertRaisesRegex(
+                BUILDER_MODULE.DistributionError,
+                "built prompt profile projection is invalid"):
+            BUILDER_MODULE.verify_distribution_manifest(output)
+
+    def test_invalid_context_module_catalog_is_a_distribution_error(self):
+        output = self.build("--plugin", "--profile", "governed")
+        (output / "references/context-modules.json").write_bytes(b"{}\n")
+        with self.assertRaisesRegex(
+                BUILDER_MODULE.DistributionError,
+                "built prompt profile projection is invalid"):
+            BUILDER_MODULE.validate_prompt_profile_distribution(output, "governed")
+
     def test_manifest_profile_and_ceiling_are_enforced(self):
         output = self.build("--plugin", "--profile", "lite")
         with self.assertRaisesRegex(
