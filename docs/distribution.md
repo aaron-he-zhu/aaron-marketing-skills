@@ -90,7 +90,7 @@ The two `*-bot-host` rows are declared in the separate
 catalog (`context_assembly: excluded`), not in `host-capability-profiles.json`:
 they describe generated deployment surfaces only and never enter
 `build-distribution.py` payload selection, prompt/context assembly, or the
-certified resolver chain.
+host/module resolver chain.
 
 Every plugin host projection, at every physical profile, ships the typed host,
 prompt, and context-module catalogs, `context-profile-resolver.py`, and the
@@ -99,21 +99,19 @@ second Skill inventory. A one-folder standalone distribution deliberately does
 not acquire those root files: its complete `SKILL.md` remains the embedded
 explicit-policy representation, and its direct-skill semantics stay intact.
 
-The Governed physical profile additionally ships the generated
-`references/skill-capsules/` tree (120 per-skill capsules plus its index) and
-both capsule schemas. It also ships `context-assembly.py` and
+The Governed physical profile additionally ships `context-assembly.py` and
 `context-assembly.schema.json`, which project a verified manifest into separate
-controller, model, tool, and deferred resource sets. The resolver selects a
-capsule only for the typed lean prompt representation; balanced keeps the
-complete business Skill while replacing repeated shared policy with the kernel,
-and explicit keeps both complete representations. Capsules are
-reference/control artifacts, never `SKILL.md` files: they are absent from every
-Skill catalog and do not change the canonical count of 120. Lite and Pro omit
-the capsule tree and the assembly runtime. Compact-profile certificates remain
-evaluation artifacts only: because the package does not yet carry complete
-paired evidence for trusted revalidation or a signed release attestation, every
-distribution build and manifest verification rejects non-empty
-`certified_bindings`. Production therefore remains `explicit`-only.
+controller, model, tool, and deferred resource sets. Lite and Pro omit this
+assembly runtime. Prompt and module catalogs use schema 2.0 and support only
+`explicit`: shared-root assembly keeps the full selected Skill and shared
+contract. Host identity, file inventory, source hashes, capabilities, and
+permission checks remain mandatory.
+
+The capsule tree, compact certification schemas, and ablation tools are retired
+from current packages and default authoring checks. This removes undeployed
+research maintenance; it does not establish model token, cost, or quality gains.
+Historical packages and results must be inspected with their matching fixed
+runtime and sources; see [the retained research boundary](context-engineering.md#historical-research).
 
 That Governed-only executable surface also contains the cross-discipline
 control schema, the generated control-bindings catalog and schema, and the

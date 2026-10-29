@@ -36,8 +36,8 @@ JUDGE_OUTPUT_SCHEMA = ROOT / "evals" / "codex-behavior-model-output.schema.json"
 CANDIDATE_OUTPUT_SCHEMA = ROOT / "evals" / "codex-behavior-candidate-output.schema.json"
 ROUTING_OUTPUT_SCHEMA = ROOT / "evals" / "codex-behavior-routing-output.schema.json"
 ADAPTER_NAME = "codex-behavior-adapter"
-ADAPTER_VERSION = "3.0.0"
-PROMPT_TEMPLATE_VERSION = "3.0.0"
+ADAPTER_VERSION = "3.1.0"
+PROMPT_TEMPLATE_VERSION = "3.1.0"
 PERMISSION_PROFILE_NAME = "behavior_eval"
 MAX_INPUT_LINE_BYTES = 2_000_000
 MAX_OUTPUT_BYTES = 1_000_000
@@ -589,8 +589,8 @@ def _nullable_assembly_binding(value):
             or value["model_body_bytes"] != sum(item["bytes"] for item in resources)):
         raise AdapterError("request execution assembly model_body_bytes differs from resources")
     ratio = value["model_reduction_ratio"]
-    if isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or not 0 <= ratio <= 1:
-        raise AdapterError("request execution assembly model_reduction_ratio is invalid")
+    if isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or ratio != 0:
+        raise AdapterError("explicit adapter context cannot claim a prompt reduction")
     return value
 
 
@@ -603,7 +603,7 @@ def validate_v3_request(value):
         },
         "request",
     )
-    if value["kind"] != "behavior-eval-request" or value["protocol_version"] != "3.0":
+    if value["kind"] != "behavior-eval-request" or value["protocol_version"] != "3.1":
         raise AdapterError("unsupported behavior-eval request protocol")
     sha256_value(value["request_sha256"], "request.request_sha256")
     unhashed = dict(value)
@@ -654,7 +654,7 @@ def validate_v3_request(value):
         value["routing_index"],
         {
             "catalog_ref", "catalog_sha256", "system_catalog", "shared_contract",
-            "capsule_index", "entry_count", "entries", "index_sha256",
+            "entry_count", "entries", "index_sha256",
         },
         "request.routing_index",
     )
@@ -671,13 +671,7 @@ def validate_v3_request(value):
         sha256_value(binding["sha256"], "request.routing_index.%s.sha256" % key)
         if key == "system_catalog":
             nonempty_string(binding["version"], "request.routing_index.system_catalog.version", 128)
-    capsule_index = exact_object(
-        routing["capsule_index"], {"path", "sha256"},
-        "request.routing_index.capsule_index",
-    )
-    if capsule_index["path"] != "references/skill-capsules/index.json":
-        raise AdapterError("request capsule index ref is unsupported")
-    sha256_value(capsule_index["sha256"], "request.routing_index.capsule_index.sha256")
+
     entries = routing["entries"]
     if routing["entry_count"] != 120 or not isinstance(entries, list) or len(entries) != 120:
         raise AdapterError("request blind routing index must contain exactly 120 entries")
@@ -728,12 +722,8 @@ def validate_v3_request(value):
         raise AdapterError(
             "protocol v3 requires an independent judge model distinct from the SUT"
         )
-    if execution["prompt_profile"] not in {"explicit", "balanced", "lean"}:
-        raise AdapterError("request execution prompt profile is invalid")
-    if not isinstance(execution["evaluation_only"], bool):
-        raise AdapterError("request execution evaluation_only must be boolean")
-    if execution["prompt_profile"] != "explicit" and not execution["evaluation_only"]:
-        raise AdapterError("compact prompt profiles are evaluation-only until certified")
+    if execution["prompt_profile"] != "explicit" or execution["evaluation_only"] is not False:
+        raise AdapterError("protocol v3.1 supports explicit context only; use a pinned historical runtime for retired experiments")
     safe_id(execution["toolset_id"], "request.execution.toolset_id")
     sha256_value(execution["toolset_sha256"], "request.execution.toolset_sha256")
     _nullable_assembly_binding(execution["assembly_binding"])
@@ -754,9 +744,11 @@ def validate_request(value):
     if not isinstance(value, dict):
         raise AdapterError("request must be an object")
     protocol = value.get("protocol_version")
+    if protocol == "3.0":
+        raise AdapterError("legacy protocol v3.0 requires its pinned historical runtime; it cannot be relabeled as v3.1")
     if protocol == "2.0":
         return validate_v2_request(value)
-    if protocol == "3.0":
+    if protocol == "3.1":
         return validate_v3_request(value)
     raise AdapterError("unsupported behavior-eval request protocol")
 
@@ -1077,7 +1069,6 @@ def _apply_v3_execution_allowlist(request, sources, root: Path):
             if not isinstance(prompt_policy, dict):
                 raise AdapterError("v3 prompt profile catalog is not an object")
             prompt_policy = dict(prompt_policy)
-            prompt_policy["certified_bindings"] = []
             actual = sha256_json(prompt_policy)
         if actual != assembly[key]:
             raise AdapterError(
@@ -1148,99 +1139,20 @@ def collect_v3_selected_sources(request, selected_skill: str, root: Path):
 
     sources = []
     seen = set()
-    profile = request["execution"]["prompt_profile"]
-    if profile == "explicit":
-        _add_bound_source(
-            sources, seen, "skill-definition", entry["skill_ref"], entry["skill_sha256"],
-            root, "blind-selected skill",
-        )
-        # The catalog and machine contract were verified above but are
-        # controller-only.  The explicit SUT sees the full authored skill plus
-        # shared execution policy, never controller metadata bodies.
-        binding = routing["shared_contract"]
-        _add_bound_source(
-            sources, seen, "shared-contract", binding["path"], binding["sha256"], root,
-            "blind-selected shared_contract",
-        )
-    else:
-        capsule_index_binding = routing["capsule_index"]
-        capsule_index_ref = capsule_index_binding["path"]
-        capsule_index_raw = read_project_reference(root, capsule_index_ref, "skill capsule index")
-        _verify_digest(
-            capsule_index_raw, capsule_index_binding["sha256"], "skill capsule index",
-        )
-        capsule_index = _strict_bound_json(capsule_index_raw, "skill capsule index")
-        if (
-                not isinstance(capsule_index, dict)
-                or set(capsule_index) != {
-                    "$schema", "schema_version", "capsule_count", "capsule_schema",
-                    "capsules", "policy_kernel", "source_contract_index",
-                }
-                or capsule_index.get("schema_version") != "1.0"
-                or capsule_index.get("capsule_count") != 120
-                or not isinstance(capsule_index.get("capsules"), list)
-                or len(capsule_index["capsules"]) != 120
-                or capsule_index.get("source_contract_index") != {
-                    "path": routing["catalog_ref"], "sha256": routing["catalog_sha256"],
-                }):
-            raise AdapterError("compact source catalog is not bound to the routing catalog")
-        capsules = [
-            item for item in capsule_index["capsules"]
-            if isinstance(item, dict) and item.get("skill") == selected_skill
-        ]
-        if len(capsules) != 1:
-            raise AdapterError("selected route has no unique compact capsule")
-        capsule = capsules[0]
-        exact_object(
-            capsule, {"skill", "capsule_ref", "capsule_sha256", "model_bytes"},
-            "selected capsule index entry",
-        )
-        kernel = capsule_index.get("policy_kernel")
-        if not isinstance(kernel, dict) or set(kernel) != {"path", "sha256"}:
-            raise AdapterError("compact source catalog has no bound policy kernel")
-        kernel_raw = read_project_reference(root, kernel["path"], "blind-selected policy kernel")
-        _verify_digest(kernel_raw, kernel["sha256"], "blind-selected policy kernel")
-        if profile == "balanced":
-            _add_bound_source(
-                sources, seen, "skill-definition", entry["skill_ref"], entry["skill_sha256"],
-                root, "blind-selected skill",
-            )
-        else:
-            capsule_raw = read_project_reference(
-                root, capsule["capsule_ref"], "blind-selected skill capsule",
-            )
-            _verify_digest(
-                capsule_raw, capsule["capsule_sha256"], "blind-selected skill capsule",
-            )
-            capsule_value = _strict_bound_json(capsule_raw, "blind-selected skill capsule")
-            if (
-                    not isinstance(capsule_value, dict)
-                    or capsule_value.get("schema_version") != "1.0"
-                    or capsule_value.get("capsule_id") != "skill-capsule:%s" % selected_skill
-                    or capsule_value.get("identity") != {
-                        "class": identity.get("class"),
-                        "discipline": entry["discipline"],
-                        "name": selected_skill,
-                        "phase": entry["phase"],
-                        "version": entry["version"],
-                    }
-                    or capsule_value.get("provenance", {}).get("source") != {
-                        "path": entry["skill_ref"], "sha256": entry["skill_sha256"],
-                    }
-                    or capsule_value.get("provenance", {}).get("machine_contract") != {
-                        "path": entry["contract_ref"], "sha256": entry["contract_sha256"],
-                    }
-                    or capsule_value.get("policy", {}).get("kernel") != kernel
-                    or capsule.get("model_bytes") != len(capsule_raw) + len(kernel_raw)):
-                raise AdapterError("selected compact capsule provenance is stale or invalid")
-            sources.append(BoundSource(
-                "skill-capsule", capsule["capsule_ref"], capsule["capsule_sha256"], capsule_raw,
-            ))
-            seen.add(capsule["capsule_ref"])
-        _add_bound_source(
-            sources, seen, "policy-kernel", kernel["path"], kernel["sha256"], root,
-            "blind-selected policy kernel",
-        )
+    if request["execution"]["prompt_profile"] != "explicit":
+        raise AdapterError("only explicit selected-skill sources are supported")
+    _add_bound_source(
+        sources, seen, "skill-definition", entry["skill_ref"], entry["skill_sha256"],
+        root, "blind-selected skill",
+    )
+    # The catalog and machine contract were verified above but are
+    # controller-only.  The explicit SUT sees the full authored skill plus
+    # shared execution policy, never controller metadata bodies.
+    binding = routing["shared_contract"]
+    _add_bound_source(
+        sources, seen, "shared-contract", binding["path"], binding["sha256"], root,
+        "blind-selected shared_contract",
+    )
 
     for position, source in enumerate(context_hints["bundle_references"], 1):
         if not isinstance(source, dict) or set(source) != {
@@ -1840,7 +1752,7 @@ def validate_candidate_output(value):
 
 
 def _judge_expectations(request):
-    if request.get("protocol_version") == "3.0":
+    if request.get("protocol_version") == "3.1":
         return (
             request["judge_contract"]["assertions"],
             request["judge_contract"]["must_not"],
@@ -2088,8 +2000,7 @@ def v3_execution_provenance(
     )
     provenance["judge_model_provider"] = "openai"
     # Codex CLI currently exposes aliases but no immutable provider revision.
-    # Null is honest evaluation provenance and deliberately cannot certify a
-    # deployable compact prompt profile.
+    # Null reports unavailable provider identity; it is never a verified snapshot.
     provenance["judge_model_revision"] = None
     return provenance
 
@@ -2123,7 +2034,6 @@ def _v3_context_binding(request, candidate_context_sha256, candidate_sources_sha
         "host_catalog_sha256": None,
         "prompt_policy_sha256": None,
         "context_modules_sha256": None,
-        "capsule_index_sha256": request["routing_index"]["capsule_index"]["sha256"],
         "model_body_bytes": None,
         "model_reduction_ratio": None,
         "model_resources_sha256": None,
@@ -2142,7 +2052,7 @@ def v3_result_envelope(
     expected = request["judge_contract"]["expected_route"]
     return {
         "kind": "behavior-eval-result",
-        "protocol_version": "3.0",
+        "protocol_version": "3.1",
         "case_id": request["case"]["id"],
         "request_sha256": request["request_sha256"],
         "outcome": outcome,
@@ -2672,7 +2582,7 @@ def evaluate_request(
     runtime: SecureRuntime,
     root: Path = ROOT,
 ):
-    if isinstance(request, dict) and request.get("protocol_version") == "3.0":
+    if isinstance(request, dict) and request.get("protocol_version") == "3.1":
         return evaluate_request_v3(request, config, host_version, runtime, root)
     started_at = timestamp_now()
     started_monotonic = time.monotonic()
@@ -2828,7 +2738,7 @@ def evaluate_request(
 def _probe_failure_result(request, config: AdapterConfig, runtime, probe: ProbeResult):
     started_at = timestamp_now()
     ended_at = timestamp_now()
-    if request.get("protocol_version") == "3.0":
+    if request.get("protocol_version") == "3.1":
         return _v3_failure_result(
             request, config, runtime, probe.host_version,
             probe.failure_code or "HOST_UNAVAILABLE", probe.retryable,
@@ -2846,7 +2756,7 @@ def _probe_failure_result(request, config: AdapterConfig, runtime, probe: ProbeR
 def _adapter_runtime_failure_result(request, config: AdapterConfig, runtime, host_version: str):
     started_at = timestamp_now()
     ended_at = timestamp_now()
-    if request.get("protocol_version") == "3.0":
+    if request.get("protocol_version") == "3.1":
         return _v3_failure_result(
             request, config, runtime, host_version, "ADAPTER_PROVENANCE", False,
             "Codex could not prove the required isolated, tool-free permission profile.",
@@ -2862,7 +2772,7 @@ def _adapter_runtime_failure_result(request, config: AdapterConfig, runtime, hos
 def _adapter_worker_crash_result(request, config: AdapterConfig):
     started_at = timestamp_now()
     ended_at = timestamp_now()
-    if request.get("protocol_version") == "3.0":
+    if request.get("protocol_version") == "3.1":
         return _v3_failure_result(
             request, config, None, "unavailable", "ADAPTER_CRASH", False,
             "An isolated adapter worker stopped before producing a result.",

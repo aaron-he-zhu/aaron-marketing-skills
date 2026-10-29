@@ -16,6 +16,7 @@ provenance, and capability boundary](agent-plugins-v1.md).
 
 ## Install
 
+<!-- GENERATED:BEGIN release-surface:portable-install -->
 | Route | Command | Serves |
 |-------|---------|--------|
 | **Claude Code plugin** (full suite) | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` → `/plugin install aaron-marketing@aaron` | skills + commands + hooks + memory + connectors + shared references |
@@ -23,7 +24,8 @@ provenance, and capability boundary](agent-plugins-v1.md).
 | **Any other agent** (global) | `npx skills add aaron-he-zhu/aaron-marketing-skills -g` | same, user-wide |
 | **Single skill** | `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research` | one skill folder |
 | **Force one agent** | `… -a codex` / `-a cursor` / `-a opencode` … | one host only |
-| **Agent Plugins v1 · Portable Lite** | Download `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz` from the [v20.1.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0), unpack it, and select the extracted plugin directory in the client | 120 strict static Skills; no `mcp.json`, commands, hooks, connectors, or repository runtime |
+| **Agent Plugins v1 · Portable Lite** | Download `aaron-marketing-skills-20.2.0-agent-plugin-v1-lite.tar.gz` from the [v20.2.0 release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.2.0), unpack it, and select the extracted plugin directory in the client | 120 strict static Skills; no `mcp.json`, commands, hooks, connectors, or repository runtime |
+<!-- GENERATED:END release-surface:portable-install -->
 
 `npx skills` auto-detects which agents are installed and symlinks each skill into the right directories (canonical copy in `.agents/skills/`, per-agent symlinks). Use `--copy` where symlinks are unsupported, `npx skills update` to pull new versions, `npx skills remove` to uninstall.
 
@@ -199,7 +201,7 @@ Deployment boundaries, in both hosts:
   `compatible_distributions: ["bot-roster"]`, `context_assembly: excluded`).
   They are deliberately kept out of
   [`references/host-capability-profiles.json`](../references/host-capability-profiles.json),
-  so the certified context/prompt assembly chain and its hash-pinned host
+  so the context/prompt assembly chain and its hash-pinned host
   catalog stay untouched; each generated bundle manifest binds the selected
   profile definition by SHA-256.
 
@@ -305,18 +307,17 @@ prompt, and context-module catalogs, their resolver, and the compact portable
 policy kernel. These files select a representation; they are not executable
 authority and are not additional Skills. A standalone one-folder install keeps
 the full Skill as its embedded explicit-policy representation and does not
-claim the missing root resolver, kernel, or capsule runtime.
+claim the missing root resolver, kernel, or assembly runtime.
 
-The Governed physical profile also includes the generated
-`references/skill-capsules/` index and 120 per-skill capsule JSON records for
-typed lean context assembly. Balanced assembly keeps the complete selected
-Skill and replaces only shared policy with the kernel. Its `context-assembly.py` runtime and
-schema keep controller, model, tool, and deferred resources separate instead
-of treating manifest capacity as model-visible prompt. Capsule records contain
-no `SKILL.md`, are not plugin or registry declarations, and therefore never
-expand the canonical 120-Skill surface. Explicit and balanced execution still
-select the complete Skill; Lite, Pro, and standalone payloads do not ship the
-capsule tree or assembly runtime.
+The Governed physical profile includes `context-assembly.py` and its schema to
+keep controller, model, tool, and deferred resources separate. Its only prompt
+representation is `explicit`, which selects the complete Skill and shared
+contract on shared-root hosts. Lite, Pro, and standalone payloads do not ship
+the assembly runtime. Host capabilities and source/inventory checks still
+apply; a prompt profile never grants permissions. Repository-side standalone
+evaluation uses the embedded policy once and stays explicitly non-deployable.
+Retired compact research does not add capabilities to any host; old results
+require their [matching historical runtime](context-engineering.md#historical-research).
 
 A standalone install bundles **only each skill's folder** (its `SKILL.md` + own `references/`). Everything below ships with the plugin (or a full `git clone`) instead:
 

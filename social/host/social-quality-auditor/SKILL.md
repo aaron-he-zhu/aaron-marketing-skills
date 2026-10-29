@@ -4,14 +4,14 @@ slug: aaron-social-quality-auditor
 displayName: "Social Quality Auditor · 社媒质量门"
 summary: "社媒资产门/运营成熟度/六条红线"
 description: 'Use when the user asks to "audit our social presence" or "is this batch safe to publish"; runs either the typed ECHO asset gate or a separate program-maturity profile, with channel-truth, claim, disclosure, manipulation, UGC-rights, and denominator checks. Not for creator deliverables — use creator-content-auditor; not for launch readiness — use launch-readiness-auditor. 社媒资产门/运营成熟度/发布前放行'
-version: "20.1.0"
+version: "20.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use for a pre-publish social asset/batch gate or a separate channel-program maturity audit. Never combine the asset and operating profiles into one score."
 argument-hint: "<asset batch or channel portfolio> [asset-gate|community|b2c|founder]"
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.2.0", "discipline": "social", "phase": "host", "geo-relevance": "low", "hermes": {"tags": ["marketing", "social", "host"], "category": "social"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Social Quality Auditor
@@ -60,7 +60,17 @@ Audit the last 90 days with program-maturity-community; report outcomes separate
 
 ### Runtime and Setup
 
-Read `../../../references/auditor-runbook.md`, `scoring-semantics.md`, `echo-benchmark.md`, and the ECHO catalog entry. Standalone installs use bundled immutable `references/auditor-runtime.md`; never fetch mutable `main`. Before deterministic calls, follow [`runtime-invocation.md`](../../../references/runtime-invocation.md), resolve `AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`, and require the scorer, validator, and typed catalogs. If unavailable, return `score_state: NOT_SCORED` / `score_confidence: not_scored` with no gate verdict or persistent artifact.
+<!-- GENERATED:BEGIN auditor-shared:activation -->
+Read the declared root runtime sources and selected framework/catalog entry.
+Standalone installs use the bundled immutable `references/auditor-runtime.md`;
+never fetch mutable `main` or guess missing policy. Before deterministic calls,
+follow `runtime-invocation.md` and resolve
+`AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`.
+Require the scorer, validator and typed catalogs. If unavailable, collect the
+selected profile's typed observations and Unknowns, but return
+`score_state: NOT_SCORED` / `score_confidence: not_scored` without a gate verdict
+or persistent artifact. Record the bound schema, runbook and catalog versions.
+<!-- GENERATED:END auditor-shared:activation -->
 
 Declare target, profile, `assessment_mode`, `program_archetype`, channels, market, window, and observation date. Use `assessment_mode: asset` plus `program_archetype: not-applicable` for `asset-gate`; use `assessment_mode: program` plus the exact `community|b2c|founder` archetype for a maturity profile. Profile and context must match.
 
@@ -96,7 +106,11 @@ State `asset-gate` or exact maturity profile in every result. On trace request, 
 
 ## Report and Verdict
 
-Begin with the auditor-runbook's exact typed conversation header. Never replace `status`, `verdict`, or `score_state` with prose; list each explicitly missing qualified item as ``ID: `unknown``` before findings.
+<!-- GENERATED:BEGIN auditor-shared:result-header -->
+Begin with the auditor-runbook's exact typed conversation header. Never replace
+`status`, `verdict`, or `score_state` with prose; list each explicitly missing
+qualified item as ``ID: `unknown``` before findings.
+<!-- GENERATED:END auditor-shared:result-header -->
 
 Show verdict, unit/profile/context/date, score or coverage/interval, confidence, included-item detail, verified critical controls, Unknown inputs, and fixes. For asset batches, identify the exact asset/location. Never publish or unpause a queue based only on the audit; separate explicit approval is required.
 

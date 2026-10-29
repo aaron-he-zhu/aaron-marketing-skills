@@ -941,7 +941,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "social/host/social-quality-auditor/SKILL.md:124",
+      "condition_source": "social/host/social-quality-auditor/SKILL.md:138",
       "condition_text": "Channel truth: channel-registry",
       "documentation_required": true,
       "exception": null,
@@ -972,7 +972,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "social/host/social-quality-auditor/SKILL.md:126",
+      "condition_source": "social/host/social-quality-auditor/SKILL.md:140",
       "condition_text": "UGC/response: engagement-inbox-manager",
       "documentation_required": true,
       "exception": null,
@@ -1000,7 +1000,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "social/host/social-quality-auditor/SKILL.md:125",
+      "condition_source": "social/host/social-quality-auditor/SKILL.md:139",
       "condition_text": "Claims: offer-claims-registry",
       "documentation_required": true,
       "exception": null,
@@ -1031,7 +1031,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "social/host/social-quality-auditor/SKILL.md:127",
+      "condition_source": "social/host/social-quality-auditor/SKILL.md:141",
       "condition_text": "Measurement: social-measurement-loop",
       "documentation_required": true,
       "exception": null,

@@ -8,7 +8,7 @@ The source manifest pins context-budgeted authoritative edge shards by SHA-256; 
 - Nodes: **120**
 - Edges: **378**
 - Named workflows: **1**
-- Graph digest: `sha256:b775199bafcfd67185940d25e45212e2eca0e6938dde5d5f80b7e166eb4fca3f`
+- Graph digest: `sha256:f2135af37a367bf7451d66d1cb88333f5ac4d0608c7dc292cbefa64c888eafdb`
 
 ## Named Workflows
 
@@ -29,3 +29,5 @@ Package the approved launch, fan out gated execution across launch-day, communit
 An edge typed `gate` with `gate` bound to its source auditor is a release gate: `audit-evidence` and an independent `execution-approval` are both required before its successor may open. Non-SHIP verdicts remain closed.
 
 `python3 scripts/workflow-graph.py --check` detects projection drift, dangling edges, documentation drift, orphan nodes, unreachable workflow nodes, illegal cycles, undeclared phase inversions, and undeclared dead ends.
+
+`--write` refreshes derived `condition_source` line positions only after the full unchanged edge semantics pass validation. Text, conditions, inputs, permissions and gates remain authoritative; semantic edits require an explicit source change.

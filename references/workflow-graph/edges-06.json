@@ -4,7 +4,7 @@
   "edges": [
     {
       "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:128",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:142",
       "condition_text": "Architecture repair: message-system-architect",
       "documentation_required": true,
       "exception": {
@@ -36,7 +36,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:130",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:144",
       "condition_text": "Effectiveness evidence: message-test-designer",
       "documentation_required": true,
       "exception": null,
@@ -64,7 +64,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:129",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:143",
       "condition_text": "Landing repair: narrative-cascade-planner",
       "documentation_required": true,
       "exception": {
@@ -96,7 +96,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:127",
+      "condition_source": "narrative/evaluate/narrative-quality-auditor/SKILL.md:141",
       "condition_text": "Truth repair: positioning-truth-tracer",
       "documentation_required": true,
       "exception": {

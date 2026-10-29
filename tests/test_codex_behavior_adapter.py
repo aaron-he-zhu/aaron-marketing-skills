@@ -1027,7 +1027,6 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
                 **json.loads(
                     (ROOT / "references/prompt-profiles.json").read_text(encoding="utf-8")
                 ),
-                "certified_bindings": [],
             }),
             "context_modules_sha256": hashlib.sha256(
                 (ROOT / "references/context-modules.json").read_bytes()
@@ -1345,7 +1344,6 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
         prompt_catalog = json.loads(
             (bundle / "references/prompt-profiles.json").read_text(encoding="utf-8")
         )
-        prompt_catalog["certified_bindings"] = []
 
         def binding_for(assembly):
             resources = sorted([
@@ -1408,7 +1406,7 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
                     item["path"].endswith("/references/auditor-runtime.md")
                     for item in plugin_manifest["resources"]
                 ))
-            for profile in ("explicit", "balanced", "lean"):
+            for profile in ("explicit",):
                 build_options = {
                     "requested_prompt_profile": "explicit",
                 } if profile == "explicit" else {
@@ -1519,7 +1517,6 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
         prompt_catalog = json.loads(
             (bundle / "references/prompt-profiles.json").read_text(encoding="utf-8")
         )
-        prompt_catalog["certified_bindings"] = []
 
         def binding_for(context_assembly):
             resources = sorted([
@@ -1576,7 +1573,7 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
             manifest = planner.resolver.resolve_context(plan, bundle, project)
             planner.resolver.verify_manifest_sources(manifest, bundle, project)
 
-            for profile in ("explicit", "balanced", "lean"):
+            for profile in ("explicit",):
                 options = {
                     "requested_prompt_profile": "explicit",
                 } if profile == "explicit" else {
@@ -1628,107 +1625,8 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
                 ))
                 closure_count += 1
 
-        self.assertEqual(120 * 3, closure_count)
+        self.assertEqual(120, closure_count)
 
-    def test_v3_profiles_have_three_distinct_candidate_representations(self):
-        selection = self.runner.select_semantic_cases(
-            "smoke", {"routing-outreach-vs-contract-helper-outreach-manager-001"},
-        )
-        refs_by_profile = {}
-        context_hashes = {}
-        target = self.request["judge_contract"]["expected_route"]
-        for profile in ("explicit", "balanced", "lean"):
-            request = self.runner.build_v3_requests(
-                selection["cases"], selection["profile"], selection["selection_reasons"],
-                host_profile="claude-code-plugin-host",
-                model_id="gpt-fixture",
-                judge_model_id="gpt-judge-fixture",
-                prompt_profile=profile,
-                evaluation_only=(profile != "explicit"),
-            )[0]
-            sources = self.module.collect_v3_selected_sources(request, target, ROOT)
-            refs_by_profile[profile] = {item.ref for item in sources}
-            staged = [
-                self.module.StagedSource(source, "bound/%03d-%s.bin" % (index, source.role))
-                for index, source in enumerate(sources, 1)
-            ]
-            payload = self.module.v3_execution_candidate_payload(request, target, staged)
-            context_hashes[profile] = self.module.sha256_json(payload)
-            rendered = self.module.canonical_json(payload)
-            self.assertNotIn('"prompt_profile"', rendered)
-            changed = json.loads(json.dumps(request))
-            arm_sentinel = "ARM-LABEL-%s-experiment-evaluation-SENTINEL" % profile
-            changed["execution"]["prompt_profile"] = arm_sentinel
-            self.assertEqual(
-                payload,
-                self.module.v3_execution_candidate_payload(changed, target, staged),
-            )
-            self.assertNotIn(arm_sentinel, rendered)
-
-        target_entry = next(
-            item for item in self.request["routing_index"]["entries"]
-            if item["skill"] == target
-        )
-        shared = self.request["routing_index"]["shared_contract"]["path"]
-        kernel = "references/policy-kernel.md"
-        capsule = "references/skill-capsules/%s.json" % target
-        self.assertIn(target_entry["skill_ref"], refs_by_profile["explicit"])
-        self.assertIn(shared, refs_by_profile["explicit"])
-        self.assertNotIn(kernel, refs_by_profile["explicit"])
-        self.assertIn(target_entry["skill_ref"], refs_by_profile["balanced"])
-        self.assertIn(kernel, refs_by_profile["balanced"])
-        self.assertNotIn(shared, refs_by_profile["balanced"])
-        self.assertIn(capsule, refs_by_profile["lean"])
-        self.assertIn(kernel, refs_by_profile["lean"])
-        self.assertNotIn(target_entry["skill_ref"], refs_by_profile["lean"])
-        self.assertEqual(3, len(set(context_hashes.values())))
-
-    def test_v3_lean_rejects_reanchored_but_stale_capsule_provenance(self):
-        selection = self.runner.select_semantic_cases(
-            "smoke", {"routing-outreach-vs-contract-helper-outreach-manager-001"},
-        )
-        request = self.runner.build_v3_requests(
-            selection["cases"], selection["profile"], selection["selection_reasons"],
-            host_profile="claude-code-plugin-host",
-            model_id="gpt-fixture", judge_model_id="gpt-judge-fixture",
-            prompt_profile="lean", evaluation_only=True,
-        )[0]
-        target = request["judge_contract"]["expected_route"]
-        index_ref = request["routing_index"]["capsule_index"]["path"]
-        capsule_index = json.loads((ROOT / index_ref).read_text(encoding="utf-8"))
-        entry = next(item for item in capsule_index["capsules"] if item["skill"] == target)
-        capsule = json.loads((ROOT / entry["capsule_ref"]).read_text(encoding="utf-8"))
-        capsule["provenance"]["source"]["sha256"] = "0" * 64
-        capsule_raw = (
-            json.dumps(capsule, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-            + "\n"
-        ).encode("utf-8")
-        kernel_raw = (ROOT / capsule_index["policy_kernel"]["path"]).read_bytes()
-        entry["capsule_sha256"] = hashlib.sha256(capsule_raw).hexdigest()
-        entry["model_bytes"] = len(capsule_raw) + len(kernel_raw)
-        index_raw = (
-            json.dumps(capsule_index, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-            + "\n"
-        ).encode("utf-8")
-        request["routing_index"]["capsule_index"]["sha256"] = hashlib.sha256(
-            index_raw
-        ).hexdigest()
-        index_payload = dict(request["routing_index"])
-        index_payload.pop("index_sha256")
-        request["routing_index"]["index_sha256"] = self.module.sha256_json(index_payload)
-        self._rehash(request)
-        original_read = self.module.read_project_reference
-
-        def read(root, reference, label):
-            if reference == index_ref:
-                return index_raw
-            if reference == entry["capsule_ref"]:
-                return capsule_raw
-            return original_read(root, reference, label)
-
-        with mock.patch.object(self.module, "read_project_reference", side_effect=read):
-            with self.assertRaisesRegex(self.module.AdapterError, "provenance is stale"):
-                self.module.collect_v3_selected_sources(request, target, ROOT)
 
     def test_v3_three_stage_success_and_wrong_route_deterministic_failure(self):
         expected = self.request["judge_contract"]["expected_route"]
@@ -1739,7 +1637,7 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
                 self.request, self.config, "codex fixture", self.runtime, ROOT,
             )
         self.assertEqual(3, run.call_count)
-        self.assertEqual("3.0", passed["protocol_version"])
+        self.assertEqual("3.1", passed["protocol_version"])
         self.assertEqual("passed", passed["outcome"])
         self.assertTrue(passed["routing"]["correct"])
         self.assertTrue(all(value is None for value in passed["provider_metrics"].values()))
@@ -1758,7 +1656,7 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
                 self.request, self.config, "codex fixture", self.runtime, ROOT,
             )
         self.assertEqual(1, run.call_count)
-        self.assertEqual("3.0", failed["protocol_version"])
+        self.assertEqual("3.1", failed["protocol_version"])
         self.assertEqual("behavior-failed", failed["outcome"])
         self.assertFalse(failed["routing"]["correct"])
         self.assertEqual(
@@ -1799,20 +1697,6 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
         self._rehash(cross_skill)
         variants.append(cross_skill)
 
-        selection = self.runner.select_semantic_cases(
-            "smoke", {"routing-outreach-vs-contract-helper-outreach-manager-001"},
-        )
-        balanced = self.runner.build_v3_requests(
-            selection["cases"], selection["profile"], selection["selection_reasons"],
-            host_profile="claude-code-plugin-host", model_id="gpt-fixture",
-            judge_model_id="gpt-judge-fixture", prompt_profile="balanced",
-            evaluation_only=True,
-        )[0]
-        cross_profile = json.loads(json.dumps(self.request))
-        cross_profile["execution"]["assembly_binding"] = self._binding_for(balanced)
-        self._rehash(cross_profile)
-        variants.append(cross_profile)
-
         forged_bytes = json.loads(json.dumps(self.request))
         binding = self._binding_for(forged_bytes)
         binding["model_resources"][0]["bytes"] += 1
@@ -1848,7 +1732,7 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
             host = self.module.evaluate_request(
                 self.request, self.config, "codex fixture", self.runtime, ROOT,
             )
-        self.assertEqual("3.0", host["protocol_version"])
+        self.assertEqual("3.1", host["protocol_version"])
         self.assertEqual("host-failed", host["outcome"])
         self.assertEqual("HOST_RATE_LIMIT", host["failures"][0]["code"])
         self.assertIsNone(host["routing"]["selected_skill"])
@@ -1859,7 +1743,7 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
             adapter = self.module.evaluate_request(
                 self.request, self.config, "codex fixture", self.runtime, ROOT,
             )
-        self.assertEqual("3.0", adapter["protocol_version"])
+        self.assertEqual("3.1", adapter["protocol_version"])
         self.assertEqual("adapter-failed", adapter["outcome"])
         self.assertEqual("ADAPTER_PROTOCOL", adapter["failures"][0]["code"])
 
@@ -1882,7 +1766,7 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
                 (index, {
                     "case_id": request["case"]["id"],
                     "request_sha256": request["request_sha256"],
-                    "protocol_version": "3.0",
+                    "protocol_version": "3.1",
                     "outcome": "passed",
                 })
                 for index, request in partition_requests
@@ -1895,10 +1779,27 @@ class CodexBehaviorAdapterV3Tests(unittest.TestCase):
             [result["case_id"] for result in results],
         )
         for index in (0, 2):
-            self.assertEqual("3.0", results[index]["protocol_version"])
+            self.assertEqual("3.1", results[index]["protocol_version"])
             self.assertEqual(requests[index]["request_sha256"], results[index]["request_sha256"])
             self.assertEqual("adapter-failed", results[index]["outcome"])
             self.assertEqual("ADAPTER_CRASH", results[index]["failures"][0]["code"])
+
+    def test_explicit_v31_requires_no_capsule_and_rejects_legacy_or_compact_requests(self):
+        self.assertEqual("3.1", self.request["protocol_version"])
+        self.assertNotIn("capsule_index", self.request["routing_index"])
+        self.module.validate_request(self.request)
+        legacy = json.loads(json.dumps(self.request))
+        legacy["protocol_version"] = "3.0"
+        with self.assertRaisesRegex(self.module.AdapterError, "pinned historical runtime"):
+            self.module.validate_request(legacy)
+        with self.assertRaisesRegex(self.runner.BehaviorEvalError, "pinned historical runtime"):
+            self.runner.validate_protocol_adapter_result({}, legacy)
+        for retired in ("balanced", "lean"):
+            request = json.loads(json.dumps(self.request))
+            request["execution"]["prompt_profile"] = retired
+            self._rehash(request)
+            with self.assertRaisesRegex(self.module.AdapterError, "explicit context only"):
+                self.module.validate_request(request)
 
 
 if __name__ == "__main__":

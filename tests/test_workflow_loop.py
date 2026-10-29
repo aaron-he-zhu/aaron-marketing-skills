@@ -1644,30 +1644,32 @@ class WorkflowLoopTests(unittest.TestCase):
             "expected_head_sha256": result["state"]["last_event_hash"],
             "payload": {"node": "launch-asset-packager", "evidence": [evidence]},
         }
-        original = workflow_loop._atomic_write
-
-        def fail_state(path, content):
-            if Path(path).name == "state.json":
-                raise OSError("simulated projection failure")
-            return original(path, content)
-
-        with mock.patch.object(workflow_loop, "_atomic_write", side_effect=fail_state):
-            with self.assertRaisesRegex(workflow_loop.EventCommittedError, "event_committed=true"):
-                workflow_loop.advance(self.root, request)
-        recovered = workflow_loop.advance(self.root, request)
+        with mock.patch.object(workflow_loop, "_atomic_write", side_effect=OSError("disk full")) as write:
+            completed = workflow_loop.advance(self.root, request)
+            recovered = workflow_loop.advance(self.root, request)
+            write.assert_not_called()
         self.assertTrue(recovered["deduplicated"])
+        self.assertEqual(completed["state"], recovered["state"])
         state_path = (
             self.root / "memory" / "runs" / self.run_id / "workflow-plans"
             / "launch-loop" / "state.json"
         )
-        state_path.write_text("{}\n", encoding="utf-8")
-        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "projection"):
-            workflow_loop.verify(self.root, self.run_id, "launch-loop")
+        self.assertFalse(state_path.exists())
+        self.assertTrue(workflow_loop.verify(self.root, self.run_id, "launch-loop")["valid"])
+        stream = state_path.with_name("events.ndjson")
+        committed = stream.read_bytes()
+        state_path.write_text("malformed old cache\n", encoding="utf-8")
+        self.assertTrue(workflow_loop.verify(self.root, self.run_id, "launch-loop")["valid"])
+        self.assertEqual("malformed old cache\n", state_path.read_text(encoding="utf-8"))
+        with mock.patch.object(workflow_loop, "_atomic_write", side_effect=OSError("disk full")):
+            with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "projection export failed.*disk full"):
+                workflow_loop.verify(self.root, self.run_id, "launch-loop", repair_projection=True)
+        self.assertEqual(committed, stream.read_bytes())
         repaired = workflow_loop.verify(
             self.root, self.run_id, "launch-loop", repair_projection=True,
         )
         self.assertTrue(repaired["projection_current"])
-        stream = state_path.with_name("events.ndjson")
+        self.assertEqual(completed["state"], json.loads(state_path.read_text(encoding="utf-8")))
         text = stream.read_text(encoding="utf-8")
         stream.write_text(
             text.replace("launch-asset-packager", "launch-retro-analyzer", 1),
@@ -1675,6 +1677,56 @@ class WorkflowLoopTests(unittest.TestCase):
         )
         with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "hash"):
             workflow_loop.verify(self.root, self.run_id, "launch-loop")
+
+    def test_legacy_plan_keeps_canonical_export_paths_and_immutable_history(self):
+        result = self.plan()
+        paths = workflow_loop._workflow_paths(self.root, self.run_id, "launch-loop")
+        original_plan = paths["plan"].read_bytes()
+        original_events = paths["events"].read_bytes()
+        plan = json.loads(original_plan)
+        self.assertEqual(str(paths["state"].relative_to(self.root)), plan["state_ref"])
+        self.assertFalse(paths["state"].exists())
+        for cached in ("{}\n", "invalid json\n"):
+            paths["state"].write_text(cached, encoding="utf-8")
+            verified = workflow_loop.verify(self.root, self.run_id, "launch-loop")
+            self.assertTrue(verified["valid"])
+            self.assertFalse(verified["projection_current"])
+            self.assertEqual(cached, paths["state"].read_text(encoding="utf-8"))
+        workflow_loop.verify(self.root, self.run_id, "launch-loop", repair_projection=True)
+        self.assertEqual(result["state"], json.loads(paths["state"].read_text(encoding="utf-8")))
+        self.assertEqual(original_plan, paths["plan"].read_bytes())
+        self.assertEqual(original_events, paths["events"].read_bytes())
+
+        run_events = workflow_loop._run_events_module()
+        original_read = run_events._stable_project_read
+
+        def unstable_state_read(root, reference, limit, label):
+            if reference == plan["state_ref"]:
+                raise run_events.RunEventError(
+                    "workflow state projection changed during inspection"
+                )
+            return original_read(root, reference, limit, label)
+
+        with mock.patch.object(run_events, "_stable_project_read", side_effect=unstable_state_read):
+            with self.assertRaisesRegex(
+                    workflow_loop.WorkflowLoopError,
+                    "^workflow state projection changed during inspection$"):
+                workflow_loop.verify(self.root, self.run_id, "launch-loop")
+
+        plan["state_ref"] = "memory/other-run-state.json"
+        paths["plan"].write_text(json.dumps(plan), encoding="utf-8")
+        with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "canonical workflow path"):
+            workflow_loop.verify(self.root, self.run_id, "launch-loop", repair_projection=True)
+        self.assertFalse((self.root / "memory/other-run-state.json").exists())
+        paths["plan"].write_bytes(original_plan)
+        paths["state"].unlink()
+        outside = self.root / "outside-state.json"
+        outside.write_text("{}\n", encoding="utf-8")
+        paths["state"].symlink_to(outside)
+        for export in (False, True):
+            with self.assertRaisesRegex(workflow_loop.WorkflowLoopError, "regular single-link"):
+                workflow_loop.verify(self.root, self.run_id, "launch-loop", repair_projection=export)
+        self.assertEqual("{}\n", outside.read_text(encoding="utf-8"))
 
     def test_recorded_at_tampering_breaks_the_event_hash(self):
         self.plan()
@@ -2023,6 +2075,7 @@ class WorkflowLoopTests(unittest.TestCase):
                  ["action-receipt", "evidence-observation"]),
                 ("launch-monitor", "launch-retro-analyzer",
                  ["action-receipt", "evidence-observation", "measurement-contract"])):
+            workflow_loop.verify(self.root, self.run_id, "launch-loop", repair_projection=True)
             before_events = paths["events"].read_bytes()
             before_state = paths["state"].read_bytes()
             for status in ("failed", "partial", "unknown"):
@@ -2069,6 +2122,7 @@ class WorkflowLoopTests(unittest.TestCase):
             "launch-day-conductor", ["action-receipt", "evidence-observation"],
             prefix="historical-failure", receipt_status="failed",
         )
+        workflow_loop.verify(self.root, self.run_id, "launch-loop", repair_projection=True)
         # Model a correctly hash-chained stream accepted by the former kind-only gate.
         with mock.patch.object(
                 workflow_loop, "_validate_control_release_evidence", return_value=None):

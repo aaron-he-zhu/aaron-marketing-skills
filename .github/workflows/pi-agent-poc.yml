@@ -1,16 +1,16 @@
 name: Pi agent PoC (isolated)
 
+# The historical Node probe is retired. Preserve this check identity until the
+# repository owner can verify that branch protection does not require `probe`.
+# It now exercises the retained local compatibility and guard boundaries.
+# No paths filter: the old filter only matched the retired evals/pi-agent-poc
+# tree, and this ~10s job must report on every PR in case `probe` is required.
+
 on:
   push:
     branches: [main]
-    paths:
-      - "evals/pi-agent-poc/**"
-      - ".github/workflows/pi-agent-poc.yml"
   pull_request:
     branches: [main]
-    paths:
-      - "evals/pi-agent-poc/**"
-      - ".github/workflows/pi-agent-poc.yml"
   workflow_dispatch:
 
 permissions:
@@ -20,19 +20,10 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    defaults:
-      run:
-        working-directory: evals/pi-agent-poc
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-python@v5
         with:
-          node-version: 22.19.0
-          cache: npm
-          cache-dependency-path: evals/pi-agent-poc/package-lock.json
-      - name: Install the locked probe without lifecycle scripts
-        run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Exercise the isolated session-tree probe
-        run: npm test
-      - name: Audit the locked runtime dependency graph
-        run: npm audit --omit=dev --audit-level=low
+          python-version: '3.12'
+      - name: Retained compatibility and dependency-boundary regressions
+        run: python3 -m unittest tests.test_v3_compatibility tests.test_markdown_guard_exclusions

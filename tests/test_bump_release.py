@@ -151,14 +151,12 @@ class BumpReleaseTests(unittest.TestCase):
                 )
                 self.assertEqual(json.loads(metadata)["version"], "99.0.0")
 
-            expected_support = (
-                "19.0.0",
-                "19.1.0",
-                "19.2.0",
-                "20.0.0",
-                "20.1.0",
-                "99.0.0",
-            )
+            # Freeze the input support set before comparing the appended
+            # release; each release must preserve every previously read value.
+            expected_support = python_constant(
+                ROOT / 'scripts/verify-release-receipt.py',
+                'SUPPORTED_RELEASE_VERSIONS',
+            ) + ('99.0.0',)
             for relative in (
                 "scripts/verify-release-receipt.py",
                 "scripts/verify-profile-outcomes.py",
@@ -232,9 +230,12 @@ class BumpReleaseTests(unittest.TestCase):
             fixture = Path(tmp)
             build_fixture(fixture)
             verifier = fixture / "scripts" / "verify-profile-outcomes.py"
+            current = json.loads((fixture / 'references/system-catalog.json').read_text())['bundle_version']
+            missing_tail = '    "%s",\n)' % current
+            self.assertIn(missing_tail, verifier.read_text())
             verifier.write_text(
                 verifier.read_text(encoding="utf-8").replace(
-                    '    "20.1.0",\n)',
+                    missing_tail,
                     ")",
                     1,
                 ),

@@ -289,6 +289,7 @@ def _write_file(destination, relative, content, mode=0o644):
     try:
         descriptor = os.open(target, flags, mode)
         with os.fdopen(descriptor, "wb", closefd=True) as handle:
+            os.fchmod(handle.fileno(), mode)
             handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())

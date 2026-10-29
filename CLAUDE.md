@@ -3,7 +3,7 @@
 This repository ships a **four-layer marketing operating system**: 112 discipline skills, 8 protocol skills, and 8 command entrypoints. This file is a compact navigation and safety map, not a second handbook. The authoritative topology is [`references/system-catalog.json`](references/system-catalog.json); its generated human view is [`docs/system-architecture.md`](docs/system-architecture.md).
 
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-Current bundle version: `20.1.0` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)).
+Current bundle version: `20.2.0` (see [VERSIONS.md](https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md)).
 <!-- GENERATED:END release-surface:current-bundle -->
 
 ## Start Here
@@ -12,7 +12,7 @@ Current bundle version: `20.1.0` (see [VERSIONS.md](https://github.com/aaron-he-
 - **Full product/install guide:** [`README.md`](README.md)
 - **Typed topology:** [`references/system-catalog.json`](references/system-catalog.json)
 - **Shared execution contract:** [`references/skill-contract.md`](references/skill-contract.md)
-- **Compact non-reducible policy:** [`references/policy-kernel.md`](references/policy-kernel.md)
+- **Non-reducible policy summary:** [`references/policy-kernel.md`](references/policy-kernel.md)
 - **Context architecture and measurements:** [`docs/context-engineering.md`](docs/context-engineering.md)
 - **Distribution/host behavior:** [`docs/distribution.md`](docs/distribution.md), [`docs/agent-compatibility.md`](docs/agent-compatibility.md), and the strict [`Agent Plugins v1 Portable Lite`](docs/agent-plugins-v1.md) projection
 
@@ -88,16 +88,11 @@ The runtime separates three consumers:
 2. **Model context** receives the selected Skill representation, the non-reducible policy representation, declared runtime reads, current route shard, and relevant project evidence.
 3. **Tool context** exposes connector catalogs and implementations only when discovery or invocation requires them.
 
-The typed map is [`references/context-modules.json`](references/context-modules.json). `load_policy` is one of `always`, `activation`, `conditional`, `lookup-only`, or `fallback`.
+The typed map is [`references/context-modules.json`](references/context-modules.json). `load_policy` is one of `always`, `activation`, `conditional`, or `lookup-only`.
 
 ### Skill representations
 
-- **Explicit** is the safe default for unknown or uncertified model/host combinations. It uses the full selected Skill and shared contract.
-- **Balanced** keeps the complete selected Skill and replaces only the repeated shared contract with the policy kernel. **Lean** uses a generated Skill capsule plus that kernel. Both are unavailable for deployment until paired evidence satisfies [`references/prompt-profiles.json`](references/prompt-profiles.json).
-- Evaluation-only compact assemblies are visibly `deployment_eligible: false`; they cannot silently become runtime bindings.
-- A compact-profile failure downgrades to explicit context or stops. It never drops the policy kernel or safety overlays.
-
-Generated capsules live under `references/skill-capsules/` and are controller-verified against the live Skill, machine contract, policy kernel, and index. They are reference artifacts, not additional business Skills.
+**Explicit** is the only supported prompt representation in [`references/prompt-profiles.json`](references/prompt-profiles.json). Shared-root hosts receive the full selected Skill and shared contract; standalone Skills retain their embedded policy and degraded capabilities. Non-explicit requests fail clearly. Retired compact experiments and their old results require their fixed historical runtime; they cannot authorize deployment. Repository-side standalone evaluation remains labeled `deployment_eligible: false`.
 
 ### Runtime reads
 
@@ -119,7 +114,7 @@ Only an exact `### Runtime Reads` block creates a required bundle dependency. Or
 | Change | Authoritative source / required action |
 |---|---|
 | Add, rename, move, or regroup a Skill | Edit [`references/system-catalog.json`](references/system-catalog.json), sync the ten surfaces in [`CONTRIBUTING.md`](CONTRIBUTING.md), update `skills.sh.json`, and regenerate system docs/indexes |
-| Change Skill runtime dependencies | Edit its exact `### Runtime Reads`, then regenerate machine contracts and capsules |
+| Change Skill runtime dependencies | Edit its exact `### Runtime Reads`, then regenerate machine contracts |
 | Change shared policy | Edit [`references/skill-contract.md`](references/skill-contract.md); update the compact kernel only as a faithful projection; rerun safety/eval gates |
 | Change context selection | Update the typed context/request/manifest/module schemas and run context-efficiency plus behavior suites |
 | Add a connector | Follow [`docs/connector-playbook.md`](docs/connector-playbook.md) end to end; keep shipped runtime Python standard-library-only |
@@ -132,7 +127,6 @@ Key checks include:
 ```bash
 python3 scripts/generate-claude-index.py --check
 python3 scripts/generate-skill-contracts.py --check
-python3 scripts/generate-skill-capsules.py --check
 python3 scripts/check-context-budget.py
 python3 scripts/check-context-efficiency.py
 python3 scripts/check-routing.py

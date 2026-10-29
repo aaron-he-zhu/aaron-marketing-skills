@@ -36,6 +36,47 @@ def write_distribution_manifest(path, manifest):
     )
 
 
+class PackageCeilingTrustTests(unittest.TestCase):
+    def test_packaged_claims_cannot_raise_the_frozen_runtime_ceiling(self):
+        frozen = {
+            "lite": {"max_files": 350, "max_bytes": 3_450_000},
+            "pro": {"max_files": 400, "max_bytes": 3_950_000},
+            "governed": {"max_files": 560, "max_bytes": 6_710_000},
+        }
+        self.assertEqual(frozen, assembly.PLUGIN_PACKAGE_CEILINGS)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "references").mkdir()
+            manifest = dict.fromkeys((
+                "schema_version", "kind", "profile", "capability_ceiling", "capabilities",
+                "catalog_sha256", "profile_definition_sha256", "host_profile",
+                "host_capabilities", "host_profile_catalog_sha256",
+                "host_profile_definition_sha256", "routing_surface", "reference_surface",
+                "connector_surface", "routing_sidecar", "package_ceiling", "hash_algorithm",
+                "manifest_path", "manifest_excludes", "source", "files_sha256", "files",
+            ))
+            manifest.update({
+                "schema_version": "1.2", "kind": "plugin",
+                "host_profile": "claude-code-plugin-host", "hash_algorithm": "sha256",
+                "manifest_path": "distribution-manifest.json",
+                "manifest_excludes": ["distribution-manifest.json"],
+            })
+            for profile, original in frozen.items():
+                for field in ("max_files", "max_bytes"):
+                    with self.subTest(profile=profile, field=field):
+                        raised = {**original, field: original[field] + 1}
+                        manifest.update(profile=profile, capability_ceiling=profile,
+                                        package_ceiling=raised)
+                        # Even a matching self-reported authoring catalog grants no new budget.
+                        (root / "references/distribution-files.json").write_text(json.dumps({
+                            "plugin": {"profiles": {profile: {"package_ceiling": raised}}},
+                        }))
+                        write_distribution_manifest(root / "distribution-manifest.json", manifest)
+                        with self.assertRaisesRegex(assembly.ContextAssemblyError,
+                                                    "identity does not authorize"):
+                            assembly._distribution_identity(root, "claude-code-plugin-host")
+
+
 class ContextAssemblyTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -203,72 +244,19 @@ class ContextAssemblyTests(unittest.TestCase):
         )
         self.assertEqual(0, result["usage"]["model_reduction_bytes"])
 
-    def test_host_profile_matrix_keeps_explicit_deployable_and_compact_eval_exact(self):
-        expected_compact_support = {
-            "standalone-skill-host": False,
-            "generic-shared-root-host": True,
-            "claude-code-plugin-host": True,
-        }
-        for host_profile, compact_supported in expected_compact_support.items():
-            with self.subTest(host_profile=host_profile, prompt_profile="explicit"):
-                explicit = self.build_for_host(
-                    host_profile, requested_prompt_profile="explicit"
-                )
-                self.assertEqual(
-                    host_profile != "standalone-skill-host",
-                    explicit["deployment_eligible"],
-                )
-                self.assertEqual(
-                    (host_profile, "explicit"),
-                    (
-                        explicit["profile"]["host_profile"],
-                        explicit["profile"]["prompt_profile"],
-                    ),
-                )
+    def test_host_profile_matrix_keeps_explicit_deployable_and_rejects_retired_profiles(self):
+        for host in assembly.profile_resolver.HOST_PROFILE_ORDER:
+            with self.subTest(host=host):
+                built = self.build_for_host(host)
+                self.assertEqual("explicit", built["profile"]["prompt_profile"])
+                self.assertEqual([], built["replacements"])
+                self.assertEqual(0, built["usage"]["model_reduction_bytes"])
+                for retired in ("balanced", "lean"):
+                    with self.assertRaises(assembly.ContextAssemblyError):
+                        self.build_for_host(host, requested_prompt_profile=retired)
+                    with self.assertRaises(assembly.ContextAssemblyError):
+                        self.build_for_host(host, evaluation_prompt_profile=retired, evaluation_run_id="retired")
 
-            for prompt_profile in ("balanced", "lean"):
-                with self.subTest(
-                    host_profile=host_profile,
-                    prompt_profile=prompt_profile,
-                    mode="evaluation",
-                ):
-                    if compact_supported:
-                        compact = self.build_for_host(
-                            host_profile,
-                            evaluation_prompt_profile=prompt_profile,
-                            evaluation_run_id="matrix-%s-%s"
-                            % (host_profile, prompt_profile),
-                        )
-                        self.assertFalse(compact["deployment_eligible"])
-                        self.assertEqual(
-                            prompt_profile, compact["profile"]["prompt_profile"]
-                        )
-                    else:
-                        with self.assertRaisesRegex(
-                            assembly.ContextAssemblyError,
-                            "cannot authorize a compact prompt profile",
-                        ):
-                            self.build_for_host(
-                                host_profile,
-                                evaluation_prompt_profile=prompt_profile,
-                                evaluation_run_id="matrix-%s-%s"
-                                % (host_profile, prompt_profile),
-                            )
-
-                with self.subTest(
-                    host_profile=host_profile,
-                    prompt_profile=prompt_profile,
-                    mode="deployment",
-                ):
-                    with self.assertRaisesRegex(
-                        assembly.ContextAssemblyError,
-                        ("explicit prompt profile"
-                         if host_profile == "standalone-skill-host"
-                         else "UNCERTIFIED"),
-                    ):
-                        self.build_for_host(
-                            host_profile, requested_prompt_profile=prompt_profile
-                        )
 
     def test_standalone_explicit_embedded_policy_is_counted_once(self):
         result = self.build_for_host(
@@ -319,70 +307,8 @@ class ContextAssemblyTests(unittest.TestCase):
     def test_uncertified_compact_profile_cannot_be_deployed(self):
         with self.assertRaises(assembly.ContextAssemblyError) as raised:
             self.build(requested_prompt_profile="balanced")
-        self.assertIn("UNCERTIFIED", str(raised.exception))
+        self.assertIn("UNSUPPORTED", str(raised.exception))
 
-    def test_balanced_evaluation_keeps_full_skill_and_replaces_only_policy(self):
-        result = self.build(
-            evaluation_prompt_profile="balanced",
-            evaluation_run_id="ablation-001",
-        )
-        self.assertFalse(result["deployment_eligible"])
-        self.assertEqual("ablation-001", result["evaluation_run_id"])
-        self.assertEqual("balanced", result["profile"]["prompt_profile"])
-        self.assertEqual(
-            "evaluation-only-uncertified",
-            result["profile"]["prompt_profile_source"],
-        )
-        model_paths = {item["path"] for item in result["consumers"]["model"]}
-        self.assertIn("references/policy-kernel.md", model_paths)
-        self.assertIn("seo-geo/implement/content-writer/SKILL.md", model_paths)
-        self.assertNotIn(
-            "references/skill-capsules/content-writer.json", model_paths
-        )
-        self.assertNotIn("references/skill-contract.md", model_paths)
-        self.assertEqual(1, len(result["replacements"]))
-        self.assertEqual(
-            "certified-policy-kernel", result["replacements"][0]["reason_code"]
-        )
-        self.assertGreater(result["usage"]["model_reduction_ratio"], 0.20)
-        self.assertLess(result["usage"]["model_reduction_ratio"], 0.55)
-        self.assertGreater(result["usage"]["model_reduction_bytes"], 0)
-
-    def test_lean_evaluation_uses_capsule_kernel_and_distinct_context(self):
-        balanced = self.build(
-            evaluation_prompt_profile="balanced",
-            evaluation_run_id="ablation-balanced-compare",
-        )
-        result = self.build(
-            evaluation_prompt_profile="lean",
-            evaluation_run_id="ablation-lean-001",
-        )
-        self.assertFalse(result["deployment_eligible"])
-        self.assertEqual("lean", result["profile"]["prompt_profile"])
-        self.assertEqual(
-            list(assembly.profile_resolver.ALWAYS_ON_OVERLAYS),
-            result["profile"]["always_on_overlays"],
-        )
-        kernel = next(
-            item for item in result["consumers"]["model"]
-            if item["role"] == "policy-kernel"
-        )
-        self.assertEqual(kernel["bytes"], kernel["body_bytes"])
-        model_paths = {item["path"] for item in result["consumers"]["model"]}
-        self.assertIn("references/skill-capsules/content-writer.json", model_paths)
-        self.assertNotIn("seo-geo/implement/content-writer/SKILL.md", model_paths)
-        self.assertEqual(2, len(result["replacements"]))
-        self.assertGreater(
-            result["usage"]["model_reduction_ratio"],
-            balanced["usage"]["model_reduction_ratio"],
-        )
-        self.assertNotEqual(
-            result["assembly_signature"], balanced["assembly_signature"]
-        )
-
-    def test_evaluation_requires_a_bounded_run_identity(self):
-        with self.assertRaisesRegex(assembly.ContextAssemblyError, "evaluation_run_id"):
-            self.build(evaluation_prompt_profile="balanced")
 
     def test_profile_and_module_catalog_hashes_are_bound(self):
         result = self.build()
@@ -559,7 +485,7 @@ class ContextAssemblyTests(unittest.TestCase):
             "evaluation_run_id": "projection-negative",
         }
         with self.assertRaisesRegex(
-                assembly.ContextAssemblyError, "compact prompt profile"):
+                assembly.ContextAssemblyError, "compact prompt experiments"):
             assembly.build_assembly(
                 self.standalone_manifest,
                 evaluation_prompt_profile="balanced", **common
@@ -713,8 +639,6 @@ class ContextAssemblyTests(unittest.TestCase):
                 host_profile="claude-code-plugin-host",
                 model_id="test/model-1",
                 as_of="2026-08-01T00:00:00Z",
-                evaluation_prompt_profile="balanced",
-                evaluation_run_id="cross-matrix-eval",
                 verify_sources=True,
             )
 
@@ -843,40 +767,6 @@ class ContextAssemblyTests(unittest.TestCase):
         with self.assertRaisesRegex(
                 assembly.ContextAssemblyError, "distribution matrix"):
             assembly.validate_assembly(cross_matrix)
-
-    def test_capsule_source_hash_is_verified_against_manifest_target(self):
-        temporary = tempfile.TemporaryDirectory()
-        self.addCleanup(temporary.cleanup)
-        bundle = Path(temporary.name) / "bundle"
-        shutil.copytree(self.bundle, bundle)
-        project = Path(temporary.name) / "project"
-        project.mkdir()
-        request = planner.build_request(
-            skill="content-writer",
-            run_id="123e4567-e89b-42d3-a456-426614174001",
-            turn_id="turn-tamper",
-            as_of="2026-08-01T00:00:00Z",
-            project_root=project,
-            bundle_root=bundle,
-            distribution_profile="repository",
-        )
-        manifest = planner.resolver.resolve_context(request, bundle, project)
-        capsule_path = bundle / "references/skill-capsules/content-writer.json"
-        capsule = json.loads(capsule_path.read_text(encoding="utf-8"))
-        capsule["identity"]["phase"] = "tampered"
-        capsule_path.write_text(json.dumps(capsule) + "\n", encoding="utf-8")
-        with self.assertRaisesRegex(assembly.ContextAssemblyError, "hash differs"):
-            assembly.build_assembly(
-                manifest,
-                bundle_root=bundle,
-                project_root=project,
-                host_profile="claude-code-plugin-host",
-                model_id="test/model-1",
-                as_of="2026-08-01T00:00:00Z",
-                evaluation_prompt_profile="lean",
-                evaluation_run_id="tamper-eval",
-                verify_sources=True,
-            )
 
 
 if __name__ == "__main__":

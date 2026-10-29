@@ -1,5 +1,5 @@
 {
-  "catalog_version": "20.1.0",
+  "catalog_version": "20.2.0",
   "semantics": {
     "external_validity": "advisory-until-outcome-calibrated",
     "score_states": [
@@ -591,48 +591,6 @@
           "id_width": 1
         }
       },
-      "item_definitions": {
-        "S1": "audience composition, geography, and language match the target within a stated window",
-        "S2": "real-follower rate is at/above the tier x platform x niche benchmark",
-        "S3": "follower growth is organic and stable, with no purchase or spike anomalies",
-        "S4": "typical reach reliability across recent posts is benchmarked, not cherry-picked",
-        "S5": "engagement rate meets the niche median for the creator's tier and platform",
-        "S6": "engagement is authentic, not pod-coordinated or bought",
-        "S7": "repeat audience action (saves/shares/returns) shows durable influence, not campaign conversion",
-        "S8": "brand/category fit and audience-brand overlap are evidenced, independent of any single deal",
-        "S9": "creator reliability, professionalism, and delivery history support the partnership",
-        "S10": "commercial saturation and disclosed category history are transparent and acceptable",
-        "T1": "required FTC/ASA disclosure is present, clear, and conspicuous on sponsored content",
-        "T2": "every material claim in the deliverable is truthful and substantiated",
-        "T3": "no disqualifying brand-safety evidence exists under the declared policy and window",
-        "T4": "disclosure meets platform-specific tool and caption placement requirements",
-        "T5": "prohibited or restricted-category rules for the product are satisfied",
-        "T6": "prior disclosure and compliance history shows no unresolved violations",
-        "T7": "the material connection (gifting/affiliate/paid) is accurately represented to the audience",
-        "T8": "comparative or performance claims carry evidence at the point of claim",
-        "T9": "sensitive-audience, health, financial, and age-gating requirements are met where applicable",
-        "T10": "rights, usage, whitelisting, and exclusivity terms are represented truthfully",
-        "A1": "the hook earns attention within the platform's first-impression window",
-        "A2": "creative quality (production, editing, pacing) meets the platform bar",
-        "A3": "the brand integration feels native to the creator, not bolted-on",
-        "A4": "storytelling and format choice fit the platform's native behavior",
-        "A5": "message accuracy — the brief's key message is conveyed without distortion",
-        "A6": "audience relevance — the content speaks to the target's beliefs and needs",
-        "A7": "the call-to-action is present, clear, and matched to the declared goal",
-        "A8": "on-brand tone, terminology, and visual identity are respected",
-        "A9": "accessibility (captions, alt text, legibility) is handled",
-        "A10": "originality — the piece is not a templated re-run of prior sponsorships",
-        "R1": "measured ROI/ROAS is read against the declared target",
-        "R2": "CPE/CPM/CPA are benchmarked on a normalized window",
-        "R3": "value-for-spend beats the declared alternative-channel baseline",
-        "R4": "KPI attainment versus the pre-registered target is reported",
-        "R5": "conversions and outcomes are attributed with a stated method and rigor",
-        "R6": "incremental impact is separated from baseline where measurable",
-        "R7": "creator-mix and channel choices fit the goal (orchestration, knowable at plan time)",
-        "R8": "budget split and timing across creators and phases are justified",
-        "R9": "the deliverable schedule and cadence match the campaign window",
-        "R10": "the measurement plan (UTMs, codes, controls) is defined before launch"
-      },
       "item_policies": {
         "S2": {
           "veto": true,
@@ -782,28 +740,6 @@
           "id_width": 1
         }
       },
-      "item_definitions": {
-        "R1": "conversion instrumentation verified against an own-data truth set",
-        "R2": "cross-platform attribution deduplicated and windows/currency normalized",
-        "R3": "incremental contribution or profit measured against the declared target/control",
-        "R4": "CAC/CPA and payback satisfy the declared business constraint",
-        "R5": "marginal return is read after conversion lag with uncertainty stated",
-        "O1": "claims and required disclosures are substantiated",
-        "O2": "platform policy and restricted-category requirements are satisfied",
-        "O3": "offer economics, eligibility, terms, and availability are explicit",
-        "O4": "ad-to-landing message and intent match",
-        "O5": "creative hook, format, accessibility, and fatigue state fit the placement",
-        "A1": "brand and placement safety verified from the placement evidence",
-        "A2": "targeting and query/audience intent fit",
-        "A3": "negative keywords, exclusions, and suppression controls are maintained",
-        "A4": "campaign/account structure supports the declared objective without avoidable overlap",
-        "A5": "reach, overlap, and audience saturation are measured",
-        "S1": "budget pacing stays within the declared plan and constraints",
-        "S2": "bid strategy and learning-state changes are governed",
-        "S3": "marginal CPC/CPM/CTR/CVR efficiency is compared on a normalized window",
-        "S4": "frequency and creative decay are separated from audience saturation",
-        "S5": "paid/organic and cross-campaign cannibalization are assessed"
-      },
       "item_policies": {
         "R1": {
           "veto": true,
@@ -915,28 +851,6 @@
           "item_count": 5,
           "id_width": 1
         }
-      },
-      "item_definitions": {
-        "S1": "SPF/DKIM/DMARC alignment verified from DNS and aggregate evidence",
-        "S2": "consent/lawful basis and acquisition provenance are on file",
-        "S3": "inbox placement is measured on a declared provider/seed panel",
-        "S4": "hard-bounce and complaint rates are normalized by cohort/window",
-        "S5": "suppression, hygiene, and sunset controls are active",
-        "E1": "click or downstream action rate is the primary engagement signal",
-        "E2": "open/CTOR is used only with MPP segmentation and an explicit proxy caveat",
-        "E3": "subject, preheader, and body promise match",
-        "E4": "send timing and frequency fit preference and capacity",
-        "E5": "engagement decay and reactivation/sunset logic are measured",
-        "N1": "one-click opt-out works and live suppression tombstones are honored",
-        "N2": "entry, confirmation, and welcome/first-touch logic fit the program",
-        "N3": "applicable lifecycle journeys exist for the declared program type",
-        "N4": "segmentation and progression logic use relevant evidence",
-        "N5": "preference and frequency controls are available where applicable",
-        "D1": "claims, disclosures, and offer terms match the claims ledger",
-        "D2": "the declared outcome truth set is measured: revenue, pipeline, subscription, sponsorship, or another named outcome",
-        "D3": "offer and CTA are clear for the declared program",
-        "D4": "email-to-destination message match holds",
-        "D5": "outcome attribution is reconciled outside provider self-reporting"
       },
       "item_policies": {
         "S1": {

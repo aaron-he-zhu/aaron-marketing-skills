@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.1.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.2.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -94,14 +94,16 @@ Die maßgebliche typisierte Topologie ist [`references/system-catalog.json`](../
 
 Nutze es mit Claude Code, jedem Agent-Skills-kompatiblen Host oder einem einfachen `git clone`:
 
+<!-- GENERATED:BEGIN release-surface:portable-install -->
 | Host | Installation |
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` dann `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ Hosts](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Agent-Plugins-v1-Clients · Portable Lite** | Lade `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz` aus dem [v20.1.0-Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0) herunter, entpacke es und installiere das enthaltene Plugin-Verzeichnis |
+| **Agent-Plugins-v1-Clients · Portable Lite** | Lade `aaron-marketing-skills-20.2.0-agent-plugin-v1-lite.tar.gz` aus dem [v20.2.0-Release](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.2.0) herunter, entpacke es und installiere das enthaltene Plugin-Verzeichnis |
 | **Grok Bot · Hermes Bot Mode (AI Staff)** | 8-Bot-Roster erzeugen: `python3 scripts/generate-bot-projections.py --output <private-dir>` — 7 Spezialisten + `aaron-chief`. Siehe [AI Staff](#ai-staff) |
 | **[SkillHub.cn](https://skillhub.cn) (chinesische Community)** | `skillhub install <frontmatter-slug>` (z. B. `keyword-research`) |
 | **Beliebiger Host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
+<!-- GENERATED:END release-surface:portable-install -->
 
 In Claude Code registriert `marketplace add` nur den Katalog — führe `/plugin install aaron-marketing@aaron` aus (oder wähle es in `/plugin`), um die Skills und Befehle tatsächlich zu aktivieren. Um einen **einzelnen** Skill auf einem generischen Host zu holen: `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research`. Durchstöbere das Bundle in der [skills.sh-Registry](https://skills.sh/aaron-he-zhu/aaron-marketing-skills). Verzeichnisse pro Agent, Frontmatter-Eigenheiten und was außerhalb des Plugins abbaut: [docs/agent-compatibility.md](agent-compatibility.md) (verifiziert 120/120 installierbar, 2026-07).
 
@@ -697,7 +699,7 @@ Live-Endpunkt-Drift wird separat mit dem **manuellen** [`scripts/connectors/smok
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — Authoring-Regeln, die Beitrags-Checkliste und die maßgebliche Liste der 10 Tracking-Oberflächen.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** — Versionen pro Skill + Changelog (aktuelles Bundle: `20.1.0`).
+- **[VERSIONS.md](../VERSIONS.md)** — Versionen pro Skill + Changelog (aktuelles Bundle: `20.2.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — Sicherheits-, Datenschutz- und Community-Richtlinie.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — Agent-seitiger Kontext für dieses Repo.

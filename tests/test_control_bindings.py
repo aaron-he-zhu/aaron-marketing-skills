@@ -166,11 +166,6 @@ class ControlBindingTests(unittest.TestCase):
                 encoding="utf-8"
             )
         )
-        capsule_schema = json.loads(
-            (ROOT / "references/skill-capsule.schema.json").read_text(
-                encoding="utf-8"
-            )
-        )
         expected = generator.CONTROL_REQUIREMENTS
         self.assertEqual(
             expected,
@@ -179,10 +174,6 @@ class ControlBindingTests(unittest.TestCase):
         self.assertEqual(
             expected,
             set(machine_schema["$defs"]["controlRequirement"]["enum"]),
-        )
-        self.assertEqual(
-            expected,
-            set(capsule_schema["$defs"]["controlRequirement"]["enum"]),
         )
 
     def test_first_release_reuses_artifact_validation_without_new_run_events(self):

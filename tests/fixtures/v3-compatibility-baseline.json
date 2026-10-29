@@ -1,0 +1,1207 @@
+{
+  "source_commit": "cac58547bc84ed2af865b68b90c5cfbb79b63978",
+  "skills": [
+    {
+      "name": "narrative-baseline-mapper",
+      "path": "narrative/trace/narrative-baseline-mapper/SKILL.md",
+      "slug": "aaron-narrative-baseline-mapper",
+      "url": "/skills/s/narrative-baseline-mapper"
+    },
+    {
+      "name": "category-narrative-mapper",
+      "path": "narrative/trace/category-narrative-mapper/SKILL.md",
+      "slug": "aaron-category-narrative-mapper",
+      "url": "/skills/s/category-narrative-mapper"
+    },
+    {
+      "name": "audience-belief-mapper",
+      "path": "narrative/trace/audience-belief-mapper/SKILL.md",
+      "slug": "aaron-audience-belief-mapper",
+      "url": "/skills/s/audience-belief-mapper"
+    },
+    {
+      "name": "positioning-truth-tracer",
+      "path": "narrative/trace/positioning-truth-tracer/SKILL.md",
+      "slug": "aaron-positioning-truth-tracer",
+      "url": "/skills/s/positioning-truth-tracer"
+    },
+    {
+      "name": "strategic-narrative-designer",
+      "path": "narrative/architect/strategic-narrative-designer/SKILL.md",
+      "slug": "aaron-strategic-narrative-designer",
+      "url": "/skills/s/strategic-narrative-designer"
+    },
+    {
+      "name": "message-system-architect",
+      "path": "narrative/architect/message-system-architect/SKILL.md",
+      "slug": "aaron-message-system-architect",
+      "url": "/skills/s/message-system-architect"
+    },
+    {
+      "name": "brand-language-codifier",
+      "path": "narrative/architect/brand-language-codifier/SKILL.md",
+      "slug": "aaron-brand-language-codifier",
+      "url": "/skills/s/brand-language-codifier"
+    },
+    {
+      "name": "story-bank-builder",
+      "path": "narrative/architect/story-bank-builder/SKILL.md",
+      "slug": "aaron-story-bank-builder",
+      "url": "/skills/s/story-bank-builder"
+    },
+    {
+      "name": "narrative-cascade-planner",
+      "path": "narrative/land/narrative-cascade-planner/SKILL.md",
+      "slug": "aaron-narrative-cascade-planner",
+      "url": "/skills/s/narrative-cascade-planner"
+    },
+    {
+      "name": "pitch-narrative-builder",
+      "path": "narrative/land/pitch-narrative-builder/SKILL.md",
+      "slug": "aaron-pitch-narrative-builder",
+      "url": "/skills/s/pitch-narrative-builder"
+    },
+    {
+      "name": "narrative-enablement-kit",
+      "path": "narrative/land/narrative-enablement-kit/SKILL.md",
+      "slug": "aaron-narrative-enablement-kit",
+      "url": "/skills/s/narrative-enablement-kit"
+    },
+    {
+      "name": "proof-point-packager",
+      "path": "narrative/land/proof-point-packager/SKILL.md",
+      "slug": "aaron-proof-point-packager",
+      "url": "/skills/s/proof-point-packager"
+    },
+    {
+      "name": "narrative-quality-auditor",
+      "path": "narrative/evaluate/narrative-quality-auditor/SKILL.md",
+      "slug": "aaron-narrative-quality-auditor",
+      "url": "/skills/s/narrative-quality-auditor"
+    },
+    {
+      "name": "message-test-designer",
+      "path": "narrative/evaluate/message-test-designer/SKILL.md",
+      "slug": "aaron-message-test-designer",
+      "url": "/skills/s/message-test-designer"
+    },
+    {
+      "name": "narrative-resonance-monitor",
+      "path": "narrative/evaluate/narrative-resonance-monitor/SKILL.md",
+      "slug": "aaron-narrative-resonance-monitor",
+      "url": "/skills/s/narrative-resonance-monitor"
+    },
+    {
+      "name": "narrative-drift-monitor",
+      "path": "narrative/evaluate/narrative-drift-monitor/SKILL.md",
+      "slug": "aaron-narrative-drift-monitor",
+      "url": "/skills/s/narrative-drift-monitor"
+    },
+    {
+      "name": "keyword-research",
+      "path": "seo-geo/survey/keyword-research/SKILL.md",
+      "slug": "keyword-research",
+      "url": "/skills/s/keyword-research"
+    },
+    {
+      "name": "competitor-analysis",
+      "path": "seo-geo/survey/competitor-analysis/SKILL.md",
+      "slug": "competitor-analysis",
+      "url": "/skills/s/competitor-analysis"
+    },
+    {
+      "name": "serp-analysis",
+      "path": "seo-geo/survey/serp-analysis/SKILL.md",
+      "slug": "serp-analysis",
+      "url": "/skills/s/serp-analysis"
+    },
+    {
+      "name": "content-gap-analysis",
+      "path": "seo-geo/survey/content-gap-analysis/SKILL.md",
+      "slug": "content-gap-analysis",
+      "url": "/skills/s/content-gap-analysis"
+    },
+    {
+      "name": "content-writer",
+      "path": "seo-geo/implement/content-writer/SKILL.md",
+      "slug": "aaron-content-writer",
+      "url": "/skills/s/content-writer"
+    },
+    {
+      "name": "geo-content-optimizer",
+      "path": "seo-geo/implement/geo-content-optimizer/SKILL.md",
+      "slug": "geo-content-optimizer",
+      "url": "/skills/s/geo-content-optimizer"
+    },
+    {
+      "name": "serp-markup-builder",
+      "path": "seo-geo/implement/serp-markup-builder/SKILL.md",
+      "slug": "serp-markup-builder",
+      "url": "/skills/s/serp-markup-builder"
+    },
+    {
+      "name": "page-play-builder",
+      "path": "seo-geo/implement/page-play-builder/SKILL.md",
+      "slug": "page-play-builder",
+      "url": "/skills/s/page-play-builder"
+    },
+    {
+      "name": "content-quality-auditor",
+      "path": "seo-geo/tune/content-quality-auditor/SKILL.md",
+      "slug": "content-quality-auditor",
+      "url": "/skills/s/content-quality-auditor"
+    },
+    {
+      "name": "technical-seo-checker",
+      "path": "seo-geo/tune/technical-seo-checker/SKILL.md",
+      "slug": "technical-seo-checker",
+      "url": "/skills/s/technical-seo-checker"
+    },
+    {
+      "name": "on-page-seo-checker",
+      "path": "seo-geo/tune/on-page-seo-checker/SKILL.md",
+      "slug": "on-page-seo-checker",
+      "url": "/skills/s/on-page-seo-checker"
+    },
+    {
+      "name": "site-structure-optimizer",
+      "path": "seo-geo/tune/site-structure-optimizer/SKILL.md",
+      "slug": "site-structure-optimizer",
+      "url": "/skills/s/site-structure-optimizer"
+    },
+    {
+      "name": "domain-authority-auditor",
+      "path": "seo-geo/evaluate/domain-authority-auditor/SKILL.md",
+      "slug": "domain-authority-auditor",
+      "url": "/skills/s/domain-authority-auditor"
+    },
+    {
+      "name": "rank-tracker",
+      "path": "seo-geo/evaluate/rank-tracker/SKILL.md",
+      "slug": "rank-tracker",
+      "url": "/skills/s/rank-tracker"
+    },
+    {
+      "name": "performance-monitor",
+      "path": "seo-geo/evaluate/performance-monitor/SKILL.md",
+      "slug": "performance-monitor",
+      "url": "/skills/s/performance-monitor"
+    },
+    {
+      "name": "offsite-signal-analyzer",
+      "path": "seo-geo/evaluate/offsite-signal-analyzer/SKILL.md",
+      "slug": "offsite-signal-analyzer",
+      "url": "/skills/s/offsite-signal-analyzer"
+    },
+    {
+      "name": "channel-portfolio-planner",
+      "path": "social/explore/channel-portfolio-planner/SKILL.md",
+      "slug": "aaron-channel-portfolio-planner",
+      "url": "/skills/s/channel-portfolio-planner"
+    },
+    {
+      "name": "voice-dossier-builder",
+      "path": "social/explore/voice-dossier-builder/SKILL.md",
+      "slug": "aaron-voice-dossier-builder",
+      "url": "/skills/s/voice-dossier-builder"
+    },
+    {
+      "name": "platform-norm-profiler",
+      "path": "social/explore/platform-norm-profiler/SKILL.md",
+      "slug": "aaron-platform-norm-profiler",
+      "url": "/skills/s/platform-norm-profiler"
+    },
+    {
+      "name": "participation-warmup-planner",
+      "path": "social/explore/participation-warmup-planner/SKILL.md",
+      "slug": "aaron-participation-warmup-planner",
+      "url": "/skills/s/participation-warmup-planner"
+    },
+    {
+      "name": "social-calendar-builder",
+      "path": "social/craft/social-calendar-builder/SKILL.md",
+      "slug": "aaron-social-calendar-builder",
+      "url": "/skills/s/social-calendar-builder"
+    },
+    {
+      "name": "social-creative-builder",
+      "path": "social/craft/social-creative-builder/SKILL.md",
+      "slug": "aaron-social-creative-builder",
+      "url": "/skills/s/social-creative-builder"
+    },
+    {
+      "name": "short-video-scripter",
+      "path": "social/craft/short-video-scripter/SKILL.md",
+      "slug": "aaron-short-video-scripter",
+      "url": "/skills/s/short-video-scripter"
+    },
+    {
+      "name": "advocacy-program-designer",
+      "path": "social/craft/advocacy-program-designer/SKILL.md",
+      "slug": "aaron-advocacy-program-designer",
+      "url": "/skills/s/advocacy-program-designer"
+    },
+    {
+      "name": "social-quality-auditor",
+      "path": "social/host/social-quality-auditor/SKILL.md",
+      "slug": "aaron-social-quality-auditor",
+      "url": "/skills/s/social-quality-auditor"
+    },
+    {
+      "name": "engagement-inbox-manager",
+      "path": "social/host/engagement-inbox-manager/SKILL.md",
+      "slug": "aaron-engagement-inbox-manager",
+      "url": "/skills/s/engagement-inbox-manager"
+    },
+    {
+      "name": "social-selling-planner",
+      "path": "social/host/social-selling-planner/SKILL.md",
+      "slug": "aaron-social-selling-planner",
+      "url": "/skills/s/social-selling-planner"
+    },
+    {
+      "name": "crisis-response-planner",
+      "path": "social/host/crisis-response-planner/SKILL.md",
+      "slug": "aaron-crisis-response-planner",
+      "url": "/skills/s/crisis-response-planner"
+    },
+    {
+      "name": "social-pulse-monitor",
+      "path": "social/observe/social-pulse-monitor/SKILL.md",
+      "slug": "aaron-social-pulse-monitor",
+      "url": "/skills/s/social-pulse-monitor"
+    },
+    {
+      "name": "share-of-voice-tracker",
+      "path": "social/observe/share-of-voice-tracker/SKILL.md",
+      "slug": "aaron-share-of-voice-tracker",
+      "url": "/skills/s/share-of-voice-tracker"
+    },
+    {
+      "name": "dark-social-attributor",
+      "path": "social/observe/dark-social-attributor/SKILL.md",
+      "slug": "aaron-dark-social-attributor",
+      "url": "/skills/s/dark-social-attributor"
+    },
+    {
+      "name": "social-measurement-loop",
+      "path": "social/observe/social-measurement-loop/SKILL.md",
+      "slug": "aaron-social-measurement-loop",
+      "url": "/skills/s/social-measurement-loop"
+    },
+    {
+      "name": "deliverability-qa",
+      "path": "email/setup/deliverability-qa/SKILL.md",
+      "slug": "aaron-deliverability-qa",
+      "url": "/skills/s/deliverability-qa"
+    },
+    {
+      "name": "list-segment-builder",
+      "path": "email/setup/list-segment-builder/SKILL.md",
+      "slug": "aaron-list-segment-builder",
+      "url": "/skills/s/list-segment-builder"
+    },
+    {
+      "name": "list-growth-designer",
+      "path": "email/setup/list-growth-designer/SKILL.md",
+      "slug": "aaron-list-growth-designer",
+      "url": "/skills/s/list-growth-designer"
+    },
+    {
+      "name": "list-hygiene-monitor",
+      "path": "email/setup/list-hygiene-monitor/SKILL.md",
+      "slug": "aaron-list-hygiene-monitor",
+      "url": "/skills/s/list-hygiene-monitor"
+    },
+    {
+      "name": "email-creative-builder",
+      "path": "email/engage/email-creative-builder/SKILL.md",
+      "slug": "aaron-email-creative-builder",
+      "url": "/skills/s/email-creative-builder"
+    },
+    {
+      "name": "subject-line-lab",
+      "path": "email/engage/subject-line-lab/SKILL.md",
+      "slug": "aaron-subject-line-lab",
+      "url": "/skills/s/subject-line-lab"
+    },
+    {
+      "name": "email-render-builder",
+      "path": "email/engage/email-render-builder/SKILL.md",
+      "slug": "aaron-email-render-builder",
+      "url": "/skills/s/email-render-builder"
+    },
+    {
+      "name": "dynamic-content-personalizer",
+      "path": "email/engage/dynamic-content-personalizer/SKILL.md",
+      "slug": "aaron-dynamic-content-personalizer",
+      "url": "/skills/s/dynamic-content-personalizer"
+    },
+    {
+      "name": "email-sequence-designer",
+      "path": "email/nurture/email-sequence-designer/SKILL.md",
+      "slug": "aaron-email-sequence-designer",
+      "url": "/skills/s/email-sequence-designer"
+    },
+    {
+      "name": "newsletter-monetization-planner",
+      "path": "email/nurture/newsletter-monetization-planner/SKILL.md",
+      "slug": "aaron-newsletter-monetization-planner",
+      "url": "/skills/s/newsletter-monetization-planner"
+    },
+    {
+      "name": "preference-frequency-manager",
+      "path": "email/nurture/preference-frequency-manager/SKILL.md",
+      "slug": "aaron-preference-frequency-manager",
+      "url": "/skills/s/preference-frequency-manager"
+    },
+    {
+      "name": "reactivation-specialist",
+      "path": "email/nurture/reactivation-specialist/SKILL.md",
+      "slug": "aaron-reactivation-specialist",
+      "url": "/skills/s/reactivation-specialist"
+    },
+    {
+      "name": "email-quality-auditor",
+      "path": "email/deliver/email-quality-auditor/SKILL.md",
+      "slug": "aaron-email-quality-auditor",
+      "url": "/skills/s/email-quality-auditor"
+    },
+    {
+      "name": "send-experiment-designer",
+      "path": "email/deliver/send-experiment-designer/SKILL.md",
+      "slug": "aaron-send-experiment-designer",
+      "url": "/skills/s/send-experiment-designer"
+    },
+    {
+      "name": "inbox-placement-monitor",
+      "path": "email/deliver/inbox-placement-monitor/SKILL.md",
+      "slug": "aaron-inbox-placement-monitor",
+      "url": "/skills/s/inbox-placement-monitor"
+    },
+    {
+      "name": "cold-outbound-sequencer",
+      "path": "email/deliver/cold-outbound-sequencer/SKILL.md",
+      "slug": "aaron-cold-outbound-sequencer",
+      "url": "/skills/s/cold-outbound-sequencer"
+    },
+    {
+      "name": "campaign-architect",
+      "path": "ad/research/campaign-architect/SKILL.md",
+      "slug": "aaron-campaign-architect",
+      "url": "/skills/s/campaign-architect"
+    },
+    {
+      "name": "audience-segment-builder",
+      "path": "ad/research/audience-segment-builder/SKILL.md",
+      "slug": "aaron-audience-segment-builder",
+      "url": "/skills/s/audience-segment-builder"
+    },
+    {
+      "name": "search-term-miner",
+      "path": "ad/research/search-term-miner/SKILL.md",
+      "slug": "aaron-search-term-miner",
+      "url": "/skills/s/search-term-miner"
+    },
+    {
+      "name": "product-feed-optimizer",
+      "path": "ad/research/product-feed-optimizer/SKILL.md",
+      "slug": "aaron-product-feed-optimizer",
+      "url": "/skills/s/product-feed-optimizer"
+    },
+    {
+      "name": "ad-creative-builder",
+      "path": "ad/orchestrate/ad-creative-builder/SKILL.md",
+      "slug": "aaron-ad-creative-builder",
+      "url": "/skills/s/ad-creative-builder"
+    },
+    {
+      "name": "ad-test-designer",
+      "path": "ad/orchestrate/ad-test-designer/SKILL.md",
+      "slug": "aaron-ad-test-designer",
+      "url": "/skills/s/ad-test-designer"
+    },
+    {
+      "name": "bid-strategy-planner",
+      "path": "ad/orchestrate/bid-strategy-planner/SKILL.md",
+      "slug": "aaron-bid-strategy-planner",
+      "url": "/skills/s/bid-strategy-planner"
+    },
+    {
+      "name": "landing-experience-checker",
+      "path": "ad/orchestrate/landing-experience-checker/SKILL.md",
+      "slug": "aaron-landing-experience-checker",
+      "url": "/skills/s/landing-experience-checker"
+    },
+    {
+      "name": "ad-account-auditor",
+      "path": "ad/activate/ad-account-auditor/SKILL.md",
+      "slug": "aaron-ad-account-auditor",
+      "url": "/skills/s/ad-account-auditor"
+    },
+    {
+      "name": "conversion-signal-qa",
+      "path": "ad/activate/conversion-signal-qa/SKILL.md",
+      "slug": "aaron-conversion-signal-qa",
+      "url": "/skills/s/conversion-signal-qa"
+    },
+    {
+      "name": "placement-exclusion-manager",
+      "path": "ad/activate/placement-exclusion-manager/SKILL.md",
+      "slug": "aaron-placement-exclusion-manager",
+      "url": "/skills/s/placement-exclusion-manager"
+    },
+    {
+      "name": "conversion-value-mapper",
+      "path": "ad/activate/conversion-value-mapper/SKILL.md",
+      "slug": "aaron-conversion-value-mapper",
+      "url": "/skills/s/conversion-value-mapper"
+    },
+    {
+      "name": "paid-measurement-loop",
+      "path": "ad/scale/paid-measurement-loop/SKILL.md",
+      "slug": "aaron-paid-measurement-loop",
+      "url": "/skills/s/paid-measurement-loop"
+    },
+    {
+      "name": "attribution-reconciler",
+      "path": "ad/scale/attribution-reconciler/SKILL.md",
+      "slug": "aaron-attribution-reconciler",
+      "url": "/skills/s/attribution-reconciler"
+    },
+    {
+      "name": "budget-pacing-monitor",
+      "path": "ad/scale/budget-pacing-monitor/SKILL.md",
+      "slug": "aaron-budget-pacing-monitor",
+      "url": "/skills/s/budget-pacing-monitor"
+    },
+    {
+      "name": "fatigue-frequency-manager",
+      "path": "ad/scale/fatigue-frequency-manager/SKILL.md",
+      "slug": "aaron-fatigue-frequency-manager",
+      "url": "/skills/s/fatigue-frequency-manager"
+    },
+    {
+      "name": "audience-mapper",
+      "path": "influencer/scout/audience-mapper/SKILL.md",
+      "slug": "audience-mapper",
+      "url": "/skills/s/audience-mapper"
+    },
+    {
+      "name": "trend-spotter",
+      "path": "influencer/scout/trend-spotter/SKILL.md",
+      "slug": "trend-spotter",
+      "url": "/skills/s/trend-spotter"
+    },
+    {
+      "name": "influencer-discovery",
+      "path": "influencer/scout/influencer-discovery/SKILL.md",
+      "slug": "influencer-discovery",
+      "url": "/skills/s/influencer-discovery"
+    },
+    {
+      "name": "fit-scorer",
+      "path": "influencer/scout/fit-scorer/SKILL.md",
+      "slug": "fit-scorer",
+      "url": "/skills/s/fit-scorer"
+    },
+    {
+      "name": "competitor-tracker",
+      "path": "influencer/target/competitor-tracker/SKILL.md",
+      "slug": "aaron-competitor-tracker",
+      "url": "/skills/s/competitor-tracker"
+    },
+    {
+      "name": "campaign-planner",
+      "path": "influencer/target/campaign-planner/SKILL.md",
+      "slug": "aaron-campaign-planner",
+      "url": "/skills/s/campaign-planner"
+    },
+    {
+      "name": "brief-generator",
+      "path": "influencer/target/brief-generator/SKILL.md",
+      "slug": "brief-generator",
+      "url": "/skills/s/brief-generator"
+    },
+    {
+      "name": "budget-optimizer",
+      "path": "influencer/target/budget-optimizer/SKILL.md",
+      "slug": "budget-optimizer",
+      "url": "/skills/s/budget-optimizer"
+    },
+    {
+      "name": "outreach-manager",
+      "path": "influencer/activate/outreach-manager/SKILL.md",
+      "slug": "outreach-manager",
+      "url": "/skills/s/outreach-manager"
+    },
+    {
+      "name": "creator-content-auditor",
+      "path": "influencer/activate/creator-content-auditor/SKILL.md",
+      "slug": "creator-content-auditor",
+      "url": "/skills/s/creator-content-auditor"
+    },
+    {
+      "name": "contract-helper",
+      "path": "influencer/activate/contract-helper/SKILL.md",
+      "slug": "contract-helper",
+      "url": "/skills/s/contract-helper"
+    },
+    {
+      "name": "content-amplifier",
+      "path": "influencer/activate/content-amplifier/SKILL.md",
+      "slug": "content-amplifier",
+      "url": "/skills/s/content-amplifier"
+    },
+    {
+      "name": "landing-optimizer",
+      "path": "influencer/report/landing-optimizer/SKILL.md",
+      "slug": "landing-optimizer",
+      "url": "/skills/s/landing-optimizer"
+    },
+    {
+      "name": "performance-analyzer",
+      "path": "influencer/report/performance-analyzer/SKILL.md",
+      "slug": "performance-analyzer",
+      "url": "/skills/s/performance-analyzer"
+    },
+    {
+      "name": "roi-calculator",
+      "path": "influencer/report/roi-calculator/SKILL.md",
+      "slug": "aaron-roi-calculator",
+      "url": "/skills/s/roi-calculator"
+    },
+    {
+      "name": "report-generator",
+      "path": "influencer/report/report-generator/SKILL.md",
+      "slug": "aaron-report-generator",
+      "url": "/skills/s/report-generator"
+    },
+    {
+      "name": "positioning-mapper",
+      "path": "launch/research/positioning-mapper/SKILL.md",
+      "slug": "aaron-positioning-mapper",
+      "url": "/skills/s/positioning-mapper"
+    },
+    {
+      "name": "launch-tier-planner",
+      "path": "launch/research/launch-tier-planner/SKILL.md",
+      "slug": "aaron-launch-tier-planner",
+      "url": "/skills/s/launch-tier-planner"
+    },
+    {
+      "name": "launch-window-planner",
+      "path": "launch/research/launch-window-planner/SKILL.md",
+      "slug": "aaron-launch-window-planner",
+      "url": "/skills/s/launch-window-planner"
+    },
+    {
+      "name": "early-access-designer",
+      "path": "launch/research/early-access-designer/SKILL.md",
+      "slug": "aaron-early-access-designer",
+      "url": "/skills/s/early-access-designer"
+    },
+    {
+      "name": "message-house-builder",
+      "path": "launch/assemble/message-house-builder/SKILL.md",
+      "slug": "aaron-message-house-builder",
+      "url": "/skills/s/message-house-builder"
+    },
+    {
+      "name": "launch-asset-packager",
+      "path": "launch/assemble/launch-asset-packager/SKILL.md",
+      "slug": "aaron-launch-asset-packager",
+      "url": "/skills/s/launch-asset-packager"
+    },
+    {
+      "name": "pricing-packaging-planner",
+      "path": "launch/assemble/pricing-packaging-planner/SKILL.md",
+      "slug": "aaron-pricing-packaging-planner",
+      "url": "/skills/s/pricing-packaging-planner"
+    },
+    {
+      "name": "sales-enablement-kit",
+      "path": "launch/assemble/sales-enablement-kit/SKILL.md",
+      "slug": "aaron-sales-enablement-kit",
+      "url": "/skills/s/sales-enablement-kit"
+    },
+    {
+      "name": "launch-readiness-auditor",
+      "path": "launch/mobilize/launch-readiness-auditor/SKILL.md",
+      "slug": "aaron-launch-readiness-auditor",
+      "url": "/skills/s/launch-readiness-auditor"
+    },
+    {
+      "name": "launch-day-conductor",
+      "path": "launch/mobilize/launch-day-conductor/SKILL.md",
+      "slug": "aaron-launch-day-conductor",
+      "url": "/skills/s/launch-day-conductor"
+    },
+    {
+      "name": "community-launch-runner",
+      "path": "launch/mobilize/community-launch-runner/SKILL.md",
+      "slug": "aaron-community-launch-runner",
+      "url": "/skills/s/community-launch-runner"
+    },
+    {
+      "name": "press-media-relations",
+      "path": "launch/mobilize/press-media-relations/SKILL.md",
+      "slug": "aaron-press-media-relations",
+      "url": "/skills/s/press-media-relations"
+    },
+    {
+      "name": "launch-monitor",
+      "path": "launch/prove/launch-monitor/SKILL.md",
+      "slug": "aaron-launch-monitor",
+      "url": "/skills/s/launch-monitor"
+    },
+    {
+      "name": "launch-feedback-synthesizer",
+      "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
+      "slug": "aaron-launch-feedback-synthesizer",
+      "url": "/skills/s/launch-feedback-synthesizer"
+    },
+    {
+      "name": "launch-retro-analyzer",
+      "path": "launch/prove/launch-retro-analyzer/SKILL.md",
+      "slug": "aaron-launch-retro-analyzer",
+      "url": "/skills/s/launch-retro-analyzer"
+    },
+    {
+      "name": "momentum-planner",
+      "path": "launch/prove/momentum-planner/SKILL.md",
+      "slug": "aaron-momentum-planner",
+      "url": "/skills/s/momentum-planner"
+    },
+    {
+      "name": "entity-registry",
+      "path": "protocol/entity-registry/SKILL.md",
+      "slug": "entity-registry",
+      "url": "/skills/s/entity-registry"
+    },
+    {
+      "name": "creator-registry",
+      "path": "protocol/creator-registry/SKILL.md",
+      "slug": "aaron-creator-registry",
+      "url": "/skills/s/creator-registry"
+    },
+    {
+      "name": "offer-claims-registry",
+      "path": "protocol/offer-claims-registry/SKILL.md",
+      "slug": "aaron-offer-claims-registry",
+      "url": "/skills/s/offer-claims-registry"
+    },
+    {
+      "name": "consent-registry",
+      "path": "protocol/consent-registry/SKILL.md",
+      "slug": "aaron-consent-registry",
+      "url": "/skills/s/consent-registry"
+    },
+    {
+      "name": "launch-registry",
+      "path": "protocol/launch-registry/SKILL.md",
+      "slug": "aaron-launch-registry",
+      "url": "/skills/s/launch-registry"
+    },
+    {
+      "name": "channel-registry",
+      "path": "protocol/channel-registry/SKILL.md",
+      "slug": "aaron-channel-registry",
+      "url": "/skills/s/channel-registry"
+    },
+    {
+      "name": "narrative-registry",
+      "path": "protocol/narrative-registry/SKILL.md",
+      "slug": "aaron-narrative-registry",
+      "url": "/skills/s/narrative-registry"
+    },
+    {
+      "name": "memory-management",
+      "path": "protocol/memory-management/SKILL.md",
+      "slug": "memory-management",
+      "url": "/skills/s/memory-management"
+    }
+  ],
+  "semantics": {
+    "external_validity": "advisory-until-outcome-calibrated",
+    "score_states": [
+      "pass",
+      "partial",
+      "fail",
+      "unknown",
+      "na"
+    ],
+    "item_points": {
+      "pass": 10,
+      "partial": 5,
+      "fail": 0
+    },
+    "evidence_types": {
+      "measured": 1.0,
+      "user-provided": 0.8,
+      "calculated": 0.8,
+      "estimated": 0.5,
+      "proxy": 0.4
+    },
+    "confidence_factors": {
+      "high": 1.0,
+      "medium": 0.75,
+      "low": 0.5
+    },
+    "required_coverage": 100,
+    "missingness": {
+      "unknown": "applicable but not observed; prevents a comparable total score",
+      "na": "genuinely inapplicable under an item policy; requires a reason and is excluded",
+      "missing": "treated as unknown, never as partial or fail"
+    },
+    "rounding": "floor",
+    "veto_ceiling": 59,
+    "multi_veto": {
+      "minimum": 2,
+      "verdict": "BLOCK",
+      "emit_final_score": false
+    },
+    "bands": [
+      {
+        "name": "Excellent",
+        "minimum": 90,
+        "maximum": 100
+      },
+      {
+        "name": "Good",
+        "minimum": 75,
+        "maximum": 89
+      },
+      {
+        "name": "Medium",
+        "minimum": 60,
+        "maximum": 74
+      },
+      {
+        "name": "Low",
+        "minimum": 40,
+        "maximum": 59
+      },
+      {
+        "name": "Poor",
+        "minimum": 0,
+        "maximum": 39
+      }
+    ]
+  },
+  "frameworks": {
+    "CORE-EEAT": {
+      "item_ids": [
+        "CORE-EEAT-C01",
+        "CORE-EEAT-C02",
+        "CORE-EEAT-C03",
+        "CORE-EEAT-C04",
+        "CORE-EEAT-C05",
+        "CORE-EEAT-C06",
+        "CORE-EEAT-C07",
+        "CORE-EEAT-C08",
+        "CORE-EEAT-C09",
+        "CORE-EEAT-C10",
+        "CORE-EEAT-O01",
+        "CORE-EEAT-O02",
+        "CORE-EEAT-O03",
+        "CORE-EEAT-O04",
+        "CORE-EEAT-O05",
+        "CORE-EEAT-O06",
+        "CORE-EEAT-O07",
+        "CORE-EEAT-O08",
+        "CORE-EEAT-O09",
+        "CORE-EEAT-O10",
+        "CORE-EEAT-R01",
+        "CORE-EEAT-R02",
+        "CORE-EEAT-R03",
+        "CORE-EEAT-R04",
+        "CORE-EEAT-R05",
+        "CORE-EEAT-R06",
+        "CORE-EEAT-R07",
+        "CORE-EEAT-R08",
+        "CORE-EEAT-R09",
+        "CORE-EEAT-R10",
+        "CORE-EEAT-E01",
+        "CORE-EEAT-E02",
+        "CORE-EEAT-E03",
+        "CORE-EEAT-E04",
+        "CORE-EEAT-E05",
+        "CORE-EEAT-E06",
+        "CORE-EEAT-E07",
+        "CORE-EEAT-E08",
+        "CORE-EEAT-E09",
+        "CORE-EEAT-E10",
+        "CORE-EEAT-Exp01",
+        "CORE-EEAT-Exp02",
+        "CORE-EEAT-Exp03",
+        "CORE-EEAT-Exp04",
+        "CORE-EEAT-Exp05",
+        "CORE-EEAT-Exp06",
+        "CORE-EEAT-Exp07",
+        "CORE-EEAT-Exp08",
+        "CORE-EEAT-Exp09",
+        "CORE-EEAT-Exp10",
+        "CORE-EEAT-Ept01",
+        "CORE-EEAT-Ept02",
+        "CORE-EEAT-Ept03",
+        "CORE-EEAT-Ept04",
+        "CORE-EEAT-Ept05",
+        "CORE-EEAT-Ept06",
+        "CORE-EEAT-Ept07",
+        "CORE-EEAT-Ept08",
+        "CORE-EEAT-Ept09",
+        "CORE-EEAT-Ept10",
+        "CORE-EEAT-A01",
+        "CORE-EEAT-A02",
+        "CORE-EEAT-A03",
+        "CORE-EEAT-A04",
+        "CORE-EEAT-A05",
+        "CORE-EEAT-A06",
+        "CORE-EEAT-A07",
+        "CORE-EEAT-A08",
+        "CORE-EEAT-A09",
+        "CORE-EEAT-A10",
+        "CORE-EEAT-T01",
+        "CORE-EEAT-T02",
+        "CORE-EEAT-T03",
+        "CORE-EEAT-T04",
+        "CORE-EEAT-T05",
+        "CORE-EEAT-T06",
+        "CORE-EEAT-T07",
+        "CORE-EEAT-T08",
+        "CORE-EEAT-T09",
+        "CORE-EEAT-T10"
+      ],
+      "profiles": [
+        "product-review",
+        "how-to-guide",
+        "comparison",
+        "landing-page",
+        "blog-post",
+        "faq-page",
+        "alternative",
+        "best-of",
+        "testimonial"
+      ],
+      "policy_sha256": "11c0425f671c23ab11508a4ba58605969efd0e3ac981cf9d31d105720509ad19"
+    },
+    "CITE": {
+      "item_ids": [
+        "CITE-C01",
+        "CITE-C02",
+        "CITE-C03",
+        "CITE-C04",
+        "CITE-C05",
+        "CITE-C06",
+        "CITE-C07",
+        "CITE-C08",
+        "CITE-C09",
+        "CITE-C10",
+        "CITE-I01",
+        "CITE-I02",
+        "CITE-I03",
+        "CITE-I04",
+        "CITE-I05",
+        "CITE-I06",
+        "CITE-I07",
+        "CITE-I08",
+        "CITE-I09",
+        "CITE-I10",
+        "CITE-T01",
+        "CITE-T02",
+        "CITE-T03",
+        "CITE-T04",
+        "CITE-T05",
+        "CITE-T06",
+        "CITE-T07",
+        "CITE-T08",
+        "CITE-T09",
+        "CITE-T10",
+        "CITE-E01",
+        "CITE-E02",
+        "CITE-E03",
+        "CITE-E04",
+        "CITE-E05",
+        "CITE-E06",
+        "CITE-E07",
+        "CITE-E08",
+        "CITE-E09",
+        "CITE-E10"
+      ],
+      "profiles": [
+        "default",
+        "content-publisher",
+        "product-service",
+        "ecommerce",
+        "community-ugc",
+        "tool-utility",
+        "authority-institutional"
+      ],
+      "policy_sha256": "57c169ea4464bfa096502d992ac72df8619354168f85833c109173318d7e079e"
+    },
+    "STAR": {
+      "item_ids": [
+        "STAR-S1",
+        "STAR-S2",
+        "STAR-S3",
+        "STAR-S4",
+        "STAR-S5",
+        "STAR-S6",
+        "STAR-S7",
+        "STAR-S8",
+        "STAR-S9",
+        "STAR-S10",
+        "STAR-T1",
+        "STAR-T2",
+        "STAR-T3",
+        "STAR-T4",
+        "STAR-T5",
+        "STAR-T6",
+        "STAR-T7",
+        "STAR-T8",
+        "STAR-T9",
+        "STAR-T10",
+        "STAR-A1",
+        "STAR-A2",
+        "STAR-A3",
+        "STAR-A4",
+        "STAR-A5",
+        "STAR-A6",
+        "STAR-A7",
+        "STAR-A8",
+        "STAR-A9",
+        "STAR-A10",
+        "STAR-R1",
+        "STAR-R2",
+        "STAR-R3",
+        "STAR-R4",
+        "STAR-R5",
+        "STAR-R6",
+        "STAR-R7",
+        "STAR-R8",
+        "STAR-R9",
+        "STAR-R10"
+      ],
+      "profiles": [
+        "awareness",
+        "engagement",
+        "conversion",
+        "brand-building"
+      ],
+      "policy_sha256": "bf2b458967ebd50c95bf817d321a5cdf38335ee0884fada54b9834e195b6dc26"
+    },
+    "ROAS": {
+      "item_ids": [
+        "ROAS-R1",
+        "ROAS-R2",
+        "ROAS-R3",
+        "ROAS-R4",
+        "ROAS-R5",
+        "ROAS-O1",
+        "ROAS-O2",
+        "ROAS-O3",
+        "ROAS-O4",
+        "ROAS-O5",
+        "ROAS-A1",
+        "ROAS-A2",
+        "ROAS-A3",
+        "ROAS-A4",
+        "ROAS-A5",
+        "ROAS-S1",
+        "ROAS-S2",
+        "ROAS-S3",
+        "ROAS-S4",
+        "ROAS-S5"
+      ],
+      "profiles": [
+        "direct-response",
+        "prospecting",
+        "incremental-profit"
+      ],
+      "policy_sha256": "a5adfecb7ac5e7186d49dc674fb35783b0bbee74278bd1c97269813fa6813e94"
+    },
+    "SEND": {
+      "item_ids": [
+        "SEND-S1",
+        "SEND-S2",
+        "SEND-S3",
+        "SEND-S4",
+        "SEND-S5",
+        "SEND-E1",
+        "SEND-E2",
+        "SEND-E3",
+        "SEND-E4",
+        "SEND-E5",
+        "SEND-N1",
+        "SEND-N2",
+        "SEND-N3",
+        "SEND-N4",
+        "SEND-N5",
+        "SEND-D1",
+        "SEND-D2",
+        "SEND-D3",
+        "SEND-D4",
+        "SEND-D5"
+      ],
+      "profiles": [
+        "promotional",
+        "retention",
+        "cold-outbound",
+        "newsletter"
+      ],
+      "policy_sha256": "93108024eb3b049760b024ecd6a9c02826ef157990f1c820e89adc8cf053df36"
+    },
+    "RAMP": {
+      "item_ids": [
+        "RAMP-R1",
+        "RAMP-R2",
+        "RAMP-R3",
+        "RAMP-R4",
+        "RAMP-R5",
+        "RAMP-R6",
+        "RAMP-R7",
+        "RAMP-R8",
+        "RAMP-R9",
+        "RAMP-R10",
+        "RAMP-A1",
+        "RAMP-A2",
+        "RAMP-A3",
+        "RAMP-A4",
+        "RAMP-A5",
+        "RAMP-A6",
+        "RAMP-A7",
+        "RAMP-A8",
+        "RAMP-A9",
+        "RAMP-A10",
+        "RAMP-M1",
+        "RAMP-M2",
+        "RAMP-M3",
+        "RAMP-M4",
+        "RAMP-M5",
+        "RAMP-M6",
+        "RAMP-M7",
+        "RAMP-M8",
+        "RAMP-M9",
+        "RAMP-M10",
+        "RAMP-P1",
+        "RAMP-P2",
+        "RAMP-P3",
+        "RAMP-P4",
+        "RAMP-P5",
+        "RAMP-P6",
+        "RAMP-P7",
+        "RAMP-P8",
+        "RAMP-P9",
+        "RAMP-P10"
+      ],
+      "profiles": [
+        "preflight",
+        "execution",
+        "outcome"
+      ],
+      "policy_sha256": "48558b8836306635b22d9fbd81afca5495fc2c1b050e9c2b50b0a3d5d73b4bca"
+    },
+    "ECHO": {
+      "item_ids": [
+        "ECHO-E1",
+        "ECHO-E2",
+        "ECHO-E3",
+        "ECHO-E4",
+        "ECHO-E5",
+        "ECHO-E6",
+        "ECHO-E7",
+        "ECHO-E8",
+        "ECHO-E9",
+        "ECHO-E10",
+        "ECHO-C1",
+        "ECHO-C2",
+        "ECHO-C3",
+        "ECHO-C4",
+        "ECHO-C5",
+        "ECHO-C6",
+        "ECHO-C7",
+        "ECHO-C8",
+        "ECHO-C9",
+        "ECHO-C10",
+        "ECHO-H1",
+        "ECHO-H2",
+        "ECHO-H3",
+        "ECHO-H4",
+        "ECHO-H5",
+        "ECHO-H6",
+        "ECHO-H7",
+        "ECHO-H8",
+        "ECHO-H9",
+        "ECHO-H10",
+        "ECHO-O1",
+        "ECHO-O2",
+        "ECHO-O3",
+        "ECHO-O4",
+        "ECHO-O5",
+        "ECHO-O6",
+        "ECHO-O7",
+        "ECHO-O8",
+        "ECHO-O9",
+        "ECHO-O10"
+      ],
+      "profiles": [
+        "asset-gate",
+        "program-maturity-community",
+        "program-maturity-b2c",
+        "program-maturity-founder"
+      ],
+      "policy_sha256": "78c6fd28dda90f73e7edfafd97b27468a242540d35f0898dc3a7eca21a0cbd16"
+    },
+    "TALE": {
+      "item_ids": [
+        "TALE-T1",
+        "TALE-T2",
+        "TALE-T3",
+        "TALE-T4",
+        "TALE-T5",
+        "TALE-T6",
+        "TALE-T7",
+        "TALE-T8",
+        "TALE-T9",
+        "TALE-T10",
+        "TALE-A1",
+        "TALE-A2",
+        "TALE-A3",
+        "TALE-A4",
+        "TALE-A5",
+        "TALE-A6",
+        "TALE-A7",
+        "TALE-A8",
+        "TALE-A9",
+        "TALE-A10",
+        "TALE-L1",
+        "TALE-L2",
+        "TALE-L3",
+        "TALE-L4",
+        "TALE-L5",
+        "TALE-L6",
+        "TALE-L7",
+        "TALE-L8",
+        "TALE-L9",
+        "TALE-L10",
+        "TALE-E1",
+        "TALE-E2",
+        "TALE-E3",
+        "TALE-E4",
+        "TALE-E5",
+        "TALE-E6",
+        "TALE-E7",
+        "TALE-E8",
+        "TALE-E9",
+        "TALE-E10"
+      ],
+      "profiles": [
+        "truth",
+        "system",
+        "effectiveness"
+      ],
+      "policy_sha256": "8a658e5e23a5d2429539552ca951281d0b5f09331bc8bae5d8f07f4c2b1994c1"
+    }
+  }
+}

@@ -35,11 +35,6 @@ class ContextProfileResolverTests(unittest.TestCase):
             ROOT / "references/skill-contracts/index.json",
             references / "skill-contracts/index.json",
         )
-        (references / "skill-capsules").mkdir()
-        shutil.copy2(
-            ROOT / "references/skill-capsules/index.json",
-            references / "skill-capsules/index.json",
-        )
         (root / "scripts").mkdir()
         shutil.copy2(
             ROOT / "scripts/context-assembly.py",
@@ -47,118 +42,6 @@ class ContextProfileResolverTests(unittest.TestCase):
         )
         return temporary, root
 
-    def _add_binding(self, root):
-        catalog_path = root / "references" / "prompt-profiles.json"
-        catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
-        gates = {
-            key: True for key in (
-                "minimum_cases", "minimum_repeats", "minimum_coverage_strata",
-                "complete_pairs", "real_execution", "real_case_evidence",
-                "immutable_model_identity", "immutable_judge_identity",
-                "adapter_provenance",
-                "assembly_source_equivalence", "minimum_candidate_reduction",
-                "same_invariants", "current_age", "routing_noninferior",
-                "minimum_control_routing_accuracy",
-                "minimum_candidate_routing_accuracy",
-                "minimum_control_quality_pass_rate",
-                "minimum_candidate_quality_pass_rate",
-                "quality_noninferior", "zero_safety_regressions",
-                "zero_candidate_safety_failures",
-            )
-        }
-        certificate = {
-            "$schema": "../prompt-profile-release-certificate.schema.json",
-            "schema_version": "1.0",
-            "kind": "prompt-profile-release-certificate",
-            "protocol_version": "3.0",
-            "certificate_id": "certificate:test-only-fixture",
-            "paired_evidence": {
-                "evidence_id": "test-only-fixture",
-                "sha256": "1" * 64,
-                "arm_run_set_sha256": "7" * 64,
-            },
-            "distribution_profile": "governed",
-            "host": {
-                "host_profile": "claude-code-plugin-host",
-                "host_name": "fixture-host",
-                "host_version": "fixture-host-1",
-            },
-            "model": {
-                "provider": "fixture-provider",
-                "model_id": "test/model-1",
-                "judge_model_id": "test/judge-1",
-                "model_revision": "immutable-snapshot-2026-08-01",
-                "judge_provider": "fixture-provider",
-                "judge_model_revision": "immutable-judge-snapshot-2026-08-01",
-            },
-            "profiles": {"control": "explicit", "candidate": "balanced"},
-            "catalogs": {
-                **{
-                    key: hashlib.sha256((root / relative).read_bytes()).hexdigest()
-                    for key, relative in MODULE.PACKAGE_CATALOG_PATHS.items()
-                },
-                "prompt_policy_sha256": MODULE._prompt_policy_sha256(catalog),
-                "skill_contract_index_sha256": hashlib.sha256(
-                    (root / "references/skill-contracts/index.json").read_bytes()
-                ).hexdigest(),
-                "behavior_protocol_base_sha256": "3" * 64,
-                "behavior_protocol_sha256": "4" * 64,
-                "behavior_adapter_sha256": "5" * 64,
-                "eval_case_runtime_sha256": "6" * 64,
-            },
-            "policy_snapshot_sha256": hashlib.sha256(
-                MODULE._canonical_json(catalog["certification_policy"]).encode()
-            ).hexdigest(),
-            "evaluated_at": "2026-08-01T00:02:00Z",
-            "expires_at": "2026-10-30T00:02:00Z",
-            "aggregate": {
-                "case_count": 40, "pair_count": 120,
-                "coverage_stratum_count": 8, "repeats": 3,
-                "arm_run_set_sha256": "7" * 64,
-                "advisories": {
-                    "paired_model_body_above_target_maximum": 0,
-                    "harness_only_above_target_maximum": 0,
-                    "provider_telemetry_incomplete": True,
-                },
-                "evidence_scope": "context-bytes-and-behavior",
-                "gates": gates,
-            },
-            "decision": {
-                "valid": True, "reasons": [],
-                "evidence_scope": "context-bytes-and-behavior",
-                "token_savings_claims_permitted": False,
-                "cost_savings_claims_permitted": False,
-            },
-            "promotion": {
-                "verifier_ref": "scripts/verify-prompt-profile-release.py",
-                "verifier_sha256": "2" * 64,
-                "promoted_at": "2026-08-02T00:00:00Z",
-            },
-        }
-        evidence = (
-            json.dumps(certificate, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
-        ).encode("utf-8")
-        evidence_ref = Path("references/prompt-profile-evidence/test-balanced.json")
-        evidence_path = root / evidence_ref
-        evidence_path.parent.mkdir()
-        evidence_path.write_bytes(evidence)
-        catalog["certified_bindings"] = [{
-            "binding_id": "test-balanced",
-            "distribution_profile": "governed",
-            "host_profile": "claude-code-plugin-host",
-            "model_id": "test/model-1",
-            "model_revision": "immutable-snapshot-2026-08-01",
-            "prompt_profile": "balanced",
-            "evidence_ref": evidence_ref.as_posix(),
-            "evidence_sha256": hashlib.sha256(evidence).hexdigest(),
-            "certified_at": certificate["evaluated_at"],
-            "expires_at": certificate["expires_at"],
-        }]
-        catalog_path.write_text(
-            json.dumps(catalog, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
-        return evidence_path
 
     def test_catalogs_validate_and_keep_safety_overlays_invariant(self):
         host, unused = MODULE.load_host_catalog(ROOT)
@@ -167,8 +50,8 @@ class ContextProfileResolverTests(unittest.TestCase):
         self.assertEqual(list(MODULE.HOST_PROFILE_ORDER), host["profile_order"])
         self.assertEqual(list(MODULE.PROMPT_PROFILE_ORDER), prompt["profile_order"])
         self.assertEqual(list(MODULE.ALWAYS_ON_OVERLAYS), prompt["always_on_overlays"])
-        self.assertTrue(prompt["profiles"]["balanced"]["requires_certification"])
-        self.assertTrue(prompt["profiles"]["lean"]["requires_certification"])
+        self.assertEqual(["explicit"], prompt["profile_order"])
+        self.assertNotIn("certified_bindings", prompt)
         self.assertGreaterEqual(len(modules["modules"]), 12)
 
     def test_unknown_host_falls_back_only_when_auto_was_requested(self):
@@ -200,7 +83,7 @@ class ContextProfileResolverTests(unittest.TestCase):
                 requested_prompt_profile="balanced",
                 as_of="2026-08-01T00:00:00Z",
             )
-        self.assertEqual("CONTEXT_PROMPT_PROFILE_UNCERTIFIED", raised.exception.code)
+        self.assertEqual("CONTEXT_PROMPT_PROFILE_UNSUPPORTED", raised.exception.code)
 
     def test_host_profile_matrix_selects_exact_explicit_policy_representation(self):
         expected_policy = {
@@ -250,20 +133,10 @@ class ContextProfileResolverTests(unittest.TestCase):
                             as_of="2026-08-01T00:00:00Z",
                         )
                     self.assertEqual(
-                        "CONTEXT_PROMPT_PROFILE_UNCERTIFIED",
+                        "CONTEXT_PROMPT_PROFILE_UNSUPPORTED",
                         raised.exception.code,
                     )
 
-    def test_self_consistent_hand_forged_certificate_is_not_authoritative(self):
-        """Package-local hashes cannot promote a compact production profile."""
-        temporary, root = self._bundle_copy()
-        self.addCleanup(temporary.cleanup)
-        self._add_binding(root)
-        host, unused = MODULE.load_host_catalog(root)
-        with self.assertRaises(MODULE.ContextProfileError) as raised:
-            MODULE.load_prompt_catalog(root, host)
-        self.assertEqual("CONTEXT_PROFILE_DOCUMENT_INVALID", raised.exception.code)
-        self.assertIn("signed release-attestation", str(raised.exception))
 
     def test_host_capabilities_are_monotonic(self):
         temporary, root = self._bundle_copy()
@@ -288,7 +161,7 @@ class ContextProfileResolverTests(unittest.TestCase):
         host, unused = MODULE.load_host_catalog(root)
         with self.assertRaises(MODULE.ContextProfileError) as raised:
             MODULE.load_prompt_catalog(root, host)
-        self.assertIn("identity is unsupported", str(raised.exception))
+        self.assertIn("explicit prompt catalog", str(raised.exception))
 
     def test_cli_validate_is_machine_readable(self):
         completed = subprocess.run(
@@ -302,9 +175,9 @@ class ContextProfileResolverTests(unittest.TestCase):
         payload = json.loads(completed.stdout)
         self.assertTrue(payload["valid"])
         self.assertEqual(3, payload["host_profile_count"])
-        self.assertEqual(3, payload["prompt_profile_count"])
-        self.assertEqual(0, payload["certified_binding_count"])
-        self.assertEqual(18, payload["context_module_count"])
+        self.assertEqual(1, payload["prompt_profile_count"])
+        self.assertNotIn("certified_binding_count", payload)
+        self.assertEqual(13, payload["context_module_count"])
 
 
 if __name__ == "__main__":

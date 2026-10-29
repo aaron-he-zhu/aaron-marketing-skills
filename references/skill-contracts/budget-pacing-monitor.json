@@ -11,7 +11,7 @@
           "end_char": 42,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18",
+          "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -23,7 +23,7 @@
     "source": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18"
+      "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642"
     }
   },
   "context_hints": {
@@ -32,14 +32,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 30
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 39
       },
       {
@@ -53,14 +53,14 @@
         "path": "references/roas-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "e1c3264a6d93f5a2412b366f3a7c1ac2cdbf6eba808aeb785231f680849595a0",
+        "sha256": "2aef010db6ed59a7163fa07f2acbff00a377638f9e037951cda9ad5ffe097c1a",
         "source_line": 56
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 26
       },
       {
@@ -87,7 +87,7 @@
           "end_char": 252,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18",
+          "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -105,7 +105,7 @@
           "end_char": 615,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18",
+          "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642",
           "span_basis": "field-text",
           "start_char": 254
         },
@@ -123,7 +123,7 @@
           "end_char": 754,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18",
+          "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642",
           "span_basis": "field-text",
           "start_char": 617
         },
@@ -139,7 +139,7 @@
           "end_char": 834,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18",
+          "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642",
           "span_basis": "field-text",
           "start_char": 756
         },
@@ -152,7 +152,7 @@
     "summary_ref": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18"
+      "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -166,8 +166,8 @@
     "name": "budget-pacing-monitor",
     "path": "ad/scale/budget-pacing-monitor/SKILL.md",
     "phase": "scale",
-    "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18",
-    "version": "20.1.0"
+    "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<campaign/flight> [budget + flight window] [target curve: even|front|back-loaded]",
@@ -181,7 +181,7 @@
           "end_char": 95,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18",
+          "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -193,7 +193,7 @@
     "source": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18"
+      "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642"
     }
   },
   "output_contract": {
@@ -208,7 +208,7 @@
           "end_char": 108,
           "path": "ad/scale/budget-pacing-monitor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18",
+          "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -219,7 +219,7 @@
     "source": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18"
+      "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642"
     },
     "summary": "a pacing read for one campaign or flight — cumulative spend vs the target curve (percent-to-pace), a verdict (On-track / Ahead / Behind / Stalled), the learning-phase status, an over/under-delivery call with the driver (cap-limited, bid-throttled, low-volume, dayparting), and a reallocation trigger (fire / hold) with the band that decided it. Plus a handoff summary storable under `memory/ad/budget-pacing-monitor/`.",
     "summary_source": "expected-output",
@@ -230,12 +230,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -244,7 +244,7 @@
     "source": {
       "path": "ad/scale/budget-pacing-monitor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "670fbe2e65d2dfd092ba767c4fb050045f72ce19679957da66790f3a60fdde18"
+      "sha256": "d2f7e43ec88b6d5746d1b11a71288f64246e58df19e329a9ab6b60b37e231642"
     },
     "trigger_phrases": [
       "am I over/under-spending",

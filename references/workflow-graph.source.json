@@ -52,7 +52,7 @@
     "note": "Markdown was used only to create the initial explicit edge inventory; normal generation never treats prose as authoritative.",
     "source_surface": "Markdown Next Best Skill declarations"
   },
-  "catalog_version": "20.1.0",
+  "catalog_version": "20.2.0",
   "edge_shards": [
     {
       "edge_count": 40,
@@ -60,7 +60,7 @@
       "id": "edges-00",
       "last_edge_id": "campaign-architect--ad-creative-builder",
       "ref": "references/workflow-graph/edges-00.json",
-      "sha256": "0d83520da0716ddcd3d8fce5ed98509d8615bad0f6535f4104bae6ce34ff0b32"
+      "sha256": "ecc142650657e11f0db93da0d935bc2b0f4acdae27cad5c88d6e7b79a330191a"
     },
     {
       "edge_count": 40,
@@ -68,7 +68,7 @@
       "id": "edges-01",
       "last_edge_id": "content-quality-auditor--technical-seo-checker",
       "ref": "references/workflow-graph/edges-01.json",
-      "sha256": "5992a6e8637762f0839ca08d88eca24db9a0d8b0dd6b06df07879a6db4e18bfb"
+      "sha256": "48cfcf896ec1706f50b908aee71590388f23897c2ac0915256a9736670764b8a"
     },
     {
       "edge_count": 40,
@@ -76,7 +76,7 @@
       "id": "edges-02",
       "last_edge_id": "email-creative-builder--email-quality-auditor",
       "ref": "references/workflow-graph/edges-02.json",
-      "sha256": "02398e6d0cb0110e6f0078e008a48d3e2cad1901d55c224cccb446053a0960b8"
+      "sha256": "e8cadc6b1deb38ffd81d846685857a987d544893dabd04fe3570613d3509b2f5"
     },
     {
       "edge_count": 40,
@@ -84,7 +84,7 @@
       "id": "edges-03",
       "last_edge_id": "influencer-discovery--fit-scorer",
       "ref": "references/workflow-graph/edges-03.json",
-      "sha256": "fd2f3dfac12383b5290c5d6cb915cacae48c685b76ee2a998423b342d97f0c93"
+      "sha256": "b809c2d830bfe0f515168be933a6eb34034fa7cbd5433bb09bdb440d218adc2d"
     },
     {
       "edge_count": 40,
@@ -92,7 +92,7 @@
       "id": "edges-04",
       "last_edge_id": "list-growth-designer--email-sequence-designer",
       "ref": "references/workflow-graph/edges-04.json",
-      "sha256": "2a6473a669163128aefa4419eeac85bb6afe950bebca143aa146146bf0e2d652"
+      "sha256": "6693a90856c1fd05a664c0c49a37508d9a86c7697ab3f0758d14689c4a1b3c47"
     },
     {
       "edge_count": 40,
@@ -108,7 +108,7 @@
       "id": "edges-06",
       "last_edge_id": "performance-analyzer--roi-calculator",
       "ref": "references/workflow-graph/edges-06.json",
-      "sha256": "cea4b46f446c9c532c87c87d5624227e89bd066371654a4945430afaeaa848f9"
+      "sha256": "e7dacc20bdb99d2b0996e7ca3b9ecd5d4a2d0645e228fccb3f99fd7c0a24d666"
     },
     {
       "edge_count": 40,
@@ -124,7 +124,7 @@
       "id": "edges-08",
       "last_edge_id": "story-bank-builder--narrative-cascade-planner",
       "ref": "references/workflow-graph/edges-08.json",
-      "sha256": "cbf5893ed37051b86e4c9762f451cdfa7ca930c7fc93b0ba0fb3eae38f4ca4f5"
+      "sha256": "b4c35b905f2836fdd309b04f42bbe944f441558b52a95bb2c9724286dd923eeb"
     },
     {
       "edge_count": 18,

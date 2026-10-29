@@ -351,9 +351,7 @@ def start_run(
         prefix_file_limit=budget["prefix_file_limit"],
         registry_offsets=request["registry_offsets"],
     )
-    planner.validate_planned_request(
-        planned, bundle_root=bundle_root, project_root=project_root, resolve_sources=True,
-    )
+    # resolve_context validates the complete planner/source closure itself.
     manifest = resolver.resolve_context(planned, bundle_root, project_root)
     start_result = None
     try:
@@ -666,10 +664,10 @@ def resume_run(
         environ=environ,
     )
     project_root = runtime.normalized_root(project_root)
-    events = runtime.load_events(project_root, run_id)
-    state = runtime.project_events(run_id, events)
-    summary = runtime.resume_summary(project_root, run_id, max_bytes)
-    snapshots = runtime.selected_branch_snapshots(project_root, run_id, events, state)
+    view = runtime.verified_resume_view(project_root, run_id)
+    state = view["state"]
+    summary = runtime._resume_summary_from_state(run_id, state, max_bytes)
+    snapshots = view["snapshots"]
     binding = None
     if snapshots:
         _event, snapshot = snapshots[-1]
@@ -685,11 +683,6 @@ def resume_run(
             },
             "permission_profile": snapshot["permission_profile"],
         }
-    if state["last_save_point_ref"] is not None:
-        runtime.validate_save_point_document(
-            project_root, state["last_save_point_ref"],
-            state["last_save_point_sha256"], run_id,
-        )
     return {
         "schema_version": SCHEMA_VERSION,
         "operation": "resume",

@@ -1,5 +1,7 @@
 # CORE-EEAT Content Benchmark — Skills Reference
 
+**Human-anchor revision: 2026-10-27-a.** The delimited item tables own criteria; detailed boundaries and examples below interpret those same IDs. Profiles, applicability, weights, veto identity, coverage and rounding remain in the typed catalog/scorer. This revision is not outcome calibration; preserve prior audit source digests and do not relabel historical observations.
+
 > Adapted from the [CORE-EEAT Content Benchmark](https://github.com/aaron-he-zhu/core-eeat-content-benchmark) (see that repo for the upstream version and changelog)
 >
 > This file is a reference adaptation for Aaron Marketing Skills. For the full benchmark with detailed examples, see the source repository.
@@ -48,11 +50,13 @@
 
 ### CORE — Content Body (40 Items)
 
+<!-- AUDITOR-ITEMS:BEGIN -->
+
 | ID | Dim | Check Item | Priority | One-Line Standard |
 |----|-----|------------|----------|-------------------|
 | C01 | C | Intent Alignment | Dual ⚡ | Title promise = content delivery |
 | C02 | C | Direct Answer | GEO 🎯 | Core answer in first 150 words |
-| C03 | C | Query Coverage | Dual ⚡ | Covers ≥3 query variants (synonyms, long-tail) |
+| C03 | C | Query Coverage | Dual ⚡ | Count distinct secondary query intents answered beyond the exact target: >=3 Pass, 1–2 Partial, 0 Fail; repetitions do not count. |
 | C04 | C | Definition First | GEO 🎯 | Key terms defined on first use |
 | C05 | C | Topic Scope | GEO 🎯 | Explicitly states what is and isn't covered |
 | C06 | C | Audience Targeting | Dual ⚡ | States "this article is for..." |
@@ -63,15 +67,15 @@
 | O01 | O | Heading Hierarchy | Dual ⚡ | H1→H2→H3, no level skipping |
 | O02 | O | Summary Box | GEO 🎯 | Has TL;DR or Key Takeaways section |
 | O03 | O | Data Tables | GEO 🎯 | Comparisons and specs presented in tables |
-| O04 | O | List Formatting | GEO 🎯 | Parallel items use bullet or numbered lists |
+| O04 | O | List Formatting | GEO 🎯 | Parallel steps/options use appropriate lists; judge information organization, not a lists-per-word quota. |
 | O05 | O | Schema Markup | GEO 🎯 | Appropriate JSON-LD (Article/FAQ/HowTo/etc.) |
 | O06 | O | Section Chunking | GEO 🎯 | Each section has single topic; paragraphs 3–5 sentences |
 | O07 | O | Visual Hierarchy | SEO 🔍 | Key concepts bolded or highlighted |
 | O08 | O | Anchor Navigation | Dual ⚡ | Table of contents with jump links |
 | O09 | O | Information Density | GEO 🎯 | No filler; consistent terminology throughout |
 | O10 | O | Multimedia Structure | Dual ⚡ | Images/videos have captions and carry information |
-| R01 | R | Data Precision | GEO 🎯 | ≥5 precise numbers with units (%, $, ms) |
-| R02 | R | Citation Density | GEO 🎯 | ≥1 external citation per 500 words |
+| R01 | R | Data Precision | GEO 🎯 | Relevant distinct precise data points with units: >=5 Pass, 1–4 Partial, 0 Fail; missing artifact is Unknown. |
+| R02 | R | Citation Density | GEO 🎯 | Meet both citation-density and source-type bands: >=1/500 words and >=3 types Pass; >=1/1000 and >=2 types Partial; otherwise Fail. |
 | R03 | R | Source Hierarchy | GEO 🎯 | Primary sources first; ≥3 Tier 1–2 sources |
 | R04 | R | Evidence-Claim Mapping | GEO 🎯 | Every claim backed by evidence immediately after |
 | R05 | R | Methodology Transparency | GEO 🎯 | Sample size, steps, and criteria documented |
@@ -119,7 +123,7 @@
 | A02 | A | Media Mentions | SEO 🔍 | "Featured in" with media logos |
 | A03 | A | Industry Awards | SEO 🔍 | Displays relevant industry awards or recognition |
 | A04 | A | Publishing Record | SEO 🔍 | Conference talks, publications, patents |
-| A05 | A | Brand Recognition | Dual ⚡ | Brand has search volume |
+| A05 | A | Brand Recognition | Dual ⚡ | Observed brand recognition in a declared market/window; missing observation is Unknown, not Fail. |
 | A06 | A | Social Proof | SEO 🔍 | Authentic user testimonials with real details |
 | A07 | A | Knowledge Graph Presence | Dual ⚡ | Has Wikipedia entry or Google Knowledge Panel |
 | A08 | A | Entity Consistency | GEO 🎯 | Brand/author info consistent across the web |
@@ -135,6 +139,8 @@
 | T08 | T | Risk Disclaimers | Dual ⚡ | YMYL topics have necessary disclaimers |
 | T09 | T | Review Authenticity | Dual ⚡ | Reviews show authenticity signals |
 | T10 | T | Customer Support | SEO 🔍 | Clear return policy, complaint channels, response SLA |
+
+<!-- AUDITOR-ITEMS:END -->
 
 ---
 
@@ -161,16 +167,21 @@ Do not use the old unweighted GEO/SEO average as a profile-independent total. Co
 
 ### Content-Type Weight Table
 
-| Dim | Product Review | How-to Guide | Comparison | Landing Page | Blog Post | FAQ Page | Alternative | Best-of | Testimonial |
-|-----|---------------|--------------|------------|--------------|-----------|----------|-------------|---------|-------------|
-| C | 10% | 20% | 10% | 20% | 25% | 25% | 10% | 10% | 10% |
-| O | 10% | 20% | 20% | 10% | 10% | 25% | 15% | 25% | 5% |
-| R | 15% | 10% | 25% | 5% | 10% | 15% | 25% | 20% | 15% |
-| E | 20% | 5% | 10% | 5% | 20% | 5% | 5% | 15% | 10% |
-| Exp | 20% | 5% | 5% | 5% | 10% | 5% | 15% | 5% | 30% |
-| Ept | 5% | 20% | 15% | 5% | 10% | 10% | 5% | 10% | 5% |
-| A | 5% | 5% | 5% | 25% | 5% | 5% | 5% | 5% | 5% |
-| T | 15% | 15% | 10% | 25% | 10% | 10% | 20% | 10% | 20% |
+<!-- GENERATED:BEGIN auditor-policy:profiles -->
+
+| Profile | Dimension weights | Context match | Item subset |
+|---|---|---|---|
+| `product-review` | C 10% · O 10% · R 15% · E 20% · Exp 20% · Ept 5% · A 5% · T 15% | {"content_type": "product-review"} | all items in included dimensions |
+| `how-to-guide` | C 20% · O 20% · R 10% · E 5% · Exp 5% · Ept 20% · A 5% · T 15% | {"content_type": "how-to-guide"} | all items in included dimensions |
+| `comparison` | C 10% · O 20% · R 25% · E 10% · Exp 5% · Ept 15% · A 5% · T 10% | {"content_type": "comparison"} | all items in included dimensions |
+| `landing-page` | C 20% · O 10% · R 5% · E 5% · Exp 5% · Ept 5% · A 25% · T 25% | {"content_type": "landing-page"} | all items in included dimensions |
+| `blog-post` | C 25% · O 10% · R 10% · E 20% · Exp 10% · Ept 10% · A 5% · T 10% | {"content_type": "blog-post"} | all items in included dimensions |
+| `faq-page` | C 25% · O 25% · R 15% · E 5% · Exp 5% · Ept 10% · A 5% · T 10% | {"content_type": "faq-page"} | all items in included dimensions |
+| `alternative` | C 10% · O 15% · R 25% · E 5% · Exp 15% · Ept 5% · A 5% · T 20% | {"content_type": "alternative"} | all items in included dimensions |
+| `best-of` | C 10% · O 25% · R 20% · E 15% · Exp 5% · Ept 10% · A 5% · T 10% | {"content_type": "best-of"} | all items in included dimensions |
+| `testimonial` | C 10% · O 5% · R 15% · E 10% · Exp 30% · Ept 5% · A 5% · T 20% | {"content_type": "testimonial"} | all items in included dimensions |
+
+<!-- GENERATED:END auditor-policy:profiles -->
 
 ### Rating Scale
 
@@ -184,7 +195,7 @@ Do not use the old unweighted GEO/SEO average as a profile-independent total. Co
 
 ### Veto Items
 
-Failing any veto item activates the Critical Fail Cap. The cap arithmetic and thresholds are defined in [auditor-runbook.md §4](auditor-runbook.md). Do not restate cap numbers here or elsewhere — this file owns the item definitions only.
+Failing any veto item activates the Critical Fail Cap. The cap arithmetic and thresholds are defined in [auditor-runbook.md §4](auditor-runbook.md). The table below explains the domain-specific failures; executable policy and its generated views remain catalog-owned.
 
 | Veto ID | Dimension | Check |
 |---------|-----------|-------|
@@ -279,9 +290,11 @@ What is the primary goal?
 - **Fail**: Answer buried in middle or end.
 
 **C03: Query Coverage** | Dual ⚡
-- **Pass**: Covers ≥3 query variants; appropriate entity density.
-- **Partial**: 1–2 variants.
-- **Fail**: Single exact query only.
+Count distinct secondary query intents that the artifact actually answers, excluding the exact primary target query. Synonym repetition, keyword stuffing and repeated answers do not create additional variants. C01 still owns primary-intent alignment.
+- **Pass**: At least 3 relevant secondary variants are answered.
+- **Partial**: Exactly 1 or 2 relevant secondary variants are answered.
+- **Fail**: No secondary variant is answered; only the exact primary query is addressed.
+- **Unknown**: The artifact or primary target cannot be inspected. Do not infer zero from missing access.
 
 **C04: Definition First** | GEO 🎯
 - **Pass**: All key terms defined on first use.
@@ -336,9 +349,11 @@ What is the primary goal?
 - **Fail**: Prose where tables would be better.
 
 **O04: List Formatting** | GEO 🎯
-- **Pass**: ~1–2 lists per 500 words; parallel items listed.
-- **Partial**: Insufficient or excessive.
-- **Fail**: Overused or absent.
+Judge how parallel information is organized, matching the calibration examples below. The previous “1–2 lists per 500 words” quota is retired in human-anchor revision 2026-10-27-a; adding irrelevant lists cannot improve this item.
+- **Pass**: Parallel steps/options are clearly grouped in an appropriate list; continuous prose with no parallel sequence also passes when that form fits the content.
+- **Partial**: Some relevant parallel items are grouped but others are buried or split inconsistently.
+- **Fail**: Observed parallel steps/options are obscured in run-on prose or fragmented so the sequence cannot be followed.
+- **Unknown**: The artifact cannot be inspected.
 
 **O05: Schema Markup** | GEO 🎯
 - **Pass**: Correct JSON-LD matching content type.
@@ -373,14 +388,18 @@ What is the primary goal?
 ### R — Referenceability
 
 **R01: Data Precision** | GEO 🎯
-- **Pass**: ≥5 precise data points with units; directly extractable.
-- **Partial**: 2–4 data points.
-- **Fail**: No precise data; vague descriptions.
+Count distinct, relevant and supported measurements with meaningful units. Repeating one number, adding unrelated statistics, or treating navigation/date strings as measurements does not increase the count. Do not invent data to meet a count.
+- **Pass**: At least 5 such data points are directly extractable.
+- **Partial**: Exactly 1–4 such data points; revision 2026-10-27-a explicitly closes the previous one-point gap.
+- **Fail**: An inspected artifact has 0 such data points and only vague assertions.
+- **Unknown**: The artifact/evidence cannot be inspected, so the count is not known.
 
 **R02: Citation Density** | GEO 🎯
-- **Pass**: ≥1 external citation per 500 words; ≥3 source types.
-- **Partial**: ≥1 per 1000 words; 2 types.
-- **Fail**: Insufficient citations.
+Use inspected word count, substantive claim-linked external citations, and distinct source types (for example official documentation, primary research and independent reporting). Duplicate links for the same claim, navigation and unrelated citations do not count. Both density and diversity must reach a band; the lower band governs. R03 separately judges source authority, and short content is not licensed to add irrelevant sources.
+- **Pass**: Density is at least 1 citation per 500 words AND at least 3 source types are present.
+- **Partial**: Both are at least 1 per 1000 words and 2 source types, but one or both fall below Pass.
+- **Fail**: In an inspected artifact, density is below 1 per 1000 OR fewer than 2 source types support the claims.
+- **Unknown**: Word count, citation mapping or source classification is unavailable; do not substitute a zero.
 
 **R03: Source Hierarchy** | GEO 🎯
 - **Pass**: Primary sources prioritized; ≥3 Tier 1–2 sources.
@@ -601,9 +620,11 @@ What is the primary goal?
 - **Fail**: None.
 
 **A05: Brand Recognition** | Dual ⚡
-- **Pass**: Brand has search volume.
-- **Partial**: Some awareness.
-- **Fail**: Unknown.
+Declare the brand/entity, market, query disambiguation and observation window. Use dated demand or relevant awareness evidence; absence from one incomplete tool is not proof of no recognition.
+- **Pass**: Reliable observation establishes relevant branded search demand in that scope.
+- **Partial**: Adequately observed but limited awareness is evidenced, without claiming broad recognition.
+- **Fail**: A documented, adequate observation scope positively establishes no recognition signal under its declared criterion.
+- **Unknown**: No adequate observation or disambiguation is available. Revision 2026-10-27-a replaces the former contradictory “Fail: Unknown”; missing data is never scored zero.
 
 **A06: Social Proof** | SEO 🔍
 - **Pass**: Authentic reviews with real details.
@@ -768,3 +789,13 @@ Calibration examples for the most subjective CORE items. Use these to anchor sco
 - **Pass**: Article on SaaS pricing combines behavioral economics research (anchoring effect, loss aversion) with B2B sales cycle data and A/B test results from 3 SaaS companies to propose a pricing page framework. The intersection of psychology, sales data, and UX testing produces an insight none of the individual domains would yield alone.
 - **Partial**: Article mentions that "psychology plays a role in pricing" and references one anchoring study, but does not synthesize it with domain-specific data or produce a novel framework. The cross-domain mention is surface-level.
 - **Fail**: Article discusses SaaS pricing purely from a feature-comparison perspective. No knowledge from adjacent fields (psychology, economics, design) is incorporated.
+
+## Fixed Boundary Cases (2026-10-27-a)
+
+See the [fixed factual examples for CORE-EEAT](benchmark-boundary-examples.md#core-eeat) when calibrating a disputed boundary. These examples are lookup material; retain the item anchors and complete evidence rules above for execution.
+
+## Evidence Reuse and Targeted Review
+
+Inspect the rendered artifact once and retain its source/date/hash with the existing author/claims records. Reuse that capture for C/O/R and related credibility checks; content, author and organization facts keep their distinct owners. Recheck changed claims, citations or rendering and their dependencies before submitting the complete run.
+
+Follow the existing [auditor runbook](auditor-runbook.md) for evidence, authority and final complete-coverage scoring; reuse does not create independent corroboration.

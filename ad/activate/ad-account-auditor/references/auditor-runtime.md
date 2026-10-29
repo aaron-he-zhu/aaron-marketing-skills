@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 20.1.0
+- **Catalog version:** 20.2.0
 - **Framework:** ROAS
 - **Auditor:** ad-account-auditor
 - **Complete item definitions:** 20
-- **Source digest:** `sha256:1d9cb169c82655b1db3578e5166be6554398656562757e0ea5bb9618b2f8dde9`
+- **Source digest:** `sha256:4ecdc592b224cde70f44ba1974b846d9c27e724d65ca3d1c32da8385ae9ff39a`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "20.1.0",
+  "catalog_version": "20.2.0",
   "frameworks": {
     "ROAS": {
       "construct": "incremental paid-media contribution and operating quality under declared business constraints",
@@ -45,28 +45,6 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "name": "Spend Efficiency"
         }
       },
-      "item_definitions": {
-        "A1": "brand and placement safety verified from the placement evidence",
-        "A2": "targeting and query/audience intent fit",
-        "A3": "negative keywords, exclusions, and suppression controls are maintained",
-        "A4": "campaign/account structure supports the declared objective without avoidable overlap",
-        "A5": "reach, overlap, and audience saturation are measured",
-        "O1": "claims and required disclosures are substantiated",
-        "O2": "platform policy and restricted-category requirements are satisfied",
-        "O3": "offer economics, eligibility, terms, and availability are explicit",
-        "O4": "ad-to-landing message and intent match",
-        "O5": "creative hook, format, accessibility, and fatigue state fit the placement",
-        "R1": "conversion instrumentation verified against an own-data truth set",
-        "R2": "cross-platform attribution deduplicated and windows/currency normalized",
-        "R3": "incremental contribution or profit measured against the declared target/control",
-        "R4": "CAC/CPA and payback satisfy the declared business constraint",
-        "R5": "marginal return is read after conversion lag with uncertainty stated",
-        "S1": "budget pacing stays within the declared plan and constraints",
-        "S2": "bid strategy and learning-state changes are governed",
-        "S3": "marginal CPC/CPM/CTR/CVR efficiency is compared on a normalized window",
-        "S4": "frequency and creative decay are separated from audience saturation",
-        "S5": "paid/organic and cross-campaign cannibalization are assessed"
-      },
       "item_policies": {
         "A1": {
           "unknown_policy": "needs-input",
@@ -89,7 +67,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
       },
       "items": {
         "A1": {
-          "criterion": "Brand and placement safety are verified from placement evidence.",
+          "criterion": "Brand and placement safety are verified from the placement evidence.",
           "dimension": "A",
           "name": null,
           "policy": {
@@ -116,7 +94,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "A4": {
-          "criterion": "Account structure supports the objective without avoidable overlap.",
+          "criterion": "Campaign/account structure supports the declared objective without avoidable overlap.",
           "dimension": "A",
           "name": null,
           "policy": {},
@@ -124,7 +102,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "A5": {
-          "criterion": "Reach, overlap, and audience saturation are measured.",
+          "criterion": "Reach, overlap and audience saturation use audience-level evidence on one window; frequency alone cannot establish saturation.",
           "dimension": "A",
           "name": null,
           "policy": {},
@@ -152,7 +130,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": true
         },
         "O3": {
-          "criterion": "Economics, eligibility, terms, and availability are explicit.",
+          "criterion": "Offer economics, eligibility, terms, and availability are explicit.",
           "dimension": "O",
           "name": null,
           "policy": {},
@@ -168,7 +146,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "O5": {
-          "criterion": "Hook, format, accessibility, and fatigue state fit the placement.",
+          "criterion": "Creative hook, format, accessibility, and fatigue state fit the placement.",
           "dimension": "O",
           "name": null,
           "policy": {},
@@ -187,7 +165,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": true
         },
         "R2": {
-          "criterion": "Cross-platform attribution is deduplicated; windows and currency are normalized.",
+          "criterion": "Cross-platform attribution is deduplicated; attribution windows and currency are normalized.",
           "dimension": "R",
           "name": null,
           "policy": {
@@ -198,7 +176,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": true
         },
         "R3": {
-          "criterion": "Incremental contribution or profit is measured against the declared target/control.",
+          "criterion": "Incremental contribution/profit is evaluated against the declared target/control; platform-attributed ROAS alone leaves incrementality Unknown, a labeled proxy is not a causal result.",
           "dimension": "R",
           "name": null,
           "policy": {},
@@ -206,7 +184,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "R4": {
-          "criterion": "CAC/CPA and payback satisfy the declared business constraint.",
+          "criterion": "CAC/CPA and payback meet the declared business constraints on normalized own-data outcomes; absent constraint/truth set is Unknown.",
           "dimension": "R",
           "name": null,
           "policy": {},
@@ -214,7 +192,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "R5": {
-          "criterion": "Marginal return is read after conversion lag with uncertainty stated.",
+          "criterion": "Marginal return uses a completed declared lag window and stated uncertainty; average historical ROAS cannot establish the return on additional spend.",
           "dimension": "R",
           "name": null,
           "policy": {},
@@ -238,7 +216,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "S3": {
-          "criterion": "Marginal CPC/CPM/CTR/CVR efficiency uses a normalized window.",
+          "criterion": "Marginal CPC/CPM/CTR/CVR efficiency is compared on a normalized window.",
           "dimension": "S",
           "name": null,
           "policy": {},
@@ -246,7 +224,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "S4": {
-          "criterion": "Frequency and creative decay are separated from audience saturation.",
+          "criterion": "Creative-level frequency/decay is separated from audience saturation; aggregate frequency alone cannot establish creative fatigue.",
           "dimension": "S",
           "name": null,
           "policy": {},
@@ -413,7 +391,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 ## Standalone Execution Policy
 
 1. Select exactly one declared profile from the typed snapshot and record it with the catalog version and source digest above.
-2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Every non-unknown state needs evidence; never convert missing evidence into a pass.
+2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Observed pass/partial/fail states need evidence. Unknown needs a gap reason; catalog-authorized na needs a reason and no evidence. Never convert missing evidence into a pass.
 3. Record veto observations by their qualified framework item IDs, but do not calculate dimension, raw, capped, or final scores without the root deterministic scorer.
 4. Return `status: NEEDS_INPUT` or `status: BLOCKED` with `verdict: UNDECIDED`, `score_state: NOT_SCORED`, and `score_confidence: not_scored`. Clearly identify the unavailable root runtime as the reason.
 5. Do not write under `memory/audits/`, mutate registries, or claim a publish/ship decision. Offer the observation set for later execution in a full plugin or repository install.

@@ -1061,7 +1061,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:181",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:190",
       "condition_text": "FIX content: content-writer",
       "documentation_required": true,
       "exception": {
@@ -1093,7 +1093,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:184",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:193",
       "condition_text": "Add domain context: domain-authority-auditor",
       "documentation_required": true,
       "exception": null,
@@ -1123,7 +1123,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:183",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:192",
       "condition_text": "Resolve claims: offer-claims-registry",
       "documentation_required": true,
       "exception": null,
@@ -1154,7 +1154,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:182",
+      "condition_source": "seo-geo/tune/content-quality-auditor/SKILL.md:191",
       "condition_text": "FIX technical evidence: technical-seo-checker",
       "documentation_required": true,
       "exception": null,

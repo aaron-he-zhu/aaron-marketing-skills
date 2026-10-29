@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.1.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.2.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -94,14 +94,16 @@ La topologia tipizzata autorevole è [`references/system-catalog.json`](../refer
 
 Usala con Claude Code, qualsiasi host compatibile con Agent Skills o un semplice `git clone`:
 
+<!-- GENERATED:BEGIN release-surface:portable-install -->
 | Host | Installazione |
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` poi `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ host](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Client Agent Plugins v1 · Portable Lite** | Scarica `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz` dalla [release v20.1.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0), estrailo e installa la directory del plugin estratta |
+| **Client Agent Plugins v1 · Portable Lite** | Scarica `aaron-marketing-skills-20.2.0-agent-plugin-v1-lite.tar.gz` dalla [release v20.2.0](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.2.0), estrailo e installa la directory del plugin estratta |
 | **Grok Bot · Hermes Bot Mode (AI Staff)** | Genera il roster da 8 bot: `python3 scripts/generate-bot-projections.py --output <private-dir>` — 7 specialisti + `aaron-chief`. Vedi [AI Staff](#ai-staff) |
 | **[SkillHub.cn](https://skillhub.cn) (community cinese)** | `skillhub install <frontmatter-slug>` (es. `keyword-research`) |
 | **Qualsiasi host** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
+<!-- GENERATED:END release-surface:portable-install -->
 
 In Claude Code, `marketplace add` registra solo il catalogo — esegui `/plugin install aaron-marketing@aaron` (o scegli da `/plugin`) per attivare davvero le skill e i comandi. Per prendere una **singola** skill su un host generico: `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research`. Sfoglia il bundle nel [registro skills.sh](https://skills.sh/aaron-he-zhu/aaron-marketing-skills). Directory per agente, particolarità del frontmatter e cosa si degrada fuori dal plugin: [docs/agent-compatibility.md](agent-compatibility.md) (verificato 120/120 installabili, 2026-07).
 
@@ -697,7 +699,7 @@ La deriva degli endpoint live viene campionata separatamente dal **manuale** [`s
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — regole di authoring, la checklist di contribuzione e la lista autorevole delle 10 superfici di tracking.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** — versioni per skill + changelog (bundle attuale: `20.1.0`).
+- **[VERSIONS.md](../VERSIONS.md)** — versioni per skill + changelog (bundle attuale: `20.2.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — policy di sicurezza, privacy e community.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — contesto lato agente per questo repo.

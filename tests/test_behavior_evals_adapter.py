@@ -150,14 +150,13 @@ for line in sys.stdin:
         "assembly_sha256": None, "assembly_signature": None, "context_signature": None,
         "host_catalog_sha256": None, "prompt_policy_sha256": None,
         "context_modules_sha256": None,
-        "capsule_index_sha256": request["routing_index"]["capsule_index"]["sha256"],
         "model_body_bytes": None, "model_reduction_ratio": None,
         "model_resources_sha256": None,
     }
     if assembly is not None:
         context.update({key: value for key, value in assembly.items() if key != "model_resources"})
     print(json.dumps({
-        "kind": "behavior-eval-result", "protocol_version": "3.0",
+        "kind": "behavior-eval-result", "protocol_version": "3.1",
         "case_id": request["case"]["id"], "request_sha256": request["request_sha256"],
         "outcome": "passed",
         "routing": {
@@ -412,7 +411,7 @@ class AdapterTests(unittest.TestCase):
             evidence = evidence_root / "memory" / "runs" / run_id / "semantic-eval"
             manifest = json.loads((evidence / "manifest.json").read_text(encoding="utf-8"))
             completion = json.loads((evidence / "completion.json").read_text(encoding="utf-8"))
-            self.assertEqual("3.0", manifest["protocol_version"])
+            self.assertEqual("3.1", manifest["protocol_version"])
             self.assertEqual("evals/behavior-adapter-v3.schema.json", manifest["protocol_schema"]["ref"])
             self.assertEqual(
                 hashlib.sha256((ROOT / "evals/behavior-adapter-v3.schema.json").read_bytes()).hexdigest(),

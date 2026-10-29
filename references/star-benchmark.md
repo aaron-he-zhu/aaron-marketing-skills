@@ -1,5 +1,7 @@
 # STAR Benchmark — Influencer Marketing Evaluation Standard
 
+**Human-anchor revision: 2026-10-27-a.** The delimited item tables own criteria; detailed boundaries and examples below interpret those same IDs. Profiles, applicability, weights, veto identity, coverage and rounding remain in the typed catalog/scorer. This revision is not outcome calibration; preserve prior audit source digests and do not relabel historical observations.
+
 STAR evaluates **influencer partnership quality** across **Suitability · Trust · Appeal · Return** for one creator partnership. The mnemonic matches the STAR loop (Scout → Target → Activate → Report), but the framework scores *quality*, not workflow: a suitable creator with non-compliant or weak content must not pass on a comfortable average alone — the vetoes and the profile weighting keep each concern visible.
 
 The framework is advisory. Executable items, profiles, context, and vetoes live in [`framework-catalog.json`](framework-catalog.json); common evidence, missingness, score, status, and verdict rules live in [`scoring-semantics.md`](scoring-semantics.md).
@@ -16,14 +18,16 @@ Audience, reach, engagement, and return are relative to a locked creator-tier ×
 
 Vetoes are marked ⛔.
 
+<!-- AUDITOR-ITEMS:BEGIN -->
+
 | ID | Dimension | Criterion |
 |---|---|---|
 | `S1` | Suitability | Audience composition, geography, and language match the target within a stated window. |
-| `S2` ⛔ | Suitability | Real-follower rate is at/above the tier x platform x niche benchmark. |
+| `S2` ⛔ | Suitability | Real-follower rate meets the locked creator-tier x platform x niche benchmark; verified below-benchmark rate/fraud Fails, missing audit is Unknown. |
 | `S3` | Suitability | Follower growth is organic and stable, with no purchase or spike anomalies. |
 | `S4` | Suitability | Typical reach reliability across recent posts is benchmarked, not cherry-picked. |
 | `S5` | Suitability | Engagement rate meets the niche median for the creator's tier and platform. |
-| `S6` ⛔ | Suitability | Engagement is authentic, not pod-coordinated or bought. |
+| `S6` ⛔ | Suitability | Observed engagement is authentic; verified bought/coordinated/pod activity Fails, an unusual engagement rate alone does not establish fraud. |
 | `S7` | Suitability | Repeat audience action (saves/shares/returns) shows durable influence, not campaign conversion. |
 | `S8` | Suitability | Brand/category fit and audience-brand overlap are evidenced, independent of any single deal. |
 | `S9` | Suitability | Creator reliability, professionalism, and delivery history support the partnership. |
@@ -40,7 +44,7 @@ Vetoes are marked ⛔.
 | `T10` | Trust | Rights, usage, whitelisting, and exclusivity terms are represented truthfully. |
 | `A1` | Appeal | The hook earns attention within the platform's first-impression window. |
 | `A2` | Appeal | Creative quality (production, editing, pacing) meets the platform bar. |
-| `A3` | Appeal | The brand integration feels native to the creator, not bolted-on. |
+| `A3` | Appeal | Brand integration fits the creator’s observed voice and format; native, understandable integration Passes, awkward but connected placement is Partial, unrelated bolted-on copy Fails. |
 | `A4` | Appeal | Storytelling and format choice fit the platform's native behavior. |
 | `A5` | Appeal | Message accuracy — the brief's key message is conveyed without distortion. |
 | `A6` | Appeal | Audience relevance — the content speaks to the target's beliefs and needs. |
@@ -59,18 +63,29 @@ Vetoes are marked ⛔.
 | `R9` | Return | The deliverable schedule and cadence match the campaign window. |
 | `R10` | Return | The measurement plan (UTMs, codes, controls) is defined before launch. |
 
+<!-- AUDITOR-ITEMS:END -->
+
 ## Profiles and Scoring
 
 Per item: Pass = 10, Partial = 5, Fail = 0. A dimension score is the mean of its applicable items × 10 (0–100). The **SQS** (Star Quality Score) is the floor-rounded, profile-weighted arithmetic mean of the four dimensions — the same rollup family as ROAS (RQS) and SEND (EQS). A score is emitted only at 100% coverage of applicable items; missing evidence is `unknown` and prevents a score, and catalog-authorized `na` requires a reason.
 
 Return items `R1`–`R6` apply only to an `actual` assessment; in a `forecast` (pre-publish) read they are `na` with reason, exactly as a paid go/no-go scores Return before spend exists.
 
-| Profile (goal) | S | T | A | R | Use |
-|---|---:|---:|---:|---:|---|
-| `awareness` | .30 | .20 | .35 | .15 | Reach/impressions program where audience and craft carry the objective |
-| `engagement` | .25 | .20 | .40 | .15 | Interaction program where content appeal dominates |
-| `conversion` | .25 | .20 | .20 | .35 | Response program judged on measured return |
-| `brand-building` | .30 | .35 | .20 | .15 | Reputation program where suitability and trust lead |
+<!-- GENERATED:BEGIN auditor-policy:profiles -->
+
+| Profile | Dimension weights | Context match | Item subset |
+|---|---|---|---|
+| `awareness` | S 30% · T 20% · A 35% · R 15% | {"goal": "awareness"} | all items in included dimensions |
+| `engagement` | S 25% · T 20% · A 40% · R 15% | {"goal": "engagement"} | all items in included dimensions |
+| `conversion` | S 25% · T 20% · A 20% · R 35% | {"goal": "conversion"} | all items in included dimensions |
+| `brand-building` | S 30% · T 35% · A 20% · R 15% | {"goal": "brand-building"} | all items in included dimensions |
+
+<!-- GENERATED:END auditor-policy:profiles -->
+
+- `awareness`: Reach/impressions program where audience and craft carry the objective.
+- `engagement`: Interaction program where content appeal dominates.
+- `conversion`: Response program judged on measured return.
+- `brand-building`: Reputation program where suitability and trust lead.
 
 Do not compare profiles as though their weights were identical.
 
@@ -89,6 +104,16 @@ Exactly one verified veto caps SQS at `min(raw, 59)` and raises a flag; two or m
 Disclosure vetoes use FTC **16 CFR §255** (Endorsement Guides) and the 2024 Trade Regulation Rule on Consumer Reviews & Testimonials (**16 CFR Part 465**) as compliance inputs. Not legal advice — consult counsel for your jurisdiction.
 
 **Cross-framework ID note:** STAR's `S`/`T`/`A`/`R` item prefixes collide textually with SEND `S`, ROAS `A`/`S`, RAMP `A`/`R`, TALE `T`/`A`, CITE `T`, and CORE-EEAT `A`/`T`. Always qualify IDs as `STAR-S2`, `STAR-T1`, etc. outside a single-framework table.
+
+## Fixed Boundary Cases (2026-10-27-a)
+
+See the [fixed factual examples for STAR](benchmark-boundary-examples.md#star) when calibrating a disputed boundary. These examples are lookup material; retain the item anchors and complete evidence rules above for execution.
+
+## Evidence Reuse and Targeted Review
+
+Collect the creator-window analytics, the frozen deliverable and current rights/disclosure records once. Suitability, craft and actual return judge different objects; a changed asset reopens its affected T/A checks, while a new outcome window creates a separate actual run, never a rewritten forecast.
+
+Follow the existing [auditor runbook](auditor-runbook.md) for evidence, authority and final complete-coverage scoring; reuse does not create independent corroboration.
 
 ## Skill Ownership
 

@@ -11,7 +11,7 @@
           "end_char": 215,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 519,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 217
         },
@@ -41,7 +41,7 @@
           "end_char": 611,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 521
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "protocol/entity-registry/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29"
+      "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374"
     }
   },
   "context_hints": {
@@ -111,14 +111,14 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 30
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "sha256": "46ca45bc943bb84448542c537f05e7fb0b0b3f05650db70ec9d00c68230f60d7",
         "source_line": 86
       }
     ],
@@ -155,7 +155,7 @@
           "end_char": 104,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -173,7 +173,7 @@
           "end_char": 212,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 105
         },
@@ -191,7 +191,7 @@
           "end_char": 294,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 213
         },
@@ -209,7 +209,7 @@
           "end_char": 369,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 295
         },
@@ -227,7 +227,7 @@
           "end_char": 441,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 370
         },
@@ -242,7 +242,7 @@
     "summary_ref": {
       "path": "protocol/entity-registry/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29"
+      "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -259,8 +259,8 @@
     "name": "entity-registry",
     "path": "protocol/entity-registry/SKILL.md",
     "phase": "protocol",
-    "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
-    "version": "20.1.0"
+    "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<entity aggregate-id/name or 'review entity proposals'>",
@@ -274,7 +274,7 @@
           "end_char": 160,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -286,7 +286,7 @@
     "source": {
       "path": "protocol/entity-registry/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29"
+      "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374"
     }
   },
   "output_contract": {
@@ -301,7 +301,7 @@
           "end_char": 61,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -317,7 +317,7 @@
           "end_char": 159,
           "path": "protocol/entity-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29",
+          "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374",
           "span_basis": "field-text",
           "start_char": 63
         },
@@ -328,7 +328,7 @@
     "source": {
       "path": "protocol/entity-registry/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29"
+      "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374"
     },
     "summary": "authorized entity events through `scripts/registry-events.py`; a Markdown view under `memory/entities/` may then be regenerated from accepted projection state.",
     "summary_source": "writes-fallback",
@@ -339,12 +339,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -353,7 +353,7 @@
     "source": {
       "path": "protocol/entity-registry/SKILL.md",
       "section": "frontmatter",
-      "sha256": "1611aa16bd485ec8e58f72a5bf50c8f31c2c6ac1e5234ac3d1731c9aaef98c29"
+      "sha256": "a776995950d6fd879db42777174322f480fd2d68518c510358347c9045e68374"
     },
     "trigger_phrases": [
       "optimize entity presence"

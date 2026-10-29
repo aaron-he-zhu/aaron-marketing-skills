@@ -11,7 +11,7 @@
           "end_char": 102,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 226,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 104
         },
@@ -41,7 +41,7 @@
           "end_char": 259,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 228
         },
@@ -56,7 +56,7 @@
           "end_char": 334,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 261
         },
@@ -71,7 +71,7 @@
           "end_char": 424,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 336
         },
@@ -83,7 +83,7 @@
     "source": {
       "path": "launch/mobilize/launch-day-conductor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc"
+      "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf"
     }
   },
   "context_hints": {
@@ -92,14 +92,14 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 42
       },
       {
@@ -113,21 +113,21 @@
         "path": "references/ramp-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "sha256": "70009847011370cae4e6fa09990f0bcf2dfd0f520fdcadabf5008e3d41dc6b75",
         "source_line": 4
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 34
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "sha256": "46ca45bc943bb84448542c537f05e7fb0b0b3f05650db70ec9d00c68230f60d7",
         "source_line": 27
       }
     ],
@@ -152,7 +152,7 @@
           "end_char": 143,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -170,7 +170,7 @@
           "end_char": 316,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 144
         },
@@ -188,7 +188,7 @@
           "end_char": 504,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 317
         },
@@ -206,7 +206,7 @@
           "end_char": 927,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 506
         },
@@ -219,7 +219,7 @@
     "summary_ref": {
       "path": "launch/mobilize/launch-day-conductor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc"
+      "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -234,8 +234,8 @@
     "name": "launch-day-conductor",
     "path": "launch/mobilize/launch-day-conductor/SKILL.md",
     "phase": "mobilize",
-    "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
-    "version": "20.1.0"
+    "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<product / launch date> [tier] [channel plan + owners] [kill criteria source]",
@@ -249,7 +249,7 @@
           "end_char": 40,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -264,7 +264,7 @@
           "end_char": 147,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 42
         },
@@ -279,7 +279,7 @@
           "end_char": 192,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 149
         },
@@ -294,7 +294,7 @@
           "end_char": 231,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 194
         },
@@ -309,7 +309,7 @@
           "end_char": 264,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 233
         },
@@ -324,7 +324,7 @@
           "end_char": 375,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 266
         },
@@ -336,7 +336,7 @@
     "source": {
       "path": "launch/mobilize/launch-day-conductor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc"
+      "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf"
     }
   },
   "output_contract": {
@@ -351,7 +351,7 @@
           "end_char": 79,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -367,7 +367,7 @@
           "end_char": 362,
           "path": "launch/mobilize/launch-day-conductor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc",
+          "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf",
           "span_basis": "field-text",
           "start_char": 81
         },
@@ -378,7 +378,7 @@
     "source": {
       "path": "launch/mobilize/launch-day-conductor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc"
+      "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf"
     },
     "summary": "a pre-conditions verification bound to the current manifest hash, a dated hour-blocked runbook with one action intent per irreversible operation, an observation-window + binary-verdict schedule and real action receipt per attempted operation, a P0-P3 incident ladder with separately receipted rollback actions, an end-of-day consolidation whose lane joins remain open on missing/partial receipts, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -393,12 +393,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -407,7 +407,7 @@
     "source": {
       "path": "launch/mobilize/launch-day-conductor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "9442c52826788bb39039a6f0c4af199e33c9b9de9744482ce7006c8155f9edcc"
+      "sha256": "8d3636e3205793340113e86998c0debd99eabc9b2c98fc504acadcda084effdf"
     },
     "trigger_phrases": [
       "build a launch day runbook / war room",

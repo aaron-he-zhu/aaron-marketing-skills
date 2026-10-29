@@ -75,7 +75,7 @@ state paths remain unchanged.
   intent, receipt, actor field, tool availability, or projection grants external
   authority.
 - **Typed handoffs, bounded context.** Workflow edges carry only the control
-  input kinds they truly consume. Machine contracts and capsules project compact
+  input kinds they truly consume. Machine contracts project explicit
   enums and source hashes; full schemas stay deferred so discovery and selected
   context remain inside the existing hard budgets.
 - **Projection and distribution boundaries.** The Influencer Markdown/YAML

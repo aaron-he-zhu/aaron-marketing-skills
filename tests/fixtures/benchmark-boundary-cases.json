@@ -1,0 +1,748 @@
+{
+  "rubric_revision": "2026-10-27-a",
+  "scope": "Fixed reviewable boundary expectations, independent of the production parser/scorer; not dual-blind or outcome calibration.",
+  "cases": [
+    {
+      "case": "brand-unobserved",
+      "framework": "CORE-EEAT",
+      "item": "A05",
+      "facts": {
+        "adequate_observation": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "brand-observed-absent",
+      "framework": "CORE-EEAT",
+      "item": "A05",
+      "facts": {
+        "adequate_observation": true,
+        "recognition_signal": "none"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "brand-scoped-demand",
+      "framework": "CORE-EEAT",
+      "item": "A05",
+      "facts": {
+        "adequate_observation": true,
+        "recognition_signal": "branded-search-demand"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "query-exact-only",
+      "framework": "CORE-EEAT",
+      "item": "C03",
+      "facts": {
+        "artifact_observed": true,
+        "primary_answered": true,
+        "secondary_intents": 0
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "query-one-variant",
+      "framework": "CORE-EEAT",
+      "item": "C03",
+      "facts": {
+        "artifact_observed": true,
+        "secondary_intents": 1
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "query-two-variants",
+      "framework": "CORE-EEAT",
+      "item": "C03",
+      "facts": {
+        "artifact_observed": true,
+        "secondary_intents": 2
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "query-three-variants",
+      "framework": "CORE-EEAT",
+      "item": "C03",
+      "facts": {
+        "artifact_observed": true,
+        "secondary_intents": 3
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "precision-none",
+      "framework": "CORE-EEAT",
+      "item": "R01",
+      "facts": {
+        "artifact_observed": true,
+        "distinct_relevant_measurements": 0
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "precision-one-repeated",
+      "framework": "CORE-EEAT",
+      "item": "R01",
+      "facts": {
+        "artifact_observed": true,
+        "distinct_relevant_measurements": 1,
+        "numeric_tokens": 6
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "precision-four",
+      "framework": "CORE-EEAT",
+      "item": "R01",
+      "facts": {
+        "artifact_observed": true,
+        "distinct_relevant_measurements": 4
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "precision-five",
+      "framework": "CORE-EEAT",
+      "item": "R01",
+      "facts": {
+        "artifact_observed": true,
+        "distinct_relevant_measurements": 5
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "citation-one-type",
+      "framework": "CORE-EEAT",
+      "item": "R02",
+      "facts": {
+        "words": 1000,
+        "claim_linked_citations": 10,
+        "source_types": 1
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "citation-two-types",
+      "framework": "CORE-EEAT",
+      "item": "R02",
+      "facts": {
+        "words": 1000,
+        "claim_linked_citations": 2,
+        "source_types": 2
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "citation-pass",
+      "framework": "CORE-EEAT",
+      "item": "R02",
+      "facts": {
+        "words": 1500,
+        "claim_linked_citations": 3,
+        "source_types": 3
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "citation-low-density",
+      "framework": "CORE-EEAT",
+      "item": "R02",
+      "facts": {
+        "words": 4000,
+        "claim_linked_citations": 3,
+        "source_types": 3
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "citation-count-unobserved",
+      "framework": "CORE-EEAT",
+      "item": "R02",
+      "facts": {
+        "words": null,
+        "claim_linked_citations": 3,
+        "source_types": 3
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "lists-organized",
+      "framework": "CORE-EEAT",
+      "item": "O04",
+      "facts": {
+        "artifact_observed": true,
+        "parallel_items": "all-grouped"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "lists-mixed",
+      "framework": "CORE-EEAT",
+      "item": "O04",
+      "facts": {
+        "artifact_observed": true,
+        "parallel_items": "some-buried"
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "lists-runon",
+      "framework": "CORE-EEAT",
+      "item": "O04",
+      "facts": {
+        "artifact_observed": true,
+        "parallel_items": "obscured-runon"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "lists-unneeded",
+      "framework": "CORE-EEAT",
+      "item": "O04",
+      "facts": {
+        "artifact_observed": true,
+        "parallel_items": "none",
+        "form": "appropriate-continuous-prose"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "cohort-small-pass",
+      "framework": "CITE",
+      "item": "C01",
+      "facts": {
+        "referring_domains": 30,
+        "frozen_cohort": true,
+        "pass_minimum": 20,
+        "partial_minimum": 10
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "cohort-intermediate",
+      "framework": "CITE",
+      "item": "C01",
+      "facts": {
+        "referring_domains": 15,
+        "frozen_cohort": true,
+        "pass_minimum": 20,
+        "partial_minimum": 10
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "cohort-below-minimum",
+      "framework": "CITE",
+      "item": "C01",
+      "facts": {
+        "referring_domains": 5,
+        "frozen_cohort": true,
+        "pass_minimum": 20,
+        "partial_minimum": 10
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "cohort-large-unanchored",
+      "framework": "CITE",
+      "item": "C01",
+      "facts": {
+        "referring_domains": 600,
+        "frozen_cohort": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "followers-audited-pass",
+      "framework": "STAR",
+      "item": "S2",
+      "facts": {
+        "audit_verified": true,
+        "real_follower_rate": 95,
+        "cohort_minimum": 90
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "followers-verified-fail",
+      "framework": "STAR",
+      "item": "S2",
+      "facts": {
+        "audit_verified": true,
+        "real_follower_rate": 85,
+        "cohort_minimum": 90
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "followers-missing",
+      "framework": "STAR",
+      "item": "S2",
+      "facts": {
+        "audit_verified": false,
+        "real_follower_rate": null,
+        "cohort_minimum": 90
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "engagement-verified-bought",
+      "framework": "STAR",
+      "item": "S6",
+      "facts": {
+        "bought_engagement_verified": true
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "engagement-rate-only",
+      "framework": "STAR",
+      "item": "S6",
+      "facts": {
+        "unusual_rate": true,
+        "authenticity_observation": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "engagement-authentic",
+      "framework": "STAR",
+      "item": "S6",
+      "facts": {
+        "authenticity_observation": true,
+        "bought_engagement_verified": false,
+        "coordinated_activity": false
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "integration-native",
+      "framework": "STAR",
+      "item": "A3",
+      "facts": {
+        "asset_observed": true,
+        "creator_reference_observed": true,
+        "integration": "native-and-understandable"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "integration-awkward",
+      "framework": "STAR",
+      "item": "A3",
+      "facts": {
+        "asset_observed": true,
+        "creator_reference_observed": true,
+        "integration": "awkward-but-connected"
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "integration-disconnected",
+      "framework": "STAR",
+      "item": "A3",
+      "facts": {
+        "asset_observed": true,
+        "creator_reference_observed": true,
+        "integration": "unrelated-bolted-on-copy"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "integration-unobserved",
+      "framework": "STAR",
+      "item": "A3",
+      "facts": {
+        "asset_observed": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "incremental-controlled",
+      "framework": "ROAS",
+      "item": "R3",
+      "facts": {
+        "design": "holdout",
+        "own_profit_observed": true,
+        "declared_target_met": true
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "incremental-platform-ratio",
+      "framework": "ROAS",
+      "item": "R3",
+      "facts": {
+        "design": "none",
+        "platform_roas": 12,
+        "own_incrementality_observed": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "incremental-limited-proxy",
+      "framework": "ROAS",
+      "item": "R3",
+      "facts": {
+        "design": "justified-labeled-proxy",
+        "own_outcomes_observed": true,
+        "limitations_declared": true
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "constraint-at-ceiling",
+      "framework": "ROAS",
+      "item": "R4",
+      "facts": {
+        "cac": 20,
+        "cac_ceiling": 20,
+        "payback_months": 4,
+        "payback_ceiling": 6,
+        "own_outcomes_verified": true
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "constraint-breached",
+      "framework": "ROAS",
+      "item": "R4",
+      "facts": {
+        "cac": 25,
+        "cac_ceiling": 20,
+        "payback_months": 4,
+        "payback_ceiling": 6,
+        "own_outcomes_verified": true
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "constraint-undefined",
+      "framework": "ROAS",
+      "item": "R4",
+      "facts": {
+        "cac": 20,
+        "cac_ceiling": null
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "marginal-immature",
+      "framework": "ROAS",
+      "item": "R5",
+      "facts": {
+        "declared_lag_complete": false,
+        "average_roas": 8
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "marginal-negative",
+      "framework": "ROAS",
+      "item": "R5",
+      "facts": {
+        "declared_lag_complete": true,
+        "marginal_profit": "verified-negative",
+        "uncertainty": "target-excluded"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "marginal-uncertain",
+      "framework": "ROAS",
+      "item": "R5",
+      "facts": {
+        "declared_lag_complete": true,
+        "marginal_profit": "estimated-positive",
+        "uncertainty": "target-straddled"
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "saturation-frequency-only",
+      "framework": "ROAS",
+      "item": "A5",
+      "facts": {
+        "frequency": 12,
+        "audience_reach_overlap_observed": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "saturation-observed",
+      "framework": "ROAS",
+      "item": "A5",
+      "facts": {
+        "audience_reach_overlap_observed": true,
+        "qualified_new_reach": "below-declared-minimum",
+        "overlap": "above-declared-maximum"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "saturation-within-bounds",
+      "framework": "ROAS",
+      "item": "A5",
+      "facts": {
+        "audience_reach_overlap_observed": true,
+        "qualified_new_reach": "within-declared-bounds",
+        "overlap": "within-declared-bounds"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "fatigue-frequency-only",
+      "framework": "ROAS",
+      "item": "S4",
+      "facts": {
+        "frequency": 12,
+        "creative_cohort_breakdown": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "fatigue-stable",
+      "framework": "ROAS",
+      "item": "S4",
+      "facts": {
+        "creative_cohort_breakdown": true,
+        "audience_held_stable": true,
+        "creative_performance": "stable"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "fatigue-observed",
+      "framework": "ROAS",
+      "item": "S4",
+      "facts": {
+        "creative_cohort_breakdown": true,
+        "audience_held_stable": true,
+        "creative_performance": "verified-decline"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "opens-unused",
+      "framework": "SEND",
+      "item": "E2",
+      "facts": {
+        "opens_used": false,
+        "ctor_used": false,
+        "reason": "Program uses verified clicks/downstream actions; no open-derived metric is assessed."
+      },
+      "expected_state": "na"
+    },
+    {
+      "case": "opens-unsegmented",
+      "framework": "SEND",
+      "item": "E2",
+      "facts": {
+        "opens_used": true,
+        "mpp_segmentation_observed": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "opens-proxy-honest",
+      "framework": "SEND",
+      "item": "E2",
+      "facts": {
+        "opens_used": true,
+        "mpp_segmentation_observed": true,
+        "proxy_caveat": true
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "opens-false-human-claim",
+      "framework": "SEND",
+      "item": "E2",
+      "facts": {
+        "opens_used": true,
+        "mpp_preload_verified": true,
+        "claim": "raw-opens-are-measured-human-engagement"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "suppression-violated",
+      "framework": "SEND",
+      "item": "N1",
+      "facts": {
+        "suppression_effective_before_send": true,
+        "delivery_verified": true
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "suppression-unobserved",
+      "framework": "SEND",
+      "item": "N1",
+      "facts": {
+        "delivery_logs_observed": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "suppression-honored",
+      "framework": "SEND",
+      "item": "N1",
+      "facts": {
+        "required_optout_tested": true,
+        "suppression_effective_before_send": true,
+        "subsequent_delivery": false
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "newsletter-own-outcome",
+      "framework": "SEND",
+      "item": "D2",
+      "facts": {
+        "program": "paid-newsletter",
+        "truth_set": "verified-subscriptions-and-net-revenue"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "outbound-opens-only",
+      "framework": "SEND",
+      "item": "D2",
+      "facts": {
+        "program": "cold-outbound",
+        "truth_set": "provider-opens-only"
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "commerce-own-outcome",
+      "framework": "SEND",
+      "item": "D2",
+      "facts": {
+        "program": "ecommerce",
+        "truth_set": "deduplicated-orders-and-contribution"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "feedback-collected",
+      "framework": "RAMP",
+      "item": "P6",
+      "facts": {
+        "feedback_observed": true,
+        "disposition_recorded": false
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "feedback-closed",
+      "framework": "RAMP",
+      "item": "P6",
+      "facts": {
+        "feedback_observed": true,
+        "owned_disposition": true,
+        "reporter_followup_recorded": true
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "feedback-abandoned",
+      "framework": "RAMP",
+      "item": "P6",
+      "facts": {
+        "feedback_observed": true,
+        "abandonment_verified": true
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "feedback-unobserved",
+      "framework": "RAMP",
+      "item": "P6",
+      "facts": {
+        "feedback_records_observed": false
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "platform-native",
+      "framework": "ECHO",
+      "item": "C3",
+      "facts": {
+        "asset_observed": true,
+        "requirements": "documented-or-observed",
+        "execution": "native"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "platform-remediable",
+      "framework": "ECHO",
+      "item": "C3",
+      "facts": {
+        "asset_observed": true,
+        "requirements": "documented-or-observed",
+        "execution": "remediable-format-mismatch"
+      },
+      "expected_state": "partial"
+    },
+    {
+      "case": "platform-incompatible",
+      "framework": "ECHO",
+      "item": "C3",
+      "facts": {
+        "asset_observed": true,
+        "requirements": "documented",
+        "execution": "verified-blocking-incompatibility"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "platform-folklore-only",
+      "framework": "ECHO",
+      "item": "C3",
+      "facts": {
+        "adaptation_observed": false,
+        "requirements": "unverified-folklore-only"
+      },
+      "expected_state": "unknown"
+    },
+    {
+      "case": "message-concrete",
+      "framework": "TALE",
+      "item": "A9",
+      "facts": {
+        "canon_observed": true,
+        "audience": "named",
+        "problem": "identifiable",
+        "value": "specific"
+      },
+      "expected_state": "pass"
+    },
+    {
+      "case": "message-generic",
+      "framework": "TALE",
+      "item": "A9",
+      "facts": {
+        "canon_observed": true,
+        "audience": "indeterminate",
+        "problem": "indeterminate",
+        "value": "empty-generic-claim"
+      },
+      "expected_state": "fail"
+    },
+    {
+      "case": "message-unobserved",
+      "framework": "TALE",
+      "item": "A9",
+      "facts": {
+        "canon_observed": false
+      },
+      "expected_state": "unknown"
+    }
+  ]
+}
