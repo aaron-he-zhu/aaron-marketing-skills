@@ -19,6 +19,8 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
+import shlex
 import subprocess
 import sys
 
@@ -31,6 +33,86 @@ REPORT_SCHEMA = "references/engineering-maturity-report.schema.json"
 
 class MaturityError(ValueError):
     pass
+
+
+def ci_commands(text, suites, tier):
+    """Read supported run steps; comments and unknown conditions prove no execution."""
+    commands = []
+    for step in re.split(r"(?m)^      - name:", text)[1:]:
+        condition = re.search(r"(?m)^        if:\s*(.+)$", step)
+        if condition:
+            reachable = False
+            for alternative in condition[1].strip().split(" || "):
+                match = re.fullmatch(r"needs\.classify\.outputs\.tier\s*(==|!=)\s*'(S[0-3])'", alternative)
+                if match and ((tier == match[2]) == (match[1] == "==")):
+                    reachable = True
+            if not reachable:
+                continue
+        run = re.search(r"(?m)^        run:\s*(.*)$", step)
+        if not run:
+            continue
+        body = run[1].strip()
+        if body in {"|", "|-", ">", ">-"}:
+            lines = []
+            for line in step[run.end():].splitlines():
+                if line and not line.startswith("          "):
+                    break
+                lines.append(line[10:] if line.startswith("          ") else "")
+            body = "\n".join(lines)
+        heredoc = None
+        for line in body.replace("\\\n", " ").splitlines():
+            if heredoc is not None:
+                if line.strip() == heredoc:
+                    heredoc = None
+                continue
+            try:
+                command = shlex.split(line, comments=True)
+            except ValueError:
+                continue
+            for index, token in enumerate(command):
+                if token.startswith("<<") and not token.startswith("<<<"):
+                    delimiter = token[2:].lstrip("-") or (
+                        command[index + 1] if index + 1 < len(command) else "")
+                    if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", delimiter):
+                        heredoc = delimiter
+            if line != line.lstrip():
+                continue
+            if not command or command[0] not in {"python3", "python", "bash"}:
+                continue
+            commands.append(command)
+            if command[:2] == ["python3", "scripts/run-behavior-evals.py"]:
+                if command[2:] not in ([], ["--with-unittest-discovery"]):
+                    continue
+                if command[2:]:
+                    commands.append(["python3", "-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"])
+                commands.extend([
+                    ["python3" if part == "{python}" else part for part in suite["command"]]
+                    for suite in suites.get("suites", [])
+                ])
+    return commands
+
+
+def ci_wires_tests(text, suites, modules, root=ROOT):
+    for tier in ("S2", "S3"):
+        covered = set()
+        for command in ci_commands(text, suites, tier):
+            if command[:4] == ["python3", "-m", "unittest", "discover"] \
+                    and command[4:] == ["-s", "tests", "-p", "test_*.py"]:
+                covered.update("tests." + path.stem for path in (Path(root) / "tests").glob("test_*.py"))
+            elif command[:3] in (["python3", "-m", "unittest"], ["python", "-m", "unittest"]) \
+                    and command[3:] and all(re.fullmatch(r"tests\.test_[A-Za-z0-9_]+", part)
+                                                  for part in command[3:]):
+                covered.update(command[3:])
+            elif len(command) == 2 and command[0] in {"python3", "python"} \
+                    and re.fullmatch(r"tests/test_[A-Za-z0-9_]+\.py", command[1]):
+                covered.add(command[1][:-3].replace("/", "."))
+        if not set(modules) <= covered:
+            return False
+    return True
+
+
+def ci_wires_command(text, suites, command):
+    return all(command in ci_commands(text, suites, tier) for tier in ("S2", "S3"))
 
 
 @dataclass(frozen=True)
@@ -257,7 +339,7 @@ def h17_fact(harness_suite, publishers, common_publish, sync_about,
 
 def h19_fact(harness_suite, semantic_request_suite, adapter_text, runner_text,
              verifier_text, behavior_eval_tests, codex_adapter_tests,
-             verifier_tests, policy, ci_text, suites):
+             verifier_tests, policy, ci_text, suites, *, root=ROOT):
     missing = []
     if not harness_suite.passed:
         missing.append("harness_suite")
@@ -296,7 +378,7 @@ def h19_fact(harness_suite, semantic_request_suite, adapter_text, runner_text,
     for key in ("require_isolated_project_adapter", "require_staged_project_adapter"):
         if policy.get(key) is not True:
             missing.append("policy:%s" % key)
-    if "tests.test_semantic_evidence_verifier" not in ci_text:
+    if not ci_wires_tests(ci_text, suites, {"tests.test_semantic_evidence_verifier"}, root):
         missing.append("ci:semantic-evidence-verifier")
     if not any(
             suite.get("id") == "five-engineering-maturity-contract"
@@ -511,10 +593,10 @@ class Auditor:
         return True
 
     def _controller_ci(self):
-        return all(token in self.ci for token in (
-            "tests.test_runtime_controller", "tests.test_context_plan",
-            "scripts/generate-skill-contracts.py --check",
-        ))
+        return ci_wires_tests(self.ci, self.suites, {
+            "tests.test_runtime_controller", "tests.test_context_plan"}, self.root) \
+            and ci_wires_command(self.ci, self.suites, [
+                "python3", "scripts/generate-skill-contracts.py", "--check"])
 
     def _semantic_evidence(self):
         if not self.evidence_run_id:
@@ -685,8 +767,9 @@ class Auditor:
         facts["P14"] = prompt_suite
         facts["P15"] = prompt_drift
         facts["P16"] = self.fact(
-            "generate-skill-contracts.py --check" in self.ci
-            and "tests.test_skill_contracts" in self.ci,
+            ci_wires_command(self.ci, self.suites, [
+                "python3", "scripts/generate-skill-contracts.py", "--check"])
+            and ci_wires_tests(self.ci, self.suites, {"tests.test_skill_contracts"}, self.root),
             "machine contract generator/tests are wired into CI",
             "machine contract CI wiring is missing",
         )
@@ -812,7 +895,8 @@ class Auditor:
             "manifest live replay is unproven",
         )
         facts["C20"] = self.fact(
-            self._controller_ci() and "tests.test_context_resolver" in self.ci,
+            self._controller_ci() and ci_wires_tests(
+                self.ci, self.suites, {"tests.test_context_resolver"}, self.root),
             "planner/resolver/controller adversarial tests are in CI",
             "context/controller CI wiring is incomplete",
         )
@@ -892,9 +976,9 @@ class Auditor:
             "registered deterministic harness suites are missing/failing",
         )
         facts["H14"] = self.fact(
-            "tests.test_runtime_controller" in self.ci
-            and "tests.test_distribution_builder" in self.ci
-            and "tests.test_publish_release" in self.ci,
+            ci_wires_tests(self.ci, self.suites, {
+                "tests.test_runtime_controller", "tests.test_distribution_builder",
+                "tests.test_publish_release"}, self.root),
             "controller/hardening tests are mandatory in CI",
             "controller/hardening CI wiring is incomplete",
         )
@@ -951,6 +1035,7 @@ class Auditor:
             load_json(self.root / "evals/semantic-evidence-policy.json"),
             self.ci,
             self.suites,
+            root=self.root,
         )
         facts["H20"] = semantic_fact
 
@@ -1124,7 +1209,7 @@ class Auditor:
                 "missing_or_drifted_external_trust_anchor_fails_closed",
                 "signed_approval_nonce_cannot_be_replayed_in_next_cycle",
             ))
-            and "tests.test_workflow_loop" in self.ci,
+            and ci_wires_tests(self.ci, self.suites, {"tests.test_workflow_loop"}, self.root),
             "Product Launch executes with validator-clean SHIP and host-signed approval gate",
             "graph-through-loop SHIP/signed-approval gate execution is unproven",
         )
@@ -1237,7 +1322,8 @@ class Auditor:
             "join failure/timeout/partial policy is incomplete",
         )
         facts["G20"] = self.fact(
-            "tests.test_workflow_graph" in self.ci and "workflow-graph.py --check" in self.ci,
+            ci_wires_tests(self.ci, self.suites, {"tests.test_workflow_graph"}, self.root)
+            and ci_wires_command(self.ci, self.suites, ["python3", "scripts/workflow-graph.py", "--check"]),
             "graph drift/reachability/cycle/fan-out/join tests are in CI",
             "graph CI wiring is incomplete",
         )

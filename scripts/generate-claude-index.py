@@ -6,9 +6,13 @@ import argparse
 import json
 import os
 from pathlib import Path
+from runpy import run_path
 import sys
 import tempfile
 
+
+# Resolve this checkout explicitly, including when imported by file path in tests.
+_read_catalog_groups = run_path(str(Path(__file__).with_name("system_catalog.py")))["catalog_groups"]
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG = ROOT / "references" / "system-catalog.json"
@@ -39,41 +43,26 @@ def load_catalog():
 
 def render(catalog):
     lines = [BEGIN]
-    names = []
-    for discipline in catalog["logical_order"]:
-        if discipline == "protocol":
-            protocol = catalog["protocol"]
-            skills = protocol["skills"]
-            names.extend(skills)
+    groups = _read_catalog_groups(catalog, ClaudeIndexError)
+    for group in groups:
+        spec = group.specification
+        if group.discipline == "protocol":
             lines.append(
                 "- **%s (8):** %s"
-                % (
-                    protocol["display_name"],
-                    " · ".join("`%s`" % skill for skill in skills),
-                )
+                % (spec["display_name"], " · ".join("`%s`" % skill.name for skill in group.skills))
             )
             continue
-        spec = catalog["disciplines"][discipline]
-        phase_parts = []
-        count = 0
-        for phase in spec["phase_order"]:
-            skills = spec["phases"][phase]
-            names.extend(skills)
-            count += len(skills)
-            phase_parts.append(
-                "**%s:** %s"
-                % (phase.title(), " · ".join("`%s`" % skill for skill in skills))
-            )
+        phase_parts = [
+            "**%s:** %s" % (phase.title(), " · ".join(
+                "`%s`" % skill.name for skill in group.skills if skill.phase == phase))
+            for phase in group.phase_order
+        ]
         lines.append(
             "- **%s · %s (%d):** %s"
-            % (
-                spec["display_name"],
-                "+".join(spec["frameworks"]),
-                count,
-                "; ".join(phase_parts),
-            )
+            % (spec["display_name"], "+".join(spec["frameworks"]),
+               len(group.skills), "; ".join(phase_parts))
         )
-    if len(names) != 120 or len(names) != len(set(names)):
+    if sum(len(group.skills) for group in groups) != 120:
         raise ClaudeIndexError("compact index does not cover 120 unique skills")
     lines.append(END)
     return "\n".join(lines)

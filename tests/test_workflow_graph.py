@@ -1,7 +1,10 @@
 import copy
+import contextlib
 import importlib.util
+import io
 import json
 from pathlib import Path
+import shutil
 import tempfile
 import unittest
 
@@ -27,6 +30,73 @@ class WorkflowGraphTests(unittest.TestCase):
             source, self.catalog, ROOT,
             copy.deepcopy(self.edges if edges is None else edges),
         )
+
+    def copy_fixture(self, root):
+        relative_paths = [
+            workflow_graph.CATALOG_REL, workflow_graph.CONTROL_BINDINGS_REL,
+            workflow_graph.SOURCE_REL, workflow_graph.GRAPH_REL, workflow_graph.DOC_REL,
+            *(Path(item["ref"]) for item in self.source["edge_shards"]),
+            *(Path(node["path"]) for node in workflow_graph.catalog_nodes(self.catalog)),
+        ]
+        for relative in relative_paths:
+            target = root / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(ROOT / relative, target)
+
+    @staticmethod
+    def graph_files(root):
+        source, _raw, _edges, _shards = workflow_graph.load_authoritative_source(root)
+        relatives = [workflow_graph.SOURCE_REL, workflow_graph.GRAPH_REL, workflow_graph.DOC_REL]
+        relatives.extend(Path(item["ref"]) for item in source["edge_shards"])
+        return {str(relative): (root / relative).read_bytes() for relative in relatives}
+
+    def test_write_refreshes_only_moved_condition_locations_and_is_repeatable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.copy_fixture(root)
+            chosen = next(edge for edge in self.edges if edge["documentation_required"])
+            relative = chosen["condition_source"].rsplit(":", 1)[0]
+            path = root / relative
+            text = path.read_text(encoding="utf-8")
+            moved = text.replace("## Next Best Skill", "\n## Next Best Skill", 1)
+            self.assertNotEqual(text, moved)
+            path.write_text(moved, encoding="utf-8")
+            with self.assertRaisesRegex(workflow_graph.GraphError, "source-derived edge semantic drift"):
+                workflow_graph.check(root)
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, workflow_graph.main(["--write", "--root", str(root)]))
+            _source, _raw, refreshed, _shards = workflow_graph.load_authoritative_source(root)
+            self.assertEqual(
+                [{key: value for key, value in edge.items() if key != "condition_source"} for edge in self.edges],
+                [{key: value for key, value in edge.items() if key != "condition_source"} for edge in refreshed],
+            )
+            for old, new in zip(self.edges, refreshed):
+                prefix, line = old["condition_source"].rsplit(":", 1)
+                self.assertEqual(
+                    prefix + ":" + str(int(line) + (prefix == relative)),
+                    new["condition_source"],
+                )
+            self.assertEqual([], workflow_graph.check(root)[0])
+            before = self.graph_files(root)
+            with contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(0, workflow_graph.main(["--write", "--root", str(root)]))
+            self.assertEqual(before, self.graph_files(root))
+
+    def test_write_rejects_changed_handoff_meaning_before_writing_any_projection(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.copy_fixture(root)
+            before = self.graph_files(root)
+            chosen = next(edge for edge in self.edges if edge["documentation_required"])
+            relative, line = chosen["condition_source"].rsplit(":", 1)
+            path = root / relative
+            lines = path.read_text(encoding="utf-8").splitlines()
+            lines[int(line) - 1] += " Changed handoff requirement."
+            changed = "\n".join(lines).replace("## Next Best Skill", "\n## Next Best Skill", 1)
+            path.write_text(changed + "\n", encoding="utf-8")
+            with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(1, workflow_graph.main(["--write", "--root", str(root)]))
+            self.assertEqual(before, self.graph_files(root))
 
     def test_projection_covers_catalog_and_real_launch_fanout_join(self):
         failures, graph = workflow_graph.check(ROOT)

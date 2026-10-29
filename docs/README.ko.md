@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills"><img src="https://img.shields.io/github/stars/aaron-he-zhu/aaron-marketing-skills?style=flat" alt="GitHub Stars"></a>
 <!-- GENERATED:BEGIN release-surface:version-badge -->
-  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.1.0-orange" alt="Version"></a>
+  <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/VERSIONS.md"><img src="https://img.shields.io/badge/version-20.2.0-orange" alt="Version"></a>
 <!-- GENERATED:END release-surface:version-badge -->
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
   <a href="https://github.com/aaron-he-zhu/aaron-marketing-skills/commits/main"><img src="https://img.shields.io/github/last-commit/aaron-he-zhu/aaron-marketing-skills" alt="Last Commit"></a>
@@ -94,14 +94,16 @@
 
 Claude Code, 임의의 Agent Skills 호환 호스트, 또는 단순한 `git clone`과 함께 사용하세요:
 
+<!-- GENERATED:BEGIN release-surface:portable-install -->
 | 호스트 | 설치 |
 |------|---------|
 | **Claude Code** | `/plugin marketplace add aaron-he-zhu/aaron-marketing-skills` 후 `/plugin install aaron-marketing@aaron` |
 | **Codex · Cursor · OpenCode · Antigravity · Gemini CLI · Copilot CLI · OpenClaw · Hermes · [70+ 호스트](https://github.com/vercel-labs/skills#supported-agents)** | `npx skills add aaron-he-zhu/aaron-marketing-skills` |
-| **Agent Plugins v1 클라이언트 · Portable Lite** | [v20.1.0 릴리스](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.1.0)에서 `aaron-marketing-skills-20.1.0-agent-plugin-v1-lite.tar.gz`를 내려받아 압축을 풀고 추출된 플러그인 디렉터리를 설치 |
+| **Agent Plugins v1 클라이언트 · Portable Lite** | [v20.2.0 릴리스](https://github.com/aaron-he-zhu/aaron-marketing-skills/releases/tag/v20.2.0)에서 `aaron-marketing-skills-20.2.0-agent-plugin-v1-lite.tar.gz`를 내려받아 압축을 풀고 추출된 플러그인 디렉터리를 설치 |
 | **Grok Bot · Hermes Bot Mode (AI Staff)** | 8봇 명단 생성: `python3 scripts/generate-bot-projections.py --output <private-dir>` — 전문가 7명 + `aaron-chief`. [AI Staff](#ai-staff) 참고 |
 | **[SkillHub.cn](https://skillhub.cn)(중국어 커뮤니티)** | `skillhub install <frontmatter-slug>`(예: `keyword-research`) |
 | **임의의 호스트** | `git clone https://github.com/aaron-he-zhu/aaron-marketing-skills` |
+<!-- GENERATED:END release-surface:portable-install -->
 
 Claude Code에서 `marketplace add`는 카탈로그만 등록합니다 — 스킬과 명령어를 실제로 활성화하려면 `/plugin install aaron-marketing@aaron`을 실행(또는 `/plugin`에서 선택)하세요. 범용 호스트에서 **단일** 스킬을 가져오려면: `npx skills add aaron-he-zhu/aaron-marketing-skills -s keyword-research`. 번들은 [skills.sh 레지스트리](https://skills.sh/aaron-he-zhu/aaron-marketing-skills)에서 둘러볼 수 있습니다. 에이전트별 디렉터리, frontmatter 특이점, 플러그인 밖에서 무엇이 저하되는지: [docs/agent-compatibility.md](agent-compatibility.md)(120/120 설치 가능 검증, 2026-07).
 
@@ -697,7 +699,7 @@ docs/            # 현지화된 README (de, es, fr, it, ja, ko, pt, zh, zh-Hant)
 
 - **[CONTRIBUTING.md](../CONTRIBUTING.md)** — 오서링 규칙, 기여 체크리스트, 권위 있는 10개 추적 표면 목록.
 <!-- GENERATED:BEGIN release-surface:current-bundle -->
-- **[VERSIONS.md](../VERSIONS.md)** — 스킬별 버전 + changelog(현재 번들: `20.1.0`).
+- **[VERSIONS.md](../VERSIONS.md)** — 스킬별 버전 + changelog(현재 번들: `20.2.0`).
 <!-- GENERATED:END release-surface:current-bundle -->
 - **[SECURITY.md](../SECURITY.md)** · **[PRIVACY.md](../PRIVACY.md)** · **[CODE_OF_CONDUCT.md](../CODE_OF_CONDUCT.md)** — 보안, 프라이버시, 커뮤니티 정책.
 - **[CLAUDE.md](../CLAUDE.md)** / **[AGENTS.md](../AGENTS.md)** — 이 repo의 에이전트용 컨텍스트.

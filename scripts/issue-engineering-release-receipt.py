@@ -29,7 +29,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 RECEIPT_SCHEMA_REF = "references/engineering-release-receipt.schema.json"
 REPORT_SCHEMA_REF = "references/engineering-maturity-report.schema.json"
-RELEASE_VERSION = "20.1.0"
+RELEASE_VERSION = "20.2.0"
 GATE = "engineering-validation-v19"
 AUTHORIZATION = "release-v19-without-real-project-outcomes"
 MAX_EVIDENCE_AGE_SECONDS = 24 * 60 * 60

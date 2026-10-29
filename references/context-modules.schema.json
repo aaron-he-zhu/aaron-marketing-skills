@@ -16,11 +16,32 @@
     "modules"
   ],
   "properties": {
-    "$schema": {"const": "./context-modules.schema.json"},
-    "schema_version": {"const": "1.0"},
-    "consumer_order": {"const": ["controller", "model", "tool"]},
-    "load_policy_order": {"const": ["always", "activation", "conditional", "lookup-only", "fallback"]},
-    "prompt_profile_order": {"const": ["explicit", "balanced", "lean"]},
+    "$schema": {
+      "const": "./context-modules.schema.json"
+    },
+    "schema_version": {
+      "const": "2.0"
+    },
+    "consumer_order": {
+      "const": [
+        "controller",
+        "model",
+        "tool"
+      ]
+    },
+    "load_policy_order": {
+      "const": [
+        "always",
+        "activation",
+        "conditional",
+        "lookup-only"
+      ]
+    },
+    "prompt_profile_order": {
+      "const": [
+        "explicit"
+      ]
+    },
     "host_profile_order": {
       "const": [
         "standalone-skill-host",
@@ -31,17 +52,26 @@
     "exclusive_groups": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["model-policy-representation", "model-skill-representation"],
+      "required": [
+        "model-policy-representation",
+        "model-skill-representation"
+      ],
       "properties": {
-        "model-policy-representation": {"$ref": "#/$defs/exclusiveGroup"},
-        "model-skill-representation": {"$ref": "#/$defs/exclusiveGroup"}
+        "model-policy-representation": {
+          "$ref": "#/$defs/exclusiveGroup"
+        },
+        "model-skill-representation": {
+          "$ref": "#/$defs/exclusiveGroup"
+        }
       }
     },
     "modules": {
       "type": "array",
       "minItems": 12,
-      "maxItems": 32,
-      "items": {"$ref": "#/$defs/module"}
+      "maxItems": 24,
+      "items": {
+        "$ref": "#/$defs/module"
+      }
     }
   },
   "$defs": {
@@ -54,10 +84,17 @@
     "exclusiveGroup": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["consumer", "selection"],
+      "required": [
+        "consumer",
+        "selection"
+      ],
       "properties": {
-        "consumer": {"const": "model"},
-        "selection": {"const": "exactly-one-primary-per-applicable-host-and-prompt-profile"}
+        "consumer": {
+          "const": "model"
+        },
+        "selection": {
+          "const": "exactly-one-primary-per-applicable-host-and-prompt-profile"
+        }
       }
     },
     "module": {
@@ -75,30 +112,48 @@
         "condition_code"
       ],
       "properties": {
-        "module_id": {"$ref": "#/$defs/safeId"},
-        "consumer": {"enum": ["controller", "model", "tool"]},
-        "load_policy": {"enum": ["always", "activation", "conditional", "lookup-only", "fallback"]},
-        "source_role": {
+        "module_id": {
+          "$ref": "#/$defs/safeId"
+        },
+        "consumer": {
           "enum": [
-            "skill-definition",
-            "skill-capsule",
-            "machine-contract",
-            "shared-skill-contract",
-            "policy-kernel",
-            "explicit-runtime-read",
-            "authored-reference",
-            "project-evidence",
-            "routing-shard",
-            "connector-catalog",
-            "connector-implementation"
+            "controller",
+            "model",
+            "tool"
           ]
         },
-        "materialization": {"enum": ["body", "metadata", "on-demand"]},
+        "load_policy": {
+          "enum": [
+            "always",
+            "activation",
+            "conditional",
+            "lookup-only"
+          ]
+        },
+        "source_role": {
+          "enum": [
+            "authored-reference",
+            "connector-catalog",
+            "connector-implementation",
+            "explicit-runtime-read",
+            "machine-contract",
+            "project-evidence",
+            "routing-shard",
+            "shared-skill-contract",
+            "skill-definition"
+          ]
+        },
+        "materialization": {
+          "enum": [
+            "body",
+            "metadata",
+            "on-demand"
+          ]
+        },
         "prompt_profiles": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true,
-          "items": {"enum": ["explicit", "balanced", "lean"]}
+          "const": [
+            "explicit"
+          ]
         },
         "host_profiles": {
           "type": "array",
@@ -114,12 +169,26 @@
         },
         "exclusive_group": {
           "oneOf": [
-            {"type": "null"},
-            {"enum": ["model-policy-representation", "model-skill-representation"]}
+            {
+              "type": "null"
+            },
+            {
+              "enum": [
+                "model-policy-representation",
+                "model-skill-representation"
+              ]
+            }
           ]
         },
         "condition_code": {
-          "oneOf": [{"type": "null"}, {"$ref": "#/$defs/safeId"}]
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/safeId"
+            }
+          ]
         }
       }
     }

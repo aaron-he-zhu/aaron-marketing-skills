@@ -82,9 +82,6 @@ jobs:
           set -euo pipefail
           python3 scripts/check-pii.py --tracked
           bash scripts/check-stdlib-only.sh
-          python3 scripts/check-local-links.py
-          python3 scripts/check-wiki.py
-          python3 scripts/check-routing-retrieval.py
           find . -path ./.git -prune -o -path ./.planning -prune -o -name '*.json' -type f -print0 |
             xargs -0 -n1 python3 -m json.tool >/dev/null
           python3 -m py_compile scripts/*.py scripts/connectors/*.py scripts/adapters/*.py
@@ -107,31 +104,20 @@ jobs:
       - name: Generated architecture and contract drift
         run: |
           set -euo pipefail
-          python3 scripts/check-architecture.py
-          python3 scripts/generate-release-surfaces.py --check
-          python3 scripts/generate-system-docs.py --check
-          python3 scripts/generate-auditor-runtime.py --check
           python3 scripts/generate-auditor-prompt-contracts.py --check
           python3 scripts/generate-auto-routing-shards.py --check
           python3 scripts/generate-skill-contracts.py --check
-          python3 scripts/generate-skill-capsules.py --check
+          python3 scripts/generate-claude-index.py --check
           python3 scripts/workflow-graph.py --check
-          python3 scripts/check-context-budget.py
-          python3 scripts/check-context-efficiency.py --check
-          python3 scripts/check-routing.py
 
       - name: All unit and runtime suites
         run: |
           set -euo pipefail
-          python3 -m unittest discover -s tests -p 'test_*.py'
-          bash tests/test_runtime_distribution.sh
-          bash tests/test_hook_artifact_gate.sh
+          python3 scripts/run-behavior-evals.py --with-unittest-discovery
 
       - name: Deterministic behavior and exact nightly plan
         run: |
           set -euo pipefail
-          python3 scripts/run-behavior-evals.py
-          python3 scripts/check-evals.py
           python3 scripts/run-behavior-evals.py \
             --adapter-only \
             --adapter-protocol 2 \

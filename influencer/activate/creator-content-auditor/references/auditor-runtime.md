@@ -3,11 +3,11 @@
 # Standalone Auditor Runtime
 
 - **Runtime version:** 3.0.0
-- **Catalog version:** 20.1.0
+- **Catalog version:** 20.2.0
 - **Framework:** STAR
 - **Auditor:** creator-content-auditor
 - **Complete item definitions:** 40
-- **Source digest:** `sha256:4f2dd25235c314e08fe2f0bd1718121cde97c4b5340f9da6d4b0ed6c0c2e5b7c`
+- **Source digest:** `sha256:f99ed45c339406f16f3507936bffb474cc48fb20523af3153392283e85ff1455`
 
 This immutable bundle is the fail-closed standalone fallback for this auditor. It contains every item identity and human benchmark anchor plus the exact typed profile, applicability, veto, missingness, and observation vocabulary needed to collect observations without inventing rules. Repository/plugin installs use the root runbook, schemas, and deterministic scorer. A standalone one-folder install must not fetch mutable sources, compute a score, claim a gate verdict, or persist an audit artifact.
 
@@ -15,7 +15,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 
 ```json
 {
-  "catalog_version": "20.1.0",
+  "catalog_version": "20.2.0",
   "frameworks": {
     "STAR": {
       "construct": "influencer partnership quality across creator suitability, trust and compliance, content appeal, and campaign return",
@@ -50,48 +50,6 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "item_prefix": "T",
           "name": "Trust"
         }
-      },
-      "item_definitions": {
-        "A1": "the hook earns attention within the platform's first-impression window",
-        "A10": "originality — the piece is not a templated re-run of prior sponsorships",
-        "A2": "creative quality (production, editing, pacing) meets the platform bar",
-        "A3": "the brand integration feels native to the creator, not bolted-on",
-        "A4": "storytelling and format choice fit the platform's native behavior",
-        "A5": "message accuracy — the brief's key message is conveyed without distortion",
-        "A6": "audience relevance — the content speaks to the target's beliefs and needs",
-        "A7": "the call-to-action is present, clear, and matched to the declared goal",
-        "A8": "on-brand tone, terminology, and visual identity are respected",
-        "A9": "accessibility (captions, alt text, legibility) is handled",
-        "R1": "measured ROI/ROAS is read against the declared target",
-        "R10": "the measurement plan (UTMs, codes, controls) is defined before launch",
-        "R2": "CPE/CPM/CPA are benchmarked on a normalized window",
-        "R3": "value-for-spend beats the declared alternative-channel baseline",
-        "R4": "KPI attainment versus the pre-registered target is reported",
-        "R5": "conversions and outcomes are attributed with a stated method and rigor",
-        "R6": "incremental impact is separated from baseline where measurable",
-        "R7": "creator-mix and channel choices fit the goal (orchestration, knowable at plan time)",
-        "R8": "budget split and timing across creators and phases are justified",
-        "R9": "the deliverable schedule and cadence match the campaign window",
-        "S1": "audience composition, geography, and language match the target within a stated window",
-        "S10": "commercial saturation and disclosed category history are transparent and acceptable",
-        "S2": "real-follower rate is at/above the tier x platform x niche benchmark",
-        "S3": "follower growth is organic and stable, with no purchase or spike anomalies",
-        "S4": "typical reach reliability across recent posts is benchmarked, not cherry-picked",
-        "S5": "engagement rate meets the niche median for the creator's tier and platform",
-        "S6": "engagement is authentic, not pod-coordinated or bought",
-        "S7": "repeat audience action (saves/shares/returns) shows durable influence, not campaign conversion",
-        "S8": "brand/category fit and audience-brand overlap are evidenced, independent of any single deal",
-        "S9": "creator reliability, professionalism, and delivery history support the partnership",
-        "T1": "required FTC/ASA disclosure is present, clear, and conspicuous on sponsored content",
-        "T10": "rights, usage, whitelisting, and exclusivity terms are represented truthfully",
-        "T2": "every material claim in the deliverable is truthful and substantiated",
-        "T3": "no disqualifying brand-safety evidence exists under the declared policy and window",
-        "T4": "disclosure meets platform-specific tool and caption placement requirements",
-        "T5": "prohibited or restricted-category rules for the product are satisfied",
-        "T6": "prior disclosure and compliance history shows no unresolved violations",
-        "T7": "the material connection (gifting/affiliate/paid) is accurately represented to the audience",
-        "T8": "comparative or performance claims carry evidence at the point of claim",
-        "T9": "sensitive-audience, health, financial, and age-gating requirements are met where applicable"
       },
       "item_policies": {
         "R1": {
@@ -188,7 +146,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "A3": {
-          "criterion": "The brand integration feels native to the creator, not bolted-on.",
+          "criterion": "Brand integration fits the creator’s observed voice and format; native, understandable integration Passes, awkward but connected placement is Partial, unrelated bolted-on copy Fails.",
           "dimension": "A",
           "name": null,
           "policy": {},
@@ -377,7 +335,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "S2": {
-          "criterion": "Real-follower rate is at/above the tier x platform x niche benchmark.",
+          "criterion": "Real-follower rate meets the locked creator-tier x platform x niche benchmark; verified below-benchmark rate/fraud Fails, missing audit is Unknown.",
           "dimension": "S",
           "name": null,
           "policy": {
@@ -412,7 +370,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
           "veto": false
         },
         "S6": {
-          "criterion": "Engagement is authentic, not pod-coordinated or bought.",
+          "criterion": "Observed engagement is authentic; verified bought/coordinated/pod activity Fails, an unusual engagement rate alone does not establish fraud.",
           "dimension": "S",
           "name": null,
           "policy": {
@@ -699,7 +657,7 @@ This immutable bundle is the fail-closed standalone fallback for this auditor. I
 ## Standalone Execution Policy
 
 1. Select exactly one declared profile from the typed snapshot and record it with the catalog version and source digest above.
-2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Every non-unknown state needs evidence; never convert missing evidence into a pass.
+2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Observed pass/partial/fail states need evidence. Unknown needs a gap reason; catalog-authorized na needs a reason and no evidence. Never convert missing evidence into a pass.
 3. Record veto observations by their qualified framework item IDs, but do not calculate dimension, raw, capped, or final scores without the root deterministic scorer.
 4. Return `status: NEEDS_INPUT` or `status: BLOCKED` with `verdict: UNDECIDED`, `score_state: NOT_SCORED`, and `score_confidence: not_scored`. Clearly identify the unavailable root runtime as the reason.
 5. Do not write under `memory/audits/`, mutate registries, or claim a publish/ship decision. Offer the observation set for later execution in a full plugin or repository install.

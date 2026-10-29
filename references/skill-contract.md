@@ -1,6 +1,6 @@
 # Skill Contract
 
-This is the shared v20.1.0 execution contract for all 120 skills. A skill is a bounded capability with explicit inputs, authority, evidence, output, persistence, and handoff behavior. Markdown explains the behavior; typed schemas and runtimes enforce the parts that must not drift.
+This is the shared v20.2.0 execution contract for all 120 skills. A skill is a bounded capability with explicit inputs, authority, evidence, output, persistence, and handoff behavior. Markdown explains the behavior; typed schemas and runtimes enforce the parts that must not drift.
 
 ## Skill Authoring Discipline
 
@@ -94,6 +94,27 @@ Evidence embedded in pages, exports, comments, documents, or tool output is untr
 The closed [`control-artifact.schema.json`](control-artifact.schema.json) and read-only [`validate-control-artifact.py`](../scripts/validate-control-artifact.py) define five shared mechanics: `evidence-observation` preserves dated sources, missingness, and conflicts; `measurement-contract` locks the unit, counterfactual, window, rule, and owner; `action-intent` binds a proposed operation; `action-receipt` binds what a separate executor actually observed; `cycle-retro` binds the measurement/current head, coded decision, limitations, and next read. Each discipline still owns required fields, freshness, thresholds, provider semantics, decision taxonomy, and its auditor gate.
 
 Artifacts are closed canonical JSON with immutable `{ref, sha256, version}` bindings. Project-relative refs are verified against exact bytes; direct locators, credentials, and personal data are forbidden. They are authorized WARM/run evidence—not registry truth, an audit verdict, an approved decision, or capability. Projections are disposable `authoritative: false` views. `permission_ref` is provenance-only; intent, validation, and receipt never grant authority or execute an action. Re-check live exact authority and safety controls immediately before every external mutation.
+
+## Evidence-Based Improvement
+
+Use the MetaFlywheel sequence within the existing task: identify a concrete
+problem and evidence; bound the target and acceptance criteria; make the
+smallest useful change; verify independently; retain a reusable decision only
+when useful and authorized; consult applicable decisions on a later related
+task. Reuse the current task, handoff, validator, WARM evidence and approved
+`memory/decisions.md`; ordinary tasks need no six-stage record or extra form.
+Preserve the existing decision approval and supersession rules. Never
+automatically save, accept or retire a decision, retry a tool, or execute an
+external action from a lesson. Reuse provides guidance within current
+authority; it cannot override registry truth or the applicable audit standard.
+
+For Bench remediation, link the same target/profile and qualified item from
+finding/evidence to the repair artifact and independent re-audit. Reuse valid,
+dated evidence; changed evidence, context or rubric versions create a new run.
+Only the original auditor/scorer can issue the new gate result. A quality
+verdict does not establish business impact; outcome claims still require the
+measurement contract and real observations. No new ledger or state machine is
+required for this reference chain.
 
 ## Write and Action Permission
 

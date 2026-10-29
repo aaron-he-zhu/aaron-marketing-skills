@@ -11,7 +11,7 @@
           "end_char": 135,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 490,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 137
         },
@@ -41,7 +41,7 @@
           "end_char": 581,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 492
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7"
+      "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072"
     }
   },
   "context_hints": {
@@ -69,7 +69,7 @@
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 65
       },
       {
@@ -90,7 +90,7 @@
         "path": "references/send-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "1e2aaee64edbeafd828883c72a9bb9a986d2473234af0c3f8df1704fcd1a4351",
+        "sha256": "7ac0765f58f3438da1c413647c9dfd7cabec0d8e206507b199116af2e0258fe6",
         "source_line": 63
       }
     ],
@@ -119,7 +119,7 @@
           "end_char": 95,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -137,7 +137,7 @@
           "end_char": 189,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 96
         },
@@ -155,7 +155,7 @@
           "end_char": 286,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 190
         },
@@ -173,7 +173,7 @@
           "end_char": 358,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 287
         },
@@ -188,7 +188,7 @@
     "summary_ref": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7"
+      "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -204,8 +204,8 @@
     "name": "consent-registry",
     "path": "protocol/consent-registry/SKILL.md",
     "phase": "protocol",
-    "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
-    "version": "20.1.0"
+    "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<pseudonymous subject-id and consent/suppression event>",
@@ -219,7 +219,7 @@
           "end_char": 87,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -231,7 +231,7 @@
     "source": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7"
+      "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072"
     }
   },
   "output_contract": {
@@ -246,7 +246,7 @@
           "end_char": 48,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -262,7 +262,7 @@
           "end_char": 80,
           "path": "protocol/consent-registry/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7",
+          "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072",
           "span_basis": "field-text",
           "start_char": 50
         },
@@ -273,7 +273,7 @@
     "source": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7"
+      "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072"
     },
     "summary": "consent events only through `registry-events.py`; human records are projections.",
     "summary_source": "writes-fallback",
@@ -284,12 +284,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -298,7 +298,7 @@
     "source": {
       "path": "protocol/consent-registry/SKILL.md",
       "section": "frontmatter",
-      "sha256": "b824f95dd1eb54f211e8260cd879ec50b4cef8a7f569f469e05b7463ac710cb7"
+      "sha256": "3ff279015463c9db093e9ee14a7679b42e6f69ae8c35511cd1b3a0c816656072"
     },
     "trigger_phrases": [
       "log this subscriber's opt-in"

@@ -7,6 +7,9 @@ deliberately narrower: this tool will only replace content between an exact
 inserts markers, rewrites a whole Markdown file, or performs global version
 substitution.
 
+The fixed assembly package ceilings are also generated from distribution-files;
+the runtime retains local constants and never trusts a package's self-report.
+
 Usage:
   python3 scripts/generate-release-surfaces.py --check
   python3 scripts/generate-release-surfaces.py --write
@@ -17,6 +20,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+from runpy import run_path
 import re
 import stat
 import string
@@ -24,9 +28,14 @@ import sys
 import tempfile
 
 
+# Resolve this checkout explicitly, including when imported by file path in tests.
+_read_catalog_groups = run_path(str(Path(__file__).with_name("system_catalog.py")))["catalog_groups"]
+
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_REL = Path("references/system-catalog.json")
 METADATA_REL = Path("references/publication-metadata.json")
+DISTRIBUTION_REL = Path("references/distribution-files.json")
+ASSEMBLY_REL = Path("scripts/context-assembly.py")
 
 JSON_TARGETS = (
     Path(".claude-plugin/plugin.json"),
@@ -41,6 +50,8 @@ STATIC_MARKDOWN_TARGETS = {
     Path("CLAUDE.md"),
     Path("AGENTS.md"),
     Path("SECURITY.md"),
+    Path("docs/agent-compatibility.md"),
+    Path("docs/registry-submissions.md"),
 }
 DISCIPLINES = {
     "narrative", "seo-geo", "social", "email", "ad", "influencer", "launch",
@@ -101,60 +112,11 @@ def _unique_text_list(value: object, label: str) -> list[str]:
 
 
 def _catalog_skill_inventory(catalog: dict) -> tuple[list[str], dict[str, list[str]]]:
-    try:
-        logical_order = catalog["logical_order"]
-        disciplines = catalog["disciplines"]
-        protocol = catalog["protocol"]
-        counts = catalog["counts"]
-    except KeyError as exc:
-        raise GenerationError("system catalog is missing %s" % exc) from exc
-    if (
-            not isinstance(logical_order, list)
-            or not logical_order
-            or len(logical_order) != len(set(logical_order))):
-        raise GenerationError("system catalog logical_order must be a unique list")
-
-    grouped: dict[str, list[str]] = {}
-    paths: list[str] = []
-    for key in logical_order:
-        if key == "protocol":
-            skills = protocol.get("skills")
-            if not isinstance(skills, list):
-                raise GenerationError("system catalog protocol.skills must be a list")
-            if any(
-                    not isinstance(skill, str) or not SLUG_RE.fullmatch(skill)
-                    for skill in skills):
-                raise GenerationError("system catalog protocol has an invalid skill slug")
-            grouped[key] = list(skills)
-            paths.extend("./protocol/%s" % skill for skill in skills)
-            continue
-        if key not in disciplines:
-            raise GenerationError("logical_order references unknown discipline %s" % key)
-        discipline = disciplines[key]
-        phase_order = discipline.get("phase_order")
-        phases = discipline.get("phases")
-        if not isinstance(phase_order, list) or not isinstance(phases, dict):
-            raise GenerationError("%s phase topology is invalid" % key)
-        skills = []
-        for phase in phase_order:
-            phase_skills = phases.get(phase)
-            if not isinstance(phase_skills, list):
-                raise GenerationError("%s.%s must be a skill list" % (key, phase))
-            for skill in phase_skills:
-                if not isinstance(skill, str) or not SLUG_RE.fullmatch(skill):
-                    raise GenerationError("%s.%s has an invalid skill slug" % (key, phase))
-                skills.append(skill)
-                paths.append("./%s/%s/%s" % (key, phase, skill))
-        grouped[key] = skills
-
-    if len(paths) != len(set(paths)):
-        raise GenerationError("system catalog skill paths are not unique")
-    expected = counts.get("total_skills")
-    if expected != len(paths):
-        raise GenerationError(
-            "system catalog declares %r total skills but orders %d" % (expected, len(paths))
-        )
-    return paths, grouped
+    groups = _read_catalog_groups(catalog, GenerationError)
+    return (
+        ["./" + skill.directory for group in groups for skill in group.skills],
+        {group.discipline: [skill.name for skill in group.skills] for group in groups},
+    )
 
 
 def _validate_metadata(metadata: dict, catalog: dict, grouped: dict[str, list[str]]) -> None:
@@ -425,6 +387,10 @@ def _marker_lines(marker: str) -> tuple[str, str]:
 
 def _project_markdown(text: str, relative: Path, marker: str, body: str) -> str:
     begin, end = _marker_lines(marker)
+    return _project_text(text, relative, begin, end, body)
+
+
+def _project_text(text: str, relative: Path, begin: str, end: str, body: str) -> str:
     lines = text.splitlines(keepends=True)
     begin_positions = [
         index for index, line in enumerate(lines) if line.rstrip("\r\n") == begin
@@ -434,15 +400,44 @@ def _project_markdown(text: str, relative: Path, marker: str, body: str) -> str:
     ]
     if len(begin_positions) != 1 or len(end_positions) != 1:
         raise GenerationError(
-            "%s requires exactly one marker pair for %s; add lines %r and %r"
-            % (relative, marker, begin, end)
+            "%s requires exactly one marker pair; add lines %r and %r"
+            % (relative, begin, end)
         )
     start = begin_positions[0]
     stop = end_positions[0]
     if start >= stop:
-        raise GenerationError("%s marker pair is out of order for %s" % (relative, marker))
+        raise GenerationError("%s marker pair is out of order" % relative)
     projected = body.rstrip("\r\n") + "\n"
     return "".join(lines[:start + 1]) + projected + "".join(lines[stop:])
+
+
+def _runtime_ceiling_output(root: Path) -> bytes:
+    distribution = _load_json(root, DISTRIBUTION_REL)
+    plugin = distribution.get("plugin")
+    if not isinstance(plugin, dict):
+        raise GenerationError("distribution plugin must be an object")
+    order = plugin.get("profile_order")
+    profiles = plugin.get("profiles")
+    if order != ["lite", "pro", "governed"] or not isinstance(profiles, dict) or set(profiles) != set(order):
+        raise GenerationError("distribution plugin must declare lite/pro/governed ceilings")
+    lines = ["PLUGIN_PACKAGE_CEILINGS = {"]
+    for profile in order:
+        specification = profiles[profile]
+        ceiling = specification.get("package_ceiling") if isinstance(specification, dict) else None
+        if (not isinstance(ceiling, dict) or set(ceiling) != {"max_files", "max_bytes"}
+                or any(type(value) is not int or value <= 0 for value in ceiling.values())):
+            raise GenerationError("invalid distribution package ceiling for %s" % profile)
+        lines.append('    "%s": {"max_files": %s, "max_bytes": %s},' % (
+            profile, format(ceiling["max_files"], "_"), format(ceiling["max_bytes"], "_")))
+    lines.append("}")
+    try:
+        source = (root / ASSEMBLY_REL).read_text(encoding="utf-8")
+    except OSError as exc:
+        raise GenerationError("cannot read runtime ceiling projection: %s" % exc) from exc
+    return _project_text(source, ASSEMBLY_REL,
+                         "# GENERATED:BEGIN plugin-package-ceilings",
+                         "# GENERATED:END plugin-package-ceilings",
+                         "\n".join(lines)).encode("utf-8")
 
 
 def _render_all(root: Path) -> tuple[dict[Path, bytes], dict[Path, bytes]]:
@@ -455,7 +450,7 @@ def _render_all(root: Path) -> tuple[dict[Path, bytes], dict[Path, bytes]]:
     if set(json_outputs) != set(JSON_TARGETS):
         raise GenerationError("internal JSON target set drift")
 
-    markdown_outputs: dict[Path, bytes] = {}
+    text_outputs: dict[Path, bytes] = {ASSEMBLY_REL: _runtime_ceiling_output(root)}
     current_text: dict[Path, str] = {}
     for surface in metadata["markdown_surfaces"]:
         relative = Path(surface["path"])
@@ -469,8 +464,8 @@ def _render_all(root: Path) -> tuple[dict[Path, bytes], dict[Path, bytes]]:
             current_text[relative], relative, surface["marker"], body,
         )
     for relative, text in current_text.items():
-        markdown_outputs[relative] = text.encode("utf-8")
-    return json_outputs, markdown_outputs
+        text_outputs[relative] = text.encode("utf-8")
+    return json_outputs, text_outputs
 
 
 def _checked_target(root: Path, relative: Path) -> Path:

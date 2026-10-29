@@ -4,7 +4,7 @@ slug: aaron-ad-account-auditor
 displayName: "Ad Account Auditor · 付费广告账户审计"
 summary: "付费广告账户审计/ROAS评分"
 description: 'Use when auditing a paid ad account for incremental contribution, wasted spend, or measurement integrity before scaling; runs a typed 20-item ROAS profile with verified vetoes and a SHIP/FIX/BLOCK/UNDECIDED gate on own exported data. Not for campaign structure design — use campaign-architect; not for creative production — use ad-creative-builder. 付费广告账户审计/ROAS评分'
-version: "20.1.0"
+version: "20.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
@@ -12,7 +12,7 @@ when_to_use: "Use when checking whether a paid account or portfolio is safe to l
 argument-hint: "<campaign + outcome exports> <currency/window/lag> [profile]"
 allowed-tools: WebFetch
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "ad", "phase": "activate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "ad", "activate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.2.0", "discipline": "ad", "phase": "activate", "geo-relevance": "medium", "hermes": {"tags": ["marketing", "ad", "activate"], "category": "ad"}, "openclaw": {"emoji": "🎯", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Ad Account Auditor
@@ -63,7 +63,17 @@ For a pre-launch account-audit request, use the narrow route `conversion-signal-
 
 ### Runtime and Setup
 
-Read `../../../references/auditor-runbook.md`, `scoring-semantics.md`, `roas-benchmark.md`, and the ROAS catalog entry. Standalone installs use bundled immutable `references/auditor-runtime.md`; never fetch mutable `main`. Before deterministic calls, follow [`runtime-invocation.md`](../../../references/runtime-invocation.md), resolve `AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`, and require the scorer, validator, and typed catalogs. If unavailable, return `score_state: NOT_SCORED` / `score_confidence: not_scored` with no gate verdict or persistent artifact.
+<!-- GENERATED:BEGIN auditor-shared:activation -->
+Read the declared root runtime sources and selected framework/catalog entry.
+Standalone installs use the bundled immutable `references/auditor-runtime.md`;
+never fetch mutable `main` or guess missing policy. Before deterministic calls,
+follow `runtime-invocation.md` and resolve
+`AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`.
+Require the scorer, validator and typed catalogs. If unavailable, collect the
+selected profile's typed observations and Unknowns, but return
+`score_state: NOT_SCORED` / `score_confidence: not_scored` without a gate verdict
+or persistent artifact. Record the bound schema, runbook and catalog versions.
+<!-- GENERATED:END auditor-shared:activation -->
 
 Declare profile (`direct-response|prospecting|incremental-profit`), target, currency, attribution window, conversion lag, business constraint, goal, and observation date. If any required context is missing, return `NEEDS_INPUT/UNDECIDED`.
 
@@ -101,7 +111,11 @@ Lead with business impact and evidence. On trace request, qualify `ROAS-R1/R2/O1
 
 ## Report and Verdict
 
-Begin with the auditor-runbook's exact typed conversation header. Never replace `status`, `verdict`, or `score_state` with prose; list each explicitly missing qualified item as ``ID: `unknown``` before findings.
+<!-- GENERATED:BEGIN auditor-shared:result-header -->
+Begin with the auditor-runbook's exact typed conversation header. Never replace
+`status`, `verdict`, or `score_state` with prose; list each explicitly missing
+qualified item as ``ID: `unknown``` before findings.
+<!-- GENERATED:END auditor-shared:result-header -->
 
 Show verdict, profile/context, score or coverage/interval, confidence, R/O/A/S detail, reconciliation table, verified critical controls, Unknown evidence, and prioritized fix/owner/rerun condition. The scorer owns status/verdict and the 59 ceiling.
 

@@ -700,7 +700,20 @@ def project_events(run_id, events):
     envelope = envelope_hash = None
     validated_artifacts = []
     loop_states = {}
+    status = "active"
     for event in selected_path:
+        lifecycle_status = {
+            "run_finished": "succeeded", "run_failed": "failed",
+            "run_aborted": "aborted", "run_waiting": "waiting",
+        }.get(event["event_type"])
+        if lifecycle_status is not None:
+            status = lifecycle_status
+        elif event["event_type"] in {
+                "run_started", "route_selected", "context_resolved", "turn_started",
+                "turn_snapshot_created", "tool_requested", "tool_allowed",
+                "tool_blocked", "tool_finished", "branch_created", "turn_finished",
+                "save_point_created", "loop_state_changed"}:
+            status = "active"
         if event["event_type"] in {"tool_requested", "tool_allowed"}:
             open_tools.add(event["subject"]["ref"])
         elif event["event_type"] in {"tool_blocked", "tool_finished"}:
@@ -732,10 +745,6 @@ def project_events(run_id, events):
                     "ref": reference["ref"], "sha256": reference.get("sha256"),
                     "validator": event["dimensions"].get("validator"),
                 })
-    status = {
-        "run_finished": "succeeded", "run_failed": "failed", "run_aborted": "aborted",
-        "run_waiting": "waiting",
-    }.get(last["event_type"], "active")
     return {
         "schema_version": SCHEMA_VERSION,
         "authoritative": False,
@@ -1597,7 +1606,7 @@ def ensure_artifact_validation_capacity(events, request):
         )
 
 
-def append_locked(root, run_id, handle, events, request, projection_path, allow_hook_retry=False):
+def append_locked(root, run_id, handle, events, request, allow_hook_retry=False):
     normalized = validate_event_request(request)
     if normalized["run_id"] != run_id:
         raise RunEventError("request run_id does not match command run_id")
@@ -1609,7 +1618,6 @@ def append_locked(root, run_id, handle, events, request, projection_path, allow_
                 raise RunEventError("idempotency key was already used with different content")
         validate_artifact_validation_event(root, normalized)
         projected = project_events(run_id, events)
-        atomic_write_json(normalized_root(root), projection_path, projected)
         return {"deduplicated": True, "event": existing, "projection": projected}
     if events and events[-1]["event_type"] in TERMINAL_TYPES:
         raise RunEventError("terminal run cannot accept another event")
@@ -1651,14 +1659,6 @@ def append_locked(root, run_id, handle, events, request, projection_path, allow_
     handle.write(line)
     handle.flush()
     os.fsync(handle.fileno())
-    try:
-        atomic_write_json(normalized_root(root), projection_path, projected)
-    except Exception as exc:
-        raise RunEventError(
-            "event_committed=true offset=%s event_id=%s: projection install failed (%s); "
-            "run `project %s` and do not retry with a new idempotency key"
-            % (event["offset"], event["event_id"], exc, run_id)
-        ) from exc
     return {"deduplicated": False, "event": event, "projection": projected}
 
 
@@ -1668,7 +1668,7 @@ def _append_event_under_coordinator(root, run_id, normalized, allow_hook_retry=F
     with locked_stream(stream, exclusive=True) as handle:
         events = read_stream(handle, run_id)
         return append_locked(
-            root, run_id, handle, events, normalized, projection, allow_hook_retry,
+            root, run_id, handle, events, normalized, allow_hook_retry,
         )
 
 
@@ -1704,7 +1704,7 @@ def _append_hook_event_under_coordinator(root, run_id, request):
         current["parent_event_id"] = events[-1]["event_id"]
         normalized = validate_event_request(current)
         return append_locked(
-            root, run_id, handle, events, normalized, projection, allow_hook_retry=True
+            root, run_id, handle, events, normalized, allow_hook_retry=True
         )
 
 
@@ -2054,7 +2054,6 @@ def anchor_loop_step(
                     "materialized loop anchor is not on the current selected branch"
                 )
             state = project_events(run_id, events)
-            atomic_write_json(normalized_root(root), projection, state)
             return {
                 "deduplicated": True,
                 "event": existing[0],
@@ -2125,7 +2124,7 @@ def anchor_loop_step(
             },
             "dimensions": {"loop_state": normalized_document["state"]},
         }
-        result = append_locked(root, run_id, handle, events, request, projection)
+        result = append_locked(root, run_id, handle, events, request)
         result["artifact"] = {"ref": reference, "sha256": expected_sha256}
         return result
 
@@ -2186,7 +2185,6 @@ def _record_loop_step_under_coordinator(
                     "public loop-step requires one exact pre-existing loop anchor"
                 )
             state = project_events(run_id, events)
-            atomic_write_json(normalized_root(root), projection, state)
             return {
                 "deduplicated": True, "event": existing[0], "projection": state,
                 "artifact": {"ref": reference, "sha256": expected_sha256},
@@ -2219,7 +2217,10 @@ def rebuild_projection(root, run_id):
             raise RunEventError("cannot project an empty run")
         validate_artifact_validation_events(root, events)
         state = project_events(run_id, events)
-        atomic_write_json(normalized_root(root), projection, state)
+        try:
+            atomic_write_json(normalized_root(root), projection, state)
+        except (OSError, RunEventError) as exc:
+            raise RunEventError("projection export failed; committed event history is unchanged: %s" % exc) from exc
         return state
 
 
@@ -3082,7 +3083,7 @@ def _write_snapshot_under_coordinator(root, run_id, value):
             "metrics": {},
             "dimensions": {},
         }
-        result = append_locked(root, run_id, handle, events, request, projection)
+        result = append_locked(root, run_id, handle, events, request)
         result["artifact"] = {"ref": reference, "sha256": digest}
         return result
 
@@ -3174,7 +3175,7 @@ def _write_save_point_under_coordinator(root, run_id, value):
             "metrics": {},
             "dimensions": {},
         }
-        result = append_locked(root, run_id, handle, events, request, projection)
+        result = append_locked(root, run_id, handle, events, request)
         result["artifact"] = {"ref": reference, "sha256": digest}
         return result
 
@@ -3379,7 +3380,7 @@ def _install_envelope_locked(
         "metrics": normalized["metrics"],
         "dimensions": {"evidence_mode": normalized["evidence_mode"]},
     }
-    result = append_locked(root, run_id, handle, events, request, projection)
+    result = append_locked(root, run_id, handle, events, request)
     result["artifact"] = {"ref": reference, "sha256": digest}
     return result
 
@@ -3657,15 +3658,27 @@ def record_hook(root, mode, payload):
             "event_id": result["event"]["event_id"]}
 
 
-def resume_summary(root, run_id, max_bytes):
-    if not isinstance(max_bytes, int) or max_bytes < 512 or max_bytes > 16_384:
-        raise RunEventError("max-bytes must be between 512 and 16384")
+def verified_resume_view(root, run_id):
+    """Read one verified event prefix and its selected immutable recovery records.
+
+    Callers may derive summaries and bindings from this invocation's view.  It
+    does not authorize future actions or cache trust across calls.
+    """
     events = load_events(root, run_id)
     state = project_events(run_id, events)
     validate_artifact_validation_events(
         root, events, state["selected_path_event_ids"],
     )
-    validate_selected_save_point_replay(root, run_id, events, state)
+    snapshots = selected_branch_snapshots(root, run_id, events, state)
+    save_point = validate_selected_save_point_replay(root, run_id, events, state)
+    return {"events": events, "state": state, "snapshots": snapshots,
+            "save_point": save_point}
+
+
+def _resume_summary_from_state(run_id, state, max_bytes):
+    """Format an already verified invocation-local view without reading files."""
+    if not isinstance(max_bytes, int) or max_bytes < 512 or max_bytes > 16_384:
+        raise RunEventError("max-bytes must be between 512 and 16384")
     summary = {
         "schema_version": SCHEMA_VERSION,
         "authoritative": False,
@@ -3721,6 +3734,11 @@ def resume_summary(root, run_id, max_bytes):
     if len(encoded) > max_bytes:
         raise RunEventError("resume summary cannot fit requested bound")
     return summary
+
+
+def resume_summary(root, run_id, max_bytes):
+    view = verified_resume_view(root, run_id)
+    return _resume_summary_from_state(run_id, view["state"], max_bytes)
 
 
 def output(value, compact=False):

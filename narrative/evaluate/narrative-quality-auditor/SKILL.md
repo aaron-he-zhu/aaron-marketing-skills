@@ -4,14 +4,14 @@ slug: aaron-narrative-quality-auditor
 displayName: "Narrative Quality Auditor · 品牌叙事质量门"
 summary: "叙事真实性/系统一致性/效果证据分层审计"
 description: 'Use when the user asks to "audit our brand narrative" or "is this message on-canon"; runs separate typed TALE truth, system, or effectiveness profiles and never averages them into one composite. Checks differentiation, canon, landing consistency, and evidence integrity. Not for launch readiness — use launch-readiness-auditor; not for social operations — use social-quality-auditor. 品牌叙事分层审计/发布前一致性放行'
-version: "20.1.0"
+version: "20.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use for narrative truth, message-system consistency, flagship pre-publish alignment, or measured message-effectiveness review. A full review runs linked profiles separately."
 argument-hint: "<canon/surfaces/experiment> [truth|system|effectiveness|full]"
 class: auditor
-metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.2.0", "discipline": "narrative", "phase": "evaluate", "geo-relevance": "low", "hermes": {"tags": ["marketing", "narrative", "evaluate"], "category": "narrative"}, "openclaw": {"emoji": "📖", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Narrative Quality Auditor
@@ -61,7 +61,17 @@ Run a full review as three linked profile results; do not compute an overall sco
 
 ### Runtime and Setup
 
-Read `../../../references/auditor-runbook.md`, `scoring-semantics.md`, `tale-benchmark.md`, and the TALE catalog entry. Standalone installs use bundled immutable `references/auditor-runtime.md`; never fetch mutable `main`. Before deterministic calls, follow [`runtime-invocation.md`](../../../references/runtime-invocation.md), resolve `AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`, and require the scorer, validator, and typed catalogs. If unavailable, still collect the selected profile's typed observations and Unknowns, but return `score_state: NOT_SCORED` / `score_confidence: not_scored` with no gate verdict or persistent artifact; runtime absence blocks deterministic scoring, not the observation pass.
+<!-- GENERATED:BEGIN auditor-shared:activation -->
+Read the declared root runtime sources and selected framework/catalog entry.
+Standalone installs use the bundled immutable `references/auditor-runtime.md`;
+never fetch mutable `main` or guess missing policy. Before deterministic calls,
+follow `runtime-invocation.md` and resolve
+`AARON_SKILLS_ROOT="${CLAUDE_PLUGIN_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || true)}"`.
+Require the scorer, validator and typed catalogs. If unavailable, collect the
+selected profile's typed observations and Unknowns, but return
+`score_state: NOT_SCORED` / `score_confidence: not_scored` without a gate verdict
+or persistent artifact. Record the bound schema, runbook and catalog versions.
+<!-- GENERATED:END auditor-shared:activation -->
 
 Declare target, profile/mode, brand scope, market, audience, canon version, observation date, and evidence window.
 
@@ -99,7 +109,11 @@ Always name truth/system/effectiveness. On trace request, qualify `TALE-T1/A1/L1
 
 ## Report and Verdict
 
-Begin with the auditor-runbook's exact typed conversation header. Never replace `status`, `verdict`, or `score_state` with prose; list each explicitly missing qualified item as ``ID: `unknown``` before findings.
+<!-- GENERATED:BEGIN auditor-shared:result-header -->
+Begin with the auditor-runbook's exact typed conversation header. Never replace
+`status`, `verdict`, or `score_state` with prose; list each explicitly missing
+qualified item as ``ID: `unknown``` before findings.
+<!-- GENERATED:END auditor-shared:result-header -->
 
 For each profile show verdict, target/canon/context/date, score or coverage/interval, confidence, evidence, Unknowns, and fixes. A full report shows three side-by-side results and no overall number. Do not claim market effectiveness from system coherence.
 

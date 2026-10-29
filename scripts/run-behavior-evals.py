@@ -9,10 +9,13 @@ Protocol-v2 results can be retained as private run evidence, never as golden bas
 from __future__ import annotations
 
 import argparse
+import ast
+from collections import Counter
 import contextlib
 import datetime as dt
 import hashlib
 import importlib.util
+import inspect
 import json
 import os
 from pathlib import Path
@@ -23,6 +26,7 @@ import stat
 import subprocess
 import sys
 import tempfile
+import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -78,7 +82,7 @@ V3_CONTEXT_BINDING_KEYS = {
     "candidate_context_sha256", "candidate_sources_sha256", "assembly_sha256",
     "assembly_signature", "context_signature",
     "host_catalog_sha256", "prompt_policy_sha256", "context_modules_sha256",
-    "capsule_index_sha256", "model_body_bytes", "model_reduction_ratio",
+    "model_body_bytes", "model_reduction_ratio",
     "model_resources_sha256",
 }
 V3_STAGE_LATENCY_KEYS = {"routing_ms", "execution_ms", "judge_ms"}
@@ -291,7 +295,148 @@ def expand_command(parts):
     return [replacements.get(part, part) for part in parts]
 
 
-def run_deterministic(selected):
+def _test_id_inventory(suite):
+    """Use source identities because discovery and ``-m unittest`` name modules differently."""
+    identities = []
+    sources = {}
+    for test in suite:
+        if isinstance(test, unittest.TestSuite):
+            child_ids, child_sources = _test_id_inventory(test)
+            identities.extend(child_ids)
+            sources.update(child_sources)
+            continue
+        test_class = type(test)
+        source = Path(inspect.getfile(test_class)).resolve()
+        try:
+            relative = source.relative_to(ROOT.resolve()).as_posix()
+        except ValueError as exc:
+            raise BehaviorEvalError("discovered test source escapes the project") from exc
+        identity = test.id()
+        prefix = test_class.__module__ + "."
+        if not identity.startswith(prefix):
+            raise BehaviorEvalError("custom test IDs cannot establish discovery coverage")
+        identities.append(relative + "::" + identity[len(prefix):])
+        sources[relative] = hashlib.sha256(source.read_bytes()).hexdigest()
+    return identities, sources
+
+
+def _standard_test_sources(command):
+    """Recognize only standard unittest invocations, keeping custom entrypoints independent."""
+    if not command or command[0] != "{python}":
+        return None
+    direct = len(command) == 2 and re.fullmatch(r"tests/test_[A-Za-z0-9_]+\.py", command[1])
+    if direct:
+        sources = [command[1]]
+    elif command[1:3] == ["-m", "unittest"] and len(command) > 3 and all(
+            re.fullmatch(r"tests\.test_[A-Za-z0-9_]+", name) for name in command[3:]):
+        sources = [name.replace(".", "/") + ".py" for name in command[3:]]
+    else:
+        return None
+    for relative in sources:
+        try:
+            tree = ast.parse((ROOT / relative).read_text(encoding="utf-8"))
+        except (OSError, SyntaxError, UnicodeError):
+            return None
+        if any(isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+               and node.name == "load_tests" for node in tree.body):
+            return None
+        if direct:
+            guards = [node for node in tree.body if isinstance(node, ast.If)
+                      and ast.dump(node.test) == ast.dump(ast.parse(
+                          '__name__ == "__main__"', mode="eval").body)]
+            if len(guards) != 1 or guards[0].orelse or len(guards[0].body) != 1:
+                return None
+            statement = guards[0].body[0]
+            if not (isinstance(statement, ast.Expr)
+                    and isinstance(statement.value, ast.Call)
+                    and ast.dump(statement.value) == ast.dump(ast.parse(
+                        "unittest.main()", mode="eval").body)):
+                return None
+            outside = ast.Module(body=[node for node in tree.body if node is not guards[0]],
+                                 type_ignores=[])
+            if any(isinstance(node, ast.Name) and node.id == "__name__"
+                   for node in ast.walk(outside)):
+                return None
+    return sources
+
+
+def _covered_by_discovery(command, coverage):
+    if not coverage:
+        return False
+    sources = _standard_test_sources(command)
+    if not sources:
+        return False
+    for relative in sources:
+        source = ROOT / relative
+        if coverage["sources"].get(relative) != hashlib.sha256(source.read_bytes()).hexdigest():
+            return False
+    if "commands" in coverage:
+        return command in coverage["commands"]
+    loader = unittest.TestLoader()
+    suite = unittest.TestSuite()
+    for relative in sources:
+        suite.addTests(loader.loadTestsFromName(relative[:-3].replace("/", ".")))
+    if loader.errors:
+        return False
+    identities, hashes = _test_id_inventory(suite)
+    needed = Counter(identities)
+    return bool(needed) and all(coverage["ids"][key] >= count for key, count in needed.items()) \
+        and all(coverage["sources"].get(key) == value for key, value in hashes.items())
+
+
+def _run_unittest_discovery():
+    # Preserve the process boundary of the original CI discovery command. The
+    # temporary inventory is produced only after the actual tests pass; callers
+    # cannot supply an assertion that discovery already ran.
+    bootstrap = (
+        "import ast, hashlib, inspect, json, pathlib, re, sys, unittest\n"
+        "from collections import Counter\n"
+        "from pathlib import Path\n"
+        "BehaviorEvalError = ValueError\n"
+        + inspect.getsource(_test_id_inventory)
+        + "\n" + inspect.getsource(_standard_test_sources)
+        + "\n" + inspect.getsource(_covered_by_discovery)
+        + "\nROOT = Path(sys.argv[1]).resolve()\n"
+        "loader = unittest.TestLoader()\n"
+        "suite = loader.discover(str(ROOT / 'tests'), pattern='test_*.py')\n"
+        "if loader.errors: raise ValueError('discovery failed: ' + str(loader.errors))\n"
+        "identities, sources = _test_id_inventory(suite)\n"
+        "if not identities: raise ValueError('discovery selected no tests')\n"
+        "result = unittest.TextTestRunner(stream=sys.stdout, verbosity=1).run(suite)\n"
+        "if not result.wasSuccessful() or result.testsRun != len(identities): sys.exit(1)\n"
+        "coverage = {'ids': Counter(identities), 'sources': sources}\n"
+        "manifest_path = ROOT / 'evals/deterministic-suites.json'\n"
+        "manifest = json.loads(manifest_path.read_text()) if manifest_path.is_file() else {'suites': []}\n"
+        "covered = [entry['command'] for entry in manifest['suites'] "
+        "if _covered_by_discovery(entry['command'], coverage)]\n"
+        "Path(sys.argv[2]).write_text(json.dumps({'ids': identities, 'sources': sources, "
+        "'commands': covered, 'tests_run': result.testsRun, 'skipped': len(result.skipped)}), encoding='utf-8')\n"
+    )
+    print("RUN   unittest-discovery", flush=True)
+    with tempfile.TemporaryDirectory(prefix="aaron-ci-discovery-") as directory:
+        inventory_path = Path(directory) / "coverage.json"
+        result = subprocess.run(
+            [sys.executable, "-c", bootstrap, str(ROOT), str(inventory_path)],
+            cwd=ROOT, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            check=False,
+        )
+        if result.stdout:
+            print(result.stdout, end="" if result.stdout.endswith("\n") else "\n")
+        if result.returncode or not inventory_path.is_file():
+            raise BehaviorEvalError("full unittest discovery did not pass its complete test ID set")
+        inventory = load_json(inventory_path)
+    if set(inventory) != {"ids", "sources", "commands", "tests_run", "skipped"} \
+            or not isinstance(inventory["ids"], list) or not inventory["ids"] \
+            or not all(isinstance(item, str) for item in inventory["ids"]) \
+            or not isinstance(inventory["sources"], dict) or not isinstance(inventory["commands"], list) \
+            or inventory["tests_run"] != len(inventory["ids"]):
+        raise BehaviorEvalError("unittest discovery returned an invalid coverage inventory")
+    print("PASS  unittest-discovery: %d test IDs (%d skipped)" % (
+        inventory["tests_run"], inventory["skipped"]))
+    return {"ids": Counter(inventory["ids"]), "sources": inventory["sources"], "commands": inventory["commands"]}
+
+
+def run_deterministic(selected, *, with_unittest_discovery=False):
     manifest = load_json(SUITES_PATH)
     validate_suite_manifest(manifest)
     suites = manifest["suites"]
@@ -300,8 +445,14 @@ def run_deterministic(selected):
         if unknown:
             raise BehaviorEvalError("unknown deterministic suite(s): %s" % ", ".join(unknown))
         suites = [suite for suite in suites if suite["id"] in selected]
+    if with_unittest_discovery and selected:
+        raise BehaviorEvalError("full unittest discovery cannot be combined with suite filters")
+    coverage = _run_unittest_discovery() if with_unittest_discovery else None
     failures = []
     for suite in suites:
+        if _covered_by_discovery(suite["command"], coverage):
+            print("PASS  %s: same test IDs and source bytes passed in unittest discovery" % suite["id"])
+            continue
         command = expand_command(suite["command"])
         print("RUN   %s" % suite["id"])
         try:
@@ -832,12 +983,6 @@ def build_v3_routing_index(machine_contracts=None):
         "catalog_sha256": index_sha256,
         "system_catalog": dict(index["source_catalog"]),
         "shared_contract": dict(index["shared_contract"]),
-        "capsule_index": {
-            "path": "references/skill-capsules/index.json",
-            "sha256": hashlib.sha256(
-                project_bytes("references/skill-capsules/index.json")
-            ).hexdigest(),
-        },
         "entry_count": 120,
         "entries": entries,
     }
@@ -856,10 +1001,8 @@ def build_v3_requests(
     Adapter code is responsible for constructing candidate prompts from the
     public case and complete routing index without serializing that contract.
     """
-    if prompt_profile not in {"explicit", "balanced", "lean"}:
-        raise BehaviorEvalError("adapter v3 prompt_profile is unsupported")
-    if prompt_profile != "explicit" and not evaluation_only:
-        raise BehaviorEvalError("uncertified compact profiles are evaluation-only")
+    if prompt_profile != "explicit" or evaluation_only:
+        raise BehaviorEvalError("protocol v3.1 supports only explicit context; retired experimental requests require their pinned historical runtime")
     for label, value in (
             ("host_profile", host_profile), ("model_id", model_id),
             ("judge_model_id", judge_model_id), ("toolset_id", toolset_id)):
@@ -906,7 +1049,7 @@ def build_v3_requests(
         }
         request = {
             "kind": "behavior-eval-request",
-            "protocol_version": "3.0",
+            "protocol_version": "3.1",
             "case": public_case,
             "selection": {"profile": profile, "reasons": sorted(set(reasons))},
             "routing_index": routing_index,
@@ -941,10 +1084,12 @@ def validate_v2_request_hash(request):
 
 
 def validate_v3_request_hash(request):
+    if isinstance(request, dict) and request.get("protocol_version") == "3.0":
+        raise BehaviorEvalError("legacy protocol v3.0 requires its pinned historical runtime; it cannot be relabeled as v3.1")
     if not isinstance(request, dict) or not isinstance(request.get("request_sha256"), str):
         raise BehaviorEvalError("adapter v3 request has no request_sha256")
     if request.get("kind") != "behavior-eval-request" or request.get(
-            "protocol_version") != "3.0":
+            "protocol_version") != "3.1":
         raise BehaviorEvalError("adapter v3 request identity is invalid")
     execution = request.get("execution")
     if not isinstance(execution, dict):
@@ -1009,8 +1154,8 @@ def validate_v3_assembly_binding(binding):
             or binding["model_body_bytes"] != sum(item["bytes"] for item in resources)):
         raise BehaviorEvalError("adapter v3 model_body_bytes differs from model resources")
     ratio = binding["model_reduction_ratio"]
-    if isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or not 0 <= ratio <= 1:
-        raise BehaviorEvalError("adapter v3 model reduction ratio is invalid")
+    if isinstance(ratio, bool) or not isinstance(ratio, (int, float)) or ratio != 0:
+        raise BehaviorEvalError("explicit adapter context cannot claim a prompt reduction")
     return binding
 
 
@@ -1238,7 +1383,7 @@ def validate_v3_adapter_result(
         expected_adapter_implementation_sha256=None):
     """Validate v3 while reusing the mature v2 judge/provenance invariants."""
     exact_object(value, V3_RESULT_KEYS, "adapter v3 result")
-    if value["kind"] != "behavior-eval-result" or value["protocol_version"] != "3.0":
+    if value["kind"] != "behavior-eval-result" or value["protocol_version"] != "3.1":
         raise BehaviorEvalError("adapter v3 result kind/protocol_version is invalid")
     validate_v3_request_hash(request)
 
@@ -1324,7 +1469,7 @@ def validate_v3_adapter_result(
     for key in (
             "candidate_sources_sha256", "assembly_sha256", "assembly_signature",
             "context_signature", "host_catalog_sha256", "prompt_policy_sha256",
-            "context_modules_sha256", "capsule_index_sha256", "model_resources_sha256"):
+            "context_modules_sha256", "model_resources_sha256"):
         item = context[key]
         if item is not None and (not isinstance(item, str) or not SHA256_RE.fullmatch(item)):
             raise BehaviorEvalError("adapter v3 context binding %s is invalid" % key)
@@ -1360,10 +1505,6 @@ def validate_v3_adapter_result(
                 raise BehaviorEvalError(
                     "adapter v3 candidate sources differ without a closed mismatch failure"
                 )
-    if context["capsule_index_sha256"] != request["routing_index"]["capsule_index"][
-            "sha256"]:
-        raise BehaviorEvalError("adapter v3 capsule index binding differs from request")
-
     synthetic_case = {
         "id": request["case"]["id"],
         "expected_behavior": request["judge_contract"]["assertions"],
@@ -1438,12 +1579,14 @@ def validate_protocol_adapter_result(
         value, request, required_execution_mode="real",
         expected_adapter_implementation_sha256=None):
     protocol = request.get("protocol_version") if isinstance(request, dict) else None
+    if protocol == "3.0":
+        raise BehaviorEvalError("legacy protocol v3.0 requires its pinned historical runtime; it cannot be relabeled as v3.1")
     if protocol == "2.0":
         return validate_v2_adapter_result(
             value, request, required_execution_mode=required_execution_mode,
             expected_adapter_implementation_sha256=expected_adapter_implementation_sha256,
         )
-    if protocol == "3.0":
+    if protocol == "3.1":
         return validate_v3_adapter_result(
             value, request, required_execution_mode=required_execution_mode,
             expected_adapter_implementation_sha256=expected_adapter_implementation_sha256,
@@ -2134,7 +2277,7 @@ def semantic_evidence_session(
     try:
         runtime.ensure_ignored(root, paths)
         protocols = {request.get("protocol_version") for request in requests}
-        if len(protocols) != 1 or protocols.pop() not in {"2.0", "3.0"}:
+        if len(protocols) != 1 or protocols.pop() not in {"2.0", "3.1"}:
             raise BehaviorEvalError("semantic evidence requests must use one supported protocol")
         protocol_version = requests[0]["protocol_version"]
         protocol_ref = (
@@ -2296,7 +2439,7 @@ def run_adapter_v2(
         requests = build_v2_requests(cases, profile, selection["selection_reasons"])
         for request in requests:
             validate_v2_request_hash(request)
-    elif _protocol_version == "3.0":
+    elif _protocol_version == "3.1":
         if not isinstance(_v3_options, dict):
             raise BehaviorEvalError("adapter v3 execution options are missing")
         requests = build_v3_requests(
@@ -2467,7 +2610,7 @@ def run_adapter_v3(
         resume_evidence=resume_evidence,
         evidence_root=evidence_root,
         adapter_implementation_ref=adapter_implementation_ref,
-        _protocol_version="3.0",
+        _protocol_version="3.1",
         _v3_options={
             "host_profile": host_profile,
             "model_id": model_id,
@@ -2588,6 +2731,10 @@ def load_v3_assembly_bindings(path):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", action="append", default=[], help="Run only this deterministic suite ID.")
+    parser.add_argument(
+        "--with-unittest-discovery", action="store_true",
+        help="Run all unittest tests once, then skip only proven-identical standard test suites.",
+    )
     parser.add_argument("--adapter-command", help="Optional NDJSON semantic-eval adapter command.")
     parser.add_argument(
         "--adapter-implementation-ref",
@@ -2606,13 +2753,10 @@ def main(argv=None):
         "--judge-model-id", help="Protocol-v3 judge model identity; must match the adapter."
     )
     parser.add_argument(
-        "--prompt-profile", choices=("explicit", "balanced", "lean"), default="explicit",
-        help="Protocol-v3 model prompt representation (compact profiles remain evaluation-only).",
+        "--prompt-profile", choices=("explicit",), default="explicit",
+        help="Protocol-v3.1 explicit model prompt representation.",
     )
-    parser.add_argument(
-        "--evaluation-only", action="store_true",
-        help="Mark a protocol-v3 compact profile as non-deployable evaluation traffic.",
-    )
+
     parser.add_argument("--toolset-id", default="read-only-no-tools-v1")
     parser.add_argument("--toolset-sha256")
     parser.add_argument(
@@ -2687,27 +2831,29 @@ def main(argv=None):
         parser.error("protocol-v3 execution requires --host-profile, --model-id, and --judge-model-id")
     if adapter_protocol != "3" and (
             args.host_profile or args.model_id or args.judge_model_id
-            or args.prompt_profile != "explicit" or args.evaluation_only
+            or args.prompt_profile != "explicit"
             or args.toolset_sha256 or args.assembly_bindings_json):
         parser.error("prompt/host/model/toolset v3 options require --adapter-protocol 3")
     if args.assembly_bindings_json and not args.adapter_command:
         parser.error("--assembly-bindings-json requires protocol-v3 adapter execution")
-    if args.prompt_profile in {"balanced", "lean"} and not args.evaluation_only:
-        parser.error("balanced/lean protocol-v3 profiles require --evaluation-only")
-    if args.evaluation_only and args.prompt_profile == "explicit":
-        parser.error("--evaluation-only is only for balanced/lean prompt profiles")
+
     if not 1 <= args.adapter_timeout <= 7200:
         parser.error("--adapter-timeout must be 1..7200 seconds")
     if not 1 <= args.adapter_batch_size <= 1000:
         parser.error("--adapter-batch-size must be 1..1000")
     failures = []
+    if args.with_unittest_discovery and (args.suite or args.adapter_only or args.adapter_command):
+        parser.error("--with-unittest-discovery requires unfiltered offline conformance")
     try:
         assembly_bindings = (
             load_v3_assembly_bindings(args.assembly_bindings_json)
             if args.assembly_bindings_json else None
         )
         if not args.adapter_only:
-            failures.extend(run_deterministic(set(args.suite)))
+            if args.with_unittest_discovery:
+                failures.extend(run_deterministic(set(), with_unittest_discovery=True))
+            else:
+                failures.extend(run_deterministic(set(args.suite)))
         selection = None
         if adapter_protocol in {"2", "3"} and (
                 args.adapter_command or args.plan_json or args.list_cases):
@@ -2746,7 +2892,7 @@ def main(argv=None):
                         model_id=args.model_id,
                         judge_model_id=args.judge_model_id,
                         prompt_profile=args.prompt_profile,
-                        evaluation_only=args.evaluation_only,
+                        evaluation_only=False,
                         toolset_id=args.toolset_id,
                         toolset_sha256=args.toolset_sha256,
                         batch_size=args.adapter_batch_size,

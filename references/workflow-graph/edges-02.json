@@ -298,7 +298,7 @@
     },
     {
       "condition_code": "remediation",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:136",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:152",
       "condition_text": "Brief mismatch: brief-generator",
       "documentation_required": true,
       "exception": {
@@ -330,7 +330,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:139",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:155",
       "condition_text": "Approved asset amplification: content-amplifier",
       "documentation_required": true,
       "exception": null,
@@ -358,7 +358,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:138",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:154",
       "condition_text": "Rights/terms: contract-helper",
       "documentation_required": true,
       "exception": null,
@@ -386,7 +386,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:137",
+      "condition_source": "influencer/activate/creator-content-auditor/SKILL.md:153",
       "condition_text": "Claim fix: offer-claims-registry",
       "documentation_required": true,
       "exception": null,
@@ -829,7 +829,7 @@
     },
     {
       "condition_code": "quality-gate",
-      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:164",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:178",
       "condition_text": "Audit representative content: content-quality-auditor",
       "documentation_required": true,
       "exception": {
@@ -862,7 +862,7 @@
     },
     {
       "condition_code": "governance",
-      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:162",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:176",
       "condition_text": "Repair entity state: entity-registry",
       "documentation_required": true,
       "exception": null,
@@ -893,7 +893,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:161",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:175",
       "condition_text": "Investigate links: offsite-signal-analyzer",
       "documentation_required": true,
       "exception": null,
@@ -921,7 +921,7 @@
     },
     {
       "condition_code": "unclassified",
-      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:163",
+      "condition_source": "seo-geo/evaluate/domain-authority-auditor/SKILL.md:177",
       "condition_text": "Verify technical/index state: technical-seo-checker",
       "documentation_required": true,
       "exception": {

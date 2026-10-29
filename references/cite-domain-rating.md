@@ -1,5 +1,7 @@
 # CITE Domain Rating — Skills Reference
 
+**Human-anchor revision: 2026-10-27-a.** The delimited item tables own criteria; detailed boundaries and examples below interpret those same IDs. Profiles, applicability, weights, veto identity, coverage and rounding remain in the typed catalog/scorer. This revision is not outcome calibration; preserve prior audit source digests and do not relabel historical observations.
+
 > Based on [CITE Domain Rating](https://github.com/aaron-he-zhu/cite-domain-rating) **v1.0** (2026-02-10)
 >
 > This file is a reference adaptation for Aaron Marketing Skills. For the full specification with examples, see the source repository.
@@ -52,9 +54,11 @@ Every scored run declares a comparison cohort, market, entity stage, and domain 
 
 ### C — Citation (10 Items)
 
+<!-- AUDITOR-ITEMS:BEGIN -->
+
 | ID | Check Item | One-Line Diagnostic Anchor |
 |----|-----------|-------------------|
-| C01 | Referring Domains Volume | >=500 unique referring domains |
+| C01 | Referring Domains Volume | Referring-domain volume against a dated, frozen cohort-specific criterion; absent comparison basis is Unknown, never an automatic small-domain Fail. |
 | C02 | Referring Domains Quality | >=20% of referring domains have DA (Moz Domain Authority™) / DR (Ahrefs Domain Rating™) 50+ |
 | C03 | Link Equity Distribution | Top sources concentrate outbound links (<1,000 outbound domains) |
 | C04 | Link Velocity | Steady natural growth; no month >3x average |
@@ -110,6 +114,8 @@ Every scored run declares a comparison cohort, market, entity stage, and domain 
 | E09 | Geographic Reach | Organic traffic from >=10 countries/regions |
 | E10 | Industry Share of Voice | >=5% visibility share across top 50 industry keywords |
 
+<!-- AUDITOR-ITEMS:END -->
+
 ---
 
 ## 3. Scoring System
@@ -132,12 +138,19 @@ Applicable but unobserved items are `unknown`; omitted items are also `unknown`.
 
 ### Domain-Type Weight Table
 
-| Dim | Default | Content Publisher | Product & Service | E-commerce | Community & UGC | Tool & Utility | Authority & Institutional |
-|-----|:-------:|:-:|:-:|:-:|:-:|:-:|:-:|
-| C | 35% | **40%** | 25% | 20% | 35% | 25% | **45%** |
-| I | 20% | 15% | **30%** | 20% | 10% | **30%** | 20% |
-| T | 25% | 20% | 25% | **35%** | 25% | 25% | 20% |
-| E | 20% | 25% | 20% | 25% | **30%** | 20% | 15% |
+<!-- GENERATED:BEGIN auditor-policy:profiles -->
+
+| Profile | Dimension weights | Context match | Item subset |
+|---|---|---|---|
+| `default` | C 35% · I 20% · T 25% · E 20% | none | all items in included dimensions |
+| `content-publisher` | C 40% · I 15% · T 20% · E 25% | {"domain_type": "content-publisher"} | all items in included dimensions |
+| `product-service` | C 25% · I 30% · T 25% · E 20% | {"domain_type": "product-service"} | all items in included dimensions |
+| `ecommerce` | C 20% · I 20% · T 35% · E 25% | {"domain_type": "ecommerce"} | all items in included dimensions |
+| `community-ugc` | C 35% · I 10% · T 25% · E 30% | {"domain_type": "community-ugc"} | all items in included dimensions |
+| `tool-utility` | C 25% · I 30% · T 25% · E 20% | {"domain_type": "tool-utility"} | all items in included dimensions |
+| `authority-institutional` | C 45% · I 20% · T 20% · E 15% | {"domain_type": "authority-institutional"} | all items in included dimensions |
+
+<!-- GENERATED:END auditor-policy:profiles -->
 
 ### Rating Scale
 
@@ -151,7 +164,7 @@ Applicable but unobserved items are `unknown`; omitted items are also `unknown`.
 
 ### Veto Items
 
-Failing any veto item activates the Critical Fail Cap. The cap arithmetic and thresholds are defined in [auditor-runbook.md §4](auditor-runbook.md). Do not restate cap numbers here or elsewhere — this file owns the item definitions only.
+Failing any veto item activates the Critical Fail Cap. The cap arithmetic and thresholds are defined in [auditor-runbook.md §4](auditor-runbook.md). The table below explains the domain-specific failures; executable policy and its generated views remain catalog-owned.
 
 | Veto ID | Dimension | Check |
 |---------|-----------|-------|
@@ -229,9 +242,12 @@ What is the domain's primary function?
 ### C — Citation
 
 **C01: Referring Domains Volume**
-- **Pass**: >=500 unique referring domains.
-- **Partial**: 50-499 referring domains.
-- **Fail**: <50 referring domains.
+Freeze the market, entity stage/domain type, comparison cohort, source date/window, and the justified Pass/Partial/Fail boundaries before reading the target result. Count unique referring domains, not total backlinks. A different cohort or date is a different run.
+- **Pass**: The observed domain count meets the frozen cohort-specific Pass criterion.
+- **Partial**: It meets that cohort’s intermediate band but not Pass.
+- **Fail**: Reliable observation places it below that cohort’s declared minimum; small size alone is not a universal trust failure.
+- **Unknown**: The cohort/criterion or reliable comparable domain count is missing.
+- **Historical illustration only**: 500/50 were source-benchmark starting points. A 30-domain early-stage site may pass a justified precommitted >=20 cohort criterion; 600 domains with no comparison basis remain Unknown. Never select the criterion after seeing the target or present the historical counts as machine-enforced universal thresholds.
 
 **C02: Referring Domains Quality**
 - **Pass**: >=20% of referring domains have DA/DR 50+.
@@ -517,3 +533,13 @@ When unsure which dimension owns a signal, use the ownership boundary rule (Sect
 | **I08 (Niche Consistency)** vs **E07/E08 (Topical Authority)** | I08 = how long you've stayed in one niche (identity); E07/E08 = how deep/broad your rankings are (visibility) |
 | **C09 (Editorial Link Ratio)** vs **T01 (Link Naturalness)** | C09 = positive quality (what % are editorial); T01 = negative detection (is the growth pattern natural) |
 | **T06 (WHOIS Transparency)** vs **I06 (Domain Tenure)** | T06 = is the registration suspicious (trust); I06 = how long has it been active (identity) |
+
+## Fixed Boundary Cases (2026-10-27-a)
+
+See the [fixed factual examples for CITE](benchmark-boundary-examples.md#cite) when calibrating a disputed boundary. These examples are lookup material; retain the item anchors and complete evidence rules above for execution.
+
+## Evidence Reuse and Targeted Review
+
+Freeze one cohort/market/stage/window and collect a common backlink, identity and visibility panel once. Keep public observations separate from unavailable private-console facts; a new panel or date creates a new run rather than silently changing the old benchmark.
+
+Follow the existing [auditor runbook](auditor-runbook.md) for evidence, authority and final complete-coverage scoring; reuse does not create independent corroboration.

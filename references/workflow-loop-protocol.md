@@ -26,7 +26,7 @@ Each loop stores:
 |---|---|
 | `plan.json` | Immutable snapshot of the objective, hypothesis, typed success criteria, graph digest, selected workflow, selected edge definitions, deadline, budgets, coordinator-protected evidence cutoff, and optional approval trust-anchor digest |
 | `events.ndjson` | Non-authoritative append-only, hash-chained transition evidence; each stored event carries a runtime-assigned, strictly increasing `recorded_at` covered by its event hash |
-| `state.json` | Deterministic projection rebuilt from `plan.json` and `events.ndjson`, including consumed execution-approval nonces and the last recorded persistence time |
+| `state.json` | Optional explicit export of the deterministic view from `plan.json` and `events.ndjson`, including consumed execution-approval nonces and the last recorded persistence time |
 
 The JSON contracts are `workflow-loop-plan.schema.json`, `workflow-loop-event.schema.json`, `workflow-loop-state.schema.json`, and `workflow-loop-request.schema.json`.
 
@@ -60,7 +60,7 @@ You can import the same behavior without invoking a subprocess:
 from scripts.workflow_loop import advance, plan, verify
 ```
 
-`plan(root, request)` returns the planned event and projected state. `advance(root, request)` appends exactly one typed transition. `verify(root, run_id, loop_id, repair_projection=False)` verifies the run anchor, plan digest, event hashes, evidence hashes, transition replay, and projection.
+`plan(root, request)` returns the planned event and projected state. `advance(root, request)` appends exactly one typed transition. Both return an in-memory state without writing `state.json`. `verify(root, run_id, loop_id, repair_projection=False)` verifies the run anchor, plan digest, event hashes, evidence hashes, and transition replay. The legacy `state_ref` remains a canonical export destination in immutable plans; it never supplies state or an arbitrary write path.
 
 ## Plan request
 
@@ -149,6 +149,6 @@ Each event ID is deterministic from the run ID, loop ID, and idempotency key. Th
 
 On the first append only, the runtime assigns the workflow event's UTC `recorded_at`, requires it to be strictly later than the stored head, includes it in `event_hash`, and then evaluates any gate approval against that persistence time. An idempotent retry reuses the already stored timestamp. Replay rejects missing, modified, or non-monotonic recorded times even if an attacker recomputes later public hash fields.
 
-The event line is flushed before `state.json` is replaced. If projection installation fails after the append, the error contains `event_committed=true`. Retry the exact request and key; the runtime detects the committed event and rebuilds the projection without appending a duplicate.
+The event line is flushed and fsynced before the in-memory state is returned. A lost response is recovered by retrying the exact request and key, which returns the committed event without appending a duplicate. There is no mandatory projection installation after an append.
 
-`verify` fails on plan tampering, event-chain tampering, a stale or missing state projection, a missing or non-selected run-event anchor, a sibling/mismatched action route, a mismatched validator, changed or cross-action-reused evidence/control identity, approval signature/binding/replay failure, or trust-anchor drift. Use `--repair-projection` only for a projection mismatch: it replays the valid immutable plan and event stream; it does not repair or ignore broken evidence.
+`verify` fails on plan tampering, event-chain tampering, a missing or non-selected run-event anchor, a sibling/mismatched action route, a mismatched validator, changed or cross-action-reused evidence/control identity, approval signature/binding/replay failure, or trust-anchor drift. Missing, stale, or malformed `state.json` does not invalidate verified history; unsafe paths still fail closed. `projection_current` reports whether the optional export matches replay. `--repair-projection` explicitly exports the verified replay result; export failure leaves the committed event stream intact and never repairs or ignores broken evidence.

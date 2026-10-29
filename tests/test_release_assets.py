@@ -39,11 +39,17 @@ def current_source_snapshot(destination):
         check=True,
         capture_output=True,
     )
-    relative_paths = sorted(
-        item.decode("utf-8")
-        for item in completed.stdout.split(b"\0")
-        if item
+    # A development snapshot includes the current working tree, including
+    # intentional deletions; the source index can still name retired files.
+    deleted = subprocess.run(
+        ["git", "ls-files", "--deleted", "-z"], cwd=ROOT,
+        check=True, capture_output=True,
     )
+    deleted_paths = {item for item in deleted.stdout.split(b"\0") if item}
+    relative_paths = sorted({
+        item.decode("utf-8") for item in completed.stdout.split(b"\0")
+        if item and item not in deleted_paths
+    })
     for relative in relative_paths:
         source = ROOT / relative
         target = destination / relative
@@ -199,7 +205,7 @@ class ReleaseAssetPromptBindingGateTests(unittest.TestCase):
             )
         self.assertNotEqual(0, completed.returncode)
         self.assertIn(
-            "non-empty certified_bindings are not distributable",
+            "unknown or missing fields",
             completed.stderr,
         )
 

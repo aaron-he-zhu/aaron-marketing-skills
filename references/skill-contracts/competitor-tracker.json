@@ -11,7 +11,7 @@
           "end_char": 140,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 205,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 142
         },
@@ -41,7 +41,7 @@
           "end_char": 283,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 208
         },
@@ -56,7 +56,7 @@
           "end_char": 386,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 286
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "influencer/target/competitor-tracker/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886"
+      "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca"
     }
   },
   "context_hints": {
@@ -77,7 +77,7 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 49
       },
       {
@@ -91,14 +91,14 @@
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 33
       },
       {
         "path": "references/state-model.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "1e88de7fdc4283df638bfae02860b9dcd71d7abc92fe717d2c8099b905f8b981",
+        "sha256": "46ca45bc943bb84448542c537f05e7fb0b0b3f05650db70ec9d00c68230f60d7",
         "source_line": 74
       },
       {
@@ -128,7 +128,7 @@
           "end_char": 119,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -146,7 +146,7 @@
           "end_char": 287,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 120
         },
@@ -164,7 +164,7 @@
           "end_char": 425,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 288
         },
@@ -182,7 +182,7 @@
           "end_char": 629,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 427
         },
@@ -195,7 +195,7 @@
     "summary_ref": {
       "path": "influencer/target/competitor-tracker/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886"
+      "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -210,8 +210,8 @@
     "name": "competitor-tracker",
     "path": "influencer/target/competitor-tracker/SKILL.md",
     "phase": "target",
-    "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
-    "version": "20.1.0"
+    "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<your brand> [competitor names] [platform]",
@@ -225,7 +225,7 @@
           "end_char": 239,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -237,7 +237,7 @@
     "source": {
       "path": "influencer/target/competitor-tracker/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886"
+      "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca"
     }
   },
   "output_contract": {
@@ -252,7 +252,7 @@
           "end_char": 60,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -268,7 +268,7 @@
           "end_char": 174,
           "path": "influencer/target/competitor-tracker/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886",
+          "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca",
           "span_basis": "field-text",
           "start_char": 62
         },
@@ -279,7 +279,7 @@
     "source": {
       "path": "influencer/target/competitor-tracker/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886"
+      "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca"
     },
     "summary": "return the competitive intelligence report inline by default; save it to `memory/influencer/competitor-tracker/YYYY-MM-DD-<topic>.md` only with exact WARM-save authorization.",
     "summary_source": "writes-fallback",
@@ -294,12 +294,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -308,7 +308,7 @@
     "source": {
       "path": "influencer/target/competitor-tracker/SKILL.md",
       "section": "frontmatter",
-      "sha256": "64d018cba103b00a8712a4f08de95d4e4abcb82d068e37daed6891c31aa8a886"
+      "sha256": "1a7fd1de0e415a6c6203708a61bc992b6dc3ba2a86105c56a2588e4d6d507fca"
     },
     "trigger_phrases": [
       "benchmark my influencer program",

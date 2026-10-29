@@ -14,7 +14,6 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
-CAPSULE_INDEX_REF = "references/skill-capsules/index.json"
 DISTRIBUTION_MANIFEST_REF = "distribution-manifest.json"
 MAX_DOCUMENT_BYTES = 8_000_000
 TRUSTED_DISTRIBUTION_FILES = (
@@ -43,11 +42,13 @@ ASSEMBLY_PROFILE_FIELDS = {
     "prompt_profile", "prompt_profile_source", "binding_id",
     "always_on_overlays", "catalogs",
 }
+# GENERATED:BEGIN plugin-package-ceilings
 PLUGIN_PACKAGE_CEILINGS = {
     "lite": {"max_files": 350, "max_bytes": 3_450_000},
     "pro": {"max_files": 400, "max_bytes": 3_950_000},
     "governed": {"max_files": 560, "max_bytes": 6_710_000},
 }
+# GENERATED:END plugin-package-ceilings
 MAX_DISTRIBUTION_SCAN_ENTRIES = 2048
 
 
@@ -288,7 +289,7 @@ def _distribution_identity(bundle_root, requested_host_profile):
     A repository checkout has no distribution manifest and therefore receives
     the non-package identity ``repository``.  A built plugin must carry the
     current 1.2 manifest, bind the requested host profile, and hash-anchor the
-    runtime files that can authorize compact prompt-profile selection.
+    runtime files that verify and assemble the explicit context.
     """
     root = profile_resolver._normalized_root(bundle_root)
     try:
@@ -379,7 +380,7 @@ def _distribution_identity(bundle_root, requested_host_profile):
         descriptor = by_path.get(relative)
         if descriptor is None:
             raise ContextAssemblyError(
-                "distribution manifest omits compact-profile runtime %s" % relative
+                "distribution manifest omits context runtime %s" % relative
             )
         try:
             raw = context_resolver.anchored_read(
@@ -387,13 +388,13 @@ def _distribution_identity(bundle_root, requested_host_profile):
             )
         except context_resolver.ContextResolutionError as exc:
             raise ContextAssemblyError(
-                "cannot verify compact-profile runtime %s: %s" % (relative, exc)
+                "cannot verify context runtime %s: %s" % (relative, exc)
             ) from exc
         if (
                 descriptor["bytes"] != len(raw)
                 or descriptor["sha256"] != hashlib.sha256(raw).hexdigest()):
             raise ContextAssemblyError(
-                "compact-profile runtime differs from distribution manifest: %s" % relative
+                "context runtime differs from distribution manifest: %s" % relative
             )
         if relative in TRUSTED_EXECUTED_RUNTIME_FILES:
             try:
@@ -428,105 +429,6 @@ def _validate_evaluation_run_id(value):
         raise ContextAssemblyError(
             "evaluation_run_id must be a safe non-empty identifier"
         )
-
-
-def _selected_modules(module_catalog, host_profile, prompt_profile):
-    active = {consumer: [] for consumer in profile_resolver.CONSUMER_ORDER}
-    fallback = []
-    for module in module_catalog["modules"]:
-        if (
-                host_profile not in module["host_profiles"]
-                or prompt_profile not in module["prompt_profiles"]):
-            continue
-        projection = {
-            "module_id": module["module_id"],
-            "load_policy": module["load_policy"],
-            "source_role": module["source_role"],
-            "materialization": module["materialization"],
-            "condition_code": module["condition_code"],
-        }
-        if module["load_policy"] == "fallback":
-            fallback.append(projection)
-        else:
-            active[module["consumer"]].append(projection)
-    return active, fallback
-
-
-def _evaluation_resolution(
-        *, bundle_root, host_profile, model_id, model_revision, prompt_profile, as_of,
-        evaluation_run_id):
-    if (
-            not isinstance(evaluation_run_id, str)
-            or not profile_resolver.SAFE_ID.fullmatch(evaluation_run_id)):
-        raise ContextAssemblyError("evaluation_run_id must be a safe non-empty identifier")
-    if prompt_profile not in {"balanced", "lean"}:
-        raise ContextAssemblyError("evaluation profile must be balanced or lean")
-    try:
-        root = profile_resolver._normalized_root(bundle_root)
-        host_catalog, host_raw = profile_resolver.load_host_catalog(root)
-        prompt_catalog, prompt_raw = profile_resolver.load_prompt_catalog(root, host_catalog)
-        module_catalog, module_raw = profile_resolver.load_context_module_catalog(
-            root, host_catalog, prompt_catalog
-        )
-        profile_resolver._parse_datetime(as_of, "as_of")
-    except profile_resolver.ContextProfileError as exc:
-        raise ContextAssemblyError(str(exc)) from exc
-    if host_profile not in host_catalog["profiles"]:
-        raise ContextAssemblyError("evaluation host profile is unknown: %s" % host_profile)
-    if not isinstance(model_id, str) or not profile_resolver.SAFE_ID.fullmatch(model_id):
-        raise ContextAssemblyError("evaluation model_id is invalid")
-    active, fallback = _selected_modules(module_catalog, host_profile, prompt_profile)
-    model_ids = {item["module_id"] for item in active["model"]}
-    skill_representations = model_ids & {
-        "model-skill-explicit", "model-skill-balanced-full", "model-skill-capsule"
-    }
-    policy_representations = model_ids & {
-        "model-policy-explicit", "model-policy-kernel"
-    }
-    expected_representations = {
-        "balanced": ({"model-skill-balanced-full"}, {"model-policy-kernel"}),
-        "lean": ({"model-skill-capsule"}, {"model-policy-kernel"}),
-    }[prompt_profile]
-    if (skill_representations, policy_representations) != expected_representations:
-        raise ContextAssemblyError(
-            "evaluation profile has no exact model representation for host=%s profile=%s"
-            % (host_profile, prompt_profile)
-        )
-    host = host_catalog["profiles"][host_profile]
-    prompt = prompt_catalog["profiles"][prompt_profile]
-    return {
-        "schema_version": "1.0",
-        "as_of": as_of,
-        "host_profile": host_profile,
-        "host_profile_source": "evaluation-explicit",
-        "model_id": model_id,
-        "model_revision": model_revision,
-        "distribution_profile": "repository",
-        "prompt_profile": prompt_profile,
-        "prompt_profile_source": "evaluation-only-uncertified",
-        "binding_id": None,
-        "capabilities": list(host["capabilities"]),
-        "compatible_distributions": list(host["compatible_distributions"]),
-        "routing_surface": host["routing_surface"],
-        "reference_surface": host["reference_surface"],
-        "connector_surface": host["connector_surface"],
-        "always_on_overlays": list(profile_resolver.ALWAYS_ON_OVERLAYS),
-        "reducible_settings": {
-            "workflow_detail": prompt["workflow_detail"],
-            "example_budget": prompt["example_budget"],
-            "template_detail": prompt["template_detail"],
-            "rationale_detail": prompt["rationale_detail"],
-            "reminder_density": prompt["reminder_density"],
-        },
-        "context_modules": active,
-        "fallback_modules": fallback,
-        "catalogs": {
-            "host_sha256": _sha256(host_raw),
-            "prompt_sha256": _sha256(prompt_raw),
-            "context_modules_sha256": _sha256(module_raw),
-        },
-        "evaluation_run_id": evaluation_run_id,
-    }
 
 
 def _module_index(resolution):
@@ -570,98 +472,6 @@ def _project_manifest_resource(resource, module, *, materialization=None):
     }
 
 
-def _generated_resource(relative, raw, role, module, source_resource_id):
-    digest = _sha256(raw)
-    return {
-        "resource_id": "g.%s" % hashlib.sha256(relative.encode("utf-8")).hexdigest()[:24],
-        "scope": "bundle",
-        "path": relative,
-        "sha256": digest,
-        "bytes": len(raw),
-        "body_bytes": len(raw) if module["materialization"] == "body" else 0,
-        "role": role,
-        "module_id": module["module_id"],
-        "materialization": module["materialization"],
-        "load_policy": module["load_policy"],
-        "source_resource_id": source_resource_id,
-    }
-
-
-def _load_compact_index(bundle_root):
-    index, index_raw = _load_bundle_json(
-        bundle_root, CAPSULE_INDEX_REF, "skill capsule index"
-    )
-    if (
-            not isinstance(index, dict) or index.get("schema_version") != "1.0"
-            or index.get("capsule_count") != 120
-            or not isinstance(index.get("capsules"), list)
-            or len(index["capsules"]) != 120):
-        raise ContextAssemblyError("skill capsule index identity/count is unsupported")
-    kernel_ref = index.get("policy_kernel")
-    if not isinstance(kernel_ref, dict) or set(kernel_ref) != {"path", "sha256"}:
-        raise ContextAssemblyError("skill capsule index policy kernel reference is invalid")
-    try:
-        kernel_raw = context_resolver.anchored_read(
-            bundle_root, kernel_ref["path"], MAX_DOCUMENT_BYTES, "bundle root"
-        )
-    except context_resolver.ContextResolutionError as exc:
-        raise ContextAssemblyError("cannot read policy kernel: %s" % exc) from exc
-    if _sha256(kernel_raw) != kernel_ref["sha256"]:
-        raise ContextAssemblyError("policy kernel hash differs from capsule index")
-    contract_index_ref = index.get("source_contract_index")
-    if not isinstance(contract_index_ref, dict) or set(contract_index_ref) != {
-            "path", "sha256"}:
-        raise ContextAssemblyError("capsule source contract index reference is invalid")
-    contract_index, source_index_raw = _load_bundle_json(
-        bundle_root, contract_index_ref["path"], "capsule source contract index"
-    )
-    if _sha256(source_index_raw) != contract_index_ref["sha256"]:
-        raise ContextAssemblyError("capsule source contract index hash differs")
-    if (
-            not isinstance(contract_index, dict)
-            or contract_index.get("contract_count") != 120
-            or not isinstance(contract_index.get("contracts"), list)
-            or len(contract_index["contracts"]) != 120):
-        raise ContextAssemblyError("capsule source contract index identity/count is invalid")
-    return index, index_raw, kernel_ref, kernel_raw, contract_index
-
-
-def _load_capsule(bundle_root, skill, manifest):
-    index, index_raw, kernel_ref, kernel_raw, contract_index = _load_compact_index(
-        bundle_root
-    )
-    matches = [item for item in index["capsules"] if item.get("skill") == skill]
-    if len(matches) != 1:
-        raise ContextAssemblyError("skill capsule index has no unique entry for %s" % skill)
-    entry = matches[0]
-    if entry.get("capsule_ref") != "references/skill-capsules/%s.json" % skill:
-        raise ContextAssemblyError("skill capsule path differs from its target identity")
-    capsule, capsule_raw = _load_bundle_json(
-        bundle_root, entry["capsule_ref"], "skill capsule"
-    )
-    if _sha256(capsule_raw) != entry.get("capsule_sha256"):
-        raise ContextAssemblyError("skill capsule hash differs from index")
-    contracts = [
-        item for item in contract_index["contracts"]
-        if isinstance(item, dict) and item.get("skill") == skill
-    ]
-    if len(contracts) != 1:
-        raise ContextAssemblyError("capsule source index has no unique contract for %s" % skill)
-    source = capsule.get("provenance", {}).get("source")
-    machine = capsule.get("provenance", {}).get("machine_contract")
-    if (
-            capsule.get("capsule_id") != "skill-capsule:" + skill
-            or not isinstance(source, dict)
-            or source.get("sha256") != manifest["route"]["skill_sha256"]
-            or machine != {
-                "path": contracts[0].get("contract_ref"),
-                "sha256": contracts[0].get("contract_sha256"),
-            }
-            or capsule.get("policy", {}).get("kernel") != kernel_ref):
-        raise ContextAssemblyError("skill capsule is stale for the manifest target")
-    return entry, capsule_raw, kernel_ref, kernel_raw, index_raw
-
-
 def build_assembly(
         manifest, *, bundle_root=ROOT, project_root=None, host_profile,
         model_id="unknown", model_revision=None, requested_prompt_profile=None, as_of=None,
@@ -696,51 +506,23 @@ def build_assembly(
     distribution = _distribution_identity(bundle_root, host_profile)
     planner_profile = manifest["request"]["planner"]["distribution_profile"]
     if distribution_evaluation_only:
-        if evaluation_prompt_profile is not None:
-            raise ContextAssemblyError(
-                "distribution evaluation cannot authorize a compact prompt profile"
-            )
         if requested_prompt_profile not in {None, "explicit"}:
-            raise ContextAssemblyError(
-                "distribution evaluation requires the explicit prompt profile"
-            )
+            raise ContextAssemblyError("distribution evaluation requires the explicit prompt profile")
         _validate_evaluation_run_id(evaluation_run_id)
     if evaluation_prompt_profile is not None:
-        if requested_prompt_profile is not None:
-            raise ContextAssemblyError(
-                "deployment prompt profile and evaluation prompt profile are mutually exclusive"
-            )
-        resolution = _evaluation_resolution(
-            bundle_root=bundle_root,
-            host_profile=host_profile,
-            model_id=model_id,
-            model_revision=model_revision,
-            prompt_profile=evaluation_prompt_profile,
-            as_of=as_of,
-            evaluation_run_id=evaluation_run_id,
+        raise ContextAssemblyError("compact prompt experiments are retired; only explicit context is supported")
+    if evaluation_run_id is not None and not distribution_evaluation_only:
+        raise ContextAssemblyError("evaluation_run_id is only for a repository standalone distribution projection")
+    try:
+        resolution = profile_resolver.resolve_context_profile(
+            bundle_root=bundle_root, host_profile=host_profile,
+            model_id=model_id, model_revision=model_revision,
+            requested_prompt_profile=requested_prompt_profile,
+            as_of=as_of, distribution_profile=distribution["profile"],
         )
-        deployment_eligible = False
-    else:
-        if evaluation_run_id is not None and not distribution_evaluation_only:
-            raise ContextAssemblyError(
-                "evaluation_run_id is allowed only with evaluation_prompt_profile"
-            )
-        try:
-            resolution = profile_resolver.resolve_context_profile(
-                bundle_root=bundle_root,
-                host_profile=host_profile,
-                model_id=model_id,
-                model_revision=model_revision,
-                requested_prompt_profile=(
-                    "explicit" if distribution_evaluation_only
-                    else requested_prompt_profile
-                ),
-                as_of=as_of,
-                distribution_profile=distribution["profile"],
-            )
-        except profile_resolver.ContextProfileError as exc:
-            raise ContextAssemblyError(str(exc)) from exc
-        deployment_eligible = not distribution_evaluation_only
+    except profile_resolver.ContextProfileError as exc:
+        raise ContextAssemblyError(str(exc)) from exc
+    deployment_eligible = not distribution_evaluation_only
     resolved_host = resolution["host_profile"]
     if (
             distribution["host_profile"] is not None
@@ -792,21 +574,15 @@ def build_assembly(
             source_skill = resource
             controller = _require_module(modules, "controller-skill-identity", "controller")
             consumers["controller"].append(_project_manifest_resource(resource, controller))
-            if prompt_profile == "explicit":
-                model = _require_module(modules, "model-skill-explicit", "model")
-                consumers["model"].append(_project_manifest_resource(resource, model))
-                if standalone_host:
-                    # The standalone SKILL.md embeds the non-reducible policy.
-                    # Require that host-specific policy representation, but do
-                    # not project the same source body a second time.
-                    _require_module(
-                        modules, "model-policy-standalone-embedded", "model"
-                    )
-            elif prompt_profile == "balanced":
-                model = _require_module(
-                    modules, "model-skill-balanced-full", "model"
+            model = _require_module(modules, "model-skill-explicit", "model")
+            consumers["model"].append(_project_manifest_resource(resource, model))
+            if standalone_host:
+                # The standalone SKILL.md embeds the non-reducible policy.
+                # Require that host-specific policy representation, but do
+                # not project the same source body a second time.
+                _require_module(
+                    modules, "model-policy-standalone-embedded", "model"
                 )
-                consumers["model"].append(_project_manifest_resource(resource, model))
         elif role == "skill-contract":
             if "controller-machine-contract" in modules:
                 controller = _require_module(
@@ -832,7 +608,7 @@ def build_assembly(
                 raise ContextAssemblyError(
                     "selected shared contract has no active controller module"
                 )
-            if prompt_profile == "explicit" and not standalone_host:
+            if not standalone_host:
                 model = _require_module(modules, "model-policy-explicit", "model")
                 consumers["model"].append(_project_manifest_resource(resource, model))
         elif role == "routing-scenario":
@@ -881,57 +657,6 @@ def build_assembly(
             raise ContextAssemblyError("unsupported selected manifest role: %s" % role)
     if source_skill is None or (source_policy is None and not standalone_host):
         raise ContextAssemblyError("manifest lacks selected skill/shared policy resources")
-
-    if prompt_profile == "balanced":
-        unused_index, unused_raw, kernel_ref, kernel_raw, unused_contracts = (
-            _load_compact_index(bundle_root)
-        )
-        kernel_module = _require_module(modules, "model-policy-kernel", "model")
-        kernel_model = _generated_resource(
-            kernel_ref["path"], kernel_raw, "policy-kernel", kernel_module,
-            source_policy["resource_id"],
-        )
-        consumers["model"].append(kernel_model)
-        replacements.append({
-            "source_resource_id": source_policy["resource_id"],
-            "replacement_resource_ids": [kernel_model["resource_id"]],
-            "reason_code": "certified-policy-kernel",
-        })
-    elif prompt_profile == "lean":
-        entry, capsule_raw, kernel_ref, kernel_raw, unused = _load_capsule(
-            bundle_root, manifest["route"]["target_skill"], manifest
-        )
-        capsule_module = _require_module(modules, "model-skill-capsule", "model")
-        kernel_module = _require_module(modules, "model-policy-kernel", "model")
-        controller_capsule = _require_module(
-            modules, "controller-capsule-provenance", "controller"
-        )
-        capsule_model = _generated_resource(
-            entry["capsule_ref"], capsule_raw, "skill-capsule", capsule_module,
-            source_skill["resource_id"],
-        )
-        capsule_control = _generated_resource(
-            entry["capsule_ref"], capsule_raw, "skill-capsule", controller_capsule,
-            source_skill["resource_id"],
-        )
-        kernel_model = _generated_resource(
-            kernel_ref["path"], kernel_raw, "policy-kernel", kernel_module,
-            source_policy["resource_id"],
-        )
-        consumers["model"].extend([capsule_model, kernel_model])
-        consumers["controller"].append(capsule_control)
-        replacements.extend([
-            {
-                "source_resource_id": source_skill["resource_id"],
-                "replacement_resource_ids": [capsule_model["resource_id"]],
-                "reason_code": "certified-skill-capsule",
-            },
-            {
-                "source_resource_id": source_policy["resource_id"],
-                "replacement_resource_ids": [kernel_model["resource_id"]],
-                "reason_code": "certified-policy-kernel",
-            },
-        ])
 
     for consumer in consumers:
         consumers[consumer].sort(key=lambda item: (item["path"], item["resource_id"]))
@@ -1077,24 +802,17 @@ def validate_assembly(value):
                     raise ContextAssemblyError("body resource byte accounting is invalid")
             elif resource["body_bytes"] != 0:
                 raise ContextAssemblyError("non-body resource cannot count model bytes")
+    if profile["prompt_profile"] != "explicit" or profile["binding_id"] is not None:
+        raise ContextAssemblyError("retired prompt profile: inspect historical experimental results with their pinned runtime")
+    if value["replacements"] or value["usage"]["model_reduction_bytes"] != 0 or value["usage"]["model_reduction_ratio"] != 0:
+        raise ContextAssemblyError("explicit context cannot claim prompt replacements or reductions")
     if value["deployment_eligible"]:
-        if value["evaluation_run_id"] is not None:
-            raise ContextAssemblyError("deployment assembly cannot carry evaluation_run_id")
-        if value["profile"]["prompt_profile_source"] in {
-                "evaluation-only-uncertified",
-                "evaluation-only-distribution-projection",
-        }:
-            raise ContextAssemblyError("evaluation-only profile cannot be deployment eligible")
+        if value["evaluation_run_id"] is not None or evaluation_only:
+            raise ContextAssemblyError("deployment assembly cannot carry evaluation identity")
     else:
         _validate_evaluation_run_id(value["evaluation_run_id"])
-        expected_source = (
-            "evaluation-only-distribution-projection"
-            if evaluation_only else "evaluation-only-uncertified"
-        )
-        if value["profile"]["prompt_profile_source"] != expected_source:
-            raise ContextAssemblyError(
-                "evaluation assembly must remain explicitly non-deployable"
-            )
+        if not evaluation_only or profile["prompt_profile_source"] != "evaluation-only-distribution-projection":
+            raise ContextAssemblyError("only the repository standalone projection is evaluation-only")
     signature = value["assembly_signature"]
     payload = dict(value)
     payload.pop("assembly_signature")
@@ -1113,11 +831,7 @@ def main(argv=None):
     parser.add_argument("--host-profile", required=True)
     parser.add_argument("--model-id", default="unknown")
     parser.add_argument("--model-revision")
-    profile = parser.add_mutually_exclusive_group()
-    profile.add_argument("--prompt-profile", choices=profile_resolver.PROMPT_PROFILE_ORDER)
-    profile.add_argument(
-        "--evaluation-prompt-profile", choices=("balanced", "lean")
-    )
+    parser.add_argument("--prompt-profile", choices=profile_resolver.PROMPT_PROFILE_ORDER)
     parser.add_argument("--evaluation-run-id")
     parser.add_argument(
         "--distribution-evaluation-only", action="store_true",
@@ -1138,7 +852,6 @@ def main(argv=None):
             model_revision=args.model_revision,
             requested_prompt_profile=args.prompt_profile,
             as_of=args.as_of,
-            evaluation_prompt_profile=args.evaluation_prompt_profile,
             evaluation_run_id=args.evaluation_run_id,
             distribution_evaluation_only=args.distribution_evaluation_only,
             verify_sources=True,

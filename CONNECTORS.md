@@ -17,38 +17,7 @@ All endpoints below were verified against primary vendor/source docs (2026-05; r
 
 For the bundle-able categories the repo ships small **Python-3-stdlib** helpers under [`scripts/connectors/`](scripts/connectors/README.md) — no `pip`, no key (except where noted). They turn the recipes below into one command, so a skill can pull real data itself instead of asking you to paste it. Run from the repo root:
 
-| Capability | Helper | Needs |
-|---|---|---|
-| Crawl a site (→ page records) | `crawl.py <url>` | — |
-| On-page audit (title/meta/headings/canonical/JSON-LD) | `onpage.py <url>` | — |
-| robots.txt eval + AI-bot check | `robots.py <url> --check-ai-bots` | — |
-| sitemap / sitemap-index / llms.txt | `sitemap.py <url>` | — |
-| Internal-link graph (orphans / depth / internal PageRank) | `crawl.py … \| linkgraph.py -` | — |
-| Page speed + Core Web Vitals | `psi.py <url>` | free key for automation |
-| Structured-data extract + validate (+ FAQ/HowTo deprecation) | `schema_lint.py <url>` | — |
-| Entity → Wikidata QID + claims | `kg.py reconcile "<name>"` | — |
-| Archive history / change tracking | `wayback.py <url>` | — |
-| Domain-authority signal | `openpagerank.py <domain> --key …` | free key |
-| Keyword ideas (⚠️ unofficial endpoint) | `suggest.py "<seed>" --expand` | — |
-| Live web SERP (keyless) | `firecrawl.py search "<query>" --limit 10` | — (optional key) |
-| Rendered-page scrape for JS-heavy pages / site URL map | `firecrawl.py scrape <url>` · `firecrawl.py map <domain>` | — (optional key) |
-| AI answer engine + citation probe / news search / URL extract (keyless) | `tavily.py search "<query>" --answer` · `tavily.py extract <url>` | — (optional key) |
-| Email-auth DNS records — SPF/DMARC/BIMI/MX + DKIM-selector probes (DoH) | `doh.py auth <domain>` · `doh.py query <name> --type TXT` | — |
-| Entity/topic attention series (Wikipedia pageviews) | `pageviews.py "<Article>" --months 12` | — |
-| Global news mentions + volume trend (GDELT) | `gdelt.py '"<brand>"' --days 30` (⚠️ ≥5s between calls) | — |
-| Brand / mention RSS | `rss_monitor.py <feed-url>` | — |
-| YouTube creator metrics — real subs/views/video stats for shortlist vetting | `youtube.py channel @handle` · `youtube.py videos @handle --limit 10` | free key |
-| Hacker News launch/mention heat — brand/domain search, front-page rank + live points/comments, account facts | `hn.py search "<brand or domain>" --tags story` · `hn.py rank <item-id> --list showstories` | — |
-| Product Hunt launch intel — daily leaderboard / post record / topic feed (**⚠️ non-commercial per PH API terms; keep the attribution field**) | `producthunt.py daily` · `producthunt.py post <slug>` | free token |
-| App Store app metadata — ratings / price / version / top-free & top-paid charts | `appstore.py lookup <app-id>` · `appstore.py charts --country us` | — |
-| Bluesky profile/feed engagement + cadence + handle-squat audit — keyless public counts; app-password post search | `bluesky.py profile <handle>` · `bluesky.py feed <handle>` · `bluesky.py actors "<brand>"` · `bluesky.py search "<q>"` (search needs `BSKY_IDENTIFIER`+`BSKY_APP_PASSWORD`) | — (search: free app password) |
-| Fediverse listening — keyless Mastodon trends/tags/status engagement + Lemmy post/community search | `fediverse.py trends --instance mastodon.social` · `fediverse.py account <acct>` · `fediverse.py tag "<#tag>"` · `fediverse.py lemmy "<q>"` | — |
-| Discourse forum community-health — keyless trust-level distribution + time-to-first-response | `discourse.py latest <forum-base>` · `discourse.py topic <forum-base> <id>` · `discourse.py health <forum-base>` | — |
-| YouTube upload cadence + view counts, zero-quota — keyless channel RSS (latest 15 videos) | `youtube.py rss <channel-id-or-@handle>` | — |
-| Index push — tell Bing/DuckDuckGo/Yandex (IndexNow) and Baidu your URLs changed | `indexpush.py indexnow <urls…> --key …` · `indexpush.py baidu … --site … --key …` (dry-run by default, `--live` to submit) | self-minted key / site token |
-| Email ESP automation — domain-auth status / seed-test send / suppression sync / broadcasts (Resend) | `resend.py domains` · `resend.py seed …` (mutating commands dry-run by default, `--live` to execute) | free key |
-| Before/after deltas (measurement loop) | `… \| ledger.py record <target> --source <name>` → `ledger.py diff <target> --source <name>` | — |
-| Experiment **decision inputs** on your own observations — z-test / Mann-Whitney, confidence/effect intervals, practical-effect flag, and sample-size / MDE; returns Calculated facts and never a business action | `experiment.py proportion --control <c> <n> --variant <v> <n> [--min-lift 0.15]` · `experiment.py samplesize --baseline 0.1 --mde 0.02` | — |
+The [helper guide](scripts/connectors/README.md#helpers) owns the complete capability, credential and command table. Load the chosen helper's syntax when needed; do not maintain a second command inventory here.
 
 See [scripts/connectors/README.md](scripts/connectors/README.md) for the full list, the safety contract, and what intentionally stays external (proprietary / own-data → MCP/API).
 

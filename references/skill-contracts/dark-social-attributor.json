@@ -11,7 +11,7 @@
           "end_char": 85,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 200,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 87
         },
@@ -41,7 +41,7 @@
           "end_char": 316,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 202
         },
@@ -53,7 +53,7 @@
     "source": {
       "path": "social/observe/dark-social-attributor/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc"
+      "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc"
     }
   },
   "context_hints": {
@@ -62,28 +62,28 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 48
       },
       {
         "path": "references/echo-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078",
+        "sha256": "a685aab57c6d3278067e1be97ce9b5ca879f54d7f59b4a32ed4bc2b09cbbbfc3",
         "source_line": 4
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 34
       },
       {
@@ -119,7 +119,7 @@
           "end_char": 192,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -137,7 +137,7 @@
           "end_char": 387,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 193
         },
@@ -155,7 +155,7 @@
           "end_char": 571,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 388
         },
@@ -173,7 +173,7 @@
           "end_char": 932,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 573
         },
@@ -186,7 +186,7 @@
     "summary_ref": {
       "path": "social/observe/dark-social-attributor/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc"
+      "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -201,8 +201,8 @@
     "name": "dark-social-attributor",
     "path": "social/observe/dark-social-attributor/SKILL.md",
     "phase": "observe",
-    "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
-    "version": "20.1.0"
+    "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<GA4/GSC exports or site> [share-surface inventory] [existing form fields]",
@@ -216,7 +216,7 @@
           "end_char": 94,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -231,7 +231,7 @@
           "end_char": 117,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 96
         },
@@ -246,7 +246,7 @@
           "end_char": 171,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 119
         },
@@ -261,7 +261,7 @@
           "end_char": 279,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 173
         },
@@ -276,7 +276,7 @@
           "end_char": 387,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 281
         },
@@ -291,7 +291,7 @@
           "end_char": 494,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 389
         },
@@ -303,7 +303,7 @@
     "source": {
       "path": "social/observe/dark-social-attributor/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc"
+      "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc"
     }
   },
   "output_contract": {
@@ -318,7 +318,7 @@
           "end_char": 51,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -334,7 +334,7 @@
           "end_char": 387,
           "path": "social/observe/dark-social-attributor/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc",
+          "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc",
           "span_basis": "field-text",
           "start_char": 53
         },
@@ -345,7 +345,7 @@
     "source": {
       "path": "social/observe/dark-social-attributor/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc"
+      "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc"
     },
     "summary": "a dark-social attribution pack — (1) a share-link/UTM hygiene spec for owned share surfaces, (2) a self-reported attribution field design that replaces an existing form field (free-text first, coding plan later), (3) a GA4 direct-traffic decomposition read with each heuristic labeled Estimated/proxy, (4) a branded-search-lift proxy read (GSC + `pageviews.py`), and (5) the one-page declared-method doc — plus the standard handoff summary.",
     "summary_source": "expected-output",
@@ -356,12 +356,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -370,7 +370,7 @@
     "source": {
       "path": "social/observe/dark-social-attributor/SKILL.md",
       "section": "frontmatter",
-      "sha256": "4d9f03dafaa06f95ac85cd8b631940916456a755b1a433e36e86fe2fde7fc2fc"
+      "sha256": "cd416ab9c38c1f804d6b4d3678527977e8f8b78559b2b98c2a0f3eec5ad53acc"
     },
     "trigger_phrases": [
       "add a how-did-you-hear-about-us field",

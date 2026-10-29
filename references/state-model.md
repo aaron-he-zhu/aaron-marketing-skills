@@ -10,7 +10,7 @@ This document defines the v18 project-state architecture. Runtime state is priva
 | Registry projection | Current accepted state | `memory/projections/<registry>.json` | Rebuilt atomically from events |
 | Human registry view | Presentation only | Registry-owned paths under `memory/` | Regenerated from projection; never authoritative |
 | Run event | Non-authoritative operational evidence | `memory/runs/<run-id>/events.ndjson` | Append-only within one retained run; deletable under operational retention |
-| Run projection | Disposable session-tree view | `memory/runs/<run-id>/session.json` | Rebuilt atomically from verified run events |
+| Run projection | Optional disposable session-tree export | `memory/runs/<run-id>/session.json` | Explicit `project` export from verified run events; normal operations return an in-memory view |
 | Context manifest | Deterministic invocation provenance | `memory/runs/<run-id>/turns/<turn-id>/context-manifest.json` | Immutable metadata/hash selection; no source bodies or authority |
 | Turn snapshot | Invocation provenance | `memory/runs/<run-id>/turns/<turn-id>/snapshot.json` | Immutable metadata/hash freeze for one turn |
 | Save point | Verified runtime resume pointer | `memory/runs/<run-id>/save-points/<id>.json` | Immutable; re-verify stream, artifacts, permissions, and registries before use |

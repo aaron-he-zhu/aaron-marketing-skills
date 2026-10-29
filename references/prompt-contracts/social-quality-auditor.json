@@ -195,8 +195,8 @@
   ],
   "framework_contract": {
     "catalog_path": "references/framework-catalog.json",
-    "catalog_sha256": "71700105604bf955bc9fe634ed917a97f8f912b2674d1eee8c989fe13e6a9a0a",
-    "catalog_version": "20.1.0",
+    "catalog_sha256": "931ac8f66f96d211ec704713f88f5a98d15250659e83c9fffc6c71987d37ba68",
+    "catalog_version": "20.2.0",
     "profiles": [
       "asset-gate",
       "program-maturity-community",
@@ -230,7 +230,7 @@
     "runtime_sources": [
       {
         "path": "references/auditor-runbook.md",
-        "sha256": "028a87012aa8cded04d9b7fb70f44a2b0eb3475b7984251050e1ec281c60a3ec"
+        "sha256": "2fddd2dd19dd4b95676715bec812c8e3866bac9e3399b204977b37c017cf70c4"
       },
       {
         "path": "references/scoring-semantics.md",
@@ -238,7 +238,7 @@
       },
       {
         "path": "references/echo-benchmark.md",
-        "sha256": "f4a6fd4227140c7d9789e49c16711bdcbfeea5d9725398d3582f8081e6178078"
+        "sha256": "a685aab57c6d3278067e1be97ce9b5ca879f54d7f59b4a32ed4bc2b09cbbbfc3"
       },
       {
         "path": "references/audit-run.schema.json",
@@ -246,7 +246,7 @@
       },
       {
         "path": "references/audit-artifact.schema.json",
-        "sha256": "e5a1898412907400a2cf67ddc950eb7013db0558da47bf7eb4f7bf7b98e2a717"
+        "sha256": "75aac256d427451f9dc29795193972358588462931c0f9ff4a28dabf73c8dd7a"
       }
     ],
     "sink": "memory/audits/social/"
@@ -331,12 +331,12 @@
   "skill": {
     "name": "social-quality-auditor",
     "path": "social/host/social-quality-auditor/SKILL.md",
-    "sha256": "66250eaa3d075bc352e27d00e097dff05f5bd8b1d87e3752a38017ff10b907eb",
-    "version": "20.1.0"
+    "sha256": "c0a4570c7ecb3907534ab84d94f6d03eb8e9518723ec489835a947908e48e9eb",
+    "version": "20.2.0"
   },
   "source_catalog": {
     "path": "references/system-catalog.json",
-    "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-    "version": "20.1.0"
+    "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+    "version": "20.2.0"
   }
 }

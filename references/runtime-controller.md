@@ -182,6 +182,22 @@ reopens every current context source. A modified required or selected source
 blocks resume instead of silently reusing stale context. The result is a
 bounded operational summary and remains non-authoritative.
 
+Summary, head, latest snapshot binding, and save-point validation use one verified
+event prefix. A concurrent append may make that prefix older than the current
+head; every returned field still describes the same prefix. Resume writes no
+projection and never retries an external action. Waiting persists through
+SessionStart observations until a typed lifecycle progression occurs.
+
+Before changing runtime versions, stop writes to the affected runs and preserve
+their exact head, plans, and referenced evidence with the matching runtime
+bundle. Test the proposed version's verify/resume and identical-key retry on a
+copy. An older workflow runtime may require an explicit state export; a missing
+export is separate from an unreadable event or incompatible source contract.
+If that version cannot safely read and replay the preserved records, keep them
+read only and use a compatible fixed version. Do not rewrite historical hashes,
+retry external actions, or return to a version known to violate lifecycle or
+permission rules.
+
 ## Failure and privacy behavior
 
 - Planning and source verification occur before the run starts, so an invalid

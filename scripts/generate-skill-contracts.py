@@ -14,10 +14,14 @@ import json
 import math
 import os
 from pathlib import Path
+from runpy import run_path
 import re
 import sys
 import tempfile
 
+
+# Resolve this checkout explicitly, including when imported by file path in tests.
+_read_catalog_groups = run_path(str(Path(__file__).with_name("system_catalog.py")))["catalog_groups"]
 
 ROOT = Path(__file__).resolve().parents[1]
 CATALOG_REF = "references/system-catalog.json"
@@ -139,39 +143,8 @@ def load_json(root, relative):
 
 
 def catalog_skill_paths(catalog):
-    result = []
-    logical_order = catalog.get("logical_order")
-    if not isinstance(logical_order, list):
-        raise ContractGenerationError("system catalog lacks logical_order")
-    for discipline in logical_order:
-        if discipline == "protocol":
-            protocol = catalog.get("protocol", {})
-            skills = protocol.get("skills")
-            if not isinstance(skills, list):
-                raise ContractGenerationError("system catalog protocol.skills is invalid")
-            for skill in skills:
-                result.append((skill, "protocol/%s" % skill, "protocol", "protocol"))
-            continue
-        specification = catalog.get("disciplines", {}).get(discipline)
-        if not isinstance(specification, dict):
-            raise ContractGenerationError("unknown catalog discipline: %s" % discipline)
-        for phase in specification.get("phase_order", []):
-            skills = specification.get("phases", {}).get(phase)
-            if not isinstance(skills, list):
-                raise ContractGenerationError(
-                    "catalog phase is not a skill list: %s/%s" % (discipline, phase)
-                )
-            for skill in skills:
-                result.append((skill, "%s/%s/%s" % (discipline, phase, skill), discipline, phase))
-    declared = catalog.get("counts", {}).get("total_skills")
-    if declared != len(result):
-        raise ContractGenerationError(
-            "catalog declares %r skills but enumerates %d" % (declared, len(result))
-        )
-    names = [item[0] for item in result]
-    if len(names) != len(set(names)):
-        raise ContractGenerationError("system catalog contains duplicate skill names")
-    return result
+    return [tuple(skill) for group in _read_catalog_groups(catalog, ContractGenerationError)
+            for skill in group.skills]
 
 
 def load_control_bindings(root, ordered):

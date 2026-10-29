@@ -696,24 +696,26 @@ class RunEventTests(unittest.TestCase):
             "event": anchored["event"],
         }
 
-    def test_idempotency_hash_chain_and_projection_repair(self):
-        original_atomic_write = runtime.atomic_write_json
-
-        def broken(*args, **kwargs):
-            raise OSError("disk full")
-
-        runtime.atomic_write_json = broken
-        try:
-            with self.assertRaisesRegex(runtime.RunEventError, "event_committed=true"):
-                self.start()
-        finally:
-            runtime.atomic_write_json = original_atomic_write
-
+    def test_idempotency_hash_chain_and_explicit_projection_export(self):
+        with mock.patch.object(runtime, "atomic_write_json", side_effect=OSError("disk full")) as write:
+            first = self.start()
+            repaired = self.start()
+            write.assert_not_called()
         stream, projection, _ = runtime.run_paths(self.root, self.run_id)
         self.assertEqual(1, len(stream.read_text(encoding="utf-8").splitlines()))
-        repaired = self.start()
         self.assertTrue(repaired["deduplicated"])
-        self.assertTrue(projection.is_file())
+        self.assertFalse(projection.exists())
+        committed = stream.read_bytes()
+        with mock.patch.object(runtime, "atomic_write_json", side_effect=OSError("disk full")):
+            with self.assertRaisesRegex(runtime.RunEventError, "projection export failed.*disk full"):
+                runtime.rebuild_projection(self.root, self.run_id)
+        self.assertEqual(committed, stream.read_bytes())
+        exported = runtime.rebuild_projection(self.root, self.run_id)
+        self.assertEqual(first["projection"], exported)
+        self.assertEqual(exported, json.loads(projection.read_text(encoding="utf-8")))
+        projection.write_text("invalid old cache\n", encoding="utf-8")
+        self.assertEqual(first["projection"], self.start()["projection"])
+        self.assertEqual("invalid old cache\n", projection.read_text(encoding="utf-8"))
         self.assertEqual(runtime.ZERO_HASH, repaired["event"]["previous_hash"])
         self.assertEqual(1, repaired["projection"]["last_offset"])
 
@@ -1583,13 +1585,26 @@ class RunEventTests(unittest.TestCase):
         self.assertEqual("waiting", first["projection"]["status"])
         self.assertEqual(first["artifact"]["ref"], first["projection"]["run_envelope_ref"])
 
+        observed = runtime.append_event(
+            self.root, self.run_id,
+            self.request(
+                "observe-after-wait", event_type="hook_observed",
+                parent=first["event"]["event_id"],
+                subject={"kind": "hook", "ref": "session-start"},
+                dimensions={"hook_name": "session-start"},
+            ),
+        )
+        self.assertEqual("waiting", observed["projection"]["status"])
+        self.assertEqual("waiting", runtime.resume_summary(self.root, self.run_id, 8192)["status"])
+
         resumed = runtime.append_event(
             self.root, self.run_id,
             self.request(
-                "resume-after-wait", parent=first["event"]["event_id"],
+                "resume-after-wait", parent=observed["event"]["event_id"],
                 subject={"kind": "route", "ref": "resume"},
             ),
         )
+        self.assertEqual("active", resumed["projection"]["status"])
         second_value = self.envelope_value(context, None, resumed["projection"], status="waiting")
         second_value["ended_at"] = None
         second_value["next_action"] = {"code": "second-readback"}
@@ -2114,7 +2129,7 @@ class RunEventTests(unittest.TestCase):
         self.assertFalse(summary["authoritative"])
         self.assertLessEqual(len((runtime.canonical_json(summary) + "\n").encode("utf-8")), 1024)
         self.assertTrue(stream.is_file())
-        self.assertTrue(projection.is_file())
+        self.assertFalse(projection.exists())
 
         completed = subprocess.run(
             [

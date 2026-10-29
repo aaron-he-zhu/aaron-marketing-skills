@@ -9,6 +9,7 @@ keeping the root references authoritative in repository mode.
 from __future__ import annotations
 
 import argparse
+from decimal import Decimal
 import hashlib
 import json
 import os
@@ -65,51 +66,53 @@ def parse_item_definitions(framework_name, framework, benchmark_path):
         text = benchmark_path.read_text(encoding="utf-8")
     except (OSError, UnicodeError) as exc:
         raise GenerationError("cannot read framework benchmark: %s" % exc) from exc
+    begin, end = "<!-- AUDITOR-ITEMS:BEGIN -->", "<!-- AUDITOR-ITEMS:END -->"
+    if text.count(begin) != 1 or text.count(end) != 1:
+        raise GenerationError("%s needs one authoritative item-table block" % framework_name)
+    start, finish = text.index(begin) + len(begin), text.index(end)
+    if finish <= start:
+        raise GenerationError("%s item-table markers are reversed" % framework_name)
     parsed = {}
-
-    # CORE-EEAT, CITE, STAR, ROAS, and SEND declare item tables. Ignore later
-    # qualified veto tables: their first cell is not an unqualified expected ID.
-    for line in text.splitlines():
+    header = None
+    for line in text[start:finish].splitlines():
         if not line.startswith("|"):
             continue
         cells = [_clean_cell(cell) for cell in line.strip().strip("|").split("|")]
-        if not cells:
+        raw_item_id = cells[0].replace("⛔", "").replace("`", "").strip()
+        if raw_item_id == "ID":
+            allowed = {"ID", "Dim", "Dimension", "Check Item", "Name", "Priority",
+                       "Criterion", "One-Line Standard", "One-Line Diagnostic Anchor"}
+            if (len(cells) < 2 or len(set(cells)) != len(cells)
+                    or not set(cells).issubset(allowed)
+                    or cells[-1] not in {"Criterion", "One-Line Standard", "One-Line Diagnostic Anchor"}
+                    or {"Dim", "Dimension"}.issubset(cells)
+                    or {"Check Item", "Name"}.issubset(cells)):
+                raise GenerationError("%s has an invalid item-table header" % framework_name)
+            header = cells
             continue
-        raw_item_id = cells[0].replace("`", "").replace("⛔", "").strip()
+        if all(re.fullmatch(r"[-: ]+", cell) for cell in cells):
+            if header is None or len(cells) != len(header):
+                raise GenerationError("%s has an invalid item-table separator" % framework_name)
+            continue
+        if header is None or len(cells) != len(header):
+            raise GenerationError("%s item-table columns differ from its header: %s" % (framework_name, raw_item_id))
         match = ITEM_ID.fullmatch(raw_item_id)
-        if match is None or match.group(1) not in expected or len(cells) < 2:
-            continue
+        if match is None or raw_item_id not in expected:
+            raise GenerationError("%s has an invalid item-table row: %s" % (framework_name, raw_item_id))
         item_id = match.group(1)
+        if item_id in parsed:
+            raise GenerationError("%s has duplicate authoritative item: %s" % (framework_name, item_id))
         dimension = expected[item_id]
         dimension_name = framework["dimensions"][dimension]["name"]
-        middle = []
-        for cell in cells[1:-1]:
-            if cell in {dimension, dimension_name}:
-                continue
-            if any(marker in cell for marker in ("GEO", "SEO", "Dual")):
-                continue
-            middle.append(cell)
-        parsed.setdefault(item_id, {
+        row = dict(zip(header, cells))
+        declared_dimension = row.get("Dim", row.get("Dimension"))
+        if declared_dimension is not None and declared_dimension not in {dimension, dimension_name}:
+            raise GenerationError("%s item dimension differs from the typed catalog: %s" % (framework_name, item_id))
+        parsed[item_id] = {
             "dimension": dimension,
-            "name": middle[0] if middle else None,
+            "name": row.get("Check Item", row.get("Name")),
             "criterion": cells[-1],
-        })
-
-    # RAMP, ECHO, and TALE use compact stable-anchor paragraphs. First
-    # occurrence wins so later explanatory prose such as "`T1` does not..."
-    # cannot replace the canonical anchor.
-    marker = "## Stable Item Anchors"
-    if marker in text:
-        anchor_section = text.split(marker, 1)[1].split("Per item:", 1)[0]
-        for match in re.finditer(r"`([A-Za-z]+[0-9]{1,2})`\s+([^·\n]+)", anchor_section):
-            item_id = match.group(1)
-            if item_id not in expected:
-                continue
-            parsed.setdefault(item_id, {
-                "dimension": expected[item_id],
-                "name": None,
-                "criterion": match.group(2).strip().rstrip("."),
-            })
+        }
 
     missing = sorted(set(expected) - set(parsed))
     extra = sorted(set(parsed) - set(expected))
@@ -162,7 +165,7 @@ def safe_source(relative):
     return path
 
 
-def build_bundle(auditor, framework_catalog):
+def build_bundle(auditor, framework_catalog, source_overrides=None):
     framework_name = auditor["framework"]
     framework = framework_catalog.get("frameworks", {}).get(framework_name)
     if framework is None:
@@ -202,7 +205,7 @@ def build_bundle(auditor, framework_catalog):
     for relative, path in source_paths:
         digest.update(relative.encode("utf-8"))
         digest.update(b"\0")
-        digest.update(path.read_bytes())
+        digest.update((source_overrides or {}).get(relative, path.read_bytes()))
     lines = [
         "<!-- GENERATED FILE: run `python3 scripts/generate-auditor-runtime.py --write`; do not edit. -->",
         "",
@@ -228,7 +231,7 @@ def build_bundle(auditor, framework_catalog):
         "## Standalone Execution Policy",
         "",
         "1. Select exactly one declared profile from the typed snapshot and record it with the catalog version and source digest above.",
-        "2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Every non-unknown state needs evidence; never convert missing evidence into a pass.",
+        "2. Collect one state per applicable item using the run-schema vocabulary: `pass`, `partial`, `fail`, `na`, or `unknown` — the same states the root scorer replays later. Observed pass/partial/fail states need evidence. Unknown needs a gap reason; catalog-authorized na needs a reason and no evidence. Never convert missing evidence into a pass.",
         "3. Record veto observations by their qualified framework item IDs, but do not calculate dimension, raw, capped, or final scores without the root deterministic scorer.",
         "4. Return `status: NEEDS_INPUT` or `status: BLOCKED` with `verdict: UNDECIDED`, `score_state: NOT_SCORED`, and `score_confidence: not_scored`. Clearly identify the unavailable root runtime as the reason.",
         "5. Do not write under `memory/audits/`, mutate registries, or claim a publish/ship decision. Offer the observation set for later execution in a full plugin or repository install.",
@@ -256,6 +259,9 @@ def atomic_write(path, content):
     fd, temp_name = tempfile.mkstemp(prefix=".%s." % path.name, dir=str(path.parent))
     try:
         with os.fdopen(fd, "wb") as handle:
+            # These are public source/projection files, independent of the
+            # maintainer's restrictive process umask.
+            os.fchmod(handle.fileno(), 0o644)
             handle.write(content)
             handle.flush()
             os.fsync(handle.fileno())
@@ -263,6 +269,78 @@ def atomic_write(path, content):
     finally:
         if os.path.exists(temp_name):
             os.unlink(temp_name)
+
+
+SHARED_KEYS = ("activation", "result-header")
+RUNBOOK_REF = "references/auditor-runbook.md"
+
+
+def _marked_body(source, begin, end):
+    if source.count(begin) != 1 or source.count(end) != 1:
+        raise GenerationError("expected one marker pair: %s" % begin)
+    start = source.index(begin) + len(begin)
+    finish = source.index(end)
+    if finish <= start:
+        raise GenerationError("reversed marker pair: %s" % begin)
+    return source[start:finish].strip()
+
+
+def render_shared_skill(auditor, runbook_text):
+    path = safe_source(auditor["path"] + "/SKILL.md")
+    source = path.read_text(encoding="utf-8")
+    for key in SHARED_KEYS:
+        begin = "<!-- GENERATED:BEGIN auditor-shared:%s -->" % key
+        end = "<!-- GENERATED:END auditor-shared:%s -->" % key
+        _marked_body(source, begin, end)
+        body = _marked_body(
+            runbook_text,
+            "<!-- AUTHORING:BEGIN auditor-shared:%s -->" % key,
+            "<!-- AUTHORING:END auditor-shared:%s -->" % key,
+        )
+        start = source.index(begin) + len(begin)
+        finish = source.index(end)
+        source = source[:start] + "\n" + body + "\n" + source[finish:]
+    return path, source.encode("utf-8")
+
+
+def render_policy_runbook(runbook_text, frameworks):
+    begin = "<!-- GENERATED:BEGIN auditor-policy:vetoes -->"
+    end = "<!-- GENERATED:END auditor-policy:vetoes -->"
+    _marked_body(runbook_text, begin, end)
+    rows = ["| Framework | Veto IDs |", "|---|---|"]
+    for name, framework in frameworks["frameworks"].items():
+        rows.append("| %s | %s |" % (
+            name, ", ".join("`%s-%s`" % (name, item)
+                            for item in framework["veto_items"]),
+        ))
+    start = runbook_text.index(begin) + len(begin)
+    finish = runbook_text.index(end)
+    return runbook_text[:start] + "\n\n" + "\n".join(rows) + "\n\n" + runbook_text[finish:]
+
+
+def render_profile_policy(benchmark_text, framework):
+    """Project policy values; domain guidance stays authored outside markers."""
+    begin = "<!-- GENERATED:BEGIN auditor-policy:profiles -->"
+    end = "<!-- GENERATED:END auditor-policy:profiles -->"
+    _marked_body(benchmark_text, begin, end)
+    rows = ["| Profile | Dimension weights | Context match | Item subset |",
+            "|---|---|---|---|"]
+    for profile, spec in framework['profiles'].items():
+        weights = []
+        for dimension, weight in spec['dimensions'].items():
+            percentage = format(Decimal(str(weight)) * 100, 'f')
+            if '.' in percentage:
+                percentage = percentage.rstrip('0').rstrip('.')
+            weights.append('%s %s%%' % (dimension, percentage))
+        context = json.dumps(spec['context_equals'], ensure_ascii=False, sort_keys=True) if spec.get('context_equals') else 'none'
+        subset = '; '.join('%s: %s' % (kind, json.dumps(spec[kind], ensure_ascii=False, sort_keys=True))
+                           for kind in ('include_items', 'exclude_items') if kind in spec) or 'all items in included dimensions'
+        rows.append('| `%s` | %s | %s | %s |' % (
+            profile, ' · '.join(weights), context.replace('|', '\\|'), subset.replace('|', '\\|'),
+        ))
+    start = benchmark_text.index(begin) + len(begin)
+    finish = benchmark_text.index(end)
+    return benchmark_text[:start] + '\n\n' + '\n'.join(rows) + '\n\n' + benchmark_text[finish:]
 
 
 def main(argv=None):
@@ -277,10 +355,22 @@ def main(argv=None):
         auditors = system.get("auditors", [])
         if len(auditors) != system.get("counts", {}).get("auditors"):
             raise GenerationError("system catalog auditor count is inconsistent")
-        stale = []
+        runbook = safe_source(RUNBOOK_REF)
+        expected_runbook = render_policy_runbook(runbook.read_text(encoding="utf-8"), frameworks)
+        outputs = {runbook: expected_runbook.encode("utf-8")}
+        for framework in frameworks['frameworks'].values():
+            benchmark = safe_source(framework['source'])
+            outputs[benchmark] = render_profile_policy(
+                benchmark.read_text(encoding='utf-8'), framework,
+            ).encode('utf-8')
         for auditor in auditors:
-            path = output_path(auditor)
-            expected = build_bundle(auditor, frameworks)
+            path, content = render_shared_skill(auditor, expected_runbook)
+            outputs[path] = content
+        overrides = {str(path.relative_to(ROOT)): content for path, content in outputs.items()}
+        for auditor in auditors:
+            outputs[output_path(auditor)] = build_bundle(auditor, frameworks, overrides)
+        stale = []
+        for path, expected in outputs.items():
             if args.write:
                 atomic_write(path, expected)
                 print("wrote %s" % path.relative_to(ROOT))

@@ -42,7 +42,6 @@ PROTOCOL_DISCIPLINES = {
     "creator-registry": "influencer",
     "launch-registry": "launch",
 }
-AUTHORITY_RANK = {"canonical": 0, "approved": 1, "working": 2, "untrusted": 3}
 REQUIREMENT_RANK = {"required": 0, "optional": 1, "forbidden": 2}
 AUDITOR_EXCLUSIVE_GROUP = "auditor-runtime-chain"
 CONTROL_REQUIREMENTS = {
@@ -71,6 +70,7 @@ def _load_resolver():
 
 
 resolver = _load_resolver()
+AUTHORITY_RANK = resolver.AUTHORITY_RANK
 ContextPlanError = resolver.ContextResolutionError
 
 

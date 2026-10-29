@@ -11,7 +11,7 @@
           "end_char": 111,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 237,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 113
         },
@@ -41,7 +41,7 @@
           "end_char": 264,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 239
         },
@@ -56,7 +56,7 @@
           "end_char": 374,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 266
         },
@@ -68,7 +68,7 @@
     "source": {
       "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1"
+      "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3"
     }
   },
   "context_hints": {
@@ -77,28 +77,28 @@
         "path": "CONNECTORS.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "82551243ae14adb3b28cc21b3122b0ec12fd4d25abb9124678c198af12455c63",
+        "sha256": "68001b6af3f0fdf15f4110f7db7a09b557c5ffbc35553d59a93e78289f953809",
         "source_line": 38
       },
       {
         "path": "SECURITY.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "5600d9d70c61e34e09dfedc0d21c28994fa2aacbbab2b8802c800a61da047f09",
+        "sha256": "324743c5bf447d990888f816fbe286ac8953d28401f8f02d199ceb08f4852720",
         "source_line": 42
       },
       {
         "path": "references/ramp-benchmark.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "ae0aeb82315baacd9deeb83ac49cf54af2be814c3d4bfe5090d9340e6b721838",
+        "sha256": "70009847011370cae4e6fa09990f0bcf2dfd0f520fdcadabf5008e3d41dc6b75",
         "source_line": 4
       },
       {
         "path": "references/skill-contract.md",
         "reason_code": "authored-reference",
         "requirement": "optional",
-        "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c",
+        "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff",
         "source_line": 34
       }
     ],
@@ -118,7 +118,7 @@
           "end_char": 139,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -136,7 +136,7 @@
           "end_char": 331,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 140
         },
@@ -154,7 +154,7 @@
           "end_char": 505,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 332
         },
@@ -172,7 +172,7 @@
           "end_char": 891,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 507
         },
@@ -185,7 +185,7 @@
     "summary_ref": {
       "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1"
+      "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -200,8 +200,8 @@
     "name": "launch-feedback-synthesizer",
     "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
     "phase": "prove",
-    "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
-    "version": "20.1.0"
+    "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
+    "version": "20.2.0"
   },
   "input_contract": {
     "argument_hint": "<launch slug / feedback exports> [channels] [review platforms]",
@@ -215,7 +215,7 @@
           "end_char": 129,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -230,7 +230,7 @@
           "end_char": 154,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 131
         },
@@ -245,7 +245,7 @@
           "end_char": 256,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 156
         },
@@ -260,7 +260,7 @@
           "end_char": 341,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 258
         },
@@ -272,7 +272,7 @@
     "source": {
       "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1"
+      "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3"
     }
   },
   "output_contract": {
@@ -287,7 +287,7 @@
           "end_char": 89,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -303,7 +303,7 @@
           "end_char": 376,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 91
         },
@@ -319,7 +319,7 @@
           "end_char": 544,
           "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1",
+          "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3",
           "span_basis": "field-text",
           "start_char": 378
         },
@@ -330,7 +330,7 @@
     "source": {
       "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1"
+      "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3"
     },
     "summary": "a feedback theme digest (per theme: frequency, severity, representative quotes), a status-loop spec (transitions, duplicate-merge rule, notification rules), \"you asked, we shipped\" announcement material for completed themes, a social-proof harvest protocol with a platform compliance matrix, and the standard handoff summary.",
     "summary_source": "expected-output",
@@ -341,12 +341,12 @@
     "shared_contract": {
       "path": "references/skill-contract.md",
       "section": "Skill Contract",
-      "sha256": "fe1e93a2bf475ba3cf915aa0274080b98cea259514e8c873266231929c884b4c"
+      "sha256": "9e6ef5e4e51a46bcb5335d453bf1d448f150a3ac2358554f67dd156eac26b0ff"
     },
     "system_catalog": {
       "path": "references/system-catalog.json",
-      "sha256": "ac5a3d42ccdc98e396c48ead96e8a99e1ba88cf101f9f57d6afd2f6394165f6f",
-      "version": "20.1.0"
+      "sha256": "d9320294ffb04ef5e90bc6763637483361114a77f8ed6e4542cc2d5cd95b2d1a",
+      "version": "20.2.0"
     }
   },
   "routing_contract": {
@@ -355,7 +355,7 @@
     "source": {
       "path": "launch/prove/launch-feedback-synthesizer/SKILL.md",
       "section": "frontmatter",
-      "sha256": "98154f1f859517bd7c339b53a77baf7228a78047a8d91e43ffc488114338b6d1"
+      "sha256": "864c3c46edcf25cb8701bf9b5986d0145aff6b9e022064b9435fcbad6efa1bf3"
     },
     "trigger_phrases": [
       "cluster reviews, comments, and board posts into themes",

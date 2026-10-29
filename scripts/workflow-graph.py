@@ -498,7 +498,7 @@ def bootstrap_source(root):
 
     This operation is intentionally separate from normal generation.  Once the
     source exists, it is the authority and must be edited directly; ``--write``
-    never re-imports prose.
+    refreshes only source line positions after verifying unchanged edge semantics.
     """
     source_path = root / SOURCE_REL
     if source_path.exists():
@@ -1252,6 +1252,8 @@ def render_doc(graph):
         "",
         "`python3 scripts/workflow-graph.py --check` detects projection drift, dangling edges, documentation drift, orphan nodes, unreachable workflow nodes, illegal cycles, undeclared phase inversions, and undeclared dead ends.",
         "",
+        "`--write` refreshes derived `condition_source` line positions only after the full unchanged edge semantics pass validation. Text, conditions, inputs, permissions and gates remain authoritative; semantic edits require an explicit source change.",
+        "",
     ])
     return "\n".join(lines)
 
@@ -1264,6 +1266,45 @@ def outputs(root):
         GRAPH_REL: pretty_json(graph),
         DOC_REL: render_doc(graph),
     }, graph
+
+
+def refresh_condition_sources(root):
+    """Refresh derived line locations, never handoff meaning or execution policy.
+
+    Preserve authoritative shard identities and order. Validate the whole proposed
+    source before writing anything, so a moved line cannot hide a semantic edit.
+    """
+    source, source_raw, edges, shard_raws = load_authoritative_source(root)
+    catalog, _catalog_raw = load_json(root / CATALOG_REL, str(CATALOG_REL))
+    nodes = catalog_nodes(catalog)
+    auditors = {item["skill"] for item in catalog.get("auditors", [])}
+    _declarations, _missing, details = markdown_declarations(root, nodes, auditors)
+    refreshed = []
+    for original in edges:
+        edge = dict(original)
+        if edge.get("documentation_required") is True:
+            pair = (edge.get("from"), edge.get("to"))
+            if pair in details:
+                edge["condition_source"] = details[pair]["condition_source"]
+        refreshed.append(edge)
+    by_id = {edge["id"]: edge for edge in refreshed}
+    candidate = dict(source)
+    candidate["edge_shards"] = []
+    proposed = {}
+    for descriptor in source["edge_shards"]:
+        relative = descriptor["ref"]
+        document = json.loads(shard_raws[relative])
+        document["edges"] = [by_id[edge["id"]] for edge in document["edges"]]
+        raw = pretty_json(document).encode("utf-8")
+        candidate["edge_shards"].append({**descriptor, "sha256": sha256_bytes(raw)})
+        if raw != shard_raws[relative]:
+            proposed[Path(relative)] = raw.decode("utf-8")
+    validate_source(candidate, catalog, root, refreshed)
+    if source_raw != pretty_json(candidate).encode("utf-8"):
+        proposed[SOURCE_REL] = pretty_json(candidate)
+    for relative, content in proposed.items():
+        atomic_write(root / relative, content)
+    return len(proposed)
 
 
 def atomic_write(path, content):
@@ -1502,6 +1543,7 @@ def main(argv=None):
             )
             return 0
         if args.write:
+            refresh_condition_sources(root)
             generated, graph = outputs(root)
             for relative, content in generated.items():
                 atomic_write(root / relative, content)

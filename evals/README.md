@@ -47,6 +47,14 @@ Run all deterministic behavior suites:
 python3 scripts/run-behavior-evals.py
 ```
 
+For the full CI path, run `python3 scripts/run-behavior-evals.py --with-unittest-discovery`.
+It executes standard unittest discovery once, then keeps every independent
+conformance check while skipping only standard unittest commands whose exact
+source hashes and normalized test IDs passed in that discovery. Custom mains,
+arguments, interpreters and `load_tests` hooks retain separate execution. This
+option is offline and cannot be combined with a model adapter or suite filter.
+The ordinary `--suite <id>` path remains unchanged.
+
 If a sync provider has materialized repository files with more than one hard
 link, do not weaken the runtime's single-link checks. Run the exact current
 working tree from a private, single-link snapshot instead:
@@ -148,7 +156,7 @@ python3 scripts/run-behavior-evals.py --adapter-only --profile nightly --list-ca
 An optional host/model adapter can evaluate the selected cases without becoming a CI dependency. The bundled Codex adapter is opt-in because it makes real model calls. The protocols have separate acceptance roles:
 
 - **Protocol v2** is the current-source real-provider smoke used by the five-dimension engineering-maturity gate.
-- **Protocol v3** performs blind route → selected-skill context → independent judge execution and is the paired evaluation path for `explicit` versus `balanced` or `lean`.
+- **Protocol v3.1** performs blind route → explicit selected-skill context → independent judge execution. It has no capsule or experimental prompt-profile dependency.
 
 ### Protocol v2: engineering-maturity smoke
 
@@ -191,33 +199,47 @@ rejects an ambiguous interpreter before any model call.
 
 Protocol v2 sends one hash-bound NDJSON request per case and requires one result conforming to [`behavior-adapter-v2.schema.json`](behavior-adapter-v2.schema.json). Results bind the request, SUT/judge model and adapter identity, exact adapter implementation, prompt/parameter hashes, timestamps, candidate/judge response hashes, complete expected/forbidden assertion coverage, and a closed behavior/inconclusive/host/adapter failure taxonomy. Real and simulated execution modes cannot be conflated; the v2 runner requires `execution_mode: real`. Missing, duplicate, unknown, malformed, simulated, or failed results fail closed. Raw prompts and responses are not result fields. Adapter commands are parsed into an argument vector and run without a shell. Existing adapter commands still default to protocol v1 for compatibility; select v2 explicitly and provide the project-relative `--adapter-implementation-ref` for model-backed profiles. The official adapter must initially be the Python script at `argv[1]` of the same resolved interpreter as the runner. The runner then copies the already-read adapter and both already-read output schemas into a private read-only staging tree and executes only that staged script as `<current-python> -I -S <staged-script>`. Its child environment is rebuilt from a six-key allowlist and contains no inherited `PYTHON*` variables, so `PYTHONPATH`, `sitecustomize`, user-site packages, and a source-schema swap after binding cannot intercept execution. The staged adapter and both staged schemas are re-hashed before and after every batch. `--adapter-timeout` applies per outer batch. The bundled adapter's `--workers 1..4` partitions that batch across isolated private runtimes while preserving input result order; use one worker for calibration, then a single full-profile batch with a bounded worker count after calibration passes.
 
-Every protocol-v2 execution requires an evidence run UUID. The runner writes the exact requests, an immutable identity manifest, incremental hash-chained structured results, and a prefix-verifiable completion record under ignored `memory/runs/<uuid>/semantic-eval/`. The manifest persists the exact resolved logical adapter argv and its digest, the complete case-selection provenance and its digest, both source and staged identities for the adapter and its three schemas, the isolated interpreter flags and environment policy, runner implementation, and protocol schema. The current-source verifier re-hashes the exact project sources and current Python runtime, reconstructs the staged aggregate identity, recomputes the command and selection digests, and requires the `-I -S`/no-site/allowlist policy; changing or omitting any one invalidates the evidence. Prompt-profile certification additionally reconstructs the current filtered, change-aware, smoke, or nightly selection (including reasons), binds the manifest profile to the stored arm request, and requires the command's current Codex binary plus SUT/judge options to match that request. It fsyncs each validated batch before continuing; raw model prompts/outputs and real evidence bytes are never written there. If a later batch or host call fails, rerun the exact command with `--resume-evidence`: terminal cases are skipped, while prior host/adapter failures are retried. A changed profile, case set, adapter argv or identity, source hash, runner/schema version, adapter runtime schema, isolation policy, or execution mode refuses resume. The local hash chain is integrity and replay evidence for repository-held bytes, not independent provider or operator attestation. Where promotion policy requires externally trustworthy provenance, the provider identity/revision and release approval still need a trusted signature or attestation path outside this self-authenticating chain.
+Every protocol-v2 execution requires an evidence run UUID. The runner writes the exact requests, an immutable identity manifest, incremental hash-chained structured results, and a prefix-verifiable completion record under ignored `memory/runs/<uuid>/semantic-eval/`. The manifest persists the exact resolved logical adapter argv and its digest, the complete case-selection provenance and its digest, both source and staged identities for the adapter and its three schemas, the isolated interpreter flags and environment policy, runner implementation, and protocol schema. The current-source verifier re-hashes the exact project sources and current Python runtime, reconstructs the staged aggregate identity, recomputes the command and selection digests, and requires the `-I -S`/no-site/allowlist policy; changing or omitting any one invalidates the evidence. It fsyncs each validated batch before continuing; raw model prompts/outputs and real evidence bytes are never written there. If a later batch or host call fails, rerun the exact command with `--resume-evidence`: terminal cases are skipped, while prior host/adapter failures are retried. A changed profile, case set, adapter argv or identity, source hash, runner/schema version, adapter runtime schema, isolation policy, or execution mode refuses resume. The local hash chain is integrity and replay evidence for repository-held bytes, not independent provider or operator attestation. Where promotion policy requires externally trustworthy provenance, the provider identity/revision and release approval still need a trusted signature or attestation path outside this self-authenticating chain.
 
-### Protocol v3: blind routing and compact-profile pairs
+### Protocol v3.1: blind routing and explicit execution
 
-Run a non-deployable balanced ablation with the same staged adapter boundary:
+The public `--adapter-protocol 3` entrypoint now emits version `3.1` requests:
 
 ```bash
 python3 scripts/run-behavior-evals.py \
   --adapter-only \
   --adapter-protocol 3 \
   --profile smoke \
-  --case routing-outreach-vs-contract-helper-outreach-manager-001 \
   --host-profile claude-code-plugin-host \
   --model-id <SUT_MODEL_ID> \
   --judge-model-id <DISTINCT_JUDGE_MODEL_ID> \
-  --prompt-profile balanced \
-  --evaluation-only \
   --evidence-run-id <CANONICAL_UUID> \
   --adapter-implementation-ref scripts/adapters/codex-behavior-adapter.py \
   --adapter-command 'python3 scripts/adapters/codex-behavior-adapter.py --codex-bin <ABSOLUTE_CODEX_PATH> --codex-sha256 <CODEX_BINARY_SHA256> --model <SUT_MODEL_ID> --judge-model <DISTINCT_JUDGE_MODEL_ID> --workers 1'
 ```
 
-The routing candidate receives the request text and a target-neutral 120-skill discovery index, never the expected route, assertions, `must_not`, target-derived coverage metadata, or target-derived paths. Only after it selects a skill does the adapter consume the planner/resolver/assembly model-resource allowlist for that direct selected-Skill route and load its explicit, balanced, or lean representation. The `/auto` answer shard is discarded before this post-route assembly and cannot enter the candidate prompt or staged source directory. The independent judge receives the selected transcript and expected outcomes. Every v3 execution uses the same private staged adapter, immutable manifest, hash-chained result stream, and completion record as v2.
+The routing candidate receives the task text and a target-neutral 120-skill
+index, never expected routes, assertions, `must_not`, target-derived coverage
+metadata, or target-derived paths. After selection, only the selected full Skill,
+shared execution contract, and declared runtime reads enter the candidate model
+context. Controller metadata and optional reference catalogs stay outside it.
+The `/auto` answer shard cannot enter the post-route candidate prompt or staged
+source directory. An assembly binding, when supplied, must match the complete
+selected model-source allowlist; caller-supplied subsets fail closed.
 
-A deployable compact certification additionally requires canonical real cases; at least 40 cases, 3 repeats, and 8 verifier-derived coverage strata; a distinct, evidence-wide-unique protocol-v3 run UUID plus stored request/result provenance for every control/candidate arm; immutable SUT and judge revisions with evidence-wide consistency; and a genuinely independent judge (`judge_model_id != model_id`, with same-provider aliases forbidden from sharing one non-null immutable revision). It also requires exact host/toolset/adapter/assembly/source bindings. In particular, each post-route model-resource set must exactly equal the current host/distribution branch's full required and `explicit-runtime-read` closure; a self-consistent caller-supplied subset is rejected. The declared reduction floor is measured from the full paired `model_body_bytes` (not a Skill/capsule-only harness ratio); routing and quality must be non-inferior; both arms must satisfy absolute 95% routing and 90% quality floors; candidate safety failures and safety regressions must be zero; and the binding must be current and Governed. Coverage strata are evidence-only: auto-routing cases derive `auto:<canonical source scenario_family>`, while authored and derived-auditor cases derive `discipline:<current system-catalog discipline>`. Neither `coverage_stratum` nor `scenario_family` may enter the public candidate case, and post-route arm resources may not contain an `/auto` routing shard. Capture rebuilds the entire stored request through the current `build_v3_requests` path from the current canonical case and requires canonical equality across the public scenario/input, judge assertions/`must_not`, complete 120-skill routing index, selection, execution, and assembly binding. It then runs the complete v3 result validator—including assertion coverage, judge ledger, routing, failure taxonomy, real execution mode, and manifest-bound adapter hash—before quality or safety booleans are projected. Evidence timestamps must enclose every actual arm, age is measured from the latest arm end rather than a fresh wrapper timestamp, and the certificate binds the full arm-run-set hash. Supply prior certificates with repeated `--previous-certificate` arguments during promotion to reject an already-promoted or duplicate run set. Provider usage may be null for behavioral comparison. Complete provider telemetry alone is not proof of savings: protocol v3 keeps token-savings permission false until a positive paired input-token reduction gate and uncertainty treatment exist. Cost-savings claims are unsupported.
+The independent judge receives the candidate response and expected outcomes.
+Requests and results retain the private staged adapter boundary, exact source
+and request hashes, independent judge identity, bounded retry policy, immutable
+manifest, hash-chained result stream, and completion record. Provider usage may
+be null; byte counts are not model tokens or cost savings.
 
-The current corpus contains 734 simulated cases, the bundled adapter reports both `model_revision: null` and `judge_model_revision: null`, and `references/prompt-profiles.json` contains zero certified bindings. Protocol-v3 compact runs are therefore evaluation-only, and `explicit` remains the deployment default. A package-local certificate and hashes alone are not a production trust anchor; non-empty compact bindings remain fail-closed until a signed release-attestation path can be revalidated. Before that path may enable bindings, the release policy must also add uncertainty-aware paired inference (for example confidence intervals plus an exact paired test such as McNemar) and 100% required-case gates for high-risk, auditor, and protocol subsets; the current aggregate floors do not claim those guarantees.
+Version 3.1 removes the capsule-index bindings from the closed request/result
+schema. Version 3.0 experimental results remain historical evidence and must be
+inspected with their original pinned runtime, never relabeled as 3.1. The old
+balanced/lean ablation, certificates, capsule generator and research-only tests
+were retired; the fixed baseline is recoverable from commit
+`cac58547bc84ed2af865b68b90c5cfbb79b63978`. Protocol v2 provider smoke remains
+version `2.0` and retains its release-evidence boundary.
 
 For protocol v2, the bundled Codex adapter runs the bound target contract as the system under test without showing it the assertions. For protocol v3, it first performs blind routing, then loads only the selected representation and runs the selected-skill task. Both protocols use a separate judge call over the hash-bound candidate response. Evaluation variants, authored case corpora, routing expectations, and real-case evidence bytes never enter candidate-visible context. Every model call runs from a private isolated workspace with only verified source bytes, a sanitized child environment, disabled optional tools, and a named read-only filesystem profile. The host executable must be an absolute, non-symlink path with an operator-supplied SHA-256; the adapter verifies and copies those exact bytes into its private runtime before copying authentication, so ambient `PATH` and executable replacement cannot redirect a run.
 
@@ -231,3 +253,17 @@ python3 scripts/generate-auditor-prompt-contracts.py --check
 ```
 
 Semantic cases may also be reviewed manually against `expected_behavior` and `failure_modes`. Passing a simulated case is useful regression evidence, not acceptance evidence; acceptance still requires a project-local real signal.
+
+## Retired Pi session-tree probe
+
+The `pi-agent-core@0.80.10` in-memory probe was retired during v3 simplification.
+Its fixed source and tests remain recoverable in repository commit
+`cac58547bc84ed2af865b68b90c5cfbb79b63978` under `evals/pi-agent-poc/`.
+Conclusion: concept reuse was useful; production adoption remained **NO-GO**.
+In-memory branch selection did not establish durable recovery, permission
+boundaries, or external exactly-once behavior. It is unrelated to Pi Durable.
+The 96-package research graph and directory-specific scanner exceptions are
+removed; stdlib compatibility and undeclared-dependency regressions remain.
+The old workflow/check identity temporarily runs those retained regressions
+because the connected GitHub integration could not read required status rules
+(403). No external protection setting was changed.

@@ -14,10 +14,14 @@ import json
 import math
 import os
 from pathlib import Path
+from runpy import run_path
 import re
 import stat
 import sys
 
+
+# Resolve this checkout explicitly, including when imported by file path in tests.
+_read_catalog_groups = run_path(str(Path(__file__).with_name("system_catalog.py")))["catalog_groups"]
 
 ROOT = Path(__file__).resolve().parents[1]
 SYSTEM_CATALOG_REF = "references/system-catalog.json"
@@ -265,68 +269,24 @@ def _target(root, discipline, phase, name, relative):
 
 
 def catalog_groups(root, catalog):
-    logical_order = catalog.get("logical_order")
-    counts = catalog.get("counts")
-    if (not isinstance(logical_order, list)
-            or logical_order != [
-                "narrative", "seo-geo", "social", "email", "ad",
-                "influencer", "launch", "protocol",
-            ]
-            or not isinstance(counts, dict)
-            or counts.get("total_skills") != 120):
+    catalogued = _read_catalog_groups(catalog, RouterFacadeError)
+    if (catalog.get("logical_order") != [
+            "narrative", "seo-geo", "social", "email", "ad",
+            "influencer", "launch", "protocol",
+            ] or catalog.get("counts", {}).get("total_skills") != 120):
         raise RouterFacadeError("system catalog does not declare the closed 120-skill topology")
     groups = []
-    seen = set()
-    for discipline in logical_order:
-        targets = []
-        if discipline == "protocol":
-            specification = catalog.get("protocol")
-            if not isinstance(specification, dict) or not isinstance(specification.get("skills"), list):
-                raise RouterFacadeError("system catalog protocol shape is invalid")
-            display_name = specification.get("display_name")
-            phase_order = ["protocol"]
-            phases = [("protocol", specification["skills"])]
-        else:
-            specification = catalog.get("disciplines", {}).get(discipline)
-            if not isinstance(specification, dict):
-                raise RouterFacadeError("system catalog discipline %s is invalid" % discipline)
-            display_name = specification.get("display_name")
-            phase_order = specification.get("phase_order")
-            phase_map = specification.get("phases")
-            if (not isinstance(phase_order, list)
-                    or len(phase_order) != len(set(phase_order))
-                    or not isinstance(phase_map, dict)
-                    or set(phase_map) != set(phase_order)):
-                raise RouterFacadeError("system catalog phases for %s are invalid" % discipline)
-            phases = [(phase, phase_map[phase]) for phase in phase_order]
+    for group in catalogued:
+        display_name = group.specification.get("display_name")
         if not isinstance(display_name, str) or not display_name:
-            raise RouterFacadeError("system catalog display name for %s is invalid" % discipline)
-        for phase, names in phases:
-            if (not isinstance(names, list)
-                    or not names
-                    or len(names) != len(set(names))):
-                raise RouterFacadeError("system catalog target list %s/%s is invalid" % (discipline, phase))
-            for name in names:
-                if name in seen:
-                    raise RouterFacadeError("skill %s is covered more than once" % name)
-                seen.add(name)
-                relative = (
-                    "protocol/%s/SKILL.md" % name
-                    if discipline == "protocol"
-                    else "%s/%s/%s/SKILL.md" % (discipline, phase, name)
-                )
-                targets.append(_target(root, discipline, phase, name, relative))
+            raise RouterFacadeError("system catalog display name for %s is invalid" % group.discipline)
         groups.append({
-            "discipline": discipline,
+            "discipline": group.discipline,
             "display_name": display_name,
-            "phase_order": phase_order,
-            "targets": targets,
+            "phase_order": group.phase_order,
+            "targets": [_target(root, skill.discipline, skill.phase, skill.name,
+                                skill.directory + "/SKILL.md") for skill in group.skills],
         })
-    if len(groups) != 8 or len(seen) != counts["total_skills"]:
-        raise RouterFacadeError(
-            "router partition covers %d groups/%d skills, expected 8/120"
-            % (len(groups), len(seen))
-        )
     return groups
 
 
@@ -619,6 +579,7 @@ def write_outputs(outputs, destination):
         try:
             descriptor = os.open(target, flags, 0o644)
             with os.fdopen(descriptor, "wb", closefd=True) as handle:
+                os.fchmod(handle.fileno(), 0o644)
                 handle.write(content)
                 handle.flush()
                 os.fsync(handle.fileno())

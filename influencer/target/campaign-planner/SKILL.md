@@ -4,13 +4,13 @@ slug: aaron-campaign-planner
 displayName: "Campaign Planner · 活动规划"
 summary: "红人活动整体规划:目标、阶段、创作者组合、时间线与风险预案"
 description: 'Use when the user asks to "plan an influencer campaign", "build a campaign blueprint", "track or close a creator campaign", or "record a late campaign correction"; produces the plan and, when requested, a non-canonical evidence tracker with scoped identity, publication, reconciliation, close, and reopen receipts. Not for individual creator briefs — use brief-generator; not for overall product launches without creators — use launch-tier-planner; not for sending, publishing, amplifying, or paying — use the owning execution workflow. 达人营销策划/种草方案/活动追踪与关账'
-version: "20.1.0"
+version: "20.2.0"
 license: Apache-2.0
 compatibility: "Claude Code and compatible agent-skill hosts"
 homepage: "https://github.com/aaron-he-zhu/aaron-marketing-skills"
 when_to_use: "Use when planning a new influencer campaign, launching a product with influencer support, building seasonal or always-on creator programs, or maintaining an existing creator-campaign tracker: recording verified publication checkpoints, deriving exception queues, reconciling payment/measurement evidence, closing creators or the campaign, and handling late evidence or manual reopen. Planning does not write briefs or execute outreach; tracking does not publish, amplify, pay, or mutate external systems."
 argument-hint: "<brand or product> [budget] [platform] [timeframe]"
-metadata: {"author": "aaron-he-zhu", "version": "20.1.0", "discipline": "influencer", "phase": "target", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "target"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
+metadata: {"author": "aaron-he-zhu", "version": "20.2.0", "discipline": "influencer", "phase": "target", "geo-relevance": "low", "hermes": {"tags": ["marketing", "influencer", "target"], "category": "influencer"}, "openclaw": {"emoji": "📣", "homepage": "https://github.com/aaron-he-zhu/aaron-marketing-skills"}}
 ---
 
 # Campaign Planner

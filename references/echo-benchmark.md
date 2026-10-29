@@ -1,5 +1,7 @@
 # ECHO Benchmark — Organic Social Evaluation Standard
 
+**Human-anchor revision: 2026-10-27-a.** The delimited item tables own criteria; detailed boundaries and examples below interpret those same IDs. Profiles, applicability, weights, veto identity, coverage and rounding remain in the typed catalog/scorer. This revision is not outcome calibration; preserve prior audit source digests and do not relabel historical observations.
+
 ECHO evaluates organic social through **Embeddedness · Craft · Hosting · Observability**. v18 separates an individual asset's Craft gate from a channel portfolio's operating maturity. It does not let a polished post compensate for manufactured engagement, weak governance, or unobservable reporting.
 
 The framework is advisory. Executable profiles, item policies, context, and vetoes live in [`framework-catalog.json`](framework-catalog.json); shared scoring semantics live in [`scoring-semantics.md`](scoring-semantics.md).
@@ -8,32 +10,89 @@ The framework is advisory. Executable profiles, item policies, context, and veto
 
 ## Units and Profiles
 
-| Profile | Unit | Dimensions | Purpose |
+<!-- GENERATED:BEGIN auditor-policy:profiles -->
+
+| Profile | Dimension weights | Context match | Item subset |
 |---|---|---|---|
-| `asset-gate` | One post/asset package for named channels and market | E1 10% · C1–C10 60% · H1/H2 20% · O1 10% | Pre-publish channel truth, content, anti-manipulation/UGC rights, and metric-integrity gate |
-| `program-maturity-community` | One channel portfolio/window | E 37.5% · H 37.5% · O 25% | Community-led operating maturity |
-| `program-maturity-b2c` | One channel portfolio/window | E 20% · H 40% · O 40% | Feed-led brand operating maturity |
-| `program-maturity-founder` | One channel portfolio/window | E 28.5% · H 21.5% · O 50% | Founder-led operating maturity |
+| `asset-gate` | E 10% · C 60% · H 20% · O 10% | {"assessment_mode": "asset", "program_archetype": "not-applicable"} | include_items: {"E": ["E1"], "H": ["H1", "H2"], "O": ["O1"]} |
+| `program-maturity-community` | E 37.5% · H 37.5% · O 25% | {"assessment_mode": "program", "program_archetype": "community"} | all items in included dimensions |
+| `program-maturity-b2c` | E 20% · H 40% · O 40% | {"assessment_mode": "program", "program_archetype": "b2c"} | all items in included dimensions |
+| `program-maturity-founder` | E 28.5% · H 21.5% · O 50% | {"assessment_mode": "program", "program_archetype": "founder"} | all items in included dimensions |
+
+<!-- GENERATED:END auditor-policy:profiles -->
+
+- `asset-gate`: One post/asset package for named channels and market; Pre-publish channel truth, content, anti-manipulation/UGC rights, and metric-integrity gate.
+- `program-maturity-community`: One channel portfolio/window; Community-led operating maturity.
+- `program-maturity-b2c`: One channel portfolio/window; Feed-led brand operating maturity.
+- `program-maturity-founder`: One channel portfolio/window; Founder-led operating maturity.
 
 The asset gate contains only controls observable on the publish package and its governing records. An observed asset with no performance rate or metric claim passes O1 because there is no denominator assertion to misrepresent; missing access to the asset remains Unknown. Do not combine the asset gate and program maturity into one score. Report outcomes such as qualified reach, retention, pipeline, or community health as measured metrics with controls; they receive no rubric score until outcome calibration exists.
 
 ## Stable Item Anchors
 
+<!-- AUDITOR-ITEMS:BEGIN -->
+
 ### Embeddedness (`E1`–`E10`)
 
-`E1` channel truth/registry state · `E2` participation before promotion · `E3` give/ask evidence · `E4` current rule digest · `E5` governed profile/bio/link state · `E6` owned-space lifecycle where applicable · `E7` channel-capability fit · `E8` handle security/governance · `E9` pinned/bio-link freshness · `E10` cross-community rule-conflict check.
+| ID | Dimension | Criterion |
+|---|---|---|
+| `E1` | Embeddedness | channel truth/registry state |
+| `E2` | Embeddedness | participation before promotion |
+| `E3` | Embeddedness | give/ask evidence |
+| `E4` | Embeddedness | current rule digest |
+| `E5` | Embeddedness | governed profile/bio/link state |
+| `E6` | Embeddedness | owned-space lifecycle where applicable |
+| `E7` | Embeddedness | channel-capability fit |
+| `E8` | Embeddedness | handle security/governance |
+| `E9` | Embeddedness | pinned/bio-link freshness |
+| `E10` | Embeddedness | cross-community rule-conflict check |
 
 ### Craft (`C1`–`C10`)
 
-`C1` claim integrity where claims exist · `C2` material-connection/synthetic-media disclosure where applicable · `C3` platform-native adaptation · `C4` hook/payload/spec fit · `C5` accessibility · `C6` voice/canon adherence · `C7` declared editorial mix · `C8` freshness on reused assets · `C9` link/placement policy · `C10` format-specific execution evidence.
+| ID | Dimension | Criterion |
+|---|---|---|
+| `C1` | Craft | claim integrity where claims exist |
+| `C2` | Craft | material-connection/synthetic-media disclosure where applicable |
+| `C3` | Craft | Adapt the asset to the named platform’s documented/observed format and audience context; native execution Passes, remediable mismatch is Partial, verified blocking incompatibility Fails; folklore is not policy. |
+| `C4` | Craft | hook/payload/spec fit |
+| `C5` | Craft | accessibility |
+| `C6` | Craft | voice/canon adherence |
+| `C7` | Craft | declared editorial mix |
+| `C8` | Craft | freshness on reused assets |
+| `C9` | Craft | link/placement policy |
+| `C10` | Craft | format-specific execution evidence |
 
 ### Hosting (`H1`–`H10`)
 
-`H1` no manufactured/baited engagement · `H2` UGC permission where republishing occurs · `H3` response SLA · `H4` crisis/pause protocol · `H5` cadence/capacity fit · `H6` voluntary advocacy · `H7` warm-touch selling discipline · `H8` escalation ownership · `H9` moderation rules/log · `H10` advocate-roster hygiene.
+| ID | Dimension | Criterion |
+|---|---|---|
+| `H1` | Hosting | no manufactured/baited engagement |
+| `H2` | Hosting | UGC permission where republishing occurs |
+| `H3` | Hosting | response SLA |
+| `H4` | Hosting | crisis/pause protocol |
+| `H5` | Hosting | cadence/capacity fit |
+| `H6` | Hosting | voluntary advocacy |
+| `H7` | Hosting | warm-touch selling discipline |
+| `H8` | Hosting | escalation ownership |
+| `H9` | Hosting | moderation rules/log |
+| `H10` | Hosting | advocate-roster hygiene |
 
 ### Observability (`O1`–`O10`)
 
-`O1` stable named denominators and provenance · `O2` declared dark-social method · `O3` locked comparison panel · `O4` robust per-post rollups and organic/paid separation · `O5` vanity/EMV exclusion from decision scores · `O6` attribution instrumentation · `O7` listening baseline · `O8` query architecture · `O9` employee-excluded community health · `O10` learning writeback.
+| ID | Dimension | Criterion |
+|---|---|---|
+| `O1` | Observability | stable named denominators and provenance |
+| `O2` | Observability | declared dark-social method |
+| `O3` | Observability | locked comparison panel |
+| `O4` | Observability | robust per-post rollups and organic/paid separation |
+| `O5` | Observability | vanity/EMV exclusion from decision scores |
+| `O6` | Observability | attribution instrumentation |
+| `O7` | Observability | listening baseline |
+| `O8` | Observability | query architecture |
+| `O9` | Observability | employee-excluded community health |
+| `O10` | Observability | learning writeback |
+
+<!-- AUDITOR-ITEMS:END -->
 
 Per item: Pass = 10, Partial = 5, Fail = 0. Every profile requires 100% coverage of applicable items. `C1`, `C2`, and `H2` may be `na` only under their catalog conditions and with a reason.
 
@@ -64,6 +123,16 @@ One verified veto caps the containing profile at 59; two or more produce `BLOCK`
 | Public echo | `gdelt.py`, `tavily.py`, and adjacent sources labeled `proxy` |
 
 No compliant keyless read surface is assumed for X, Instagram, TikTok, LinkedIn, or Xiaohongshu. Missing private exports produce Unknown, not fabricated measurement.
+
+## Fixed Boundary Cases (2026-10-27-a)
+
+See the [fixed factual examples for ECHO](benchmark-boundary-examples.md#echo) when calibrating a disputed boundary. These examples are lookup material; retain the item anchors and complete evidence rules above for execution.
+
+## Evidence Reuse and Targeted Review
+
+Capture the asset, named platform requirements, rights records and stable denominator panel once. Reuse them for craft, permissions and observability without treating one source as multiple corroborating sources; asset changes reopen dependent controls and program outcomes remain separate.
+
+Follow the existing [auditor runbook](auditor-runbook.md) for evidence, authority and final complete-coverage scoring; reuse does not create independent corroboration.
 
 ## Skill Ownership
 

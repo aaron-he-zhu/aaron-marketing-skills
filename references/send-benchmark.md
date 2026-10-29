@@ -1,5 +1,7 @@
 # SEND Benchmark — Email Marketing Evaluation Standard
 
+**Human-anchor revision: 2026-10-27-a.** The delimited item tables own criteria; detailed boundaries and examples below interpret those same IDs. Profiles, applicability, weights, veto identity, coverage and rounding remain in the typed catalog/scorer. This revision is not outcome calibration; preserve prior audit source digests and do not relabel historical observations.
+
 SEND evaluates one email program across **Sender Integrity · Engagement · Nurture · Direct Outcome**. It supports promotional, retention, cold-outbound, and newsletter programs without pretending their journeys or outcome truth sets are identical.
 
 The framework is advisory. Executable items, profiles, conditional applicability, and vetoes live in [`framework-catalog.json`](framework-catalog.json); common evidence and scoring rules live in [`scoring-semantics.md`](scoring-semantics.md).
@@ -12,6 +14,8 @@ Score one sending program/profile over one normalized window. Declare program ty
 
 ## The 20 Items
 
+<!-- AUDITOR-ITEMS:BEGIN -->
+
 | ID | Dimension | Criterion |
 |---|---|---|
 | `S1` | Sender Integrity | SPF/DKIM/DMARC alignment is verified from DNS and aggregate evidence. |
@@ -20,31 +24,37 @@ Score one sending program/profile over one normalized window. Declare program ty
 | `S4` | Sender Integrity | Hard-bounce and complaint rates are normalized by cohort/window. |
 | `S5` | Sender Integrity | Suppression, hygiene, and sunset controls are active. |
 | `E1` | Engagement | Click or downstream action rate is the primary engagement signal. |
-| `E2` | Engagement | Open/CTOR is used only with MPP segmentation and an explicit proxy caveat. |
+| `E2` | Engagement | If opens/CTOR are used, require MPP segmentation and an explicit proxy caveat; unused metrics permit catalog-authorized N/A with reason, missing segmentation is Unknown. |
 | `E3` | Engagement | Subject, preheader, and body promise match. |
-| `E4` | Engagement | Timing and frequency fit preferences and operating capacity. |
-| `E5` | Engagement | Engagement decay and reactivation/sunset behavior are measured. |
-| `N1` | Nurture | One-click opt-out works and live suppression tombstones are honored. |
+| `E4` | Engagement | Send timing and frequency fit user preferences and operating capacity. |
+| `E5` | Engagement | Engagement decay and reactivation/sunset logic are measured. |
+| `N1` | Nurture | Required one-click opt-out works and current suppression tombstones are honored; a verified delivery after a recorded effective suppression Fails, missing logs are Unknown. |
 | `N2` | Nurture | Entry, confirmation, and welcome/first-touch logic fit the program. |
-| `N3` | Nurture | Journeys applicable to the declared program type exist and work. |
+| `N3` | Nurture | Applicable lifecycle journeys exist and work for the declared program type. |
 | `N4` | Nurture | Segmentation and progression logic use relevant evidence. |
-| `N5` | Nurture | Preference/frequency controls exist where recurring sends make them applicable. |
+| `N5` | Nurture | Preference and frequency controls are available where the declared program offers recurring sends or configurable frequency. |
 | `D1` | Direct Outcome | Claims, disclosures, and offer terms match the claims ledger. |
-| `D2` | Direct Outcome | The declared outcome truth set is measured. |
-| `D3` | Direct Outcome | Offer and CTA are clear for this program. |
+| `D2` | Direct Outcome | Measure the declared program truth set: ecommerce revenue/value, CRM pipeline, subscription, sponsorship or a named equivalent; opens and provider attribution alone do not establish it. |
+| `D3` | Direct Outcome | Offer and CTA are clear for the declared program. |
 | `D4` | Direct Outcome | Email-to-destination message match holds. |
 | `D5` | Direct Outcome | Outcome attribution is reconciled outside provider self-reporting. |
+
+<!-- AUDITOR-ITEMS:END -->
 
 `E2`, `N3`, and `N5` are conditional. If opens/CTOR are not used, `E2` may be `na` with reason. A newsletter need not have an abandoned-cart flow; cold outbound need not have post-purchase automation. Applicability comes from the declared program, not from an ecommerce template.
 
 ## Profiles and Scoring
 
-| Profile | S | E | N | D |
-|---|---:|---:|---:|---:|
-| `promotional` | .30 | .20 | .15 | .35 |
-| `retention` | .20 | .35 | .30 | .15 |
-| `cold-outbound` | .35 | .25 | .15 | .25 |
-| `newsletter` | .25 | .35 | .20 | .20 |
+<!-- GENERATED:BEGIN auditor-policy:profiles -->
+
+| Profile | Dimension weights | Context match | Item subset |
+|---|---|---|---|
+| `promotional` | S 30% · E 20% · N 15% · D 35% | {"program_type": "promotional"} | all items in included dimensions |
+| `retention` | S 20% · E 35% · N 30% · D 15% | {"program_type": "retention"} | all items in included dimensions |
+| `cold-outbound` | S 35% · E 25% · N 15% · D 25% | {"program_type": "cold-outbound"} | all items in included dimensions |
+| `newsletter` | S 25% · E 35% · N 20% · D 20% | {"program_type": "newsletter"} | all items in included dimensions |
+
+<!-- GENERATED:END auditor-policy:profiles -->
 
 Per item: Pass = 10, Partial = 5, Fail = 0. `EQS` is the floor-rounded profile-weighted mean after 100% applicable evidence coverage. Profiles are separate measurement contracts, not labels pasted onto one universal program.
 
@@ -86,6 +96,16 @@ One verified veto caps the score at 59; two or more produce `verdict: BLOCK` wit
 | Claims | Approved claims/disclosures and the rendered message/destination |
 
 Use `~~email platform`, `~~web analytics`, and the relevant outcome connector from [`CONNECTORS.md`](../CONNECTORS.md). Keep provider-reported attribution separate from reconciled own-data outcomes.
+
+## Fixed Boundary Cases (2026-10-27-a)
+
+See the [fixed factual examples for SEND](benchmark-boundary-examples.md#send) when calibrating a disputed boundary. These examples are lookup material; retain the item anchors and complete evidence rules above for execution.
+
+## Evidence Reuse and Targeted Review
+
+Collect one DNS/header/DMARC, consent/suppression, MPP-segmented engagement and program-specific outcome batch. Reuse the current suppression evidence across relevant checks; a changed provider/cohort/window or new suppression state requires a fresh applicable review, not a recycled total.
+
+Follow the existing [auditor runbook](auditor-runbook.md) for evidence, authority and final complete-coverage scoring; reuse does not create independent corroboration.
 
 ## Skill Ownership
 
