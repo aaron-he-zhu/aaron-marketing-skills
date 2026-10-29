@@ -11,7 +11,7 @@
           "end_char": 57,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -26,7 +26,7 @@
           "end_char": 117,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 59
         },
@@ -41,7 +41,7 @@
           "end_char": 200,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 119
         },
@@ -56,7 +56,7 @@
           "end_char": 242,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 202
         },
@@ -71,7 +71,7 @@
           "end_char": 322,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Done when",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 244
         },
@@ -83,7 +83,7 @@
     "source": {
       "path": "ad/research/audience-segment-builder/SKILL.md",
       "section": "Skill Contract/Done when",
-      "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56"
+      "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9"
     }
   },
   "context_hints": {
@@ -133,7 +133,7 @@
           "end_char": 141,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -151,7 +151,7 @@
           "end_char": 360,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Next Best Skill",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 142
         },
@@ -166,7 +166,7 @@
     "summary_ref": {
       "path": "ad/research/audience-segment-builder/SKILL.md",
       "section": "Skill Contract/Handoff Summary",
-      "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56"
+      "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9"
     },
     "summary_source": "skill-section",
     "target_skills": [
@@ -180,7 +180,7 @@
     "name": "audience-segment-builder",
     "path": "ad/research/audience-segment-builder/SKILL.md",
     "phase": "research",
-    "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+    "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
     "version": "20.2.0"
   },
   "input_contract": {
@@ -195,7 +195,7 @@
           "end_char": 121,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -210,7 +210,7 @@
           "end_char": 190,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 123
         },
@@ -225,7 +225,7 @@
           "end_char": 209,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Reads",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 192
         },
@@ -237,7 +237,7 @@
     "source": {
       "path": "ad/research/audience-segment-builder/SKILL.md",
       "section": "Skill Contract/Reads",
-      "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56"
+      "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9"
     }
   },
   "output_contract": {
@@ -252,7 +252,7 @@
           "end_char": 89,
           "path": "ad/research/audience-segment-builder/SKILL.md",
           "section": "Skill Contract/Writes",
-          "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56",
+          "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9",
           "span_basis": "field-text",
           "start_char": 0
         },
@@ -263,7 +263,7 @@
     "source": {
       "path": "ad/research/audience-segment-builder/SKILL.md",
       "section": "Skill Contract",
-      "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56"
+      "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9"
     },
     "summary": "a set of named audiences in four buckets — (1)",
     "summary_source": "expected-output",
@@ -288,7 +288,7 @@
     "source": {
       "path": "ad/research/audience-segment-builder/SKILL.md",
       "section": "frontmatter",
-      "sha256": "f606f60079d12577c4985f31ef181161308b1072dd9709f402e1382a47f78b56"
+      "sha256": "57f7899439cfa2790993a02e843d155fae508ef867402bc7ccca1dfad1fbdbe9"
     },
     "trigger_phrases": [
       "build audience segments from my customer list",

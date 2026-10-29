@@ -1684,7 +1684,7 @@ class WorkflowLoopTests(unittest.TestCase):
         original_plan = paths["plan"].read_bytes()
         original_events = paths["events"].read_bytes()
         plan = json.loads(original_plan)
-        self.assertEqual(str(paths["state"].relative_to(self.root)), plan["state_ref"])
+        self.assertEqual(str(paths["state"].relative_to(self.root.resolve())), plan["state_ref"])
         self.assertFalse(paths["state"].exists())
         for cached in ("{}\n", "invalid json\n"):
             paths["state"].write_text(cached, encoding="utf-8")
