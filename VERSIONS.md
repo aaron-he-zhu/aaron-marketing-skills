@@ -2,7 +2,7 @@
 
 Current versions for the plugin and all 120 skills. Agents can fetch this file from `https://raw.githubusercontent.com/aaron-he-zhu/aaron-marketing-skills/main/VERSIONS.md` once per session.
 
-**Current release**: `20.2.0` (2026-10-27). **Unreleased v3 simplification.** The same 120 skill paths, eight auditor gates, 320 benchmark items and 37 profiles remain. Explicit-only context, event-derived recovery, shared authoring projections and independently checked Bench anchors reduce maintenance without relaxing authority, evidence or scoring controls.
+**Current release**: `20.2.0` (2026-10-27). **v3 simplification.** The same 120 skill paths, eight auditor gates, 320 benchmark items and 37 profiles remain. Explicit-only context, event-derived recovery, shared authoring projections and independently checked Bench anchors reduce maintenance without relaxing authority, evidence or scoring controls.
 
 ## Skills
 
@@ -131,7 +131,7 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
 
 ## Changelog
 
-### v20.2.0 — v3 simplification (2026-10-27; unreleased)
+### v20.2.0 — v3 simplification (2026-10-27)
 
 - **One deployable context representation.** Retire non-deployable compact
   certification, ablation and capsule payloads. Preserve host/capability,
@@ -153,8 +153,7 @@ Current versions for the plugin and all 120 skills. Agents can fetch this file f
   graph. Preserve a lightweight check identity until external required-status
   configuration can be verified; no external protection settings change.
 
-Local implementation and test evidence: [v3 validation](docs/optimization-v3-validation.md).
-No remote release, deployment or external operation has been performed.
+Implementation and test evidence: [v3 validation](docs/optimization-v3-validation.md).
 
 ### v20.1.0 — Cross-discipline control plane (2026-09-01)
 
