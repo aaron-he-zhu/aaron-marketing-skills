@@ -18,7 +18,7 @@ jobs:
   drift:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check GitHub About against SSOT (dry-run, read-only)
         env:
           GH_TOKEN: ${{ github.token }}

@@ -13,7 +13,7 @@ jobs:
   drift:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check family repos against SSOT (dry-run)
         env:
           # Raises the GitHub Contents API limit from 60 to 5,000 req/hr so the shared
