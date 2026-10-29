@@ -333,7 +333,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/audience-segment-builder.json",
-      "contract_sha256": "c63b89bf42c5af885ee572ab982787ca4ead3dcbef17a610b48ee064b7a6e6a2",
+      "contract_sha256": "4e5bdbd3eca16447316fbee5c5ea0c947c239958ccd11969d291963469300382",
       "skill": "audience-segment-builder"
     },
     {
@@ -583,7 +583,7 @@
     },
     {
       "contract_ref": "references/skill-contracts/consent-registry.json",
-      "contract_sha256": "6500c45e0ca89dacecb07d4897437c61a6c213bb9b288a1664efc8080f3ac3c3",
+      "contract_sha256": "b76cf512697e381250cdff291ccba2d348e6f916b69f034f13fe98f47ba2e487",
       "skill": "consent-registry"
     },
     {
