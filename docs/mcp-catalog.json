@@ -16,6 +16,10 @@
       "type": "http",
       "url": "https://api.sistrix.com/mcp"
     },
+    "mangools": {
+      "type": "http",
+      "url": "https://mcp.mangools.com/mcp"
+    },
     "similarweb": {
       "type": "http",
       "url": "https://mcp.similarweb.com"
