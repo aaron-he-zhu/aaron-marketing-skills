@@ -108,7 +108,7 @@ The fastest way to keep a skill zero-dependency is to feed it data from a free, 
 
 | Category | Placeholder | Discipline | Example paid tools | Free alternative (above) | Agent default |
 |----------|-------------|------------|--------------------|--------------------------|---------------|
-| SEO Platform | `~~SEO tool` | search | Ahrefs, Semrush, Moz, SISTRIX, SE Ranking | GSC + Google Suggest + Firecrawl live SERP | GSC + Suggest + `firecrawl.py search` (keyless) |
+| SEO Platform | `~~SEO tool` | search | Ahrefs, Semrush, Moz, SISTRIX, SE Ranking, Mangools | GSC + Google Suggest + Firecrawl live SERP | GSC + Suggest + `firecrawl.py search` (keyless) |
 | Analytics | `~~analytics` | all | GA, Adobe Analytics, Plausible, Matomo | GA4 Data API / self-host Plausible · Matomo · PostHog · Umami / Microsoft Clarity Data Export API (free heatmap+session insights, 10 req/day) | GA4 own-data |
 | Search Console | `~~search console` | search | Google Search Console, Bing Webmaster | GSC + Bing WMT APIs + Yandex Webmaster / Naver Search Advisor (multi-engine own-site) | GSC (own) |
 | AI Visibility | `~~AI monitor` | search | Otterly, Profound, Scrunch AI | manual prompt-testing + Tavily answer-citation probe (one engine, proxy) | manual prompt set + `tavily.py search --answer` |
@@ -286,10 +286,11 @@ A skill might say: *"Pull keyword rankings from `~~SEO tool` and cross-reference
 | [Semrush](https://developer.semrush.com/api/introduction/semrush-mcp/) | `https://mcp.semrush.com/v1/mcp` | streamable HTTP | OAuth, or `Authorization: Apikey KEY` | subscription | `organic_research`, `keyword_research`, `backlink_research` |
 | [SE Ranking](https://seranking.com/api/integrations/mcp/) | `https://api.seranking.com/mcp` | streamable HTTP | OAuth or API key (`X-Api-Key`) | subscription | keyword/backlink/domain, AI-search visibility (160+ tools) |
 | [SISTRIX](https://www.sistrix.com/api/connection-to-chatbot-ai/) | `https://api.sistrix.com/mcp` | HTTP | **OAuth login — since the 2026 rollout no API key is needed** ([changelog](https://www.sistrix.com/changelog/sistrix-mcp-servers/)) | subscription | `domain`, `keyword`, `links`, `ai` modules |
+| [Mangools](https://mangools.com/mcp) | `https://mcp.mangools.com/mcp` | streamable HTTP | OAuth, or API key (`x-access-token` header) | subscription (free accounts get a one-time 100 keyword + 100 SERP lookups) | keyword volume & difficulty, SERP analysis, rank tracking, backlinks, domain overview, AI-search visibility |
 | [SimilarWeb](https://developers.similarweb.com/docs/similarweb-mcp) | `https://mcp.similarweb.com` | HTTP | OAuth / key | subscription | traffic estimates, competitive intel |
 | [OpenSEO](https://github.com/every-app/open-seo) (self-hosted) | `https://<your-host>/mcp` (edit your copied entry) | streamable HTTP | none (local Docker) / OAuth (Cloudflare) | **free app + pay-as-you-go data** | `research_keywords`, `get_ranked_keywords`, `get_serp_results`, `find_serp_competitors`, `get_domain_overview`, `get_backlinks_overview`, `get_search_console_performance`, local-SERP/Maps tools |
 
-**Cost model — read before enabling.** The five vendors above are **subscription** (flat monthly fee for plan-gated API access). OpenSEO is the one **pay-as-you-go** option: the app is free and self-hosted, and it bills only the underlying [DataForSEO](https://dataforseo.com) API calls you actually make — so it fits the free/keyless-first ethos better than a subscription suite while still returning real SERP/keyword/backlink data.
+**Cost model — read before enabling.** The six vendors above are **subscription** (flat monthly fee for plan-gated API access). OpenSEO is the one **pay-as-you-go** option: the app is free and self-hosted, and it bills only the underlying [DataForSEO](https://dataforseo.com) API calls you actually make — so it fits the free/keyless-first ethos better than a subscription suite while still returning real SERP/keyword/backlink data.
 
 **OpenSEO — self-hosted full SEO suite ([github.com/every-app/open-seo](https://github.com/every-app/open-seo), open source).** Run it via Docker (single-user, no auth — local only) or Cloudflare Workers (OAuth, team-ready, free plan compatible), connect your own DataForSEO key, and the app exposes an MCP server at `/<host>/mcp`. Set the host in the `openseo` entry you copied from `docs/mcp-catalog.json` into your MCP config (placeholder ships as `your-openseo-host.example`). It natively reads Google Search Console (`get_search_console_performance`), which makes the [keyword-research](seo-geo/survey/keyword-research/SKILL.md) striking-distance loop and rank tracking first-party. Indicative DataForSEO spend (vendor pay-as-you-go pricing, verify current rates — $1 free starter credit, $50 min top-up as of early 2026):
 
@@ -350,7 +351,7 @@ keyless/lower-quota mode, and the rest degrade to a clear where-to-get-a-key mes
 | `INDEXNOW_KEY` | `scripts/connectors/indexpush.py` | Self-minted IndexNow key (host it at `https://<host>/<key>.txt`; submissions additionally require `--live`) |
 | `BAIDU_PUSH_TOKEN` | `scripts/connectors/indexpush.py` | 百度普通收录 site-bound push token (from ziyuan.baidu.com; submissions additionally require `--live`) |
 
-The opt-in MCP servers do not use env vars here: most (Semrush, SE Ranking, SISTRIX, SimilarWeb, Cloudflare, Vercel, Webflow, Sanity, Contentful) use **OAuth** at first use; Ahrefs uses an in-client MCP key. The free Google APIs use OAuth (GSC/GA4) or a key (PSI/CrUX/Knowledge Graph) you supply at call time.
+The opt-in MCP servers do not use env vars here: most (Semrush, SE Ranking, SISTRIX, Mangools, SimilarWeb, Cloudflare, Vercel, Webflow, Sanity, Contentful) use **OAuth** at first use; Ahrefs uses an in-client MCP key. The free Google APIs use OAuth (GSC/GA4) or a key (PSI/CrUX/Knowledge Graph) you supply at call time.
 
 ## Freshness & caveats
 
