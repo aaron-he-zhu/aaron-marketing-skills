@@ -126,7 +126,7 @@ The fastest way to keep a skill zero-dependency is to feed it data from a free, 
 | CRM / Marketing | `~~CRM` | all | HubSpot, Salesforce, Marketo | — | manual CSV |
 | Content / CMS | `~~content platform` / `~~CMS` | all | WordPress, Webflow, Contentful, Sanity, Notion | WordPress REST API (own site, keyless public reads) · Ghost Content API (own) | existing CMS; WordPress REST when self-hosted |
 | Communication | `~~team chat` | all | Slack, Teams, Discord | — | manual paste |
-| Reporting | `~~reporting` | all | Looker Studio, Tableau, Power BI | — | Markdown report |
+| Reporting | `~~reporting` | all | Looker Studio, Tableau, Power BI, Coupler.io | — | Markdown report |
 
 ### Influencer categories
 
@@ -317,6 +317,8 @@ A skill might say: *"Pull keyword rankings from `~~SEO tool` and cross-reference
 **AI search / answer citations (`~~AI monitor` proxy, `~~SEO tool`)**: **Tavily** — official remote MCP at `https://mcp.tavily.com/mcp/` (in `docs/mcp-catalog.json`), also **keyless** (`tavily-search` + `tavily-extract` tools, no auth required; a key lifts the rate limit). The Tier-2/3 twin of the bundled [`scripts/connectors/tavily.py`](scripts/connectors/tavily.py), which adds the local robots pre-flight on extract.
 
 **App Store data (`~~app store data`)**: **Appeeky** — remote MCP at `https://mcp.appeeky.com/mcp` (in `docs/mcp-catalog.json`), **commercial (paid, usage-billed)** — an optional Tier-2/3 layer when app research needs more than Apple's documented public endpoints; the keyless bundled [`scripts/connectors/appstore.py`](scripts/connectors/appstore.py) stays the Tier-1 default.
+
+**Reporting (`~~reporting`)**: **Coupler.io** — official remote MCP at `https://mcp.coupler.io/mcp` (in `docs/mcp-catalog.json`; streamable HTTP, OAuth on first use), **commercial (paid plans; MCP access starts on the Starter plan, 7-day trial)** — gives the agent the data flows a team has already synced into Coupler.io from 400+ sources (GA4, Google Ads, Meta Ads, LinkedIn Ads, HubSpot, Shopify and others), so a cross-channel report can be built from one connection instead of a keyed API per platform. An optional Tier-2/3 layer: the Markdown report stays the Tier-1 default, and every skill works without it.
 
 **Third URL-to-markdown fallback**: **Jina Reader** — prepend `https://r.jina.ai/` to any URL (keyless, ~20 RPM; a free key raises to 500+ RPM), official remote MCP at [github.com/jina-ai/MCP](https://github.com/jina-ai/MCP). Overlaps Firecrawl/Tavily, so it is deliberately **not** bundled or wired into skills — use it to spread load when the other two keyless tiers are rate-limited.
 

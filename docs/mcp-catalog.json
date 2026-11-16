@@ -79,6 +79,10 @@
     "upfluence": {
       "type": "http",
       "url": "https://mcp.upfluence.co/mcp"
+    },
+    "coupler-io": {
+      "type": "http",
+      "url": "https://mcp.coupler.io/mcp"
     }
   }
 }
