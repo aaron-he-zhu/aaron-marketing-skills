@@ -120,16 +120,34 @@ def build_parser():
                    help="Window for monthly granularity (full months).")
     p.add_argument("--days", type=_positive_int, default=30,
                    help="Window for daily granularity.")
+    p.add_argument("--bilingual-ar", action="store_true",
+                   help="Also query ar.wikipedia and sum bilingual EN+AR attention views.")
+    p.add_argument("--compute-sov", action="store_true",
+                   help="Compute Attention Share of Voice (SOV%%) across the article panel.")
     return p
 
 
 def main(argv=None):
     args = build_parser().parse_args(argv)
     start, end = default_range(args.granularity, args.months, args.days)
-    results = [series(a, args.project, args.granularity, start, end)
-               for a in args.articles]
-    out = results[0] if len(results) == 1 else {"count": len(results),
-                                                "results": results}
+    results = []
+    for a in args.articles:
+        r_primary = series(a, args.project, args.granularity, start, end)
+        if args.bilingual_ar and args.project != "ar.wikipedia":
+            r_ar = series(a, "ar.wikipedia", args.granularity, start, end)
+            r_primary["ar_views"] = r_ar.get("total", 0)
+            r_primary["en_views"] = r_primary.get("total", 0)
+            r_primary["total"] = r_primary["en_views"] + r_primary["ar_views"]
+        results.append(r_primary)
+    if args.compute_sov:
+        denom = sum(max(0, r.get("total", 0)) for r in results) or 1
+        for r in results:
+            r["attention_sov_pct"] = round(max(0, r.get("total", 0)) / denom * 100.0, 2)
+    out = results[0] if len(results) == 1 and not args.compute_sov else {
+        "count": len(results),
+        "panel_total_views": sum(max(0, r.get("total", 0)) for r in results),
+        "results": results,
+    }
     print(json.dumps(out, indent=2, ensure_ascii=False))
     failed = [r for r in results if r.get("error")]
     if failed:
